@@ -4,15 +4,17 @@ name: Exécution déterministe des clamps basaux vers l'entrée CNS
 owner_ids:
   - clamp.olfaction
   - clamp.gustation
+  - clamp.thermohygro
   - cns.malecns
   - wire.olfaction_clamp_to_cns
   - wire.gustation_clamp_to_cns
+  - wire.thermohygro_clamp_to_cns
 level: integration
 protocol_path: src/the_fly_matrix/wiring_smoke.py
 command: run_wiring_smoke.bat
 acceptance_criteria:
-  - All 313 generated type-A box instances execute
-  - All 4067 exact bodyId routes reach the CNS ingress buffer
+  - All 329 generated type-A box instances execute
+  - All 4158 exact bodyId routes reach the CNS ingress buffer
   - Replaying the same arbitrary inputs and seed is bit-for-bit deterministic
   - No arbitrary smoke value is persisted as a scientific parameter
 calibration_dataset_ids: []
@@ -20,7 +22,7 @@ held_out_behavior_ids: []
 latest_run_id: basal-clamp-runtime-2026-09-19
 status: integration_pass
 notes:
-  - 313 generated type-A instances executed
-  - 4067 unique MaleCNS bodyId destinations reached the type-D ingress buffer
+  - 329 generated type-A instances executed
+  - 4158 unique MaleCNS bodyId destinations reached the type-D ingress buffer
   - Deterministic replay matched bit for bit
   - Arbitrary activity values were not persisted or promoted to parameters

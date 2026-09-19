@@ -13,7 +13,7 @@ from .runtime import BasalClampBox, CNSInputBuffer, SparseActivity
 
 
 OUTPUT = ROOT / "runs" / "wiring-smoke" / "latest.json"
-CLAMP_IDS = ("clamp.olfaction", "clamp.gustation")
+CLAMP_IDS = ("clamp.olfaction", "clamp.gustation", "clamp.thermohygro")
 SMOKE_SEED = 260919
 
 
@@ -51,8 +51,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         first.values, second.values
     ):
         raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
-    if len(first.body_ids) != 4067:
-        raise RuntimeError(f"4067 destinations attendues, {len(first.body_ids)} obtenues")
+    if len(first.body_ids) != 4158:
+        raise RuntimeError(f"4158 destinations attendues, {len(first.body_ids)} obtenues")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
 

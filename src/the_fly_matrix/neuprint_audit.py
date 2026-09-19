@@ -104,6 +104,11 @@ def audit_neuprint(output: Path = OUTPUT) -> dict[str, Any]:
         "RETURN count(n) AS neurons"
     )
     remote_counts["motor.exit_nerve"] = int(exit_result.iloc[0]["neurons"])
+    thermohygro_result = client.fetch_custom(
+        "MATCH (n:Neuron) WHERE n.class IN ['thermosensory', 'hygrosensory'] "
+        "RETURN count(n) AS neurons"
+    )
+    remote_counts["sensory.thermohygro"] = int(thermohygro_result.iloc[0]["neurons"])
     local_counts: dict[str, int] = {}
     if LOCAL_INVENTORY_PATH.is_file():
         local_inventory = json.loads(LOCAL_INVENTORY_PATH.read_text(encoding="utf-8"))
@@ -113,6 +118,7 @@ def audit_neuprint(output: Path = OUTPUT) -> dict[str, Any]:
         }
     comparisons = []
     comparison_ids = [group_id for group_id, _, _ in GROUP_SPECS]
+    comparison_ids.insert(comparison_ids.index("sensory.vnc"), "sensory.thermohygro")
     comparison_ids.insert(comparison_ids.index("projection.ascending"), "motor.exit_nerve")
     for group_id in comparison_ids:
         local = local_counts.get(group_id)

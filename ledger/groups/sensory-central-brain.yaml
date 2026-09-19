@@ -12,6 +12,6 @@ target_box_ids: [cns.malecns]
 status: {inventory: complete, decomposition: proposed, routing: unknown, validation: not_run}
 confidence: high
 evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Répartir par modalité et repérer thermo/hygro parmi les entrées centrales.
+next_action: Répartir les modalités restantes après extraction exacte des 91 thermo-hygrosensoriels.
 blocked_by: []
 completion_criteria: [Modalité de chaque sous-groupe documentée ou inconnue explicite]

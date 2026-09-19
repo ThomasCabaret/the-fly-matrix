@@ -30,6 +30,11 @@ CLAMP_SPECS = {
         "source_port": "gustatory_baseline",
         "axes": ["entryNerve", "subclass", "type", "rootSide"],
     },
+    "sensory.thermohygro": {
+        "clamp_id": "clamp.thermohygro",
+        "source_port": "thermohygro_baseline",
+        "axes": ["class", "type", "rootSide"],
+    },
 }
 
 
@@ -121,6 +126,7 @@ def build_basal_clamp_wiring(
             "bodyId",
             "type",
             "instance",
+            "class",
             "entryNerve",
             "subclass",
             "rootSide",
@@ -128,7 +134,14 @@ def build_basal_clamp_wiring(
         routes = selected[route_columns].rename(columns={"bodyId": "target_body_id"})
         output_frames.append(routes)
         unknown_counts = {
-            axis: int(selected[axis].eq("(unknown)").sum()) for axis in axes
+            axis: int(
+                selected[axis]
+                .str.strip()
+                .str.lower()
+                .isin({"(unknown)", "unknown", "", "nan", "none"})
+                .sum()
+            )
+            for axis in axes
         }
         channel_count = int(selected["channel_id"].nunique())
         modality_rows.append(

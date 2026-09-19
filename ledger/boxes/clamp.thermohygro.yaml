@@ -6,11 +6,14 @@ adapter_type: A
 anatomical_region: thermo_hygrosensory_afferents
 parent_id: null
 ports: {inputs: [], outputs: [thermohygro_baseline]}
-status: {inventory: missing, implementation: not_started, parameters: unknown, validation: not_run}
-confidence: low
-evidence: [drosophila_virtual_fly_project_contract.md]
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: high
+evidence:
+  - data/derived/wiring/basal-clamp-routing.json
+  - data/derived/wiring/basal-clamp-routes.parquet
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC7443704/
 parameter_family_ids: [parameter.baseline.thermohygro]
-validation_ids: []
-next_action: Trouver les populations dans les annotations au-delà du champ class actuel.
-blocked_by: [annotation_query_to_define]
-completion_criteria: [Population exacte, Environnement neutre défini, Incertitude documentée]
+validation_ids: [validation.basal_clamp_routing, validation.basal_clamp_runtime]
+next_action: Conserver l'interface exécutable et reporter le choix des valeurs neutres à la calibration.
+blocked_by: []
+completion_criteria: [Population exacte, Sorties terminales exécutables, Paramètres neutres injectables]

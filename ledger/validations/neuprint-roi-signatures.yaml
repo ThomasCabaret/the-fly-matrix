@@ -4,6 +4,7 @@ name: Signatures anatomiques ROI des interfaces prioritaires
 owner_ids:
   - group.sensory.unknown
   - group.sensory.central_brain
+  - group.sensory.thermohygro
   - group.sensory.proprioceptive
   - group.sensory.tactile
   - group.motor.vnc
@@ -22,7 +23,7 @@ held_out_behavior_ids: []
 latest_run_id: roi-audit-2026-09-19
 status: integration_pass
 notes:
-  - 6 priority groups and 12305 group-neuron occurrences audited
+  - 7 priority groups and 12396 group-neuron occurrences audited
   - Primary ROI coverage ranges from 98.31 to 100 percent
   - Detailed per-neuron signatures remain in ignored derived data
   - Functional identity is deliberately not inferred from ROI dominance

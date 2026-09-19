@@ -2,16 +2,19 @@ schema_version: 1
 id: wire.thermohygro_clamp_to_cns
 name: Baseline thermo-hygro vers MaleCNS
 sector: basal_clamps
-source: {box_id: clamp.thermohygro, port: thermohygro_baseline, group_query: query pending}
+source: {box_id: clamp.thermohygro, port: thermohygro_baseline, group_query: "class in [thermosensory, hygrosensory]"}
 target: {box_id: cns.malecns, port: basal_activity, group_query: same bodyId}
-mapping_level: unknown
-expected_cardinality: unknown
-candidate_constraints: [thermo-hygrosensory annotations and antennal nerves]
+mapping_level: exact
+expected_cardinality: 91 class-annotated neurons
+candidate_constraints: [MaleCNS class equals thermosensory or hygrosensory]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: missing, routing: unknown, implementation: not_started, validation: not_run}
-confidence: low
-evidence: [drosophila_virtual_fly_project_contract.md]
-validation_ids: []
-next_action: Identifier la requête MaleCNS reproductible.
-blocked_by: [annotation_query_to_define]
+status: {inventory: complete, routing: fixed, implementation: tested, validation: integration_pass}
+confidence: high
+evidence:
+  - data/derived/wiring/basal-clamp-routing.json
+  - data/derived/wiring/basal-clamp-routes.parquet
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC7443704/
+validation_ids: [validation.basal_clamp_routing, validation.basal_clamp_runtime]
+next_action: Conserver la route exacte et reporter les valeurs neutres à la calibration.
+blocked_by: []

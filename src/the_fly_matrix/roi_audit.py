@@ -24,6 +24,7 @@ DETAIL_OUTPUT = ROOT / "data" / "derived" / "inventory" / "roi-neuron-signatures
 GROUP_QUERIES = (
     ("sensory.unknown", "n.class = 'unknown_sensory'"),
     ("sensory.central_brain", "n.superclass = 'cb_sensory'"),
+    ("sensory.thermohygro", "n.class IN ['thermosensory', 'hygrosensory']"),
     ("sensory.proprioceptive", "n.class = 'mechanosensory_proprioceptive'"),
     ("sensory.tactile", "n.class = 'mechanosensory_tactile'"),
     ("motor.vnc", "n.superclass = 'vnc_motor'"),

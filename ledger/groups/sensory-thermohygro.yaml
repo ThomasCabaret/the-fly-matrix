@@ -1,0 +1,20 @@
+schema_version: 1
+id: group.sensory.thermohygro
+name: Afférences thermo- et hygrosensorielles
+sector: basal_clamps
+partition_axis: class_type_side
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: "class in [thermosensory, hygrosensory]"
+member_count: 91
+named_type_count: 8
+target_box_ids: [clamp.thermohygro, cns.malecns]
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
+confidence: high
+evidence:
+  - data/derived/wiring/basal-clamp-channels.csv
+  - data/derived/wiring/basal-clamp-routes.parquet
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC7443704/
+next_action: Conserver les 16 instances terminales pendant l'implémentation et la calibration ultérieure.
+blocked_by: []
+completion_criteria: [91 neurones couverts exactement une fois, Classes et types séparés, Côté inconnu conservé explicitement]

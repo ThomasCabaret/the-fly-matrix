@@ -17,10 +17,11 @@ Le contrat scientifique de référence est
 - `verify_install.bat` relance le contrôle complet données/GPU/FlyBody/MuJoCo/Graphviz.
 - `run_analysis.bat` régénère l'inventaire local MaleCNS/FlyBody, construit les
   manifestes de câblage locaux puis, si le jeton est configuré, compare les
-  populations avec neuPrint et mesure les signatures anatomiques ROI de six
+  populations avec neuPrint et mesure les signatures anatomiques ROI de sept
   groupes d'interface prioritaires.
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
-  routes olfactives et gustatives avec des valeurs arbitraires reproductibles.
+  routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
+  arbitraires reproductibles.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 

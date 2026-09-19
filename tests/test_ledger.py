@@ -17,7 +17,7 @@ class LedgerTests(unittest.TestCase):
 
     def test_top_level_interface_is_exhaustively_represented(self) -> None:
         self.assertEqual(len(self.ledger["boxes"]), 18)
-        self.assertEqual(len(self.ledger["groups"]), 14)
+        self.assertEqual(len(self.ledger["groups"]), 15)
         self.assertEqual(len(self.ledger["wires"]), 21)
         adapter_types = {
             box.get("adapter_type") for box in self.ledger["boxes"] if box.get("adapter_type")
@@ -65,9 +65,9 @@ class LedgerTests(unittest.TestCase):
         if not path.is_file():
             self.skipTest("derived basal clamp wiring is absent")
         wiring = json.loads(path.read_text(encoding="utf-8"))
-        self.assertEqual(wiring["totals"]["modalities"], 2)
-        self.assertEqual(wiring["totals"]["generated_box_instances"], 147 + 166)
-        self.assertEqual(wiring["totals"]["exact_routes"], 2639 + 1428)
+        self.assertEqual(wiring["totals"]["modalities"], 3)
+        self.assertEqual(wiring["totals"]["generated_box_instances"], 147 + 166 + 16)
+        self.assertEqual(wiring["totals"]["exact_routes"], 2639 + 1428 + 91)
         self.assertEqual(wiring["totals"]["duplicate_routes"], 0)
         self.assertEqual(wiring["totals"]["unassigned_neurons"], 0)
         self.assertTrue(all(item["coverage_percent"] == 100 for item in wiring["modalities"]))

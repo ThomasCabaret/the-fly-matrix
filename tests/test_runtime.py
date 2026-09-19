@@ -15,15 +15,19 @@ class RuntimeTests(unittest.TestCase):
     def test_basal_clamps_execute_every_exact_route(self) -> None:
         olfaction = BasalClampBox.from_generated_wiring("clamp.olfaction")
         gustation = BasalClampBox.from_generated_wiring("clamp.gustation")
+        thermohygro = BasalClampBox.from_generated_wiring("clamp.thermohygro")
         olfactory_values = np.arange(len(olfaction.channel_ids), dtype=np.float64)
         gustatory_values = np.arange(len(gustation.channel_ids), dtype=np.float64) + 1000
+        thermohygro_values = np.arange(len(thermohygro.channel_ids), dtype=np.float64) + 2000
         olfactory_output = olfaction.step(olfactory_values)
         gustatory_output = gustation.step(gustatory_values)
-        merged = CNSInputBuffer.merge(olfactory_output, gustatory_output)
+        thermohygro_output = thermohygro.step(thermohygro_values)
+        merged = CNSInputBuffer.merge(olfactory_output, gustatory_output, thermohygro_output)
         self.assertEqual(len(olfactory_output.body_ids), 2639)
         self.assertEqual(len(gustatory_output.body_ids), 1428)
-        self.assertEqual(len(merged.body_ids), 4067)
-        self.assertEqual(len(np.unique(merged.body_ids)), 4067)
+        self.assertEqual(len(thermohygro_output.body_ids), 91)
+        self.assertEqual(len(merged.body_ids), 4158)
+        self.assertEqual(len(np.unique(merged.body_ids)), 4158)
 
     def test_basal_clamp_rejects_incomplete_parameter_vector(self) -> None:
         box = BasalClampBox.from_generated_wiring("clamp.olfaction")

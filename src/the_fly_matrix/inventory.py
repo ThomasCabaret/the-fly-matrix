@@ -42,6 +42,7 @@ DECOMPOSITION_AXES = {
     "sensory.unknown": ["entryNerve", "subclass", "type", "rootSide"],
     "sensory.optic_lobe": ["type"],
     "sensory.central_brain": ["entryNerve", "subclass", "type", "rootSide"],
+    "sensory.thermohygro": ["class", "type", "rootSide"],
     "sensory.vnc": ["entryNerve", "subclass", "mancType", "type", "rootSide"],
     "motor.vnc": ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type"],
     "motor.exit_nerve": ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type"],
@@ -201,6 +202,10 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
         ),
         "sensory.central_brain": (
             "superclass == cb_sensory", frame["superclass"].eq("cb_sensory")
+        ),
+        "sensory.thermohygro": (
+            "class in [thermosensory, hygrosensory]",
+            frame["class"].isin(["thermosensory", "hygrosensory"]),
         ),
         "sensory.vnc": ("superclass == vnc_sensory", frame["superclass"].eq("vnc_sensory")),
         "motor.vnc": ("superclass == vnc_motor", frame["superclass"].eq("vnc_motor")),

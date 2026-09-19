@@ -43,7 +43,7 @@ class ConfigTests(unittest.TestCase):
         self.assertFalse(bool(token and token in audit_text), "credential leaked into ROI audit")
         audit = json.loads(audit_text)
         self.assertFalse(audit["credential_persisted"])
-        self.assertEqual(len(audit["groups"]), 6)
+        self.assertEqual(len(audit["groups"]), 7)
         self.assertTrue(all(item["neurons"] > 0 for item in audit["groups"]))
         self.assertTrue(
             all(0 <= item["primary_roi_coverage_percent"] <= 100 for item in audit["groups"])
