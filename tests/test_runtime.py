@@ -8,9 +8,12 @@ from the_fly_matrix.runtime import (
     BasalClampBox,
     CHANNEL_PATH,
     CNSInputBuffer,
+    MECHANO_CHANNEL_PATH,
+    MECHANO_ROUTE_PATH,
     PROPRIO_CHANNEL_PATH,
     PROPRIO_ROUTE_PATH,
     ROUTE_PATH,
+    MechanosensationRoutingBox,
     ProprioceptionRoutingBox,
 )
 
@@ -57,6 +60,19 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(len(box.channel_ids), 262)
         self.assertEqual(len(output.body_ids), 1454)
         self.assertEqual(len(np.unique(output.body_ids)), 1454)
+
+    def test_mechanosensation_router_executes_both_disjoint_groups(self) -> None:
+        if not MECHANO_CHANNEL_PATH.is_file() or not MECHANO_ROUTE_PATH.is_file():
+            self.skipTest("generated mechanosensory wiring is absent")
+        box = MechanosensationRoutingBox.from_generated_wiring()
+        output = box.step(np.arange(len(box.channel_ids), dtype=np.float64))
+        self.assertEqual(len(box.channel_ids), 323)
+        self.assertEqual(len(output.body_ids), 4291)
+        self.assertEqual(len(np.unique(output.body_ids)), 4291)
+        self.assertEqual(
+            set(box.routes["group_id"]),
+            {"sensory.tactile", "sensory.mechanosensory_other"},
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,29 @@
+schema_version: 1
+id: validation.mechanosensation_routing
+name: Routage aval exact des afférences mécanoréceptrices
+owner_ids:
+  - adapter.touch.routing
+  - group.sensory.tactile
+  - group.sensory.mechanosensory_other
+  - wire.touch_routing_to_cns
+  - cns.malecns
+level: integration
+protocol_path: src/the_fly_matrix/wiring.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 4291 tactile and other mechanosensory neurons are assigned exactly once
+  - Terminal type-C instances preserve group, nerve, subclass, MANC type, MaleCNS type and side
+  - Every downstream route terminates at an explicit MaleCNS bodyId
+  - Unknown annotations and unresolved physical modalities remain explicit
+  - Physical surface-to-receptor assignments remain deferred
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: mechanosensation-routing-2026-09-19
+status: integration_pass
+notes:
+  - 323 generated type-C instances executed
+  - 4291 exact MaleCNS bodyId routes with no duplicate or omission
+  - Tactile population contributes 2558 routes and 213 channels
+  - Other mechanosensory population contributes 1733 routes and 110 channels
+  - 1040 unresolved mechanosensory subclasses remain explicit unknown values
+  - Physical contact and vibration mapping remains deliberately unknown

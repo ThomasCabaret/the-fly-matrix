@@ -21,7 +21,8 @@ Le contrat scientifique de référence est
   groupes d'interface prioritaires.
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
   routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
-  arbitraires reproductibles, ainsi que le routage proprioceptif aval.
+  arbitraires reproductibles, ainsi que les routages aval proprioceptif et
+  mécanorécepteur.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -117,6 +118,14 @@ type C. `proprioception-routes.parquet` fixe les routes terminales vers MaleCNS,
 tandis que l'affectation amont des angles, vitesses, contraintes et vibrations
 physiques reste inconnue. Finir une moitié fiable ne transforme donc pas l'autre
 moitié en hypothèse implicite.
+
+Le manifeste mécanorécepteur applique la même séparation : 4 291 afférences
+tactiles ou mécanoréceptrices sont divisées en 323 instances type C selon le
+groupe annoté, le nerf d'entrée, la sous-classe, les types MANC/MaleCNS et le côté.
+Les routes terminales vers les `bodyId` sont exactes, tandis que la correspondance
+avec les surfaces de contact, vibrations et autres observables physiques reste à
+établir. Les modalités non annotées sont conservées comme inconnues et ne sont pas
+reclassées par hypothèse.
 
 ## Rattachement Git distant
 

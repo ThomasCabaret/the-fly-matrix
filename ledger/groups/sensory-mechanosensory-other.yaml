@@ -9,9 +9,9 @@ query: class == mechanosensory
 member_count: 1733
 named_type_count: 51
 target_box_ids: [adapter.touch.routing, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: unknown, validation: not_run}
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Distinguer tactile, vibration, gravité et classes non résolues.
+evidence: [data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-routes.parquet]
+next_action: Résoudre les modalités physiques des 1 040 sous-classes inconnues sans altérer leur routage bodyId.
 blocked_by: []
-completion_criteria: [Modalités séparées, Aucun chevauchement silencieux, Routage candidat documenté]
+completion_criteria: [Partition aval exhaustive, Aucun chevauchement silencieux, Inconnues fonctionnelles explicites]

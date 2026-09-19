@@ -80,6 +80,18 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(proprio["duplicate_routes"], 0)
         self.assertEqual(proprio["unassigned_neurons"], 0)
 
+        mechano_path = path.with_name("mechanosensation-routing.json")
+        self.assertTrue(mechano_path.is_file())
+        mechano = json.loads(mechano_path.read_text(encoding="utf-8"))
+        self.assertEqual(mechano["generated_box_instances"], 323)
+        self.assertEqual(mechano["exact_routes"], 2558 + 1733)
+        self.assertEqual(mechano["duplicate_routes"], 0)
+        self.assertEqual(mechano["unassigned_neurons"], 0)
+        self.assertEqual(
+            {item["group_id"]: item["terminal_channels"] for item in mechano["groups"]},
+            {"sensory.tactile": 213, "sensory.mechanosensory_other": 110},
+        )
+
     def test_group_counts_match_local_inventory_when_available(self) -> None:
         path = Path(__file__).resolve().parents[1] / "data" / "derived" / "inventory" / "inventory.json"
         if not path.is_file():

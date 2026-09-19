@@ -21,6 +21,9 @@ ROUTE_OUTPUT = OUTPUT_ROOT / "basal-clamp-routes.parquet"
 PROPRIO_SUMMARY_OUTPUT = OUTPUT_ROOT / "proprioception-routing.json"
 PROPRIO_CHANNEL_OUTPUT = OUTPUT_ROOT / "proprioception-channels.csv"
 PROPRIO_ROUTE_OUTPUT = OUTPUT_ROOT / "proprioception-routes.parquet"
+MECHANO_SUMMARY_OUTPUT = OUTPUT_ROOT / "mechanosensation-routing.json"
+MECHANO_CHANNEL_OUTPUT = OUTPUT_ROOT / "mechanosensation-channels.csv"
+MECHANO_ROUTE_OUTPUT = OUTPUT_ROOT / "mechanosensation-routes.parquet"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -322,6 +325,148 @@ def build_proprioception_wiring(
     return summary
 
 
+def build_mechanosensation_wiring(
+    source: Path = SOURCE,
+    summary_output: Path = MECHANO_SUMMARY_OUTPUT,
+    channel_output: Path = MECHANO_CHANNEL_OUTPUT,
+    route_output: Path = MECHANO_ROUTE_OUTPUT,
+) -> dict[str, Any]:
+    """Build the exact downstream half of the mechanosensory type-C adapter."""
+    if not source.is_file():
+        raise FileNotFoundError(f"{source} absent; lancez d'abord l'inventaire MaleCNS")
+    section("Câblage terminal des afférences mécanoréceptrices")
+    frame = pd.read_parquet(source)
+    group_ids = ("sensory.tactile", "sensory.mechanosensory_other")
+    selected = frame.loc[frame["group_id"].isin(group_ids)].copy()
+    if selected.empty:
+        raise RuntimeError("Aucun neurone mécanorécepteur trouvé")
+    if selected["bodyId"].duplicated().any():
+        raise RuntimeError("Les populations mécanoréceptrices se chevauchent par bodyId")
+
+    axes = ["entryNerve", "subclass", "mancType", "type", "rootSide"]
+    selected[axes] = selected[axes].fillna("(unknown)").astype(str)
+    selected["routing_box_id"] = "adapter.touch.routing"
+    selected["source_port"] = "mechanosensory_afferents"
+    selected["target_box_id"] = "cns.malecns"
+    selected["target_port"] = "sensory_afferents"
+    selected["channel_id"] = [
+        _channel_id(str(group_id), axes, tuple(row))
+        for group_id, row in zip(
+            selected["group_id"], selected[axes].itertuples(index=False, name=None)
+        )
+    ]
+    selected["box_instance_id"] = selected["channel_id"].str.replace(
+        "channel.", "box.", n=1, regex=False
+    )
+    selected["adapter_type"] = "C"
+
+    channel_rows: list[dict[str, Any]] = []
+    group_rows: list[dict[str, Any]] = []
+    grouped = selected.groupby(["group_id", "channel_id", *axes], dropna=False, sort=True)
+    for values, channel in grouped:
+        group_id, channel_id, *axis_values = values
+        item = {
+            "channel_id": channel_id,
+            "box_instance_id": str(channel.iloc[0]["box_instance_id"]),
+            "group_id": group_id,
+            "routing_box_id": "adapter.touch.routing",
+            "adapter_type": "C",
+            "source_port": "mechanosensory_afferents",
+            "target_box_id": "cns.malecns",
+            "target_port": "sensory_afferents",
+            "neuron_count": int(len(channel)),
+            "mapping_level": "exact_body_id",
+            "free_discrete_parameters_downstream": 0,
+            "upstream_physical_mapping": "deferred",
+        }
+        item.update({axis: _text(value) for axis, value in zip(axes, axis_values)})
+        channel_rows.append(item)
+
+    for group_id in group_ids:
+        group = selected.loc[selected["group_id"].eq(group_id)]
+        unknown_counts = {
+            axis: int(
+                group[axis]
+                .str.strip()
+                .str.lower()
+                .isin({"(unknown)", "unknown", "", "nan", "none"})
+                .sum()
+            )
+            for axis in axes
+        }
+        group_rows.append(
+            {
+                "group_id": group_id,
+                "neuron_count": int(len(group)),
+                "terminal_channels": int(group["channel_id"].nunique()),
+                "unique_target_body_ids": int(group["bodyId"].nunique()),
+                "unknown_axis_value_counts": unknown_counts,
+                "coverage_percent": 100.0,
+            }
+        )
+        print(
+            f"[OK] {group_id}: {len(group):,} neurones, "
+            f"{group['channel_id'].nunique():,} instances type C"
+        )
+
+    route_columns = [
+        "channel_id",
+        "box_instance_id",
+        "group_id",
+        "routing_box_id",
+        "adapter_type",
+        "source_port",
+        "target_box_id",
+        "target_port",
+        "bodyId",
+        "type",
+        "instance",
+        "entryNerve",
+        "subclass",
+        "mancType",
+        "rootSide",
+    ]
+    routes = selected[route_columns].rename(columns={"bodyId": "target_body_id"})
+    if routes["target_body_id"].duplicated().any():
+        raise RuntimeError("Le manifeste mécanorécepteur contient des routes dupliquées")
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(source.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact downstream mechanosensory routing; physical transduction is deferred",
+        "method": {
+            "terminal_channels": "one type-C instance per group and unique annotated axis combination",
+            "target_mapping": "each instance fans out to an explicit, unique MaleCNS bodyId list",
+            "classification_policy": "unknown annotations and unresolved mechanosensory modalities remain explicit",
+            "upstream_policy": "body-surface observable assignment remains unknown until independently audited",
+        },
+        "group_ids": list(group_ids),
+        "routing_box_id": "adapter.touch.routing",
+        "partition_axes": axes,
+        "groups": group_rows,
+        "neuron_count": int(len(selected)),
+        "terminal_channels": len(channel_rows),
+        "generated_box_instances": len(channel_rows),
+        "exact_routes": int(len(routes)),
+        "duplicate_routes": 0,
+        "unassigned_neurons": 0,
+        "downstream_routing_status": "fixed",
+        "upstream_mapping_status": "unknown",
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    pd.DataFrame(channel_rows).to_csv(channel_output, index=False, encoding="utf-8")
+    routes.to_parquet(route_output, index=False)
+    print(
+        f"[OK] Total: {len(selected):,} routes exactes vers "
+        f"{len(channel_rows):,} instances type C"
+    )
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux terminaux : {channel_output}")
+    print(f"[OK] Routes bodyId exactes : {route_output}")
+    return summary
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Construit le câblage structurel des clamps basaux")
     parser.add_argument("--source", type=Path, default=SOURCE)
@@ -337,6 +482,7 @@ def main() -> int:
             args.route_output,
         )
         build_proprioception_wiring(args.source)
+        build_mechanosensation_wiring(args.source)
     except Exception as exc:
         print(f"\nWIRING_FAILED: {type(exc).__name__}: {exc}")
         return 1

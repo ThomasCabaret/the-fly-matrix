@@ -9,9 +9,9 @@ query: class == mechanosensory_tactile
 member_count: 2558
 named_type_count: 56
 target_box_ids: [adapter.touch.routing, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Décomposer par entryNerve, subclass, somaSide et organe corporel.
+evidence: [data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-routes.parquet]
+next_action: Auditer séparément la correspondance entre surfaces physiques et canaux tactiles fixés.
 blocked_by: []
-completion_criteria: [Sous-groupes anatomiques disjoints, Couverture totale, Candidats physiques bornés]
+completion_criteria: [Sous-groupes aval disjoints, Couverture totale, Valeurs inconnues conservées explicitement]

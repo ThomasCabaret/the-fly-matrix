@@ -6,11 +6,11 @@ adapter_type: C
 anatomical_region: peripheral_nerves
 parent_id: sensor.touch
 ports: {inputs: [mechanoreceptor_activity], outputs: [mechanosensory_afferents]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
-confidence: low
-evidence: [data/derived/inventory/inventory.json]
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: medium
+evidence: [data/derived/wiring/mechanosensation-routing.json, data/derived/wiring/mechanosensation-routes.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: []
-next_action: Découper les 2 558 tactiles et groupes apparentés par nerf, côté et organe.
+validation_ids: [validation.mechanosensation_routing]
+next_action: Relier les observables de contact et vibration aux 323 entrées type C sans modifier le routage aval fixé.
 blocked_by: []
-completion_criteria: [Groupes exhaustifs, Candidats anatomiques contraints, Paramètres discrets comptés]
+completion_criteria: [Groupes aval exhaustifs, Routages bodyId fixes, Modalités inconnues conservées explicitement]
