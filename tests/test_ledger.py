@@ -72,6 +72,14 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(wiring["totals"]["unassigned_neurons"], 0)
         self.assertTrue(all(item["coverage_percent"] == 100 for item in wiring["modalities"]))
 
+        proprio_path = path.with_name("proprioception-routing.json")
+        self.assertTrue(proprio_path.is_file())
+        proprio = json.loads(proprio_path.read_text(encoding="utf-8"))
+        self.assertEqual(proprio["generated_box_instances"], 262)
+        self.assertEqual(proprio["exact_routes"], 1454)
+        self.assertEqual(proprio["duplicate_routes"], 0)
+        self.assertEqual(proprio["unassigned_neurons"], 0)
+
     def test_group_counts_match_local_inventory_when_available(self) -> None:
         path = Path(__file__).resolve().parents[1] / "data" / "derived" / "inventory" / "inventory.json"
         if not path.is_file():

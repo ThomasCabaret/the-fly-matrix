@@ -18,6 +18,7 @@ NEUPRINT_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "neuprint-audit.
 ROI_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "roi-audit.json"
 BASAL_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "basal-clamp-routing.json"
 WIRING_SMOKE_PATH = ROOT / "runs" / "wiring-smoke" / "latest.json"
+PROPRIO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "proprioception-routing.json"
 
 
 def section(title: str) -> None:
@@ -102,6 +103,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     roi_audit = inventory.get("roi_audit")
     basal_wiring = inventory.get("basal_wiring")
     wiring_smoke = inventory.get("wiring_smoke")
+    proprio_wiring = inventory.get("proprio_wiring")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
     groups = "".join(
@@ -157,6 +159,11 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{ingress.get("unique_body_ids", 0):,}</strong><span>routes clamp exécutées</span></div>'
             f'<div><strong>{"oui" if checks.get("deterministic_replay") else "non"}</strong><span>rejeu déterministe</span></div>'
+        )
+    if proprio_wiring:
+        remote_metrics += (
+            f'<div><strong>{proprio_wiring.get("generated_box_instances", 0):,}</strong><span>instances proprio type C</span></div>'
+            f'<div><strong>{proprio_wiring.get("exact_routes", 0):,}</strong><span>routes proprio exactes</span></div>'
         )
     return (
         '<div class="metrics">'
@@ -296,6 +303,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 WIRING_SMOKE_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Smoke test du câblage chargé: {WIRING_SMOKE_PATH}")
+        if PROPRIO_WIRING_PATH.is_file():
+            inventory["proprio_wiring"] = json.loads(
+                PROPRIO_WIRING_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Câblage proprioceptif chargé: {PROPRIO_WIRING_PATH}")
     else:
         print("[AVERTISSEMENT] Inventaire local absent; lancer run_analysis.bat")
 

@@ -18,6 +18,9 @@ OUTPUT_ROOT = ROOT / "data" / "derived" / "wiring"
 SUMMARY_OUTPUT = OUTPUT_ROOT / "basal-clamp-routing.json"
 CHANNEL_OUTPUT = OUTPUT_ROOT / "basal-clamp-channels.csv"
 ROUTE_OUTPUT = OUTPUT_ROOT / "basal-clamp-routes.parquet"
+PROPRIO_SUMMARY_OUTPUT = OUTPUT_ROOT / "proprioception-routing.json"
+PROPRIO_CHANNEL_OUTPUT = OUTPUT_ROOT / "proprioception-channels.csv"
+PROPRIO_ROUTE_OUTPUT = OUTPUT_ROOT / "proprioception-routes.parquet"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -200,6 +203,125 @@ def build_basal_clamp_wiring(
     return summary
 
 
+def build_proprioception_wiring(
+    source: Path = SOURCE,
+    summary_output: Path = PROPRIO_SUMMARY_OUTPUT,
+    channel_output: Path = PROPRIO_CHANNEL_OUTPUT,
+    route_output: Path = PROPRIO_ROUTE_OUTPUT,
+) -> dict[str, Any]:
+    if not source.is_file():
+        raise FileNotFoundError(f"{source} absent; lancez d'abord l'inventaire MaleCNS")
+    section("Câblage terminal sensory.proprioceptive")
+    frame = pd.read_parquet(source)
+    selected = frame.loc[frame["group_id"].eq("sensory.proprioceptive")].copy()
+    if selected.empty:
+        raise RuntimeError("Aucun neurone proprioceptif trouvé")
+    if selected["bodyId"].duplicated().any():
+        raise RuntimeError("La population proprioceptive contient des bodyId dupliqués")
+
+    axes = ["entryNerve", "subclass", "mancType", "type", "rootSide"]
+    selected[axes] = selected[axes].fillna("(unknown)").astype(str)
+    selected["routing_box_id"] = "adapter.proprioception.routing"
+    selected["source_port"] = "proprioceptive_afferents"
+    selected["target_box_id"] = "cns.malecns"
+    selected["target_port"] = "sensory_afferents"
+    selected["channel_id"] = [
+        _channel_id("sensory.proprioceptive", axes, tuple(row))
+        for row in selected[axes].itertuples(index=False, name=None)
+    ]
+    selected["box_instance_id"] = selected["channel_id"].str.replace(
+        "channel.", "box.", n=1, regex=False
+    )
+    selected["adapter_type"] = "C"
+
+    channel_rows: list[dict[str, Any]] = []
+    grouped = selected.groupby(["channel_id", *axes], dropna=False, sort=True)
+    for values, channel in grouped:
+        channel_id, *axis_values = values
+        item = {
+            "channel_id": channel_id,
+            "box_instance_id": str(channel.iloc[0]["box_instance_id"]),
+            "group_id": "sensory.proprioceptive",
+            "routing_box_id": "adapter.proprioception.routing",
+            "adapter_type": "C",
+            "source_port": "proprioceptive_afferents",
+            "target_box_id": "cns.malecns",
+            "target_port": "sensory_afferents",
+            "neuron_count": int(len(channel)),
+            "mapping_level": "exact_body_id",
+            "free_discrete_parameters_downstream": 0,
+            "upstream_physical_mapping": "deferred",
+        }
+        item.update({axis: _text(value) for axis, value in zip(axes, axis_values)})
+        channel_rows.append(item)
+
+    route_columns = [
+        "channel_id",
+        "box_instance_id",
+        "group_id",
+        "routing_box_id",
+        "adapter_type",
+        "source_port",
+        "target_box_id",
+        "target_port",
+        "bodyId",
+        "type",
+        "instance",
+        "entryNerve",
+        "subclass",
+        "mancType",
+        "rootSide",
+    ]
+    routes = selected[route_columns].rename(columns={"bodyId": "target_body_id"})
+    if routes.duplicated(["group_id", "target_body_id"]).any():
+        raise RuntimeError("Le manifeste proprioceptif contient des routes dupliquées")
+    unknown_counts = {
+        axis: int(
+            selected[axis]
+            .str.strip()
+            .str.lower()
+            .isin({"(unknown)", "unknown", "", "nan", "none"})
+            .sum()
+        )
+        for axis in axes
+    }
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(source.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact downstream proprioceptive routing; physical transduction is deferred",
+        "method": {
+            "terminal_channels": "one type-C instance per unique annotated axis combination",
+            "target_mapping": "each instance fans out to an explicit, unique MaleCNS bodyId list",
+            "upstream_policy": "joint/body observable assignment remains unknown until independently audited",
+        },
+        "group_id": "sensory.proprioceptive",
+        "routing_box_id": "adapter.proprioception.routing",
+        "partition_axes": axes,
+        "neuron_count": int(len(selected)),
+        "terminal_channels": len(channel_rows),
+        "generated_box_instances": len(channel_rows),
+        "exact_routes": int(len(routes)),
+        "duplicate_routes": 0,
+        "unassigned_neurons": 0,
+        "unknown_axis_value_counts": unknown_counts,
+        "downstream_routing_status": "fixed",
+        "upstream_mapping_status": "unknown",
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    pd.DataFrame(channel_rows).to_csv(channel_output, index=False, encoding="utf-8")
+    routes.to_parquet(route_output, index=False)
+    print(
+        f"[OK] {len(selected):,} neurones affectés exactement une fois "
+        f"à {len(channel_rows):,} instances type C"
+    )
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux terminaux : {channel_output}")
+    print(f"[OK] Routes bodyId exactes : {route_output}")
+    return summary
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Construit le câblage structurel des clamps basaux")
     parser.add_argument("--source", type=Path, default=SOURCE)
@@ -214,6 +336,7 @@ def main() -> int:
             args.channel_output,
             args.route_output,
         )
+        build_proprioception_wiring(args.source)
     except Exception as exc:
         print(f"\nWIRING_FAILED: {type(exc).__name__}: {exc}")
         return 1

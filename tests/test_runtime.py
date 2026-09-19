@@ -4,7 +4,15 @@ import unittest
 
 import numpy as np
 
-from the_fly_matrix.runtime import BasalClampBox, CNSInputBuffer, CHANNEL_PATH, ROUTE_PATH
+from the_fly_matrix.runtime import (
+    BasalClampBox,
+    CHANNEL_PATH,
+    CNSInputBuffer,
+    PROPRIO_CHANNEL_PATH,
+    PROPRIO_ROUTE_PATH,
+    ROUTE_PATH,
+    ProprioceptionRoutingBox,
+)
 
 
 class RuntimeTests(unittest.TestCase):
@@ -40,6 +48,15 @@ class RuntimeTests(unittest.TestCase):
         activity = box.step(values)
         merged = CNSInputBuffer.merge(activity, activity)
         self.assertTrue(np.all(merged.values == 2.0))
+
+    def test_proprioception_router_executes_downstream_only(self) -> None:
+        if not PROPRIO_CHANNEL_PATH.is_file() or not PROPRIO_ROUTE_PATH.is_file():
+            self.skipTest("generated proprioceptive wiring is absent")
+        box = ProprioceptionRoutingBox.from_generated_wiring()
+        output = box.step(np.arange(len(box.channel_ids), dtype=np.float64))
+        self.assertEqual(len(box.channel_ids), 262)
+        self.assertEqual(len(output.body_ids), 1454)
+        self.assertEqual(len(np.unique(output.body_ids)), 1454)
 
 
 if __name__ == "__main__":

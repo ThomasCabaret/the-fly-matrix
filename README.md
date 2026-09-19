@@ -21,7 +21,7 @@ Le contrat scientifique de référence est
   groupes d'interface prioritaires.
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
   routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
-  arbitraires reproductibles.
+  arbitraires reproductibles, ainsi que le routage proprioceptif aval.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -111,6 +111,12 @@ type A générées, diffuser une valeur injectée par canal vers chaque `bodyId`
 fusionner les activités dans un tampon d'entrée CNS type D. Le smoke test utilise
 des valeurs pseudo-aléatoires uniquement pour vérifier le passage des données ;
 elles ne sont jamais enregistrées comme paramètres scientifiques.
+
+Le manifeste proprioceptif sépare volontairement les deux côtés de l'adaptateur
+type C. `proprioception-routes.parquet` fixe les routes terminales vers MaleCNS,
+tandis que l'affectation amont des angles, vitesses, contraintes et vibrations
+physiques reste inconnue. Finir une moitié fiable ne transforme donc pas l'autre
+moitié en hypothèse implicite.
 
 ## Rattachement Git distant
 

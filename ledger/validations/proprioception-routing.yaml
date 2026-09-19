@@ -1,0 +1,26 @@
+schema_version: 1
+id: validation.proprioception_routing
+name: Routage aval exact des afférences proprioceptives
+owner_ids:
+  - adapter.proprioception.routing
+  - group.sensory.proprioceptive
+  - wire.proprioception_routing_to_cns
+  - cns.malecns
+level: integration
+protocol_path: src/the_fly_matrix/wiring.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 1454 proprioceptive neurons are assigned exactly once
+  - Terminal type-C instances preserve nerve, subclass, MANC type, MaleCNS type and side
+  - Every downstream route terminates at an explicit MaleCNS bodyId
+  - Physical joint-to-receptor assignments remain explicitly deferred
+  - Arbitrary smoke values are not promoted to scientific parameters
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: proprioception-routing-2026-09-19
+status: integration_pass
+notes:
+  - 262 generated type-C instances executed
+  - 1454 exact MaleCNS bodyId routes with no duplicate or omission
+  - Unknown annotations remain explicit for 1 nerve, 1 subclass, 219 MANC types, 71 MaleCNS types and 1 side
+  - Physical joint-to-receptor mapping remains deliberately unknown

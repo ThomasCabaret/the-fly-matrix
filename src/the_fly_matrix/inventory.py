@@ -272,14 +272,18 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
         for tier in first_tier.to_dict(orient="records"):
             value = str(tier[primary_axis])
             digest = hashlib.sha256(f"{primary_axis}|{value}".encode("utf-8")).hexdigest()[:10]
-            query = f"{primary_axis} is null" if value == "(unknown)" else f"{primary_axis} == {value}"
+            tier_query = (
+                f"{primary_axis} is null"
+                if value == "(unknown)"
+                else f"{primary_axis} == {value}"
+            )
             first_tier_rows.append(
                 {
                     "subgroup_id": f"{group_id}.{digest}",
                     "parent_group_id": group_id,
                     "partition_axis": primary_axis,
                     "partition_value": value,
-                    "query": query,
+                    "query": tier_query,
                     "neurons": tier["neurons"],
                     "named_types": tier["named_types"],
                     "inventory_status": "complete",

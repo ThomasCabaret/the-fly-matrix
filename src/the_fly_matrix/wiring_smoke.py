@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from .ledger import ROOT
-from .runtime import BasalClampBox, CNSInputBuffer, SparseActivity
+from .runtime import BasalClampBox, CNSInputBuffer, ProprioceptionRoutingBox, SparseActivity
 
 
 OUTPUT = ROOT / "runs" / "wiring-smoke" / "latest.json"
@@ -21,7 +21,7 @@ def section(title: str) -> None:
     print(f"\n==> {title}", flush=True)
 
 
-def _arbitrary_values(box: BasalClampBox, seed: int) -> np.ndarray:
+def _arbitrary_values(box: BasalClampBox | ProprioceptionRoutingBox, seed: int) -> np.ndarray:
     # These values only exercise data flow. They are not physiological guesses.
     return np.random.default_rng(seed).uniform(0.0, 1.0, len(box.channel_ids))
 
@@ -42,17 +42,25 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             f"{len(box.routes):,} destinations exactes"
         )
 
+    proprioception = ProprioceptionRoutingBox.from_generated_wiring()
+    print(
+        f"[OK] {proprioception.box_id}: {len(proprioception.channel_ids):,} instances/canaux, "
+        f"{len(proprioception.routes):,} destinations exactes; entrée physique différée"
+    )
+
     section("Injection déterministe de valeurs arbitraires")
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
-    first = CNSInputBuffer.merge(*first_outputs)
-    second = CNSInputBuffer.merge(*second_outputs)
+    proprio_first = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
+    proprio_second = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
+    first = CNSInputBuffer.merge(*first_outputs, proprio_first)
+    second = CNSInputBuffer.merge(*second_outputs, proprio_second)
     if not np.array_equal(first.body_ids, second.body_ids) or not np.array_equal(
         first.values, second.values
     ):
         raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
-    if len(first.body_ids) != 4158:
-        raise RuntimeError(f"4158 destinations attendues, {len(first.body_ids)} obtenues")
+    if len(first.body_ids) != 5612:
+        raise RuntimeError(f"5612 destinations attendues, {len(first.body_ids)} obtenues")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
 
@@ -70,6 +78,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "parameter_status": "arbitrary_smoke_only",
             }
             for box in boxes
+        ]
+        + [
+            {
+                "id": proprioception.box_id,
+                "adapter_type": proprioception.adapter_type,
+                "terminal_box_instances": len(proprioception.channel_ids),
+                "exact_routes": len(proprioception.routes),
+                "upstream_physical_mapping": "deferred",
+                "parameter_status": "arbitrary_smoke_only",
+            }
         ],
         "cns_ingress": {
             "adapter_type": CNSInputBuffer.adapter_type,

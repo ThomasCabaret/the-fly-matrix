@@ -6,11 +6,11 @@ adapter_type: C
 anatomical_region: leg_and_body_nerves
 parent_id: sensor.proprioception
 ports: {inputs: [proprioceptor_activity], outputs: [proprioceptive_afferents]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/inventory/inventory.json]
+evidence: [data/derived/wiring/proprioception-routing.json, data/derived/wiring/proprioception-routes.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: []
-next_action: Découper les 1 454 proprioceptifs par nerf, côté, patte et classe fonctionnelle.
+validation_ids: [validation.proprioception_routing]
+next_action: Relier les observables mécaniques aux 262 entrées type C sans modifier le routage aval fixé.
 blocked_by: []
-completion_criteria: [Groupes exhaustifs, Routages fixes séparés des candidats, Ambiguïtés comptées]
+completion_criteria: [Groupes aval exhaustifs, Routages bodyId fixes, Ambiguïtés amont comptées séparément]
