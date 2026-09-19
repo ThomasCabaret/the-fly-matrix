@@ -1,0 +1,28 @@
+schema_version: 1
+id: wire.example
+name: Example wire
+parent_id: null
+source:
+  box_id: box.source
+  port: output
+  group_query: null
+target:
+  box_id: box.target
+  port: input
+  group_query: null
+mapping_level: unknown
+expected_cardinality: null
+candidate_constraints: []
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status:
+  inventory: missing
+  routing: unknown
+  implementation: not_started
+  validation: not_run
+confidence: low
+evidence: []
+validation_ids: []
+next_action: Enumerate source and target groups.
+blocked_by: []
+

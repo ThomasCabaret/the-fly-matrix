@@ -1,0 +1,94 @@
+digraph VirtualFlyContract {
+  graph [
+    rankdir=LR,
+    splines=ortho,
+    nodesep=0.30,
+    ranksep=0.55,
+    pad=0.20,
+    bgcolor="white",
+    fontname="Arial",
+    fontsize=11,
+    label="Virtual Drosophila project contract — end-to-end architecture and explicit uncertainty",
+    labelloc=t
+  ];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=9, margin="0.09,0.06"];
+  edge [fontname="Arial", fontsize=8, arrowsize=0.6];
+
+  world [fillcolor="#E8F5E9", label="PHYSICAL WORLD\nMuJoCo scene\nlight, contact, gravity,\nbody state"];
+
+  subgraph cluster_live_senses {
+    label="ACTIVE SENSES";
+    color="#AAAAAA";
+    style="rounded";
+    vis [fillcolor="#E8F5E9", label="Vision\nphysical retinal sampling"];
+    mech [fillcolor="#E8F5E9", label="Touch / mechanosensation\ncontacts and local loads"];
+    prop [fillcolor="#E8F5E9", label="Proprioception\njoint state / strain / vibration"];
+  }
+
+  subgraph cluster_input_adapters {
+    label="MINIMAL INPUT ADAPTERS";
+    color="#AAAAAA";
+    style="rounded";
+    vis_tf [fillcolor="#DDEBFF", label="Type B\nvisual transduction"];
+    vis_route [fillcolor="#FFF4D6", label="Type C\nretina ↔ afferent routing\nonly where unresolved"];
+    mech_tf [fillcolor="#DDEBFF", label="Type B\ncontact/deformation → spikes"];
+    mech_route [fillcolor="#FFF4D6", label="Type C\nlocal receptor ↔ axon routing"];
+    prop_tf [fillcolor="#DDEBFF", label="Type B\nmechanical state → spikes"];
+    prop_route [fillcolor="#FFF4D6", label="Type C\nlocal proprioceptor ↔ axon routing"];
+  }
+
+  subgraph cluster_clamps {
+    label="DISABLED MODALITIES — DO NOT ABLATE";
+    color="#AAAAAA";
+    style="rounded";
+    olf [fillcolor="#F3E5F5", label="Type A basal clamp\nOlfaction\nnonzero spontaneous baseline"];
+    taste [fillcolor="#F3E5F5", label="Type A basal clamp\nGustation\nlow spontaneous baseline"];
+    th [fillcolor="#F3E5F5", label="Type A basal clamp\nThermo / hygro\nstable neutral baseline\nhigher uncertainty"];
+  }
+
+  cns [shape=box3d, fillcolor="#CFE2FF", fontsize=11,
+       label="MaleCNS v1.0\n~166.7k neurons\nmeasured chemical-connectome topology\n\nType D free parameters:\nminimal central dynamics\nshared as strongly as possible"];
+
+  subgraph cluster_motor {
+    label="MINIMAL OUTPUT ADAPTERS";
+    color="#AAAAAA";
+    style="rounded";
+    motor_route [fillcolor="#FFF4D6", label="Type E\nmotor-neuron ↔ muscle/group routing\nfixed where known,\nlocal candidates where unknown"];
+    motor_tf [fillcolor="#DDEBFF", label="Type F\nMN/group activity →\nphysical actuator / muscle effect\nlocal only"];
+  }
+
+  body [fillcolor="#E8F5E9", label="PHYSICAL FLY BODY\nFlyBody / FlyGym substrate\nlegs, wings, head, antennae,\nproboscis structures, abdomen\n+ contacts and dynamics"];
+
+  ledger [shape=note, fillcolor="#FFFFFF", label="MANDATORY ADAPTER LEDGER\nFor every box:\ninputs / outputs / anatomy / evidence\nfree parameters / sharing rule\ncalibration data / held-out behaviors\nconfidence / replacement path"];
+
+  test [fillcolor="#FFE0E0", label="HELD-OUT EVALUATION\nNo parameter updates\nnovel perturbations\nnovel neural responses\nnovel physical behavior"];
+
+  world -> vis;
+  world -> mech;
+  body -> prop;
+
+  vis -> vis_tf -> vis_route -> cns;
+  mech -> mech_tf -> mech_route -> cns;
+  prop -> prop_tf -> prop_route -> cns;
+
+  olf -> cns;
+  taste -> cns;
+  th -> cns;
+
+  cns -> motor_route -> motor_tf -> body;
+  body -> world;
+
+  cns -> test [style=dashed];
+  body -> test [style=dashed];
+
+  ledger -> vis_tf [style=dotted, arrowhead=none];
+  ledger -> mech_tf [style=dotted, arrowhead=none];
+  ledger -> prop_tf [style=dotted, arrowhead=none];
+  ledger -> motor_route [style=dotted, arrowhead=none];
+  ledger -> motor_tf [style=dotted, arrowhead=none];
+  ledger -> cns [style=dotted, arrowhead=none];
+
+  anti [shape=note, fillcolor="#FFF8E1",
+        label="ANTI-CHEATING RULE\nNo adapter may see global task state\nor learn a behavioral policy.\nPrefer a visible failure to a hidden controller."];
+  anti -> ledger [style=dotted, arrowhead=none];
+}

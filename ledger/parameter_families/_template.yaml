@@ -1,0 +1,18 @@
+schema_version: 1
+id: parameter.example
+name: Example parameter family
+owner_id: box.example
+quantity: unknown
+unit: null
+sharing_rule: null
+source_kind: unknown
+source_references: []
+value: null
+bounds: null
+free_parameter_count: 0
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: unknown
+confidence: low
+known_limitations: []
+

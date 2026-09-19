@@ -1,0 +1,57 @@
+# The Fly Matrix
+
+`the-fly-matrix` construit une simulation incarnée de drosophile dans laquelle le
+connectome MaleCNS reste le substrat de calcul principal. Les adaptateurs entre le
+monde physique, le système nerveux et les actionneurs doivent rester locaux,
+explicites, de faible capacité et auditables.
+
+Le contrat scientifique de référence est
+[`drosophila_virtual_fly_project_contract.md`](drosophila_virtual_fly_project_contract.md).
+
+## Commandes Windows
+
+- `download_data.bat` télécharge ou contrôle les trois fichiers MaleCNS minimaux.
+- `setup.bat` crée `.venv` avec Python 3.12 et installe le profil demandé.
+- `setup_gpu.bat` installe PyTorch CUDA et vérifie un calcul réel sur le GPU.
+- `status.bat` affiche l'état de l'environnement, des données et du registre.
+- `verify_install.bat` relance le contrôle complet données/GPU/FlyBody/MuJoCo/Graphviz.
+
+Chaque script affiche ses étapes, conserve un code de sortie exploitable et attend
+une touche avant de fermer sa console.
+
+Profils de setup disponibles :
+
+```text
+setup.bat                    environnement de développement minimal
+setup.bat -Profile audit     outils d'audit des tables MaleCNS
+setup.bat -Profile body      FlyGym / MuJoCo
+setup.bat -Profile full      audit + corps + backend GPU MuJoCo Warp
+```
+
+PyTorch/CUDA est volontairement séparé du setup général : `setup_gpu.bat` utilise
+`requirements-gpu-cu126.txt`, puis refuse de conclure au succès tant qu'un calcul
+réel n'a pas été exécuté sur la carte NVIDIA.
+
+`requirements-lock.txt` enregistre le snapshot exact de l'environnement ayant passé
+`verify_install.bat`. `pyproject.toml` reste la spécification maintenable par profils.
+
+## Accès neuPrint
+
+Les tables MaleCNS locales suffisent pour commencer l'inventaire et le câblage.
+Les requêtes distantes et certaines morphologies demanderont ensuite un jeton
+personnel neuPrint :
+
+1. Se connecter à `https://neuprint.janelia.org`.
+2. Ouvrir le menu du compte, puis **Account**, et copier le jeton complet.
+3. Copier `.env.example` vers `.env` et renseigner
+   `NEUPRINT_APPLICATION_CREDENTIALS`.
+
+Le fichier `.env` est ignoré par Git. Le jeton ne doit jamais être partagé ni
+versionné.
+
+## Principe de suivi
+
+Le répertoire `ledger/` est la source de vérité. Il contient une fiche par boîte,
+par fil, par famille de paramètres et par validation. Les rapports présents dans
+`reports/generated/` seront produits depuis ce registre et ne devront pas être
+maintenus manuellement.

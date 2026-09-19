@@ -1,0 +1,6 @@
+schema_version: 1
+calibration_behaviors: []
+held_out_behaviors: []
+notes:
+  - No behavior is assigned until a versioned protocol fixes the calibration/evaluation split.
+

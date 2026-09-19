@@ -1,0 +1,25 @@
+schema_version: 1
+id: box.example
+name: Example box
+adapter_type: B
+anatomical_region: unknown
+parent_id: null
+ports:
+  inputs: []
+  outputs: []
+status:
+  inventory: missing
+  implementation: not_started
+  parameters: unknown
+  validation: not_run
+confidence: low
+evidence: []
+parameter_family_ids: []
+validation_ids: []
+calibration_datasets: []
+held_out_behaviors: []
+known_limitations: []
+replacement_path: null
+next_action: Describe the real box.
+blocked_by: []
+
