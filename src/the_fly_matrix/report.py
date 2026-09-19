@@ -14,6 +14,7 @@ from .ledger import ROOT, build_summary, load_ledger, validate_ledger
 
 REPORT_ROOT = ROOT / "reports" / "generated"
 INVENTORY_PATH = ROOT / "data" / "derived" / "inventory" / "inventory.json"
+NEUPRINT_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "neuprint-audit.json"
 
 
 def section(title: str) -> None:
@@ -94,24 +95,36 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         return '<p class="muted">Inventaire local absent : lancer run_analysis.bat.</p>'
     datasets = inventory["datasets"]
     body = inventory["flybody"]
+    neuprint = inventory.get("neuprint_audit")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
     groups = "".join(
         f'<tr><td><code>{html.escape(group["id"])}</code></td>'
         f'<td>{group["neurons"]:,}</td><td>{group["named_types"]:,}</td>'
+        f'<td>{group.get("first_tier_subgroups", 0):,}</td>'
         f'<td>{group.get("candidate_subgroups", 0):,}</td>'
         f'<td>{html.escape(group["query"])}</td></tr>'
         for group in inventory.get("interface_groups", [])
     )
+    remote_metrics = ""
+    if neuprint:
+        comparisons = neuprint.get("group_comparisons", [])
+        exact = sum(item.get("exact_match") is True for item in comparisons)
+        remote_metrics = (
+            f'<div><strong>{neuprint["neuron_count"]:,}</strong><span>nœuds neuPrint :Neuron</span></div>'
+            f'<div><strong>{neuprint["primary_roi_count"]:,}</strong><span>ROI primaires neuPrint</span></div>'
+            f'<div><strong>{exact}/{len(comparisons)}</strong><span>groupes locaux = distants</span></div>'
+        )
     return (
         '<div class="metrics">'
         f'<div><strong>{annotations["rows"]:,}</strong><span>lignes d’annotations</span></div>'
         f'<div><strong>{types:,}</strong><span>types MaleCNS</span></div>'
         f'<div><strong>{datasets["connectome_weights"]["rows"]:,}</strong><span>arêtes pondérées</span></div>'
         f'<div><strong>{body["model"]["nu"]}</strong><span>actionneurs FlyBody</span></div>'
+        f'{remote_metrics}'
         '</div>'
         '<div class="table-wrap compact"><table><thead><tr><th>Groupe reproductible</th>'
-        '<th>Neurones</th><th>Types nommés</th><th>Sous-groupes candidats</th>'
+        '<th>Neurones</th><th>Types nommés</th><th>Premier niveau</th><th>Détail candidat</th>'
         '<th>Requête locale</th></tr></thead>'
         f'<tbody>{groups}</tbody></table></div>'
     )
@@ -209,6 +222,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
     if INVENTORY_PATH.is_file():
         inventory = json.loads(INVENTORY_PATH.read_text(encoding="utf-8"))
         print(f"[OK] Inventaire local chargé: {INVENTORY_PATH}")
+        if NEUPRINT_AUDIT_PATH.is_file():
+            inventory["neuprint_audit"] = json.loads(
+                NEUPRINT_AUDIT_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Audit neuPrint chargé: {NEUPRINT_AUDIT_PATH}")
     else:
         print("[AVERTISSEMENT] Inventaire local absent; lancer run_analysis.bat")
 

@@ -49,6 +49,17 @@ class LedgerTests(unittest.TestCase):
             self.assertEqual(group["member_count"], audited[group["id"]]["neurons"])
             self.assertEqual(group["named_type_count"], audited[group["id"]]["named_types"])
 
+    def test_interface_validation_owns_every_top_level_group(self) -> None:
+        validation = next(
+            item
+            for item in self.ledger["validations"]
+            if item["id"] == "validation.interface_group_inventory"
+        )
+        self.assertEqual(
+            set(validation["owner_ids"]),
+            {group["id"] for group in self.ledger["groups"]},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

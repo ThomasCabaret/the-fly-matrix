@@ -39,6 +39,7 @@ def main() -> int:
     subparsers.add_parser("status", help="summarize ledger record counts")
     subparsers.add_parser("inventory", help="audit local MaleCNS and FlyBody data")
     subparsers.add_parser("report", help="generate the project dashboard")
+    subparsers.add_parser("neuprint-audit", help="verify authenticated neuPrint access")
     args = parser.parse_args()
     if args.command == "status":
         return show_status()
@@ -50,6 +51,10 @@ def main() -> int:
         from .report import main as report_main
 
         return report_main()
+    if args.command == "neuprint-audit":
+        from .neuprint_audit import main as neuprint_audit_main
+
+        return neuprint_audit_main()
     return 2
 
 

@@ -15,7 +15,8 @@ Le contrat scientifique de référence est
 - `setup_gpu.bat` installe PyTorch CUDA et vérifie un calcul réel sur le GPU.
 - `status.bat` affiche l'état de l'environnement, des données et du registre.
 - `verify_install.bat` relance le contrôle complet données/GPU/FlyBody/MuJoCo/Graphviz.
-- `run_analysis.bat` régénère l'inventaire local MaleCNS/FlyBody sans jeton neuPrint.
+- `run_analysis.bat` régénère l'inventaire local MaleCNS/FlyBody puis, si le jeton
+  est configuré, compare les populations avec neuPrint.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -52,6 +53,10 @@ personnel neuPrint :
 Le fichier `.env` est ignoré par Git. Le jeton ne doit jamais être partagé ni
 versionné.
 
+L'audit distant n'enregistre que la version du serveur, les métadonnées publiques,
+les effectifs des requêtes et leurs écarts avec les fichiers locaux. Le jeton n'est
+jamais copié dans `data/derived/` ni dans les rapports.
+
 ## Principe de suivi
 
 Le répertoire `ledger/` est la source de vérité. Il contient une fiche par boîte,
@@ -67,8 +72,11 @@ par une boîte déclarée globalement « en cours ».
 `run_analysis.bat` produit également, sous `data/derived/inventory/`, une table des
 groupes d'interface et un Parquet de leurs membres. Ces résultats sont reproductibles
 à partir des données brutes locales et volontairement exclus de Git.
-`interface-subgroups.csv` propose en outre un premier découpage mécanique par nerf,
-côté, sous-classe et neuromère. Une proposition n'est promue en fiche `ledger/groups/`
+`interface-first-tier.csv` propose le premier niveau selon l'axe le plus fiable de
+chaque population (`entryNerve` pour de nombreuses entrées, `exitNerve` pour les
+sorties, type ou sous-classe ailleurs). `interface-subgroups.csv` pousse ensuite le
+découpage sur les axes locaux pertinents, et `interface-decomposition-audit.csv`
+mesure leur couverture. Une proposition n'est promue en fiche `ledger/groups/`
 avec un `parent_id` qu'après audit anatomique ; elle ne devient donc jamais une vérité
 scientifique par simple effet du script.
 

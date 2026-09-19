@@ -170,8 +170,9 @@ def validate_ledger(ledger: dict[str, list[dict[str, Any]]]) -> list[str]:
     for validation in validations.values():
         if validation.get("status") not in VALIDATION_SCORES:
             raise LedgerError(f"{validation['_path']}: statut de validation invalide")
+        valid_owners = set(boxes) | set(groups) | set(wires) | set(parameters)
         for owner_id in validation.get("owner_ids", []):
-            if owner_id not in boxes:
+            if owner_id not in valid_owners:
                 raise LedgerError(f"{validation['_path']}: propriétaire inconnu {owner_id}")
 
     return [
@@ -179,7 +180,7 @@ def validate_ledger(ledger: dict[str, list[dict[str, Any]]]) -> list[str]:
         f"{len(groups)} groupes avec requêtes et cibles valides",
         f"{len(wires)} fils avec extrémités et ports valides",
         f"{len(parameters)} familles de paramètres avec propriétaires valides",
-        f"{len(validations)} validations avec propriétaires valides",
+        f"{len(validations)} validations avec propriétaires multi-registres valides",
     ]
 
 

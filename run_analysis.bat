@@ -4,7 +4,7 @@ chcp 65001 >nul
 cd /d "%~dp0"
 
 echo ============================================================
-echo  The Fly Matrix - inventaire local MaleCNS et FlyBody
+echo  The Fly Matrix - audit MaleCNS, FlyBody et neuPrint
 echo ============================================================
 echo.
 
@@ -13,7 +13,7 @@ set "EXIT_CODE=%ERRORLEVEL%"
 
 echo.
 if "%EXIT_CODE%"=="0" (
-  echo [OK] Inventaire termine.
+  echo [OK] Audit termine.
 ) else (
   echo [ECHEC] Inventaire interrompu avec le code %EXIT_CODE%.
 )

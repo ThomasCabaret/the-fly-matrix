@@ -10,7 +10,7 @@ status: {inventory: complete, implementation: not_started, parameters: unknown, 
 confidence: high
 evidence: [ledger/datasets.yaml, data/derived/inventory/inventory.json]
 parameter_family_ids: [parameter.central.neuron_dynamics, parameter.central.synaptic_gain]
-validation_ids: [validation.data_loading, validation.resting_dynamics]
+validation_ids: [validation.data_loading, validation.neuprint_access, validation.resting_dynamics]
 next_action: Construire la représentation creuse du graphe puis un premier modèle dynamique partagé.
 blocked_by: []
 completion_criteria: [Graphe intégral chargé, Dynamique déterministe, Régime basal stable]

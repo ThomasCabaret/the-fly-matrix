@@ -1,0 +1,13 @@
+schema_version: 1
+id: validation.neuprint_access
+name: Accès authentifié au dataset neuPrint MaleCNS
+owner_ids: [cns.malecns]
+level: integration
+protocol_path: src/the_fly_matrix/neuprint_audit.py
+command: run_analysis.bat
+acceptance_criteria: [Authentication succeeds, male-cns:v1.0 selected, Lightweight Cypher query succeeds, No credential written to reports]
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: neuprint-audit-2026-09-19
+status: integration_pass
+notes: [neuPrintHTTP 1.9.3, 176422 Neuron nodes, 144 primary ROIs, 14 of 14 local group counts matched]

@@ -32,6 +32,23 @@ DATASETS = {
     "connectome_weights": "connectome-weights-male-cns-v1.0-minconf-0.5.feather",
 }
 
+DECOMPOSITION_AXES = {
+    "sensory.visual": ["type"],
+    "sensory.olfactory": ["entryNerve", "type", "rootSide"],
+    "sensory.gustatory": ["entryNerve", "subclass", "type", "rootSide"],
+    "sensory.tactile": ["entryNerve", "subclass", "type", "rootSide"],
+    "sensory.mechanosensory_other": ["entryNerve", "subclass", "type", "rootSide"],
+    "sensory.proprioceptive": ["entryNerve", "subclass", "mancType", "type", "rootSide"],
+    "sensory.unknown": ["entryNerve", "subclass", "type", "rootSide"],
+    "sensory.optic_lobe": ["type"],
+    "sensory.central_brain": ["entryNerve", "subclass", "type", "rootSide"],
+    "sensory.vnc": ["entryNerve", "subclass", "mancType", "type", "rootSide"],
+    "motor.vnc": ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type"],
+    "motor.exit_nerve": ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type"],
+    "projection.ascending": ["somaNeuromere", "somaSide", "subclass", "type"],
+    "projection.descending": ["subclass", "somaSide", "somaNeuromere", "type"],
+}
+
 
 def section(title: str) -> None:
     print(f"\n==> {title}", flush=True)
@@ -160,7 +177,7 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
     path = DATA_ROOT / DATASETS["annotations"]
     columns = [
         "bodyId", "type", "instance", "class", "subclass", "superclass",
-        "somaSide", "somaNeuromere", "entryNerve", "exitNerve", "mancType",
+        "somaSide", "rootSide", "somaNeuromere", "entryNerve", "exitNerve", "mancType",
         "assignedOlHex1", "assignedOlHex2",
     ]
     frame = ds.dataset(path, format="ipc").to_table(columns=columns).to_pandas()
@@ -198,12 +215,28 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
     summaries: list[dict[str, Any]] = []
     membership_frames: list[pd.DataFrame] = []
     subgroup_rows: list[dict[str, Any]] = []
+    first_tier_rows: list[dict[str, Any]] = []
+    axis_audit_rows: list[dict[str, Any]] = []
     for group_id, (query, mask) in group_masks.items():
         selected = frame.loc[mask].copy()
         selected.insert(0, "group_id", group_id)
         membership_frames.append(selected)
-        axes = ["entryNerve", "somaSide", "subclass", "somaNeuromere"]
-        grouping = selected[axes + ["bodyId", "type"]].copy()
+        axes = DECOMPOSITION_AXES[group_id]
+        for axis_index, axis in enumerate(axes):
+            known = selected[axis].notna()
+            axis_audit_rows.append(
+                {
+                    "group_id": group_id,
+                    "axis": axis,
+                    "priority": axis_index + 1,
+                    "known_neurons": int(known.sum()),
+                    "coverage_percent": round(100 * float(known.mean()), 2) if len(selected) else 0.0,
+                    "distinct_known_values": int(selected.loc[known, axis].nunique()),
+                    "recommended_primary": axis_index == 0,
+                }
+            )
+        grouping_columns = list(dict.fromkeys([*axes, "bodyId", "type"]))
+        grouping = selected[grouping_columns].copy()
         grouping[axes] = grouping[axes].fillna("(unknown)").astype(str)
         candidates = (
             grouping.groupby(axes, dropna=False)
@@ -222,6 +255,34 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
                     "routing_status": "unknown",
                 }
             )
+        primary_axis = axes[0]
+        primary_columns = list(dict.fromkeys([primary_axis, "bodyId", "type"]))
+        primary = selected[primary_columns].copy()
+        primary[primary_axis] = primary[primary_axis].fillna("(unknown)").astype(str)
+        first_tier = (
+            primary.groupby(primary_axis, dropna=False)
+            .agg(neurons=("bodyId", "size"), named_types=("type", "nunique"))
+            .reset_index()
+        )
+        for tier in first_tier.to_dict(orient="records"):
+            value = str(tier[primary_axis])
+            digest = hashlib.sha256(f"{primary_axis}|{value}".encode("utf-8")).hexdigest()[:10]
+            query = f"{primary_axis} is null" if value == "(unknown)" else f"{primary_axis} == {value}"
+            first_tier_rows.append(
+                {
+                    "subgroup_id": f"{group_id}.{digest}",
+                    "parent_group_id": group_id,
+                    "partition_axis": primary_axis,
+                    "partition_value": value,
+                    "query": query,
+                    "neurons": tier["neurons"],
+                    "named_types": tier["named_types"],
+                    "inventory_status": "complete",
+                    "decomposition_status": "proposed",
+                    "routing_status": "unknown",
+                    "validation_status": "not_run",
+                }
+            )
         summaries.append(
             {
                 "id": group_id,
@@ -230,6 +291,8 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
                 "named_types": int(selected["type"].nunique(dropna=True)),
                 "typed_neurons": int(selected["type"].notna().sum()),
                 "candidate_subgroups": int(len(candidates)),
+                "first_tier_subgroups": int(len(first_tier)),
+                "recommended_axes": axes,
                 "entry_nerves": {
                     str(key): int(value) for key, value in selected["entryNerve"].value_counts().items()
                 },
@@ -267,7 +330,16 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
     pd.DataFrame(subgroup_rows).to_csv(
         output_dir / "interface-subgroups.csv", index=False, encoding="utf-8"
     )
-    print(f"  {len(subgroup_rows):,} sous-groupes candidats écrits dans interface-subgroups.csv")
+    pd.DataFrame(first_tier_rows).to_csv(
+        output_dir / "interface-first-tier.csv", index=False, encoding="utf-8"
+    )
+    pd.DataFrame(axis_audit_rows).to_csv(
+        output_dir / "interface-decomposition-audit.csv", index=False, encoding="utf-8"
+    )
+    print(
+        f"  {len(first_tier_rows):,} groupes de premier niveau et "
+        f"{len(subgroup_rows):,} sous-groupes fins proposés"
+    )
     return summaries
 
 
