@@ -9,9 +9,9 @@ query: superclass == ol_sensory
 member_count: 6098
 named_type_count: 11
 target_box_ids: [adapter.vision.routing, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Expliquer les sept éléments d'écart avec la partition class == visual.
+evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-routes.parquet]
+next_action: Conserver séparément les 6 091 photorécepteurs et les 7 HBeyelet pendant le câblage physique amont.
 blocked_by: []
-completion_criteria: [Chevauchement avec classe visuelle expliqué, Affectations hexagonales auditées]
+completion_criteria: [Écart HBeyelet expliqué, Routes aval exhaustives, Coordonnées ol_intrinsic non détournées]

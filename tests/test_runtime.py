@@ -13,8 +13,11 @@ from the_fly_matrix.runtime import (
     PROPRIO_CHANNEL_PATH,
     PROPRIO_ROUTE_PATH,
     ROUTE_PATH,
+    VISION_CHANNEL_PATH,
+    VISION_ROUTE_PATH,
     MechanosensationRoutingBox,
     ProprioceptionRoutingBox,
+    VisionRoutingBox,
 )
 
 
@@ -73,6 +76,16 @@ class RuntimeTests(unittest.TestCase):
             set(box.routes["group_id"]),
             {"sensory.tactile", "sensory.mechanosensory_other"},
         )
+
+    def test_visual_router_preserves_one_channel_per_sensory_neuron(self) -> None:
+        if not VISION_CHANNEL_PATH.is_file() or not VISION_ROUTE_PATH.is_file():
+            self.skipTest("generated visual wiring is absent")
+        box = VisionRoutingBox.from_generated_wiring()
+        output = box.step(np.arange(len(box.channel_ids), dtype=np.float64))
+        self.assertEqual(len(box.channel_ids), 6098)
+        self.assertEqual(len(output.body_ids), 6098)
+        self.assertEqual(len(np.unique(output.body_ids)), 6098)
+        self.assertEqual(len(np.unique(box.routes["channel_id"])), 6098)
 
 
 if __name__ == "__main__":

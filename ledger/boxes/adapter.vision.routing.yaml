@@ -6,11 +6,11 @@ adapter_type: C
 anatomical_region: retina_optic_lobe
 parent_id: sensor.vision
 ports: {inputs: [photoreceptor_activity], outputs: [visual_afferents]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
-confidence: medium
-evidence: [data/derived/inventory/inventory.json, assignedOlHex1, assignedOlHex2]
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: high
+evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-routes.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: []
-next_action: Auditer les 23 720 affectations hexagonales et les cellules visuelles non affectées.
+validation_ids: [validation.vision_routing]
+next_action: Relier pixels ou ommatidies aux 6 098 entrées type C sans réutiliser les coordonnées des cellules ol_intrinsic.
 blocked_by: []
-completion_criteria: [Groupes source/cible exhaustifs, Affectations exactes figées, Incertitudes isolées]
+completion_criteria: [Groupes aval exhaustifs, Affectations bodyId figées, Rétinotopie amont isolée]

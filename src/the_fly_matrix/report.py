@@ -20,6 +20,7 @@ BASAL_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "basal-clamp-routing.
 WIRING_SMOKE_PATH = ROOT / "runs" / "wiring-smoke" / "latest.json"
 PROPRIO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "proprioception-routing.json"
 MECHANO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "mechanosensation-routing.json"
+VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "vision-routing.json"
 
 
 def section(title: str) -> None:
@@ -106,6 +107,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     wiring_smoke = inventory.get("wiring_smoke")
     proprio_wiring = inventory.get("proprio_wiring")
     mechano_wiring = inventory.get("mechano_wiring")
+    vision_wiring = inventory.get("vision_wiring")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
     groups = "".join(
@@ -171,6 +173,13 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{mechano_wiring.get("generated_box_instances", 0):,}</strong><span>instances mécano type C</span></div>'
             f'<div><strong>{mechano_wiring.get("exact_routes", 0):,}</strong><span>routes mécano exactes</span></div>'
+        )
+    if vision_wiring:
+        hex_audit = vision_wiring.get("hex_assignment_audit", {})
+        remote_metrics += (
+            f'<div><strong>{vision_wiring.get("generated_box_instances", 0):,}</strong><span>instances visuelles type C</span></div>'
+            f'<div><strong>{vision_wiring.get("exact_routes", 0):,}</strong><span>routes visuelles exactes</span></div>'
+            f'<div><strong>{hex_audit.get("all_annotated_rows", 0):,}</strong><span>coordonnées hex internes isolées</span></div>'
         )
     return (
         '<div class="metrics">'
@@ -320,6 +329,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 MECHANO_WIRING_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Câblage mécanorécepteur chargé: {MECHANO_WIRING_PATH}")
+        if VISION_WIRING_PATH.is_file():
+            inventory["vision_wiring"] = json.loads(
+                VISION_WIRING_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Câblage visuel chargé: {VISION_WIRING_PATH}")
     else:
         print("[AVERTISSEMENT] Inventaire local absent; lancer run_analysis.bat")
 

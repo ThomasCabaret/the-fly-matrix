@@ -6,12 +6,12 @@ source: {box_id: adapter.vision.transduction, port: photoreceptor_activity, grou
 target: {box_id: adapter.vision.routing, port: photoreceptor_activity, group_query: null}
 mapping_level: type-level
 expected_cardinality: receptor classes by ommatidium
-candidate_constraints: [same eye, same hex column, same receptor class]
+candidate_constraints: [same eye, independently sourced retinal position, same receptor class]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
 status: {inventory: partial, routing: candidates_known, implementation: not_started, validation: not_run}
 confidence: medium
-evidence: [assignedOlHex1, assignedOlHex2]
+evidence: [data/derived/wiring/vision-routing.json]
 validation_ids: []
-next_action: Définir les classes et colonnes présentes des deux côtés.
+next_action: Trouver une source rétinotopique pour les photorécepteurs; assignedOlHex1 et assignedOlHex2 décrivent uniquement des cellules ol_intrinsic.
 blocked_by: []

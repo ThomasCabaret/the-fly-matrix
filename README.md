@@ -22,7 +22,7 @@ Le contrat scientifique de référence est
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
   routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
   arbitraires reproductibles, ainsi que les routages aval proprioceptif et
-  mécanorécepteur.
+  mécanorécepteur, et le routage aval visuel.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -126,6 +126,14 @@ Les routes terminales vers les `bodyId` sont exactes, tandis que la correspondan
 avec les surfaces de contact, vibrations et autres observables physiques reste à
 établir. Les modalités non annotées sont conservées comme inconnues et ne sont pas
 reclassées par hypothèse.
+
+Le manifeste visuel conserve une instance type C par neurone sensoriel du lobe
+optique : 6 091 photorécepteurs et 7 cellules `HBeyelet`, soit 6 098 routes
+terminales un-à-un vers MaleCNS. L'audit empêche explicitement d'utiliser
+`assignedOlHex1` et `assignedOlHex2` comme coordonnées d'entrée : leurs 23 720
+valeurs appartiennent exclusivement à des neurones internes `ol_intrinsic`. La
+correspondance pixel/ommatidie vers photorécepteur reste donc inconnue jusqu'à
+l'obtention d'une source rétinotopique indépendante.
 
 ## Rattachement Git distant
 

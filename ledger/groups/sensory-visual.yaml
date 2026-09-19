@@ -9,9 +9,9 @@ query: class == visual
 member_count: 6091
 named_type_count: 10
 target_box_ids: [adapter.vision.routing, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Séparer photorécepteurs, classes optiques et côtés sans confondre projections centrales.
+evidence: [data/derived/wiring/vision-channels.csv, data/derived/wiring/vision-routes.parquet]
+next_action: Affecter une origine rétinienne physique à chaque photorécepteur sans inventer de coordonnées absentes.
 blocked_by: []
-completion_criteria: [Sous-groupes disjoints, Couverture totale, Affectations hexagonales contrôlées]
+completion_criteria: [Photorécepteurs disjoints, Couverture totale, Une route exacte par bodyId]

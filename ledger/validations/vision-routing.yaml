@@ -1,0 +1,29 @@
+schema_version: 1
+id: validation.vision_routing
+name: Routage aval exact des afférences visuelles
+owner_ids:
+  - adapter.vision.routing
+  - group.sensory.visual
+  - group.sensory.optic_lobe
+  - wire.vision_routing_to_cns
+  - cns.malecns
+level: integration
+protocol_path: src/the_fly_matrix/wiring.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 6098 optic-lobe sensory neurons are assigned exactly once
+  - The 6091 photoreceptors and 7 HBeyelet cells remain distinct
+  - Every type-C instance maps one-to-one to an explicit MaleCNS bodyId
+  - The 23720 optic-lobe hex assignments are verified as ol_intrinsic and never imputed onto sensory inputs
+  - Physical pixel or ommatidium assignments remain explicitly deferred
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: vision-routing-2026-09-19
+status: integration_pass
+notes:
+  - 6098 generated type-C instances executed
+  - 6098 exact MaleCNS bodyId routes with no duplicate or omission
+  - Population contains 6091 class-visual photoreceptors and 7 HBeyelet cells
+  - No optic-lobe sensory neuron has assignedOlHex1 or assignedOlHex2
+  - All 23720 rows carrying both hex coordinates are ol_intrinsic neurons
+  - Physical retinotopy and phototransduction remain deliberately unknown

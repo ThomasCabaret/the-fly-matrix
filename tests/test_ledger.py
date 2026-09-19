@@ -92,6 +92,17 @@ class LedgerTests(unittest.TestCase):
             {"sensory.tactile": 213, "sensory.mechanosensory_other": 110},
         )
 
+        vision_path = path.with_name("vision-routing.json")
+        self.assertTrue(vision_path.is_file())
+        vision = json.loads(vision_path.read_text(encoding="utf-8"))
+        self.assertEqual(vision["generated_box_instances"], 6098)
+        self.assertEqual(vision["exact_routes"], 6098)
+        self.assertEqual(vision["subpopulation_counts"], {"photoreceptor": 6091, "HBeyelet": 7})
+        self.assertEqual(vision["hex_assignment_audit"]["all_annotated_rows"], 23720)
+        self.assertEqual(vision["hex_assignment_audit"]["rows_with_both_coordinates"], 23720)
+        self.assertEqual(vision["hex_assignment_audit"]["sensory_input_rows"], 0)
+        self.assertFalse(vision["hex_assignment_audit"]["used_as_input_coordinates"])
+
     def test_group_counts_match_local_inventory_when_available(self) -> None:
         path = Path(__file__).resolve().parents[1] / "data" / "derived" / "inventory" / "inventory.json"
         if not path.is_file():

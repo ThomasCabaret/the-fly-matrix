@@ -17,6 +17,8 @@ PROPRIO_CHANNEL_PATH = WIRING_ROOT / "proprioception-channels.csv"
 PROPRIO_ROUTE_PATH = WIRING_ROOT / "proprioception-routes.parquet"
 MECHANO_CHANNEL_PATH = WIRING_ROOT / "mechanosensation-channels.csv"
 MECHANO_ROUTE_PATH = WIRING_ROOT / "mechanosensation-routes.parquet"
+VISION_CHANNEL_PATH = WIRING_ROOT / "vision-channels.csv"
+VISION_ROUTE_PATH = WIRING_ROOT / "vision-routes.parquet"
 
 
 @dataclass(frozen=True)
@@ -191,6 +193,63 @@ class MechanosensationRoutingBox:
     ) -> "MechanosensationRoutingBox":
         if not channel_path.is_file() or not route_path.is_file():
             raise FileNotFoundError("Mechanosensory wiring is absent; run the wiring builder first")
+        return cls(pd.read_csv(channel_path), pd.read_parquet(route_path))
+
+    def step(self, channel_values: Mapping[str, float] | np.ndarray) -> SparseActivity:
+        if isinstance(channel_values, Mapping):
+            missing = set(self.channel_ids) - set(channel_values)
+            extra = set(channel_values) - set(self.channel_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: channel mismatch; missing={len(missing)}, extra={len(extra)}"
+                )
+            values = np.asarray([channel_values[item] for item in self.channel_ids], dtype=np.float64)
+        else:
+            values = np.asarray(channel_values, dtype=np.float64)
+        if values.shape != (len(self.channel_ids),):
+            raise ValueError(
+                f"{self.box_id}: expected {len(self.channel_ids)} channel values, got {values.shape}"
+            )
+        return SparseActivity(
+            body_ids=self._target_body_ids.copy(),
+            values=values[self._route_channel_indices],
+        )
+
+
+class VisionRoutingBox:
+    """Executable type-C one-to-one visual router with retinotopy deferred."""
+
+    adapter_type = "C"
+    box_id = "adapter.vision.routing"
+
+    def __init__(self, channels: pd.DataFrame, routes: pd.DataFrame):
+        self.channels = channels.loc[channels["routing_box_id"].eq(self.box_id)].copy()
+        self.routes = routes.loc[routes["routing_box_id"].eq(self.box_id)].copy()
+        if self.channels.empty or self.routes.empty:
+            raise ValueError("No generated visual wiring found")
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate visual channel IDs")
+        if self.routes["target_body_id"].duplicated().any():
+            raise ValueError("Duplicate visual target body IDs")
+        channel_ids = self.channels["channel_id"].astype(str).tolist()
+        self.channel_ids = tuple(channel_ids)
+        channel_index = {channel_id: index for index, channel_id in enumerate(channel_ids)}
+        unknown = set(self.routes["channel_id"].astype(str)) - set(channel_index)
+        if unknown:
+            raise ValueError(f"Routes refer to unknown visual channels: {sorted(unknown)[:3]}")
+        self._route_channel_indices = np.asarray(
+            [channel_index[str(value)] for value in self.routes["channel_id"]], dtype=np.int64
+        )
+        self._target_body_ids = self.routes["target_body_id"].to_numpy(dtype=np.int64)
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        channel_path: Path = VISION_CHANNEL_PATH,
+        route_path: Path = VISION_ROUTE_PATH,
+    ) -> "VisionRoutingBox":
+        if not channel_path.is_file() or not route_path.is_file():
+            raise FileNotFoundError("Visual wiring is absent; run the wiring builder first")
         return cls(pd.read_csv(channel_path), pd.read_parquet(route_path))
 
     def step(self, channel_values: Mapping[str, float] | np.ndarray) -> SparseActivity:

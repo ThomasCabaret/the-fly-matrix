@@ -14,6 +14,14 @@ from .ledger import ROOT
 
 INVENTORY_ROOT = ROOT / "data" / "derived" / "inventory"
 SOURCE = INVENTORY_ROOT / "interface-neurons.parquet"
+ANNOTATION_SOURCE = (
+    ROOT
+    / "data"
+    / "raw"
+    / "malecns"
+    / "v1.0"
+    / "body-annotations-male-cns-v1.0-minconf-0.5.feather"
+)
 OUTPUT_ROOT = ROOT / "data" / "derived" / "wiring"
 SUMMARY_OUTPUT = OUTPUT_ROOT / "basal-clamp-routing.json"
 CHANNEL_OUTPUT = OUTPUT_ROOT / "basal-clamp-channels.csv"
@@ -24,6 +32,9 @@ PROPRIO_ROUTE_OUTPUT = OUTPUT_ROOT / "proprioception-routes.parquet"
 MECHANO_SUMMARY_OUTPUT = OUTPUT_ROOT / "mechanosensation-routing.json"
 MECHANO_CHANNEL_OUTPUT = OUTPUT_ROOT / "mechanosensation-channels.csv"
 MECHANO_ROUTE_OUTPUT = OUTPUT_ROOT / "mechanosensation-routes.parquet"
+VISION_SUMMARY_OUTPUT = OUTPUT_ROOT / "vision-routing.json"
+VISION_CHANNEL_OUTPUT = OUTPUT_ROOT / "vision-channels.csv"
+VISION_ROUTE_OUTPUT = OUTPUT_ROOT / "vision-routes.parquet"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -467,6 +478,155 @@ def build_mechanosensation_wiring(
     return summary
 
 
+def build_vision_wiring(
+    source: Path = SOURCE,
+    annotations_source: Path = ANNOTATION_SOURCE,
+    summary_output: Path = VISION_SUMMARY_OUTPUT,
+    channel_output: Path = VISION_CHANNEL_OUTPUT,
+    route_output: Path = VISION_ROUTE_OUTPUT,
+) -> dict[str, Any]:
+    """Build one exact downstream channel per optic-lobe sensory neuron."""
+    if not source.is_file():
+        raise FileNotFoundError(f"{source} absent; lancez d'abord l'inventaire MaleCNS")
+    if not annotations_source.is_file():
+        raise FileNotFoundError(f"Table d'annotations absente: {annotations_source}")
+    section("Câblage terminal des afférences visuelles")
+    frame = pd.read_parquet(source)
+    selected = frame.loc[frame["group_id"].eq("sensory.optic_lobe")].copy()
+    if selected.empty:
+        raise RuntimeError("Aucun neurone sensoriel du lobe optique trouvé")
+    if selected["bodyId"].duplicated().any():
+        raise RuntimeError("La population sensorielle du lobe optique contient des bodyId dupliqués")
+
+    selected["visual_subpopulation"] = "unclassified"
+    selected.loc[selected["class"].eq("visual"), "visual_subpopulation"] = "photoreceptor"
+    selected.loc[selected["type"].eq("HBeyelet"), "visual_subpopulation"] = "HBeyelet"
+    text_axes = ["type", "instance", "class", "rootSide"]
+    selected[text_axes] = selected[text_axes].fillna("(unknown)").astype(str)
+    selected["routing_box_id"] = "adapter.vision.routing"
+    selected["source_port"] = "visual_afferents"
+    selected["target_box_id"] = "cns.malecns"
+    selected["target_port"] = "sensory_afferents"
+    selected["channel_id"] = [
+        _channel_id("sensory.optic_lobe", ["bodyId"], (body_id,))
+        for body_id in selected["bodyId"]
+    ]
+    selected["box_instance_id"] = selected["channel_id"].str.replace(
+        "channel.", "box.", n=1, regex=False
+    )
+    selected["adapter_type"] = "C"
+
+    channel_rows = [
+        {
+            "channel_id": row.channel_id,
+            "box_instance_id": row.box_instance_id,
+            "group_id": "sensory.optic_lobe",
+            "visual_subpopulation": row.visual_subpopulation,
+            "routing_box_id": "adapter.vision.routing",
+            "adapter_type": "C",
+            "source_port": "visual_afferents",
+            "target_box_id": "cns.malecns",
+            "target_port": "sensory_afferents",
+            "target_body_id": int(row.bodyId),
+            "type": row.type,
+            "instance": row.instance,
+            "rootSide": row.rootSide,
+            "mapping_level": "exact_body_id",
+            "free_discrete_parameters_downstream": 0,
+            "upstream_retinotopic_mapping": "deferred",
+        }
+        for row in selected.itertuples(index=False)
+    ]
+
+    route_columns = [
+        "channel_id",
+        "box_instance_id",
+        "group_id",
+        "visual_subpopulation",
+        "routing_box_id",
+        "adapter_type",
+        "source_port",
+        "target_box_id",
+        "target_port",
+        "bodyId",
+        "type",
+        "instance",
+        "class",
+        "rootSide",
+    ]
+    routes = selected[route_columns].rename(columns={"bodyId": "target_body_id"})
+    if routes["target_body_id"].duplicated().any():
+        raise RuntimeError("Le manifeste visuel contient des routes dupliquées")
+
+    annotations = pd.read_feather(
+        annotations_source,
+        columns=["bodyId", "superclass", "assignedOlHex1", "assignedOlHex2"],
+    )
+    has_hex = annotations["assignedOlHex1"].notna() | annotations["assignedOlHex2"].notna()
+    has_both_hex = annotations["assignedOlHex1"].notna() & annotations["assignedOlHex2"].notna()
+    hex_rows = annotations.loc[has_hex]
+    input_ids = set(selected["bodyId"].astype(int))
+    input_hex_rows = hex_rows.loc[hex_rows["bodyId"].astype(int).isin(input_ids)]
+    hex_superclasses = {
+        str(key): int(value)
+        for key, value in hex_rows["superclass"].fillna("(unknown)").value_counts().items()
+    }
+    if len(input_hex_rows) != 0:
+        raise RuntimeError("Des coordonnées hexagonales inattendues apparaissent sur l'interface visuelle")
+    if hex_superclasses != {"ol_intrinsic": 23720}:
+        raise RuntimeError(f"Signature hexagonale source inattendue: {hex_superclasses}")
+    if int(has_both_hex.sum()) != 23720:
+        raise RuntimeError("Les deux coordonnées hexagonales ne couvrent pas les mêmes 23 720 cellules")
+
+    subpopulation_counts = {
+        str(key): int(value)
+        for key, value in selected["visual_subpopulation"].value_counts().items()
+    }
+    if subpopulation_counts != {"photoreceptor": 6091, "HBeyelet": 7}:
+        raise RuntimeError(f"Partition visuelle inattendue: {subpopulation_counts}")
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(source.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact downstream visual routing; physical retinotopy and phototransduction are deferred",
+        "method": {
+            "terminal_channels": "one type-C instance per unique optic-lobe sensory bodyId",
+            "target_mapping": "each instance maps one-to-one to its MaleCNS bodyId",
+            "retinotopy_policy": "optic-lobe intrinsic hex coordinates are not imputed onto sensory neurons",
+            "upstream_policy": "pixel or ommatidium assignment remains unknown until independently sourced",
+        },
+        "group_id": "sensory.optic_lobe",
+        "routing_box_id": "adapter.vision.routing",
+        "subpopulation_counts": subpopulation_counts,
+        "neuron_count": int(len(selected)),
+        "terminal_channels": len(channel_rows),
+        "generated_box_instances": len(channel_rows),
+        "exact_routes": int(len(routes)),
+        "duplicate_routes": 0,
+        "unassigned_neurons": 0,
+        "hex_assignment_audit": {
+            "all_annotated_rows": int(len(hex_rows)),
+            "rows_with_both_coordinates": int(has_both_hex.sum()),
+            "annotated_superclasses": hex_superclasses,
+            "sensory_input_rows": int(len(input_hex_rows)),
+            "used_as_input_coordinates": False,
+        },
+        "downstream_routing_status": "fixed",
+        "upstream_mapping_status": "unknown",
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    pd.DataFrame(channel_rows).to_csv(channel_output, index=False, encoding="utf-8")
+    routes.to_parquet(route_output, index=False)
+    print("[OK] 6,091 photorécepteurs et 7 HBeyelet distingués")
+    print("[OK] 23,720 coordonnées hexagonales réservées aux cellules ol_intrinsic")
+    print(f"[OK] {len(routes):,} routes exactes et {len(channel_rows):,} instances type C")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux terminaux : {channel_output}")
+    print(f"[OK] Routes bodyId exactes : {route_output}")
+    return summary
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Construit le câblage structurel des clamps basaux")
     parser.add_argument("--source", type=Path, default=SOURCE)
@@ -483,6 +643,7 @@ def main() -> int:
         )
         build_proprioception_wiring(args.source)
         build_mechanosensation_wiring(args.source)
+        build_vision_wiring(args.source)
     except Exception as exc:
         print(f"\nWIRING_FAILED: {type(exc).__name__}: {exc}")
         return 1

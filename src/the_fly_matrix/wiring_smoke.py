@@ -15,6 +15,7 @@ from .runtime import (
     MechanosensationRoutingBox,
     ProprioceptionRoutingBox,
     SparseActivity,
+    VisionRoutingBox,
 )
 
 
@@ -28,7 +29,8 @@ def section(title: str) -> None:
 
 
 def _arbitrary_values(
-    box: BasalClampBox | ProprioceptionRoutingBox | MechanosensationRoutingBox, seed: int
+    box: BasalClampBox | ProprioceptionRoutingBox | MechanosensationRoutingBox | VisionRoutingBox,
+    seed: int,
 ) -> np.ndarray:
     # These values only exercise data flow. They are not physiological guesses.
     return np.random.default_rng(seed).uniform(0.0, 1.0, len(box.channel_ids))
@@ -60,6 +62,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {mechanosensation.box_id}: {len(mechanosensation.channel_ids):,} instances/canaux, "
         f"{len(mechanosensation.routes):,} destinations exactes; contacts physiques différés"
     )
+    vision = VisionRoutingBox.from_generated_wiring()
+    print(
+        f"[OK] {vision.box_id}: {len(vision.channel_ids):,} instances/canaux, "
+        f"{len(vision.routes):,} destinations exactes; rétinotopie physique différée"
+    )
 
     section("Injection déterministe de valeurs arbitraires")
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
@@ -68,14 +75,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     proprio_second = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
     mechano_first = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
     mechano_second = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
-    first = CNSInputBuffer.merge(*first_outputs, proprio_first, mechano_first)
-    second = CNSInputBuffer.merge(*second_outputs, proprio_second, mechano_second)
+    vision_first = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
+    vision_second = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
+    first = CNSInputBuffer.merge(*first_outputs, proprio_first, mechano_first, vision_first)
+    second = CNSInputBuffer.merge(*second_outputs, proprio_second, mechano_second, vision_second)
     if not np.array_equal(first.body_ids, second.body_ids) or not np.array_equal(
         first.values, second.values
     ):
         raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
-    if len(first.body_ids) != 9903:
-        raise RuntimeError(f"9903 destinations attendues, {len(first.body_ids)} obtenues")
+    if len(first.body_ids) != 16001:
+        raise RuntimeError(f"16001 destinations attendues, {len(first.body_ids)} obtenues")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
 
@@ -111,6 +120,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "terminal_box_instances": len(mechanosensation.channel_ids),
                 "exact_routes": len(mechanosensation.routes),
                 "upstream_physical_mapping": "deferred",
+                "parameter_status": "arbitrary_smoke_only",
+            }
+        ]
+        + [
+            {
+                "id": vision.box_id,
+                "adapter_type": vision.adapter_type,
+                "terminal_box_instances": len(vision.channel_ids),
+                "exact_routes": len(vision.routes),
+                "upstream_retinotopic_mapping": "deferred",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ],
