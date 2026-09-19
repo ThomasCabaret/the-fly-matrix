@@ -51,6 +51,18 @@ STATUS_SCORES: dict[str, dict[str, float]] = {
 
 PARAMETER_SCORES = STATUS_SCORES["parameters"]
 VALIDATION_SCORES = STATUS_SCORES["validation"]
+WIRING_STATUS_SCORES: dict[str, dict[str, float]] = {
+    "inventory": {"missing": 0.0, "partial": 0.5, "complete": 1.0},
+    "routing": {
+        "unknown": 0.0,
+        "candidates_known": 0.15,
+        "proposed": 0.35,
+        "fixed": 0.75,
+        "verified": 1.0,
+    },
+    "decomposition": {"unknown": 0.0, "proposed": 0.25, "fixed": 0.75, "verified": 1.0},
+    "implementation": {"not_started": 0.0, "stub": 0.15, "implemented": 0.75, "tested": 1.0},
+}
 SECTOR_LABELS = {
     "physical_world": "Monde physique",
     "vision": "Vision",
@@ -202,34 +214,80 @@ def record_progress(kind: str, record: dict[str, Any]) -> float:
     raise KeyError(kind)
 
 
+def wiring_record_progress(kind: str, record: dict[str, Any]) -> float:
+    """Readiness for a runnable graph with arbitrary injected parameters.
+
+    Calibration, fitted values and held-out behavioral validation are deliberately
+    excluded. Reaching 100% requires verified terminal groups and routes plus tested
+    executable boxes and wires.
+    """
+    status = record["status"]
+    if kind == "boxes":
+        return (
+            0.35 * WIRING_STATUS_SCORES["inventory"][status["inventory"]]
+            + 0.65 * WIRING_STATUS_SCORES["implementation"][status["implementation"]]
+        )
+    if kind == "groups":
+        return (
+            0.55 * WIRING_STATUS_SCORES["decomposition"][status["decomposition"]]
+            + 0.45 * WIRING_STATUS_SCORES["routing"][status["routing"]]
+        )
+    if kind == "wires":
+        return (
+            0.10 * WIRING_STATUS_SCORES["inventory"][status["inventory"]]
+            + 0.45 * WIRING_STATUS_SCORES["routing"][status["routing"]]
+            + 0.45 * WIRING_STATUS_SCORES["implementation"][status["implementation"]]
+        )
+    raise KeyError(kind)
+
+
+def _axis_average(records: list[dict[str, Any]], axis: str) -> int:
+    if not records:
+        return 0
+    return round(
+        100
+        * sum(WIRING_STATUS_SCORES[axis][record["status"][axis]] for record in records)
+        / len(records)
+    )
+
+
 def build_summary(ledger: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
     validate_ledger(ledger)
     enriched: dict[str, list[dict[str, Any]]] = {}
     all_scores: list[float] = []
+    wiring_scores: list[float] = []
     for kind, records in ledger.items():
         enriched[kind] = []
         for original in records:
             record = dict(original)
             record["progress"] = round(record_progress(kind, record) * 100)
+            if kind in {"boxes", "groups", "wires"}:
+                record["wiring_progress"] = round(wiring_record_progress(kind, record) * 100)
+                wiring_scores.append(wiring_record_progress(kind, record))
             enriched[kind].append(record)
             all_scores.append(record_progress(kind, record))
 
     sectors: dict[str, dict[str, Any]] = defaultdict(
-        lambda: {"boxes": [], "groups": [], "wires": [], "scores": []}
+        lambda: {"boxes": [], "groups": [], "wires": [], "scores": [], "wiring_scores": []}
     )
     for kind in ("boxes", "groups", "wires"):
         for record in enriched[kind]:
             sector = record.get("sector", "unknown")
             sectors[sector][kind].append(record["id"])
             sectors[sector]["scores"].append(record["progress"])
+            sectors[sector]["wiring_scores"].append(record["wiring_progress"])
     sector_rows = []
     for sector, data in sectors.items():
         scores = data.pop("scores")
+        sector_wiring_scores = data.pop("wiring_scores")
         sector_rows.append(
             {
                 "id": sector,
                 "name": SECTOR_LABELS.get(sector, sector.replace("_", " ").title()),
                 "progress": round(sum(scores) / len(scores)) if scores else 0,
+                "wiring_progress": round(sum(sector_wiring_scores) / len(sector_wiring_scores))
+                if sector_wiring_scores
+                else 0,
                 **data,
             }
         )
@@ -248,7 +306,8 @@ def build_summary(ledger: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
                         "id": record["id"],
                         "name": record["name"],
                         "sector": record.get("sector", "unknown"),
-                        "progress": record["progress"],
+                        "progress": record["wiring_progress"],
+                        "structural_progress": record["progress"],
                         "blocked_by": record.get("blocked_by", []),
                         "action": action,
                     }
@@ -257,6 +316,18 @@ def build_summary(ledger: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
 
     return {
         "overall_progress": round(100 * sum(all_scores) / len(all_scores)) if all_scores else 0,
+        "wiring_progress": round(100 * sum(wiring_scores) / len(wiring_scores))
+        if wiring_scores
+        else 0,
+        "wiring_components": {
+            "box_inventory": _axis_average(enriched["boxes"], "inventory"),
+            "box_execution": _axis_average(enriched["boxes"], "implementation"),
+            "group_decomposition": _axis_average(enriched["groups"], "decomposition"),
+            "group_routing": _axis_average(enriched["groups"], "routing"),
+            "wire_inventory": _axis_average(enriched["wires"], "inventory"),
+            "wire_routing": _axis_average(enriched["wires"], "routing"),
+            "wire_execution": _axis_average(enriched["wires"], "implementation"),
+        },
         "counts": {kind: len(records) for kind, records in enriched.items()},
         "routing_counts": dict(routing_counts),
         "validation_counts": dict(validation_counts),

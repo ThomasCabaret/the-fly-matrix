@@ -1,0 +1,28 @@
+schema_version: 1
+id: validation.basal_clamp_routing
+name: Câblage terminal exact des clamps olfactif et gustatif
+owner_ids:
+  - clamp.olfaction
+  - clamp.gustation
+  - group.sensory.olfactory
+  - group.sensory.gustatory
+  - wire.olfaction_clamp_to_cns
+  - wire.gustation_clamp_to_cns
+level: local
+protocol_path: src/the_fly_matrix/wiring.py
+command: run_analysis.bat
+acceptance_criteria:
+  - Every annotated olfactory and gustatory neuron is assigned exactly once
+  - Every route terminates at an explicit MaleCNS bodyId
+  - Terminal channels preserve annotated nerve, type, side and relevant subclass
+  - No activity-rate or transfer parameter is selected during wiring
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: basal-clamp-routing-2026-09-19
+status: local_pass
+notes:
+  - 4067 exact bodyId routes with no duplicate or omission
+  - 147 olfactory and 166 gustatory terminal channels
+  - Each terminal channel is owned by a generated type-A box instance
+  - Missing annotation values remain explicit unknown channel dimensions
+  - All continuous activity parameters are deferred to calibration

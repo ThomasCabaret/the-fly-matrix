@@ -9,9 +9,9 @@ query: class == olfactory
 member_count: 2639
 named_type_count: 53
 target_box_ids: [clamp.olfaction, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: proposed, validation: not_run}
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: local_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Contrôler les sous-groupes par type récepteur et côté avant injection basale.
+evidence: [data/derived/wiring/basal-clamp-channels.csv, data/derived/wiring/basal-clamp-routes.parquet]
+next_action: Conserver cette partition fixe pendant l'implémentation du générateur basal.
 blocked_by: []
-completion_criteria: [Couverture totale, Baseline affectée à chaque sous-groupe, Test de stabilité]
+completion_criteria: [Couverture totale, Sous-groupes disjoints, Route bodyId explicite pour chaque neurone]

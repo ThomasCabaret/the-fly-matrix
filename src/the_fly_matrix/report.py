@@ -16,6 +16,7 @@ REPORT_ROOT = ROOT / "reports" / "generated"
 INVENTORY_PATH = ROOT / "data" / "derived" / "inventory" / "inventory.json"
 NEUPRINT_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "neuprint-audit.json"
 ROI_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "roi-audit.json"
+BASAL_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "basal-clamp-routing.json"
 
 
 def section(title: str) -> None:
@@ -41,21 +42,21 @@ def build_dot(summary: dict[str, Any]) -> str:
     lines = [
         "digraph ProjectStatus {",
         '  graph [rankdir=TB, splines=spline, bgcolor="white", fontname="Arial", nodesep=0.3, ranksep=0.6,',
-        '         label="The Fly Matrix — état du câblage\\nFils : vert = fixé, bleu = proposé, orange = candidats, rouge = inconnu", labelloc=t, fontsize=18, pad=0.3];',
+        '         label="The Fly Matrix — préparation du câblage exécutable\\nFils : vert = fixé, bleu = proposé, orange = candidats, rouge = inconnu", labelloc=t, fontsize=18, pad=0.3];',
         '  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin="0.12,0.08"];',
         '  edge [arrowsize=0.65, penwidth=1.4];',
     ]
     for sector in summary["sectors"]:
         lines.append(f'  subgraph "cluster_{_dot_escape(sector["id"])}" {{')
         lines.append(
-            f'    label="{_dot_escape(sector["name"])} — {sector["progress"]}%"; color="#cbd5e1";'
+            f'    label="{_dot_escape(sector["name"])} — câblage {sector["wiring_progress"]}%"; color="#cbd5e1";'
         )
         for box_id in sector["boxes"]:
             box = boxes[box_id]
-            label = f'{box["name"]}\n{box["progress"]}%'
+            label = f'{box["name"]}\ncâblage {box["wiring_progress"]}%'
             lines.append(
                 f'    "{_dot_escape(box_id)}" [label="{_dot_escape(label)}", '
-                f'fillcolor="{_color(box["progress"])}"];'
+                f'fillcolor="{_color(box["wiring_progress"])}"];'
             )
         lines.append("  }")
     edge_colors = {
@@ -98,6 +99,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     body = inventory["flybody"]
     neuprint = inventory.get("neuprint_audit")
     roi_audit = inventory.get("roi_audit")
+    basal_wiring = inventory.get("basal_wiring")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
     groups = "".join(
@@ -141,6 +143,12 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
             '<th>ROI de sortie dominante</th><th>ROI distinctes</th></tr></thead>'
             f'<tbody>{roi_rows}</tbody></table></div>'
         )
+    if basal_wiring:
+        totals = basal_wiring.get("totals", {})
+        remote_metrics += (
+            f'<div><strong>{totals.get("generated_box_instances", 0):,}</strong><span>instances de boîte type A</span></div>'
+            f'<div><strong>{totals.get("exact_routes", 0):,}</strong><span>routes clamp exactes</span></div>'
+        )
     return (
         '<div class="metrics">'
         f'<div><strong>{annotations["rows"]:,}</strong><span>lignes d’annotations</span></div>'
@@ -158,9 +166,9 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
 
 def build_html(summary: dict[str, Any], inventory: dict[str, Any] | None) -> str:
     sectors = "".join(
-        f'''<article class="sector" data-progress="{item['progress']}">
-          <div class="sector-head"><h3>{html.escape(item['name'])}</h3><strong>{item['progress']}%</strong></div>
-          {_bar(item['progress'])}
+        f'''<article class="sector" data-progress="{item['wiring_progress']}">
+          <div class="sector-head"><h3>{html.escape(item['name'])}</h3><strong>{item['wiring_progress']}%</strong></div>
+          {_bar(item['wiring_progress'])}
           <p>{len(item['boxes'])} boîtes · {len(item['groups'])} groupes · {len(item['wires'])} fils</p>
         </article>'''
         for item in summary["sectors"]
@@ -169,20 +177,20 @@ def build_html(summary: dict[str, Any], inventory: dict[str, Any] | None) -> str
         f'''<tr data-sector="{html.escape(box.get('sector', 'unknown'))}">
           <td><strong>{html.escape(box['name'])}</strong><br><code>{html.escape(box['id'])}</code></td>
           <td>{html.escape(box.get('sector', 'unknown'))}</td>
-          <td class="progress-cell"><strong>{box['progress']}%</strong>{_bar(box['progress'])}</td>
+          <td class="progress-cell"><strong>{box['wiring_progress']}%</strong>{_bar(box['wiring_progress'])}</td>
           <td>{_status_text(box)}</td>
           <td>{html.escape(box.get('next_action', ''))}</td>
         </tr>'''
-        for box in sorted(summary["boxes"], key=lambda item: (item.get("sector", ""), item["progress"], item["name"]))
+        for box in sorted(summary["boxes"], key=lambda item: (item.get("sector", ""), item["wiring_progress"], item["name"]))
     )
     group_rows = "".join(
         f'''<tr data-sector="{html.escape(group.get('sector', 'unknown'))}">
           <td><strong>{html.escape(group['name'])}</strong><br><code>{html.escape(group['id'])}</code></td>
           <td>{group['member_count']:,}</td><td>{group['named_type_count']:,}</td>
-          <td class="progress-cell"><strong>{group['progress']}%</strong>{_bar(group['progress'])}</td>
+          <td class="progress-cell"><strong>{group['wiring_progress']}%</strong>{_bar(group['wiring_progress'])}</td>
           <td>{_status_text(group)}</td><td>{html.escape(group.get('next_action', ''))}</td>
         </tr>'''
-        for group in sorted(summary["groups"], key=lambda item: (item.get("sector", ""), item["progress"], item["name"]))
+        for group in sorted(summary["groups"], key=lambda item: (item.get("sector", ""), item["wiring_progress"], item["name"]))
     )
     actions = "".join(
         f'''<li><span class="pct">{item['progress']}%</span><div><strong>{html.escape(item['name'])}</strong>
@@ -192,6 +200,7 @@ def build_html(summary: dict[str, Any], inventory: dict[str, Any] | None) -> str
     )
     routing = summary["routing_counts"]
     validations = summary["validation_counts"]
+    wiring = summary["wiring_components"]
     generated = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     return f'''<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -218,20 +227,30 @@ code{{font-size:12px;color:#475569}} .progress-cell{{min-width:120px}} .actions{
 @media(max-width:900px){{main{{padding:16px}}.grid2{{grid-template-columns:1fr}}.overall{{font-size:40px}}}}
 </style></head><body><main>
 <header class="hero"><div><h1>The Fly Matrix</h1><p class="muted">État calculé depuis le registre · {generated}</p></div>
-<div class="overall">{summary['overall_progress']}%<span>avancement structurel global</span></div></header>
+<div class="overall">{summary['wiring_progress']}%<span>câblage exécutable — paramètres exclus</span></div></header>
 <div class="metrics">
   <div><strong>{summary['counts']['boxes']}</strong><span>boîtes suivies</span></div>
   <div><strong>{summary['counts']['groups']}</strong><span>groupes suivis</span></div>
   <div><strong>{summary['counts']['wires']}</strong><span>fils suivis</span></div>
   <div><strong>{routing.get('fixed',0)+routing.get('verified',0)}</strong><span>routages fixés/vérifiés</span></div>
   <div><strong>{validations.get('local_pass',0)+validations.get('integration_pass',0)+validations.get('held_out_pass',0)}</strong><span>validations réussies</span></div>
+  <div><strong>{summary['overall_progress']}%</strong><span>ancien indice structurel secondaire</span></div>
+</div>
+<h2>Composantes du câblage</h2>
+<div class="metrics">
+  <div><strong>{wiring['box_inventory']}%</strong><span>contrats/inventaire des boîtes</span></div>
+  <div><strong>{wiring['group_decomposition']}%</strong><span>décomposition terminale</span></div>
+  <div><strong>{wiring['group_routing']}%</strong><span>routage des groupes</span></div>
+  <div><strong>{wiring['wire_routing']}%</strong><span>routage des fils</span></div>
+  <div><strong>{wiring['box_execution']}%</strong><span>boîtes exécutables</span></div>
+  <div><strong>{wiring['wire_execution']}%</strong><span>fils exécutables</span></div>
 </div>
 <h2>Données réellement inventoriées</h2>{_inventory_metrics(inventory)}
-<h2>Avancement par secteur</h2><section class="sectors">{sectors}</section>
+<h2>Câblage par secteur</h2><section class="sectors">{sectors}</section>
 <h2>Carte globale</h2><p class="legend">Vert ≥75% · bleu ≥45% · jaune ≥20% · rouge &lt;20%. Les fils pointillés ne sont pas fixés.</p>
 <div class="graph"><img src="project-status.svg" alt="Graphe global des boîtes et fils du projet"></div>
-<section><h2>Groupes anatomiques et fonctionnels</h2><div class="table-wrap"><table><thead><tr><th>Groupe</th><th>Neurones</th><th>Types</th><th>Avancement</th><th>Statuts</th><th>Prochaine décomposition</th></tr></thead><tbody>{group_rows}</tbody></table></div></section>
-<div class="grid2"><section><h2>Boîtes</h2><div class="table-wrap"><table><thead><tr><th>Boîte</th><th>Secteur</th><th>Avancement</th><th>Statuts</th><th>Prochaine action</th></tr></thead><tbody>{box_rows}</tbody></table></div></section>
+<section><h2>Groupes anatomiques et fonctionnels</h2><div class="table-wrap"><table><thead><tr><th>Groupe</th><th>Neurones</th><th>Types</th><th>Câblage</th><th>Statuts</th><th>Prochaine décomposition</th></tr></thead><tbody>{group_rows}</tbody></table></div></section>
+<div class="grid2"><section><h2>Boîtes</h2><div class="table-wrap"><table><thead><tr><th>Boîte</th><th>Secteur</th><th>Câblage</th><th>Statuts</th><th>Prochaine action</th></tr></thead><tbody>{box_rows}</tbody></table></div></section>
 <aside><h2>Prochaines actions</h2><div class="actions"><ol>{actions}</ol></div></aside></div>
 </main></body></html>'''
 
@@ -258,6 +277,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 ROI_AUDIT_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Audit ROI chargé: {ROI_AUDIT_PATH}")
+        if BASAL_WIRING_PATH.is_file():
+            inventory["basal_wiring"] = json.loads(
+                BASAL_WIRING_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Câblage des clamps chargé: {BASAL_WIRING_PATH}")
     else:
         print("[AVERTISSEMENT] Inventaire local absent; lancer run_analysis.bat")
 
@@ -293,7 +317,8 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
     )
     for path in (json_path, dot_path, svg_path, png_path, html_path):
         print(f"[OK] {path}")
-    print(f"\nAvancement global: {summary['overall_progress']}%")
+    print(f"\nCâblage exécutable: {summary['wiring_progress']}%")
+    print(f"Indice structurel secondaire: {summary['overall_progress']}%")
     return {
         "json": json_path,
         "dot": dot_path,

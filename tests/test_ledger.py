@@ -34,9 +34,43 @@ class LedgerTests(unittest.TestCase):
         self.assertGreater(len(summary["sectors"]), 1)
         self.assertGreaterEqual(summary["overall_progress"], 0)
         self.assertLessEqual(summary["overall_progress"], 100)
+        self.assertGreaterEqual(summary["wiring_progress"], 0)
+        self.assertLessEqual(summary["wiring_progress"], 100)
+        self.assertEqual(
+            set(summary["wiring_components"]),
+            {
+                "box_inventory",
+                "box_execution",
+                "group_decomposition",
+                "group_routing",
+                "wire_inventory",
+                "wire_routing",
+                "wire_execution",
+            },
+        )
         for sector in summary["sectors"]:
             self.assertGreaterEqual(sector["progress"], 0)
             self.assertLessEqual(sector["progress"], 100)
+            self.assertGreaterEqual(sector["wiring_progress"], 0)
+            self.assertLessEqual(sector["wiring_progress"], 100)
+
+    def test_basal_clamp_wiring_is_exact_when_generated(self) -> None:
+        path = (
+            Path(__file__).resolve().parents[1]
+            / "data"
+            / "derived"
+            / "wiring"
+            / "basal-clamp-routing.json"
+        )
+        if not path.is_file():
+            self.skipTest("derived basal clamp wiring is absent")
+        wiring = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(wiring["totals"]["modalities"], 2)
+        self.assertEqual(wiring["totals"]["generated_box_instances"], 147 + 166)
+        self.assertEqual(wiring["totals"]["exact_routes"], 2639 + 1428)
+        self.assertEqual(wiring["totals"]["duplicate_routes"], 0)
+        self.assertEqual(wiring["totals"]["unassigned_neurons"], 0)
+        self.assertTrue(all(item["coverage_percent"] == 100 for item in wiring["modalities"]))
 
     def test_group_counts_match_local_inventory_when_available(self) -> None:
         path = Path(__file__).resolve().parents[1] / "data" / "derived" / "inventory" / "inventory.json"

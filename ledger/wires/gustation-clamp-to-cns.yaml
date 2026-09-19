@@ -9,9 +9,9 @@ expected_cardinality: 1428 class-annotated neurons
 candidate_constraints: [MaleCNS class equals gustatory]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: partial, routing: proposed, implementation: not_started, validation: not_run}
+status: {inventory: complete, routing: fixed, implementation: not_started, validation: local_pass}
 confidence: medium
-evidence: [data/derived/inventory/inventory.json]
-validation_ids: []
-next_action: Versionner la requête exacte et contrôler les annotations manquantes.
+evidence: [data/derived/wiring/basal-clamp-routing.json, data/derived/wiring/basal-clamp-routes.parquet]
+validation_ids: [validation.basal_clamp_routing]
+next_action: Brancher le manifeste exact au runtime abstrait des boîtes.
 blocked_by: []

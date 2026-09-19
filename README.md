@@ -15,9 +15,10 @@ Le contrat scientifique de référence est
 - `setup_gpu.bat` installe PyTorch CUDA et vérifie un calcul réel sur le GPU.
 - `status.bat` affiche l'état de l'environnement, des données et du registre.
 - `verify_install.bat` relance le contrôle complet données/GPU/FlyBody/MuJoCo/Graphviz.
-- `run_analysis.bat` régénère l'inventaire local MaleCNS/FlyBody puis, si le jeton
-  est configuré, compare les populations avec neuPrint et mesure les signatures
-  anatomiques ROI de six groupes d'interface prioritaires.
+- `run_analysis.bat` régénère l'inventaire local MaleCNS/FlyBody, construit les
+  manifestes de câblage locaux puis, si le jeton est configuré, compare les
+  populations avec neuPrint et mesure les signatures anatomiques ROI de six
+  groupes d'interface prioritaires.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -70,6 +71,13 @@ scientifique. Il agrège séparément l'inventaire, le routage, l'implémentatio
 paramètres et la validation. Une inconnue reste donc visible au lieu d'être masquée
 par une boîte déclarée globalement « en cours ».
 
+Le tableau de bord place désormais en tête un indicateur plus strict de **câblage
+exécutable**. Il exclut entièrement le réglage des paramètres et la calibration.
+Il atteint 100 % seulement lorsque les groupes terminaux et leurs routes sont
+vérifiés et que toutes les boîtes et liaisons peuvent s'exécuter avec des paramètres
+injectés, même arbitraires. L'ancien indice structurel reste affiché à titre
+secondaire.
+
 `run_analysis.bat` produit également, sous `data/derived/inventory/`, une table des
 groupes d'interface et un Parquet de leurs membres. Ces résultats sont reproductibles
 à partir des données brutes locales et volontairement exclus de Git.
@@ -87,6 +95,13 @@ dominantes, `roi-signatures.csv` conserve les agrégats complets et
 les synapses post-synaptiques décrivent l'entrée anatomique et les synapses
 pré-synaptiques la sortie. Ces fichiers sont des observations de morphologie
 grossière : une ROI dominante ne vaut pas attribution fonctionnelle.
+
+Pour les modalités volontairement neutralisées, le câblage reste explicite.
+`data/derived/wiring/basal-clamp-channels.csv` décrit les canaux terminaux par
+nerf, type, côté et sous-classe pertinente, tandis que
+`basal-clamp-routes.parquet` relie chaque canal aux `bodyId` MaleCNS exacts. Les
+valeurs d'activité basale n'apparaissent pas dans ces manifestes : elles seront
+traitées uniquement pendant la phase de calibration.
 
 ## Rattachement Git distant
 

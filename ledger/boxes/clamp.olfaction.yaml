@@ -6,11 +6,11 @@ adapter_type: A
 anatomical_region: olfactory_afferents
 parent_id: null
 ports: {inputs: [], outputs: [olfactory_baseline]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+status: {inventory: complete, implementation: not_started, parameters: unknown, validation: local_pass}
 confidence: medium
-evidence: [data/derived/inventory/inventory.json]
+evidence: [data/derived/wiring/basal-clamp-routing.json, data/derived/wiring/basal-clamp-routes.parquet]
 parameter_family_ids: [parameter.baseline.olfaction]
-validation_ids: []
-next_action: Énumérer les 2 639 neurones de classe olfactive et fixer un bruit basal sourcé.
+validation_ids: [validation.basal_clamp_routing]
+next_action: Implémenter le générateur paramétrable sans choisir encore ses valeurs de baseline.
 blocked_by: []
-completion_criteria: [Population exacte, Baseline non nulle sourcée, Stabilité testée]
+completion_criteria: [Population exacte, Sorties terminales exécutables, Paramètres de baseline injectables]

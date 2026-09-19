@@ -9,9 +9,9 @@ query: class == gustatory
 member_count: 1428
 named_type_count: 60
 target_box_ids: [clamp.gustation, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: proposed, validation: not_run}
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: local_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Séparer organes, nerfs, récepteurs et côtés avant injection basale.
+evidence: [data/derived/wiring/basal-clamp-channels.csv, data/derived/wiring/basal-clamp-routes.parquet]
+next_action: Conserver cette partition fixe pendant l'implémentation du générateur basal.
 blocked_by: []
-completion_criteria: [Sous-groupes disjoints, Couverture totale, Baseline testée]
+completion_criteria: [Sous-groupes disjoints, Couverture totale, Route bodyId explicite pour chaque neurone]
