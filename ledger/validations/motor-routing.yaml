@@ -1,0 +1,29 @@
+schema_version: 1
+id: validation.motor_routing
+name: Routage exact des sorties neuronales explicitement motrices
+owner_ids:
+  - adapter.motor.routing
+  - group.motor.vnc
+  - group.motor.central_brain
+  - group.motor.exit_nerve
+  - wire.cns_to_motor_routing
+  - cns.malecns
+level: integration
+protocol_path: src/the_fly_matrix/wiring.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 708 vnc_motor and 107 cb_motor neurons are assigned exactly once
+  - Every type-E instance reads one explicit MaleCNS bodyId
+  - The single cb_motor neuron without exitNerve remains explicit
+  - All 191 exit-bearing non-motor neurons are classified and excluded from muscle commands
+  - Muscle and FlyBody actuator assignments remain explicitly deferred
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: motor-routing-2026-09-19
+status: integration_pass
+notes:
+  - 815 generated type-E instances executed
+  - 815 exact MaleCNS bodyId source routes with no duplicate or omission
+  - Motor population contains 708 vnc_motor and 107 cb_motor neurons
+  - Non-motor exits comprise 92 vnc_efferent, 89 endocrine, 4 cb_efferent, 4 efferent_ascending and 2 cb_intrinsic neurons
+  - Muscle and actuator mapping remains deliberately unknown

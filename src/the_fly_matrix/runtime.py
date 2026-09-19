@@ -19,6 +19,8 @@ MECHANO_CHANNEL_PATH = WIRING_ROOT / "mechanosensation-channels.csv"
 MECHANO_ROUTE_PATH = WIRING_ROOT / "mechanosensation-routes.parquet"
 VISION_CHANNEL_PATH = WIRING_ROOT / "vision-channels.csv"
 VISION_ROUTE_PATH = WIRING_ROOT / "vision-routes.parquet"
+MOTOR_CHANNEL_PATH = WIRING_ROOT / "motor-channels.csv"
+MOTOR_ROUTE_PATH = WIRING_ROOT / "motor-routes.parquet"
 
 
 @dataclass(frozen=True)
@@ -37,6 +39,24 @@ class SparseActivity:
             raise ValueError("SparseActivity body IDs must be unique")
         if not np.isfinite(self.values).all():
             raise ValueError("activity values must be finite")
+
+
+@dataclass(frozen=True)
+class ChannelActivity:
+    """Activity addressed to generated adapter channels."""
+
+    channel_ids: tuple[str, ...]
+    values: np.ndarray
+
+    def __post_init__(self) -> None:
+        if self.values.ndim != 1:
+            raise ValueError("channel values must be one-dimensional")
+        if len(self.channel_ids) != len(self.values):
+            raise ValueError("channel_ids and values must have identical lengths")
+        if len(set(self.channel_ids)) != len(self.channel_ids):
+            raise ValueError("ChannelActivity IDs must be unique")
+        if not np.isfinite(self.values).all():
+            raise ValueError("channel values must be finite")
 
 
 class BasalClampBox:
@@ -271,6 +291,57 @@ class VisionRoutingBox:
             body_ids=self._target_body_ids.copy(),
             values=values[self._route_channel_indices],
         )
+
+
+class MotorRoutingBox:
+    """Executable type-E CNS-output router with muscle assignment deferred."""
+
+    adapter_type = "E"
+    box_id = "adapter.motor.routing"
+
+    def __init__(self, channels: pd.DataFrame, routes: pd.DataFrame):
+        self.channels = channels.loc[channels["routing_box_id"].eq(self.box_id)].copy()
+        self.routes = routes.loc[routes["routing_box_id"].eq(self.box_id)].copy()
+        if self.channels.empty or self.routes.empty:
+            raise ValueError("No generated motor wiring found")
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate motor channel IDs")
+        if self.routes["source_body_id"].duplicated().any():
+            raise ValueError("Duplicate motor source body IDs")
+        channels_by_id = self.channels.set_index("channel_id", drop=False)
+        route_channel_ids = self.routes["channel_id"].astype(str).tolist()
+        unknown = set(route_channel_ids) - set(channels_by_id.index.astype(str))
+        if unknown:
+            raise ValueError(f"Routes refer to unknown motor channels: {sorted(unknown)[:3]}")
+        self.channel_ids = tuple(route_channel_ids)
+        self.source_body_ids = tuple(int(value) for value in self.routes["source_body_id"])
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        channel_path: Path = MOTOR_CHANNEL_PATH,
+        route_path: Path = MOTOR_ROUTE_PATH,
+    ) -> "MotorRoutingBox":
+        if not channel_path.is_file() or not route_path.is_file():
+            raise FileNotFoundError("Motor wiring is absent; run the wiring builder first")
+        return cls(pd.read_csv(channel_path), pd.read_parquet(route_path))
+
+    def step(self, source_values: Mapping[int, float] | np.ndarray) -> ChannelActivity:
+        if isinstance(source_values, Mapping):
+            missing = set(self.source_body_ids) - set(source_values)
+            extra = set(source_values) - set(self.source_body_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: source mismatch; missing={len(missing)}, extra={len(extra)}"
+                )
+            values = np.asarray([source_values[item] for item in self.source_body_ids], dtype=np.float64)
+        else:
+            values = np.asarray(source_values, dtype=np.float64)
+        if values.shape != (len(self.source_body_ids),):
+            raise ValueError(
+                f"{self.box_id}: expected {len(self.source_body_ids)} source values, got {values.shape}"
+            )
+        return ChannelActivity(channel_ids=self.channel_ids, values=values.copy())
 
 
 class CNSInputBuffer:

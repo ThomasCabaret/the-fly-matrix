@@ -17,7 +17,7 @@ try {
     Write-Host "`n[1/5] Inventaire MaleCNS + FlyBody" -ForegroundColor Cyan
     & $Python -m the_fly_matrix.inventory
     if ($LASTEXITCODE -ne 0) { throw "L'inventaire a échoué avec le code $LASTEXITCODE." }
-    Write-Host "`n[2/5] Cablage structurel des clamps basaux" -ForegroundColor Cyan
+    Write-Host "`n[2/5] Cablage structurel des interfaces" -ForegroundColor Cyan
     & $Python -m the_fly_matrix.wiring
     if ($LASTEXITCODE -ne 0) { throw "Le câblage local a échoué avec le code $LASTEXITCODE." }
     Write-Host "`n[3/5] Smoke test du cablage executable" -ForegroundColor Cyan

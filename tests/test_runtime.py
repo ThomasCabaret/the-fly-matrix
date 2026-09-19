@@ -10,12 +10,15 @@ from the_fly_matrix.runtime import (
     CNSInputBuffer,
     MECHANO_CHANNEL_PATH,
     MECHANO_ROUTE_PATH,
+    MOTOR_CHANNEL_PATH,
+    MOTOR_ROUTE_PATH,
     PROPRIO_CHANNEL_PATH,
     PROPRIO_ROUTE_PATH,
     ROUTE_PATH,
     VISION_CHANNEL_PATH,
     VISION_ROUTE_PATH,
     MechanosensationRoutingBox,
+    MotorRoutingBox,
     ProprioceptionRoutingBox,
     VisionRoutingBox,
 )
@@ -86,6 +89,21 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(len(output.body_ids), 6098)
         self.assertEqual(len(np.unique(output.body_ids)), 6098)
         self.assertEqual(len(np.unique(box.routes["channel_id"])), 6098)
+
+    def test_motor_router_preserves_one_channel_per_motor_neuron(self) -> None:
+        if not MOTOR_CHANNEL_PATH.is_file() or not MOTOR_ROUTE_PATH.is_file():
+            self.skipTest("generated motor wiring is absent")
+        box = MotorRoutingBox.from_generated_wiring()
+        values = np.arange(len(box.source_body_ids), dtype=np.float64)
+        output = box.step(values)
+        self.assertEqual(len(box.source_body_ids), 815)
+        self.assertEqual(len(output.channel_ids), 815)
+        self.assertEqual(len(set(output.channel_ids)), 815)
+        self.assertTrue(np.array_equal(output.values, values))
+        self.assertEqual(
+            set(box.routes["group_id"]),
+            {"motor.vnc", "motor.central_brain"},
+        )
 
 
 if __name__ == "__main__":

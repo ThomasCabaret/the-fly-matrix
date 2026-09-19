@@ -17,7 +17,7 @@ class LedgerTests(unittest.TestCase):
 
     def test_top_level_interface_is_exhaustively_represented(self) -> None:
         self.assertEqual(len(self.ledger["boxes"]), 18)
-        self.assertEqual(len(self.ledger["groups"]), 15)
+        self.assertEqual(len(self.ledger["groups"]), 16)
         self.assertEqual(len(self.ledger["wires"]), 21)
         adapter_types = {
             box.get("adapter_type") for box in self.ledger["boxes"] if box.get("adapter_type")
@@ -102,6 +102,15 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(vision["hex_assignment_audit"]["rows_with_both_coordinates"], 23720)
         self.assertEqual(vision["hex_assignment_audit"]["sensory_input_rows"], 0)
         self.assertFalse(vision["hex_assignment_audit"]["used_as_input_coordinates"])
+
+        motor_path = path.with_name("motor-routing.json")
+        self.assertTrue(motor_path.is_file())
+        motor = json.loads(motor_path.read_text(encoding="utf-8"))
+        self.assertEqual(motor["generated_box_instances"], 815)
+        self.assertEqual(motor["exact_routes"], 815)
+        self.assertEqual(motor["group_counts"], {"motor.vnc": 708, "motor.central_brain": 107})
+        self.assertEqual(motor["exit_nerve_inventory"]["non_motor_deferred"], 191)
+        self.assertEqual(motor["exit_nerve_inventory"]["motor_without_exit_nerve"], 1)
 
     def test_group_counts_match_local_inventory_when_available(self) -> None:
         path = Path(__file__).resolve().parents[1] / "data" / "derived" / "inventory" / "inventory.json"

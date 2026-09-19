@@ -1,17 +1,17 @@
 schema_version: 1
-id: group.motor.vnc
-name: Neurones moteurs VNC
+id: group.motor.central_brain
+name: Neurones moteurs du cerveau central
 sector: motor_output
 partition_axis: role
 parent_id: null
 source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
-query: superclass == vnc_motor
-member_count: 708
-named_type_count: 142
+query: superclass == cb_motor
+member_count: 107
+named_type_count: 43
 target_box_ids: [adapter.motor.routing]
 status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
 evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-routes.parquet]
-next_action: Affecter les 708 canaux moteurs VNC aux muscles biologiques sans modifier leur source bodyId.
+next_action: Affecter les 107 canaux moteurs à des muscles ou fonctions périphériques sans masquer le nerf inconnu.
 blocked_by: []
-completion_criteria: [Chaque neurone dans un canal individuel, Sources bodyId exactes, Mapping musculaire séparé]
+completion_criteria: [Population exhaustive, Une route exacte par bodyId, Nerf manquant explicite]

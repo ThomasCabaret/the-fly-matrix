@@ -45,6 +45,7 @@ DECOMPOSITION_AXES = {
     "sensory.thermohygro": ["class", "type", "rootSide"],
     "sensory.vnc": ["entryNerve", "subclass", "mancType", "type", "rootSide"],
     "motor.vnc": ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type"],
+    "motor.central_brain": ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type"],
     "motor.exit_nerve": ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type"],
     "projection.ascending": ["somaNeuromere", "somaSide", "subclass", "type"],
     "projection.descending": ["subclass", "somaSide", "somaNeuromere", "type"],
@@ -209,6 +210,9 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
         ),
         "sensory.vnc": ("superclass == vnc_sensory", frame["superclass"].eq("vnc_sensory")),
         "motor.vnc": ("superclass == vnc_motor", frame["superclass"].eq("vnc_motor")),
+        "motor.central_brain": (
+            "superclass == cb_motor", frame["superclass"].eq("cb_motor")
+        ),
         "motor.exit_nerve": ("exitNerve is not null", frame["exitNerve"].notna()),
         "projection.ascending": (
             "superclass == ascending_neuron", frame["superclass"].eq("ascending_neuron")

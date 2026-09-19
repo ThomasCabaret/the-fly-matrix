@@ -10,4 +10,4 @@ calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: neuprint-audit-2026-09-19
 status: integration_pass
-notes: [neuPrintHTTP 1.9.3, 176422 Neuron nodes, 144 primary ROIs, 15 of 15 local group counts matched]
+notes: [neuPrintHTTP 1.9.3, 176422 Neuron nodes, 144 primary ROIs, 16 of 16 local group counts matched]

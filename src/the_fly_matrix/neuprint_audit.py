@@ -26,6 +26,7 @@ GROUP_SPECS = (
     ("sensory.central_brain", "superclass", "cb_sensory"),
     ("sensory.vnc", "superclass", "vnc_sensory"),
     ("motor.vnc", "superclass", "vnc_motor"),
+    ("motor.central_brain", "superclass", "cb_motor"),
     ("projection.ascending", "superclass", "ascending_neuron"),
     ("projection.descending", "superclass", "descending_neuron"),
 )

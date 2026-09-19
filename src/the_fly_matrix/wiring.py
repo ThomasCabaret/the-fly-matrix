@@ -35,6 +35,9 @@ MECHANO_ROUTE_OUTPUT = OUTPUT_ROOT / "mechanosensation-routes.parquet"
 VISION_SUMMARY_OUTPUT = OUTPUT_ROOT / "vision-routing.json"
 VISION_CHANNEL_OUTPUT = OUTPUT_ROOT / "vision-channels.csv"
 VISION_ROUTE_OUTPUT = OUTPUT_ROOT / "vision-routes.parquet"
+MOTOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "motor-routing.json"
+MOTOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "motor-channels.csv"
+MOTOR_ROUTE_OUTPUT = OUTPUT_ROOT / "motor-routes.parquet"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -627,6 +630,152 @@ def build_vision_wiring(
     return summary
 
 
+def build_motor_wiring(
+    source: Path = SOURCE,
+    summary_output: Path = MOTOR_SUMMARY_OUTPUT,
+    channel_output: Path = MOTOR_CHANNEL_OUTPUT,
+    route_output: Path = MOTOR_ROUTE_OUTPUT,
+) -> dict[str, Any]:
+    """Build the exact CNS-to-router half of the motor type-E adapter."""
+    if not source.is_file():
+        raise FileNotFoundError(f"{source} absent; lancez d'abord l'inventaire MaleCNS")
+    section("Câblage des sorties neuronales explicitement motrices")
+    frame = pd.read_parquet(source)
+    group_ids = ("motor.vnc", "motor.central_brain")
+    selected = frame.loc[frame["group_id"].isin(group_ids)].copy()
+    if selected.empty:
+        raise RuntimeError("Aucun neurone moteur trouvé")
+    if selected["bodyId"].duplicated().any():
+        raise RuntimeError("Les populations motrices VNC et cerveau central se chevauchent")
+    group_counts = {
+        str(key): int(value) for key, value in selected["group_id"].value_counts().items()
+    }
+    if group_counts != {"motor.vnc": 708, "motor.central_brain": 107}:
+        raise RuntimeError(f"Partition motrice inattendue: {group_counts}")
+
+    text_axes = ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type", "instance"]
+    selected[text_axes] = selected[text_axes].fillna("(unknown)").astype(str)
+    selected["routing_box_id"] = "adapter.motor.routing"
+    selected["source_box_id"] = "cns.malecns"
+    selected["source_port"] = "motor_neuron_activity"
+    selected["target_port"] = "motor_neuron_activity"
+    selected["channel_id"] = [
+        _channel_id("motor.output", ["bodyId"], (body_id,)) for body_id in selected["bodyId"]
+    ]
+    selected["box_instance_id"] = selected["channel_id"].str.replace(
+        "channel.", "box.", n=1, regex=False
+    )
+    selected["adapter_type"] = "E"
+
+    channel_rows = [
+        {
+            "channel_id": row.channel_id,
+            "box_instance_id": row.box_instance_id,
+            "group_id": row.group_id,
+            "routing_box_id": "adapter.motor.routing",
+            "adapter_type": "E",
+            "source_box_id": "cns.malecns",
+            "source_port": "motor_neuron_activity",
+            "source_body_id": int(row.bodyId),
+            "target_port": "motor_neuron_activity",
+            "exitNerve": row.exitNerve,
+            "somaSide": row.somaSide,
+            "somaNeuromere": row.somaNeuromere,
+            "subclass": row.subclass,
+            "type": row.type,
+            "instance": row.instance,
+            "mapping_level": "exact_body_id",
+            "free_discrete_parameters_upstream": 0,
+            "downstream_muscle_mapping": "deferred",
+        }
+        for row in selected.itertuples(index=False)
+    ]
+    route_columns = [
+        "channel_id",
+        "box_instance_id",
+        "group_id",
+        "routing_box_id",
+        "adapter_type",
+        "source_box_id",
+        "source_port",
+        "bodyId",
+        "target_port",
+        "exitNerve",
+        "somaSide",
+        "somaNeuromere",
+        "subclass",
+        "type",
+        "instance",
+    ]
+    routes = selected[route_columns].rename(columns={"bodyId": "source_body_id"})
+    if routes["source_body_id"].duplicated().any():
+        raise RuntimeError("Le manifeste moteur contient des sources bodyId dupliquées")
+
+    exits = frame.loc[frame["group_id"].eq("motor.exit_nerve")].copy()
+    excluded = exits.loc[~exits["bodyId"].isin(selected["bodyId"])]
+    excluded_counts = {
+        str(key): int(value)
+        for key, value in excluded["superclass"].fillna("(unknown)").value_counts().items()
+    }
+    expected_excluded = {
+        "vnc_efferent": 92,
+        "cb_endocrine": 71,
+        "vnc_endocrine": 18,
+        "cb_efferent": 4,
+        "efferent_ascending": 4,
+        "cb_intrinsic": 2,
+    }
+    if excluded_counts != expected_excluded:
+        raise RuntimeError(f"Partition des sorties non motrices inattendue: {excluded_counts}")
+    unknown_counts = {
+        axis: int(selected[axis].eq("(unknown)").sum()) for axis in text_axes
+    }
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(source.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact CNS-to-motor-router wiring; muscle and actuator assignment is deferred",
+        "method": {
+            "motor_population": "all neurons explicitly labelled vnc_motor or cb_motor",
+            "terminal_channels": "one type-E instance per unique motor-neuron bodyId",
+            "source_mapping": "each instance reads one explicit MaleCNS bodyId",
+            "exclusion_policy": "endocrine and other efferent exits are inventoried but never treated as muscle commands",
+            "downstream_policy": "muscle and FlyBody actuator assignment remains unknown",
+        },
+        "group_ids": list(group_ids),
+        "routing_box_id": "adapter.motor.routing",
+        "group_counts": group_counts,
+        "neuron_count": int(len(selected)),
+        "terminal_channels": len(channel_rows),
+        "generated_box_instances": len(channel_rows),
+        "exact_routes": int(len(routes)),
+        "duplicate_routes": 0,
+        "unassigned_motor_neurons": 0,
+        "unknown_axis_value_counts": unknown_counts,
+        "exit_nerve_inventory": {
+            "total": int(len(exits)),
+            "explicit_motor": int(exits["bodyId"].isin(selected["bodyId"]).sum()),
+            "non_motor_deferred": int(len(excluded)),
+            "non_motor_superclass_counts": excluded_counts,
+            "motor_without_exit_nerve": int(selected["exitNerve"].eq("(unknown)").sum()),
+        },
+        "upstream_routing_status": "fixed",
+        "downstream_mapping_status": "unknown",
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    pd.DataFrame(channel_rows).to_csv(channel_output, index=False, encoding="utf-8")
+    routes.to_parquet(route_output, index=False)
+    print("[OK] 708 moteurs VNC et 107 moteurs cerveau central distingués")
+    print("[OK] 191 sorties endocrines/effectrices non motrices exclues des commandes musculaires")
+    print("[OK] 1 neurone cb_motor conserve un nerf de sortie explicitement inconnu")
+    print(f"[OK] {len(routes):,} routes exactes et {len(channel_rows):,} instances type E")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux moteurs : {channel_output}")
+    print(f"[OK] Routes bodyId exactes : {route_output}")
+    return summary
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Construit le câblage structurel des clamps basaux")
     parser.add_argument("--source", type=Path, default=SOURCE)
@@ -644,6 +793,7 @@ def main() -> int:
         build_proprioception_wiring(args.source)
         build_mechanosensation_wiring(args.source)
         build_vision_wiring(args.source)
+        build_motor_wiring(args.source)
     except Exception as exc:
         print(f"\nWIRING_FAILED: {type(exc).__name__}: {exc}")
         return 1

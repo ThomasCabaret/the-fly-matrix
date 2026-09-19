@@ -6,11 +6,11 @@ adapter_type: E
 anatomical_region: motor_neurons_and_muscles
 parent_id: null
 ports: {inputs: [motor_neuron_activity], outputs: [muscle_group_activity]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
-confidence: medium
-evidence: [data/derived/inventory/inventory.json]
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: high
+evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-routes.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: []
-next_action: Découper les 708 vnc_motor et autres sorties par nerf, muscle, côté et appendice.
+validation_ids: [validation.motor_routing]
+next_action: Relier les 815 canaux type E à des groupes musculaires, en conservant séparément les sorties non motrices.
 blocked_by: []
-completion_criteria: [Populations exhaustives, Associations connues figées, Candidats inconnus bornés]
+completion_criteria: [815 sources motrices exhaustives, Routages bodyId fixes, Sorties non motrices exclues, Mapping musculaire séparé]

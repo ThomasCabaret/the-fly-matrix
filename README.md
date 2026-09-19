@@ -22,7 +22,7 @@ Le contrat scientifique de référence est
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
   routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
   arbitraires reproductibles, ainsi que les routages aval proprioceptif et
-  mécanorécepteur, et le routage aval visuel.
+  mécanorécepteur, le routage aval visuel et les sorties CNS explicitement motrices.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -134,6 +134,12 @@ terminales un-à-un vers MaleCNS. L'audit empêche explicitement d'utiliser
 valeurs appartiennent exclusivement à des neurones internes `ol_intrinsic`. La
 correspondance pixel/ommatidie vers photorécepteur reste donc inconnue jusqu'à
 l'obtention d'une source rétinotopique indépendante.
+
+Le manifeste moteur couvre les 708 neurones `vnc_motor` et 107 neurones
+`cb_motor`, avec une instance type E par `bodyId`. L'audit des nerfs de sortie
+isole 191 autres neurones endocrines ou efférents au lieu de les transformer en
+commandes musculaires. Cette moitié fixe CNS→routeur moteur ; les associations
+routeur→muscles biologiques→actionneurs FlyBody restent à construire.
 
 ## Rattachement Git distant
 

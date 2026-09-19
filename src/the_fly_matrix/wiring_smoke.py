@@ -11,8 +11,10 @@ import numpy as np
 from .ledger import ROOT
 from .runtime import (
     BasalClampBox,
+    ChannelActivity,
     CNSInputBuffer,
     MechanosensationRoutingBox,
+    MotorRoutingBox,
     ProprioceptionRoutingBox,
     SparseActivity,
     VisionRoutingBox,
@@ -43,8 +45,15 @@ def _digest(activity: SparseActivity) -> str:
     return digest.hexdigest()
 
 
+def _channel_digest(activity: ChannelActivity) -> str:
+    digest = hashlib.sha256()
+    digest.update("\n".join(activity.channel_ids).encode("utf-8"))
+    digest.update(activity.values.tobytes())
+    return digest.hexdigest()
+
+
 def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object]:
-    section("Chargement des boîtes abstraites type A")
+    section("Chargement des boîtes abstraites générées")
     boxes = [BasalClampBox.from_generated_wiring(box_id) for box_id in CLAMP_IDS]
     for box in boxes:
         print(
@@ -67,6 +76,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {vision.box_id}: {len(vision.channel_ids):,} instances/canaux, "
         f"{len(vision.routes):,} destinations exactes; rétinotopie physique différée"
     )
+    motor = MotorRoutingBox.from_generated_wiring()
+    print(
+        f"[OK] {motor.box_id}: {len(motor.channel_ids):,} instances/canaux depuis "
+        f"{len(motor.source_body_ids):,} neurones moteurs; muscles différés"
+    )
 
     section("Injection déterministe de valeurs arbitraires")
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
@@ -77,6 +91,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     mechano_second = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
     vision_first = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
     vision_second = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
+    motor_values_first = np.random.default_rng(seed + len(boxes) + 3).uniform(
+        0.0, 1.0, len(motor.source_body_ids)
+    )
+    motor_values_second = np.random.default_rng(seed + len(boxes) + 3).uniform(
+        0.0, 1.0, len(motor.source_body_ids)
+    )
+    motor_first = motor.step(motor_values_first)
+    motor_second = motor.step(motor_values_second)
     first = CNSInputBuffer.merge(*first_outputs, proprio_first, mechano_first, vision_first)
     second = CNSInputBuffer.merge(*second_outputs, proprio_second, mechano_second, vision_second)
     if not np.array_equal(first.body_ids, second.body_ids) or not np.array_equal(
@@ -85,7 +107,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
     if len(first.body_ids) != 16001:
         raise RuntimeError(f"16001 destinations attendues, {len(first.body_ids)} obtenues")
+    if motor_first.channel_ids != motor_second.channel_ids or not np.array_equal(
+        motor_first.values, motor_second.values
+    ):
+        raise RuntimeError("Le rejeu du routage moteur n'est pas déterministe")
+    if len(motor_first.channel_ids) != 815:
+        raise RuntimeError(f"815 sorties motrices attendues, {len(motor_first.channel_ids)} obtenues")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
+    print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
 
     result: dict[str, object] = {
@@ -132,14 +161,31 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "upstream_retinotopic_mapping": "deferred",
                 "parameter_status": "arbitrary_smoke_only",
             }
+        ]
+        + [
+            {
+                "id": motor.box_id,
+                "adapter_type": motor.adapter_type,
+                "terminal_box_instances": len(motor.channel_ids),
+                "exact_routes": len(motor.source_body_ids),
+                "downstream_muscle_mapping": "deferred",
+                "parameter_status": "arbitrary_smoke_only",
+            }
         ],
         "cns_ingress": {
             "adapter_type": CNSInputBuffer.adapter_type,
             "unique_body_ids": len(first.body_ids),
             "activity_digest": _digest(first),
         },
+        "motor_egress": {
+            "adapter_type": motor.adapter_type,
+            "unique_source_body_ids": len(motor.source_body_ids),
+            "output_channels": len(motor_first.channel_ids),
+            "activity_digest": _channel_digest(motor_first),
+        },
         "checks": {
             "all_routes_executed": True,
+            "motor_routes_executed": True,
             "deterministic_replay": True,
             "scientific_parameters_selected": False,
             "activity_values_persisted": False,
