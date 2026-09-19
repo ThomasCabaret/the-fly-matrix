@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.touch_transduction_to_routing
+name: Activité tactile vers routage périphérique
+sector: mechanosensation
+source: {box_id: adapter.touch.transduction, port: mechanoreceptor_activity, group_query: null}
+target: {box_id: adapter.touch.routing, port: mechanoreceptor_activity, group_query: null}
+mapping_level: type-level
+expected_cardinality: receptor groups by organ and side
+candidate_constraints: [same organ, same side, compatible receptor class]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: unknown, implementation: not_started, validation: not_run}
+confidence: low
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: []
+next_action: Créer la checklist par nerf et sous-classe mécanoréceptrice.
+blocked_by: []

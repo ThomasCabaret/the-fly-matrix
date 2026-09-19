@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.tactile
+name: Afférences tactiles
+sector: mechanosensation
+partition_axis: modality
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: class == mechanosensory_tactile
+member_count: 2558
+named_type_count: 56
+target_box_ids: [adapter.touch.routing, cns.malecns]
+status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Décomposer par entryNerve, subclass, somaSide et organe corporel.
+blocked_by: []
+completion_criteria: [Sous-groupes anatomiques disjoints, Couverture totale, Candidats physiques bornés]

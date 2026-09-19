@@ -1,0 +1,16 @@
+schema_version: 1
+id: clamp.olfaction
+name: Clamp basal olfactif
+sector: basal_clamps
+adapter_type: A
+anatomical_region: olfactory_afferents
+parent_id: null
+ports: {inputs: [], outputs: [olfactory_baseline]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+parameter_family_ids: [parameter.baseline.olfaction]
+validation_ids: []
+next_action: Énumérer les 2 639 neurones de classe olfactive et fixer un bruit basal sourcé.
+blocked_by: []
+completion_criteria: [Population exacte, Baseline non nulle sourcée, Stabilité testée]

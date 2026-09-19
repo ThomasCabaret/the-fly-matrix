@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.body_to_proprioception
+name: État corporel vers capteurs proprioceptifs
+sector: proprioception
+source: {box_id: body.flybody, port: body_state, group_query: all joints}
+target: {box_id: sensor.proprioception, port: body_state, group_query: all joints}
+mapping_level: exact
+expected_cardinality: 102 joint degrees of freedom
+candidate_constraints: [same joint and axis]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: complete, routing: fixed, implementation: stub, validation: smoke}
+confidence: high
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: [validation.flybody_inventory]
+next_action: Ajouter le calcul des vitesses, contraintes et vibrations nécessaires.
+blocked_by: []

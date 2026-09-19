@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.thermohygro_clamp_to_cns
+name: Baseline thermo-hygro vers MaleCNS
+sector: basal_clamps
+source: {box_id: clamp.thermohygro, port: thermohygro_baseline, group_query: query pending}
+target: {box_id: cns.malecns, port: basal_activity, group_query: same bodyId}
+mapping_level: unknown
+expected_cardinality: unknown
+candidate_constraints: [thermo-hygrosensory annotations and antennal nerves]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: missing, routing: unknown, implementation: not_started, validation: not_run}
+confidence: low
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: []
+next_action: Identifier la requête MaleCNS reproductible.
+blocked_by: [annotation_query_to_define]

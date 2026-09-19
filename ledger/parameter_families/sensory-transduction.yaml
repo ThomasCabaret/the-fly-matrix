@@ -1,0 +1,17 @@
+schema_version: 1
+id: parameter.sensory_transduction
+name: Familles de transduction sensorielle locale
+owner_id: adapter.vision.transduction
+quantity: local transfer functions and adaptation constants
+unit: modality-dependent
+sharing_rule: split into modality and receptor-class families before fitting
+source_kind: unknown
+source_references: []
+value: null
+bounds: null
+free_parameter_count: 0
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: unknown
+confidence: low
+known_limitations: [Temporary umbrella family; must be decomposed before implementation]

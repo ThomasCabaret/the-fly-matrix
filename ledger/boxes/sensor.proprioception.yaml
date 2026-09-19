@@ -1,0 +1,16 @@
+schema_version: 1
+id: sensor.proprioception
+name: État mécanique proprioceptif
+sector: proprioception
+adapter_type: null
+anatomical_region: joints_and_strain
+parent_id: null
+ports: {inputs: [body_state], outputs: [joint_state, strain, vibration]}
+status: {inventory: complete, implementation: stub, parameters: unknown, validation: smoke}
+confidence: high
+evidence: [data/derived/inventory/inventory.json]
+parameter_family_ids: []
+validation_ids: [validation.flybody_inventory]
+next_action: Associer chaque observable des 102 articulations aux organes proprioceptifs plausibles.
+blocked_by: []
+completion_criteria: [Observables énumérés, Unités fixées, Tests de mouvement par articulation]

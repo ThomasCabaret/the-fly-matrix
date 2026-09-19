@@ -21,7 +21,7 @@ class ScaffoldTests(unittest.TestCase):
         self.assertEqual(project["requires-python"], ">=3.12,<3.13")
 
     def test_ledger_categories_exist(self) -> None:
-        for category in ("boxes", "wires", "parameter_families", "validations"):
+        for category in ("boxes", "groups", "wires", "parameter_families", "validations"):
             folder = ROOT / "ledger" / category
             self.assertTrue(folder.is_dir(), category)
             self.assertTrue((folder / "_template.yaml").is_file(), category)
@@ -40,6 +40,9 @@ class ScaffoldTests(unittest.TestCase):
             "setup_gpu.bat",
             "status.bat",
             "verify_install.bat",
+            "run_analysis.bat",
+            "build_preview.bat",
+            "dashboard.bat",
         ):
             content = (ROOT / name).read_text(encoding="utf-8")
             self.assertIn("pause", content.lower(), name)

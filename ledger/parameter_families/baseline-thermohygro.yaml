@@ -1,0 +1,17 @@
+schema_version: 1
+id: parameter.baseline.thermohygro
+name: Activité basale thermo-hygrosensorielle
+owner_id: clamp.thermohygro
+quantity: neutral steady-state activity
+unit: spikes_per_second
+sharing_rule: shared by receptor class after population audit
+source_kind: unknown
+source_references: []
+value: null
+bounds: null
+free_parameter_count: 0
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: unknown
+confidence: low
+known_limitations: [Steady-state physiology incompletely characterized]

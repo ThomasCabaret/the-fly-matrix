@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.olfactory
+name: Afférences olfactives
+sector: basal_clamps
+partition_axis: modality
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: class == olfactory
+member_count: 2639
+named_type_count: 53
+target_box_ids: [clamp.olfaction, cns.malecns]
+status: {inventory: complete, decomposition: proposed, routing: proposed, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Contrôler les sous-groupes par type récepteur et côté avant injection basale.
+blocked_by: []
+completion_criteria: [Couverture totale, Baseline affectée à chaque sous-groupe, Test de stabilité]

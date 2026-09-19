@@ -1,0 +1,21 @@
+schema_version: 1
+id: group.example
+name: Example anatomical group
+sector: unknown
+partition_axis: modality
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: null
+member_count: null
+named_type_count: null
+target_box_ids: []
+status:
+  inventory: missing
+  decomposition: unknown
+  routing: unknown
+  validation: not_run
+confidence: low
+evidence: []
+next_action: Define and enumerate the group.
+blocked_by: []
+completion_criteria: []

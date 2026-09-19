@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.motor_routing_to_transduction
+name: Groupes musculaires vers transduction motrice
+sector: motor_output
+source: {box_id: adapter.motor.routing, port: muscle_group_activity, group_query: null}
+target: {box_id: adapter.motor.transduction, port: muscle_group_activity, group_query: null}
+mapping_level: group-level
+expected_cardinality: biological muscle groups to be audited
+candidate_constraints: [same appendage, joint action and side]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: missing, routing: unknown, implementation: not_started, validation: not_run}
+confidence: low
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: []
+next_action: Construire l'inventaire biologique des muscles/groupes moteurs.
+blocked_by: []

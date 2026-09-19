@@ -1,0 +1,16 @@
+schema_version: 1
+id: sensor.touch
+name: Contacts et mécanoréception physique
+sector: mechanosensation
+adapter_type: null
+anatomical_region: body_surface
+parent_id: null
+ports: {inputs: [contacts], outputs: [local_contact_loads]}
+status: {inventory: partial, implementation: stub, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+parameter_family_ids: []
+validation_ids: []
+next_action: Énumérer les géométries de contact et les régions corporelles observables.
+blocked_by: []
+completion_criteria: [Surfaces énumérées, Charges locales disponibles, Test de contact par région]

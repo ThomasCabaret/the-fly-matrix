@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.proprioception_routing_to_cns
+name: Routage proprioceptif vers MaleCNS
+sector: proprioception
+source: {box_id: adapter.proprioception.routing, port: proprioceptive_afferents, group_query: class == mechanosensory_proprioceptive}
+target: {box_id: cns.malecns, port: sensory_afferents, group_query: same bodyId}
+mapping_level: group-level
+expected_cardinality: 1454 class-annotated neurons before subdivision
+candidate_constraints: [entryNerve, somaSide, subclass, mancType]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: candidates_known, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: []
+next_action: Répartir les 1 454 neurones par nerf, patte, côté et classe.
+blocked_by: []

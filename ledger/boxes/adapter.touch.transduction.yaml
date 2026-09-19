@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.touch.transduction
+name: Transduction tactile
+sector: mechanosensation
+adapter_type: B
+anatomical_region: mechanosensory_organs
+parent_id: sensor.touch
+ports: {inputs: [local_contact_loads], outputs: [mechanoreceptor_activity]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: low
+evidence: [drosophila_virtual_fly_project_contract.md]
+parameter_family_ids: [parameter.sensory_transduction]
+validation_ids: []
+next_action: Séparer bristles, campaniformes et autres classes par variable mécanique locale.
+blocked_by: []
+completion_criteria: [Classes séparées, Fonctions locales documentées, Réponses unitaires testées]

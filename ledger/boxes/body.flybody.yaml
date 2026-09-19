@@ -1,0 +1,16 @@
+schema_version: 1
+id: body.flybody
+name: Corps articulé FlyBody
+sector: physical_body
+adapter_type: null
+anatomical_region: whole_body
+parent_id: null
+ports: {inputs: [actuator_commands], outputs: [body_state, contacts]}
+status: {inventory: complete, implementation: tested, parameters: borrowed, validation: smoke}
+confidence: high
+evidence: [data/derived/inventory/inventory.json, reports/generated/install-smoke-flybody.png]
+parameter_family_ids: []
+validation_ids: [validation.installation, validation.flybody_inventory]
+next_action: Documenter unités, limites et contrôlabilité de chaque actionneur.
+blocked_by: []
+completion_criteria: [Inventaire versionné, Limites auditées, Rejeu physique déterministe]

@@ -1,0 +1,13 @@
+schema_version: 1
+id: validation.ledger_integrity
+name: Intégrité du registre et de ses références
+owner_ids: []
+level: unit
+protocol_path: tests/test_ledger.py
+command: .venv/Scripts/python.exe -m unittest discover -s tests -v
+acceptance_criteria: [Unique IDs, Valid references, Valid status vocabularies, Existing ports]
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: ledger-tests-2026-09-19
+status: local_pass
+notes: [Nine unit tests passed locally]

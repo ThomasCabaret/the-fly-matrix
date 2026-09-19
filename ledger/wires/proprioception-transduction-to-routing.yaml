@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.proprioception_transduction_to_routing
+name: Activité proprioceptive vers routage périphérique
+sector: proprioception
+source: {box_id: adapter.proprioception.transduction, port: proprioceptor_activity, group_query: null}
+target: {box_id: adapter.proprioception.routing, port: proprioceptor_activity, group_query: null}
+mapping_level: type-level
+expected_cardinality: receptor classes per leg, joint and side
+candidate_constraints: [same appendage, side, joint and functional class]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: unknown, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: []
+next_action: Définir la granularité minimale commune à MaleCNS et FlyBody.
+blocked_by: []

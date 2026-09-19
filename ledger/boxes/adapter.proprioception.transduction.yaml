@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.proprioception.transduction
+name: Transduction proprioceptive
+sector: proprioception
+adapter_type: B
+anatomical_region: chordotonal_and_strain_sensors
+parent_id: sensor.proprioception
+ports: {inputs: [joint_state, strain, vibration], outputs: [proprioceptor_activity]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+parameter_family_ids: [parameter.sensory_transduction]
+validation_ids: []
+next_action: Définir les fonctions locales par classes position, mouvement et vibration.
+blocked_by: []
+completion_criteria: [Classes séparées, Homologies partagées, Courbes physiologiques référencées]

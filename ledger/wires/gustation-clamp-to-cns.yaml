@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.gustation_clamp_to_cns
+name: Baseline gustative vers MaleCNS
+sector: basal_clamps
+source: {box_id: clamp.gustation, port: gustatory_baseline, group_query: class == gustatory}
+target: {box_id: cns.malecns, port: basal_activity, group_query: same bodyId}
+mapping_level: exact
+expected_cardinality: 1428 class-annotated neurons
+candidate_constraints: [MaleCNS class equals gustatory]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: proposed, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: []
+next_action: Versionner la requête exacte et contrôler les annotations manquantes.
+blocked_by: []

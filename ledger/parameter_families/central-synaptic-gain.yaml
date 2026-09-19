@@ -1,0 +1,17 @@
+schema_version: 1
+id: parameter.central.synaptic_gain
+name: Gains synaptiques centraux
+owner_id: cns.malecns
+quantity: synaptic gain by transmitter and connection family
+unit: model-dependent
+sharing_rule: shared by transmitter class before any finer split
+source_kind: unknown
+source_references: []
+value: null
+bounds: null
+free_parameter_count: 0
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: unknown
+confidence: low
+known_limitations: [Static weights are counts, not physiological conductances]

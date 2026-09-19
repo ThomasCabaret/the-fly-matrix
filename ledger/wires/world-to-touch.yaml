@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.world_to_touch
+name: Contacts du monde vers capteurs tactiles
+sector: mechanosensation
+source: {box_id: world.mujoco, port: contacts, group_query: null}
+target: {box_id: sensor.touch, port: contacts, group_query: null}
+mapping_level: group-level
+expected_cardinality: contact geometries to local body regions
+candidate_constraints: [same physical contact location]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: proposed, implementation: stub, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: []
+next_action: Énumérer les géométries et régions de contact.
+blocked_by: []

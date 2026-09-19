@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.proprioception.routing
+name: Routage propriocepteurs vers axones
+sector: proprioception
+adapter_type: C
+anatomical_region: leg_and_body_nerves
+parent_id: sensor.proprioception
+ports: {inputs: [proprioceptor_activity], outputs: [proprioceptive_afferents]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+parameter_family_ids: []
+validation_ids: []
+next_action: Découper les 1 454 proprioceptifs par nerf, côté, patte et classe fonctionnelle.
+blocked_by: []
+completion_criteria: [Groupes exhaustifs, Routages fixes séparés des candidats, Ambiguïtés comptées]

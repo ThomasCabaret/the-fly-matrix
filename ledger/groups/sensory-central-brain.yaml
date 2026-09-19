@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.central_brain
+name: Population sensorielle du cerveau central
+sector: basal_clamps
+partition_axis: region
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: superclass == cb_sensory
+member_count: 4868
+named_type_count: 158
+target_box_ids: [cns.malecns]
+status: {inventory: complete, decomposition: proposed, routing: unknown, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Répartir par modalité et repérer thermo/hygro parmi les entrées centrales.
+blocked_by: []
+completion_criteria: [Modalité de chaque sous-groupe documentée ou inconnue explicite]

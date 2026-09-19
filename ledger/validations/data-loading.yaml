@@ -1,0 +1,13 @@
+schema_version: 1
+id: validation.data_loading
+name: Chargement des trois tables MaleCNS
+owner_ids: [cns.malecns]
+level: integration
+protocol_path: src/the_fly_matrix/verify_install.py
+command: verify_install.bat
+acceptance_criteria: [Exact row counts, Readable schemas, Three-row samples]
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: installation-2026-09-19
+status: integration_pass
+notes: [151856684 weighted edges loaded through PyArrow dataset]

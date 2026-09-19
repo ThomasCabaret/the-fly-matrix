@@ -1,0 +1,17 @@
+schema_version: 1
+id: parameter.central.neuron_dynamics
+name: Constantes et non-linéarités neuronales centrales
+owner_id: cns.malecns
+quantity: time constants, thresholds and biases
+unit: mixed
+sharing_rule: shared first by neuron class or neurotransmitter family
+source_kind: unknown
+source_references: []
+value: null
+bounds: null
+free_parameter_count: 0
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: unknown
+confidence: low
+known_limitations: [No dynamical model selected yet]

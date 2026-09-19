@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.vision.routing
+name: Routage rétine vers afférences visuelles
+sector: vision
+adapter_type: C
+anatomical_region: retina_optic_lobe
+parent_id: sensor.vision
+ports: {inputs: [photoreceptor_activity], outputs: [visual_afferents]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json, assignedOlHex1, assignedOlHex2]
+parameter_family_ids: []
+validation_ids: []
+next_action: Auditer les 23 720 affectations hexagonales et les cellules visuelles non affectées.
+blocked_by: []
+completion_criteria: [Groupes source/cible exhaustifs, Affectations exactes figées, Incertitudes isolées]

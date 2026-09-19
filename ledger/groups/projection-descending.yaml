@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.projection.descending
+name: Neurones descendants
+sector: central_nervous_system
+partition_axis: role
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: superclass == descending_neuron
+member_count: 1314
+named_type_count: 480
+target_box_ids: [cns.malecns]
+status: {inventory: complete, decomposition: proposed, routing: fixed, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Vérifier la couverture des poids et les familles dynamiques partagées.
+blocked_by: []
+completion_criteria: [Couverture du graphe, Familles paramétriques attribuées]

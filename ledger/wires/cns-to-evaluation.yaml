@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.cns_to_evaluation
+name: Activité CNS vers évaluation tenue à l'écart
+sector: evaluation
+source: {box_id: cns.malecns, port: cns_activity, group_query: selected summaries}
+target: {box_id: evaluation.held_out, port: cns_activity, group_query: frozen protocol}
+mapping_level: group-level
+expected_cardinality: protocol dependent
+candidate_constraints: [read-only evaluation path]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: proposed, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: [validation.anti_leakage]
+next_action: Fixer les résumés neuronaux avant calibration.
+blocked_by: [behavior_protocol_not_frozen]

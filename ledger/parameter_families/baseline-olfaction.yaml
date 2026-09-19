@@ -1,0 +1,17 @@
+schema_version: 1
+id: parameter.baseline.olfaction
+name: Activité basale olfactive
+owner_id: clamp.olfaction
+quantity: spontaneous activity distribution
+unit: spikes_per_second
+sharing_rule: shared by receptor class where evidence permits
+source_kind: unknown
+source_references: []
+value: null
+bounds: null
+free_parameter_count: 0
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: unknown
+confidence: medium
+known_limitations: [Must not be replaced with zero activity]

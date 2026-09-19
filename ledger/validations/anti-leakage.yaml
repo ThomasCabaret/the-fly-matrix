@@ -1,0 +1,13 @@
+schema_version: 1
+id: validation.anti_leakage
+name: Audit anti-fuite comportementale
+owner_ids: [evaluation.held_out]
+level: audit
+protocol_path: null
+command: null
+acceptance_criteria: [Every calibration dataset declares behaviors, Held-out behaviors absent from fitting, No adapter sees global task state]
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: null
+status: not_run
+notes: [Must pass before interpreting emergent behavior]

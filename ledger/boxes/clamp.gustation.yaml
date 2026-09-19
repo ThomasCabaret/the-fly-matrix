@@ -1,0 +1,16 @@
+schema_version: 1
+id: clamp.gustation
+name: Clamp basal gustatif
+sector: basal_clamps
+adapter_type: A
+anatomical_region: gustatory_afferents
+parent_id: null
+ports: {inputs: [], outputs: [gustatory_baseline]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+parameter_family_ids: [parameter.baseline.gustation]
+validation_ids: []
+next_action: Énumérer les 1 428 neurones gustatifs et fixer une activité spontanée faible.
+blocked_by: []
+completion_criteria: [Population exacte, Baseline sourcée, Stabilité testée]

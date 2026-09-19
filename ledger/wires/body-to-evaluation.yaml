@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.body_to_evaluation
+name: État corporel vers évaluation tenue à l'écart
+sector: evaluation
+source: {box_id: body.flybody, port: body_state, group_query: selected physical observables}
+target: {box_id: evaluation.held_out, port: body_state, group_query: frozen protocol}
+mapping_level: group-level
+expected_cardinality: protocol dependent
+candidate_constraints: [read-only evaluation path]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: proposed, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: [validation.anti_leakage, validation.closed_loop]
+next_action: Fixer les métriques physiques avant calibration.
+blocked_by: [behavior_protocol_not_frozen]

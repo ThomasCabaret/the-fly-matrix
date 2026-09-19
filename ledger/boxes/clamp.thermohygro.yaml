@@ -1,0 +1,16 @@
+schema_version: 1
+id: clamp.thermohygro
+name: Clamp thermo-hygrosensoriel
+sector: basal_clamps
+adapter_type: A
+anatomical_region: thermo_hygrosensory_afferents
+parent_id: null
+ports: {inputs: [], outputs: [thermohygro_baseline]}
+status: {inventory: missing, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: low
+evidence: [drosophila_virtual_fly_project_contract.md]
+parameter_family_ids: [parameter.baseline.thermohygro]
+validation_ids: []
+next_action: Trouver les populations dans les annotations au-delà du champ class actuel.
+blocked_by: [annotation_query_to_define]
+completion_criteria: [Population exacte, Environnement neutre défini, Incertitude documentée]

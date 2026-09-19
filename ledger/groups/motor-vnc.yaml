@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.motor.vnc
+name: Neurones moteurs VNC
+sector: motor_output
+partition_axis: role
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: superclass == vnc_motor
+member_count: 708
+named_type_count: 142
+target_box_ids: [adapter.motor.routing]
+status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Décomposer par exitNerve, type, côté, neuromère et muscle connu.
+blocked_by: []
+completion_criteria: [Chaque neurone dans un groupe moteur, Mappings exacts séparés des candidats]

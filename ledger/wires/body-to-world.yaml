@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.body_to_world
+name: Corps vers monde physique
+sector: physical_body
+source: {box_id: body.flybody, port: body_state, group_query: null}
+target: {box_id: world.mujoco, port: body_state, group_query: null}
+mapping_level: exact
+expected_cardinality: one compiled MuJoCo model state
+candidate_constraints: [physics engine state only]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: complete, routing: fixed, implementation: tested, validation: smoke}
+confidence: high
+evidence: [src/the_fly_matrix/verify_install.py]
+validation_ids: [validation.installation]
+next_action: Ajouter un test déterministe avec état initial et commandes fixés.
+blocked_by: []

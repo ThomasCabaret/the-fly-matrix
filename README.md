@@ -15,6 +15,9 @@ Le contrat scientifique de référence est
 - `setup_gpu.bat` installe PyTorch CUDA et vérifie un calcul réel sur le GPU.
 - `status.bat` affiche l'état de l'environnement, des données et du registre.
 - `verify_install.bat` relance le contrôle complet données/GPU/FlyBody/MuJoCo/Graphviz.
+- `run_analysis.bat` régénère l'inventaire local MaleCNS/FlyBody sans jeton neuPrint.
+- `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
+- `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
 Chaque script affiche ses étapes, conserve un code de sortie exploitable et attend
 une touche avant de fermer sa console.
@@ -52,6 +55,28 @@ versionné.
 ## Principe de suivi
 
 Le répertoire `ledger/` est la source de vérité. Il contient une fiche par boîte,
-par fil, par famille de paramètres et par validation. Les rapports présents dans
+par groupe anatomique, par fil, par famille de paramètres et par validation. Les rapports présents dans
 `reports/generated/` seront produits depuis ce registre et ne devront pas être
 maintenus manuellement.
+
+Le pourcentage affiché est un indicateur structurel, pas une mesure de réussite
+scientifique. Il agrège séparément l'inventaire, le routage, l'implémentation, les
+paramètres et la validation. Une inconnue reste donc visible au lieu d'être masquée
+par une boîte déclarée globalement « en cours ».
+
+`run_analysis.bat` produit également, sous `data/derived/inventory/`, une table des
+groupes d'interface et un Parquet de leurs membres. Ces résultats sont reproductibles
+à partir des données brutes locales et volontairement exclus de Git.
+`interface-subgroups.csv` propose en outre un premier découpage mécanique par nerf,
+côté, sous-classe et neuromère. Une proposition n'est promue en fiche `ledger/groups/`
+avec un `parent_id` qu'après audit anatomique ; elle ne devient donc jamais une vérité
+scientifique par simple effet du script.
+
+## Rattachement Git distant
+
+Une fois le dépôt distant créé :
+
+```text
+git remote add origin <URL_DU_DEPOT>
+git push -u origin main
+```

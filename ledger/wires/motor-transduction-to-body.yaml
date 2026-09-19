@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.motor_transduction_to_body
+name: Commandes motrices vers actionneurs FlyBody
+sector: motor_output
+source: {box_id: adapter.motor.transduction, port: actuator_commands, group_query: null}
+target: {box_id: body.flybody, port: actuator_commands, group_query: all actuators}
+mapping_level: group-level
+expected_cardinality: 102 actionneurs in 7 anatomical groups
+candidate_constraints: [same appendage, side, joint and axis]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: complete, routing: candidates_known, implementation: not_started, validation: smoke}
+confidence: high
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: [validation.flybody_inventory]
+next_action: Associer les groupes biologiques aux 102 actionneurs et marquer les abstractions.
+blocked_by: []

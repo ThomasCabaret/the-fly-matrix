@@ -1,6 +1,7 @@
 schema_version: 1
 id: wire.example
 name: Example wire
+sector: unknown
 parent_id: null
 source:
   box_id: box.source
@@ -25,4 +26,3 @@ evidence: []
 validation_ids: []
 next_action: Enumerate source and target groups.
 blocked_by: []
-

@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.optic_lobe
+name: Population sensorielle du lobe optique
+sector: vision
+partition_axis: region
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: superclass == ol_sensory
+member_count: 6098
+named_type_count: 11
+target_box_ids: [adapter.vision.routing, cns.malecns]
+status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Expliquer les sept éléments d'écart avec la partition class == visual.
+blocked_by: []
+completion_criteria: [Chevauchement avec classe visuelle expliqué, Affectations hexagonales auditées]

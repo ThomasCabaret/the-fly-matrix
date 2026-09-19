@@ -1,0 +1,13 @@
+schema_version: 1
+id: validation.resting_dynamics
+name: Régime central basal stable
+owner_ids: [cns.malecns]
+level: integration
+protocol_path: null
+command: null
+acceptance_criteria: [No explosion, No total extinction unless justified, Return after small perturbation]
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: null
+status: not_run
+notes: [Protocol to define before fitting central dynamics]

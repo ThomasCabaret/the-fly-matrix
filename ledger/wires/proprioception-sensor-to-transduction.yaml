@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.proprioception_sensor_to_transduction
+name: État articulaire vers transduction proprioceptive
+sector: proprioception
+source: {box_id: sensor.proprioception, port: joint_state, group_query: all 102 joints}
+target: {box_id: adapter.proprioception.transduction, port: joint_state, group_query: by joint and axis}
+mapping_level: exact
+expected_cardinality: 102 local joint channels before derived variables
+candidate_constraints: [same joint and axis]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: complete, routing: fixed, implementation: not_started, validation: smoke}
+confidence: high
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: [validation.flybody_inventory]
+next_action: Ajouter les canaux dérivés spécifiques aux classes proprioceptives.
+blocked_by: []

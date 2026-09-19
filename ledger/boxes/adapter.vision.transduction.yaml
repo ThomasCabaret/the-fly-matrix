@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.vision.transduction
+name: Transduction visuelle
+sector: vision
+adapter_type: B
+anatomical_region: retina
+parent_id: sensor.vision
+ports: {inputs: [retinal_samples], outputs: [photoreceptor_activity]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+parameter_family_ids: [parameter.sensory_transduction]
+validation_ids: []
+next_action: Choisir le sous-modèle FlyVis/phototransduction minimal et ses unités.
+blocked_by: []
+completion_criteria: [Fonction locale définie, Paramètres sourcés, Réponse lumineuse testée]

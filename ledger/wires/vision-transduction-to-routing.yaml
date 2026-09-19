@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.vision_transduction_to_routing
+name: Phototransduction vers routage rétinien
+sector: vision
+source: {box_id: adapter.vision.transduction, port: photoreceptor_activity, group_query: null}
+target: {box_id: adapter.vision.routing, port: photoreceptor_activity, group_query: null}
+mapping_level: type-level
+expected_cardinality: receptor classes by ommatidium
+candidate_constraints: [same eye, same hex column, same receptor class]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: candidates_known, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [assignedOlHex1, assignedOlHex2]
+validation_ids: []
+next_action: Définir les classes et colonnes présentes des deux côtés.
+blocked_by: []

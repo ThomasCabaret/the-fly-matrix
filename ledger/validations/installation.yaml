@@ -1,0 +1,13 @@
+schema_version: 1
+id: validation.installation
+name: Installation complète CPU GPU physique
+owner_ids: [world.mujoco, body.flybody]
+level: integration
+protocol_path: src/the_fly_matrix/verify_install.py
+command: verify_install.bat
+acceptance_criteria: [All package checks pass, CUDA computation passes, MuJoCo steps and renders]
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: installation-2026-09-19
+status: integration_pass
+notes: [Passed locally on RTX 4060 Laptop GPU]

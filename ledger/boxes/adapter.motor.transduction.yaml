@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.motor.transduction
+name: Effet musculaire vers actionneurs FlyBody
+sector: motor_output
+adapter_type: F
+anatomical_region: muscles_and_joints
+parent_id: null
+ports: {inputs: [muscle_group_activity], outputs: [actuator_commands]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+parameter_family_ids: [parameter.motor.transduction]
+validation_ids: []
+next_action: Affecter chaque groupe musculaire aux 102 actionneurs, en signalant les deux haltères sans configuration.
+blocked_by: []
+completion_criteria: [Tous actionneurs couverts, Transformations locales, Limites mécaniques testées]

@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.touch_sensor_to_transduction
+name: Charges locales vers transduction tactile
+sector: mechanosensation
+source: {box_id: sensor.touch, port: local_contact_loads, group_query: null}
+target: {box_id: adapter.touch.transduction, port: local_contact_loads, group_query: null}
+mapping_level: group-level
+expected_cardinality: local contact regions to receptor classes
+candidate_constraints: [local body region only]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: unknown, implementation: not_started, validation: not_run}
+confidence: low
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: []
+next_action: Découper les surfaces par organe sensoriel plausible.
+blocked_by: []

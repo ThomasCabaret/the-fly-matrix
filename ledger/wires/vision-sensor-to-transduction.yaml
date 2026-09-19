@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.vision_sensor_to_transduction
+name: Échantillons rétiniens vers phototransduction
+sector: vision
+source: {box_id: sensor.vision, port: retinal_samples, group_query: null}
+target: {box_id: adapter.vision.transduction, port: retinal_samples, group_query: null}
+mapping_level: group-level
+expected_cardinality: one local sample per simulated receptor channel
+candidate_constraints: [same eye and retinal location]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: proposed, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: []
+next_action: Inventorier les canaux visuels physiques.
+blocked_by: []

@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.unknown
+name: Afférences sensorielles de modalité inconnue
+sector: mechanosensation
+partition_axis: modality
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: class == unknown_sensory
+member_count: 1712
+named_type_count: 59
+target_box_ids: [cns.malecns]
+status: {inventory: complete, decomposition: unknown, routing: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Utiliser nerf, sous-classe et morphologie pour proposer des modalités sans les imposer.
+blocked_by: [morphology_or_neuprint_helpful]
+completion_criteria: [Hypothèses séparées des faits, Population intégralement classée ou explicitement inconnue]

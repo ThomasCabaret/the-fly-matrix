@@ -1,0 +1,17 @@
+schema_version: 1
+id: parameter.baseline.gustation
+name: Activité basale gustative
+owner_id: clamp.gustation
+quantity: spontaneous activity distribution
+unit: spikes_per_second
+sharing_rule: shared by receptor class
+source_kind: borrowed
+source_references: [drosophila_virtual_fly_project_contract.md]
+value: near-zero stochastic activity
+bounds: null
+free_parameter_count: 0
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: borrowed
+confidence: medium
+known_limitations: [Exact class-specific rates not yet collected]

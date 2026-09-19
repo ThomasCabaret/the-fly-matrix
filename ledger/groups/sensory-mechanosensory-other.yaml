@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.mechanosensory_other
+name: Autres afférences mécanoréceptrices
+sector: mechanosensation
+partition_axis: modality
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: class == mechanosensory
+member_count: 1733
+named_type_count: 51
+target_box_ids: [adapter.touch.routing, cns.malecns]
+status: {inventory: complete, decomposition: proposed, routing: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Distinguer tactile, vibration, gravité et classes non résolues.
+blocked_by: []
+completion_criteria: [Modalités séparées, Aucun chevauchement silencieux, Routage candidat documenté]

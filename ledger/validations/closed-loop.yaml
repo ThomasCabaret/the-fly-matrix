@@ -1,0 +1,13 @@
+schema_version: 1
+id: validation.closed_loop
+name: Boucle complète connectome-corps-monde
+owner_ids: [evaluation.held_out]
+level: end_to_end
+protocol_path: null
+command: null
+acceptance_criteria: [All live inputs reach MaleCNS, Motor outputs reach body, Replay is deterministic, No external behavioral controller]
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: null
+status: not_run
+notes: []

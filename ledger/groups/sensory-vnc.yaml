@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.vnc
+name: Population sensorielle VNC
+sector: proprioception
+partition_axis: region
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: superclass == vnc_sensory
+member_count: 6370
+named_type_count: 171
+target_box_ids: [adapter.touch.routing, adapter.proprioception.routing, cns.malecns]
+status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Croiser classe, nerf, côté et neuromère pour répartir toucher et proprioception.
+blocked_by: []
+completion_criteria: [Chevauchements quantifiés, Chaque sous-groupe affecté ou marqué inconnu]

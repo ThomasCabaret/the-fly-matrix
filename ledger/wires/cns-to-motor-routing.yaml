@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.cns_to_motor_routing
+name: Sorties MaleCNS vers routage moteur
+sector: motor_output
+source: {box_id: cns.malecns, port: motor_neuron_activity, group_query: superclass == vnc_motor or exitNerve not null}
+target: {box_id: adapter.motor.routing, port: motor_neuron_activity, group_query: same bodyId}
+mapping_level: group-level
+expected_cardinality: 708 vnc_motor plus audited non-VNC outputs
+candidate_constraints: [exitNerve, type, side, neuromere, known muscle]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: candidates_known, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: []
+next_action: Auditer les sorties motrices non étiquetées vnc_motor et les muscles connus.
+blocked_by: []

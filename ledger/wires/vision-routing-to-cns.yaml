@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.vision_routing_to_cns
+name: Routage visuel vers MaleCNS
+sector: vision
+source: {box_id: adapter.vision.routing, port: visual_afferents, group_query: superclass in ol_sensory or visual_projection}
+target: {box_id: cns.malecns, port: sensory_afferents, group_query: same bodyId}
+mapping_level: group-level
+expected_cardinality: audit pending
+candidate_constraints: [MaleCNS visual annotation, same side, assigned optic-lobe hex]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: candidates_known, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: []
+next_action: Matérialiser la requête exacte des 6 091 cellules de classe visual.
+blocked_by: []

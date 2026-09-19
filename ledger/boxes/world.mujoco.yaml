@@ -1,0 +1,16 @@
+schema_version: 1
+id: world.mujoco
+name: Monde physique MuJoCo
+sector: physical_world
+adapter_type: null
+anatomical_region: environment
+parent_id: null
+ports: {inputs: [body_state], outputs: [light, contacts, gravity]}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: smoke}
+confidence: high
+evidence: [src/the_fly_matrix/verify_install.py]
+parameter_family_ids: []
+validation_ids: [validation.installation]
+next_action: Définir les scènes et variables physiques minimales utilisées par chaque sens.
+blocked_by: []
+completion_criteria: [Scènes versionnées, Variables physiques documentées, Rejeu déterministe]

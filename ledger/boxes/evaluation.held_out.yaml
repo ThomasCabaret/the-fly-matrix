@@ -1,0 +1,16 @@
+schema_version: 1
+id: evaluation.held_out
+name: Évaluation tenue à l'écart
+sector: evaluation
+adapter_type: null
+anatomical_region: system
+parent_id: null
+ports: {inputs: [cns_activity, body_state], outputs: [evaluation_results]}
+status: {inventory: partial, implementation: not_started, parameters: frozen, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md, ledger/behaviors.yaml]
+parameter_family_ids: []
+validation_ids: [validation.anti_leakage, validation.closed_loop]
+next_action: Fixer avant entraînement les perturbations et comportements réellement tenus à l'écart.
+blocked_by: [behavior_protocol_not_frozen]
+completion_criteria: [Protocole versionné, Données de calibration séparées, Aucun ajustement après gel]

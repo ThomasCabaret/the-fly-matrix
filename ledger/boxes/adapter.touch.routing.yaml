@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.touch.routing
+name: Routage mécanorécepteurs vers axones
+sector: mechanosensation
+adapter_type: C
+anatomical_region: peripheral_nerves
+parent_id: sensor.touch
+ports: {inputs: [mechanoreceptor_activity], outputs: [mechanosensory_afferents]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: low
+evidence: [data/derived/inventory/inventory.json]
+parameter_family_ids: []
+validation_ids: []
+next_action: Découper les 2 558 tactiles et groupes apparentés par nerf, côté et organe.
+blocked_by: []
+completion_criteria: [Groupes exhaustifs, Candidats anatomiques contraints, Paramètres discrets comptés]

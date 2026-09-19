@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.motor.routing
+name: Routage neurones moteurs vers groupes musculaires
+sector: motor_output
+adapter_type: E
+anatomical_region: motor_neurons_and_muscles
+parent_id: null
+ports: {inputs: [motor_neuron_activity], outputs: [muscle_group_activity]}
+status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+parameter_family_ids: []
+validation_ids: []
+next_action: Découper les 708 vnc_motor et autres sorties par nerf, muscle, côté et appendice.
+blocked_by: []
+completion_criteria: [Populations exhaustives, Associations connues figées, Candidats inconnus bornés]

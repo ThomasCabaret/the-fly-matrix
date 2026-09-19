@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.world_to_vision
+name: Lumière du monde vers capture visuelle
+sector: vision
+source: {box_id: world.mujoco, port: light, group_query: null}
+target: {box_id: sensor.vision, port: light, group_query: null}
+mapping_level: group-level
+expected_cardinality: one scene to two compound eyes
+candidate_constraints: [physical optics only]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: proposed, implementation: stub, validation: not_run}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md]
+validation_ids: []
+next_action: Fixer les repères optiques et la résolution.
+blocked_by: []

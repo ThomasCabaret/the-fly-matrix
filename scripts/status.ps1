@@ -42,6 +42,9 @@ try {
         $PythonVersion = & $Python --version 2>&1
         Write-Host "Python   : $PythonVersion [$Python]" -ForegroundColor Green
         if ($Python -eq $VenvPython) {
+            $env:PYTHONIOENCODING = "utf-8"
+            $env:PYTHONUTF8 = "1"
+            $env:PYTHONPATH = Join-Path $ProjectRoot "src"
             $PackageSummary = & $Python -c "import importlib.metadata as m, torch; print('FlyGym=' + m.version('flygym') + '; MuJoCo=' + m.version('mujoco') + '; PyTorch=' + torch.__version__ + '; CUDA=' + str(torch.cuda.is_available()))" 2>&1
             Write-Host "Paquets  : $PackageSummary" -ForegroundColor Green
         }
@@ -87,11 +90,8 @@ try {
     Write-Host "Valides  : $ValidCount/$($ExpectedData.Count)"
 
     Write-Section "Registre"
-    foreach ($Kind in @("boxes", "wires", "parameter_families", "validations")) {
-        $Folder = Join-Path $ProjectRoot "ledger\$Kind"
-        $Count = if (Test-Path $Folder) { @(Get-ChildItem $Folder -File -Filter "*.yaml" | Where-Object Name -ne "_template.yaml").Count } else { 0 }
-        Write-Host ("{0,-20}: {1}" -f $Kind, $Count)
-    }
+    & $Python -m the_fly_matrix status
+    if ($LASTEXITCODE -ne 0) { $ExitCode = 1 }
 
     Write-Section "Git"
     if (Test-Path (Join-Path $ProjectRoot ".git")) {

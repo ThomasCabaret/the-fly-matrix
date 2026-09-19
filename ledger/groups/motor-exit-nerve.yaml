@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.motor.exit_nerve
+name: Neurones portant un nerf de sortie
+sector: motor_output
+partition_axis: anatomy
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: exitNerve is not null
+member_count: 1005
+named_type_count: 229
+target_box_ids: [adapter.motor.routing]
+status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+confidence: high
+evidence: [data/derived/inventory/interface-neurons.parquet]
+next_action: Expliquer les 297 éléments au-delà de superclass == vnc_motor avant routage.
+blocked_by: []
+completion_criteria: [Écart avec vnc_motor expliqué, Fonctions non motrices exclues ou documentées]

@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.touch_routing_to_cns
+name: Routage tactile vers MaleCNS
+sector: mechanosensation
+source: {box_id: adapter.touch.routing, port: mechanosensory_afferents, group_query: class in mechanosensory_tactile or mechanosensory}
+target: {box_id: cns.malecns, port: sensory_afferents, group_query: same bodyId}
+mapping_level: group-level
+expected_cardinality: at least 4291 class-annotated neurons before finer filtering
+candidate_constraints: [entryNerve, somaSide, subclass]
+free_discrete_parameters: 0
+free_continuous_parameters: 0
+status: {inventory: partial, routing: candidates_known, implementation: not_started, validation: not_run}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json]
+validation_ids: []
+next_action: Dédupliquer les classes et répartir par nerf/côté/organe.
+blocked_by: []
