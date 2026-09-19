@@ -33,6 +33,22 @@ class ConfigTests(unittest.TestCase):
         self.assertFalse(audit["credential_persisted"])
         self.assertTrue(all(item["exact_match"] for item in audit["group_comparisons"]))
 
+    def test_generated_roi_audit_never_contains_local_credential(self) -> None:
+        env_path = ROOT / ".env"
+        audit_path = ROOT / "data" / "derived" / "inventory" / "roi-audit.json"
+        if not env_path.is_file() or not audit_path.is_file():
+            self.skipTest("local neuPrint configuration or ROI audit is absent")
+        token = read_env_file(env_path).get("NEUPRINT_APPLICATION_CREDENTIALS", "")
+        audit_text = audit_path.read_text(encoding="utf-8")
+        self.assertFalse(bool(token and token in audit_text), "credential leaked into ROI audit")
+        audit = json.loads(audit_text)
+        self.assertFalse(audit["credential_persisted"])
+        self.assertEqual(len(audit["groups"]), 6)
+        self.assertTrue(all(item["neurons"] > 0 for item in audit["groups"]))
+        self.assertTrue(
+            all(0 <= item["primary_roi_coverage_percent"] <= 100 for item in audit["groups"])
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

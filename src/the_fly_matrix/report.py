@@ -15,6 +15,7 @@ from .ledger import ROOT, build_summary, load_ledger, validate_ledger
 REPORT_ROOT = ROOT / "reports" / "generated"
 INVENTORY_PATH = ROOT / "data" / "derived" / "inventory" / "inventory.json"
 NEUPRINT_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "neuprint-audit.json"
+ROI_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "roi-audit.json"
 
 
 def section(title: str) -> None:
@@ -96,6 +97,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     datasets = inventory["datasets"]
     body = inventory["flybody"]
     neuprint = inventory.get("neuprint_audit")
+    roi_audit = inventory.get("roi_audit")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
     groups = "".join(
@@ -115,6 +117,30 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
             f'<div><strong>{neuprint["primary_roi_count"]:,}</strong><span>ROI primaires neuPrint</span></div>'
             f'<div><strong>{exact}/{len(comparisons)}</strong><span>groupes locaux = distants</span></div>'
         )
+    roi_table = ""
+    if roi_audit:
+        roi_groups = roi_audit.get("groups", [])
+        roi_rows = "".join(
+            f'<tr><td><code>{html.escape(group["group_id"])}</code></td>'
+            f'<td>{group["neurons"]:,}</td>'
+            f'<td>{group["primary_roi_coverage_percent"]:.2f}%</td>'
+            f'<td>{html.escape((group.get("top_input_roi") or {}).get("roi", "—"))}</td>'
+            f'<td>{html.escape((group.get("top_output_roi") or {}).get("roi", "—"))}</td>'
+            f'<td>{group["distinct_primary_rois"]:,}</td></tr>'
+            for group in roi_groups
+        )
+        remote_metrics += (
+            f'<div><strong>{len(roi_groups)}</strong><span>groupes avec signature ROI</span></div>'
+        )
+        roi_table = (
+            '<h3>Signatures anatomiques neuPrint</h3>'
+            '<p class="muted">Observations directes des synapses dans les ROI primaires; '
+            'elles ne constituent pas encore une attribution fonctionnelle.</p>'
+            '<div class="table-wrap compact"><table><thead><tr><th>Groupe</th>'
+            '<th>Neurones</th><th>Couverture ROI</th><th>ROI d’entrée dominante</th>'
+            '<th>ROI de sortie dominante</th><th>ROI distinctes</th></tr></thead>'
+            f'<tbody>{roi_rows}</tbody></table></div>'
+        )
     return (
         '<div class="metrics">'
         f'<div><strong>{annotations["rows"]:,}</strong><span>lignes d’annotations</span></div>'
@@ -126,7 +152,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         '<div class="table-wrap compact"><table><thead><tr><th>Groupe reproductible</th>'
         '<th>Neurones</th><th>Types nommés</th><th>Premier niveau</th><th>Détail candidat</th>'
         '<th>Requête locale</th></tr></thead>'
-        f'<tbody>{groups}</tbody></table></div>'
+        f'<tbody>{groups}</tbody></table></div>{roi_table}'
     )
 
 
@@ -227,6 +253,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 NEUPRINT_AUDIT_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Audit neuPrint chargé: {NEUPRINT_AUDIT_PATH}")
+        if ROI_AUDIT_PATH.is_file():
+            inventory["roi_audit"] = json.loads(
+                ROI_AUDIT_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Audit ROI chargé: {ROI_AUDIT_PATH}")
     else:
         print("[AVERTISSEMENT] Inventaire local absent; lancer run_analysis.bat")
 

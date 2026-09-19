@@ -16,7 +16,8 @@ Le contrat scientifique de référence est
 - `status.bat` affiche l'état de l'environnement, des données et du registre.
 - `verify_install.bat` relance le contrôle complet données/GPU/FlyBody/MuJoCo/Graphviz.
 - `run_analysis.bat` régénère l'inventaire local MaleCNS/FlyBody puis, si le jeton
-  est configuré, compare les populations avec neuPrint.
+  est configuré, compare les populations avec neuPrint et mesure les signatures
+  anatomiques ROI de six groupes d'interface prioritaires.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -53,9 +54,9 @@ personnel neuPrint :
 Le fichier `.env` est ignoré par Git. Le jeton ne doit jamais être partagé ni
 versionné.
 
-L'audit distant n'enregistre que la version du serveur, les métadonnées publiques,
-les effectifs des requêtes et leurs écarts avec les fichiers locaux. Le jeton n'est
-jamais copié dans `data/derived/` ni dans les rapports.
+L'audit distant n'enregistre que des métadonnées publiques, les effectifs des
+requêtes, les signatures ROI et leurs écarts avec les fichiers locaux. Le jeton
+n'est jamais copié dans `data/derived/` ni dans les rapports.
 
 ## Principe de suivi
 
@@ -79,6 +80,13 @@ découpage sur les axes locaux pertinents, et `interface-decomposition-audit.csv
 mesure leur couverture. Une proposition n'est promue en fiche `ledger/groups/`
 avec un `parent_id` qu'après audit anatomique ; elle ne devient donc jamais une vérité
 scientifique par simple effet du script.
+
+Quand le jeton neuPrint est présent, `roi-audit.json` synthétise les ROI primaires
+dominantes, `roi-signatures.csv` conserve les agrégats complets et
+`roi-neuron-signatures.jsonl` le détail par neurone. Pour cette convention,
+les synapses post-synaptiques décrivent l'entrée anatomique et les synapses
+pré-synaptiques la sortie. Ces fichiers sont des observations de morphologie
+grossière : une ROI dominante ne vaut pas attribution fonctionnelle.
 
 ## Rattachement Git distant
 

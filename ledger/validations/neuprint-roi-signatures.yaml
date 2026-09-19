@@ -1,0 +1,28 @@
+schema_version: 1
+id: validation.neuprint_roi_signatures
+name: Signatures anatomiques ROI des interfaces prioritaires
+owner_ids:
+  - group.sensory.unknown
+  - group.sensory.central_brain
+  - group.sensory.proprioceptive
+  - group.sensory.tactile
+  - group.motor.vnc
+  - group.motor.exit_nerve
+level: integration
+protocol_path: src/the_fly_matrix/roi_audit.py
+command: run_analysis.bat
+acceptance_criteria:
+  - Every selected group returns at least one neuron
+  - Primary ROI coverage is measured without silently imputing missing anatomy
+  - Input and output signatures are derived from post and pre synapse counts respectively
+  - Results are labelled as anatomical observations rather than functional assignments
+  - No credential is written to derived artifacts
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: roi-audit-2026-09-19
+status: integration_pass
+notes:
+  - 6 priority groups and 12305 group-neuron occurrences audited
+  - Primary ROI coverage ranges from 98.31 to 100 percent
+  - Detailed per-neuron signatures remain in ignored derived data
+  - Functional identity is deliberately not inferred from ROI dominance
