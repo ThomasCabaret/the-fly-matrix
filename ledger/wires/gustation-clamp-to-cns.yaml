@@ -9,9 +9,9 @@ expected_cardinality: 1428 class-annotated neurons
 candidate_constraints: [MaleCNS class equals gustatory]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: complete, routing: fixed, implementation: not_started, validation: local_pass}
+status: {inventory: complete, routing: fixed, implementation: tested, validation: integration_pass}
 confidence: medium
 evidence: [data/derived/wiring/basal-clamp-routing.json, data/derived/wiring/basal-clamp-routes.parquet]
-validation_ids: [validation.basal_clamp_routing]
-next_action: Brancher le manifeste exact au runtime abstrait des boîtes.
+validation_ids: [validation.basal_clamp_routing, validation.basal_clamp_runtime]
+next_action: Conserver la route exacte et reporter les valeurs d'activité à la calibration.
 blocked_by: []

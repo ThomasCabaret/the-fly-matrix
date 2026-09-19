@@ -19,6 +19,8 @@ Le contrat scientifique de référence est
   manifestes de câblage locaux puis, si le jeton est configuré, compare les
   populations avec neuPrint et mesure les signatures anatomiques ROI de six
   groupes d'interface prioritaires.
+- `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
+  routes olfactives et gustatives avec des valeurs arbitraires reproductibles.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -102,6 +104,12 @@ nerf, type, côté et sous-classe pertinente, tandis que
 `basal-clamp-routes.parquet` relie chaque canal aux `bodyId` MaleCNS exacts. Les
 valeurs d'activité basale n'apparaissent pas dans ces manifestes : elles seront
 traitées uniquement pendant la phase de calibration.
+
+Le runtime minimal dans `src/the_fly_matrix/runtime.py` sait instancier les boîtes
+type A générées, diffuser une valeur injectée par canal vers chaque `bodyId` et
+fusionner les activités dans un tampon d'entrée CNS type D. Le smoke test utilise
+des valeurs pseudo-aléatoires uniquement pour vérifier le passage des données ;
+elles ne sont jamais enregistrées comme paramètres scientifiques.
 
 ## Rattachement Git distant
 

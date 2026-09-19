@@ -14,13 +14,16 @@ try {
     $env:PYTHONPATH = Join-Path $ProjectRoot "src"
     $env:PYTHONIOENCODING = "utf-8"
     $env:PYTHONUTF8 = "1"
-    Write-Host "`n[1/4] Inventaire MaleCNS + FlyBody" -ForegroundColor Cyan
+    Write-Host "`n[1/5] Inventaire MaleCNS + FlyBody" -ForegroundColor Cyan
     & $Python -m the_fly_matrix.inventory
     if ($LASTEXITCODE -ne 0) { throw "L'inventaire a échoué avec le code $LASTEXITCODE." }
-    Write-Host "`n[2/4] Cablage structurel des clamps basaux" -ForegroundColor Cyan
+    Write-Host "`n[2/5] Cablage structurel des clamps basaux" -ForegroundColor Cyan
     & $Python -m the_fly_matrix.wiring
     if ($LASTEXITCODE -ne 0) { throw "Le câblage local a échoué avec le code $LASTEXITCODE." }
-    Write-Host "`n[3/4] Audit neuPrint distant" -ForegroundColor Cyan
+    Write-Host "`n[3/5] Smoke test du cablage executable" -ForegroundColor Cyan
+    & $Python -m the_fly_matrix.wiring_smoke
+    if ($LASTEXITCODE -ne 0) { throw "Le smoke test du cablage a echoue avec le code $LASTEXITCODE." }
+    Write-Host "`n[4/5] Audit neuPrint distant" -ForegroundColor Cyan
     $EnvPath = Join-Path $ProjectRoot ".env"
     $CredentialLine = if (Test-Path -LiteralPath $EnvPath) {
         Get-Content -LiteralPath $EnvPath | Where-Object { $_ -match '^NEUPRINT_APPLICATION_CREDENTIALS=.+' } | Select-Object -First 1
@@ -28,11 +31,11 @@ try {
     if ($CredentialLine) {
         & $Python -m the_fly_matrix.neuprint_audit
         if ($LASTEXITCODE -ne 0) { throw "L'audit neuPrint a echoue avec le code $LASTEXITCODE." }
-        Write-Host "`n[4/4] Signatures anatomiques ROI neuPrint" -ForegroundColor Cyan
+        Write-Host "`n[5/5] Signatures anatomiques ROI neuPrint" -ForegroundColor Cyan
         & $Python -m the_fly_matrix.roi_audit
         if ($LASTEXITCODE -ne 0) { throw "L'audit ROI neuPrint a echoue avec le code $LASTEXITCODE." }
     } else {
-        Write-Host "[SKIP] Jeton neuPrint absent; les étapes 3 et 4 sont ignorées." -ForegroundColor Yellow
+        Write-Host "[SKIP] Jeton neuPrint absent; les étapes 4 et 5 sont ignorées." -ForegroundColor Yellow
         Write-Host "       L'inventaire local reste valide." -ForegroundColor Yellow
     }
     Write-Host "`n[OK] Audit termine." -ForegroundColor Green

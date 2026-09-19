@@ -40,6 +40,7 @@ def main() -> int:
     subparsers.add_parser("status", help="summarize ledger record counts")
     subparsers.add_parser("inventory", help="audit local MaleCNS and FlyBody data")
     subparsers.add_parser("wiring", help="build structural wiring manifests")
+    subparsers.add_parser("wiring-smoke", help="execute wired boxes with arbitrary values")
     subparsers.add_parser("report", help="generate the project dashboard")
     subparsers.add_parser("neuprint-audit", help="verify authenticated neuPrint access")
     args = parser.parse_args()
@@ -53,6 +54,10 @@ def main() -> int:
         from .wiring import main as wiring_main
 
         return wiring_main()
+    if args.command == "wiring-smoke":
+        from .wiring_smoke import main as wiring_smoke_main
+
+        return wiring_smoke_main()
     if args.command == "report":
         from .report import main as report_main
 

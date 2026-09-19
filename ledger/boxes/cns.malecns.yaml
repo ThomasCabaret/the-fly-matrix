@@ -6,11 +6,11 @@ adapter_type: D
 anatomical_region: full_cns
 parent_id: null
 ports: {inputs: [sensory_afferents, basal_activity], outputs: [motor_neuron_activity, cns_activity]}
-status: {inventory: complete, implementation: not_started, parameters: unknown, validation: not_run}
+status: {inventory: complete, implementation: stub, parameters: unknown, validation: smoke}
 confidence: high
-evidence: [ledger/datasets.yaml, data/derived/inventory/inventory.json]
+evidence: [ledger/datasets.yaml, data/derived/inventory/inventory.json, src/the_fly_matrix/runtime.py, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.central.neuron_dynamics, parameter.central.synaptic_gain]
-validation_ids: [validation.data_loading, validation.neuprint_access, validation.resting_dynamics]
+validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.resting_dynamics]
 next_action: Construire la représentation creuse du graphe puis un premier modèle dynamique partagé.
 blocked_by: []
 completion_criteria: [Graphe intégral chargé, Dynamique déterministe, Régime basal stable]

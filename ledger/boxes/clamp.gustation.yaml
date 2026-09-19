@@ -6,11 +6,11 @@ adapter_type: A
 anatomical_region: gustatory_afferents
 parent_id: null
 ports: {inputs: [], outputs: [gustatory_baseline]}
-status: {inventory: complete, implementation: not_started, parameters: unknown, validation: local_pass}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
 evidence: [data/derived/wiring/basal-clamp-routing.json, data/derived/wiring/basal-clamp-routes.parquet]
 parameter_family_ids: [parameter.baseline.gustation]
-validation_ids: [validation.basal_clamp_routing]
-next_action: Implémenter le générateur paramétrable sans choisir encore ses valeurs de baseline.
+validation_ids: [validation.basal_clamp_routing, validation.basal_clamp_runtime]
+next_action: Conserver l'interface exécutable et reporter le choix des valeurs à la calibration.
 blocked_by: []
 completion_criteria: [Population exacte, Sorties terminales exécutables, Paramètres de baseline injectables]
