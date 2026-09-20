@@ -148,6 +148,13 @@ valeurs appartiennent exclusivement à des neurones internes `ol_intrinsic`. La
 correspondance pixel/ommatidie vers photorécepteur reste donc inconnue jusqu'à
 l'obtention d'une source rétinotopique indépendante.
 
+Côté physique, `flybody-vision-channels.csv` décrit deux caméras composées de 721
+ommatidies chacune. Pour chaque ommatidie, le manifeste conserve le canal actif
+jaune ou pâle de la sortie FlyGym `(2, 721, 2)`, soit 1 442 échantillons
+normalisés. Le smoke test effectue un véritable rendu MuJoCo local deux fois et
+vérifie un résultat déterministe. La jonction de ces 1 442 échantillons vers les
+6 098 afférences MaleCNS reste séparée et explicitement différée.
+
 Le manifeste moteur couvre les 708 neurones `vnc_motor` et 107 neurones
 `cb_motor`, avec une instance type E par `bodyId`. L'audit des nerfs de sortie
 isole 191 autres neurones endocrines ou efférents au lieu de les transformer en

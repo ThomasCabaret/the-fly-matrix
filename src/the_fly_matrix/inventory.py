@@ -25,6 +25,7 @@ from flygym.flybody.anatomy_flybody import (
     FlyBodyContactBodiesPreset,
 )
 from flygym.utils.math import Rotation3D
+from flygym.vision.retina import Retina
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -232,6 +233,7 @@ def audit_flybody() -> dict[str, Any]:
         }
         for segment in contact_segments
     ]
+    fly.add_vision()
     contact_world = FlatGroundWorld()
     contact_world.add_fly(
         fly,
@@ -241,6 +243,24 @@ def audit_flybody() -> dict[str, Any]:
         add_ground_contact_sensors=True,
     )
     contact_model = contact_world.mjcf_root.compile()
+    retina = Retina()
+    vision_cameras = []
+    for eye_index, (sensor_name, camera) in enumerate(
+        fly.eyecameraname_to_mjcfcamera.items()
+    ):
+        camera_id = mujoco.mj_name2id(
+            contact_model, mujoco.mjtObj.mjOBJ_CAMERA, camera.name
+        )
+        vision_cameras.append(
+            {
+                "eye_index": eye_index,
+                "eye": "left" if sensor_name.startswith("l_") else "right",
+                "sensor_name": sensor_name,
+                "camera_name": camera.name,
+                "camera_id": int(camera_id),
+                "field_of_view_degrees": float(contact_model.cam_fovy[camera_id]),
+            }
+        )
     contact_sensors = []
     for index in range(contact_model.nsensor):
         sensor_name = (
@@ -295,6 +315,24 @@ def audit_flybody() -> dict[str, Any]:
             "aggregate_leg_sensors": contact_sensors,
             "compiled_sensor_data_size": int(contact_model.nsensordata),
             "non_leg_local_load_sensors": "not_exposed_by_default",
+        },
+        "vision_interface": {
+            "cameras": vision_cameras,
+            "raw_frame_shape": [len(vision_cameras), retina.nrows, retina.ncols, 3],
+            "ommatidia_per_eye": int(retina.num_ommatidia_per_eye),
+            "readout_shape": [
+                len(vision_cameras),
+                int(retina.num_ommatidia_per_eye),
+                2,
+            ],
+            "readout_components": ["yellow", "pale"],
+            "ommatidium_types": [
+                "pale" if int(value) else "yellow" for value in retina.pale_type_mask
+            ],
+            "pixels_per_ommatidium": [
+                int(value) for value in retina.num_pixels_per_ommatidia
+            ],
+            "readout_unit": "normalized_intensity_0_to_1",
         },
     }
 

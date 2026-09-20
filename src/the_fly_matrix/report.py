@@ -26,6 +26,7 @@ FLYBODY_TOUCH_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "flybody-touc
 FLYBODY_ACTUATOR_WIRING_PATH = (
     ROOT / "data" / "derived" / "wiring" / "flybody-actuators.json"
 )
+FLYBODY_VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "flybody-vision.json"
 MECHANO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "mechanosensation-routing.json"
 VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "vision-routing.json"
 MOTOR_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routing.json"
@@ -120,6 +121,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     flybody_proprio_wiring = inventory.get("flybody_proprio_wiring")
     flybody_touch_wiring = inventory.get("flybody_touch_wiring")
     flybody_actuator_wiring = inventory.get("flybody_actuator_wiring")
+    flybody_vision_wiring = inventory.get("flybody_vision_wiring")
     mechano_wiring = inventory.get("mechano_wiring")
     vision_wiring = inventory.get("vision_wiring")
     motor_wiring = inventory.get("motor_wiring")
@@ -200,6 +202,11 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{flybody_actuator_wiring.get("actuator_channels", 0):,}</strong><span>actionneurs FlyBody adressés</span></div>'
             f'<div><strong>{config_counts.get("missing", 0):,}</strong><span>configurations d’actionneur manquantes</span></div>'
+        )
+    if flybody_vision_wiring:
+        remote_metrics += (
+            f'<div><strong>{flybody_vision_wiring.get("active_sample_channels", 0):,}</strong><span>échantillons visuels physiques</span></div>'
+            f'<div><strong>{flybody_vision_wiring.get("ommatidia_per_eye", 0):,}</strong><span>ommatidies par œil simulé</span></div>'
         )
     if mechano_wiring:
         remote_metrics += (
@@ -386,6 +393,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 FLYBODY_ACTUATOR_WIRING_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Actionneurs FlyBody chargés: {FLYBODY_ACTUATOR_WIRING_PATH}")
+        if FLYBODY_VISION_WIRING_PATH.is_file():
+            inventory["flybody_vision_wiring"] = json.loads(
+                FLYBODY_VISION_WIRING_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Vision physique FlyBody chargée: {FLYBODY_VISION_WIRING_PATH}")
         if MECHANO_WIRING_PATH.is_file():
             inventory["mechano_wiring"] = json.loads(
                 MECHANO_WIRING_PATH.read_text(encoding="utf-8")

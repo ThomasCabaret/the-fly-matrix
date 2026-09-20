@@ -16,6 +16,7 @@ from .runtime import (
     FlyBodyProprioceptionSensor,
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
+    FlyBodyVisionSensor,
     MechanosensationRoutingBox,
     MotorRoutingBox,
     ProprioceptionRoutingBox,
@@ -60,6 +61,33 @@ def _channel_digest(activity: ChannelActivity) -> str:
     return digest.hexdigest()
 
 
+def _render_flybody_vision_twice() -> tuple[np.ndarray, np.ndarray]:
+    """Exercise FlyGym's real camera and retina path on a static local scene."""
+    from flygym.compose.fly.flybody import FlyBody
+    from flygym.compose.world import FlatGroundWorld
+    from flygym.flybody.anatomy_flybody import FlyBodyContactBodiesPreset
+    from flygym.simulation import Simulation
+    from flygym.utils.math import Rotation3D
+
+    fly = FlyBody()
+    fly.add_vision()
+    world = FlatGroundWorld()
+    world.add_fly(
+        fly,
+        np.asarray([0.0, 0.0, 1.0]),
+        Rotation3D("quat", (1, 0, 0, 0)),
+        bodysegs_with_ground_contact=FlyBodyContactBodiesPreset.LEGS_THORAX_ABDOMEN_HEAD,
+    )
+    simulation = Simulation(world)
+    try:
+        return (
+            simulation.get_ommatidia_readouts("flybody"),
+            simulation.get_ommatidia_readouts("flybody"),
+        )
+    finally:
+        simulation.close()
+
+
 def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object]:
     section("Chargement des boîtes abstraites générées")
     boxes = [BasalClampBox.from_generated_wiring(box_id) for box_id in CLAMP_IDS]
@@ -83,6 +111,12 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     print(
         f"[OK] {actuator_interface.box_id}: {len(actuator_interface.actuator_names):,} "
         "adresses de commande d'actionneur exactes"
+    )
+    vision_sensor = FlyBodyVisionSensor.from_generated_wiring()
+    print(
+        f"[OK] {vision_sensor.box_id}: {vision_sensor.eye_count} yeux, "
+        f"{vision_sensor.ommatidia_per_eye:,} ommatidies par œil, "
+        f"{len(vision_sensor.channel_ids):,} échantillons actifs"
     )
     proprioception = ProprioceptionRoutingBox.from_generated_wiring()
     print(
@@ -110,7 +144,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"{len(unclassified.routes):,} destinations exactes; modalités physiques différées"
     )
 
-    section("Injection déterministe de valeurs arbitraires")
+    section("Exécution déterministe du rendu et des valeurs structurelles")
+    vision_readouts_first, vision_readouts_second = _render_flybody_vision_twice()
+    vision_samples_first = vision_sensor.step(vision_readouts_first)
+    vision_samples_second = vision_sensor.step(vision_readouts_second)
     qpos_first = np.random.default_rng(seed - 2).uniform(-1.0, 1.0, proprio_sensor.qpos_size)
     qvel_first = np.random.default_rng(seed - 1).uniform(-1.0, 1.0, proprio_sensor.qvel_size)
     qpos_second = np.random.default_rng(seed - 2).uniform(-1.0, 1.0, proprio_sensor.qpos_size)
@@ -205,9 +242,18 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(
             f"102 commandes d'actionneur attendues, {len(actuator_commands_first.actuator_names)} obtenues"
         )
+    if vision_samples_first.channel_ids != vision_samples_second.channel_ids or not np.array_equal(
+        vision_samples_first.values, vision_samples_second.values
+    ):
+        raise RuntimeError("Le rejeu du rendu visuel FlyBody n'est pas déterministe")
+    if len(vision_samples_first.channel_ids) != 1442:
+        raise RuntimeError(
+            f"1442 échantillons visuels attendus, {len(vision_samples_first.channel_ids)} obtenus"
+        )
     print("[OK] 102 articulations FlyBody extraites en 204 observables position/vitesse")
     print("[OK] 6 contacts de patte extraits en 96 observables physiques")
     print("[OK] 102 commandes placées dans les 102 adresses ctrl FlyBody")
+    print("[OK] Rendu réel de 2 × 721 ommatidies extrait de façon déterministe")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
@@ -312,12 +358,22 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "control_vector_size": len(actuator_commands_first.values),
             "motor_neuron_to_actuator_mapping": "deferred",
         },
+        "physical_vision": {
+            "source_box_id": "world.mujoco",
+            "target_box_id": vision_sensor.box_id,
+            "eye_cameras": vision_sensor.eye_count,
+            "ommatidia_per_eye": vision_sensor.ommatidia_per_eye,
+            "active_sample_channels": len(vision_samples_first.channel_ids),
+            "actual_mujoco_render_executed": True,
+            "malecns_retinotopic_mapping": "deferred",
+        },
         "checks": {
             "all_routes_executed": True,
             "motor_routes_executed": True,
             "body_to_proprioception_executed": True,
             "world_to_touch_executed": True,
             "motor_transduction_to_body_executed": True,
+            "world_to_vision_executed": True,
             "deterministic_replay": True,
             "scientific_parameters_selected": False,
             "activity_values_persisted": False,

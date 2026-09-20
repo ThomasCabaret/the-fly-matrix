@@ -113,6 +113,21 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(physical_motor["control_addressing"], "exact")
         self.assertEqual(physical_motor["motor_neuron_to_actuator_mapping"], "deferred")
 
+        physical_vision_path = path.with_name("flybody-vision.json")
+        self.assertTrue(physical_vision_path.is_file())
+        physical_vision = json.loads(physical_vision_path.read_text(encoding="utf-8"))
+        self.assertEqual(physical_vision["eye_cameras"], 2)
+        self.assertEqual(physical_vision["ommatidia_per_eye"], 721)
+        self.assertEqual(physical_vision["active_sample_channels"], 1442)
+        self.assertEqual(physical_vision["raw_readout_scalar_slots"], 2884)
+        self.assertEqual(physical_vision["raw_frame_shape"], [2, 512, 450, 3])
+        self.assertEqual(physical_vision["readout_shape"], [2, 721, 2])
+        self.assertEqual(
+            sum(physical_vision["ommatidium_type_counts_per_eye"].values()), 721
+        )
+        self.assertEqual(physical_vision["physical_channel_mapping"], "exact")
+        self.assertEqual(physical_vision["malecns_retinotopic_mapping"], "deferred")
+
         mechano_path = path.with_name("mechanosensation-routing.json")
         self.assertTrue(mechano_path.is_file())
         mechano = json.loads(mechano_path.read_text(encoding="utf-8"))

@@ -4,14 +4,14 @@ name: Échantillons rétiniens vers phototransduction
 sector: vision
 source: {box_id: sensor.vision, port: retinal_samples, group_query: null}
 target: {box_id: adapter.vision.transduction, port: retinal_samples, group_query: null}
-mapping_level: group-level
-expected_cardinality: one local sample per simulated receptor channel
+mapping_level: exact
+expected_cardinality: 1442 active ommatidial samples
 candidate_constraints: [same eye and retinal location]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: partial, routing: proposed, implementation: not_started, validation: not_run}
-confidence: medium
-evidence: [drosophila_virtual_fly_project_contract.md]
-validation_ids: []
-next_action: Inventorier les canaux visuels physiques.
+status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
+confidence: high
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/flybody-vision.json, data/derived/wiring/flybody-vision-channels.csv, runs/wiring-smoke/latest.json]
+validation_ids: [validation.flybody_vision_sensor]
+next_action: Définir la phototransduction et la correspondance rétinotopique vers les 6 098 afférences sans fusionner les étapes.
 blocked_by: []

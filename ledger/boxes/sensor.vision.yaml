@@ -6,11 +6,11 @@ adapter_type: null
 anatomical_region: compound_eyes
 parent_id: null
 ports: {inputs: [light], outputs: [retinal_samples]}
-status: {inventory: partial, implementation: stub, parameters: unknown, validation: not_run}
-confidence: medium
-evidence: [drosophila_virtual_fly_project_contract.md]
+status: {inventory: complete, implementation: tested, parameters: borrowed, validation: integration_pass}
+confidence: high
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-vision.json, data/derived/wiring/flybody-vision-channels.csv, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: []
-next_action: Inventorier les pixels/ommatidies exposés par FlyGym et leurs repères.
+validation_ids: [validation.flybody_vision_sensor]
+next_action: Conserver les 1 442 échantillons physiques pendant la construction séparée de la rétinotopie MaleCNS.
 blocked_by: []
-completion_criteria: [Canaux physiques énumérés, Repères gauche/droite fixés, Test de mire]
+completion_criteria: [1 442 canaux physiques énumérés, Repères gauche/droite fixés, Rendu MuJoCo réel déterministe]

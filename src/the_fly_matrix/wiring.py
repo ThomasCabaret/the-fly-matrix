@@ -48,6 +48,8 @@ FLYBODY_TOUCH_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-touch.json"
 FLYBODY_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-touch-channels.csv"
 FLYBODY_ACTUATOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-actuators.json"
 FLYBODY_ACTUATOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-actuator-channels.csv"
+FLYBODY_VISION_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-vision.json"
+FLYBODY_VISION_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-vision-channels.csv"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -558,6 +560,91 @@ def build_flybody_actuator_wiring(
         f"{status_counts.get('missing', 0):,} sans configuration FlyBody spécifique"
     )
     print("[INFO] La correspondance entre 815 sorties neuronales et 102 actionneurs reste différée")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux physiques : {channel_output}")
+    return summary
+
+
+def build_flybody_vision_wiring(
+    inventory_path: Path = INVENTORY_PATH,
+    summary_output: Path = FLYBODY_VISION_SUMMARY_OUTPUT,
+    channel_output: Path = FLYBODY_VISION_CHANNEL_OUTPUT,
+) -> dict[str, Any]:
+    """Enumerate the active per-ommatidium samples returned by FlyGym."""
+    if not inventory_path.is_file():
+        raise FileNotFoundError(f"{inventory_path} absent; lancez d'abord l'inventaire")
+    section("Câblage des caméras FlyBody vers le capteur visuel")
+    inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+    interface = inventory["flybody"].get("vision_interface", {})
+    cameras = interface.get("cameras", [])
+    ommatidium_types = interface.get("ommatidium_types", [])
+    pixel_counts = interface.get("pixels_per_ommatidium", [])
+    if len(cameras) != 2 or not ommatidium_types or len(ommatidium_types) != len(pixel_counts):
+        raise RuntimeError("L'inventaire visuel FlyBody est incomplet")
+    rows: list[dict[str, Any]] = []
+    for camera in cameras:
+        eye = str(camera["eye"])
+        eye_code = "l" if eye == "left" else "r"
+        for ommatidium_id, (ommatidium_type, pixel_count) in enumerate(
+            zip(ommatidium_types, pixel_counts)
+        ):
+            component_index = 1 if ommatidium_type == "pale" else 0
+            rows.append(
+                {
+                    "channel_id": f"channel.flybody.vision.{eye_code}.{ommatidium_id:03d}",
+                    "source_box_id": "world.mujoco",
+                    "source_port": "light",
+                    "target_box_id": "sensor.vision",
+                    "target_port": "light",
+                    "eye_index": int(camera["eye_index"]),
+                    "eye": eye,
+                    "camera_name": camera["camera_name"],
+                    "camera_id": int(camera["camera_id"]),
+                    "ommatidium_id": ommatidium_id,
+                    "ommatidium_type": ommatidium_type,
+                    "component_index": component_index,
+                    "raw_pixel_count": int(pixel_count),
+                    "readout_unit": interface["readout_unit"],
+                }
+            )
+    channels = pd.DataFrame(rows)
+    if channels["channel_id"].duplicated().any():
+        raise RuntimeError("Les canaux visuels FlyBody ne sont pas uniques")
+    per_eye = int(interface["ommatidia_per_eye"])
+    if len(channels) != 2 * per_eye:
+        raise RuntimeError("La cardinalité des canaux visuels ne correspond pas aux yeux")
+    type_counts_per_eye = {
+        str(key): int(value)
+        for key, value in channels.loc[channels["eye_index"].eq(0), "ommatidium_type"]
+        .value_counts()
+        .sort_index()
+        .items()
+    }
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(inventory_path.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact FlyGym physical vision channels; MaleCNS retinotopy is deferred",
+        "wire_ids": ["wire.world_to_vision", "wire.vision_sensor_to_transduction"],
+        "source_box_id": "world.mujoco",
+        "target_box_id": "sensor.vision",
+        "eye_cameras": len(cameras),
+        "ommatidia_per_eye": per_eye,
+        "active_sample_channels": len(channels),
+        "raw_readout_scalar_slots": int(2 * per_eye * 2),
+        "raw_frame_shape": interface["raw_frame_shape"],
+        "readout_shape": interface["readout_shape"],
+        "field_of_view_degrees": [camera["field_of_view_degrees"] for camera in cameras],
+        "ommatidium_type_counts_per_eye": type_counts_per_eye,
+        "physical_channel_mapping": "exact",
+        "malecns_retinotopic_mapping": "deferred",
+        "scientific_parameter_values_selected": False,
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    channels.to_csv(channel_output, index=False, encoding="utf-8")
+    print(f"[OK] {len(cameras)} caméras, {per_eye:,} ommatidies par œil")
+    print(f"[OK] {len(channels):,} échantillons actifs reliés sans rétinotopie MaleCNS")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux physiques : {channel_output}")
     return summary
@@ -1201,6 +1288,7 @@ def main() -> int:
         build_flybody_proprioception_wiring()
         build_flybody_touch_wiring()
         build_flybody_actuator_wiring()
+        build_flybody_vision_wiring()
         build_mechanosensation_wiring(args.source)
         build_vision_wiring(args.source)
         build_motor_wiring(args.source)

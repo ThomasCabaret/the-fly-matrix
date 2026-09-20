@@ -11,6 +11,7 @@ from the_fly_matrix.runtime import (
     FLYBODY_PROPRIO_CHANNEL_PATH,
     FLYBODY_TOUCH_CHANNEL_PATH,
     FLYBODY_ACTUATOR_CHANNEL_PATH,
+    FLYBODY_VISION_CHANNEL_PATH,
     MECHANO_CHANNEL_PATH,
     MECHANO_ROUTE_PATH,
     MOTOR_CHANNEL_PATH,
@@ -30,6 +31,7 @@ from the_fly_matrix.runtime import (
     FlyBodyProprioceptionSensor,
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
+    FlyBodyVisionSensor,
 )
 
 
@@ -122,6 +124,27 @@ class RuntimeTests(unittest.TestCase):
             interface.channels["actuator_config_status"].value_counts().to_dict(),
             {"configured": 100, "missing": 2},
         )
+
+    def test_flybody_vision_extracts_one_active_sample_per_ommatidium(self) -> None:
+        if not FLYBODY_VISION_CHANNEL_PATH.is_file():
+            self.skipTest("generated FlyBody vision wiring is absent")
+        sensor = FlyBodyVisionSensor.from_generated_wiring()
+        readouts = np.arange(np.prod(sensor.readout_shape), dtype=np.float64).reshape(
+            sensor.readout_shape
+        )
+        output = sensor.step(readouts)
+        self.assertEqual(sensor.readout_shape, (2, 721, 2))
+        self.assertEqual(len(sensor.channel_ids), 1442)
+        self.assertEqual(len(output.values), 1442)
+        first = sensor.channels.iloc[0]
+        expected_first = readouts[
+            int(first["eye_index"]),
+            int(first["ommatidium_id"]),
+            int(first["component_index"]),
+        ]
+        self.assertEqual(output.values[0], expected_first)
+        self.assertEqual(set(sensor.channels["eye"]), {"left", "right"})
+        self.assertEqual(set(sensor.channels["ommatidium_type"]), {"yellow", "pale"})
 
     def test_mechanosensation_router_executes_both_disjoint_groups(self) -> None:
         if not MECHANO_CHANNEL_PATH.is_file() or not MECHANO_ROUTE_PATH.is_file():

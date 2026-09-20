@@ -1,0 +1,25 @@
+schema_version: 1
+id: validation.flybody_vision_sensor
+name: Capture visuelle physique exécutable FlyBody
+owner_ids:
+  - world.mujoco
+  - sensor.vision
+  - wire.world_to_vision
+  - wire.vision_sensor_to_transduction
+level: integration
+protocol_path: src/the_fly_matrix/wiring_smoke.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - Two compiled eye cameras expose 721 ommatidia each
+  - One active yellow or pale sample is preserved per ommatidium
+  - The real MuJoCo rendering and FlyGym retina path execute locally
+  - Repeated rendering of the unchanged scene is deterministic
+  - No mapping to the 6098 MaleCNS visual afferents is inferred
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: flybody-vision-runtime-2026-09-20
+status: integration_pass
+notes:
+  - The physical interface contains 1442 active normalized-intensity channels
+  - Raw FlyGym readouts retain 2884 yellow/pale scalar slots before active-channel selection
+  - MaleCNS retinotopy and phototransduction remain deliberately deferred

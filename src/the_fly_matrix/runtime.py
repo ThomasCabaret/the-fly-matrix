@@ -26,6 +26,7 @@ UNCLASSIFIED_ROUTE_PATH = WIRING_ROOT / "unclassified-sensory-routes.parquet"
 FLYBODY_PROPRIO_CHANNEL_PATH = WIRING_ROOT / "flybody-proprioception-channels.csv"
 FLYBODY_TOUCH_CHANNEL_PATH = WIRING_ROOT / "flybody-touch-channels.csv"
 FLYBODY_ACTUATOR_CHANNEL_PATH = WIRING_ROOT / "flybody-actuator-channels.csv"
+FLYBODY_VISION_CHANNEL_PATH = WIRING_ROOT / "flybody-vision-channels.csv"
 
 
 @dataclass(frozen=True)
@@ -335,6 +336,64 @@ class FlyBodyActuatorInterface:
             for _, name in sorted(zip(self._control_addresses, self.actuator_names))
         )
         return ActuatorCommands(actuator_names=names_by_address, values=controls)
+
+
+class FlyBodyVisionSensor:
+    """Extract one active yellow/pale sample per FlyGym ommatidium."""
+
+    box_id = "sensor.vision"
+
+    def __init__(self, channels: pd.DataFrame):
+        if channels.empty:
+            raise ValueError("No generated FlyBody vision channels found")
+        required = {
+            "channel_id",
+            "eye_index",
+            "eye",
+            "ommatidium_id",
+            "ommatidium_type",
+            "component_index",
+        }
+        missing = required - set(channels.columns)
+        if missing:
+            raise ValueError(f"Missing FlyBody vision columns: {sorted(missing)}")
+        self.channels = channels.sort_values(["eye_index", "ommatidium_id"]).reset_index(
+            drop=True
+        )
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate FlyBody vision channel IDs")
+        if self.channels.duplicated(["eye_index", "ommatidium_id"]).any():
+            raise ValueError("Duplicate FlyBody eye/ommatidium pairs")
+        self.channel_ids = tuple(self.channels["channel_id"].astype(str))
+        self._eye_indices = self.channels["eye_index"].to_numpy(dtype=np.int64)
+        self._ommatidium_indices = self.channels["ommatidium_id"].to_numpy(dtype=np.int64)
+        self._component_indices = self.channels["component_index"].to_numpy(dtype=np.int64)
+        self.eye_count = int(self._eye_indices.max()) + 1
+        self.ommatidia_per_eye = int(self._ommatidium_indices.max()) + 1
+        self.readout_shape = (self.eye_count, self.ommatidia_per_eye, 2)
+
+    @classmethod
+    def from_generated_wiring(
+        cls, channel_path: Path = FLYBODY_VISION_CHANNEL_PATH
+    ) -> "FlyBodyVisionSensor":
+        if not channel_path.is_file():
+            raise FileNotFoundError("FlyBody vision wiring is absent; run the wiring builder first")
+        return cls(pd.read_csv(channel_path))
+
+    def step(self, ommatidia_readouts: np.ndarray) -> ChannelActivity:
+        readouts = np.asarray(ommatidia_readouts, dtype=np.float64)
+        if readouts.shape != self.readout_shape:
+            raise ValueError(
+                f"ommatidia readouts: expected {self.readout_shape}, got {readouts.shape}"
+            )
+        if not np.isfinite(readouts).all():
+            raise ValueError("ommatidia readouts must be finite")
+        values = readouts[
+            self._eye_indices,
+            self._ommatidium_indices,
+            self._component_indices,
+        ]
+        return ChannelActivity(channel_ids=self.channel_ids, values=values.copy())
 
 
 class BasalClampBox:

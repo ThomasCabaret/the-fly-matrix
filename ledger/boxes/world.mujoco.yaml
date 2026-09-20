@@ -8,9 +8,9 @@ parent_id: null
 ports: {inputs: [body_state], outputs: [light, contacts, gravity]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: smoke}
 confidence: high
-evidence: [src/the_fly_matrix/verify_install.py, data/derived/wiring/flybody-touch.json, runs/wiring-smoke/latest.json]
+evidence: [src/the_fly_matrix/verify_install.py, data/derived/wiring/flybody-touch.json, data/derived/wiring/flybody-vision.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: [validation.installation, validation.flybody_touch_sensor]
+validation_ids: [validation.installation, validation.flybody_touch_sensor, validation.flybody_vision_sensor]
 next_action: Définir les scènes et variables physiques minimales utilisées par chaque sens.
 blocked_by: []
 completion_criteria: [Scènes versionnées, Variables physiques documentées, Rejeu déterministe]

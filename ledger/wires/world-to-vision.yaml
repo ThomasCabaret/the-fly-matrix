@@ -4,14 +4,14 @@ name: Lumière du monde vers capture visuelle
 sector: vision
 source: {box_id: world.mujoco, port: light, group_query: null}
 target: {box_id: sensor.vision, port: light, group_query: null}
-mapping_level: group-level
-expected_cardinality: one scene to two compound eyes
+mapping_level: exact
+expected_cardinality: 2 cameras x 721 ommatidia x one active yellow/pale channel
 candidate_constraints: [physical optics only]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: partial, routing: proposed, implementation: stub, validation: not_run}
-confidence: medium
-evidence: [drosophila_virtual_fly_project_contract.md]
-validation_ids: []
-next_action: Fixer les repères optiques et la résolution.
+status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
+confidence: high
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-vision.json, data/derived/wiring/flybody-vision-channels.csv, runs/wiring-smoke/latest.json]
+validation_ids: [validation.flybody_vision_sensor]
+next_action: Préserver ce contrat lors de l'ajout ultérieur de scènes visuelles de validation.
 blocked_by: []
