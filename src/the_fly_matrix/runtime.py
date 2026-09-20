@@ -25,6 +25,7 @@ UNCLASSIFIED_CHANNEL_PATH = WIRING_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_PATH = WIRING_ROOT / "unclassified-sensory-routes.parquet"
 FLYBODY_PROPRIO_CHANNEL_PATH = WIRING_ROOT / "flybody-proprioception-channels.csv"
 FLYBODY_TOUCH_CHANNEL_PATH = WIRING_ROOT / "flybody-touch-channels.csv"
+FLYBODY_ACTUATOR_CHANNEL_PATH = WIRING_ROOT / "flybody-actuator-channels.csv"
 
 
 @dataclass(frozen=True)
@@ -256,6 +257,84 @@ class FlyBodyGroundContactSensor:
             normals=rows[:, 10:13].copy(),
             tangents=rows[:, 13:16].copy(),
         )
+
+
+@dataclass(frozen=True)
+class ActuatorCommands:
+    """Control vector addressed to the compiled FlyBody actuators."""
+
+    actuator_names: tuple[str, ...]
+    values: np.ndarray
+
+    def __post_init__(self) -> None:
+        if self.values.shape != (len(self.actuator_names),):
+            raise ValueError("actuator command values must match actuator_names")
+        if len(set(self.actuator_names)) != len(self.actuator_names):
+            raise ValueError("Actuator command names must be unique")
+        if not np.isfinite(self.values).all():
+            raise ValueError("actuator command values must be finite")
+
+
+class FlyBodyActuatorInterface:
+    """Address pre-transduced values to all 102 FlyBody control slots."""
+
+    box_id = "body.flybody"
+
+    def __init__(self, channels: pd.DataFrame):
+        if channels.empty:
+            raise ValueError("No generated FlyBody actuator channels found")
+        required = {"channel_id", "actuator_name", "control_address", "target_joint_name"}
+        missing = required - set(channels.columns)
+        if missing:
+            raise ValueError(f"Missing FlyBody actuator columns: {sorted(missing)}")
+        self.channels = channels.sort_values("control_address").reset_index(drop=True)
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate FlyBody actuator channel IDs")
+        if self.channels["actuator_name"].duplicated().any():
+            raise ValueError("Duplicate FlyBody actuator names")
+        self.channel_ids = tuple(self.channels["channel_id"].astype(str))
+        self.actuator_names = tuple(self.channels["actuator_name"].astype(str))
+        self._control_addresses = self.channels["control_address"].to_numpy(dtype=np.int64)
+        if len(np.unique(self._control_addresses)) != len(self._control_addresses):
+            raise ValueError("Duplicate FlyBody control addresses")
+        self.control_size = int(self._control_addresses.max()) + 1
+
+    @classmethod
+    def from_generated_wiring(
+        cls, channel_path: Path = FLYBODY_ACTUATOR_CHANNEL_PATH
+    ) -> "FlyBodyActuatorInterface":
+        if not channel_path.is_file():
+            raise FileNotFoundError(
+                "FlyBody actuator wiring is absent; run the wiring builder first"
+            )
+        return cls(pd.read_csv(channel_path))
+
+    def step(self, command_values: Mapping[str, float] | np.ndarray) -> ActuatorCommands:
+        if isinstance(command_values, Mapping):
+            missing = set(self.actuator_names) - set(command_values)
+            extra = set(command_values) - set(self.actuator_names)
+            if missing or extra:
+                raise ValueError(
+                    f"actuator commands: mismatch; missing={len(missing)}, extra={len(extra)}"
+                )
+            values = np.asarray(
+                [command_values[name] for name in self.actuator_names], dtype=np.float64
+            )
+        else:
+            values = np.asarray(command_values, dtype=np.float64)
+        if values.shape != (len(self.actuator_names),):
+            raise ValueError(
+                f"actuator commands: expected {len(self.actuator_names)} values, got {values.shape}"
+            )
+        if not np.isfinite(values).all():
+            raise ValueError("actuator command values must be finite")
+        controls = np.zeros(self.control_size, dtype=np.float64)
+        controls[self._control_addresses] = values
+        names_by_address = tuple(
+            name
+            for _, name in sorted(zip(self._control_addresses, self.actuator_names))
+        )
+        return ActuatorCommands(actuator_names=names_by_address, values=controls)
 
 
 class BasalClampBox:

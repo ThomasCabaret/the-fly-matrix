@@ -1,0 +1,24 @@
+schema_version: 1
+id: validation.flybody_actuator_interface
+name: Adressage exécutable des actionneurs FlyBody
+owner_ids:
+  - body.flybody
+  - adapter.motor.transduction
+  - wire.motor_transduction_to_body
+level: integration
+protocol_path: src/the_fly_matrix/wiring_smoke.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 102 compiled FlyBody actuators have one unique control address
+  - Each actuator targets one unique compiled joint
+  - Arbitrary pre-transduced commands are placed deterministically in the ctrl vector
+  - The two haltere actuators without specific FlyBody configuration remain explicit
+  - No motor-neuron-to-muscle or scientific command value is inferred
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: flybody-actuator-runtime-2026-09-20
+status: integration_pass
+notes:
+  - 102 actuator channels target 102 unique joints
+  - 100 channels have a FlyBody actuator configuration group and 2 haltere channels do not
+  - Mapping from 815 neuronal outputs to 102 actuator commands remains deliberately deferred

@@ -46,6 +46,8 @@ FLYBODY_PROPRIO_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-proprioception.json"
 FLYBODY_PROPRIO_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-proprioception-channels.csv"
 FLYBODY_TOUCH_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-touch.json"
 FLYBODY_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-touch-channels.csv"
+FLYBODY_ACTUATOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-actuators.json"
+FLYBODY_ACTUATOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-actuator-channels.csv"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -480,6 +482,82 @@ def build_flybody_touch_wiring(
     print(f"[OK] {len(segment_rows):,} segments de collision et {interface['explicit_ground_contact_pairs']:,} paires inventoriés")
     print(f"[OK] {len(channels):,} capteurs de patte reliés, {summary['scalar_observables']:,} scalaires exposés")
     print("[INFO] Les charges locales hors pattes et l'attribution biologique restent différées")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux physiques : {channel_output}")
+    return summary
+
+
+def build_flybody_actuator_wiring(
+    inventory_path: Path = INVENTORY_PATH,
+    summary_output: Path = FLYBODY_ACTUATOR_SUMMARY_OUTPUT,
+    channel_output: Path = FLYBODY_ACTUATOR_CHANNEL_OUTPUT,
+) -> dict[str, Any]:
+    """Wire pre-transduced commands to exact FlyBody actuator addresses."""
+    if not inventory_path.is_file():
+        raise FileNotFoundError(f"{inventory_path} absent; lancez d'abord l'inventaire")
+    section("Câblage des commandes vers les actionneurs FlyBody")
+    inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+    flybody = inventory["flybody"]
+    rows = flybody.get("actuator_channels", [])
+    if not rows:
+        raise RuntimeError("L'inventaire FlyBody ne contient aucun canal d'actionneur")
+    channels = pd.DataFrame(rows).sort_values("control_address").reset_index(drop=True)
+    channels.insert(
+        0,
+        "channel_id",
+        channels["actuator_id"].map(lambda value: f"channel.flybody.actuator.{int(value):03d}"),
+    )
+    channels.insert(1, "source_box_id", "adapter.motor.transduction")
+    channels.insert(2, "source_port", "actuator_commands")
+    channels.insert(3, "target_box_id", "body.flybody")
+    channels.insert(4, "target_port", "actuator_commands")
+    if channels["channel_id"].duplicated().any() or channels["actuator_name"].duplicated().any():
+        raise RuntimeError("Les canaux d'actionneur FlyBody ne sont pas uniques")
+    if channels["control_address"].duplicated().any():
+        raise RuntimeError("Les adresses de commande FlyBody ne sont pas injectives")
+    expected = int(flybody["model"]["nu"])
+    if len(channels) != expected:
+        raise RuntimeError("La cardinalité des actionneurs ne correspond pas à nu")
+    if channels["target_joint_id"].duplicated().any():
+        raise RuntimeError("Plusieurs actionneurs ciblent le même joint dans ce contrat")
+    status_counts = {
+        str(key): int(value)
+        for key, value in channels["actuator_config_status"].value_counts().items()
+    }
+    group_counts = {
+        str(key): int(value)
+        for key, value in channels["body_group"].value_counts().sort_index().items()
+    }
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(inventory_path.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact pre-transduced command wiring; motor-neuron-to-muscle mapping is deferred",
+        "wire_id": "wire.motor_transduction_to_body",
+        "source_box_id": "adapter.motor.transduction",
+        "target_box_id": "body.flybody",
+        "actuator_channels": len(channels),
+        "unique_control_addresses": int(channels["control_address"].nunique()),
+        "unique_target_joints": int(channels["target_joint_id"].nunique()),
+        "body_group_counts": group_counts,
+        "actuator_config_status_counts": status_counts,
+        "missing_actuator_config_joints": channels.loc[
+            channels["actuator_config_status"].eq("missing"), "target_joint_name"
+        ].tolist(),
+        "control_addressing": "exact",
+        "motor_neuron_to_actuator_mapping": "deferred",
+        "free_discrete_parameters_downstream": 0,
+        "scientific_parameter_values_selected": False,
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    channels.to_csv(channel_output, index=False, encoding="utf-8")
+    print(f"[OK] {len(channels):,} actionneurs reliés à des adresses ctrl exactes")
+    print(
+        f"[OK] {status_counts.get('configured', 0):,} actionneurs configurés; "
+        f"{status_counts.get('missing', 0):,} sans configuration FlyBody spécifique"
+    )
+    print("[INFO] La correspondance entre 815 sorties neuronales et 102 actionneurs reste différée")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux physiques : {channel_output}")
     return summary
@@ -1122,6 +1200,7 @@ def main() -> int:
         build_proprioception_wiring(args.source)
         build_flybody_proprioception_wiring()
         build_flybody_touch_wiring()
+        build_flybody_actuator_wiring()
         build_mechanosensation_wiring(args.source)
         build_vision_wiring(args.source)
         build_motor_wiring(args.source)

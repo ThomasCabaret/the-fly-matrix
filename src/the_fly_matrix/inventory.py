@@ -185,6 +185,42 @@ def audit_flybody() -> dict[str, Any]:
         }
         for index, name in enumerate(joints)
     ]
+    actuator_channels = []
+    for index, actuator_name in enumerate(actuators):
+        target_joint_id = int(model.actuator_trnid[index, 0])
+        target_joint_name = (
+            mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, target_joint_id)
+            or f"unnamed-{target_joint_id}"
+        )
+        config_group = next(
+            (
+                str(group_name)
+                for group_name, config in fly.actuator_config.items()
+                if target_joint_name in config.get("apply_to", [])
+            ),
+            None,
+        )
+        actuator_channels.append(
+            {
+                "actuator_id": index,
+                "actuator_name": actuator_name,
+                "body_group": _body_group(actuator_name),
+                "control_address": index,
+                "target_joint_id": target_joint_id,
+                "target_joint_name": target_joint_name,
+                "transmission_type": mujoco.mjtTrn(
+                    int(model.actuator_trntype[index])
+                ).name.removeprefix("mjTRN_").lower(),
+                "control_limited": bool(model.actuator_ctrllimited[index]),
+                "control_range": [float(value) for value in model.actuator_ctrlrange[index]],
+                "force_limited": bool(model.actuator_forcelimited[index]),
+                "force_range": [float(value) for value in model.actuator_forcerange[index]],
+                "actuator_config_group": config_group,
+                "actuator_config_status": "configured" if config_group else "missing",
+                "command_unit": "MuJoCo_model_input",
+                "force_unit": "MuJoCo_model_torque_unit",
+            }
+        )
     contact_segments = (
         FlyBodyContactBodiesPreset.LEGS_THORAX_ABDOMEN_HEAD.to_body_segments_list()
     )
@@ -248,6 +284,7 @@ def audit_flybody() -> dict[str, Any]:
         "joints": joints,
         "joint_observables": joint_observables,
         "actuators": actuators,
+        "actuator_channels": actuator_channels,
         "bodies": bodies,
         "joint_groups": joint_groups,
         "actuator_groups": actuator_groups,

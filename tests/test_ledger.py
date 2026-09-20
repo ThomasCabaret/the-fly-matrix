@@ -99,6 +99,20 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(physical_touch["non_leg_local_load_mapping"], "deferred")
         self.assertEqual(physical_touch["biological_receptor_mapping"], "deferred")
 
+        physical_motor_path = path.with_name("flybody-actuators.json")
+        self.assertTrue(physical_motor_path.is_file())
+        physical_motor = json.loads(physical_motor_path.read_text(encoding="utf-8"))
+        self.assertEqual(physical_motor["actuator_channels"], 102)
+        self.assertEqual(physical_motor["unique_control_addresses"], 102)
+        self.assertEqual(physical_motor["unique_target_joints"], 102)
+        self.assertEqual(
+            physical_motor["actuator_config_status_counts"],
+            {"configured": 100, "missing": 2},
+        )
+        self.assertEqual(len(physical_motor["missing_actuator_config_joints"]), 2)
+        self.assertEqual(physical_motor["control_addressing"], "exact")
+        self.assertEqual(physical_motor["motor_neuron_to_actuator_mapping"], "deferred")
+
         mechano_path = path.with_name("mechanosensation-routing.json")
         self.assertTrue(mechano_path.is_file())
         mechano = json.loads(mechano_path.read_text(encoding="utf-8"))

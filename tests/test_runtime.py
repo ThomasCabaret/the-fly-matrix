@@ -10,6 +10,7 @@ from the_fly_matrix.runtime import (
     CNSInputBuffer,
     FLYBODY_PROPRIO_CHANNEL_PATH,
     FLYBODY_TOUCH_CHANNEL_PATH,
+    FLYBODY_ACTUATOR_CHANNEL_PATH,
     MECHANO_CHANNEL_PATH,
     MECHANO_ROUTE_PATH,
     MOTOR_CHANNEL_PATH,
@@ -28,6 +29,7 @@ from the_fly_matrix.runtime import (
     VisionRoutingBox,
     FlyBodyProprioceptionSensor,
     FlyBodyGroundContactSensor,
+    FlyBodyActuatorInterface,
 )
 
 
@@ -104,6 +106,22 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(output.normals.shape, (6, 3))
         self.assertEqual(output.tangents.shape, (6, 3))
         self.assertTrue(np.array_equal(output.forces[0], raw[1:4]))
+
+    def test_flybody_actuator_interface_addresses_all_control_slots(self) -> None:
+        if not FLYBODY_ACTUATOR_CHANNEL_PATH.is_file():
+            self.skipTest("generated FlyBody actuator wiring is absent")
+        interface = FlyBodyActuatorInterface.from_generated_wiring()
+        values = np.arange(len(interface.actuator_names), dtype=np.float64)
+        output = interface.step(values)
+        self.assertEqual(len(interface.actuator_names), 102)
+        self.assertEqual(interface.control_size, 102)
+        self.assertEqual(len(output.actuator_names), 102)
+        self.assertTrue(np.array_equal(output.values, values))
+        self.assertEqual(interface.channels["target_joint_name"].nunique(), 102)
+        self.assertEqual(
+            interface.channels["actuator_config_status"].value_counts().to_dict(),
+            {"configured": 100, "missing": 2},
+        )
 
     def test_mechanosensation_router_executes_both_disjoint_groups(self) -> None:
         if not MECHANO_CHANNEL_PATH.is_file() or not MECHANO_ROUTE_PATH.is_file():

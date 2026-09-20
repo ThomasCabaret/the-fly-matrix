@@ -15,6 +15,7 @@ from .runtime import (
     CNSInputBuffer,
     FlyBodyProprioceptionSensor,
     FlyBodyGroundContactSensor,
+    FlyBodyActuatorInterface,
     MechanosensationRoutingBox,
     MotorRoutingBox,
     ProprioceptionRoutingBox,
@@ -78,6 +79,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {touch_sensor.box_id}: {len(touch_sensor.leg_names):,} capteurs de patte, "
         f"{touch_sensor.sensor_data_size:,} observables de contact au sol"
     )
+    actuator_interface = FlyBodyActuatorInterface.from_generated_wiring()
+    print(
+        f"[OK] {actuator_interface.box_id}: {len(actuator_interface.actuator_names):,} "
+        "adresses de commande d'actionneur exactes"
+    )
     proprioception = ProprioceptionRoutingBox.from_generated_wiring()
     print(
         f"[OK] {proprioception.box_id}: {len(proprioception.channel_ids):,} instances/canaux, "
@@ -119,6 +125,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     contact_state_first = touch_sensor.step(contact_data_first)
     contact_state_second = touch_sensor.step(contact_data_second)
+    actuator_values_first = np.random.default_rng(seed - 6).uniform(
+        -1.0, 1.0, len(actuator_interface.actuator_names)
+    )
+    actuator_values_second = np.random.default_rng(seed - 6).uniform(
+        -1.0, 1.0, len(actuator_interface.actuator_names)
+    )
+    actuator_commands_first = actuator_interface.step(actuator_values_first)
+    actuator_commands_second = actuator_interface.step(actuator_values_second)
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     proprio_first = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
@@ -183,8 +197,17 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(
             f"6 capteurs de contact de patte attendus, {len(contact_state_first.leg_names)} obtenus"
         )
+    if actuator_commands_first.actuator_names != actuator_commands_second.actuator_names or not np.array_equal(
+        actuator_commands_first.values, actuator_commands_second.values
+    ):
+        raise RuntimeError("Le rejeu de l'interface d'actionneurs n'est pas déterministe")
+    if len(actuator_commands_first.actuator_names) != 102:
+        raise RuntimeError(
+            f"102 commandes d'actionneur attendues, {len(actuator_commands_first.actuator_names)} obtenues"
+        )
     print("[OK] 102 articulations FlyBody extraites en 204 observables position/vitesse")
     print("[OK] 6 contacts de patte extraits en 96 observables physiques")
+    print("[OK] 102 commandes placées dans les 102 adresses ctrl FlyBody")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
@@ -282,11 +305,19 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "non_leg_local_load_mapping": "deferred",
             "biological_receptor_mapping": "deferred",
         },
+        "physical_motor": {
+            "source_box_id": "adapter.motor.transduction",
+            "target_box_id": actuator_interface.box_id,
+            "actuator_channels": len(actuator_commands_first.actuator_names),
+            "control_vector_size": len(actuator_commands_first.values),
+            "motor_neuron_to_actuator_mapping": "deferred",
+        },
         "checks": {
             "all_routes_executed": True,
             "motor_routes_executed": True,
             "body_to_proprioception_executed": True,
             "world_to_touch_executed": True,
+            "motor_transduction_to_body_executed": True,
             "deterministic_replay": True,
             "scientific_parameters_selected": False,
             "activity_values_persisted": False,

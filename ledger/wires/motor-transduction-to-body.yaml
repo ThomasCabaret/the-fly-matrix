@@ -4,14 +4,14 @@ name: Commandes motrices vers actionneurs FlyBody
 sector: motor_output
 source: {box_id: adapter.motor.transduction, port: actuator_commands, group_query: null}
 target: {box_id: body.flybody, port: actuator_commands, group_query: all actuators}
-mapping_level: group-level
+mapping_level: exact
 expected_cardinality: 102 actionneurs in 7 anatomical groups
 candidate_constraints: [same appendage, side, joint and axis]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: complete, routing: candidates_known, implementation: not_started, validation: smoke}
+status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/inventory.json]
-validation_ids: [validation.flybody_inventory]
-next_action: Associer les groupes biologiques aux 102 actionneurs et marquer les abstractions.
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
+validation_ids: [validation.flybody_inventory, validation.flybody_actuator_interface]
+next_action: Préserver les 102 adresses exactes pendant la construction séparée du mapping biologique amont.
 blocked_by: []

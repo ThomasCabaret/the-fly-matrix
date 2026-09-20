@@ -154,6 +154,14 @@ isole 191 autres neurones endocrines ou efférents au lieu de les transformer en
 commandes musculaires. Cette moitié fixe CNS→routeur moteur ; les associations
 routeur→muscles biologiques→actionneurs FlyBody restent à construire.
 
+À l'autre extrémité, `flybody-actuator-channels.csv` fixe désormais les 102
+adresses `ctrl` du modèle compilé et leur articulation cible, sans choisir la
+valeur des commandes. Cent actionneurs retrouvent un groupe de configuration
+FlyBody ; les deux actionneurs d'haltères, bien que présents et limités en force
+dans notre modèle, sont signalés comme dépourvus de configuration spécifique.
+La jonction scientifique entre les 815 sorties neuronales et ces 102 commandes
+reste explicitement différée.
+
 Le manifeste sensoriel résiduel ferme la couverture des entrées inventoriées sans
 inventer leur fonction. Il route individuellement 1 883 neurones encore hors des
 modalités établies : 1 712 `unknown_sensory`, 57 `chemosensory`, 11
