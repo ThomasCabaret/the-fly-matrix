@@ -16,9 +16,9 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(len(checks), 5)
 
     def test_top_level_interface_is_exhaustively_represented(self) -> None:
-        self.assertEqual(len(self.ledger["boxes"]), 18)
-        self.assertEqual(len(self.ledger["groups"]), 16)
-        self.assertEqual(len(self.ledger["wires"]), 21)
+        self.assertEqual(len(self.ledger["boxes"]), 19)
+        self.assertEqual(len(self.ledger["groups"]), 17)
+        self.assertEqual(len(self.ledger["wires"]), 22)
         adapter_types = {
             box.get("adapter_type") for box in self.ledger["boxes"] if box.get("adapter_type")
         }
@@ -111,6 +111,23 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(motor["group_counts"], {"motor.vnc": 708, "motor.central_brain": 107})
         self.assertEqual(motor["exit_nerve_inventory"]["non_motor_deferred"], 191)
         self.assertEqual(motor["exit_nerve_inventory"]["motor_without_exit_nerve"], 1)
+
+        residual_path = path.with_name("unclassified-sensory-routing.json")
+        self.assertTrue(residual_path.is_file())
+        residual = json.loads(residual_path.read_text(encoding="utf-8"))
+        self.assertEqual(residual["generated_box_instances"], 1883)
+        self.assertEqual(residual["exact_routes"], 1883)
+        self.assertEqual(
+            residual["class_counts"],
+            {
+                "unknown_sensory": 1712,
+                "(unknown)": 103,
+                "chemosensory": 57,
+                "mechanosensory_tbc": 11,
+            },
+        )
+        self.assertEqual(residual["sensory_coverage"]["total_routed_unique_body_ids"], 17884)
+        self.assertEqual(residual["sensory_coverage"]["coverage_percent"], 100.0)
 
     def test_group_counts_match_local_inventory_when_available(self) -> None:
         path = Path(__file__).resolve().parents[1] / "data" / "derived" / "inventory" / "inventory.json"

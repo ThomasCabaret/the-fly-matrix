@@ -8,10 +8,10 @@ source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
 query: superclass == cb_sensory
 member_count: 4868
 named_type_count: 158
-target_box_ids: [cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: unknown, validation: not_run}
+target_box_ids: [clamp.olfaction, clamp.gustation, clamp.thermohygro, adapter.sensory.unclassified.routing, cns.malecns]
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Répartir les modalités restantes après extraction exacte des 91 thermo-hygrosensoriels.
+evidence: [data/derived/wiring/basal-clamp-routing.json, data/derived/wiring/unclassified-sensory-routing.json]
+next_action: Résoudre les modalités des 130 afférences résiduelles sans modifier leurs routes CNS.
 blocked_by: []
-completion_criteria: [Modalité de chaque sous-groupe documentée ou inconnue explicite]
+completion_criteria: [Partition exhaustive, Routes exactes, Modalités non résolues explicites]

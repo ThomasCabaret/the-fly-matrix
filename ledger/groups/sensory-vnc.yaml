@@ -8,10 +8,10 @@ source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
 query: superclass == vnc_sensory
 member_count: 6370
 named_type_count: 171
-target_box_ids: [adapter.touch.routing, adapter.proprioception.routing, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: candidates_known, validation: not_run}
+target_box_ids: [adapter.touch.routing, adapter.proprioception.routing, adapter.sensory.unclassified.routing, cns.malecns]
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Croiser classe, nerf, côté et neuromère pour répartir toucher et proprioception.
+evidence: [data/derived/wiring/proprioception-routing.json, data/derived/wiring/mechanosensation-routing.json, data/derived/wiring/unclassified-sensory-routing.json]
+next_action: Résoudre les modalités des 1 709 afférences résiduelles sans modifier leurs routes CNS.
 blocked_by: []
-completion_criteria: [Chevauchements quantifiés, Chaque sous-groupe affecté ou marqué inconnu]
+completion_criteria: [Chevauchements quantifiés, Partition exhaustive, Chaque sous-groupe routé ou marqué inconnu]

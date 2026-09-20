@@ -1,0 +1,30 @@
+schema_version: 1
+id: validation.unclassified_sensory_routing
+name: Couverture exacte des afférences sensorielles non résolues
+owner_ids:
+  - adapter.sensory.unclassified.routing
+  - group.sensory.unclassified_residual
+  - group.sensory.unknown
+  - group.sensory.central_brain
+  - group.sensory.vnc
+  - wire.unclassified_sensory_routing_to_cns
+  - cns.malecns
+level: integration
+protocol_path: src/the_fly_matrix/wiring.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - The complement of all routed sensory modality classes contains exactly 1883 unique neurons
+  - Every residual neuron maps one-to-one to an explicit MaleCNS bodyId
+  - The residual contains 1712 unknown_sensory, 57 chemosensory, 11 mechanosensory_tbc and 103 class-unknown neurons
+  - The complete inventoried sensory union contains 17884 unique bodyIds and is fully routed
+  - No unresolved modality is silently relabelled or assigned a physical transduction
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: unclassified-sensory-routing-2026-09-20
+status: integration_pass
+notes:
+  - 1883 generated type-C instances executed
+  - 1883 exact MaleCNS bodyId routes with no duplicate or omission
+  - Residual anatomy comprises 1709 vnc_sensory, 130 cb_sensory, 32 sensory_ascending and 12 sensory_descending neurons
+  - All 17884 unique neurons in the inventoried sensory union now have an exact CNS route
+  - Physical modality and transduction remain deliberately unknown

@@ -8,10 +8,10 @@ source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
 query: class == unknown_sensory
 member_count: 1712
 named_type_count: 59
-target_box_ids: [cns.malecns]
-status: {inventory: complete, decomposition: unknown, routing: unknown, validation: not_run}
+target_box_ids: [adapter.sensory.unclassified.routing, cns.malecns]
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Utiliser nerf, sous-classe et morphologie pour proposer des modalités sans les imposer.
+evidence: [data/derived/wiring/unclassified-sensory-routing.json, data/derived/wiring/unclassified-sensory-routes.parquet]
+next_action: Utiliser nerf, sous-classe et morphologie pour proposer des modalités sans changer les routes fixées.
 blocked_by: [morphology_or_neuprint_helpful]
 completion_criteria: [Hypothèses séparées des faits, Population intégralement classée ou explicitement inconnue]

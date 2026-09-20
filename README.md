@@ -22,7 +22,8 @@ Le contrat scientifique de référence est
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
   routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
   arbitraires reproductibles, ainsi que les routages aval proprioceptif et
-  mécanorécepteur, le routage aval visuel et les sorties CNS explicitement motrices.
+  mécanorécepteur, le routage aval visuel, les afférences sensorielles non résolues
+  et les sorties CNS explicitement motrices.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -140,6 +141,13 @@ Le manifeste moteur couvre les 708 neurones `vnc_motor` et 107 neurones
 isole 191 autres neurones endocrines ou efférents au lieu de les transformer en
 commandes musculaires. Cette moitié fixe CNS→routeur moteur ; les associations
 routeur→muscles biologiques→actionneurs FlyBody restent à construire.
+
+Le manifeste sensoriel résiduel ferme la couverture des entrées inventoriées sans
+inventer leur fonction. Il route individuellement 1 883 neurones encore hors des
+modalités établies : 1 712 `unknown_sensory`, 57 `chemosensory`, 11
+`mechanosensory_tbc` et 103 sans classe. Avec les modalités déjà câblées, les
+17 884 `bodyId` de l'union sensorielle suivie disposent ainsi d'une route CNS
+exacte. Leur origine physique et leur transduction restent inconnues.
 
 ## Rattachement Git distant
 

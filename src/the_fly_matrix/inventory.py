@@ -40,6 +40,9 @@ DECOMPOSITION_AXES = {
     "sensory.mechanosensory_other": ["entryNerve", "subclass", "type", "rootSide"],
     "sensory.proprioceptive": ["entryNerve", "subclass", "mancType", "type", "rootSide"],
     "sensory.unknown": ["entryNerve", "subclass", "type", "rootSide"],
+    "sensory.unclassified_residual": [
+        "superclass", "class", "entryNerve", "subclass", "type", "rootSide"
+    ],
     "sensory.optic_lobe": ["type"],
     "sensory.central_brain": ["entryNerve", "subclass", "type", "rootSide"],
     "sensory.thermohygro": ["class", "type", "rootSide"],
@@ -183,6 +186,24 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
         "assignedOlHex1", "assignedOlHex2",
     ]
     frame = ds.dataset(path, format="ipc").to_table(columns=columns).to_pandas()
+    known_routed_classes = {
+        "visual",
+        "olfactory",
+        "gustatory",
+        "thermosensory",
+        "hygrosensory",
+        "mechanosensory_tactile",
+        "mechanosensory",
+        "mechanosensory_proprioceptive",
+    }
+    sensory_inventory_mask = frame["superclass"].isin(
+        ["ol_sensory", "cb_sensory", "vnc_sensory"]
+    ) | frame["class"].eq("unknown_sensory")
+    unclassified_residual_mask = (
+        sensory_inventory_mask
+        & ~frame["class"].isin(known_routed_classes)
+        & ~frame["superclass"].eq("ol_sensory")
+    )
     group_masks = {
         "sensory.visual": ("class == visual", frame["class"].eq("visual")),
         "sensory.olfactory": ("class == olfactory", frame["class"].eq("olfactory")),
@@ -198,6 +219,10 @@ def audit_interface_groups(output_dir: Path) -> list[dict[str, Any]]:
             frame["class"].eq("mechanosensory_proprioceptive"),
         ),
         "sensory.unknown": ("class == unknown_sensory", frame["class"].eq("unknown_sensory")),
+        "sensory.unclassified_residual": (
+            "sensory inventory minus routed modality classes and ol_sensory",
+            unclassified_residual_mask,
+        ),
         "sensory.optic_lobe": (
             "superclass == ol_sensory", frame["superclass"].eq("ol_sensory")
         ),

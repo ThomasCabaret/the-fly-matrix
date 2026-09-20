@@ -22,6 +22,9 @@ PROPRIO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "proprioception-rou
 MECHANO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "mechanosensation-routing.json"
 VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "vision-routing.json"
 MOTOR_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routing.json"
+UNCLASSIFIED_WIRING_PATH = (
+    ROOT / "data" / "derived" / "wiring" / "unclassified-sensory-routing.json"
+)
 
 
 def section(title: str) -> None:
@@ -110,6 +113,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     mechano_wiring = inventory.get("mechano_wiring")
     vision_wiring = inventory.get("vision_wiring")
     motor_wiring = inventory.get("motor_wiring")
+    unclassified_wiring = inventory.get("unclassified_wiring")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
     groups = "".join(
@@ -188,6 +192,12 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{motor_wiring.get("exact_routes", 0):,}</strong><span>sorties motrices exactes</span></div>'
             f'<div><strong>{exits.get("non_motor_deferred", 0):,}</strong><span>sorties non motrices isolées</span></div>'
+        )
+    if unclassified_wiring:
+        coverage = unclassified_wiring.get("sensory_coverage", {})
+        remote_metrics += (
+            f'<div><strong>{unclassified_wiring.get("exact_routes", 0):,}</strong><span>routes sensorielles résiduelles</span></div>'
+            f'<div><strong>{coverage.get("coverage_percent", 0):.0f}%</strong><span>couverture sensorielle inventoriée</span></div>'
         )
     return (
         '<div class="metrics">'
@@ -347,6 +357,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 MOTOR_WIRING_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Câblage moteur chargé: {MOTOR_WIRING_PATH}")
+        if UNCLASSIFIED_WIRING_PATH.is_file():
+            inventory["unclassified_wiring"] = json.loads(
+                UNCLASSIFIED_WIRING_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Câblage sensoriel résiduel chargé: {UNCLASSIFIED_WIRING_PATH}")
     else:
         print("[AVERTISSEMENT] Inventaire local absent; lancer run_analysis.bat")
 

@@ -69,6 +69,7 @@ SECTOR_LABELS = {
     "mechanosensation": "Mécanosensation",
     "proprioception": "Proprioception",
     "basal_clamps": "Clamps basaux",
+    "unclassified_sensory": "Entrées sensorielles non résolues",
     "central_nervous_system": "Système nerveux central",
     "motor_output": "Sortie motrice",
     "physical_body": "Corps physique",

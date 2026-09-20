@@ -17,6 +17,7 @@ from .runtime import (
     MotorRoutingBox,
     ProprioceptionRoutingBox,
     SparseActivity,
+    UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
 )
 
@@ -31,7 +32,11 @@ def section(title: str) -> None:
 
 
 def _arbitrary_values(
-    box: BasalClampBox | ProprioceptionRoutingBox | MechanosensationRoutingBox | VisionRoutingBox,
+    box: BasalClampBox
+    | ProprioceptionRoutingBox
+    | MechanosensationRoutingBox
+    | VisionRoutingBox
+    | UnclassifiedSensoryRoutingBox,
     seed: int,
 ) -> np.ndarray:
     # These values only exercise data flow. They are not physiological guesses.
@@ -81,6 +86,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {motor.box_id}: {len(motor.channel_ids):,} instances/canaux depuis "
         f"{len(motor.source_body_ids):,} neurones moteurs; muscles différés"
     )
+    unclassified = UnclassifiedSensoryRoutingBox.from_generated_wiring()
+    print(
+        f"[OK] {unclassified.box_id}: {len(unclassified.channel_ids):,} instances/canaux, "
+        f"{len(unclassified.routes):,} destinations exactes; modalités physiques différées"
+    )
 
     section("Injection déterministe de valeurs arbitraires")
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
@@ -91,22 +101,32 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     mechano_second = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
     vision_first = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
     vision_second = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
-    motor_values_first = np.random.default_rng(seed + len(boxes) + 3).uniform(
+    unclassified_first = unclassified.step(
+        _arbitrary_values(unclassified, seed + len(boxes) + 3)
+    )
+    unclassified_second = unclassified.step(
+        _arbitrary_values(unclassified, seed + len(boxes) + 3)
+    )
+    motor_values_first = np.random.default_rng(seed + len(boxes) + 4).uniform(
         0.0, 1.0, len(motor.source_body_ids)
     )
-    motor_values_second = np.random.default_rng(seed + len(boxes) + 3).uniform(
+    motor_values_second = np.random.default_rng(seed + len(boxes) + 4).uniform(
         0.0, 1.0, len(motor.source_body_ids)
     )
     motor_first = motor.step(motor_values_first)
     motor_second = motor.step(motor_values_second)
-    first = CNSInputBuffer.merge(*first_outputs, proprio_first, mechano_first, vision_first)
-    second = CNSInputBuffer.merge(*second_outputs, proprio_second, mechano_second, vision_second)
+    first = CNSInputBuffer.merge(
+        *first_outputs, proprio_first, mechano_first, vision_first, unclassified_first
+    )
+    second = CNSInputBuffer.merge(
+        *second_outputs, proprio_second, mechano_second, vision_second, unclassified_second
+    )
     if not np.array_equal(first.body_ids, second.body_ids) or not np.array_equal(
         first.values, second.values
     ):
         raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
-    if len(first.body_ids) != 16001:
-        raise RuntimeError(f"16001 destinations attendues, {len(first.body_ids)} obtenues")
+    if len(first.body_ids) != 17884:
+        raise RuntimeError(f"17884 destinations attendues, {len(first.body_ids)} obtenues")
     if motor_first.channel_ids != motor_second.channel_ids or not np.array_equal(
         motor_first.values, motor_second.values
     ):
@@ -169,6 +189,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "terminal_box_instances": len(motor.channel_ids),
                 "exact_routes": len(motor.source_body_ids),
                 "downstream_muscle_mapping": "deferred",
+                "parameter_status": "arbitrary_smoke_only",
+            }
+        ]
+        + [
+            {
+                "id": unclassified.box_id,
+                "adapter_type": unclassified.adapter_type,
+                "terminal_box_instances": len(unclassified.channel_ids),
+                "exact_routes": len(unclassified.routes),
+                "upstream_modality_mapping": "deferred",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ],

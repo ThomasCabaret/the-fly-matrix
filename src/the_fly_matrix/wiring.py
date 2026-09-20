@@ -38,6 +38,9 @@ VISION_ROUTE_OUTPUT = OUTPUT_ROOT / "vision-routes.parquet"
 MOTOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "motor-routing.json"
 MOTOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_OUTPUT = OUTPUT_ROOT / "motor-routes.parquet"
+UNCLASSIFIED_SUMMARY_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routing.json"
+UNCLASSIFIED_CHANNEL_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-channels.csv"
+UNCLASSIFIED_ROUTE_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routes.parquet"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -776,6 +779,189 @@ def build_motor_wiring(
     return summary
 
 
+def build_unclassified_sensory_wiring(
+    source: Path = SOURCE,
+    summary_output: Path = UNCLASSIFIED_SUMMARY_OUTPUT,
+    channel_output: Path = UNCLASSIFIED_CHANNEL_OUTPUT,
+    route_output: Path = UNCLASSIFIED_ROUTE_OUTPUT,
+) -> dict[str, Any]:
+    """Route the exact complement of known sensory modalities without relabelling it."""
+    if not source.is_file():
+        raise FileNotFoundError(f"{source} absent; lancez d'abord l'inventaire MaleCNS")
+    section("Câblage des afférences sensorielles non résolues")
+    frame = pd.read_parquet(source)
+    selected = frame.loc[frame["group_id"].eq("sensory.unclassified_residual")].copy()
+    if selected.empty:
+        raise RuntimeError("Aucune afférence sensorielle résiduelle trouvée")
+    if selected["bodyId"].duplicated().any():
+        raise RuntimeError("La population sensorielle résiduelle contient des bodyId dupliqués")
+
+    known_group_ids = (
+        "sensory.optic_lobe",
+        "sensory.olfactory",
+        "sensory.gustatory",
+        "sensory.thermohygro",
+        "sensory.tactile",
+        "sensory.mechanosensory_other",
+        "sensory.proprioceptive",
+    )
+    sensory_scope_group_ids = (
+        "sensory.optic_lobe",
+        "sensory.central_brain",
+        "sensory.vnc",
+        "sensory.unknown",
+    )
+    known_ids = set(
+        frame.loc[frame["group_id"].isin(known_group_ids), "bodyId"].astype(int)
+    )
+    scope_ids = set(
+        frame.loc[frame["group_id"].isin(sensory_scope_group_ids), "bodyId"].astype(int)
+    )
+    residual_ids = set(selected["bodyId"].astype(int))
+    if residual_ids != scope_ids - known_ids:
+        raise RuntimeError("Le groupe résiduel n'est pas le complément exact des modalités routées")
+    if (len(scope_ids), len(known_ids & scope_ids), len(residual_ids)) != (17380, 15497, 1883):
+        raise RuntimeError(
+            "Couverture sensorielle inattendue: "
+            f"scope={len(scope_ids)}, routed={len(known_ids & scope_ids)}, residual={len(residual_ids)}"
+        )
+
+    text_axes = ["superclass", "class", "entryNerve", "subclass", "type", "rootSide"]
+    selected[text_axes] = selected[text_axes].fillna("(unknown)").astype(str)
+    selected["routing_box_id"] = "adapter.sensory.unclassified.routing"
+    selected["source_port"] = "sensory_afferents"
+    selected["target_box_id"] = "cns.malecns"
+    selected["target_port"] = "sensory_afferents"
+    selected["channel_id"] = [
+        _channel_id("sensory.unclassified_residual", ["bodyId"], (body_id,))
+        for body_id in selected["bodyId"]
+    ]
+    selected["box_instance_id"] = selected["channel_id"].str.replace(
+        "channel.", "box.", n=1, regex=False
+    )
+    selected["adapter_type"] = "C"
+
+    channel_rows = [
+        {
+            "channel_id": row.channel_id,
+            "box_instance_id": row.box_instance_id,
+            "group_id": "sensory.unclassified_residual",
+            "routing_box_id": "adapter.sensory.unclassified.routing",
+            "adapter_type": "C",
+            "source_port": "sensory_afferents",
+            "target_box_id": "cns.malecns",
+            "target_port": "sensory_afferents",
+            "target_body_id": int(row.bodyId),
+            "superclass": row.superclass,
+            "entryNerve": row.entryNerve,
+            "subclass": row.subclass,
+            "type": row.type,
+            "rootSide": row.rootSide,
+            "mapping_level": "exact_body_id",
+            "free_discrete_parameters_downstream": 0,
+            "upstream_modality_mapping": "deferred",
+        }
+        for row in selected.itertuples(index=False)
+    ]
+    # `class` is a Python keyword; assign it directly rather than depending on
+    # pandas' generated itertuples field name.
+    for item, class_value in zip(channel_rows, selected["class"]):
+        item["class"] = class_value
+
+    route_columns = [
+        "channel_id",
+        "box_instance_id",
+        "group_id",
+        "routing_box_id",
+        "adapter_type",
+        "source_port",
+        "target_box_id",
+        "target_port",
+        "bodyId",
+        "superclass",
+        "class",
+        "entryNerve",
+        "subclass",
+        "type",
+        "rootSide",
+    ]
+    routes = selected[route_columns].rename(columns={"bodyId": "target_body_id"})
+    if routes["target_body_id"].duplicated().any():
+        raise RuntimeError("Le manifeste sensoriel résiduel contient des routes dupliquées")
+
+    class_counts = {
+        str(key): int(value) for key, value in selected["class"].value_counts().items()
+    }
+    expected_class_counts = {
+        "unknown_sensory": 1712,
+        "(unknown)": 103,
+        "chemosensory": 57,
+        "mechanosensory_tbc": 11,
+    }
+    if class_counts != expected_class_counts:
+        raise RuntimeError(f"Partition résiduelle par classe inattendue: {class_counts}")
+    superclass_counts = {
+        str(key): int(value) for key, value in selected["superclass"].value_counts().items()
+    }
+    expected_superclass_counts = {
+        "vnc_sensory": 1709,
+        "cb_sensory": 130,
+        "sensory_ascending": 32,
+        "sensory_descending": 12,
+    }
+    if superclass_counts != expected_superclass_counts:
+        raise RuntimeError(f"Partition résiduelle anatomique inattendue: {superclass_counts}")
+    unknown_counts = {
+        axis: int(selected[axis].str.lower().isin({"(unknown)", "unknown", ""}).sum())
+        for axis in text_axes
+    }
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(source.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact residual sensory routing without inferred modality or physical transduction",
+        "method": {
+            "residual_definition": "inventoried sensory union minus routed modality classes and the fully routed ol_sensory population",
+            "terminal_channels": "one type-C instance per unique residual bodyId",
+            "target_mapping": "each instance maps one-to-one to its MaleCNS bodyId",
+            "classification_policy": "all missing and unresolved labels remain explicit",
+            "upstream_policy": "physical modality and transduction remain unknown",
+        },
+        "group_id": "sensory.unclassified_residual",
+        "routing_box_id": "adapter.sensory.unclassified.routing",
+        "class_counts": class_counts,
+        "superclass_counts": superclass_counts,
+        "unknown_axis_value_counts": unknown_counts,
+        "neuron_count": int(len(selected)),
+        "terminal_channels": len(channel_rows),
+        "generated_box_instances": len(channel_rows),
+        "exact_routes": int(len(routes)),
+        "duplicate_routes": 0,
+        "unassigned_neurons": 0,
+        "sensory_coverage": {
+            "anatomical_scope_unique_body_ids": len(scope_ids),
+            "known_modalities_inside_anatomical_scope": len(known_ids & scope_ids),
+            "inventoried_unique_body_ids": len(scope_ids | known_ids),
+            "previously_routed_unique_body_ids": len(known_ids),
+            "newly_routed_unique_body_ids": len(residual_ids),
+            "total_routed_unique_body_ids": len(known_ids | residual_ids),
+            "coverage_percent": 100.0,
+        },
+        "downstream_routing_status": "fixed",
+        "upstream_mapping_status": "unknown",
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    pd.DataFrame(channel_rows).to_csv(channel_output, index=False, encoding="utf-8")
+    routes.to_parquet(route_output, index=False)
+    print("[OK] 1,883 afférences résiduelles isolées sans reclassification")
+    print("[OK] 17,884 neurones sensoriels inventoriés disposent maintenant d'une route CNS")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux résiduels : {channel_output}")
+    print(f"[OK] Routes bodyId exactes : {route_output}")
+    return summary
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Construit le câblage structurel des clamps basaux")
     parser.add_argument("--source", type=Path, default=SOURCE)
@@ -794,6 +980,7 @@ def main() -> int:
         build_mechanosensation_wiring(args.source)
         build_vision_wiring(args.source)
         build_motor_wiring(args.source)
+        build_unclassified_sensory_wiring(args.source)
     except Exception as exc:
         print(f"\nWIRING_FAILED: {type(exc).__name__}: {exc}")
         return 1

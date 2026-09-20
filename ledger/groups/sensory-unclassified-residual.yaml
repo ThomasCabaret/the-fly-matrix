@@ -1,0 +1,17 @@
+schema_version: 1
+id: group.sensory.unclassified_residual
+name: Afférences sensorielles non résolues restantes
+sector: unclassified_sensory
+partition_axis: residual_modality
+parent_id: null
+source_dataset_id: male_cns_annotations_v1_0_minconf_0_5
+query: sensory inventory minus routed modality classes and ol_sensory
+member_count: 1883
+named_type_count: 63
+target_box_ids: [adapter.sensory.unclassified.routing, cns.malecns]
+status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
+confidence: high
+evidence: [data/derived/wiring/unclassified-sensory-routing.json, data/derived/wiring/unclassified-sensory-routes.parquet]
+next_action: Résoudre ultérieurement les modalités physiques sans modifier les 1 883 destinations CNS exactes.
+blocked_by: []
+completion_criteria: [Complément exhaustif, Aucun chevauchement avec les modalités routées, Inconnues explicites]

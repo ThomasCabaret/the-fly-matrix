@@ -1,0 +1,16 @@
+schema_version: 1
+id: adapter.sensory.unclassified.routing
+name: Routage des afférences sensorielles non résolues
+sector: unclassified_sensory
+adapter_type: C
+anatomical_region: peripheral_and_central_sensory_nerves
+parent_id: null
+ports: {inputs: [unclassified_sensory_activity], outputs: [sensory_afferents]}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: medium
+evidence: [data/derived/wiring/unclassified-sensory-routing.json, data/derived/wiring/unclassified-sensory-routes.parquet, runs/wiring-smoke/latest.json]
+parameter_family_ids: []
+validation_ids: [validation.unclassified_sensory_routing]
+next_action: Relier des observables physiques uniquement lorsque la modalité de chaque canal sera étayée.
+blocked_by: []
+completion_criteria: [1883 sources exhaustives, Routages bodyId fixes, Modalités amont non inventées]

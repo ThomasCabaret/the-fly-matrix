@@ -9,6 +9,7 @@ owner_ids:
   - group.sensory.mechanosensory_other
   - group.sensory.proprioceptive
   - group.sensory.unknown
+  - group.sensory.unclassified_residual
   - group.sensory.optic_lobe
   - group.sensory.central_brain
   - group.sensory.thermohygro
@@ -23,11 +24,11 @@ protocol_path: src/the_fly_matrix/inventory.py
 command: run_analysis.bat
 acceptance_criteria:
   - Every top-level group is reproducibly queryable from local annotations
-  - Local and neuPrint counts match for all 16 groups
+  - Local and neuPrint counts match for all 17 groups
   - Every proposed primary partition has at least 99 percent field coverage
   - Missing values remain explicit unknown partitions
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: interface-audit-2026-09-19
 status: integration_pass
-notes: [180 first-tier groups and 5845 fine candidate subgroups generated, Central-brain motor neurons tracked separately from VNC motor neurons and non-motor exits]
+notes: [184 first-tier groups and 6074 fine candidate subgroups generated, Residual sensory and central-brain motor populations tracked explicitly]

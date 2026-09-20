@@ -15,11 +15,14 @@ from the_fly_matrix.runtime import (
     PROPRIO_CHANNEL_PATH,
     PROPRIO_ROUTE_PATH,
     ROUTE_PATH,
+    UNCLASSIFIED_CHANNEL_PATH,
+    UNCLASSIFIED_ROUTE_PATH,
     VISION_CHANNEL_PATH,
     VISION_ROUTE_PATH,
     MechanosensationRoutingBox,
     MotorRoutingBox,
     ProprioceptionRoutingBox,
+    UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
 )
 
@@ -104,6 +107,15 @@ class RuntimeTests(unittest.TestCase):
             set(box.routes["group_id"]),
             {"motor.vnc", "motor.central_brain"},
         )
+
+    def test_unclassified_sensory_router_closes_inventory_coverage(self) -> None:
+        if not UNCLASSIFIED_CHANNEL_PATH.is_file() or not UNCLASSIFIED_ROUTE_PATH.is_file():
+            self.skipTest("generated unclassified sensory wiring is absent")
+        box = UnclassifiedSensoryRoutingBox.from_generated_wiring()
+        output = box.step(np.arange(len(box.channel_ids), dtype=np.float64))
+        self.assertEqual(len(box.channel_ids), 1883)
+        self.assertEqual(len(output.body_ids), 1883)
+        self.assertEqual(len(np.unique(output.body_ids)), 1883)
 
 
 if __name__ == "__main__":
