@@ -89,6 +89,16 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(physical_proprio["qvel_addressing"], "exact")
         self.assertEqual(physical_proprio["biological_receptor_mapping"], "deferred")
 
+        physical_touch_path = path.with_name("flybody-touch.json")
+        self.assertTrue(physical_touch_path.is_file())
+        physical_touch = json.loads(physical_touch_path.read_text(encoding="utf-8"))
+        self.assertEqual(physical_touch["collision_enabled_segments"], 57)
+        self.assertEqual(physical_touch["explicit_ground_contact_pairs"], 69)
+        self.assertEqual(physical_touch["aggregate_leg_channels"], 6)
+        self.assertEqual(physical_touch["scalar_observables"], 96)
+        self.assertEqual(physical_touch["non_leg_local_load_mapping"], "deferred")
+        self.assertEqual(physical_touch["biological_receptor_mapping"], "deferred")
+
         mechano_path = path.with_name("mechanosensation-routing.json")
         self.assertTrue(mechano_path.is_file())
         mechano = json.loads(mechano_path.read_text(encoding="utf-8"))

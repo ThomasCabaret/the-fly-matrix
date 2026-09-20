@@ -1,0 +1,24 @@
+schema_version: 1
+id: validation.flybody_touch_sensor
+name: Extraction exécutable des contacts au sol FlyBody
+owner_ids:
+  - world.mujoco
+  - sensor.touch
+  - wire.world_to_touch
+level: integration
+protocol_path: src/the_fly_matrix/wiring_smoke.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - The default FlyBody contact preset exposes 57 collision-enabled segments
+  - The compiled flat-ground model contains 69 explicit ground contact pairs
+  - All six legs have one unique 16-dimensional aggregate contact sensor
+  - The 96 raw sensor values decode deterministically into documented fields
+  - Non-leg local loads and biological receptor assignments remain explicit gaps
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: flybody-touch-runtime-2026-09-20
+status: integration_pass
+notes:
+  - Six leg channels expose contact presence, force, torque, position, normal and tangent
+  - The world-to-touch wire is executable for aggregate leg-ground contacts
+  - Local loads outside the six leg aggregates remain deliberately deferred

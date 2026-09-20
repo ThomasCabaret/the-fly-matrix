@@ -9,18 +9,22 @@ from pathlib import Path
 from typing import Any
 
 import mujoco
+import numpy as np
 import pandas as pd
 import pyarrow as pa
 import pyarrow.compute as pc
 import pyarrow.dataset as ds
 from flygym.compose import ActuatorType
 from flygym.compose.fly.flybody import FlyBody
+from flygym.compose.world import FlatGroundWorld
 from flygym.flybody.anatomy_flybody import (
     FlyBodyActuatedDOFPreset,
     FlyBodyAxisOrder,
     FlyBodyJointPreset,
     FlyBodySkeleton,
+    FlyBodyContactBodiesPreset,
 )
+from flygym.utils.math import Rotation3D
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -181,6 +185,62 @@ def audit_flybody() -> dict[str, Any]:
         }
         for index, name in enumerate(joints)
     ]
+    contact_segments = (
+        FlyBodyContactBodiesPreset.LEGS_THORAX_ABDOMEN_HEAD.to_body_segments_list()
+    )
+    contact_segment_rows = [
+        {
+            "segment_name": segment.name,
+            "body_group": _body_group(segment.name),
+            "geom_names": [geom.name for geom in fly.bodyseg_to_mjcfgeom[segment]],
+        }
+        for segment in contact_segments
+    ]
+    contact_world = FlatGroundWorld()
+    contact_world.add_fly(
+        fly,
+        np.asarray([0.0, 0.0, 1.0]),
+        Rotation3D("quat", (1, 0, 0, 0)),
+        bodysegs_with_ground_contact=contact_segments,
+        add_ground_contact_sensors=True,
+    )
+    contact_model = contact_world.mjcf_root.compile()
+    contact_sensors = []
+    for index in range(contact_model.nsensor):
+        sensor_name = (
+            mujoco.mj_id2name(contact_model, mujoco.mjtObj.mjOBJ_SENSOR, index)
+            or f"unnamed-{index}"
+        )
+        if not sensor_name.startswith("ground_contact_"):
+            continue
+        contact_sensors.append(
+            {
+                "sensor_id": index,
+                "sensor_name": sensor_name,
+                "leg": sensor_name.removeprefix("ground_contact_").removesuffix("_leg"),
+                "sensor_address": int(contact_model.sensor_adr[index]),
+                "sensor_dimension": int(contact_model.sensor_dim[index]),
+                "aggregation": "netforce_over_leg_subtree_against_ground",
+                "observable_layout": [
+                    "found",
+                    "force_contact_x",
+                    "force_contact_y",
+                    "force_contact_z",
+                    "torque_contact_x",
+                    "torque_contact_y",
+                    "torque_contact_z",
+                    "position_world_x",
+                    "position_world_y",
+                    "position_world_z",
+                    "normal_world_x",
+                    "normal_world_y",
+                    "normal_world_z",
+                    "tangent_world_x",
+                    "tangent_world_y",
+                    "tangent_world_z",
+                ],
+            }
+        )
     print(f"FlyBody: {len(joints)} joints, {len(actuators)} actionneurs, {len(bodies)} corps")
     print("  actionneurs par groupe: " + ", ".join(f"{k}={v}" for k, v in actuator_groups.items()))
     return {
@@ -191,6 +251,14 @@ def audit_flybody() -> dict[str, Any]:
         "bodies": bodies,
         "joint_groups": joint_groups,
         "actuator_groups": actuator_groups,
+        "contact_interface": {
+            "preset": "legs_thorax_abdomen_head",
+            "collision_enabled_segments": contact_segment_rows,
+            "explicit_ground_contact_pairs": int(contact_model.npair),
+            "aggregate_leg_sensors": contact_sensors,
+            "compiled_sensor_data_size": int(contact_model.nsensordata),
+            "non_leg_local_load_sensors": "not_exposed_by_default",
+        },
     }
 
 

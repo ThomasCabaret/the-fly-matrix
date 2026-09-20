@@ -6,11 +6,11 @@ adapter_type: null
 anatomical_region: body_surface
 parent_id: null
 ports: {inputs: [contacts], outputs: [local_contact_loads]}
-status: {inventory: partial, implementation: stub, parameters: unknown, validation: not_run}
+status: {inventory: partial, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [drosophila_virtual_fly_project_contract.md]
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-touch.json, data/derived/wiring/flybody-touch-channels.csv, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: []
-next_action: Énumérer les géométries de contact et les régions corporelles observables.
+validation_ids: [validation.flybody_touch_sensor]
+next_action: Ajouter des charges locales fiables pour les 51 régions de contact qui ne disposent pas d'un capteur agrégé de patte, puis les relier aux classes réceptrices.
 blocked_by: []
-completion_criteria: [Surfaces énumérées, Charges locales disponibles, Test de contact par région]
+completion_criteria: [57 surfaces énumérées, 6 capteurs de patte exécutables, Charges locales hors pattes disponibles, Test de contact par région]

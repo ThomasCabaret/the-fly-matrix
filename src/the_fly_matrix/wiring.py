@@ -44,6 +44,8 @@ UNCLASSIFIED_CHANNEL_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routes.parquet"
 FLYBODY_PROPRIO_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-proprioception.json"
 FLYBODY_PROPRIO_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-proprioception-channels.csv"
+FLYBODY_TOUCH_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-touch.json"
+FLYBODY_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-touch-channels.csv"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -411,6 +413,73 @@ def build_flybody_proprioception_wiring(
     channels.to_csv(channel_output, index=False, encoding="utf-8")
     print(f"[OK] {len(channels):,} articulations reliées par adresse qpos/qvel exacte")
     print(f"[OK] {len(channels) * 2:,} observables scalaires exposées sans calibration")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux physiques : {channel_output}")
+    return summary
+
+
+def build_flybody_touch_wiring(
+    inventory_path: Path = INVENTORY_PATH,
+    summary_output: Path = FLYBODY_TOUCH_SUMMARY_OUTPUT,
+    channel_output: Path = FLYBODY_TOUCH_CHANNEL_OUTPUT,
+) -> dict[str, Any]:
+    """Wire FlyGym's real aggregate ground-contact sensors into sensor.touch."""
+    if not inventory_path.is_file():
+        raise FileNotFoundError(f"{inventory_path} absent; lancez d'abord l'inventaire")
+    section("Câblage des contacts FlyBody vers le capteur tactile")
+    inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+    interface = inventory["flybody"].get("contact_interface", {})
+    sensor_rows = interface.get("aggregate_leg_sensors", [])
+    segment_rows = interface.get("collision_enabled_segments", [])
+    if not sensor_rows or not segment_rows:
+        raise RuntimeError("L'inventaire FlyBody ne contient pas d'interface de contact")
+    channels = pd.DataFrame(sensor_rows).sort_values("sensor_address").reset_index(drop=True)
+    channels.insert(0, "channel_id", channels["leg"].map(lambda leg: f"channel.flybody.ground_contact.{leg}"))
+    channels.insert(1, "source_box_id", "world.mujoco")
+    channels.insert(2, "source_port", "contacts")
+    channels.insert(3, "target_box_id", "sensor.touch")
+    channels.insert(4, "target_port", "contacts")
+    channels["scope"] = "aggregate_ground_contact_per_leg"
+    channels["position_unit"] = "mm"
+    channels["force_unit"] = "MuJoCo_model_unit"
+    channels["torque_unit"] = "MuJoCo_model_unit"
+    channels["direction_unit"] = "unitless"
+    channels["observable_layout"] = channels["observable_layout"].map(
+        lambda values: ",".join(values)
+    )
+    if channels["channel_id"].duplicated().any() or channels["sensor_name"].duplicated().any():
+        raise RuntimeError("Les canaux de contact FlyBody ne sont pas uniques")
+    if not channels["sensor_dimension"].eq(16).all():
+        raise RuntimeError("Chaque capteur de contact au sol doit exposer 16 scalaires")
+    expected_legs = {"lf", "lm", "lh", "rf", "rm", "rh"}
+    if set(channels["leg"]) != expected_legs:
+        raise RuntimeError("Les six pattes ne sont pas toutes couvertes exactement une fois")
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(inventory_path.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact FlyGym ground-contact sensor wiring; receptor assignment is deferred",
+        "wire_id": "wire.world_to_touch",
+        "source_box_id": "world.mujoco",
+        "target_box_id": "sensor.touch",
+        "collision_enabled_segments": len(segment_rows),
+        "explicit_ground_contact_pairs": int(interface["explicit_ground_contact_pairs"]),
+        "aggregate_leg_channels": len(channels),
+        "scalars_per_leg": 16,
+        "scalar_observables": int(channels["sensor_dimension"].sum()),
+        "legs": channels["leg"].tolist(),
+        "ground_contact_sensor_mapping": "exact",
+        "non_leg_local_load_mapping": "deferred",
+        "biological_receptor_mapping": "deferred",
+        "free_discrete_parameters": 0,
+        "continuous_parameters_deferred": True,
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    channels.to_csv(channel_output, index=False, encoding="utf-8")
+    print(f"[OK] {len(segment_rows):,} segments de collision et {interface['explicit_ground_contact_pairs']:,} paires inventoriés")
+    print(f"[OK] {len(channels):,} capteurs de patte reliés, {summary['scalar_observables']:,} scalaires exposés")
+    print("[INFO] Les charges locales hors pattes et l'attribution biologique restent différées")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux physiques : {channel_output}")
     return summary
@@ -1052,6 +1121,7 @@ def main() -> int:
         )
         build_proprioception_wiring(args.source)
         build_flybody_proprioception_wiring()
+        build_flybody_touch_wiring()
         build_mechanosensation_wiring(args.source)
         build_vision_wiring(args.source)
         build_motor_wiring(args.source)

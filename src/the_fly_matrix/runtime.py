@@ -24,6 +24,7 @@ MOTOR_ROUTE_PATH = WIRING_ROOT / "motor-routes.parquet"
 UNCLASSIFIED_CHANNEL_PATH = WIRING_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_PATH = WIRING_ROOT / "unclassified-sensory-routes.parquet"
 FLYBODY_PROPRIO_CHANNEL_PATH = WIRING_ROOT / "flybody-proprioception-channels.csv"
+FLYBODY_TOUCH_CHANNEL_PATH = WIRING_ROOT / "flybody-touch-channels.csv"
 
 
 @dataclass(frozen=True)
@@ -163,6 +164,97 @@ class FlyBodyProprioceptionSensor:
             joint_names=self.joint_names,
             positions=positions.copy(),
             velocities=velocities.copy(),
+        )
+
+
+@dataclass(frozen=True)
+class GroundContactState:
+    """Six aggregate FlyGym leg-ground contact observations."""
+
+    leg_names: tuple[str, ...]
+    contact_found: np.ndarray
+    forces: np.ndarray
+    torques: np.ndarray
+    positions: np.ndarray
+    normals: np.ndarray
+    tangents: np.ndarray
+
+    def __post_init__(self) -> None:
+        count = len(self.leg_names)
+        if self.contact_found.shape != (count,):
+            raise ValueError("contact_found must contain one value per leg")
+        for label, values in (
+            ("forces", self.forces),
+            ("torques", self.torques),
+            ("positions", self.positions),
+            ("normals", self.normals),
+            ("tangents", self.tangents),
+        ):
+            if values.shape != (count, 3):
+                raise ValueError(f"{label} must have shape {(count, 3)}")
+            if not np.isfinite(values).all():
+                raise ValueError(f"{label} values must be finite")
+        if not np.isfinite(self.contact_found).all():
+            raise ValueError("contact_found values must be finite")
+
+
+class FlyBodyGroundContactSensor:
+    """Decode FlyGym's six native 16-scalar aggregate leg contact sensors."""
+
+    box_id = "sensor.touch"
+
+    def __init__(self, channels: pd.DataFrame):
+        if channels.empty:
+            raise ValueError("No generated FlyBody touch channels found")
+        required = {
+            "channel_id",
+            "leg",
+            "sensor_name",
+            "sensor_address",
+            "sensor_dimension",
+        }
+        missing = required - set(channels.columns)
+        if missing:
+            raise ValueError(f"Missing FlyBody touch columns: {sorted(missing)}")
+        self.channels = channels.sort_values("sensor_address").reset_index(drop=True)
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate FlyBody touch channel IDs")
+        if not self.channels["sensor_dimension"].eq(16).all():
+            raise ValueError("FlyBody aggregate ground-contact sensors must be 16-dimensional")
+        self.channel_ids = tuple(self.channels["channel_id"].astype(str))
+        self.leg_names = tuple(self.channels["leg"].astype(str))
+        self._addresses = self.channels["sensor_address"].to_numpy(dtype=np.int64)
+        self._dimensions = self.channels["sensor_dimension"].to_numpy(dtype=np.int64)
+        self.sensor_data_size = int(np.max(self._addresses + self._dimensions))
+
+    @classmethod
+    def from_generated_wiring(
+        cls, channel_path: Path = FLYBODY_TOUCH_CHANNEL_PATH
+    ) -> "FlyBodyGroundContactSensor":
+        if not channel_path.is_file():
+            raise FileNotFoundError("FlyBody touch wiring is absent; run the wiring builder first")
+        return cls(pd.read_csv(channel_path))
+
+    def step(self, sensor_data: np.ndarray) -> GroundContactState:
+        raw = np.asarray(sensor_data, dtype=np.float64)
+        if raw.ndim != 1 or len(raw) < self.sensor_data_size:
+            raise ValueError(
+                f"sensordata: expected a vector of at least {self.sensor_data_size} values, "
+                f"got {raw.shape}"
+            )
+        if not np.isfinite(raw).all():
+            raise ValueError("sensordata values must be finite")
+        rows = np.stack(
+            [raw[address : address + dimension] for address, dimension in zip(self._addresses, self._dimensions)]
+        )
+        return GroundContactState(
+            leg_names=self.leg_names,
+            contact_found=rows[:, 0].copy(),
+            forces=rows[:, 1:4].copy(),
+            torques=rows[:, 4:7].copy(),
+            positions=rows[:, 7:10].copy(),
+            normals=rows[:, 10:13].copy(),
+            tangents=rows[:, 13:16].copy(),
         )
 
 

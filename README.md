@@ -132,6 +132,14 @@ avec les surfaces de contact, vibrations et autres observables physiques reste �
 établir. Les modalités non annotées sont conservées comme inconnues et ne sont pas
 reclassées par hypothèse.
 
+Côté physique, `flybody-touch-channels.csv` fixe désormais les six capteurs de
+contact au sol réellement compilés par FlyGym, un par patte. Chaque canal expose
+16 scalaires : présence du contact, force, couple, position, normale et tangente,
+soit 96 observables exécutables. L'inventaire conserve également les 57 segments
+autorisés à entrer en collision et leurs 69 paires avec le sol. Les charges locales
+hors pattes et la correspondance de ces six canaux avec les 323 instances
+mécanoréceptrices restent explicitement différées.
+
 Le manifeste visuel conserve une instance type C par neurone sensoriel du lobe
 optique : 6 091 photorécepteurs et 7 cellules `HBeyelet`, soit 6 098 routes
 terminales un-à-un vers MaleCNS. L'audit empêche explicitement d'utiliser

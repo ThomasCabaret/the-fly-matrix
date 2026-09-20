@@ -1,7 +1,7 @@
 schema_version: 1
 id: validation.flybody_inventory
 name: Inventaire et compilation FlyBody
-owner_ids: [body.flybody, sensor.proprioception, adapter.motor.transduction]
+owner_ids: [body.flybody, sensor.proprioception, sensor.touch, adapter.motor.transduction]
 level: local
 protocol_path: src/the_fly_matrix/inventory.py
 command: run_analysis.bat
@@ -10,4 +10,4 @@ calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: inventory-2026-09-20
 status: local_pass
-notes: [102 joints and 102 actuators inventoried, 102 unique qpos and qvel addresses inventoried]
+notes: [102 joints and 102 actuators inventoried, 102 unique qpos and qvel addresses inventoried, 57 collision-enabled segments and 6 aggregate leg contact sensors inventoried]

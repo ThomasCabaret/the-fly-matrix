@@ -4,14 +4,14 @@ name: Contacts du monde vers capteurs tactiles
 sector: mechanosensation
 source: {box_id: world.mujoco, port: contacts, group_query: null}
 target: {box_id: sensor.touch, port: contacts, group_query: null}
-mapping_level: group-level
-expected_cardinality: contact geometries to local body regions
+mapping_level: exact
+expected_cardinality: 6 aggregate leg-ground sensors (96 scalars); 57 collision-enabled segments inventoried
 candidate_constraints: [same physical contact location]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: partial, routing: proposed, implementation: stub, validation: not_run}
-confidence: medium
-evidence: [drosophila_virtual_fly_project_contract.md]
-validation_ids: []
-next_action: Énumérer les géométries et régions de contact.
+status: {inventory: partial, routing: verified, implementation: tested, validation: integration_pass}
+confidence: high
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-touch.json, data/derived/wiring/flybody-touch-channels.csv, runs/wiring-smoke/latest.json]
+validation_ids: [validation.flybody_touch_sensor]
+next_action: Étendre le flux exact au-delà des six agrégats de patte vers les autres régions corporelles en collision.
 blocked_by: []

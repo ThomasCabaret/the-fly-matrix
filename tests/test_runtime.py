@@ -9,6 +9,7 @@ from the_fly_matrix.runtime import (
     CHANNEL_PATH,
     CNSInputBuffer,
     FLYBODY_PROPRIO_CHANNEL_PATH,
+    FLYBODY_TOUCH_CHANNEL_PATH,
     MECHANO_CHANNEL_PATH,
     MECHANO_ROUTE_PATH,
     MOTOR_CHANNEL_PATH,
@@ -26,6 +27,7 @@ from the_fly_matrix.runtime import (
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
     FlyBodyProprioceptionSensor,
+    FlyBodyGroundContactSensor,
 )
 
 
@@ -86,6 +88,22 @@ class RuntimeTests(unittest.TestCase):
         self.assertTrue(np.array_equal(output.positions, qpos))
         self.assertTrue(np.array_equal(output.velocities, qvel))
         self.assertEqual(set(sensor.channels["observables"]), {"position,velocity"})
+
+    def test_flybody_ground_contacts_execute_without_receptor_claims(self) -> None:
+        if not FLYBODY_TOUCH_CHANNEL_PATH.is_file():
+            self.skipTest("generated FlyBody touch wiring is absent")
+        sensor = FlyBodyGroundContactSensor.from_generated_wiring()
+        raw = np.arange(sensor.sensor_data_size, dtype=np.float64)
+        output = sensor.step(raw)
+        self.assertEqual(sensor.leg_names, ("lf", "lm", "lh", "rf", "rm", "rh"))
+        self.assertEqual(sensor.sensor_data_size, 96)
+        self.assertEqual(output.contact_found.shape, (6,))
+        self.assertEqual(output.forces.shape, (6, 3))
+        self.assertEqual(output.torques.shape, (6, 3))
+        self.assertEqual(output.positions.shape, (6, 3))
+        self.assertEqual(output.normals.shape, (6, 3))
+        self.assertEqual(output.tangents.shape, (6, 3))
+        self.assertTrue(np.array_equal(output.forces[0], raw[1:4]))
 
     def test_mechanosensation_router_executes_both_disjoint_groups(self) -> None:
         if not MECHANO_CHANNEL_PATH.is_file() or not MECHANO_ROUTE_PATH.is_file():

@@ -14,6 +14,7 @@ from .runtime import (
     ChannelActivity,
     CNSInputBuffer,
     FlyBodyProprioceptionSensor,
+    FlyBodyGroundContactSensor,
     MechanosensationRoutingBox,
     MotorRoutingBox,
     ProprioceptionRoutingBox,
@@ -72,6 +73,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {proprio_sensor.box_id}: {len(proprio_sensor.joint_names):,} articulations, "
         f"{len(proprio_sensor.joint_names) * 2:,} observables position/vitesse exactes"
     )
+    touch_sensor = FlyBodyGroundContactSensor.from_generated_wiring()
+    print(
+        f"[OK] {touch_sensor.box_id}: {len(touch_sensor.leg_names):,} capteurs de patte, "
+        f"{touch_sensor.sensor_data_size:,} observables de contact au sol"
+    )
     proprioception = ProprioceptionRoutingBox.from_generated_wiring()
     print(
         f"[OK] {proprioception.box_id}: {len(proprioception.channel_ids):,} instances/canaux, "
@@ -105,6 +111,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     qvel_second = np.random.default_rng(seed - 1).uniform(-1.0, 1.0, proprio_sensor.qvel_size)
     joint_state_first = proprio_sensor.step(qpos_first, qvel_first)
     joint_state_second = proprio_sensor.step(qpos_second, qvel_second)
+    contact_data_first = np.random.default_rng(seed - 4).uniform(
+        -1.0, 1.0, touch_sensor.sensor_data_size
+    )
+    contact_data_second = np.random.default_rng(seed - 4).uniform(
+        -1.0, 1.0, touch_sensor.sensor_data_size
+    )
+    contact_state_first = touch_sensor.step(contact_data_first)
+    contact_state_second = touch_sensor.step(contact_data_second)
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     proprio_first = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
@@ -153,7 +167,24 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(
             f"102 articulations proprioceptives attendues, {len(joint_state_first.joint_names)} obtenues"
         )
+    if contact_state_first.leg_names != contact_state_second.leg_names or not all(
+        np.array_equal(first_values, second_values)
+        for first_values, second_values in (
+            (contact_state_first.contact_found, contact_state_second.contact_found),
+            (contact_state_first.forces, contact_state_second.forces),
+            (contact_state_first.torques, contact_state_second.torques),
+            (contact_state_first.positions, contact_state_second.positions),
+            (contact_state_first.normals, contact_state_second.normals),
+            (contact_state_first.tangents, contact_state_second.tangents),
+        )
+    ):
+        raise RuntimeError("Le rejeu du capteur tactile n'est pas déterministe")
+    if len(contact_state_first.leg_names) != 6:
+        raise RuntimeError(
+            f"6 capteurs de contact de patte attendus, {len(contact_state_first.leg_names)} obtenus"
+        )
     print("[OK] 102 articulations FlyBody extraites en 204 observables position/vitesse")
+    print("[OK] 6 contacts de patte extraits en 96 observables physiques")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
@@ -243,10 +274,19 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "qvel_size": proprio_sensor.qvel_size,
             "biological_receptor_mapping": "deferred",
         },
+        "physical_touch": {
+            "source_box_id": "world.mujoco",
+            "target_box_id": touch_sensor.box_id,
+            "aggregate_leg_channels": len(contact_state_first.leg_names),
+            "scalar_observables": touch_sensor.sensor_data_size,
+            "non_leg_local_load_mapping": "deferred",
+            "biological_receptor_mapping": "deferred",
+        },
         "checks": {
             "all_routes_executed": True,
             "motor_routes_executed": True,
             "body_to_proprioception_executed": True,
+            "world_to_touch_executed": True,
             "deterministic_replay": True,
             "scientific_parameters_selected": False,
             "activity_values_persisted": False,

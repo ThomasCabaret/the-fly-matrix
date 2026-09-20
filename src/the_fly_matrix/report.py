@@ -22,6 +22,7 @@ PROPRIO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "proprioception-rou
 FLYBODY_PROPRIO_WIRING_PATH = (
     ROOT / "data" / "derived" / "wiring" / "flybody-proprioception.json"
 )
+FLYBODY_TOUCH_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "flybody-touch.json"
 MECHANO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "mechanosensation-routing.json"
 VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "vision-routing.json"
 MOTOR_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routing.json"
@@ -114,6 +115,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     wiring_smoke = inventory.get("wiring_smoke")
     proprio_wiring = inventory.get("proprio_wiring")
     flybody_proprio_wiring = inventory.get("flybody_proprio_wiring")
+    flybody_touch_wiring = inventory.get("flybody_touch_wiring")
     mechano_wiring = inventory.get("mechano_wiring")
     vision_wiring = inventory.get("vision_wiring")
     motor_wiring = inventory.get("motor_wiring")
@@ -183,6 +185,11 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{flybody_proprio_wiring.get("joint_channels", 0):,}</strong><span>articulations FlyBody câblées</span></div>'
             f'<div><strong>{flybody_proprio_wiring.get("scalar_observables", 0):,}</strong><span>observables proprio physiques</span></div>'
+        )
+    if flybody_touch_wiring:
+        remote_metrics += (
+            f'<div><strong>{flybody_touch_wiring.get("aggregate_leg_channels", 0):,}</strong><span>capteurs de contact de patte</span></div>'
+            f'<div><strong>{flybody_touch_wiring.get("scalar_observables", 0):,}</strong><span>observables tactiles physiques</span></div>'
         )
     if mechano_wiring:
         remote_metrics += (
@@ -359,6 +366,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 f"[OK] Observables proprioceptives FlyBody chargées: "
                 f"{FLYBODY_PROPRIO_WIRING_PATH}"
             )
+        if FLYBODY_TOUCH_WIRING_PATH.is_file():
+            inventory["flybody_touch_wiring"] = json.loads(
+                FLYBODY_TOUCH_WIRING_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Contacts FlyBody chargés: {FLYBODY_TOUCH_WIRING_PATH}")
         if MECHANO_WIRING_PATH.is_file():
             inventory["mechano_wiring"] = json.loads(
                 MECHANO_WIRING_PATH.read_text(encoding="utf-8")
