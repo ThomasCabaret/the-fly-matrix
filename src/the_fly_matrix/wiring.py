@@ -13,6 +13,7 @@ from .ledger import ROOT
 
 
 INVENTORY_ROOT = ROOT / "data" / "derived" / "inventory"
+INVENTORY_PATH = INVENTORY_ROOT / "inventory.json"
 SOURCE = INVENTORY_ROOT / "interface-neurons.parquet"
 ANNOTATION_SOURCE = (
     ROOT
@@ -41,6 +42,8 @@ MOTOR_ROUTE_OUTPUT = OUTPUT_ROOT / "motor-routes.parquet"
 UNCLASSIFIED_SUMMARY_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routing.json"
 UNCLASSIFIED_CHANNEL_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routes.parquet"
+FLYBODY_PROPRIO_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-proprioception.json"
+FLYBODY_PROPRIO_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-proprioception-channels.csv"
 
 CLAMP_SPECS = {
     "sensory.olfactory": {
@@ -339,6 +342,77 @@ def build_proprioception_wiring(
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux terminaux : {channel_output}")
     print(f"[OK] Routes bodyId exactes : {route_output}")
+    return summary
+
+
+def build_flybody_proprioception_wiring(
+    inventory_path: Path = INVENTORY_PATH,
+    summary_output: Path = FLYBODY_PROPRIO_SUMMARY_OUTPUT,
+    channel_output: Path = FLYBODY_PROPRIO_CHANNEL_OUTPUT,
+) -> dict[str, Any]:
+    """Wire raw FlyBody joint state into the proprioception sensor box.
+
+    This is deliberately the physical half only: it exposes joint positions and
+    velocities but makes no claim about which biological receptor consumes them.
+    """
+    if not inventory_path.is_file():
+        raise FileNotFoundError(f"{inventory_path} absent; lancez d'abord l'inventaire")
+    section("Câblage FlyBody vers le capteur proprioceptif")
+    inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+    flybody = inventory["flybody"]
+    rows = flybody.get("joint_observables", [])
+    if not rows:
+        raise RuntimeError("L'inventaire FlyBody ne contient aucune observable articulaire")
+    channels = pd.DataFrame(rows).sort_values("joint_id").reset_index(drop=True)
+    channels.insert(
+        0,
+        "channel_id",
+        channels["joint_id"].map(lambda value: f"channel.flybody.joint.{int(value):03d}"),
+    )
+    channels.insert(1, "source_box_id", "body.flybody")
+    channels.insert(2, "source_port", "body_state")
+    channels.insert(3, "target_box_id", "sensor.proprioception")
+    channels.insert(4, "target_port", "body_state")
+    channels["observables"] = "position,velocity"
+    if channels["channel_id"].duplicated().any():
+        raise RuntimeError("Les identifiants de canaux articulaires ne sont pas uniques")
+    if channels["joint_name"].duplicated().any():
+        raise RuntimeError("Les noms d'articulations FlyBody ne sont pas uniques")
+    if channels["qpos_address"].duplicated().any() or channels["qvel_address"].duplicated().any():
+        raise RuntimeError("Les adresses qpos/qvel articulaires ne sont pas injectives")
+    expected = int(flybody["model"]["nq"])
+    if len(channels) != expected or int(flybody["model"]["nv"]) != expected:
+        raise RuntimeError("La cardinalité des observables ne correspond pas à nq/nv")
+    group_counts = {
+        str(key): int(value)
+        for key, value in channels["body_group"].value_counts().sort_index().items()
+    }
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(inventory_path.relative_to(ROOT)).replace("\\", "/"),
+        "purpose": "exact FlyBody joint-state wiring; biological receptor assignment is deferred",
+        "wire_id": "wire.body_to_proprioception",
+        "source_box_id": "body.flybody",
+        "target_box_id": "sensor.proprioception",
+        "joint_channels": len(channels),
+        "scalar_observables": len(channels) * 2,
+        "position_observables": len(channels),
+        "velocity_observables": len(channels),
+        "joint_group_counts": group_counts,
+        "qpos_addressing": "exact",
+        "qvel_addressing": "exact",
+        "biological_receptor_mapping": "deferred",
+        "free_discrete_parameters": 0,
+        "continuous_parameters_deferred": True,
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    channels.to_csv(channel_output, index=False, encoding="utf-8")
+    print(f"[OK] {len(channels):,} articulations reliées par adresse qpos/qvel exacte")
+    print(f"[OK] {len(channels) * 2:,} observables scalaires exposées sans calibration")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Canaux physiques : {channel_output}")
     return summary
 
 
@@ -977,6 +1051,7 @@ def main() -> int:
             args.route_output,
         )
         build_proprioception_wiring(args.source)
+        build_flybody_proprioception_wiring()
         build_mechanosensation_wiring(args.source)
         build_vision_wiring(args.source)
         build_motor_wiring(args.source)

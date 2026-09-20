@@ -8,6 +8,7 @@ from the_fly_matrix.runtime import (
     BasalClampBox,
     CHANNEL_PATH,
     CNSInputBuffer,
+    FLYBODY_PROPRIO_CHANNEL_PATH,
     MECHANO_CHANNEL_PATH,
     MECHANO_ROUTE_PATH,
     MOTOR_CHANNEL_PATH,
@@ -24,6 +25,7 @@ from the_fly_matrix.runtime import (
     ProprioceptionRoutingBox,
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
+    FlyBodyProprioceptionSensor,
 )
 
 
@@ -69,6 +71,21 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(len(box.channel_ids), 262)
         self.assertEqual(len(output.body_ids), 1454)
         self.assertEqual(len(np.unique(output.body_ids)), 1454)
+
+    def test_flybody_joint_state_executes_upstream_without_receptor_claims(self) -> None:
+        if not FLYBODY_PROPRIO_CHANNEL_PATH.is_file():
+            self.skipTest("generated FlyBody proprioception wiring is absent")
+        sensor = FlyBodyProprioceptionSensor.from_generated_wiring()
+        qpos = np.arange(sensor.qpos_size, dtype=np.float64) + 0.25
+        qvel = np.arange(sensor.qvel_size, dtype=np.float64) - 0.5
+        output = sensor.step(qpos, qvel)
+        self.assertEqual(len(sensor.channel_ids), 102)
+        self.assertEqual(len(output.joint_names), 102)
+        self.assertEqual(sensor.qpos_size, 102)
+        self.assertEqual(sensor.qvel_size, 102)
+        self.assertTrue(np.array_equal(output.positions, qpos))
+        self.assertTrue(np.array_equal(output.velocities, qvel))
+        self.assertEqual(set(sensor.channels["observables"]), {"position,velocity"})
 
     def test_mechanosensation_router_executes_both_disjoint_groups(self) -> None:
         if not MECHANO_CHANNEL_PATH.is_file() or not MECHANO_ROUTE_PATH.is_file():

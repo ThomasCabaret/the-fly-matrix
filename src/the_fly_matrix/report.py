@@ -19,6 +19,9 @@ ROI_AUDIT_PATH = ROOT / "data" / "derived" / "inventory" / "roi-audit.json"
 BASAL_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "basal-clamp-routing.json"
 WIRING_SMOKE_PATH = ROOT / "runs" / "wiring-smoke" / "latest.json"
 PROPRIO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "proprioception-routing.json"
+FLYBODY_PROPRIO_WIRING_PATH = (
+    ROOT / "data" / "derived" / "wiring" / "flybody-proprioception.json"
+)
 MECHANO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "mechanosensation-routing.json"
 VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "vision-routing.json"
 MOTOR_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routing.json"
@@ -110,6 +113,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     basal_wiring = inventory.get("basal_wiring")
     wiring_smoke = inventory.get("wiring_smoke")
     proprio_wiring = inventory.get("proprio_wiring")
+    flybody_proprio_wiring = inventory.get("flybody_proprio_wiring")
     mechano_wiring = inventory.get("mechano_wiring")
     vision_wiring = inventory.get("vision_wiring")
     motor_wiring = inventory.get("motor_wiring")
@@ -174,6 +178,11 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{proprio_wiring.get("generated_box_instances", 0):,}</strong><span>instances proprio type C</span></div>'
             f'<div><strong>{proprio_wiring.get("exact_routes", 0):,}</strong><span>routes proprio exactes</span></div>'
+        )
+    if flybody_proprio_wiring:
+        remote_metrics += (
+            f'<div><strong>{flybody_proprio_wiring.get("joint_channels", 0):,}</strong><span>articulations FlyBody câblées</span></div>'
+            f'<div><strong>{flybody_proprio_wiring.get("scalar_observables", 0):,}</strong><span>observables proprio physiques</span></div>'
         )
     if mechano_wiring:
         remote_metrics += (
@@ -342,6 +351,14 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 PROPRIO_WIRING_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Câblage proprioceptif chargé: {PROPRIO_WIRING_PATH}")
+        if FLYBODY_PROPRIO_WIRING_PATH.is_file():
+            inventory["flybody_proprio_wiring"] = json.loads(
+                FLYBODY_PROPRIO_WIRING_PATH.read_text(encoding="utf-8")
+            )
+            print(
+                f"[OK] Observables proprioceptives FlyBody chargées: "
+                f"{FLYBODY_PROPRIO_WIRING_PATH}"
+            )
         if MECHANO_WIRING_PATH.is_file():
             inventory["mechano_wiring"] = json.loads(
                 MECHANO_WIRING_PATH.read_text(encoding="utf-8")

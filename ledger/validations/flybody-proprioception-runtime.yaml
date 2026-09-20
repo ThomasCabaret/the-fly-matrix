@@ -1,0 +1,25 @@
+schema_version: 1
+id: validation.flybody_proprioception_sensor
+name: Extraction exécutable de l'état articulaire FlyBody
+owner_ids:
+  - body.flybody
+  - sensor.proprioception
+  - wire.body_to_proprioception
+  - wire.proprioception_sensor_to_transduction
+level: integration
+protocol_path: src/the_fly_matrix/wiring_smoke.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 102 biological joints have one unique manifest channel
+  - All qpos and qvel addresses are unique and exact
+  - Position and velocity extraction is deterministic
+  - Units are explicit in the generated manifest
+  - No biological receptor assignment or calibrated value is inferred
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: flybody-proprioception-runtime-2026-09-20
+status: integration_pass
+notes:
+  - 102 FlyBody joint channels expose 102 positions and 102 velocities
+  - The physical body-to-sensor wire is executable
+  - Mapping into the 262 proprioceptive routing instances remains deliberately deferred

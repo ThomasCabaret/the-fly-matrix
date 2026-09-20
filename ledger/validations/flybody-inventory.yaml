@@ -5,9 +5,9 @@ owner_ids: [body.flybody, sensor.proprioception, adapter.motor.transduction]
 level: local
 protocol_path: src/the_fly_matrix/inventory.py
 command: run_analysis.bat
-acceptance_criteria: [Model compiles, Joint names enumerated, Actuator names enumerated]
+acceptance_criteria: [Model compiles, Joint names enumerated, Joint qpos and qvel addresses enumerated, Actuator names enumerated]
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: inventory-2026-09-19
+latest_run_id: inventory-2026-09-20
 status: local_pass
-notes: [102 joints and 102 actuators inventoried]
+notes: [102 joints and 102 actuators inventoried, 102 unique qpos and qvel addresses inventoried]

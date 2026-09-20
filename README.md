@@ -115,10 +115,14 @@ des valeurs pseudo-aléatoires uniquement pour vérifier le passage des données
 elles ne sont jamais enregistrées comme paramètres scientifiques.
 
 Le manifeste proprioceptif sépare volontairement les deux côtés de l'adaptateur
-type C. `proprioception-routes.parquet` fixe les routes terminales vers MaleCNS,
-tandis que l'affectation amont des angles, vitesses, contraintes et vibrations
-physiques reste inconnue. Finir une moitié fiable ne transforme donc pas l'autre
-moitié en hypothèse implicite.
+type C. Côté physique, `flybody-proprioception-channels.csv` relie maintenant les
+102 articulations biologiques aux adresses `qpos` et `qvel` du modèle compilé :
+la boîte `sensor.proprioception` extrait ainsi 102 positions et 102 vitesses de
+façon exécutable. Côté CNS, `proprioception-routes.parquet` fixe les 1 454 routes
+terminales MaleCNS regroupées en 262 instances. La correspondance scientifique
+entre ces 204 observables et ces 262 instances reste volontairement inconnue ;
+les contraintes et vibrations sont elles aussi différées. Finir ces deux moitiés
+fiables ne fabrique donc pas une jonction biologique implicite.
 
 Le manifeste mécanorécepteur applique la même séparation : 4 291 afférences
 tactiles ou mécanoréceptrices sont divisées en 323 instances type C selon le

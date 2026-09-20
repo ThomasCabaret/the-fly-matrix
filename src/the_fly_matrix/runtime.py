@@ -23,6 +23,7 @@ MOTOR_CHANNEL_PATH = WIRING_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_PATH = WIRING_ROOT / "motor-routes.parquet"
 UNCLASSIFIED_CHANNEL_PATH = WIRING_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_PATH = WIRING_ROOT / "unclassified-sensory-routes.parquet"
+FLYBODY_PROPRIO_CHANNEL_PATH = WIRING_ROOT / "flybody-proprioception-channels.csv"
 
 
 @dataclass(frozen=True)
@@ -59,6 +60,110 @@ class ChannelActivity:
             raise ValueError("ChannelActivity IDs must be unique")
         if not np.isfinite(self.values).all():
             raise ValueError("channel values must be finite")
+
+
+@dataclass(frozen=True)
+class JointState:
+    """Uncalibrated FlyBody joint positions and velocities in manifest order."""
+
+    joint_names: tuple[str, ...]
+    positions: np.ndarray
+    velocities: np.ndarray
+
+    def __post_init__(self) -> None:
+        expected = (len(self.joint_names),)
+        if self.positions.shape != expected or self.velocities.shape != expected:
+            raise ValueError("joint positions and velocities must match joint_names")
+        if len(set(self.joint_names)) != len(self.joint_names):
+            raise ValueError("JointState names must be unique")
+        if not np.isfinite(self.positions).all() or not np.isfinite(self.velocities).all():
+            raise ValueError("joint state values must be finite")
+
+
+class FlyBodyProprioceptionSensor:
+    """Extract the 102 physical joint observables from a compiled FlyBody state."""
+
+    box_id = "sensor.proprioception"
+
+    def __init__(self, channels: pd.DataFrame):
+        if channels.empty:
+            raise ValueError("No generated FlyBody proprioception channels found")
+        required = {
+            "channel_id",
+            "joint_name",
+            "joint_id",
+            "qpos_address",
+            "qvel_address",
+        }
+        missing = required - set(channels.columns)
+        if missing:
+            raise ValueError(f"Missing FlyBody channel columns: {sorted(missing)}")
+        self.channels = channels.sort_values("joint_id").reset_index(drop=True)
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate FlyBody proprioception channel IDs")
+        if self.channels["joint_name"].duplicated().any():
+            raise ValueError("Duplicate FlyBody joint names")
+        self.channel_ids = tuple(self.channels["channel_id"].astype(str))
+        self.joint_names = tuple(self.channels["joint_name"].astype(str))
+        self._qpos_addresses = self.channels["qpos_address"].to_numpy(dtype=np.int64)
+        self._qvel_addresses = self.channels["qvel_address"].to_numpy(dtype=np.int64)
+        if len(np.unique(self._qpos_addresses)) != len(self._qpos_addresses):
+            raise ValueError("Duplicate qpos addresses")
+        if len(np.unique(self._qvel_addresses)) != len(self._qvel_addresses):
+            raise ValueError("Duplicate qvel addresses")
+        self.qpos_size = int(self._qpos_addresses.max()) + 1
+        self.qvel_size = int(self._qvel_addresses.max()) + 1
+
+    @classmethod
+    def from_generated_wiring(
+        cls, channel_path: Path = FLYBODY_PROPRIO_CHANNEL_PATH
+    ) -> "FlyBodyProprioceptionSensor":
+        if not channel_path.is_file():
+            raise FileNotFoundError(
+                "FlyBody proprioception wiring is absent; run the wiring builder first"
+            )
+        return cls(pd.read_csv(channel_path))
+
+    def _state_vector(
+        self,
+        values: Mapping[str, float] | np.ndarray,
+        expected_size: int,
+        label: str,
+    ) -> np.ndarray:
+        if isinstance(values, Mapping):
+            missing = set(self.joint_names) - set(values)
+            extra = set(values) - set(self.joint_names)
+            if missing or extra:
+                raise ValueError(
+                    f"{label}: joint mismatch; missing={len(missing)}, extra={len(extra)}"
+                )
+            result = np.asarray([values[name] for name in self.joint_names], dtype=np.float64)
+            if not np.isfinite(result).all():
+                raise ValueError(f"{label} values must be finite")
+            return result
+        result = np.asarray(values, dtype=np.float64)
+        if result.shape != (expected_size,):
+            raise ValueError(f"{label}: expected raw shape {(expected_size,)}, got {result.shape}")
+        if not np.isfinite(result).all():
+            raise ValueError(f"{label} values must be finite")
+        return result
+
+    def step(
+        self,
+        qpos: Mapping[str, float] | np.ndarray,
+        qvel: Mapping[str, float] | np.ndarray,
+    ) -> JointState:
+        positions = self._state_vector(qpos, self.qpos_size, "qpos")
+        velocities = self._state_vector(qvel, self.qvel_size, "qvel")
+        if not isinstance(qpos, Mapping):
+            positions = positions[self._qpos_addresses]
+        if not isinstance(qvel, Mapping):
+            velocities = velocities[self._qvel_addresses]
+        return JointState(
+            joint_names=self.joint_names,
+            positions=positions.copy(),
+            velocities=velocities.copy(),
+        )
 
 
 class BasalClampBox:

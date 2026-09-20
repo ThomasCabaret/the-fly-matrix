@@ -80,6 +80,15 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(proprio["duplicate_routes"], 0)
         self.assertEqual(proprio["unassigned_neurons"], 0)
 
+        physical_proprio_path = path.with_name("flybody-proprioception.json")
+        self.assertTrue(physical_proprio_path.is_file())
+        physical_proprio = json.loads(physical_proprio_path.read_text(encoding="utf-8"))
+        self.assertEqual(physical_proprio["joint_channels"], 102)
+        self.assertEqual(physical_proprio["scalar_observables"], 204)
+        self.assertEqual(physical_proprio["qpos_addressing"], "exact")
+        self.assertEqual(physical_proprio["qvel_addressing"], "exact")
+        self.assertEqual(physical_proprio["biological_receptor_mapping"], "deferred")
+
         mechano_path = path.with_name("mechanosensation-routing.json")
         self.assertTrue(mechano_path.is_file())
         mechano = json.loads(mechano_path.read_text(encoding="utf-8"))

@@ -9,9 +9,9 @@ expected_cardinality: 102 joint degrees of freedom
 candidate_constraints: [same joint and axis]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: complete, routing: fixed, implementation: stub, validation: smoke}
+status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/inventory.json]
-validation_ids: [validation.flybody_inventory]
-next_action: Ajouter le calcul des vitesses, contraintes et vibrations nécessaires.
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, runs/wiring-smoke/latest.json]
+validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor]
+next_action: Conserver ce contrat exact pendant l'ajout ultérieur des contraintes et vibrations.
 blocked_by: []

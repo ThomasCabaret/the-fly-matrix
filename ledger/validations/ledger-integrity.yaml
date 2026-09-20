@@ -8,6 +8,6 @@ command: .venv/Scripts/python.exe -m unittest discover -s tests -v
 acceptance_criteria: [Unique IDs, Valid references, Valid status vocabularies, Existing ports]
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: ledger-tests-2026-09-19
+latest_run_id: ledger-tests-2026-09-20
 status: local_pass
-notes: [Twenty-two unit tests passed locally]
+notes: [Twenty-three unit tests passed locally]

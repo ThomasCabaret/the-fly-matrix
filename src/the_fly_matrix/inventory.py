@@ -166,11 +166,27 @@ def audit_flybody() -> dict[str, Any]:
     bodies = _mujoco_names(model, mujoco.mjtObj.mjOBJ_BODY, model.nbody)
     actuator_groups = dict(sorted(Counter(_body_group(name) for name in actuators).items()))
     joint_groups = dict(sorted(Counter(_body_group(name) for name in joints).items()))
+    joint_observables = [
+        {
+            "joint_id": index,
+            "joint_name": name,
+            "body_group": _body_group(name),
+            "joint_type": mujoco.mjtJoint(int(model.jnt_type[index])).name.removeprefix(
+                "mjJNT_"
+            ).lower(),
+            "qpos_address": int(model.jnt_qposadr[index]),
+            "qvel_address": int(model.jnt_dofadr[index]),
+            "position_unit": "rad",
+            "velocity_unit": "rad/s",
+        }
+        for index, name in enumerate(joints)
+    ]
     print(f"FlyBody: {len(joints)} joints, {len(actuators)} actionneurs, {len(bodies)} corps")
     print("  actionneurs par groupe: " + ", ".join(f"{k}={v}" for k, v in actuator_groups.items()))
     return {
         "model": {"nq": model.nq, "nv": model.nv, "nu": model.nu, "nbody": model.nbody},
         "joints": joints,
+        "joint_observables": joint_observables,
         "actuators": actuators,
         "bodies": bodies,
         "joint_groups": joint_groups,

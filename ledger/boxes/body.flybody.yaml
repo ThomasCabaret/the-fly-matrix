@@ -8,9 +8,9 @@ parent_id: null
 ports: {inputs: [actuator_commands], outputs: [body_state, contacts]}
 status: {inventory: complete, implementation: tested, parameters: borrowed, validation: smoke}
 confidence: high
-evidence: [data/derived/inventory/inventory.json, reports/generated/install-smoke-flybody.png]
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, reports/generated/install-smoke-flybody.png]
 parameter_family_ids: []
-validation_ids: [validation.installation, validation.flybody_inventory]
+validation_ids: [validation.installation, validation.flybody_inventory, validation.flybody_proprioception_sensor]
 next_action: Documenter unités, limites et contrôlabilité de chaque actionneur.
 blocked_by: []
 completion_criteria: [Inventaire versionné, Limites auditées, Rejeu physique déterministe]

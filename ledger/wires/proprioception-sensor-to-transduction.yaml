@@ -11,7 +11,7 @@ free_discrete_parameters: 0
 free_continuous_parameters: 0
 status: {inventory: complete, routing: fixed, implementation: not_started, validation: smoke}
 confidence: high
-evidence: [data/derived/inventory/inventory.json]
-validation_ids: [validation.flybody_inventory]
-next_action: Ajouter les canaux dérivés spécifiques aux classes proprioceptives.
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception-channels.csv]
+validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor]
+next_action: Déterminer quels canaux position/vitesse alimentent chacune des 262 instances biologiques, puis ajouter les dérivées spécifiques nécessaires.
 blocked_by: []

@@ -13,6 +13,7 @@ from .runtime import (
     BasalClampBox,
     ChannelActivity,
     CNSInputBuffer,
+    FlyBodyProprioceptionSensor,
     MechanosensationRoutingBox,
     MotorRoutingBox,
     ProprioceptionRoutingBox,
@@ -66,6 +67,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             f"{len(box.routes):,} destinations exactes"
         )
 
+    proprio_sensor = FlyBodyProprioceptionSensor.from_generated_wiring()
+    print(
+        f"[OK] {proprio_sensor.box_id}: {len(proprio_sensor.joint_names):,} articulations, "
+        f"{len(proprio_sensor.joint_names) * 2:,} observables position/vitesse exactes"
+    )
     proprioception = ProprioceptionRoutingBox.from_generated_wiring()
     print(
         f"[OK] {proprioception.box_id}: {len(proprioception.channel_ids):,} instances/canaux, "
@@ -93,6 +99,12 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
 
     section("Injection déterministe de valeurs arbitraires")
+    qpos_first = np.random.default_rng(seed - 2).uniform(-1.0, 1.0, proprio_sensor.qpos_size)
+    qvel_first = np.random.default_rng(seed - 1).uniform(-1.0, 1.0, proprio_sensor.qvel_size)
+    qpos_second = np.random.default_rng(seed - 2).uniform(-1.0, 1.0, proprio_sensor.qpos_size)
+    qvel_second = np.random.default_rng(seed - 1).uniform(-1.0, 1.0, proprio_sensor.qvel_size)
+    joint_state_first = proprio_sensor.step(qpos_first, qvel_first)
+    joint_state_second = proprio_sensor.step(qpos_second, qvel_second)
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     proprio_first = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
@@ -133,6 +145,15 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError("Le rejeu du routage moteur n'est pas déterministe")
     if len(motor_first.channel_ids) != 815:
         raise RuntimeError(f"815 sorties motrices attendues, {len(motor_first.channel_ids)} obtenues")
+    if joint_state_first.joint_names != joint_state_second.joint_names or not np.array_equal(
+        joint_state_first.positions, joint_state_second.positions
+    ) or not np.array_equal(joint_state_first.velocities, joint_state_second.velocities):
+        raise RuntimeError("Le rejeu du capteur proprioceptif n'est pas déterministe")
+    if len(joint_state_first.joint_names) != 102:
+        raise RuntimeError(
+            f"102 articulations proprioceptives attendues, {len(joint_state_first.joint_names)} obtenues"
+        )
+    print("[OK] 102 articulations FlyBody extraites en 204 observables position/vitesse")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
@@ -213,9 +234,19 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "output_channels": len(motor_first.channel_ids),
             "activity_digest": _channel_digest(motor_first),
         },
+        "physical_proprioception": {
+            "source_box_id": "body.flybody",
+            "target_box_id": proprio_sensor.box_id,
+            "joint_channels": len(joint_state_first.joint_names),
+            "scalar_observables": len(joint_state_first.joint_names) * 2,
+            "qpos_size": proprio_sensor.qpos_size,
+            "qvel_size": proprio_sensor.qvel_size,
+            "biological_receptor_mapping": "deferred",
+        },
         "checks": {
             "all_routes_executed": True,
             "motor_routes_executed": True,
+            "body_to_proprioception_executed": True,
             "deterministic_replay": True,
             "scientific_parameters_selected": False,
             "activity_values_persisted": False,
