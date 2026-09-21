@@ -17,6 +17,7 @@ from .runtime import (
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
     FlyBodyVisionSensor,
+    GroupedChannelActivity,
     MechanosensationRoutingBox,
     MotorRoutingBox,
     ProprioceptionRoutingBox,
@@ -54,9 +55,11 @@ def _digest(activity: SparseActivity) -> str:
     return digest.hexdigest()
 
 
-def _channel_digest(activity: ChannelActivity) -> str:
+def _channel_digest(activity: ChannelActivity | GroupedChannelActivity) -> str:
     digest = hashlib.sha256()
     digest.update("\n".join(activity.channel_ids).encode("utf-8"))
+    if isinstance(activity, GroupedChannelActivity):
+        digest.update("\n".join(activity.group_ids).encode("utf-8"))
     digest.update(activity.values.tobytes())
     return digest.hexdigest()
 
@@ -136,7 +139,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     motor = MotorRoutingBox.from_generated_wiring()
     print(
         f"[OK] {motor.box_id}: {len(motor.channel_ids):,} instances/canaux depuis "
-        f"{len(motor.source_body_ids):,} neurones moteurs; muscles différés"
+        f"{len(motor.source_body_ids):,} neurones moteurs vers "
+        f"{len(set(motor.motor_group_ids)):,} groupes annotés; actionneurs différés"
     )
     unclassified = UnclassifiedSensoryRoutingBox.from_generated_wiring()
     print(
@@ -210,6 +214,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError("Le rejeu du routage moteur n'est pas déterministe")
     if len(motor_first.channel_ids) != 815:
         raise RuntimeError(f"815 sorties motrices attendues, {len(motor_first.channel_ids)} obtenues")
+    if motor_first.group_ids != motor_second.group_ids or len(set(motor_first.group_ids)) != 441:
+        raise RuntimeError("Le groupage moteur annoté n'est pas déterministe ou exhaustif")
     if joint_state_first.joint_names != joint_state_second.joint_names or not np.array_equal(
         joint_state_first.positions, joint_state_second.positions
     ) or not np.array_equal(joint_state_first.velocities, joint_state_second.velocities):
@@ -256,6 +262,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     print("[OK] Rendu réel de 2 × 721 ommatidies extrait de façon déterministe")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
+    print("[OK] 441 groupes moteurs annotés transportent les 815 valeurs sans agrégation")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
 
     result: dict[str, object] = {
@@ -309,7 +316,9 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "adapter_type": motor.adapter_type,
                 "terminal_box_instances": len(motor.channel_ids),
                 "exact_routes": len(motor.source_body_ids),
-                "downstream_muscle_mapping": "deferred",
+                "annotation_backed_motor_groups": len(set(motor.motor_group_ids)),
+                "motor_group_membership": "fixed_lossless",
+                "flybody_actuator_mapping": "deferred",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ]
@@ -332,6 +341,9 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "adapter_type": motor.adapter_type,
             "unique_source_body_ids": len(motor.source_body_ids),
             "output_channels": len(motor_first.channel_ids),
+            "annotation_backed_motor_groups": len(set(motor_first.group_ids)),
+            "group_membership": "fixed_lossless",
+            "flybody_actuator_mapping": "deferred",
             "activity_digest": _channel_digest(motor_first),
         },
         "physical_proprioception": {
@@ -370,6 +382,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         "checks": {
             "all_routes_executed": True,
             "motor_routes_executed": True,
+            "motor_group_membership_executed": True,
             "body_to_proprioception_executed": True,
             "world_to_touch_executed": True,
             "motor_transduction_to_body_executed": True,

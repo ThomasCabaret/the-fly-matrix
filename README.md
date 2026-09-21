@@ -158,8 +158,12 @@ vérifie un résultat déterministe. La jonction de ces 1 442 échantillons vers
 Le manifeste moteur couvre les 708 neurones `vnc_motor` et 107 neurones
 `cb_motor`, avec une instance type E par `bodyId`. L'audit des nerfs de sortie
 isole 191 autres neurones endocrines ou efférents au lieu de les transformer en
-commandes musculaires. Cette moitié fixe CNS→routeur moteur ; les associations
-routeur→muscles biologiques→actionneurs FlyBody restent à construire.
+commandes musculaires. Les 815 activités sont maintenant étiquetées par 441
+groupes reproductibles `(sous-classe, type, côté)` sans sommation ni perte ; les
+10 neurones sans type restent des singletons `bodyId`. Cette granularité repose
+sur les annotations MaleCNS publiées et fixe le fil routeur→transduction. La
+jonction séparée des 441 groupes vers les 102 actionneurs FlyBody, ainsi que les
+signes, gains et dynamiques musculaires, restent à construire.
 
 À l'autre extrémité, `flybody-actuator-channels.csv` fixe désormais les 102
 adresses `ctrl` du modèle compilé et leur articulation cible, sans choisir la

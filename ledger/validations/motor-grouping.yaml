@@ -1,0 +1,27 @@
+schema_version: 1
+id: validation.motor_grouping
+name: Groupage moteur type et côté sans perte
+owner_ids:
+  - adapter.motor.routing
+  - adapter.motor.transduction
+  - group.motor.vnc
+  - group.motor.central_brain
+  - wire.motor_routing_to_transduction
+level: integration
+protocol_path: src/the_fly_matrix/wiring.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 815 explicitly motor neurons belong to exactly one annotation-backed group
+  - The lossless partition contains 441 groups keyed by subclass, type and soma side
+  - The 10 neurons without a type remain separate bodyId singletons
+  - Every member activity is forwarded without aggregation, sign or gain selection
+  - Mapping from the 441 groups to the 102 FlyBody actuators remains explicitly deferred
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: motor-grouping-2026-09-21
+status: integration_pass
+notes:
+  - Group semantics use published MaleCNS subclass and type annotations
+  - 815 exact member routes are transported through 441 group labels
+  - No neuronal value is combined or dropped
+  - Actuator choice, sign, gain and muscle dynamics remain unknown

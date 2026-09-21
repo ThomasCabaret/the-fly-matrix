@@ -6,11 +6,11 @@ adapter_type: F
 anatomical_region: muscles_and_joints
 parent_id: null
 ports: {inputs: [muscle_group_activity], outputs: [actuator_commands]}
-status: {inventory: partial, implementation: stub, parameters: unknown, validation: integration_pass}
+status: {inventory: complete, implementation: stub, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/motor-routing.json, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.motor.transduction]
-validation_ids: [validation.flybody_actuator_interface]
-next_action: Construire la jonction des 815 sorties neuronales vers les groupes musculaires puis les 102 commandes; les deux haltères sans configuration restent signalés.
+validation_ids: [validation.motor_grouping, validation.flybody_actuator_interface]
+next_action: Relier les 441 groupes moteur type/côté aux 102 commandes FlyBody; signes, gains et agrégation restent à calibrer séparément.
 blocked_by: []
 completion_criteria: [102 actionneurs physiques couverts, Groupes musculaires biologiques affectés, Transformations locales, Limites mécaniques testées]

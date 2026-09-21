@@ -16,7 +16,7 @@ acceptance_criteria:
   - Every type-E instance reads one explicit MaleCNS bodyId
   - The single cb_motor neuron without exitNerve remains explicit
   - All 191 exit-bearing non-motor neurons are classified and excluded from muscle commands
-  - Muscle and FlyBody actuator assignments remain explicitly deferred
+  - Annotation-backed type/side grouping and FlyBody actuator assignments are audited separately
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: motor-routing-2026-09-19
@@ -26,4 +26,4 @@ notes:
   - 815 exact MaleCNS bodyId source routes with no duplicate or omission
   - Motor population contains 708 vnc_motor and 107 cb_motor neurons
   - Non-motor exits comprise 92 vnc_efferent, 89 endocrine, 4 cb_efferent, 4 efferent_ascending and 2 cb_intrinsic neurons
-  - Muscle and actuator mapping remains deliberately unknown
+  - Group membership is validated separately; actuator mapping remains deliberately unknown

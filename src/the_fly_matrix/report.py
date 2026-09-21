@@ -222,8 +222,10 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         )
     if motor_wiring:
         exits = motor_wiring.get("exit_nerve_inventory", {})
+        muscle_groups = motor_wiring.get("muscle_group_inventory", {})
         remote_metrics += (
             f'<div><strong>{motor_wiring.get("exact_routes", 0):,}</strong><span>sorties motrices exactes</span></div>'
+            f'<div><strong>{muscle_groups.get("groups", 0):,}</strong><span>groupes moteur type/côté</span></div>'
             f'<div><strong>{exits.get("non_motor_deferred", 0):,}</strong><span>sorties non motrices isolées</span></div>'
         )
     if unclassified_wiring:

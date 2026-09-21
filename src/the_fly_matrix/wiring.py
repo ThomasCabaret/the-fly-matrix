@@ -39,6 +39,8 @@ VISION_ROUTE_OUTPUT = OUTPUT_ROOT / "vision-routes.parquet"
 MOTOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "motor-routing.json"
 MOTOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_OUTPUT = OUTPUT_ROOT / "motor-routes.parquet"
+MOTOR_GROUP_OUTPUT = OUTPUT_ROOT / "motor-muscle-groups.csv"
+MOTOR_GROUP_MEMBER_OUTPUT = OUTPUT_ROOT / "motor-muscle-members.parquet"
 UNCLASSIFIED_SUMMARY_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routing.json"
 UNCLASSIFIED_CHANNEL_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routes.parquet"
@@ -946,8 +948,15 @@ def build_motor_wiring(
     summary_output: Path = MOTOR_SUMMARY_OUTPUT,
     channel_output: Path = MOTOR_CHANNEL_OUTPUT,
     route_output: Path = MOTOR_ROUTE_OUTPUT,
+    group_output: Path = MOTOR_GROUP_OUTPUT,
+    group_member_output: Path = MOTOR_GROUP_MEMBER_OUTPUT,
 ) -> dict[str, Any]:
-    """Build the exact CNS-to-router half of the motor type-E adapter."""
+    """Build exact motor routes and their annotation-backed muscle groups.
+
+    The grouping is a lossless structural bundle: every motor-neuron activity
+    remains present.  It deliberately does not sum activities, choose signs or
+    assign any group to a FlyBody actuator.
+    """
     if not source.is_file():
         raise FileNotFoundError(f"{source} absent; lancez d'abord l'inventaire MaleCNS")
     section("Câblage des sorties neuronales explicitement motrices")
@@ -966,6 +975,16 @@ def build_motor_wiring(
 
     text_axes = ["exitNerve", "somaSide", "somaNeuromere", "subclass", "type", "instance"]
     selected[text_axes] = selected[text_axes].fillna("(unknown)").astype(str)
+    selected["grouping_type"] = selected["type"]
+    unknown_type = selected["type"].eq("(unknown)")
+    selected.loc[unknown_type, "grouping_type"] = selected.loc[unknown_type, "bodyId"].map(
+        lambda body_id: f"(unknown bodyId={int(body_id)})"
+    )
+    group_axes = ["subclass", "grouping_type", "somaSide"]
+    selected["motor_group_id"] = [
+        _channel_id("motor.muscle_group", group_axes, tuple(row))
+        for row in selected[group_axes].itertuples(index=False, name=None)
+    ]
     selected["routing_box_id"] = "adapter.motor.routing"
     selected["source_box_id"] = "cns.malecns"
     selected["source_port"] = "motor_neuron_activity"
@@ -995,9 +1014,11 @@ def build_motor_wiring(
             "subclass": row.subclass,
             "type": row.type,
             "instance": row.instance,
+            "motor_group_id": row.motor_group_id,
             "mapping_level": "exact_body_id",
             "free_discrete_parameters_upstream": 0,
-            "downstream_muscle_mapping": "deferred",
+            "downstream_muscle_grouping": "fixed",
+            "flybody_actuator_mapping": "deferred",
         }
         for row in selected.itertuples(index=False)
     ]
@@ -1017,10 +1038,66 @@ def build_motor_wiring(
         "subclass",
         "type",
         "instance",
+        "motor_group_id",
     ]
     routes = selected[route_columns].rename(columns={"bodyId": "source_body_id"})
     if routes["source_body_id"].duplicated().any():
         raise RuntimeError("Le manifeste moteur contient des sources bodyId dupliquées")
+
+    group_rows: list[dict[str, Any]] = []
+    for motor_group_id, members in selected.groupby("motor_group_id", sort=True):
+        subclass = str(members.iloc[0]["subclass"])
+        motor_type = str(members.iloc[0]["type"])
+        side = str(members.iloc[0]["somaSide"])
+        if motor_type == "(unknown)":
+            annotation_resolution = "unknown_singleton"
+        elif motor_type.startswith(
+            ("MNad", "MNfl", "MNhl", "MNhm", "MNml", "MNnm", "MNwm", "MNxm")
+        ):
+            annotation_resolution = "systematic_type"
+        else:
+            annotation_resolution = "named_type"
+        group_rows.append(
+            {
+                "motor_group_id": str(motor_group_id),
+                "source_box_id": "adapter.motor.routing",
+                "source_port": "muscle_group_activity",
+                "target_box_id": "adapter.motor.transduction",
+                "target_port": "muscle_group_activity",
+                "subclass": subclass,
+                "type": motor_type,
+                "side": side,
+                "annotation_resolution": annotation_resolution,
+                "member_neurons": int(len(members)),
+                "member_channels": int(members["channel_id"].nunique()),
+                "membership_mapping": "exact_body_id",
+                "value_transformation": "none_preserve_members",
+                "flybody_actuator_mapping": "deferred",
+            }
+        )
+    groups = pd.DataFrame(group_rows).sort_values(
+        ["subclass", "type", "side", "motor_group_id"]
+    ).reset_index(drop=True)
+    members = selected[
+        [
+            "motor_group_id",
+            "channel_id",
+            "bodyId",
+            "group_id",
+            "subclass",
+            "type",
+            "somaSide",
+            "exitNerve",
+            "somaNeuromere",
+            "instance",
+        ]
+    ].rename(columns={"bodyId": "source_body_id", "somaSide": "side"})
+    if members["source_body_id"].duplicated().any():
+        raise RuntimeError("Un neurone moteur appartient à plusieurs groupes musculaires")
+    if set(members["motor_group_id"]) != set(groups["motor_group_id"]):
+        raise RuntimeError("Les membres et l'inventaire des groupes moteurs divergent")
+    if len(groups) != 441:
+        raise RuntimeError(f"441 groupes moteurs annotés attendus, {len(groups)} obtenus")
 
     exits = frame.loc[frame["group_id"].eq("motor.exit_nerve")].copy()
     excluded = exits.loc[~exits["bodyId"].isin(selected["bodyId"])]
@@ -1051,7 +1128,14 @@ def build_motor_wiring(
             "terminal_channels": "one type-E instance per unique motor-neuron bodyId",
             "source_mapping": "each instance reads one explicit MaleCNS bodyId",
             "exclusion_policy": "endocrine and other efferent exits are inventoried but never treated as muscle commands",
-            "downstream_policy": "muscle and FlyBody actuator assignment remains unknown",
+            "muscle_groups": "lossless partition by annotated subclass, type and soma side; unknown types remain bodyId singletons",
+            "value_policy": "member activities are preserved individually; no sum, sign or gain is selected",
+            "downstream_policy": "mapping from annotated groups to FlyBody actuators remains unknown",
+        },
+        "scientific_basis": {
+            "publication": "Organization of circuits linking descending input to motor output in the Drosophila Male Adult Nerve Cord connectome",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/",
+            "used_claim": "motor subclass encodes broad muscle category and type identifies the annotated motor-neuron type",
         },
         "group_ids": list(group_ids),
         "routing_box_id": "adapter.motor.routing",
@@ -1063,6 +1147,22 @@ def build_motor_wiring(
         "duplicate_routes": 0,
         "unassigned_motor_neurons": 0,
         "unknown_axis_value_counts": unknown_counts,
+        "muscle_group_inventory": {
+            "groups": int(len(groups)),
+            "exact_member_routes": int(len(members)),
+            "subclass_group_counts": {
+                str(key): int(value)
+                for key, value in groups["subclass"].value_counts().sort_index().items()
+            },
+            "annotation_resolution_counts": {
+                str(key): int(value)
+                for key, value in groups["annotation_resolution"].value_counts().items()
+            },
+            "unknown_type_neurons_preserved_as_singletons": int(unknown_type.sum()),
+            "value_transformation": "none_preserve_members",
+            "membership_status": "fixed",
+            "flybody_actuator_mapping": "deferred",
+        },
         "exit_nerve_inventory": {
             "total": int(len(exits)),
             "explicit_motor": int(exits["bodyId"].isin(selected["bodyId"]).sum()),
@@ -1071,19 +1171,25 @@ def build_motor_wiring(
             "motor_without_exit_nerve": int(selected["exitNerve"].eq("(unknown)").sum()),
         },
         "upstream_routing_status": "fixed",
-        "downstream_mapping_status": "unknown",
+        "downstream_group_membership_status": "fixed",
+        "flybody_actuator_mapping_status": "unknown",
     }
     summary_output.parent.mkdir(parents=True, exist_ok=True)
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     pd.DataFrame(channel_rows).to_csv(channel_output, index=False, encoding="utf-8")
     routes.to_parquet(route_output, index=False)
+    groups.to_csv(group_output, index=False, encoding="utf-8")
+    members.to_parquet(group_member_output, index=False)
     print("[OK] 708 moteurs VNC et 107 moteurs cerveau central distingués")
     print("[OK] 191 sorties endocrines/effectrices non motrices exclues des commandes musculaires")
     print("[OK] 1 neurone cb_motor conserve un nerf de sortie explicitement inconnu")
     print(f"[OK] {len(routes):,} routes exactes et {len(channel_rows):,} instances type E")
+    print(f"[OK] {len(groups):,} groupes type/côté couvrent les {len(members):,} neurones sans agrégation")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux moteurs : {channel_output}")
     print(f"[OK] Routes bodyId exactes : {route_output}")
+    print(f"[OK] Groupes moteurs : {group_output}")
+    print(f"[OK] Membres exacts des groupes : {group_member_output}")
     return summary
 
 

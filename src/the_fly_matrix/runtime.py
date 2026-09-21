@@ -66,6 +66,27 @@ class ChannelActivity:
 
 
 @dataclass(frozen=True)
+class GroupedChannelActivity:
+    """Lossless channel activity annotated with a structural group per value."""
+
+    channel_ids: tuple[str, ...]
+    group_ids: tuple[str, ...]
+    values: np.ndarray
+
+    def __post_init__(self) -> None:
+        if self.values.ndim != 1:
+            raise ValueError("grouped channel values must be one-dimensional")
+        if len(self.channel_ids) != len(self.values) or len(self.group_ids) != len(self.values):
+            raise ValueError("channel_ids, group_ids and values must have identical lengths")
+        if len(set(self.channel_ids)) != len(self.channel_ids):
+            raise ValueError("GroupedChannelActivity channel IDs must be unique")
+        if not all(self.group_ids):
+            raise ValueError("GroupedChannelActivity group IDs must be non-empty")
+        if not np.isfinite(self.values).all():
+            raise ValueError("grouped channel values must be finite")
+
+
+@dataclass(frozen=True)
 class JointState:
     """Uncalibrated FlyBody joint positions and velocities in manifest order."""
 
@@ -631,7 +652,7 @@ class VisionRoutingBox:
 
 
 class MotorRoutingBox:
-    """Executable type-E CNS-output router with muscle assignment deferred."""
+    """Type-E router preserving every value and its annotated muscle group."""
 
     adapter_type = "E"
     box_id = "adapter.motor.routing"
@@ -652,6 +673,11 @@ class MotorRoutingBox:
             raise ValueError(f"Routes refer to unknown motor channels: {sorted(unknown)[:3]}")
         self.channel_ids = tuple(route_channel_ids)
         self.source_body_ids = tuple(int(value) for value in self.routes["source_body_id"])
+        if "motor_group_id" not in self.routes:
+            raise ValueError("Motor routes do not contain annotation-backed group IDs")
+        self.motor_group_ids = tuple(self.routes["motor_group_id"].astype(str))
+        if len(set(self.motor_group_ids)) != 441:
+            raise ValueError("Expected 441 annotation-backed motor groups")
 
     @classmethod
     def from_generated_wiring(
@@ -663,7 +689,7 @@ class MotorRoutingBox:
             raise FileNotFoundError("Motor wiring is absent; run the wiring builder first")
         return cls(pd.read_csv(channel_path), pd.read_parquet(route_path))
 
-    def step(self, source_values: Mapping[int, float] | np.ndarray) -> ChannelActivity:
+    def step(self, source_values: Mapping[int, float] | np.ndarray) -> GroupedChannelActivity:
         if isinstance(source_values, Mapping):
             missing = set(self.source_body_ids) - set(source_values)
             extra = set(source_values) - set(self.source_body_ids)
@@ -678,7 +704,11 @@ class MotorRoutingBox:
             raise ValueError(
                 f"{self.box_id}: expected {len(self.source_body_ids)} source values, got {values.shape}"
             )
-        return ChannelActivity(channel_ids=self.channel_ids, values=values.copy())
+        return GroupedChannelActivity(
+            channel_ids=self.channel_ids,
+            group_ids=self.motor_group_ids,
+            values=values.copy(),
+        )
 
 
 class UnclassifiedSensoryRoutingBox:

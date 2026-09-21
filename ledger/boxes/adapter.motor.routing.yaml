@@ -8,9 +8,9 @@ parent_id: null
 ports: {inputs: [motor_neuron_activity], outputs: [muscle_group_activity]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: high
-evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-routes.parquet, runs/wiring-smoke/latest.json]
+evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-routes.parquet, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: [validation.motor_routing]
-next_action: Relier les 815 canaux type E à des groupes musculaires, en conservant séparément les sorties non motrices.
+validation_ids: [validation.motor_routing, validation.motor_grouping]
+next_action: Conserver les 441 groupes annotés et relier séparément chacun aux candidats d'actionneurs FlyBody.
 blocked_by: []
-completion_criteria: [815 sources motrices exhaustives, Routages bodyId fixes, Sorties non motrices exclues, Mapping musculaire séparé]
+completion_criteria: [815 sources motrices exhaustives, Routages bodyId fixes, Sorties non motrices exclues, Groupage type/côté sans perte]

@@ -159,6 +159,13 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(motor["group_counts"], {"motor.vnc": 708, "motor.central_brain": 107})
         self.assertEqual(motor["exit_nerve_inventory"]["non_motor_deferred"], 191)
         self.assertEqual(motor["exit_nerve_inventory"]["motor_without_exit_nerve"], 1)
+        muscle_groups = motor["muscle_group_inventory"]
+        self.assertEqual(muscle_groups["groups"], 441)
+        self.assertEqual(muscle_groups["exact_member_routes"], 815)
+        self.assertEqual(muscle_groups["unknown_type_neurons_preserved_as_singletons"], 10)
+        self.assertEqual(muscle_groups["value_transformation"], "none_preserve_members")
+        self.assertEqual(muscle_groups["membership_status"], "fixed")
+        self.assertEqual(muscle_groups["flybody_actuator_mapping"], "deferred")
 
         residual_path = path.with_name("unclassified-sensory-routing.json")
         self.assertTrue(residual_path.is_file())

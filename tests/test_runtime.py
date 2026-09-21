@@ -178,6 +178,8 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(len(box.source_body_ids), 815)
         self.assertEqual(len(output.channel_ids), 815)
         self.assertEqual(len(set(output.channel_ids)), 815)
+        self.assertEqual(len(output.group_ids), 815)
+        self.assertEqual(len(set(output.group_ids)), 441)
         self.assertTrue(np.array_equal(output.values, values))
         self.assertEqual(
             set(box.routes["group_id"]),
