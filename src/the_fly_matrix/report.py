@@ -30,6 +30,9 @@ FLYBODY_VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "flybody-vis
 MECHANO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "mechanosensation-routing.json"
 VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "vision-routing.json"
 MOTOR_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routing.json"
+MOTOR_TRANSDUCTION_PATH = (
+    ROOT / "data" / "derived" / "wiring" / "motor-transduction-candidates.json"
+)
 UNCLASSIFIED_WIRING_PATH = (
     ROOT / "data" / "derived" / "wiring" / "unclassified-sensory-routing.json"
 )
@@ -125,6 +128,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     mechano_wiring = inventory.get("mechano_wiring")
     vision_wiring = inventory.get("vision_wiring")
     motor_wiring = inventory.get("motor_wiring")
+    motor_transduction = inventory.get("motor_transduction")
     unclassified_wiring = inventory.get("unclassified_wiring")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
@@ -227,6 +231,12 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
             f'<div><strong>{motor_wiring.get("exact_routes", 0):,}</strong><span>sorties motrices exactes</span></div>'
             f'<div><strong>{muscle_groups.get("groups", 0):,}</strong><span>groupes moteur type/côté</span></div>'
             f'<div><strong>{exits.get("non_motor_deferred", 0):,}</strong><span>sorties non motrices isolées</span></div>'
+        )
+    if motor_transduction:
+        remote_metrics += (
+            f'<div><strong>{motor_transduction.get("candidate_edges", 0):,}</strong><span>paramètres moteur candidats</span></div>'
+            f'<div><strong>{motor_transduction.get("covered_actuators", 0):,}/102</strong><span>actionneurs avec candidats</span></div>'
+            f'<div><strong>{motor_transduction.get("unresolved_motor_neurons", 0):,}</strong><span>neurones moteurs non résolus</span></div>'
         )
     if unclassified_wiring:
         coverage = unclassified_wiring.get("sensory_coverage", {})
@@ -415,6 +425,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 MOTOR_WIRING_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Câblage moteur chargé: {MOTOR_WIRING_PATH}")
+        if MOTOR_TRANSDUCTION_PATH.is_file():
+            inventory["motor_transduction"] = json.loads(
+                MOTOR_TRANSDUCTION_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Matrice motrice candidate chargée: {MOTOR_TRANSDUCTION_PATH}")
         if UNCLASSIFIED_WIRING_PATH.is_file():
             inventory["unclassified_wiring"] = json.loads(
                 UNCLASSIFIED_WIRING_PATH.read_text(encoding="utf-8")

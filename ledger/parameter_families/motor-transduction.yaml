@@ -6,12 +6,12 @@ quantity: activation-to-actuator transformation
 unit: actuator-dependent
 sharing_rule: homologous left-right muscle groups share parameters initially
 source_kind: unknown
-source_references: []
+source_references: [data/derived/wiring/motor-transduction-candidates.json, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
 value: null
 bounds: null
-free_parameter_count: 0
+free_parameter_count: 7536
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 status: unknown
 confidence: low
-known_limitations: [FlyBody actionneurs are not explicit biological muscles]
+known_limitations: [FlyBody actionneurs are not explicit biological muscles, 93 neurons in am/pm/rm/xm lack an independently supported actuator category, 11 antenna and proboscis actuators have no candidate input]

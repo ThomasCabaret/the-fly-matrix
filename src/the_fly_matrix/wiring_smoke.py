@@ -20,6 +20,7 @@ from .runtime import (
     GroupedChannelActivity,
     MechanosensationRoutingBox,
     MotorRoutingBox,
+    MotorTransductionBox,
     ProprioceptionRoutingBox,
     SparseActivity,
     UnclassifiedSensoryRoutingBox,
@@ -142,6 +143,12 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"{len(motor.source_body_ids):,} neurones moteurs vers "
         f"{len(set(motor.motor_group_ids)):,} groupes annotés; actionneurs différés"
     )
+    motor_transduction = MotorTransductionBox.from_generated_wiring()
+    print(
+        f"[OK] {motor_transduction.box_id}: {len(motor_transduction.parameter_ids):,} "
+        f"arêtes candidates vers {len(motor_transduction.covered_actuator_ids):,}/102 actionneurs; "
+        "paramètres non fixés"
+    )
     unclassified = UnclassifiedSensoryRoutingBox.from_generated_wiring()
     print(
         f"[OK] {unclassified.box_id}: {len(unclassified.channel_ids):,} instances/canaux, "
@@ -166,14 +173,6 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     contact_state_first = touch_sensor.step(contact_data_first)
     contact_state_second = touch_sensor.step(contact_data_second)
-    actuator_values_first = np.random.default_rng(seed - 6).uniform(
-        -1.0, 1.0, len(actuator_interface.actuator_names)
-    )
-    actuator_values_second = np.random.default_rng(seed - 6).uniform(
-        -1.0, 1.0, len(actuator_interface.actuator_names)
-    )
-    actuator_commands_first = actuator_interface.step(actuator_values_first)
-    actuator_commands_second = actuator_interface.step(actuator_values_second)
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     proprio_first = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
@@ -196,6 +195,20 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     motor_first = motor.step(motor_values_first)
     motor_second = motor.step(motor_values_second)
+    transduction_parameters_first = np.random.default_rng(seed + len(boxes) + 5).uniform(
+        -1.0, 1.0, len(motor_transduction.parameter_ids)
+    )
+    transduction_parameters_second = np.random.default_rng(seed + len(boxes) + 5).uniform(
+        -1.0, 1.0, len(motor_transduction.parameter_ids)
+    )
+    transduced_commands_first = motor_transduction.step(
+        motor_first, transduction_parameters_first
+    )
+    transduced_commands_second = motor_transduction.step(
+        motor_second, transduction_parameters_second
+    )
+    actuator_commands_first = actuator_interface.step(transduced_commands_first.values)
+    actuator_commands_second = actuator_interface.step(transduced_commands_second.values)
     first = CNSInputBuffer.merge(
         *first_outputs, proprio_first, mechano_first, vision_first, unclassified_first
     )
@@ -216,6 +229,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(f"815 sorties motrices attendues, {len(motor_first.channel_ids)} obtenues")
     if motor_first.group_ids != motor_second.group_ids or len(set(motor_first.group_ids)) != 441:
         raise RuntimeError("Le groupage moteur annoté n'est pas déterministe ou exhaustif")
+    if not np.array_equal(transduced_commands_first.values, transduced_commands_second.values):
+        raise RuntimeError("Le rejeu de la transduction motrice candidate n'est pas déterministe")
+    if np.count_nonzero(transduced_commands_first.values[list(motor_transduction.uncovered_actuator_ids)]):
+        raise RuntimeError("Des actionneurs sans candidat ont reçu une commande")
     if joint_state_first.joint_names != joint_state_second.joint_names or not np.array_equal(
         joint_state_first.positions, joint_state_second.positions
     ) or not np.array_equal(joint_state_first.velocities, joint_state_second.velocities):
@@ -263,6 +280,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
     print("[OK] 441 groupes moteurs annotés transportent les 815 valeurs sans agrégation")
+    print("[OK] 7,536 paramètres injectés à travers la matrice candidate type F")
     print("[OK] Rejeu bit-à-bit identique avec la même graine")
 
     result: dict[str, object] = {
@@ -324,6 +342,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         ]
         + [
             {
+                "id": motor_transduction.box_id,
+                "adapter_type": motor_transduction.adapter_type,
+                "candidate_edges": len(motor_transduction.parameter_ids),
+                "resolved_motor_channels": len(motor_transduction.source_channel_ids),
+                "covered_actuators": len(motor_transduction.covered_actuator_ids),
+                "parameter_status": "arbitrary_smoke_only",
+            }
+        ]
+        + [
+            {
                 "id": unclassified.box_id,
                 "adapter_type": unclassified.adapter_type,
                 "terminal_box_instances": len(unclassified.channel_ids),
@@ -345,6 +373,15 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "group_membership": "fixed_lossless",
             "flybody_actuator_mapping": "deferred",
             "activity_digest": _channel_digest(motor_first),
+        },
+        "motor_transduction": {
+            "adapter_type": motor_transduction.adapter_type,
+            "candidate_edges": len(motor_transduction.parameter_ids),
+            "resolved_motor_channels": len(motor_transduction.source_channel_ids),
+            "resolved_motor_groups": len(motor_transduction.resolved_group_ids),
+            "covered_actuators": len(motor_transduction.covered_actuator_ids),
+            "uncovered_actuators": len(motor_transduction.uncovered_actuator_ids),
+            "parameter_status": "arbitrary_smoke_only",
         },
         "physical_proprioception": {
             "source_box_id": "body.flybody",
@@ -368,7 +405,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "target_box_id": actuator_interface.box_id,
             "actuator_channels": len(actuator_commands_first.actuator_names),
             "control_vector_size": len(actuator_commands_first.values),
-            "motor_neuron_to_actuator_mapping": "deferred",
+            "motor_neuron_to_actuator_mapping": "candidate_partial",
         },
         "physical_vision": {
             "source_box_id": "world.mujoco",
@@ -383,6 +420,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "all_routes_executed": True,
             "motor_routes_executed": True,
             "motor_group_membership_executed": True,
+            "motor_transduction_candidates_executed": True,
             "body_to_proprioception_executed": True,
             "world_to_touch_executed": True,
             "motor_transduction_to_body_executed": True,

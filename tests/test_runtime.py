@@ -16,6 +16,7 @@ from the_fly_matrix.runtime import (
     MECHANO_ROUTE_PATH,
     MOTOR_CHANNEL_PATH,
     MOTOR_ROUTE_PATH,
+    MOTOR_ACTUATOR_CANDIDATE_PATH,
     PROPRIO_CHANNEL_PATH,
     PROPRIO_ROUTE_PATH,
     ROUTE_PATH,
@@ -25,6 +26,7 @@ from the_fly_matrix.runtime import (
     VISION_ROUTE_PATH,
     MechanosensationRoutingBox,
     MotorRoutingBox,
+    MotorTransductionBox,
     ProprioceptionRoutingBox,
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
@@ -185,6 +187,24 @@ class RuntimeTests(unittest.TestCase):
             set(box.routes["group_id"]),
             {"motor.vnc", "motor.central_brain"},
         )
+
+    def test_motor_transduction_executes_only_anatomical_candidate_edges(self) -> None:
+        if not MOTOR_ACTUATOR_CANDIDATE_PATH.is_file():
+            self.skipTest("generated motor transduction candidates are absent")
+        router = MotorRoutingBox.from_generated_wiring()
+        transduction = MotorTransductionBox.from_generated_wiring()
+        activity = router.step(np.ones(len(router.source_body_ids), dtype=np.float64))
+        output = transduction.step(
+            activity, np.ones(len(transduction.parameter_ids), dtype=np.float64)
+        )
+        self.assertEqual(len(transduction.parameter_ids), 7536)
+        self.assertEqual(len(transduction.source_channel_ids), 722)
+        self.assertEqual(len(transduction.resolved_group_ids), 368)
+        self.assertEqual(len(transduction.covered_actuator_ids), 91)
+        self.assertEqual(len(transduction.uncovered_actuator_ids), 11)
+        self.assertEqual(output.values.shape, (102,))
+        self.assertTrue(np.all(output.values[list(transduction.covered_actuator_ids)] > 0))
+        self.assertTrue(np.all(output.values[list(transduction.uncovered_actuator_ids)] == 0))
 
     def test_unclassified_sensory_router_closes_inventory_coverage(self) -> None:
         if not UNCLASSIFIED_CHANNEL_PATH.is_file() or not UNCLASSIFIED_ROUTE_PATH.is_file():

@@ -21,6 +21,7 @@ VISION_CHANNEL_PATH = WIRING_ROOT / "vision-channels.csv"
 VISION_ROUTE_PATH = WIRING_ROOT / "vision-routes.parquet"
 MOTOR_CHANNEL_PATH = WIRING_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_PATH = WIRING_ROOT / "motor-routes.parquet"
+MOTOR_ACTUATOR_CANDIDATE_PATH = WIRING_ROOT / "motor-actuator-candidates.parquet"
 UNCLASSIFIED_CHANNEL_PATH = WIRING_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_PATH = WIRING_ROOT / "unclassified-sensory-routes.parquet"
 FLYBODY_PROPRIO_CHANNEL_PATH = WIRING_ROOT / "flybody-proprioception-channels.csv"
@@ -709,6 +710,120 @@ class MotorRoutingBox:
             group_ids=self.motor_group_ids,
             values=values.copy(),
         )
+
+
+class MotorTransductionBox:
+    """Sparse type-F candidate transform whose gains are supplied explicitly."""
+
+    adapter_type = "F"
+    box_id = "adapter.motor.transduction"
+
+    def __init__(self, candidates: pd.DataFrame, actuators: pd.DataFrame):
+        if candidates.empty or actuators.empty:
+            raise ValueError("No generated motor transduction candidates found")
+        required = {
+            "parameter_id",
+            "motor_group_id",
+            "source_channel_id",
+            "source_body_id",
+            "target_actuator_id",
+            "target_actuator_name",
+        }
+        missing = required - set(candidates.columns)
+        if missing:
+            raise ValueError(f"Missing motor candidate columns: {sorted(missing)}")
+        self.candidates = candidates.sort_values(
+            ["source_body_id", "target_actuator_id"]
+        ).reset_index(drop=True)
+        self.actuators = actuators.sort_values("actuator_id").reset_index(drop=True)
+        if self.candidates["parameter_id"].duplicated().any():
+            raise ValueError("Duplicate motor transduction parameter IDs")
+        if self.actuators["actuator_id"].duplicated().any():
+            raise ValueError("Duplicate target actuator IDs")
+        self.parameter_ids = tuple(self.candidates["parameter_id"].astype(str))
+        self.actuator_names = tuple(self.actuators["actuator_name"].astype(str))
+        self.source_channel_ids = tuple(
+            self.candidates["source_channel_id"].astype(str).drop_duplicates()
+        )
+        self.resolved_group_ids = tuple(
+            self.candidates["motor_group_id"].astype(str).drop_duplicates()
+        )
+        self._edge_source_channel_ids = tuple(
+            self.candidates["source_channel_id"].astype(str)
+        )
+        self._edge_group_ids = tuple(self.candidates["motor_group_id"].astype(str))
+        self._target_actuator_ids = self.candidates["target_actuator_id"].to_numpy(
+            dtype=np.int64
+        )
+        self.covered_actuator_ids = tuple(sorted(set(self._target_actuator_ids.tolist())))
+        all_actuator_ids = set(self.actuators["actuator_id"].astype(int))
+        self.uncovered_actuator_ids = tuple(sorted(all_actuator_ids - set(self.covered_actuator_ids)))
+        if len(self.parameter_ids) != 7536:
+            raise ValueError("Expected 7,536 constrained motor-to-actuator parameters")
+        if len(self.source_channel_ids) != 722 or len(self.resolved_group_ids) != 368:
+            raise ValueError("Unexpected resolved motor candidate coverage")
+        if len(self.actuator_names) != 102:
+            raise ValueError("Expected 102 FlyBody actuator outputs")
+        if len(self.covered_actuator_ids) != 91 or len(self.uncovered_actuator_ids) != 11:
+            raise ValueError("Unexpected FlyBody actuator candidate coverage")
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        candidate_path: Path = MOTOR_ACTUATOR_CANDIDATE_PATH,
+        actuator_path: Path = FLYBODY_ACTUATOR_CHANNEL_PATH,
+    ) -> "MotorTransductionBox":
+        if not candidate_path.is_file() or not actuator_path.is_file():
+            raise FileNotFoundError(
+                "Motor transduction candidates are absent; run the wiring builder first"
+            )
+        return cls(pd.read_parquet(candidate_path), pd.read_csv(actuator_path))
+
+    def step(
+        self,
+        activity: GroupedChannelActivity,
+        parameters: Mapping[str, float] | np.ndarray,
+    ) -> ActuatorCommands:
+        channel_index = {channel_id: index for index, channel_id in enumerate(activity.channel_ids)}
+        missing_channels = set(self.source_channel_ids) - set(channel_index)
+        if missing_channels:
+            raise ValueError(
+                f"{self.box_id}: missing {len(missing_channels)} resolved motor channels"
+            )
+        group_by_channel = dict(zip(activity.channel_ids, activity.group_ids))
+        mismatched_groups = sum(
+            group_by_channel[channel_id] != group_id
+            for channel_id, group_id in zip(self._edge_source_channel_ids, self._edge_group_ids)
+        )
+        if mismatched_groups:
+            raise ValueError(f"{self.box_id}: {mismatched_groups} candidate group labels mismatch")
+        if isinstance(parameters, Mapping):
+            missing = set(self.parameter_ids) - set(parameters)
+            extra = set(parameters) - set(self.parameter_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: parameter mismatch; missing={len(missing)}, extra={len(extra)}"
+                )
+            weights = np.asarray([parameters[item] for item in self.parameter_ids], dtype=np.float64)
+        else:
+            weights = np.asarray(parameters, dtype=np.float64)
+        if weights.shape != (len(self.parameter_ids),):
+            raise ValueError(
+                f"{self.box_id}: expected {len(self.parameter_ids)} parameters, got {weights.shape}"
+            )
+        if not np.isfinite(weights).all():
+            raise ValueError("motor transduction parameters must be finite")
+        source_indices = np.asarray(
+            [channel_index[channel_id] for channel_id in self._edge_source_channel_ids],
+            dtype=np.int64,
+        )
+        commands = np.zeros(len(self.actuator_names), dtype=np.float64)
+        np.add.at(
+            commands,
+            self._target_actuator_ids,
+            activity.values[source_indices] * weights,
+        )
+        return ActuatorCommands(actuator_names=self.actuator_names, values=commands)
 
 
 class UnclassifiedSensoryRoutingBox:

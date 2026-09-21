@@ -11,7 +11,7 @@ free_discrete_parameters: 0
 free_continuous_parameters: 0
 status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
-validation_ids: [validation.flybody_inventory, validation.flybody_actuator_interface]
-next_action: Préserver les 102 adresses exactes pendant la construction séparée du mapping biologique amont.
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/motor-transduction-candidates.json, data/derived/wiring/motor-actuator-candidates.parquet, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
+validation_ids: [validation.flybody_inventory, validation.motor_transduction_candidates, validation.flybody_actuator_interface]
+next_action: Préserver les 102 adresses exactes tout en complétant les 11 sorties encore sans candidat biologique.
 blocked_by: []

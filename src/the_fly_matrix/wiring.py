@@ -41,6 +41,8 @@ MOTOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_OUTPUT = OUTPUT_ROOT / "motor-routes.parquet"
 MOTOR_GROUP_OUTPUT = OUTPUT_ROOT / "motor-muscle-groups.csv"
 MOTOR_GROUP_MEMBER_OUTPUT = OUTPUT_ROOT / "motor-muscle-members.parquet"
+MOTOR_TRANSDUCTION_SUMMARY_OUTPUT = OUTPUT_ROOT / "motor-transduction-candidates.json"
+MOTOR_ACTUATOR_CANDIDATE_OUTPUT = OUTPUT_ROOT / "motor-actuator-candidates.parquet"
 UNCLASSIFIED_SUMMARY_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routing.json"
 UNCLASSIFIED_CHANNEL_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routes.parquet"
@@ -1193,6 +1195,155 @@ def build_motor_wiring(
     return summary
 
 
+def build_motor_transduction_candidates(
+    group_path: Path = MOTOR_GROUP_OUTPUT,
+    member_path: Path = MOTOR_GROUP_MEMBER_OUTPUT,
+    actuator_path: Path = FLYBODY_ACTUATOR_CHANNEL_OUTPUT,
+    summary_output: Path = MOTOR_TRANSDUCTION_SUMMARY_OUTPUT,
+    candidate_output: Path = MOTOR_ACTUATOR_CANDIDATE_OUTPUT,
+) -> dict[str, Any]:
+    """Constrain motor-to-actuator parameters by published broad anatomy only."""
+    for path in (group_path, member_path, actuator_path):
+        if not path.is_file():
+            raise FileNotFoundError(f"{path} absent; reconstruisez d'abord le câblage")
+    section("Construction de la matrice candidate moteur vers actionneurs")
+    groups = pd.read_csv(group_path).fillna("(unknown)")
+    members = pd.read_parquet(member_path).fillna("(unknown)")
+    actuators = pd.read_csv(actuator_path).fillna("(unknown)")
+
+    # These are the seven broad muscle categories explicitly defined by the
+    # MANC/MaleCNS motor annotation publication.  No interpretation is assigned
+    # to am/pm/rm/xm here.
+    subclass_specs = {
+        "ad": {"body_group": "abdomen", "limb": None},
+        "nm": {"body_group": "head", "limb": None},
+        "wm": {"body_group": "wings", "limb": "wing"},
+        "hm": {"body_group": "halteres", "limb": "haltere"},
+        "fl": {"body_group": "legs", "limb": "f"},
+        "ml": {"body_group": "legs", "limb": "m"},
+        "hl": {"body_group": "legs", "limb": "h"},
+    }
+
+    candidate_rows: list[dict[str, Any]] = []
+    resolved_group_ids: set[str] = set()
+    for group in groups.itertuples(index=False):
+        spec = subclass_specs.get(str(group.subclass))
+        if spec is None:
+            continue
+        candidates = actuators.loc[actuators["body_group"].eq(spec["body_group"])].copy()
+        side = str(group.side).lower()
+        limb = spec["limb"]
+        if limb in {"f", "m", "h"}:
+            limb_code = f"{side}{limb}_"
+            candidates = candidates.loc[candidates["target_joint_name"].str.contains(limb_code)]
+        elif limb in {"wing", "haltere"}:
+            marker = f"-{side}_{limb}"
+            candidates = candidates.loc[candidates["target_joint_name"].str.contains(marker)]
+        if candidates.empty:
+            raise RuntimeError(
+                f"Aucun actionneur candidat pour {group.motor_group_id} ({group.subclass}, {group.side})"
+            )
+        resolved_group_ids.add(str(group.motor_group_id))
+        group_members = members.loc[members["motor_group_id"].eq(group.motor_group_id)]
+        if group_members.empty:
+            raise RuntimeError(f"Groupe moteur sans membre: {group.motor_group_id}")
+        for member in group_members.itertuples(index=False):
+            for actuator in candidates.itertuples(index=False):
+                parameter_key = f"{int(member.source_body_id)}|{int(actuator.actuator_id)}"
+                candidate_rows.append(
+                    {
+                        "parameter_id": "parameter.motor.edge."
+                        + hashlib.sha256(parameter_key.encode("utf-8")).hexdigest()[:16],
+                        "motor_group_id": str(group.motor_group_id),
+                        "source_channel_id": str(member.channel_id),
+                        "source_body_id": int(member.source_body_id),
+                        "subclass": str(group.subclass),
+                        "type": str(group.type),
+                        "side": str(group.side),
+                        "target_channel_id": str(actuator.channel_id),
+                        "target_actuator_id": int(actuator.actuator_id),
+                        "target_actuator_name": str(actuator.actuator_name),
+                        "target_joint_name": str(actuator.target_joint_name),
+                        "target_body_group": str(actuator.body_group),
+                        "candidate_basis": "published_broad_category_and_side",
+                        "parameter_status": "unassigned",
+                    }
+                )
+    candidates = pd.DataFrame(candidate_rows).sort_values(
+        ["source_body_id", "target_actuator_id"]
+    ).reset_index(drop=True)
+    if candidates["parameter_id"].duplicated().any():
+        raise RuntimeError("La matrice candidate contient des identifiants de paramètre dupliqués")
+    resolved_members = set(candidates["source_body_id"].astype(int))
+    all_members = set(members["source_body_id"].astype(int))
+    unresolved_members = all_members - resolved_members
+    covered_actuators = set(candidates["target_actuator_id"].astype(int))
+    all_actuators = set(actuators["actuator_id"].astype(int))
+    unresolved_groups = set(groups["motor_group_id"].astype(str)) - resolved_group_ids
+    if (len(resolved_group_ids), len(unresolved_groups)) != (368, 73):
+        raise RuntimeError(
+            f"Partition candidate inattendue: {len(resolved_group_ids)} groupes résolus, "
+            f"{len(unresolved_groups)} non résolus"
+        )
+    if (len(resolved_members), len(unresolved_members)) != (722, 93):
+        raise RuntimeError(
+            f"Couverture motrice candidate inattendue: {len(resolved_members)} neurones résolus, "
+            f"{len(unresolved_members)} non résolus"
+        )
+    if (len(covered_actuators), len(all_actuators - covered_actuators)) != (91, 11):
+        raise RuntimeError("La couverture candidate des actionneurs FlyBody est inattendue")
+
+    unresolved = members.loc[members["source_body_id"].isin(unresolved_members)]
+    uncovered = actuators.loc[actuators["actuator_id"].isin(all_actuators - covered_actuators)]
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "purpose": "sparse motor-transduction candidate matrix without fitted parameter values",
+        "scientific_basis": {
+            "publication": "Organization of circuits linking descending input to motor output in the Drosophila Male Adult Nerve Cord connectome",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/",
+            "used_claim": "subclass codes ad/nm/wm/hm/fl/ml/hl identify broad muscle categories",
+        },
+        "method": {
+            "candidate_rule": "same published broad category and, for paired appendages, same soma side",
+            "parameterization": "one free signed gain for each permitted motor-neuron-to-actuator edge",
+            "initialization": "absent; all parameter values remain unassigned",
+            "excluded_subclasses": ["am", "pm", "rm", "xm"],
+        },
+        "source_motor_neurons": int(len(members)),
+        "source_motor_groups": int(len(groups)),
+        "target_actuators": int(len(actuators)),
+        "candidate_edges": int(len(candidates)),
+        "free_continuous_parameters": int(len(candidates)),
+        "resolved_motor_groups": len(resolved_group_ids),
+        "unresolved_motor_groups": len(unresolved_groups),
+        "resolved_motor_neurons": len(resolved_members),
+        "unresolved_motor_neurons": len(unresolved_members),
+        "unresolved_subclass_neuron_counts": {
+            str(key): int(value)
+            for key, value in unresolved["subclass"].value_counts().sort_index().items()
+        },
+        "covered_actuators": len(covered_actuators),
+        "uncovered_actuators": len(all_actuators - covered_actuators),
+        "uncovered_actuator_body_group_counts": {
+            str(key): int(value)
+            for key, value in uncovered["body_group"].value_counts().sort_index().items()
+        },
+        "routing_status": "candidates_known_partial",
+        "parameter_status": "unassigned",
+        "scientific_parameter_values_selected": False,
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    candidates.to_parquet(candidate_output, index=False)
+    print(f"[OK] {len(candidates):,} arêtes candidates, toutes sans valeur de paramètre")
+    print("[OK] 722 neurones / 368 groupes contraints vers 91 actionneurs")
+    print("[INFO] 93 neurones / 73 groupes et 11 actionneurs restent explicitement non résolus")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Matrice candidate : {candidate_output}")
+    return summary
+
+
 def build_unclassified_sensory_wiring(
     source: Path = SOURCE,
     summary_output: Path = UNCLASSIFIED_SUMMARY_OUTPUT,
@@ -1398,6 +1549,7 @@ def main() -> int:
         build_mechanosensation_wiring(args.source)
         build_vision_wiring(args.source)
         build_motor_wiring(args.source)
+        build_motor_transduction_candidates()
         build_unclassified_sensory_wiring(args.source)
     except Exception as exc:
         print(f"\nWIRING_FAILED: {type(exc).__name__}: {exc}")

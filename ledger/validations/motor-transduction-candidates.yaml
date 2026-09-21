@@ -1,0 +1,24 @@
+schema_version: 1
+id: validation.motor_transduction_candidates
+name: Matrice candidate motrice anatomiquement contrainte
+owner_ids:
+  - adapter.motor.transduction
+  - wire.motor_transduction_to_body
+  - parameter.motor.transduction
+level: integration
+protocol_path: src/the_fly_matrix/wiring_smoke.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - Published broad categories and side constrain 722 motor neurons in 368 groups
+  - The sparse matrix contains exactly 7536 candidate edges into 91 FlyBody actuators
+  - The 93 neurons in am, pm, rm and xm remain explicitly unresolved
+  - The 11 antenna and proboscis actuators without supported candidates remain explicit
+  - Runtime weights are injected externally and no scientific parameter value is persisted
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: motor-transduction-candidates-2026-09-21
+status: integration_pass
+notes:
+  - Candidate rules use only broad muscle category and side
+  - A free signed gain is exposed for each permitted edge
+  - Arbitrary smoke weights verify execution but are never calibration values

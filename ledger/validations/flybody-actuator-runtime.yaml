@@ -13,7 +13,7 @@ acceptance_criteria:
   - Each actuator targets one unique compiled joint
   - Arbitrary pre-transduced commands are placed deterministically in the ctrl vector
   - The two haltere actuators without specific FlyBody configuration remain explicit
-  - No motor-neuron-to-muscle or scientific command value is inferred
+  - Candidate motor-neuron inputs and scientific command values remain separate from exact ctrl addressing
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: flybody-actuator-runtime-2026-09-20
@@ -21,4 +21,4 @@ status: integration_pass
 notes:
   - 102 actuator channels target 102 unique joints
   - 100 channels have a FlyBody actuator configuration group and 2 haltere channels do not
-  - Mapping from 815 neuronal outputs to 102 actuator commands remains deliberately deferred
+  - A partial candidate mapping is audited separately; exact ctrl addressing remains independent
