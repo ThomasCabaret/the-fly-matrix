@@ -25,6 +25,7 @@ from the_fly_matrix.runtime import (
     VISION_CHANNEL_PATH,
     VISION_ROUTE_PATH,
     MechanosensationRoutingBox,
+    GroupedChannelActivity,
     MotorRoutingBox,
     MotorTransductionBox,
     ProprioceptionRoutingBox,
@@ -197,14 +198,29 @@ class RuntimeTests(unittest.TestCase):
         output = transduction.step(
             activity, np.ones(len(transduction.parameter_ids), dtype=np.float64)
         )
-        self.assertEqual(len(transduction.parameter_ids), 7536)
-        self.assertEqual(len(transduction.source_channel_ids), 722)
-        self.assertEqual(len(transduction.resolved_group_ids), 368)
-        self.assertEqual(len(transduction.covered_actuator_ids), 91)
-        self.assertEqual(len(transduction.uncovered_actuator_ids), 11)
+        self.assertEqual(len(transduction.parameter_ids), 7849)
+        self.assertEqual(len(transduction.source_channel_ids), 804)
+        self.assertEqual(len(transduction.resolved_group_ids), 431)
+        self.assertEqual(len(transduction.covered_actuator_ids), 102)
+        self.assertEqual(len(transduction.uncovered_actuator_ids), 0)
+        self.assertEqual(len(transduction.unsupported_terminal_channel_ids), 11)
         self.assertEqual(output.values.shape, (102,))
         self.assertTrue(np.all(output.values[list(transduction.covered_actuator_ids)] > 0))
-        self.assertTrue(np.all(output.values[list(transduction.uncovered_actuator_ids)] == 0))
+        terminal_values = np.asarray(
+            [
+                float(channel_id in transduction.unsupported_terminal_channel_ids)
+                for channel_id in activity.channel_ids
+            ]
+        )
+        terminal_activity = GroupedChannelActivity(
+            channel_ids=activity.channel_ids,
+            group_ids=activity.group_ids,
+            values=terminal_values,
+        )
+        terminal_output = transduction.step(
+            terminal_activity, np.ones(len(transduction.parameter_ids), dtype=np.float64)
+        )
+        self.assertEqual(np.count_nonzero(terminal_output.values), 0)
 
     def test_unclassified_sensory_router_closes_inventory_coverage(self) -> None:
         if not UNCLASSIFIED_CHANNEL_PATH.is_file() or not UNCLASSIFIED_ROUTE_PATH.is_file():

@@ -162,13 +162,15 @@ commandes musculaires. Les 815 activités sont maintenant étiquetées par 441
 groupes reproductibles `(sous-classe, type, côté)` sans sommation ni perte ; les
 10 neurones sans type restent des singletons `bodyId`. Cette granularité repose
 sur les annotations MaleCNS publiées et fixe le fil routeur→transduction. La
-jonction séparée des 441 groupes vers les 102 actionneurs FlyBody, ainsi que les
-signes, gains et dynamiques musculaires, restent à construire. Une première
-matrice creuse limite déjà 722 neurones de 368 groupes à 91 actionneurs compatibles
-avec leur grande catégorie anatomique et leur côté. Elle expose 7 536 gains libres
-sans leur attribuer de valeur. Les 93 neurones `am/pm/rm/xm` et les 11 actionneurs
-d'antennes ou de proboscis restent explicitement hors de cette matrice faute de
-correspondance indépendamment étayée.
+jonction séparée des 441 groupes vers les 102 actionneurs FlyBody est désormais
+structurellement exhaustive. La matrice creuse contraint 804 neurones de 431
+groupes vers les actionneurs compatibles avec leur grande catégorie anatomique,
+leur nerf de sortie et leur côté. Elle expose 7 849 gains libres sans leur
+attribuer de valeur. Les 13 neurones `am`, les 67 `pm` et la paire `PS349` de
+`rm` couvrent les antennes et le proboscis. Les cinq `rm` du nerf optique et les
+six `xm` de nerfs accessoires restent des terminaux explicites sans commande,
+car FlyBody ne représente pas leurs effecteurs. Les signes, gains et dynamiques
+musculaires relèvent donc maintenant de la calibration, pas du câblage.
 
 À l'autre extrémité, `flybody-actuator-channels.csv` fixe désormais les 102
 adresses `ctrl` du modèle compilé et leur articulation cible, sans choisir la

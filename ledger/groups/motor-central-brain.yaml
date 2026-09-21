@@ -9,9 +9,9 @@ query: superclass == cb_motor
 member_count: 107
 named_type_count: 43
 target_box_ids: [adapter.motor.routing]
-status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
+status: {inventory: complete, decomposition: verified, routing: verified, validation: integration_pass}
 confidence: high
 evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-routes.parquet, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet]
-next_action: Relier les groupes type/côté du cerveau central aux candidats physiques sans masquer les annotations inconnues.
+next_action: Conserver les 107 membres exacts et les 11 terminaux explicites pendant la future calibration.
 blocked_by: []
 completion_criteria: [Population exhaustive, Une route exacte par bodyId, Nerf manquant explicite]

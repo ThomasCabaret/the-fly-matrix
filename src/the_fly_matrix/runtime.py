@@ -713,13 +713,19 @@ class MotorRoutingBox:
 
 
 class MotorTransductionBox:
-    """Sparse type-F candidate transform whose gains are supplied explicitly."""
+    """Sparse type-F candidate transform whose gains are supplied explicitly.
+
+    Every one of the 815 motor channels is consumed.  Channels whose physical
+    effector is absent from FlyBody are tracked as explicit no-output terminals.
+    """
 
     adapter_type = "F"
     box_id = "adapter.motor.transduction"
 
-    def __init__(self, candidates: pd.DataFrame, actuators: pd.DataFrame):
-        if candidates.empty or actuators.empty:
+    def __init__(
+        self, candidates: pd.DataFrame, actuators: pd.DataFrame, motor_channels: pd.DataFrame
+    ):
+        if candidates.empty or actuators.empty or motor_channels.empty:
             raise ValueError("No generated motor transduction candidates found")
         required = {
             "parameter_id",
@@ -758,26 +764,44 @@ class MotorTransductionBox:
         self.covered_actuator_ids = tuple(sorted(set(self._target_actuator_ids.tolist())))
         all_actuator_ids = set(self.actuators["actuator_id"].astype(int))
         self.uncovered_actuator_ids = tuple(sorted(all_actuator_ids - set(self.covered_actuator_ids)))
-        if len(self.parameter_ids) != 7536:
-            raise ValueError("Expected 7,536 constrained motor-to-actuator parameters")
-        if len(self.source_channel_ids) != 722 or len(self.resolved_group_ids) != 368:
+        all_motor_channel_ids = tuple(motor_channels["channel_id"].astype(str))
+        if len(all_motor_channel_ids) != 815 or len(set(all_motor_channel_ids)) != 815:
+            raise ValueError("Expected 815 unique generated motor channels")
+        self.all_motor_channel_ids = all_motor_channel_ids
+        self.unsupported_terminal_channel_ids = tuple(
+            sorted(set(all_motor_channel_ids) - set(self.source_channel_ids))
+        )
+        if len(self.parameter_ids) != 7849:
+            raise ValueError("Expected 7,849 constrained motor-to-actuator parameters")
+        if len(self.source_channel_ids) != 804 or len(self.resolved_group_ids) != 431:
             raise ValueError("Unexpected resolved motor candidate coverage")
         if len(self.actuator_names) != 102:
             raise ValueError("Expected 102 FlyBody actuator outputs")
-        if len(self.covered_actuator_ids) != 91 or len(self.uncovered_actuator_ids) != 11:
+        if len(self.covered_actuator_ids) != 102 or self.uncovered_actuator_ids:
             raise ValueError("Unexpected FlyBody actuator candidate coverage")
+        if len(self.unsupported_terminal_channel_ids) != 11:
+            raise ValueError("Expected 11 explicit unsupported motor terminals")
 
     @classmethod
     def from_generated_wiring(
         cls,
         candidate_path: Path = MOTOR_ACTUATOR_CANDIDATE_PATH,
         actuator_path: Path = FLYBODY_ACTUATOR_CHANNEL_PATH,
+        motor_channel_path: Path = MOTOR_CHANNEL_PATH,
     ) -> "MotorTransductionBox":
-        if not candidate_path.is_file() or not actuator_path.is_file():
+        if (
+            not candidate_path.is_file()
+            or not actuator_path.is_file()
+            or not motor_channel_path.is_file()
+        ):
             raise FileNotFoundError(
                 "Motor transduction candidates are absent; run the wiring builder first"
             )
-        return cls(pd.read_parquet(candidate_path), pd.read_csv(actuator_path))
+        return cls(
+            pd.read_parquet(candidate_path),
+            pd.read_csv(actuator_path),
+            pd.read_csv(motor_channel_path),
+        )
 
     def step(
         self,
@@ -785,6 +809,13 @@ class MotorTransductionBox:
         parameters: Mapping[str, float] | np.ndarray,
     ) -> ActuatorCommands:
         channel_index = {channel_id: index for index, channel_id in enumerate(activity.channel_ids)}
+        missing_all = set(self.all_motor_channel_ids) - set(channel_index)
+        extra_all = set(channel_index) - set(self.all_motor_channel_ids)
+        if missing_all or extra_all:
+            raise ValueError(
+                f"{self.box_id}: full motor input mismatch; "
+                f"missing={len(missing_all)}, extra={len(extra_all)}"
+            )
         missing_channels = set(self.source_channel_ids) - set(channel_index)
         if missing_channels:
             raise ValueError(

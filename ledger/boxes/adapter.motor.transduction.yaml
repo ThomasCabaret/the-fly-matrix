@@ -11,6 +11,6 @@ confidence: medium
 evidence: [data/derived/inventory/inventory.json, data/derived/wiring/motor-routing.json, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, data/derived/wiring/motor-transduction-candidates.json, data/derived/wiring/motor-actuator-candidates.parquet, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.motor.transduction]
 validation_ids: [validation.motor_grouping, validation.motor_transduction_candidates, validation.flybody_actuator_interface]
-next_action: Résoudre les classes am/pm/rm/xm puis réduire les 7 536 paramètres candidats avant calibration des signes et gains.
+next_action: Réduire puis calibrer les 7 849 gains candidats sans modifier le câblage exhaustif des 815 entrées et 102 sorties.
 blocked_by: []
-completion_criteria: [102 actionneurs physiques couverts, Groupes musculaires biologiques affectés, Transformations locales, Limites mécaniques testées]
+completion_criteria: [102 actionneurs physiques couverts, 11 effecteurs absents traités comme terminaux explicites, Groupes musculaires biologiques affectés, Transformations locales, Limites mécaniques testées]

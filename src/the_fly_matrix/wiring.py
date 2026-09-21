@@ -563,7 +563,7 @@ def build_flybody_actuator_wiring(
         f"[OK] {status_counts.get('configured', 0):,} actionneurs configurés; "
         f"{status_counts.get('missing', 0):,} sans configuration FlyBody spécifique"
     )
-    print("[INFO] La correspondance entre 815 sorties neuronales et 102 actionneurs reste différée")
+    print("[INFO] La correspondance neuronale est construite séparément par la transduction motrice")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux physiques : {channel_output}")
     return summary
@@ -1211,9 +1211,10 @@ def build_motor_transduction_candidates(
     members = pd.read_parquet(member_path).fillna("(unknown)")
     actuators = pd.read_csv(actuator_path).fillna("(unknown)")
 
-    # These are the seven broad muscle categories explicitly defined by the
-    # MANC/MaleCNS motor annotation publication.  No interpretation is assigned
-    # to am/pm/rm/xm here.
+    # The first seven categories are the broad muscle categories explicitly
+    # defined by the MANC/MaleCNS motor annotation publication.  The head
+    # appendage additions are constrained independently by the published exit
+    # nerve annotations: AN for antennae, and PhN/MxLbN for the proboscis.
     subclass_specs = {
         "ad": {"body_group": "abdomen", "limb": None},
         "nm": {"body_group": "head", "limb": None},
@@ -1222,14 +1223,32 @@ def build_motor_transduction_candidates(
         "fl": {"body_group": "legs", "limb": "f"},
         "ml": {"body_group": "legs", "limb": "m"},
         "hl": {"body_group": "legs", "limb": "h"},
+        "am": {"body_group": "antennae", "limb": "antenna"},
+        "pm": {"body_group": "proboscis", "limb": "proboscis"},
     }
 
     candidate_rows: list[dict[str, Any]] = []
     resolved_group_ids: set[str] = set()
     for group in groups.itertuples(index=False):
-        spec = subclass_specs.get(str(group.subclass))
+        subclass = str(group.subclass)
+        spec = subclass_specs.get(subclass)
+        # rm is a mixed residual class.  Its PS349 pair exits through AN and is
+        # therefore eligible for antenna actuators; the five ON members are
+        # retained below as unsupported physical effectors.
+        if subclass == "rm" and str(group.type) == "PS349":
+            spec = {"body_group": "antennae", "limb": "antenna"}
         if spec is None:
             continue
+        group_members = members.loc[members["motor_group_id"].eq(group.motor_group_id)]
+        if group_members.empty:
+            raise RuntimeError(f"Groupe moteur sans membre: {group.motor_group_id}")
+        exit_nerves = set(group_members["exitNerve"].astype(str))
+        if subclass == "am" and exit_nerves != {"AN"}:
+            raise RuntimeError(f"Nerf antennaire inattendu pour {group.motor_group_id}: {exit_nerves}")
+        if subclass == "pm" and not exit_nerves <= {"PhN", "MxLbN", "(unknown)"}:
+            raise RuntimeError(f"Nerf proboscis inattendu pour {group.motor_group_id}: {exit_nerves}")
+        if subclass == "rm" and str(group.type) == "PS349" and exit_nerves != {"AN"}:
+            raise RuntimeError(f"Nerf PS349 inattendu pour {group.motor_group_id}: {exit_nerves}")
         candidates = actuators.loc[actuators["body_group"].eq(spec["body_group"])].copy()
         side = str(group.side).lower()
         limb = spec["limb"]
@@ -1239,14 +1258,25 @@ def build_motor_transduction_candidates(
         elif limb in {"wing", "haltere"}:
             marker = f"-{side}_{limb}"
             candidates = candidates.loc[candidates["target_joint_name"].str.contains(marker)]
+        elif limb == "antenna":
+            marker = f"-{side}_antenna"
+            candidates = candidates.loc[candidates["target_joint_name"].str.contains(marker)]
+        elif limb == "proboscis":
+            # Three medial rostrum/haustellum joints are shared; only the
+            # lateral labrum joint is side-filtered.
+            is_labrum = candidates["target_joint_name"].str.contains("_labrum")
+            same_labrum = candidates["target_joint_name"].str.contains(f"-{side}_labrum")
+            candidates = candidates.loc[~is_labrum | same_labrum]
         if candidates.empty:
             raise RuntimeError(
                 f"Aucun actionneur candidat pour {group.motor_group_id} ({group.subclass}, {group.side})"
             )
         resolved_group_ids.add(str(group.motor_group_id))
-        group_members = members.loc[members["motor_group_id"].eq(group.motor_group_id)]
-        if group_members.empty:
-            raise RuntimeError(f"Groupe moteur sans membre: {group.motor_group_id}")
+        candidate_basis = (
+            "published_exit_nerve_effector_and_side"
+            if subclass in {"am", "pm", "rm"}
+            else "published_broad_category_and_side"
+        )
         for member in group_members.itertuples(index=False):
             for actuator in candidates.itertuples(index=False):
                 parameter_key = f"{int(member.source_body_id)}|{int(actuator.actuator_id)}"
@@ -1265,7 +1295,7 @@ def build_motor_transduction_candidates(
                         "target_actuator_name": str(actuator.actuator_name),
                         "target_joint_name": str(actuator.target_joint_name),
                         "target_body_group": str(actuator.body_group),
-                        "candidate_basis": "published_broad_category_and_side",
+                        "candidate_basis": candidate_basis,
                         "parameter_status": "unassigned",
                     }
                 )
@@ -1280,17 +1310,17 @@ def build_motor_transduction_candidates(
     covered_actuators = set(candidates["target_actuator_id"].astype(int))
     all_actuators = set(actuators["actuator_id"].astype(int))
     unresolved_groups = set(groups["motor_group_id"].astype(str)) - resolved_group_ids
-    if (len(resolved_group_ids), len(unresolved_groups)) != (368, 73):
+    if (len(resolved_group_ids), len(unresolved_groups)) != (431, 10):
         raise RuntimeError(
             f"Partition candidate inattendue: {len(resolved_group_ids)} groupes résolus, "
             f"{len(unresolved_groups)} non résolus"
         )
-    if (len(resolved_members), len(unresolved_members)) != (722, 93):
+    if (len(resolved_members), len(unresolved_members)) != (804, 11):
         raise RuntimeError(
             f"Couverture motrice candidate inattendue: {len(resolved_members)} neurones résolus, "
             f"{len(unresolved_members)} non résolus"
         )
-    if (len(covered_actuators), len(all_actuators - covered_actuators)) != (91, 11):
+    if (len(covered_actuators), len(all_actuators - covered_actuators)) != (102, 0):
         raise RuntimeError("La couverture candidate des actionneurs FlyBody est inattendue")
 
     unresolved = members.loc[members["source_body_id"].isin(unresolved_members)]
@@ -1303,12 +1333,17 @@ def build_motor_transduction_candidates(
             "publication": "Organization of circuits linking descending input to motor output in the Drosophila Male Adult Nerve Cord connectome",
             "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/",
             "used_claim": "subclass codes ad/nm/wm/hm/fl/ml/hl identify broad muscle categories",
+            "head_appendage_evidence": [
+                "https://pmc.ncbi.nlm.nih.gov/articles/PMC12154692/",
+                "https://www.virtualflybrain.org/blog/2022/01/01/ps349_r-malecns10383-vfb_jrmc1k3g/",
+            ],
+            "head_appendage_claim": "AN motor neurons drive antennae; PhN/MxLbN motor neurons drive proboscis movements",
         },
         "method": {
-            "candidate_rule": "same published broad category and, for paired appendages, same soma side",
+            "candidate_rule": "same published broad category or supported exit-nerve effector and, for paired appendages, same soma side",
             "parameterization": "one free signed gain for each permitted motor-neuron-to-actuator edge",
             "initialization": "absent; all parameter values remain unassigned",
-            "excluded_subclasses": ["am", "pm", "rm", "xm"],
+            "explicit_terminal_policy": "members without a represented FlyBody effector are consumed but emit no actuator command",
         },
         "source_motor_neurons": int(len(members)),
         "source_motor_groups": int(len(groups)),
@@ -1323,13 +1358,18 @@ def build_motor_transduction_candidates(
             str(key): int(value)
             for key, value in unresolved["subclass"].value_counts().sort_index().items()
         },
+        "unresolved_exit_nerve_counts": {
+            str(key): int(value)
+            for key, value in unresolved["exitNerve"].value_counts().sort_index().items()
+        },
+        "unresolved_reason": "five optic-nerve rm effectors and six accessory-nerve xm effectors have no represented FlyBody actuator",
         "covered_actuators": len(covered_actuators),
         "uncovered_actuators": len(all_actuators - covered_actuators),
         "uncovered_actuator_body_group_counts": {
             str(key): int(value)
             for key, value in uncovered["body_group"].value_counts().sort_index().items()
         },
-        "routing_status": "candidates_known_partial",
+        "routing_status": "candidates_known_complete_with_explicit_unsupported_terminals",
         "parameter_status": "unassigned",
         "scientific_parameter_values_selected": False,
     }
@@ -1337,8 +1377,8 @@ def build_motor_transduction_candidates(
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     candidates.to_parquet(candidate_output, index=False)
     print(f"[OK] {len(candidates):,} arêtes candidates, toutes sans valeur de paramètre")
-    print("[OK] 722 neurones / 368 groupes contraints vers 91 actionneurs")
-    print("[INFO] 93 neurones / 73 groupes et 11 actionneurs restent explicitement non résolus")
+    print("[OK] 804 neurones / 431 groupes contraints vers les 102 actionneurs")
+    print("[INFO] 11 neurones / 10 groupes sans effecteur FlyBody restent des terminaux explicites")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Matrice candidate : {candidate_output}")
     return summary

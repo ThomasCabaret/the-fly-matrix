@@ -236,7 +236,8 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{motor_transduction.get("candidate_edges", 0):,}</strong><span>paramètres moteur candidats</span></div>'
             f'<div><strong>{motor_transduction.get("covered_actuators", 0):,}/102</strong><span>actionneurs avec candidats</span></div>'
-            f'<div><strong>{motor_transduction.get("unresolved_motor_neurons", 0):,}</strong><span>neurones moteurs non résolus</span></div>'
+            f'<div><strong>{motor_transduction.get("resolved_motor_groups", 0):,}/441</strong><span>groupes reliés à un actionneur</span></div>'
+            f'<div><strong>{motor_transduction.get("unresolved_motor_neurons", 0):,}</strong><span>terminaux moteur sans effecteur FlyBody</span></div>'
         )
     if unclassified_wiring:
         coverage = unclassified_wiring.get("sensory_coverage", {})

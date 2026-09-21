@@ -9,9 +9,9 @@ query: exitNerve is not null
 member_count: 1005
 named_type_count: 229
 target_box_ids: [adapter.motor.routing]
-status: {inventory: complete, decomposition: fixed, routing: proposed, validation: integration_pass}
+status: {inventory: complete, decomposition: verified, routing: verified, validation: integration_pass}
 confidence: high
 evidence: [data/derived/wiring/motor-routing.json, data/derived/inventory/interface-neurons.parquet]
-next_action: Créer des adaptateurs séparés pour les 191 sorties endocrines et efférentes non motrices si le périmètre comportemental les exige.
+next_action: Conserver l'exclusion vérifiée des 191 sorties non motrices; créer des adaptateurs dédiés seulement si le périmètre comportemental futur les exige.
 blocked_by: []
 completion_criteria: [Écart avec vnc_motor expliqué, 106 cb_motor routés, 191 sorties non motrices explicitement exclues]
