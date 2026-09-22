@@ -6,11 +6,11 @@ adapter_type: D
 anatomical_region: full_cns
 parent_id: null
 ports: {inputs: [sensory_afferents, basal_activity], outputs: [motor_neuron_activity, cns_activity]}
-status: {inventory: complete, implementation: stub, parameters: unknown, validation: smoke}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: high
-evidence: [ledger/datasets.yaml, data/derived/inventory/inventory.json, src/the_fly_matrix/runtime.py, runs/wiring-smoke/latest.json]
+evidence: [ledger/datasets.yaml, data/derived/inventory/inventory.json, data/derived/wiring/central-connectome.json, data/derived/wiring/central-node-index.parquet, src/the_fly_matrix/central_graph.py, src/the_fly_matrix/runtime.py, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.central.neuron_dynamics, parameter.central.synaptic_gain]
-validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.resting_dynamics]
-next_action: Construire la représentation creuse du graphe puis un premier modèle dynamique partagé.
+validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.central_graph_runtime, validation.resting_dynamics]
+next_action: Choisir puis calibrer la dynamique neuronale partagée sur le graphe creux désormais exécutable.
 blocked_by: []
-completion_criteria: [Graphe intégral chargé, Dynamique déterministe, Régime basal stable]
+completion_criteria: [Sous-graphe annoté intégral chargé, Projection creuse déterministe, Fragments non annotés explicitement exclus, Régime basal stable après calibration]

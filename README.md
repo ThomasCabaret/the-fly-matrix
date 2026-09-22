@@ -114,6 +114,16 @@ fusionner les activités dans un tampon d'entrée CNS type D. Le smoke test util
 des valeurs pseudo-aléatoires uniquement pour vérifier le passage des données ;
 elles ne sont jamais enregistrées comme paramètres scientifiques.
 
+Le cœur CNS utilise directement la table creuse publiée, sans en créer une copie
+géante dans le dépôt. `central-node-index.parquet` attribue un indice stable aux
+211 577 `bodyId` annotés et conserve leurs degrés et poids synaptiques entrants
+et sortants. Sur les 151 856 684 lignes brutes, 26 028 386 relient deux neurones
+annotés ; les 125 828 298 lignes touchant un fragment de segmentation non annoté
+sont comptées puis exclues explicitement. Le runtime parcourt les lots Arrow et
+calcule un entraînement synaptique à un saut avec les poids entiers publiés. Cette
+opération ferme le chemin structurel entrée→CNS→sortie motrice, sans choisir de
+seuil, signe, constante de temps, non-linéarité ni activité physiologique.
+
 Le manifeste proprioceptif sépare volontairement les deux côtés de l'adaptateur
 type C. Côté physique, `flybody-proprioception-channels.csv` relie maintenant les
 102 articulations biologiques aux adresses `qpos` et `qvel` du modèle compilé :
@@ -177,8 +187,8 @@ adresses `ctrl` du modèle compilé et leur articulation cible, sans choisir la
 valeur des commandes. Cent actionneurs retrouvent un groupe de configuration
 FlyBody ; les deux actionneurs d'haltères, bien que présents et limités en force
 dans notre modèle, sont signalés comme dépourvus de configuration spécifique.
-La jonction scientifique entre les 815 sorties neuronales et ces 102 commandes
-reste explicitement différée.
+La topologie candidate entre les 815 sorties neuronales et ces 102 commandes est
+fixée ; ses signes, gains et dynamiques restent explicitement à calibrer.
 
 Le manifeste sensoriel résiduel ferme la couverture des entrées inventoriées sans
 inventer leur fonction. Il route individuellement 1 883 neurones encore hors des

@@ -36,6 +36,7 @@ MOTOR_TRANSDUCTION_PATH = (
 UNCLASSIFIED_WIRING_PATH = (
     ROOT / "data" / "derived" / "wiring" / "unclassified-sensory-routing.json"
 )
+CENTRAL_GRAPH_PATH = ROOT / "data" / "derived" / "wiring" / "central-connectome.json"
 
 
 def section(title: str) -> None:
@@ -130,6 +131,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     motor_wiring = inventory.get("motor_wiring")
     motor_transduction = inventory.get("motor_transduction")
     unclassified_wiring = inventory.get("unclassified_wiring")
+    central_graph = inventory.get("central_graph")
     annotations = datasets["annotations"]
     types = annotations.get("profiles", {}).get("type", {}).get("distinct_count", "?")
     groups = "".join(
@@ -244,6 +246,12 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{unclassified_wiring.get("exact_routes", 0):,}</strong><span>routes sensorielles résiduelles</span></div>'
             f'<div><strong>{coverage.get("coverage_percent", 0):.0f}%</strong><span>couverture sensorielle inventoriée</span></div>'
+        )
+    if central_graph:
+        remote_metrics += (
+            f'<div><strong>{central_graph.get("annotated_nodes", 0):,}</strong><span>nœuds CNS annotés indexés</span></div>'
+            f'<div><strong>{central_graph.get("induced_edge_rows", 0):,}</strong><span>arêtes CNS neuronales</span></div>'
+            f'<div><strong>{central_graph.get("excluded_fragment_edge_rows", 0):,}</strong><span>arêtes de fragments isolées</span></div>'
         )
     return (
         '<div class="metrics">'
@@ -436,6 +444,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 UNCLASSIFIED_WIRING_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Câblage sensoriel résiduel chargé: {UNCLASSIFIED_WIRING_PATH}")
+        if CENTRAL_GRAPH_PATH.is_file():
+            inventory["central_graph"] = json.loads(
+                CENTRAL_GRAPH_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Graphe CNS creux chargé: {CENTRAL_GRAPH_PATH}")
     else:
         print("[AVERTISSEMENT] Inventaire local absent; lancer run_analysis.bat")
 

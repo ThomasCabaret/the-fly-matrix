@@ -9,6 +9,7 @@ from typing import Any
 
 import pandas as pd
 
+from .central_graph import build_central_graph_index
 from .ledger import ROOT
 
 
@@ -1591,6 +1592,7 @@ def main() -> int:
         build_motor_wiring(args.source)
         build_motor_transduction_candidates()
         build_unclassified_sensory_wiring(args.source)
+        build_central_graph_index()
     except Exception as exc:
         print(f"\nWIRING_FAILED: {type(exc).__name__}: {exc}")
         return 1

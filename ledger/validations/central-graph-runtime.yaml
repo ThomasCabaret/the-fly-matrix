@@ -1,0 +1,24 @@
+schema_version: 1
+id: validation.central_graph_runtime
+name: Sous-graphe central annoté et projection creuse
+owner_ids:
+  - cns.malecns
+  - group.projection.ascending
+  - group.projection.descending
+level: integration
+protocol_path: src/the_fly_matrix/central_graph.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - All 211577 annotated bodyIds receive one stable dense node index
+  - The induced annotated-neuron graph contains exactly 26028386 published weighted edges
+  - All 125828298 rows touching unannotated segmentation fragments are counted and excluded explicitly
+  - One-hop weighted projection traverses the complete induced graph deterministically
+  - No threshold, sign, time constant, nonlinearity or fitted activity value is selected
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: central-graph-runtime-2026-09-22
+status: integration_pass
+notes:
+  - The original 1 GB Arrow edge table remains the single sparse edge store
+  - The generated node index records in/out edge counts and synapse-count weights
+  - The smoke path executes sensory ingress through the CNS projection into all 815 motor outputs

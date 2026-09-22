@@ -15,7 +15,7 @@ acceptance_criteria:
   - The lossless partition contains 441 groups keyed by subclass, type and soma side
   - The 10 neurons without a type remain separate bodyId singletons
   - Every member activity is forwarded without aggregation, sign or gain selection
-  - Mapping from the 441 groups to the 102 FlyBody actuators remains explicitly deferred
+  - Mapping from the 441 groups to the 102 FlyBody actuators is validated separately
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: motor-grouping-2026-09-21
@@ -24,4 +24,4 @@ notes:
   - Group semantics use published MaleCNS subclass and type annotations
   - 815 exact member routes are transported through 441 group labels
   - No neuronal value is combined or dropped
-  - Actuator choice, sign, gain and muscle dynamics remain unknown
+  - Actuator candidate choice is validated separately; sign, gain and muscle dynamics remain unknown

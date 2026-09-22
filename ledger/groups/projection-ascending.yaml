@@ -9,9 +9,9 @@ query: superclass == ascending_neuron
 member_count: 1846
 named_type_count: 567
 target_box_ids: [cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: fixed, validation: not_run}
+status: {inventory: complete, decomposition: verified, routing: verified, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/interface-neurons.parquet]
-next_action: Vérifier la couverture des poids et les familles dynamiques partagées.
+evidence: [data/derived/inventory/interface-neurons.parquet, data/derived/wiring/central-connectome.json, data/derived/wiring/central-node-index.parquet, runs/wiring-smoke/latest.json]
+next_action: Conserver la population vérifiée pendant le choix ultérieur des familles dynamiques.
 blocked_by: []
 completion_criteria: [Couverture du graphe, Familles paramétriques attribuées]

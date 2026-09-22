@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
@@ -28,6 +29,16 @@ FLYBODY_PROPRIO_CHANNEL_PATH = WIRING_ROOT / "flybody-proprioception-channels.cs
 FLYBODY_TOUCH_CHANNEL_PATH = WIRING_ROOT / "flybody-touch-channels.csv"
 FLYBODY_ACTUATOR_CHANNEL_PATH = WIRING_ROOT / "flybody-actuator-channels.csv"
 FLYBODY_VISION_CHANNEL_PATH = WIRING_ROOT / "flybody-vision-channels.csv"
+CENTRAL_NODE_INDEX_PATH = WIRING_ROOT / "central-node-index.parquet"
+CENTRAL_GRAPH_SUMMARY_PATH = WIRING_ROOT / "central-connectome.json"
+CENTRAL_WEIGHT_PATH = (
+    ROOT
+    / "data"
+    / "raw"
+    / "malecns"
+    / "v1.0"
+    / "connectome-weights-male-cns-v1.0-minconf-0.5.feather"
+)
 
 
 @dataclass(frozen=True)
@@ -938,3 +949,131 @@ class CNSInputBuffer:
         unique_ids, first_indices = np.unique(body_ids, return_index=True)
         summed = np.add.reduceat(values, first_indices)
         return SparseActivity(body_ids=unique_ids, values=summed)
+
+
+class CentralConnectomeBox:
+    """Stream the annotated-neuron subgraph as a sparse structural operator.
+
+    This computes raw one-hop synaptic drive from published integer connection
+    weights.  It deliberately does not implement time constants, thresholds,
+    signs, nonlinearities or any other calibrated neuronal dynamics.
+    """
+
+    adapter_type = "D"
+    box_id = "cns.malecns"
+
+    def __init__(
+        self,
+        nodes: pd.DataFrame,
+        weight_path: Path,
+        expected_induced_edges: int | None = None,
+    ):
+        required = {"node_index", "body_id"}
+        missing = required - set(nodes.columns)
+        if missing:
+            raise ValueError(f"Missing central node-index columns: {sorted(missing)}")
+        self.nodes = nodes.sort_values("node_index").reset_index(drop=True)
+        expected_indices = np.arange(len(self.nodes), dtype=np.int64)
+        if not np.array_equal(self.nodes["node_index"].to_numpy(dtype=np.int64), expected_indices):
+            raise ValueError("Central node indices must be contiguous and zero-based")
+        self.body_ids = self.nodes["body_id"].to_numpy(dtype=np.int64)
+        if len(np.unique(self.body_ids)) != len(self.body_ids):
+            raise ValueError("Central node body IDs must be unique")
+        if not np.all(self.body_ids[1:] > self.body_ids[:-1]):
+            raise ValueError("Central node body IDs must be strictly increasing")
+        self.weight_path = Path(weight_path)
+        if not self.weight_path.is_file():
+            raise FileNotFoundError(f"Central weight table is absent: {self.weight_path}")
+        self.expected_induced_edges = expected_induced_edges
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        node_path: Path = CENTRAL_NODE_INDEX_PATH,
+        weight_path: Path = CENTRAL_WEIGHT_PATH,
+        summary_path: Path = CENTRAL_GRAPH_SUMMARY_PATH,
+    ) -> "CentralConnectomeBox":
+        if not node_path.is_file() or not summary_path.is_file():
+            raise FileNotFoundError("Central graph index is absent; run the wiring builder first")
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        return cls(
+            pd.read_parquet(node_path),
+            weight_path,
+            expected_induced_edges=int(summary["induced_edge_rows"]),
+        )
+
+    def _locate(self, body_ids: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        indices = np.searchsorted(self.body_ids, body_ids)
+        clipped = np.minimum(indices, len(self.body_ids) - 1)
+        valid = (indices < len(self.body_ids)) & (self.body_ids[clipped] == body_ids)
+        return indices, valid
+
+    def project_many(self, activities: tuple[SparseActivity, ...]) -> tuple[SparseActivity, ...]:
+        """Project multiple inputs in one edge-table pass for deterministic replay."""
+        if not activities:
+            raise ValueError("At least one CNS input activity is required")
+        dense_inputs = np.zeros((len(activities), len(self.body_ids)), dtype=np.float64)
+        for row, activity in enumerate(activities):
+            indices, valid = self._locate(activity.body_ids.astype(np.int64, copy=False))
+            if not valid.all():
+                unknown = activity.body_ids[~valid]
+                raise ValueError(f"CNS input contains unknown body IDs: {unknown[:3].tolist()}")
+            dense_inputs[row, indices] = activity.values
+
+        outputs = np.zeros_like(dense_inputs)
+        induced_edges = 0
+        import pyarrow as pa
+
+        with pa.memory_map(str(self.weight_path), "r") as mapped:
+            reader = pa.ipc.open_file(mapped)
+            for batch_index in range(reader.num_record_batches):
+                batch = reader.get_batch(batch_index)
+                pre = batch.column(0).to_numpy()
+                post = batch.column(1).to_numpy()
+                weights = batch.column(2).to_numpy().astype(np.float64, copy=False)
+                pre_indices, pre_valid = self._locate(pre)
+                post_indices, post_valid = self._locate(post)
+                valid = pre_valid & post_valid
+                if not valid.any():
+                    continue
+                source = pre_indices[valid]
+                target = post_indices[valid]
+                selected_weights = weights[valid]
+                induced_edges += len(source)
+                for row in range(len(activities)):
+                    np.add.at(
+                        outputs[row],
+                        target,
+                        dense_inputs[row, source] * selected_weights,
+                    )
+        if (
+            self.expected_induced_edges is not None
+            and induced_edges != self.expected_induced_edges
+        ):
+            raise RuntimeError(
+                f"Central edge coverage mismatch: {induced_edges} != "
+                f"{self.expected_induced_edges}"
+            )
+        return tuple(
+            SparseActivity(body_ids=self.body_ids.copy(), values=values)
+            for values in outputs
+        )
+
+    def project(self, activity: SparseActivity) -> SparseActivity:
+        return self.project_many((activity,))[0]
+
+    def select_values(self, activity: SparseActivity, body_ids: tuple[int, ...]) -> np.ndarray:
+        requested = np.asarray(body_ids, dtype=np.int64)
+        if np.array_equal(activity.body_ids, self.body_ids):
+            indices, valid = self._locate(requested)
+            if not valid.all():
+                raise ValueError("Requested CNS output body ID is absent")
+            return activity.values[indices]
+        activity_order = np.argsort(activity.body_ids)
+        sorted_ids = activity.body_ids[activity_order]
+        indices = np.searchsorted(sorted_ids, requested)
+        clipped = np.minimum(indices, len(sorted_ids) - 1)
+        valid = (indices < len(sorted_ids)) & (sorted_ids[clipped] == requested)
+        if not valid.all():
+            raise ValueError("Requested CNS output body ID is absent from activity")
+        return activity.values[activity_order[indices]]

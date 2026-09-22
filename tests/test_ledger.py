@@ -201,6 +201,18 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(residual["sensory_coverage"]["total_routed_unique_body_ids"], 17884)
         self.assertEqual(residual["sensory_coverage"]["coverage_percent"], 100.0)
 
+        central_path = path.with_name("central-connectome.json")
+        self.assertTrue(central_path.is_file())
+        central = json.loads(central_path.read_text(encoding="utf-8"))
+        self.assertEqual(central["annotated_nodes"], 211577)
+        self.assertEqual(central["raw_edge_rows"], 151856684)
+        self.assertEqual(central["induced_edge_rows"], 26028386)
+        self.assertEqual(central["excluded_fragment_edge_rows"], 125828298)
+        self.assertEqual(sum(central["edge_scope_counts"].values()), 151856684)
+        self.assertEqual(central["raw_synapse_weight"], 311833243)
+        self.assertEqual(central["induced_synapse_weight"], 125365933)
+        self.assertFalse(central["scientific_parameter_values_selected"])
+
     def test_group_counts_match_local_inventory_when_available(self) -> None:
         path = Path(__file__).resolve().parents[1] / "data" / "derived" / "inventory" / "inventory.json"
         if not path.is_file():

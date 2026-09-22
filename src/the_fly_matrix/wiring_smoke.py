@@ -12,6 +12,7 @@ from .ledger import ROOT
 from .runtime import (
     BasalClampBox,
     ChannelActivity,
+    CentralConnectomeBox,
     CNSInputBuffer,
     FlyBodyProprioceptionSensor,
     FlyBodyGroundContactSensor,
@@ -155,6 +156,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {unclassified.box_id}: {len(unclassified.channel_ids):,} instances/canaux, "
         f"{len(unclassified.routes):,} destinations exactes; modalités physiques différées"
     )
+    central = CentralConnectomeBox.from_generated_wiring()
+    print(
+        f"[OK] {central.box_id}: {len(central.body_ids):,} neurones annotés; "
+        f"{central.expected_induced_edges:,} arêtes creuses à parcourir"
+    )
 
     section("Exécution déterministe du rendu et des valeurs structurelles")
     vision_readouts_first, vision_readouts_second = _render_flybody_vision_twice()
@@ -188,14 +194,26 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     unclassified_second = unclassified.step(
         _arbitrary_values(unclassified, seed + len(boxes) + 3)
     )
-    motor_values_first = np.random.default_rng(seed + len(boxes) + 4).uniform(
-        0.0, 1.0, len(motor.source_body_ids)
+    first = CNSInputBuffer.merge(
+        *first_outputs, proprio_first, mechano_first, vision_first, unclassified_first
     )
-    motor_values_second = np.random.default_rng(seed + len(boxes) + 4).uniform(
-        0.0, 1.0, len(motor.source_body_ids)
+    second = CNSInputBuffer.merge(
+        *second_outputs, proprio_second, mechano_second, vision_second, unclassified_second
     )
-    motor_first = motor.step(motor_values_first)
-    motor_second = motor.step(motor_values_second)
+    if not np.array_equal(first.body_ids, second.body_ids) or not np.array_equal(
+        first.values, second.values
+    ):
+        raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
+    if len(first.body_ids) != 17884:
+        raise RuntimeError(f"17884 destinations attendues, {len(first.body_ids)} obtenues")
+    print("[INFO] Projection des entrées dans les 26 028 386 arêtes du sous-graphe annoté")
+    central_first, central_second = central.project_many((first, second))
+    if not np.array_equal(central_first.values, central_second.values):
+        raise RuntimeError("Le rejeu de la projection creuse CNS n'est pas déterministe")
+    if not np.count_nonzero(central_first.values):
+        raise RuntimeError("La projection creuse CNS n'a produit aucun entraînement synaptique")
+    motor_first = motor.step(central.select_values(central_first, motor.source_body_ids))
+    motor_second = motor.step(central.select_values(central_second, motor.source_body_ids))
     transduction_parameters_first = np.random.default_rng(seed + len(boxes) + 5).uniform(
         -1.0, 1.0, len(motor_transduction.parameter_ids)
     )
@@ -210,18 +228,6 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     actuator_commands_first = actuator_interface.step(transduced_commands_first.values)
     actuator_commands_second = actuator_interface.step(transduced_commands_second.values)
-    first = CNSInputBuffer.merge(
-        *first_outputs, proprio_first, mechano_first, vision_first, unclassified_first
-    )
-    second = CNSInputBuffer.merge(
-        *second_outputs, proprio_second, mechano_second, vision_second, unclassified_second
-    )
-    if not np.array_equal(first.body_ids, second.body_ids) or not np.array_equal(
-        first.values, second.values
-    ):
-        raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
-    if len(first.body_ids) != 17884:
-        raise RuntimeError(f"17884 destinations attendues, {len(first.body_ids)} obtenues")
     if motor_first.channel_ids != motor_second.channel_ids or not np.array_equal(
         motor_first.values, motor_second.values
     ):
@@ -296,6 +302,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     print("[OK] 102 commandes placées dans les 102 adresses ctrl FlyBody")
     print("[OK] Rendu réel de 2 × 721 ommatidies extrait de façon déterministe")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
+    print(
+        f"[OK] {central.expected_induced_edges:,} arêtes CNS parcourues vers "
+        f"{np.count_nonzero(central_first.values):,} neurones entraînés"
+    )
     print(f"[OK] {len(motor_first.channel_ids):,} sorties motrices CNS routées")
     print("[OK] 441 groupes moteurs annotés transportent les 815 valeurs sans agrégation")
     print(
@@ -383,11 +393,31 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "upstream_modality_mapping": "deferred",
                 "parameter_status": "arbitrary_smoke_only",
             }
+        ]
+        + [
+            {
+                "id": central.box_id,
+                "adapter_type": central.adapter_type,
+                "annotated_nodes": len(central.body_ids),
+                "induced_edges": central.expected_induced_edges,
+                "operation": "one_hop_weighted_synaptic_drive",
+                "parameter_status": "no_dynamics_selected",
+            }
         ],
         "cns_ingress": {
             "adapter_type": CNSInputBuffer.adapter_type,
             "unique_body_ids": len(first.body_ids),
             "activity_digest": _digest(first),
+        },
+        "central_graph": {
+            "adapter_type": central.adapter_type,
+            "annotated_nodes": len(central.body_ids),
+            "induced_edges": central.expected_induced_edges,
+            "nonzero_projected_nodes": int(np.count_nonzero(central_first.values)),
+            "motor_outputs_read": len(motor.source_body_ids),
+            "operation": "raw_one_hop_synapse_count_projection",
+            "activity_digest": _digest(central_first),
+            "dynamics_status": "unassigned",
         },
         "motor_egress": {
             "adapter_type": motor.adapter_type,
@@ -445,6 +475,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         },
         "checks": {
             "all_routes_executed": True,
+            "full_annotated_cns_graph_executed": True,
+            "cns_dynamics_selected": False,
             "motor_routes_executed": True,
             "motor_group_membership_executed": True,
             "motor_transduction_candidates_executed": True,

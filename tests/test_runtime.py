@@ -1,12 +1,18 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
+import pandas as pd
+import pyarrow as pa
+import pyarrow.feather as feather
 
 from the_fly_matrix.runtime import (
     BasalClampBox,
     CHANNEL_PATH,
+    CentralConnectomeBox,
     CNSInputBuffer,
     FLYBODY_PROPRIO_CHANNEL_PATH,
     FLYBODY_TOUCH_CHANNEL_PATH,
@@ -29,6 +35,7 @@ from the_fly_matrix.runtime import (
     MotorRoutingBox,
     MotorTransductionBox,
     ProprioceptionRoutingBox,
+    SparseActivity,
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
     FlyBodyProprioceptionSensor,
@@ -71,6 +78,27 @@ class RuntimeTests(unittest.TestCase):
         activity = box.step(values)
         merged = CNSInputBuffer.merge(activity, activity)
         self.assertTrue(np.all(merged.values == 2.0))
+
+    def test_central_connectome_streams_only_annotated_induced_edges(self) -> None:
+        nodes = pd.DataFrame({"node_index": [0, 1, 2], "body_id": [10, 20, 30]})
+        table = pa.table(
+            {
+                "body_pre": [10, 10, 99, 20],
+                "body_post": [20, 30, 20, 99],
+                "weight": [2, 3, 100, 100],
+            }
+        )
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "weights.feather"
+            feather.write_feather(table, path)
+            central = CentralConnectomeBox(nodes, path, expected_induced_edges=2)
+            activity = SparseActivity(
+                body_ids=np.asarray([10], dtype=np.int64),
+                values=np.asarray([4.0], dtype=np.float64),
+            )
+            output = central.project(activity)
+        self.assertTrue(np.array_equal(output.body_ids, np.asarray([10, 20, 30])))
+        self.assertTrue(np.array_equal(output.values, np.asarray([0.0, 8.0, 12.0])))
 
     def test_proprioception_router_executes_downstream_only(self) -> None:
         if not PROPRIO_CHANNEL_PATH.is_file() or not PROPRIO_ROUTE_PATH.is_file():
