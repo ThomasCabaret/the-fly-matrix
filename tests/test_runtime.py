@@ -49,6 +49,7 @@ from the_fly_matrix.runtime import (
     FlyBodyLocalContactSensor,
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
+    FlyBodyPhysicsLoop,
     FlyBodyVisionSensor,
 )
 from the_fly_matrix.wiring_smoke import _arbitrary_retinal_registration
@@ -192,6 +193,21 @@ class RuntimeTests(unittest.TestCase):
             interface.channels["actuator_config_status"].value_counts().to_dict(),
             {"configured": 100, "missing": 2},
         )
+
+    def test_flybody_physics_loop_applies_commands_and_reads_joint_state(self) -> None:
+        if not FLYBODY_ACTUATOR_CHANNEL_PATH.is_file():
+            self.skipTest("generated FlyBody actuator wiring is absent")
+        interface = FlyBodyActuatorInterface.from_generated_wiring()
+        commands = interface.step(
+            np.linspace(-1e-4, 1e-4, len(interface.actuator_names), dtype=np.float64)
+        )
+        with FlyBodyPhysicsLoop.from_generated_wiring() as loop:
+            result = loop.step(commands, substeps=2)
+        self.assertEqual(result.actuator_names, interface.actuator_names)
+        self.assertEqual(len(result.joint_state.joint_names), 102)
+        self.assertEqual(result.actuator_forces.shape, (102,))
+        self.assertTrue(np.array_equal(result.applied_commands, commands.values))
+        self.assertGreater(result.simulation_time, 0.0)
 
     def test_flybody_vision_extracts_one_active_sample_per_ommatidium(self) -> None:
         if not FLYBODY_VISION_CHANNEL_PATH.is_file():

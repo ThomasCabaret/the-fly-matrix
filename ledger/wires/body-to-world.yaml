@@ -9,9 +9,9 @@ expected_cardinality: one compiled MuJoCo model state
 candidate_constraints: [physics engine state only]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: complete, routing: fixed, implementation: tested, validation: smoke}
+status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
 confidence: high
-evidence: [src/the_fly_matrix/verify_install.py]
-validation_ids: [validation.installation]
-next_action: Ajouter un test déterministe avec état initial et commandes fixés.
+evidence: [src/the_fly_matrix/verify_install.py, src/the_fly_matrix/wiring_smoke.py, runs/wiring-smoke/latest.json]
+validation_ids: [validation.installation, validation.flybody_actuator_interface]
+next_action: Préserver ce contrat pendant l'ajout des observables physiques encore absentes.
 blocked_by: []

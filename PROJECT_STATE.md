@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-22, lot de colonnes visuelles R7/R8.
+Mise à jour : 2026-09-22, lot de fermeture physique FlyBody/MuJoCo.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -23,19 +23,22 @@ attendu.
 - Clamps basaux : **87 %**.
 - Vision : **86 %**.
 - Mécanosensation : **82 %**.
-- Corps physique : **94 %**.
+- Corps physique : **100 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 
-Le dernier lot intègre le supplément officiel MaleCNS des colonnes optiques. Il
-fixe 2 628 photorécepteurs R7/R8 dans 1 332 colonnes biologiques nommées, soit
-43,1 % des 6 098 canaux visuels. La boîte de transduction impose désormais le même
-œil, la compatibilité pale/jaune et un enregistrement injectif colonne→ommatidie.
-Cet enregistrement et les 2 628 coefficients restent injectés de l'extérieur et
-ne sont pas calibrés. Les 3 470 autres canaux visuels restent explicitement
-ouverts. La vision passe de 74 à 86 % et le câblage global de 83 à 85 %.
-Le smoke test traverse 17 884 entrées CNS, 26 028 386 arêtes centrales, 815 sorties
-motrices et 102 actionneurs. Les 32 tests unitaires/intégration locaux passent.
+Le dernier lot ferme l'exécution physique après la sortie motrice. Le runtime
+construit un FlyBody articulé dans MuJoCo, vérifie l'ordre des 102 actionneurs,
+applique réellement les commandes pendant 20 pas, puis relit les 102 positions et
+vitesses par l'interface proprioceptive. Le rejeu depuis le même état est identique
+bit à bit et diffère du témoin passif. Une enveloppe numérique propre au smoke test
+protège MuJoCo des paramètres arbitraires; elle n'est pas une calibration. Le
+secteur corps physique passe de 94 à 100 %. Le score global reste arrondi à 85 %,
+mais son composant de routage des fils passe de 69 à 70 %.
+
+Le smoke test traverse toujours 17 884 entrées CNS, 26 028 386 arêtes centrales,
+815 sorties motrices et 102 actionneurs avant le pas physique. Les 33 tests
+unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
 
@@ -47,8 +50,8 @@ motrices et 102 actionneurs. Les 32 tests unitaires/intégration locaux passent.
    proprioceptifs encore ouverts.
 4. Réduire les modalités sensorielles résiduelles lorsque les annotations le
    permettent, sans modifier leurs routes `bodyId` déjà exactes.
-5. Fermer et tester la boucle physique complète et son interface d'évaluation,
-   toujours sans contrôleur comportemental externe.
+5. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
+   commande→MuJoCo→état articulaire est désormais fermée et déterministe.
 6. N'affiner les candidats tête/thorax que si une observable corporelle plus
    localisée devient disponible, sans inventer de latéralité.
 

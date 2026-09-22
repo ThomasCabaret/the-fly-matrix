@@ -228,6 +228,16 @@ dans notre modèle, sont signalés comme dépourvus de configuration spécifique
 La topologie candidate entre les 815 sorties neuronales et ces 102 commandes est
 fixée ; ses signes, gains et dynamiques restent explicitement à calibrer.
 
+Le smoke test ne s'arrête plus au vecteur `ctrl`. Il construit également un
+FlyBody articulé dans un monde MuJoCo, applique les 102 commandes pendant vingt
+pas physiques, puis relit les 102 positions et vitesses articulaires par
+l'interface proprioceptive exacte. Deux exécutions repartant du même état sont
+identiques bit à bit et l'état commandé diffère du témoin passif. Pour protéger ce
+test structurel de valeurs volontairement arbitraires, les commandes y sont
+bornées par une enveloppe `tanh × 10⁻³`; cette enveloppe n'appartient ni au modèle
+scientifique ni aux paramètres persistés. La boucle physique exécutable est donc
+fermée, sans prétendre produire un mouvement biologiquement plausible.
+
 Le manifeste sensoriel résiduel ferme la couverture des entrées inventoriées sans
 inventer leur fonction. Il route individuellement 1 883 neurones encore hors des
 modalités établies : 1 712 `unknown_sensory`, 57 `chemosensory`, 11

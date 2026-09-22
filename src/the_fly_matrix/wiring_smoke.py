@@ -10,6 +10,7 @@ import numpy as np
 
 from .ledger import ROOT
 from .runtime import (
+    ActuatorCommands,
     BasalClampBox,
     ChannelActivity,
     CentralConnectomeBox,
@@ -18,6 +19,7 @@ from .runtime import (
     FlyBodyProprioceptionSensor,
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
+    FlyBodyPhysicsLoop,
     FlyBodyVisionSensor,
     GroupedChannelActivity,
     MechanosensationRoutingBox,
@@ -467,6 +469,46 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(
             f"102 commandes d'actionneur attendues, {len(actuator_commands_first.actuator_names)} obtenues"
         )
+    # Keep the arbitrary structural smoke values inside a conservative envelope
+    # before applying them to MuJoCo.  This guard is not a persisted scientific
+    # gain and does not alter the runtime interface itself.
+    physical_smoke_commands = ActuatorCommands(
+        actuator_names=actuator_commands_first.actuator_names,
+        values=np.tanh(actuator_commands_first.values) * 1e-3,
+    )
+    zero_physical_commands = ActuatorCommands(
+        actuator_names=actuator_commands_first.actuator_names,
+        values=np.zeros(len(actuator_commands_first.values), dtype=np.float64),
+    )
+    with FlyBodyPhysicsLoop.from_generated_wiring() as physical_loop:
+        initial_physical_state = physical_loop.read_joint_state()
+        physical_first = physical_loop.step(physical_smoke_commands, substeps=20)
+        physical_loop.reset()
+        physical_second = physical_loop.step(physical_smoke_commands, substeps=20)
+        physical_loop.reset()
+        physical_passive = physical_loop.step(zero_physical_commands, substeps=20)
+    if (
+        not np.array_equal(
+            physical_first.joint_state.positions, physical_second.joint_state.positions
+        )
+        or not np.array_equal(
+            physical_first.joint_state.velocities, physical_second.joint_state.velocities
+        )
+        or not np.array_equal(
+            physical_first.actuator_forces, physical_second.actuator_forces
+        )
+    ):
+        raise RuntimeError("Le rejeu du pas physique commandé n'est pas déterministe")
+    if np.array_equal(
+        physical_first.joint_state.positions, physical_passive.joint_state.positions
+    ) and np.array_equal(
+        physical_first.joint_state.velocities, physical_passive.joint_state.velocities
+    ):
+        raise RuntimeError("Les commandes appliquées n'ont produit aucun effet physique observable")
+    if not np.array_equal(
+        physical_first.applied_commands, physical_smoke_commands.values
+    ):
+        raise RuntimeError("Le simulateur n'a pas reçu le vecteur de commandes adressé")
     if vision_samples_first.channel_ids != vision_samples_second.channel_ids or not np.array_equal(
         vision_samples_first.values, vision_samples_second.values
     ):
@@ -497,6 +539,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"exécutées vers {len(mechano_transduction.resolved_channel_ids):,} canaux"
     )
     print("[OK] 102 commandes placées dans les 102 adresses ctrl FlyBody")
+    print(
+        "[OK] 102 commandes appliquées pendant 20 pas MuJoCo puis relues dans "
+        "les 102 articulations"
+    )
+    print("[OK] Rejeu physique commandé identique et distinct du témoin passif")
     print("[OK] Rendu réel de 2 × 721 ommatidies extrait de façon déterministe")
     print(
         f"[OK] {len(vision_transduction.resolved_channel_ids):,} photorécepteurs R7/R8 "
@@ -713,6 +760,20 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "actuator_channels": len(actuator_commands_first.actuator_names),
             "control_vector_size": len(actuator_commands_first.values),
             "motor_neuron_to_actuator_mapping": "candidate_complete_with_explicit_terminals",
+            "mujoco_command_application_executed": True,
+            "physics_substeps": 20,
+            "simulation_time_seconds": physical_first.simulation_time,
+            "command_envelope": "tanh(raw_command) * 1e-3 for smoke safety only",
+            "commanded_state_differs_from_passive": True,
+            "commanded_joint_position_digest": hashlib.sha256(
+                physical_first.joint_state.positions.tobytes()
+            ).hexdigest(),
+            "commanded_joint_velocity_digest": hashlib.sha256(
+                physical_first.joint_state.velocities.tobytes()
+            ).hexdigest(),
+            "initial_joint_position_digest": hashlib.sha256(
+                initial_physical_state.positions.tobytes()
+            ).hexdigest(),
         },
         "physical_vision": {
             "source_box_id": "world.mujoco",
@@ -743,6 +804,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "world_to_touch_executed": True,
             "mechanosensation_transduction_candidates_executed": True,
             "motor_transduction_to_body_executed": True,
+            "actuator_commands_applied_to_mujoco": True,
+            "physical_feedback_joint_state_read": True,
+            "commanded_physics_differs_from_passive": True,
+            "physical_replay_deterministic": True,
             "world_to_vision_executed": True,
             "vision_column_transduction_candidates_executed": True,
             "deterministic_replay": True,

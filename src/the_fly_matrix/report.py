@@ -196,9 +196,12 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     if wiring_smoke:
         ingress = wiring_smoke.get("cns_ingress", {})
         checks = wiring_smoke.get("checks", {})
+        physical_motor = wiring_smoke.get("physical_motor", {})
         remote_metrics += (
             f'<div><strong>{ingress.get("unique_body_ids", 0):,}</strong><span>entrées CNS exécutées</span></div>'
             f'<div><strong>{"oui" if checks.get("deterministic_replay") else "non"}</strong><span>rejeu déterministe</span></div>'
+            f'<div><strong>{"oui" if checks.get("actuator_commands_applied_to_mujoco") else "non"}</strong><span>commandes réellement appliquées à MuJoCo</span></div>'
+            f'<div><strong>{physical_motor.get("physics_substeps", 0):,}</strong><span>pas physiques du test de boucle</span></div>'
         )
     if proprio_wiring:
         remote_metrics += (

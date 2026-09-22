@@ -1,10 +1,14 @@
 schema_version: 1
 id: validation.flybody_actuator_interface
-name: Adressage exécutable des actionneurs FlyBody
+name: Adressage et retour physique exécutable de FlyBody
 owner_ids:
   - body.flybody
+  - world.mujoco
+  - sensor.proprioception
   - adapter.motor.transduction
   - wire.motor_transduction_to_body
+  - wire.body_to_world
+  - wire.body_to_proprioception
 level: integration
 protocol_path: src/the_fly_matrix/wiring_smoke.py
 command: run_wiring_smoke.bat
@@ -12,13 +16,18 @@ acceptance_criteria:
   - All 102 compiled FlyBody actuators have one unique control address
   - Each actuator targets one unique compiled joint
   - Arbitrary pre-transduced commands are placed deterministically in the ctrl vector
+  - Addressed commands are applied to all 102 compiled MuJoCo motor actuators
+  - Twenty physics substeps return 102 finite joint positions and velocities
+  - Replaying from reset is bit-for-bit deterministic and differs from the passive control
   - The two haltere actuators without specific FlyBody configuration remain explicit
   - Candidate motor-neuron inputs and scientific command values remain separate from exact ctrl addressing
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: flybody-actuator-runtime-2026-09-20
+latest_run_id: flybody-physical-feedback-2026-09-22
 status: integration_pass
 notes:
   - 102 actuator channels target 102 unique joints
   - 100 channels have a FlyBody actuator configuration group and 2 haltere channels do not
-  - A partial candidate mapping is audited separately; exact ctrl addressing remains independent
+  - The smoke-only tanh envelope protects numerical execution and is not a scientific gain
+  - The commanded state is read back through the exact 102-channel proprioception interface
+  - Candidate mapping and parameter calibration remain separate from exact physical execution

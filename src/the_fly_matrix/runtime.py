@@ -764,6 +764,28 @@ class ActuatorCommands:
             raise ValueError("actuator command values must be finite")
 
 
+@dataclass(frozen=True)
+class PhysicalStep:
+    """One observed FlyBody physics step after addressed actuator commands."""
+
+    joint_state: JointState
+    actuator_names: tuple[str, ...]
+    applied_commands: np.ndarray
+    actuator_forces: np.ndarray
+    simulation_time: float
+
+    def __post_init__(self) -> None:
+        expected = (len(self.actuator_names),)
+        if self.applied_commands.shape != expected or self.actuator_forces.shape != expected:
+            raise ValueError("physical command and force vectors must match actuator_names")
+        if not np.isfinite(self.applied_commands).all() or not np.isfinite(
+            self.actuator_forces
+        ).all():
+            raise ValueError("physical command and force vectors must be finite")
+        if not np.isfinite(self.simulation_time) or self.simulation_time < 0:
+            raise ValueError("simulation_time must be finite and non-negative")
+
+
 class FlyBodyActuatorInterface:
     """Address pre-transduced values to all 102 FlyBody control slots."""
 
@@ -824,6 +846,127 @@ class FlyBodyActuatorInterface:
             for _, name in sorted(zip(self._control_addresses, self.actuator_names))
         )
         return ActuatorCommands(actuator_names=names_by_address, values=controls)
+
+
+class FlyBodyPhysicsLoop:
+    """Apply addressed commands to FlyGym and expose the resulting joint state.
+
+    This class fixes only API and address plumbing.  It deliberately accepts the
+    already-transduced command vector as-is; parameter choice remains upstream.
+    """
+
+    box_id = "body.flybody"
+
+    def __init__(
+        self,
+        simulation: object,
+        fly: object,
+        actuator_interface: FlyBodyActuatorInterface,
+        proprioception_sensor: FlyBodyProprioceptionSensor,
+    ):
+        from flygym.compose import ActuatorType
+
+        self.simulation = simulation
+        self.fly = fly
+        self.actuator_interface = actuator_interface
+        self.proprioception_sensor = proprioception_sensor
+        self.actuator_type = ActuatorType.MOTOR
+        self.joint_names = tuple(item.name for item in fly.get_jointdofs_order())
+        actuated_joint_names = tuple(
+            item.name for item in fly.get_actuated_jointdofs_order(self.actuator_type)
+        )
+        self.actuator_names = tuple(f"{name}-motor" for name in actuated_joint_names)
+        if self.actuator_names != actuator_interface.actuator_names:
+            raise ValueError("compiled FlyBody actuator order differs from the wiring manifest")
+        if self.joint_names != proprioception_sensor.joint_names:
+            raise ValueError("compiled FlyBody joint order differs from the wiring manifest")
+
+    @classmethod
+    def from_generated_wiring(cls) -> "FlyBodyPhysicsLoop":
+        from flygym.compose import ActuatorType
+        from flygym.compose.fly.flybody import FlyBody
+        from flygym.compose.world import FlatGroundWorld
+        from flygym.flybody.anatomy_flybody import (
+            FlyBodyActuatedDOFPreset,
+            FlyBodyAxisOrder,
+            FlyBodyContactBodiesPreset,
+            FlyBodyJointPreset,
+            FlyBodySkeleton,
+        )
+        from flygym.simulation import Simulation
+        from flygym.utils.math import Rotation3D
+
+        fly = FlyBody()
+        skeleton = FlyBodySkeleton(
+            axis_order=FlyBodyAxisOrder.YAW_PITCH_ROLL,
+            joint_preset=FlyBodyJointPreset.ALL_BIOLOGICAL,
+        )
+        fly.add_joints(skeleton)
+        actuated = skeleton.get_actuated_dofs_from_preset(FlyBodyActuatedDOFPreset.ALL)
+        fly.add_actuators(
+            actuated,
+            ActuatorType.MOTOR,
+            forcelimited=True,
+            forcerange=(-0.01, 0.01),
+        )
+        world = FlatGroundWorld()
+        world.add_fly(
+            fly,
+            np.asarray([0.0, 0.0, 1.0]),
+            Rotation3D("quat", (1, 0, 0, 0)),
+            bodysegs_with_ground_contact=FlyBodyContactBodiesPreset.LEGS_THORAX_ABDOMEN_HEAD,
+        )
+        return cls(
+            Simulation(world),
+            fly,
+            FlyBodyActuatorInterface.from_generated_wiring(),
+            FlyBodyProprioceptionSensor.from_generated_wiring(),
+        )
+
+    def reset(self) -> None:
+        self.simulation.reset()
+
+    def read_joint_state(self) -> JointState:
+        positions = np.asarray(
+            self.simulation.get_joint_angles("flybody"), dtype=np.float64
+        )
+        velocities = np.asarray(
+            self.simulation.get_joint_velocities("flybody"), dtype=np.float64
+        )
+        return self.proprioception_sensor.step(
+            dict(zip(self.joint_names, positions)),
+            dict(zip(self.joint_names, velocities)),
+        )
+
+    def step(self, commands: ActuatorCommands, substeps: int = 1) -> PhysicalStep:
+        if commands.actuator_names != self.actuator_names:
+            raise ValueError("addressed command names differ from compiled FlyBody actuators")
+        if substeps < 1:
+            raise ValueError("substeps must be at least one")
+        self.simulation.set_actuator_inputs(
+            "flybody", self.actuator_type, commands.values
+        )
+        for _ in range(substeps):
+            self.simulation.step()
+        return PhysicalStep(
+            joint_state=self.read_joint_state(),
+            actuator_names=self.actuator_names,
+            applied_commands=commands.values.copy(),
+            actuator_forces=np.asarray(
+                self.simulation.get_actuator_forces("flybody", self.actuator_type),
+                dtype=np.float64,
+            ).copy(),
+            simulation_time=float(self.simulation.mj_data.time),
+        )
+
+    def close(self) -> None:
+        self.simulation.close()
+
+    def __enter__(self) -> "FlyBodyPhysicsLoop":
+        return self
+
+    def __exit__(self, exc_type: object, exc_value: object, traceback: object) -> None:
+        self.close()
 
 
 class FlyBodyVisionSensor:
