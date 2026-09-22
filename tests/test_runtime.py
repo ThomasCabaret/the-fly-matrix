@@ -19,6 +19,7 @@ from the_fly_matrix.runtime import (
     FLYBODY_ACTUATOR_CHANNEL_PATH,
     FLYBODY_VISION_CHANNEL_PATH,
     MECHANO_CHANNEL_PATH,
+    MECHANO_INPUT_CANDIDATE_PATH,
     MECHANO_ROUTE_PATH,
     MOTOR_CHANNEL_PATH,
     MOTOR_ROUTE_PATH,
@@ -32,6 +33,7 @@ from the_fly_matrix.runtime import (
     VISION_CHANNEL_PATH,
     VISION_ROUTE_PATH,
     MechanosensationRoutingBox,
+    MechanosensationTransductionBox,
     GroupedChannelActivity,
     MotorRoutingBox,
     MotorTransductionBox,
@@ -218,6 +220,33 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(
             set(box.routes["group_id"]),
             {"sensory.tactile", "sensory.mechanosensory_other"},
+        )
+
+    def test_mechanosensation_transduction_executes_leg_candidates_and_terminals(self) -> None:
+        if not MECHANO_INPUT_CANDIDATE_PATH.is_file():
+            self.skipTest("generated mechanosensation transduction candidates are absent")
+        sensor = FlyBodyGroundContactSensor.from_generated_wiring()
+        box = MechanosensationTransductionBox.from_generated_wiring()
+        contact_state = sensor.step(
+            np.arange(sensor.sensor_data_size, dtype=np.float64) + 1.0
+        )
+        fallback = np.arange(len(box.unresolved_channel_ids), dtype=np.float64) + 1000.0
+        output = box.step(
+            contact_state,
+            np.ones(len(box.parameter_ids), dtype=np.float64),
+            fallback,
+        )
+        self.assertEqual(len(box.parameter_ids), 1246)
+        self.assertEqual(len(box.resolved_channel_ids), 178)
+        self.assertEqual(len(box.unresolved_channel_ids), 145)
+        self.assertEqual(len(output.channel_ids), 323)
+        self.assertTrue(np.all(output.values > 0))
+        values_by_channel = dict(zip(output.channel_ids, output.values))
+        self.assertTrue(
+            np.array_equal(
+                np.asarray([values_by_channel[item] for item in box.unresolved_channel_ids]),
+                fallback,
+            )
         )
 
     def test_visual_router_preserves_one_channel_per_sensory_neuron(self) -> None:

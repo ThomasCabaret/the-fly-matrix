@@ -16,9 +16,10 @@ acceptance_criteria:
   - Non-leg local loads and biological receptor assignments remain explicit gaps
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: flybody-touch-runtime-2026-09-20
+latest_run_id: flybody-touch-runtime-2026-09-22
 status: integration_pass
 notes:
   - Six leg channels expose contact presence, force, torque, position, normal and tangent
   - The world-to-touch wire is executable for aggregate leg-ground contacts
+  - Seven load observables per leg feed sparse same-leg mechanosensory candidates
   - Local loads outside the six leg aggregates remain deliberately deferred

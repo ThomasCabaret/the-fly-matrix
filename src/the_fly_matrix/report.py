@@ -31,6 +31,9 @@ FLYBODY_ACTUATOR_WIRING_PATH = (
 )
 FLYBODY_VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "flybody-vision.json"
 MECHANO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "mechanosensation-routing.json"
+MECHANO_TRANSDUCTION_PATH = (
+    ROOT / "data" / "derived" / "wiring" / "mechanosensation-transduction-candidates.json"
+)
 VISION_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "vision-routing.json"
 MOTOR_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routing.json"
 MOTOR_TRANSDUCTION_PATH = (
@@ -131,6 +134,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     flybody_actuator_wiring = inventory.get("flybody_actuator_wiring")
     flybody_vision_wiring = inventory.get("flybody_vision_wiring")
     mechano_wiring = inventory.get("mechano_wiring")
+    mechano_transduction = inventory.get("mechano_transduction")
     vision_wiring = inventory.get("vision_wiring")
     motor_wiring = inventory.get("motor_wiring")
     motor_transduction = inventory.get("motor_transduction")
@@ -228,6 +232,12 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{mechano_wiring.get("generated_box_instances", 0):,}</strong><span>instances mécano type C</span></div>'
             f'<div><strong>{mechano_wiring.get("exact_routes", 0):,}</strong><span>routes mécano exactes</span></div>'
+        )
+    if mechano_transduction:
+        remote_metrics += (
+            f'<div><strong>{mechano_transduction.get("candidate_edges", 0):,}</strong><span>arêtes tactiles candidates</span></div>'
+            f'<div><strong>{mechano_transduction.get("resolved_terminal_channels", 0):,}/323</strong><span>canaux mécano reliés au corps</span></div>'
+            f'<div><strong>{mechano_transduction.get("unresolved_terminal_channels", 0):,}</strong><span>canaux attendant un capteur dédié</span></div>'
         )
     if vision_wiring:
         hex_audit = vision_wiring.get("hex_assignment_audit", {})
@@ -439,6 +449,14 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 MECHANO_WIRING_PATH.read_text(encoding="utf-8")
             )
             print(f"[OK] Câblage mécanorécepteur chargé: {MECHANO_WIRING_PATH}")
+        if MECHANO_TRANSDUCTION_PATH.is_file():
+            inventory["mechano_transduction"] = json.loads(
+                MECHANO_TRANSDUCTION_PATH.read_text(encoding="utf-8")
+            )
+            print(
+                f"[OK] Matrice tactile candidate chargée: "
+                f"{MECHANO_TRANSDUCTION_PATH}"
+            )
         if VISION_WIRING_PATH.is_file():
             inventory["vision_wiring"] = json.loads(
                 VISION_WIRING_PATH.read_text(encoding="utf-8")

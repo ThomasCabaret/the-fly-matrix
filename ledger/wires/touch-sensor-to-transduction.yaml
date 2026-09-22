@@ -2,16 +2,21 @@ schema_version: 1
 id: wire.touch_sensor_to_transduction
 name: Charges locales vers transduction tactile
 sector: mechanosensation
-source: {box_id: sensor.touch, port: local_contact_loads, group_query: null}
-target: {box_id: adapter.touch.transduction, port: local_contact_loads, group_query: null}
+source: {box_id: sensor.touch, port: local_contact_loads, group_query: 6 aggregate leg sensors x 7 load observables}
+target: {box_id: adapter.touch.transduction, port: local_contact_loads, group_query: 178 represented terminal channels}
 mapping_level: group-level
-expected_cardinality: local contact regions to receptor classes
-candidate_constraints: [local body region only]
+expected_cardinality: 1246 sparse local candidate edges
+candidate_constraints: [same annotated leg segment, same root side, non-leg nerves remain unresolved]
 free_discrete_parameters: 0
-free_continuous_parameters: 0
-status: {inventory: partial, routing: unknown, implementation: not_started, validation: not_run}
-confidence: low
-evidence: [drosophila_virtual_fly_project_contract.md]
-validation_ids: []
-next_action: Découper les surfaces par organe sensoriel plausible.
+free_continuous_parameters: 1246
+status: {inventory: complete, routing: candidates_known, implementation: tested, validation: integration_pass}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/flybody-touch-channels.csv, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]
+  source_references: [https://github.com/google-deepmind/mujoco_menagerie/tree/main/flybody, https://github.com/flyconnectome/2025malecns, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
+  used_claims: [Aggregate contact loads are physically addressable per leg, nerve and side constrain local leg-terminal candidates]
+  assumptions: [Each permitted edge exposes an independent coefficient until calibration]
+validation_ids: [validation.flybody_touch_sensor, validation.mechanosensation_transduction_candidates]
+next_action: Ajouter des capteurs dédiés aux 145 canaux non issus des nerfs de patte; ne sélectionner aucune arête avant calibration.
 blocked_by: []

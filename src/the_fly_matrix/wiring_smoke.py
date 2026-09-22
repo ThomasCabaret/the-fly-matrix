@@ -20,6 +20,7 @@ from .runtime import (
     FlyBodyVisionSensor,
     GroupedChannelActivity,
     MechanosensationRoutingBox,
+    MechanosensationTransductionBox,
     MotorRoutingBox,
     MotorTransductionBox,
     ProprioceptionTransductionBox,
@@ -139,7 +140,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     mechanosensation = MechanosensationRoutingBox.from_generated_wiring()
     print(
         f"[OK] {mechanosensation.box_id}: {len(mechanosensation.channel_ids):,} instances/canaux, "
-        f"{len(mechanosensation.routes):,} destinations exactes; contacts physiques différés"
+        f"{len(mechanosensation.routes):,} destinations exactes"
+    )
+    mechano_transduction = MechanosensationTransductionBox.from_generated_wiring()
+    print(
+        f"[OK] {mechano_transduction.box_id}: "
+        f"{len(mechano_transduction.parameter_ids):,} arêtes candidates pour "
+        f"{len(mechano_transduction.resolved_channel_ids):,}/323 canaux; "
+        f"{len(mechano_transduction.unresolved_channel_ids):,} observables manquantes explicites"
     )
     vision = VisionRoutingBox.from_generated_wiring()
     print(
@@ -206,12 +214,30 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     contact_state_first = touch_sensor.step(contact_data_first)
     contact_state_second = touch_sensor.step(contact_data_second)
+    mechano_parameters_first = np.random.default_rng(seed + len(boxes) + 12).uniform(
+        -1.0, 1.0, len(mechano_transduction.parameter_ids)
+    )
+    mechano_parameters_second = np.random.default_rng(seed + len(boxes) + 12).uniform(
+        -1.0, 1.0, len(mechano_transduction.parameter_ids)
+    )
+    unresolved_mechano_first = np.random.default_rng(seed + len(boxes) + 13).uniform(
+        -1.0, 1.0, len(mechano_transduction.unresolved_channel_ids)
+    )
+    unresolved_mechano_second = np.random.default_rng(seed + len(boxes) + 13).uniform(
+        -1.0, 1.0, len(mechano_transduction.unresolved_channel_ids)
+    )
+    mechano_activity_first = mechano_transduction.step(
+        contact_state_first, mechano_parameters_first, unresolved_mechano_first
+    )
+    mechano_activity_second = mechano_transduction.step(
+        contact_state_second, mechano_parameters_second, unresolved_mechano_second
+    )
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     proprio_first = proprioception.step(proprio_activity_first.values)
     proprio_second = proprioception.step(proprio_activity_second.values)
-    mechano_first = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
-    mechano_second = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
+    mechano_first = mechanosensation.step(mechano_activity_first.values)
+    mechano_second = mechanosensation.step(mechano_activity_second.values)
     vision_first = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
     vision_second = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
     unclassified_first = unclassified.step(
@@ -313,6 +339,12 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(
             f"6 capteurs de contact de patte attendus, {len(contact_state_first.leg_names)} obtenus"
         )
+    if (
+        mechano_activity_first.channel_ids != mechano_activity_second.channel_ids
+        or mechano_activity_first.channel_ids != mechanosensation.channel_ids
+        or not np.array_equal(mechano_activity_first.values, mechano_activity_second.values)
+    ):
+        raise RuntimeError("Le rejeu de la transduction mécanoréceptrice n'est pas déterministe")
     if actuator_commands_first.actuator_names != actuator_commands_second.actuator_names or not np.array_equal(
         actuator_commands_first.values, actuator_commands_second.values
     ):
@@ -335,6 +367,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"exécutées vers {len(proprio_transduction.resolved_channel_ids):,} canaux"
     )
     print("[OK] 6 contacts de patte extraits en 96 observables physiques")
+    print(
+        f"[OK] {len(mechano_transduction.parameter_ids):,} arêtes mécanoréceptrices candidates "
+        f"exécutées vers {len(mechano_transduction.resolved_channel_ids):,} canaux"
+    )
     print("[OK] 102 commandes placées dans les 102 adresses ctrl FlyBody")
     print("[OK] Rendu réel de 2 × 721 ommatidies extrait de façon déterministe")
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
@@ -389,11 +425,23 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         ]
         + [
             {
+                "id": mechano_transduction.box_id,
+                "adapter_type": mechano_transduction.adapter_type,
+                "candidate_edges": len(mechano_transduction.parameter_ids),
+                "resolved_terminal_channels": len(mechano_transduction.resolved_channel_ids),
+                "unresolved_terminal_channels": len(
+                    mechano_transduction.unresolved_channel_ids
+                ),
+                "parameter_status": "arbitrary_smoke_only",
+            }
+        ]
+        + [
+            {
                 "id": mechanosensation.box_id,
                 "adapter_type": mechanosensation.adapter_type,
                 "terminal_box_instances": len(mechanosensation.channel_ids),
                 "exact_routes": len(mechanosensation.routes),
-                "upstream_physical_mapping": "deferred",
+                "upstream_physical_mapping": "candidates_known_with_missing_observables",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ]
@@ -505,8 +553,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "target_box_id": touch_sensor.box_id,
             "aggregate_leg_channels": len(contact_state_first.leg_names),
             "scalar_observables": touch_sensor.sensor_data_size,
+            "candidate_edges": len(mechano_transduction.parameter_ids),
+            "resolved_terminal_channels": len(mechano_transduction.resolved_channel_ids),
+            "unresolved_terminal_channels": len(mechano_transduction.unresolved_channel_ids),
             "non_leg_local_load_mapping": "deferred",
-            "biological_receptor_mapping": "deferred",
+            "biological_receptor_mapping": "candidates_known_with_missing_observables",
         },
         "physical_motor": {
             "source_box_id": "adapter.motor.transduction",
@@ -535,6 +586,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "body_to_proprioception_executed": True,
             "proprioception_transduction_candidates_executed": True,
             "world_to_touch_executed": True,
+            "mechanosensation_transduction_candidates_executed": True,
             "motor_transduction_to_body_executed": True,
             "world_to_vision_executed": True,
             "deterministic_replay": True,

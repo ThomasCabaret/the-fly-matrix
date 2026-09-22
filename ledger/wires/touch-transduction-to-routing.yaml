@@ -2,16 +2,16 @@ schema_version: 1
 id: wire.touch_transduction_to_routing
 name: Activité tactile vers routage périphérique
 sector: mechanosensation
-source: {box_id: adapter.touch.transduction, port: mechanoreceptor_activity, group_query: null}
-target: {box_id: adapter.touch.routing, port: mechanoreceptor_activity, group_query: null}
+source: {box_id: adapter.touch.transduction, port: mechanoreceptor_activity, group_query: all 323 terminal channel IDs}
+target: {box_id: adapter.touch.routing, port: mechanoreceptor_activity, group_query: same terminal channel ID}
 mapping_level: type-level
-expected_cardinality: receptor groups by organ and side
-candidate_constraints: [same organ, same side, compatible receptor class]
+expected_cardinality: 323 identity-preserving terminal channels
+candidate_constraints: [same generated terminal channel ID]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: partial, routing: unknown, implementation: not_started, validation: not_run}
-confidence: low
-evidence: [data/derived/inventory/inventory.json]
-validation_ids: []
-next_action: Créer la checklist par nerf et sous-classe mécanoréceptrice.
+status: {inventory: complete, routing: fixed, implementation: tested, validation: integration_pass}
+confidence: high
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-transduction-candidates.json, runs/wiring-smoke/latest.json]
+validation_ids: [validation.mechanosensation_transduction_candidates]
+next_action: Préserver cette identité terminale pendant la calibration future des coefficients locaux.
 blocked_by: []

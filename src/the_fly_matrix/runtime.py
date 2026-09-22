@@ -19,6 +19,7 @@ PROPRIO_ROUTE_PATH = WIRING_ROOT / "proprioception-routes.parquet"
 PROPRIO_INPUT_CANDIDATE_PATH = WIRING_ROOT / "proprioception-input-candidates.parquet"
 MECHANO_CHANNEL_PATH = WIRING_ROOT / "mechanosensation-channels.csv"
 MECHANO_ROUTE_PATH = WIRING_ROOT / "mechanosensation-routes.parquet"
+MECHANO_INPUT_CANDIDATE_PATH = WIRING_ROOT / "mechanosensation-input-candidates.parquet"
 VISION_CHANNEL_PATH = WIRING_ROOT / "vision-channels.csv"
 VISION_ROUTE_PATH = WIRING_ROOT / "vision-routes.parquet"
 MOTOR_CHANNEL_PATH = WIRING_ROOT / "motor-channels.csv"
@@ -432,6 +433,160 @@ class FlyBodyGroundContactSensor:
             normals=rows[:, 10:13].copy(),
             tangents=rows[:, 13:16].copy(),
         )
+
+
+class MechanosensationTransductionBox:
+    """Sparse, uncalibrated leg-contact candidates feeding mechanoreceptor channels."""
+
+    adapter_type = "B"
+    box_id = "adapter.touch.transduction"
+
+    def __init__(
+        self,
+        candidates: pd.DataFrame,
+        receptor_channels: pd.DataFrame,
+        contact_channels: pd.DataFrame,
+    ):
+        if candidates.empty or receptor_channels.empty or contact_channels.empty:
+            raise ValueError("No generated mechanosensation transduction candidates found")
+        required = {
+            "parameter_id",
+            "source_leg",
+            "source_observable",
+            "target_channel_id",
+        }
+        missing = required - set(candidates.columns)
+        if missing:
+            raise ValueError(f"Missing mechanosensation candidate columns: {sorted(missing)}")
+        self.candidates = candidates.sort_values(
+            ["target_channel_id", "source_leg", "source_observable"]
+        ).reset_index(drop=True)
+        self.receptor_channels = receptor_channels.reset_index(drop=True)
+        self.contact_channels = contact_channels.sort_values("sensor_address").reset_index(drop=True)
+        if self.candidates["parameter_id"].duplicated().any():
+            raise ValueError("Duplicate mechanosensation transduction parameter IDs")
+        if self.receptor_channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate mechanoreceptor terminal channel IDs")
+        if self.contact_channels["leg"].duplicated().any():
+            raise ValueError("Duplicate physical leg-contact channels")
+        self.parameter_ids = tuple(self.candidates["parameter_id"].astype(str))
+        self.channel_ids = tuple(self.receptor_channels["channel_id"].astype(str))
+        self.leg_names = tuple(self.contact_channels["leg"].astype(str))
+        channel_index = {channel_id: index for index, channel_id in enumerate(self.channel_ids)}
+        leg_index = {leg: index for index, leg in enumerate(self.leg_names)}
+        unknown_targets = set(self.candidates["target_channel_id"].astype(str)) - set(channel_index)
+        unknown_legs = set(self.candidates["source_leg"].astype(str)) - set(leg_index)
+        if unknown_targets or unknown_legs:
+            raise ValueError(
+                "Mechanosensation candidates reference unknown channels: "
+                f"targets={len(unknown_targets)}, legs={len(unknown_legs)}"
+            )
+        self._target_indices = np.asarray(
+            [channel_index[str(value)] for value in self.candidates["target_channel_id"]],
+            dtype=np.int64,
+        )
+        self._source_leg_indices = np.asarray(
+            [leg_index[str(value)] for value in self.candidates["source_leg"]],
+            dtype=np.int64,
+        )
+        observable_index = {
+            "contact_found": 0,
+            "force_x": 1,
+            "force_y": 2,
+            "force_z": 3,
+            "torque_x": 4,
+            "torque_y": 5,
+            "torque_z": 6,
+        }
+        unknown_observables = set(self.candidates["source_observable"].astype(str)) - set(
+            observable_index
+        )
+        if unknown_observables:
+            raise ValueError(f"Unsupported contact observables: {sorted(unknown_observables)}")
+        self._source_observable_indices = np.asarray(
+            [observable_index[str(value)] for value in self.candidates["source_observable"]],
+            dtype=np.int64,
+        )
+        self.resolved_channel_ids = tuple(
+            self.candidates["target_channel_id"].astype(str).drop_duplicates()
+        )
+        self.unresolved_channel_ids = tuple(
+            channel_id for channel_id in self.channel_ids if channel_id not in self.resolved_channel_ids
+        )
+        self._unresolved_indices = np.asarray(
+            [channel_index[channel_id] for channel_id in self.unresolved_channel_ids], dtype=np.int64
+        )
+        if len(self.parameter_ids) != 1246:
+            raise ValueError("Expected 1,246 constrained mechanosensation parameters")
+        if (len(self.resolved_channel_ids), len(self.unresolved_channel_ids)) != (178, 145):
+            raise ValueError("Unexpected mechanoreceptor candidate coverage")
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        candidate_path: Path = MECHANO_INPUT_CANDIDATE_PATH,
+        receptor_channel_path: Path = MECHANO_CHANNEL_PATH,
+        contact_channel_path: Path = FLYBODY_TOUCH_CHANNEL_PATH,
+    ) -> "MechanosensationTransductionBox":
+        if (
+            not candidate_path.is_file()
+            or not receptor_channel_path.is_file()
+            or not contact_channel_path.is_file()
+        ):
+            raise FileNotFoundError(
+                "Mechanosensation transduction candidates are absent; run the wiring builder first"
+            )
+        return cls(
+            pd.read_parquet(candidate_path),
+            pd.read_csv(receptor_channel_path),
+            pd.read_csv(contact_channel_path),
+        )
+
+    def step(
+        self,
+        contact_state: GroundContactState,
+        parameters: Mapping[str, float] | np.ndarray,
+        unresolved_values: Mapping[str, float] | np.ndarray,
+    ) -> ChannelActivity:
+        if contact_state.leg_names != self.leg_names:
+            raise ValueError(f"{self.box_id}: physical leg order mismatch")
+        if isinstance(parameters, Mapping):
+            missing = set(self.parameter_ids) - set(parameters)
+            extra = set(parameters) - set(self.parameter_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: parameter mismatch; missing={len(missing)}, extra={len(extra)}"
+                )
+            weights = np.asarray([parameters[item] for item in self.parameter_ids], dtype=np.float64)
+        else:
+            weights = np.asarray(parameters, dtype=np.float64)
+        if weights.shape != (len(self.parameter_ids),) or not np.isfinite(weights).all():
+            raise ValueError(f"{self.box_id}: invalid candidate parameter vector")
+        if isinstance(unresolved_values, Mapping):
+            missing = set(self.unresolved_channel_ids) - set(unresolved_values)
+            extra = set(unresolved_values) - set(self.unresolved_channel_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: unresolved input mismatch; "
+                    f"missing={len(missing)}, extra={len(extra)}"
+                )
+            fallback = np.asarray(
+                [unresolved_values[item] for item in self.unresolved_channel_ids], dtype=np.float64
+            )
+        else:
+            fallback = np.asarray(unresolved_values, dtype=np.float64)
+        if fallback.shape != (len(self.unresolved_channel_ids),) or not np.isfinite(fallback).all():
+            raise ValueError(f"{self.box_id}: invalid unresolved terminal vector")
+        physical_values = np.column_stack(
+            (contact_state.contact_found, contact_state.forces, contact_state.torques)
+        )
+        source_values = physical_values[
+            self._source_leg_indices, self._source_observable_indices
+        ]
+        values = np.zeros(len(self.channel_ids), dtype=np.float64)
+        np.add.at(values, self._target_indices, source_values * weights)
+        values[self._unresolved_indices] = fallback
+        return ChannelActivity(channel_ids=self.channel_ids, values=values)
 
 
 @dataclass(frozen=True)

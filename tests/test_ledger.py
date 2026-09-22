@@ -4,6 +4,8 @@ import json
 import unittest
 from pathlib import Path
 
+import pandas as pd
+
 from the_fly_matrix.ledger import build_summary, load_ledger, validate_ledger
 
 
@@ -164,6 +166,37 @@ class LedgerTests(unittest.TestCase):
             {item["group_id"]: item["terminal_channels"] for item in mechano["groups"]},
             {"sensory.tactile": 213, "sensory.mechanosensory_other": 110},
         )
+
+        mechano_transduction_path = path.with_name(
+            "mechanosensation-transduction-candidates.json"
+        )
+        self.assertTrue(mechano_transduction_path.is_file())
+        mechano_transduction = json.loads(
+            mechano_transduction_path.read_text(encoding="utf-8")
+        )
+        self.assertEqual(mechano_transduction["source_contact_channels"], 6)
+        self.assertEqual(mechano_transduction["target_terminal_channels"], 323)
+        self.assertEqual(mechano_transduction["target_neurons"], 4291)
+        self.assertEqual(mechano_transduction["candidate_edges"], 1246)
+        self.assertEqual(mechano_transduction["resolved_terminal_channels"], 178)
+        self.assertEqual(mechano_transduction["resolved_neurons"], 1903)
+        self.assertEqual(mechano_transduction["unresolved_terminal_channels"], 145)
+        self.assertEqual(mechano_transduction["unresolved_neurons"], 2388)
+        self.assertEqual(
+            sum(mechano_transduction["unresolved_reason_channel_counts"].values()),
+            145,
+        )
+        self.assertFalse(mechano_transduction["scientific_parameter_values_selected"])
+        mechano_audit = pd.read_csv(
+            path.with_name("mechanosensation-transduction-channel-audit.csv")
+        )
+        self.assertEqual(len(mechano_audit), 323)
+        self.assertEqual(mechano_audit["channel_id"].nunique(), 323)
+        self.assertEqual(
+            mechano_audit["status"].value_counts().to_dict(),
+            {"candidates_known": 178, "missing_physical_observable": 145},
+        )
+        self.assertFalse(mechano_audit["reason"].isna().any())
 
         vision_path = path.with_name("vision-routing.json")
         self.assertTrue(vision_path.is_file())

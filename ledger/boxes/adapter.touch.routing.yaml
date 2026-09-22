@@ -8,9 +8,9 @@ parent_id: sensor.touch
 ports: {inputs: [mechanoreceptor_activity], outputs: [mechanosensory_afferents]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/wiring/mechanosensation-routing.json, data/derived/wiring/mechanosensation-routes.parquet, runs/wiring-smoke/latest.json]
+evidence: [data/derived/wiring/mechanosensation-routing.json, data/derived/wiring/mechanosensation-routes.parquet, data/derived/wiring/mechanosensation-transduction-candidates.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: [validation.mechanosensation_routing]
-next_action: Relier les observables de contact et vibration aux 323 entrées type C sans modifier le routage aval fixé.
+validation_ids: [validation.mechanosensation_routing, validation.mechanosensation_transduction_candidates]
+next_action: Préserver l'identité des 323 canaux terminaux pendant l'ajout des observables encore absentes.
 blocked_by: []
 completion_criteria: [Groupes aval exhaustifs, Routages bodyId fixes, Modalités inconnues conservées explicitement]

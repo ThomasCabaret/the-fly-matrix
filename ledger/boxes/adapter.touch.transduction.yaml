@@ -6,11 +6,16 @@ adapter_type: B
 anatomical_region: mechanosensory_organs
 parent_id: sensor.touch
 ports: {inputs: [local_contact_loads], outputs: [mechanoreceptor_activity]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
-confidence: low
-evidence: [drosophila_virtual_fly_project_contract.md]
+status: {inventory: partial, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]
+  source_references: [https://github.com/flyconnectome/2025malecns, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
+  used_claims: [Prothoracic nerve annotations identify front-leg candidates while MesoLN and MetaLN identify middle and hind legs, rootSide identifies the paired leg]
+  assumptions: [Each permitted load-to-terminal edge exposes an independent coefficient until calibration]
 parameter_family_ids: [parameter.sensory_transduction]
-validation_ids: []
-next_action: Séparer bristles, campaniformes et autres classes par variable mécanique locale.
+validation_ids: [validation.mechanosensation_transduction_candidates]
+next_action: Conserver les 1 246 arêtes candidates sans valeur et ajouter les observables dédiées pour les 145 terminaux non reliés aux pattes.
 blocked_by: []
-completion_criteria: [Classes séparées, Fonctions locales documentées, Réponses unitaires testées]
+completion_criteria: [Classes séparées, Candidats locaux exécutables, Observables absentes explicites, Fonctions locales documentées, Réponses unitaires testées]

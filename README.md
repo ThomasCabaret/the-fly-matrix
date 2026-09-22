@@ -30,9 +30,9 @@ Pour reprendre le projet sans le contexte des conversations :
   groupes d'interface prioritaires.
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
   routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
-  arbitraires reproductibles, ainsi que les routages aval proprioceptif et
-  mécanorécepteur, le routage aval visuel, les afférences sensorielles non résolues
-  et les sorties CNS explicitement motrices.
+  arbitraires reproductibles, ainsi que les transductions candidates proprioceptive
+  et mécanoréceptrice, leurs routages aval, le routage aval visuel, les afférences
+  sensorielles non résolues et les sorties CNS explicitement motrices.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -151,18 +151,26 @@ zéro. Aucune de ces valeurs ni aucun des 1 439 coefficients n'est une calibrati
 Le manifeste mécanorécepteur applique la même séparation : 4 291 afférences
 tactiles ou mécanoréceptrices sont divisées en 323 instances type C selon le
 groupe annoté, le nerf d'entrée, la sous-classe, les types MANC/MaleCNS et le côté.
-Les routes terminales vers les `bodyId` sont exactes, tandis que la correspondance
-avec les surfaces de contact, vibrations et autres observables physiques reste à
-établir. Les modalités non annotées sont conservées comme inconnues et ne sont pas
+Les routes terminales vers les `bodyId` sont exactes. En amont,
+`mechanosensation-input-candidates.parquet` relie les sept observables de charge de
+chaque patte — présence du contact, trois forces et trois couples — aux canaux dont
+le nerf et le côté désignent la même patte. Les 1 246 arêtes candidates couvrent
+178 instances et 1 903 neurones, sans fixer aucun coefficient. Les 145 instances
+restantes, soit 2 388 neurones, conservent une cause explicite d'absence : antenne,
+aile, haltère, bouche, notum ou interface optique sans observable physique dédiée.
+`mechanosensation-transduction-channel-audit.csv` conserve ce statut et cette cause
+pour chacun des 323 canaux terminaux.
+Le runtime exige une valeur externe pour ces terminaux au lieu de les alimenter
+silencieusement avec un contact de patte. Les modalités non annotées ne sont pas
 reclassées par hypothèse.
 
 Côté physique, `flybody-touch-channels.csv` fixe désormais les six capteurs de
 contact au sol réellement compilés par FlyGym, un par patte. Chaque canal expose
 16 scalaires : présence du contact, force, couple, position, normale et tangente,
 soit 96 observables exécutables. L'inventaire conserve également les 57 segments
-autorisés à entrer en collision et leurs 69 paires avec le sol. Les charges locales
-hors pattes et la correspondance de ces six canaux avec les 323 instances
-mécanoréceptrices restent explicitement différées.
+autorisés à entrer en collision et leurs 69 paires avec le sol. Les sept observables
+de charge utiles par patte alimentent désormais la matrice candidate décrite
+ci-dessus. Les charges locales hors pattes restent explicitement différées.
 
 Le manifeste visuel conserve une instance type C par neurone sensoriel du lobe
 optique : 6 091 photorécepteurs et 7 cellules `HBeyelet`, soit 6 098 routes

@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-22, après le commit structurel `0e4f336`.
+Mise à jour : 2026-09-22, lot de transduction mécanoréceptrice.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -15,28 +15,29 @@ attendu.
 
 ## État synthétique
 
-- Câblage global : **80 %**.
+- Câblage global : **83 %**.
 - Graphe central MaleCNS : **100 % structurel**.
 - Sortie motrice : **100 % structurel**.
 - Proprioception : **86 %**.
 - Entrées sensorielles non résolues : **88 %**.
 - Clamps basaux : **87 %**.
 - Vision : **74 %**.
-- Mécanosensation : **62 %**.
+- Mécanosensation : **82 %**.
 - Corps physique : **94 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 
-Le dernier lot a créé 1 439 arêtes candidates entre 204 observables articulaires
-et 171 des 262 canaux proprioceptifs terminaux. Les 91 autres canaux attendent des
-observables de contrainte ou vibration. Le smoke test traverse 17 884 entrées CNS,
-26 028 386 arêtes centrales, 815 sorties motrices et 102 actionneurs. Les 29 tests
-unitaires/intégration locaux passent.
+Le dernier lot a créé 1 246 arêtes candidates entre les charges des six pattes et
+178 des 323 canaux mécanorécepteurs terminaux, couvrant 1 903 neurones. Les 145
+autres canaux, soit 2 388 neurones, attendent une observable dédiée d'antenne,
+d'aile, d'haltère, de bouche, de notum ou de l'interface optique. Le smoke test
+traverse 17 884 entrées CNS, 26 028 386 arêtes centrales, 815 sorties motrices et
+102 actionneurs. Les 30 tests unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
 
-1. Relier les observables physiques aux groupes mécanorécepteurs sans inventer de
-   surfaces ou d'organes absents.
+1. Ajouter les observables physiques dédiées aux 145 canaux mécanorécepteurs non
+   issus des pattes, sans inventer de surfaces ou d'organes absents.
 2. Établir une rétinotopie indépendante entre les ommatidies FlyBody et les
    photorécepteurs MaleCNS.
 3. Ajouter ou représenter explicitement contrainte et vibration pour les terminaux

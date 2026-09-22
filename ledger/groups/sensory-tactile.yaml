@@ -11,7 +11,12 @@ named_type_count: 56
 target_box_ids: [adapter.touch.routing, cns.malecns]
 status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-routes.parquet]
-next_action: Auditer séparément la correspondance entre surfaces physiques et canaux tactiles fixés.
+evidence: [data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-routes.parquet, data/derived/wiring/mechanosensation-transduction-candidates.json]
+provenance:
+  claim_kinds: [dataset_observation, derived_rule, unresolved]
+  source_references: [male_cns_annotations_v1_0_minconf_0_5, https://github.com/flyconnectome/2025malecns, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
+  used_claims: [MaleCNS class mechanosensory_tactile defines the inventoried population, leg nerve and side constrain physical candidates]
+  assumptions: [Physical candidates are tracked separately from exact downstream bodyId membership]
+next_action: Compléter les observables dédiées pour les canaux tactiles non représentés par les six contacts de patte.
 blocked_by: []
 completion_criteria: [Sous-groupes aval disjoints, Couverture totale, Valeurs inconnues conservées explicitement]
