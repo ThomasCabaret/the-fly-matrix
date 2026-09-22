@@ -14,6 +14,7 @@ from .runtime import (
     ChannelActivity,
     CentralConnectomeBox,
     CNSInputBuffer,
+    FlyBodyLocalContactSensor,
     FlyBodyProprioceptionSensor,
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
@@ -68,11 +69,16 @@ def _channel_digest(activity: ChannelActivity | GroupedChannelActivity) -> str:
     return digest.hexdigest()
 
 
-def _render_flybody_vision_twice() -> tuple[np.ndarray, np.ndarray]:
-    """Exercise FlyGym's real camera and retina path on a static local scene."""
+def _render_flybody_observations_twice(
+    local_segment_names: tuple[str, ...],
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Exercise FlyGym's real retina and body-contact APIs on a static scene."""
     from flygym.compose.fly.flybody import FlyBody
     from flygym.compose.world import FlatGroundWorld
-    from flygym.flybody.anatomy_flybody import FlyBodyContactBodiesPreset
+    from flygym.flybody.anatomy_flybody import (
+        FlyBodyBodySegment,
+        FlyBodyContactBodiesPreset,
+    )
     from flygym.simulation import Simulation
     from flygym.utils.math import Rotation3D
 
@@ -87,9 +93,16 @@ def _render_flybody_vision_twice() -> tuple[np.ndarray, np.ndarray]:
     )
     simulation = Simulation(world)
     try:
+        body_segments = [FlyBodyBodySegment(name) for name in local_segment_names]
         return (
             simulation.get_ommatidia_readouts("flybody"),
             simulation.get_ommatidia_readouts("flybody"),
+            simulation.get_bodysegment_contact_forces(
+                "flybody", body_segments, ground_only=False
+            ),
+            simulation.get_bodysegment_contact_forces(
+                "flybody", body_segments, ground_only=False
+            ),
         )
     finally:
         simulation.close()
@@ -113,6 +126,12 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     print(
         f"[OK] {touch_sensor.box_id}: {len(touch_sensor.leg_names):,} capteurs de patte, "
         f"{touch_sensor.sensor_data_size:,} observables de contact au sol"
+    )
+    local_touch_sensor = FlyBodyLocalContactSensor.from_generated_wiring()
+    print(
+        f"[OK] {local_touch_sensor.box_id}: "
+        f"{len(local_touch_sensor.segment_names):,} segments corporels locaux, "
+        f"{len(local_touch_sensor.segment_names) * 3:,} composantes de force nette"
     )
     actuator_interface = FlyBodyActuatorInterface.from_generated_wiring()
     print(
@@ -179,9 +198,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
 
     section("Exécution déterministe du rendu et des valeurs structurelles")
-    vision_readouts_first, vision_readouts_second = _render_flybody_vision_twice()
+    (
+        vision_readouts_first,
+        vision_readouts_second,
+        local_forces_first,
+        local_forces_second,
+    ) = _render_flybody_observations_twice(local_touch_sensor.segment_names)
     vision_samples_first = vision_sensor.step(vision_readouts_first)
     vision_samples_second = vision_sensor.step(vision_readouts_second)
+    local_contact_state_first = local_touch_sensor.step(local_forces_first)
+    local_contact_state_second = local_touch_sensor.step(local_forces_second)
     qpos_first = np.random.default_rng(seed - 2).uniform(-1.0, 1.0, proprio_sensor.qpos_size)
     qvel_first = np.random.default_rng(seed - 1).uniform(-1.0, 1.0, proprio_sensor.qvel_size)
     qpos_second = np.random.default_rng(seed - 2).uniform(-1.0, 1.0, proprio_sensor.qpos_size)
@@ -228,12 +254,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     mechano_activity_first = mechano_transduction.step(
         contact_state_first,
+        local_contact_state_first,
         joint_state_first,
         mechano_parameters_first,
         unresolved_mechano_first,
     )
     mechano_activity_second = mechano_transduction.step(
         contact_state_second,
+        local_contact_state_second,
         joint_state_second,
         mechano_parameters_second,
         unresolved_mechano_second,
@@ -346,6 +374,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             f"6 capteurs de contact de patte attendus, {len(contact_state_first.leg_names)} obtenus"
         )
     if (
+        local_contact_state_first.segment_names
+        != local_contact_state_second.segment_names
+        or not np.array_equal(
+            local_contact_state_first.forces, local_contact_state_second.forces
+        )
+    ):
+        raise RuntimeError("Le rejeu des contacts corporels locaux n'est pas déterministe")
+    if len(local_contact_state_first.segment_names) != 2:
+        raise RuntimeError("2 segments de contact corporel local attendus")
+    if (
         mechano_activity_first.channel_ids != mechano_activity_second.channel_ids
         or mechano_activity_first.channel_ids != mechanosensation.channel_ids
         or not np.array_equal(mechano_activity_first.values, mechano_activity_second.values)
@@ -372,7 +410,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {len(proprio_transduction.parameter_ids):,} arêtes proprioceptives candidates "
         f"exécutées vers {len(proprio_transduction.resolved_channel_ids):,} canaux"
     )
-    print("[OK] 6 contacts de patte et 19 articulations non locomotrices fournissent les observables mécaniques")
+    print(
+        "[OK] 6 contacts de patte, 2 contacts corporels locaux et 19 articulations "
+        "non locomotrices fournissent les observables mécaniques"
+    )
     print(
         f"[OK] {len(mechano_transduction.parameter_ids):,} arêtes mécanoréceptrices candidates "
         f"exécutées vers {len(mechano_transduction.resolved_channel_ids):,} canaux"
@@ -447,7 +488,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "adapter_type": mechanosensation.adapter_type,
                 "terminal_box_instances": len(mechanosensation.channel_ids),
                 "exact_routes": len(mechanosensation.routes),
-                "upstream_physical_mapping": "candidates_known_with_missing_observables",
+                "upstream_physical_mapping": "candidate_complete",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ]
@@ -559,11 +600,15 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "target_box_id": touch_sensor.box_id,
             "aggregate_leg_channels": len(contact_state_first.leg_names),
             "scalar_observables": touch_sensor.sensor_data_size,
+            "local_body_contact_channels": len(local_contact_state_first.segment_names),
+            "local_body_contact_scalar_observables": int(
+                local_contact_state_first.forces.size
+            ),
             "candidate_edges": len(mechano_transduction.parameter_ids),
             "resolved_terminal_channels": len(mechano_transduction.resolved_channel_ids),
             "unresolved_terminal_channels": len(mechano_transduction.unresolved_channel_ids),
-            "non_leg_local_load_mapping": "deferred",
-            "biological_receptor_mapping": "candidates_known_with_missing_observables",
+            "non_leg_local_load_mapping": "exact_for_head_and_thorax_net_force",
+            "biological_receptor_mapping": "candidate_complete",
         },
         "physical_motor": {
             "source_box_id": "adapter.motor.transduction",

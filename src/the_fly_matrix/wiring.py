@@ -56,6 +56,7 @@ PROPRIO_TRANSDUCTION_SUMMARY_OUTPUT = OUTPUT_ROOT / "proprioception-transduction
 PROPRIO_INPUT_CANDIDATE_OUTPUT = OUTPUT_ROOT / "proprioception-input-candidates.parquet"
 FLYBODY_TOUCH_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-touch.json"
 FLYBODY_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-touch-channels.csv"
+FLYBODY_LOCAL_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-local-touch-channels.csv"
 FLYBODY_ACTUATOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-actuators.json"
 FLYBODY_ACTUATOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-actuator-channels.csv"
 FLYBODY_VISION_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-vision.json"
@@ -675,8 +676,9 @@ def build_flybody_touch_wiring(
     inventory_path: Path = INVENTORY_PATH,
     summary_output: Path = FLYBODY_TOUCH_SUMMARY_OUTPUT,
     channel_output: Path = FLYBODY_TOUCH_CHANNEL_OUTPUT,
+    local_channel_output: Path = FLYBODY_LOCAL_TOUCH_CHANNEL_OUTPUT,
 ) -> dict[str, Any]:
-    """Wire FlyGym's real aggregate ground-contact sensors into sensor.touch."""
+    """Wire FlyGym aggregate leg and selected body-segment contact observations."""
     if not inventory_path.is_file():
         raise FileNotFoundError(f"{inventory_path} absent; lancez d'abord l'inventaire")
     section("Câblage des contacts FlyBody vers le capteur tactile")
@@ -707,6 +709,27 @@ def build_flybody_touch_wiring(
     expected_legs = {"lf", "lm", "lh", "rf", "rm", "rh"}
     if set(channels["leg"]) != expected_legs:
         raise RuntimeError("Les six pattes ne sont pas toutes couvertes exactement une fois")
+    segment_frame = pd.DataFrame(segment_rows)
+    local_segments = segment_frame.loc[
+        segment_frame["segment_name"].isin({"c_thorax", "c_head"})
+    ].copy()
+    local_segments["channel_id"] = local_segments["segment_name"].map(
+        lambda value: f"channel.flybody.local_contact.{value}"
+    )
+    local_segments["source_box_id"] = "world.mujoco"
+    local_segments["source_port"] = "contacts"
+    local_segments["target_box_id"] = "sensor.touch"
+    local_segments["target_port"] = "contacts"
+    local_segments["query_method"] = "Simulation.get_bodysegment_contact_forces"
+    local_segments["ground_only"] = False
+    local_segments["observable_layout"] = "force_world_x,force_world_y,force_world_z"
+    local_segments["force_unit"] = "MuJoCo_model_unit"
+    local_segments["geom_names"] = local_segments["geom_names"].map(
+        lambda values: ",".join(values)
+    )
+    local_segments = local_segments.sort_values("segment_name").reset_index(drop=True)
+    if set(local_segments["segment_name"]) != {"c_thorax", "c_head"}:
+        raise RuntimeError("Les segments de contact tête et thorax ne sont pas tous représentés")
     summary = {
         "schema_version": 1,
         "generated_at": datetime.now(UTC).isoformat(),
@@ -720,9 +743,12 @@ def build_flybody_touch_wiring(
         "aggregate_leg_channels": len(channels),
         "scalars_per_leg": 16,
         "scalar_observables": int(channels["sensor_dimension"].sum()),
+        "local_body_contact_channels": len(local_segments),
+        "local_body_contact_scalar_observables": int(len(local_segments) * 3),
+        "local_body_contact_segments": local_segments["segment_name"].tolist(),
         "legs": channels["leg"].tolist(),
         "ground_contact_sensor_mapping": "exact",
-        "non_leg_local_load_mapping": "deferred",
+        "non_leg_local_load_mapping": "exact_for_head_and_thorax_net_force",
         "biological_receptor_mapping": "deferred",
         "free_discrete_parameters": 0,
         "continuous_parameters_deferred": True,
@@ -730,11 +756,14 @@ def build_flybody_touch_wiring(
     summary_output.parent.mkdir(parents=True, exist_ok=True)
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     channels.to_csv(channel_output, index=False, encoding="utf-8")
+    local_segments.to_csv(local_channel_output, index=False, encoding="utf-8")
     print(f"[OK] {len(segment_rows):,} segments de collision et {interface['explicit_ground_contact_pairs']:,} paires inventoriés")
     print(f"[OK] {len(channels):,} capteurs de patte reliés, {summary['scalar_observables']:,} scalaires exposés")
-    print("[INFO] Les charges locales hors pattes et l'attribution biologique restent différées")
+    print("[OK] 2 canaux de force nette locale ajoutés pour le thorax et la tête")
+    print("[INFO] Les autres charges locales hors pattes restent différées")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux physiques : {channel_output}")
+    print(f"[OK] Contacts corporels locaux : {local_channel_output}")
     return summary
 
 
@@ -1044,18 +1073,25 @@ def build_mechanosensation_wiring(
 def build_mechanosensation_transduction_candidates(
     receptor_channel_path: Path = MECHANO_CHANNEL_OUTPUT,
     contact_channel_path: Path = FLYBODY_TOUCH_CHANNEL_OUTPUT,
+    local_contact_channel_path: Path = FLYBODY_LOCAL_TOUCH_CHANNEL_OUTPUT,
     joint_channel_path: Path = FLYBODY_PROPRIO_CHANNEL_OUTPUT,
     summary_output: Path = MECHANO_TRANSDUCTION_SUMMARY_OUTPUT,
     candidate_output: Path = MECHANO_INPUT_CANDIDATE_OUTPUT,
     audit_output: Path = MECHANO_TRANSDUCTION_AUDIT_OUTPUT,
 ) -> dict[str, Any]:
     """Constrain local contact and appendage-motion inputs to annotated afferents."""
-    for path in (receptor_channel_path, contact_channel_path, joint_channel_path):
+    for path in (
+        receptor_channel_path,
+        contact_channel_path,
+        local_contact_channel_path,
+        joint_channel_path,
+    ):
         if not path.is_file():
             raise FileNotFoundError(f"{path} absent; reconstruisez d'abord le câblage")
     section("Construction de la matrice candidate mécanoréceptrice")
     receptors = pd.read_csv(receptor_channel_path).fillna("(unknown)")
     contacts = pd.read_csv(contact_channel_path).fillna("(unknown)")
+    local_contacts = pd.read_csv(local_contact_channel_path).fillna("(unknown)")
     joints = pd.read_csv(joint_channel_path).fillna("(unknown)")
     leg_nerve_to_segment = {
         "ProLN": "f",
@@ -1065,9 +1101,12 @@ def build_mechanosensation_transduction_candidates(
         "MesoLN": "m",
         "MetaLN": "h",
     }
-    unresolved_reason_by_nerve = {
-        "PDMN": "notum_observable_missing",
-        "ON": "optic_mechanosensory_observable_missing",
+    local_contact_by_nerve = {
+        "PDMN": (
+            "c_thorax",
+            "posterior_dorsal_mesothoracic_nerve_thorax_contact",
+        ),
+        "ON": ("c_head", "optic_nerve_head_contact"),
     }
     contact_observables = (
         "contact_found",
@@ -1079,6 +1118,7 @@ def build_mechanosensation_transduction_candidates(
         "torque_z",
     )
     contacts_by_leg = contacts.set_index("leg", drop=False)
+    local_contacts_by_segment = local_contacts.set_index("segment_name", drop=False)
     candidate_rows: list[dict[str, Any]] = []
     channel_results: list[dict[str, Any]] = []
     for receptor in receptors.itertuples(index=False):
@@ -1188,15 +1228,52 @@ def build_mechanosensation_transduction_candidates(
                     )
             continue
 
-        reason = unresolved_reason_by_nerve.get(
-            nerve, "anatomical_or_physical_observable_unresolved"
-        )
+        local_contact_match = local_contact_by_nerve.get(nerve)
+        if local_contact_match is not None:
+            segment_name, basis = local_contact_match
+            if segment_name not in local_contacts_by_segment.index:
+                raise RuntimeError(
+                    f"Canal de contact local absent pour {channel_id}: {segment_name}"
+                )
+            local_contact = local_contacts_by_segment.loc[segment_name]
+            channel_results.append(
+                {
+                    "channel_id": channel_id,
+                    "neuron_count": int(receptor.neuron_count),
+                    "status": "candidates_known",
+                    "reason": basis,
+                }
+            )
+            for observable in ("force_x", "force_y", "force_z"):
+                parameter_key = f"{local_contact.channel_id}|{observable}|{channel_id}"
+                candidate_rows.append(
+                    {
+                        "parameter_id": "parameter.mechanosensation.edge."
+                        + hashlib.sha256(parameter_key.encode("utf-8")).hexdigest()[:16],
+                        "source_kind": "body_contact",
+                        "source_channel_id": str(local_contact.channel_id),
+                        "source_leg": "",
+                        "source_joint_id": -1,
+                        "source_joint_name": "",
+                        "source_body_group": segment_name,
+                        "source_observable": observable,
+                        "target_channel_id": channel_id,
+                        "target_group_id": str(receptor.group_id),
+                        "entry_nerve": nerve,
+                        "subclass": str(receptor.subclass),
+                        "side": str(receptor.rootSide),
+                        "candidate_basis": basis,
+                        "parameter_status": "unassigned",
+                    }
+                )
+            continue
+
         channel_results.append(
             {
                 "channel_id": channel_id,
                 "neuron_count": int(receptor.neuron_count),
                 "status": "missing_physical_observable",
-                "reason": reason,
+                "reason": "anatomical_or_physical_observable_unresolved",
             }
         )
     candidates = pd.DataFrame(candidate_rows).sort_values(
@@ -1210,7 +1287,7 @@ def build_mechanosensation_transduction_candidates(
     unresolved_ids = all_ids - resolved_ids
     if resolved_ids & unresolved_ids or resolved_ids | unresolved_ids != all_ids:
         raise RuntimeError("La partition des canaux mécanorécepteurs est incohérente")
-    if (len(candidates), len(resolved_ids), len(unresolved_ids)) != (2048, 303, 20):
+    if (len(candidates), len(resolved_ids), len(unresolved_ids)) != (2108, 323, 0):
         raise RuntimeError(
             "Matrice mécanoréceptrice inattendue: "
             f"{len(candidates)} arêtes, {len(resolved_ids)} résolus, {len(unresolved_ids)} non résolus"
@@ -1219,7 +1296,7 @@ def build_mechanosensation_transduction_candidates(
     summary = {
         "schema_version": 1,
         "generated_at": datetime.now(UTC).isoformat(),
-        "purpose": "sparse local contact-and-appendage-motion-to-mechanoreceptor candidate matrix without fitted values",
+        "purpose": "sparse local contact, body-contact and appendage-motion-to-mechanoreceptor candidate matrix without fitted values",
         "scientific_basis": {
             "male_cns_annotations": "https://github.com/flyconnectome/2025malecns",
             "manc_nerve_nomenclature": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/",
@@ -1232,11 +1309,13 @@ def build_mechanosensation_transduction_candidates(
                 "non-leg nerves must not consume aggregate leg-ground contact values",
                 "Johnston's organ responds to antennal motion caused by sound, wind and gravity",
                 "FlyBody exposes explicit antenna, wing, haltere and mouthpart joint motion",
+                "the selected PDMN and ON terminal groups are represented by FlyBody's central thorax and head net contact forces",
             ],
         },
         "method": {
-            "candidate_rule": "same annotated appendage and root side; leg tactile channels use contact loads and represented non-leg appendages use joint motion",
+            "candidate_rule": "same annotated appendage and root side; leg tactile channels use contact loads, represented non-leg appendages use joint motion, and PDMN/ON terminals use central thorax/head net contact force",
             "included_contact_observables": list(contact_observables),
+            "included_body_contact_observables": ["force_x", "force_y", "force_z"],
             "included_joint_observables": ["position", "velocity"],
             "excluded_contact_geometry": [
                 "world_position",
@@ -1245,11 +1324,14 @@ def build_mechanosensation_transduction_candidates(
             ],
             "parameterization": "one free signed local coefficient per permitted physical-observable-to-terminal edge",
             "initialization": "absent; all parameter values remain unassigned",
-            "unresolved_policy": "runtime requires explicit external placeholder values for terminals whose local physical observable is absent",
+            "spatial_resolution_limit": "FlyBody exposes one central thorax and one head segment here; no unsupported left/right localization is invented",
+            "unresolved_policy": "all selected mechanoreceptor terminals have a structural physical candidate; parameter values remain unassigned",
         },
         "source_contact_channels": int(len(contacts)),
         "source_scalar_observables_total": int(contacts["sensor_dimension"].sum()),
         "source_load_observables_used_per_leg": len(contact_observables),
+        "source_local_body_contact_channels": int(len(local_contacts)),
+        "source_local_body_contact_scalar_observables": int(len(local_contacts) * 3),
         "source_joint_channels_total": int(len(joints)),
         "source_joint_channels_used": int(
             candidates.loc[
@@ -1278,7 +1360,7 @@ def build_mechanosensation_transduction_candidates(
             str(key): int(value)
             for key, value in candidates["candidate_basis"].value_counts().sort_index().items()
         },
-        "routing_status": "candidates_known_with_explicit_missing_observables",
+        "routing_status": "candidate_complete",
         "parameter_status": "unassigned",
         "scientific_parameter_values_selected": False,
     }
@@ -1288,7 +1370,7 @@ def build_mechanosensation_transduction_candidates(
     results.to_csv(audit_output, index=False)
     print(f"[OK] {len(candidates):,} arêtes locales candidates, toutes sans valeur")
     print(f"[OK] {len(resolved_ids):,}/323 canaux terminaux reliés à une observable locale")
-    print(f"[INFO] {len(unresolved_ids):,}/323 terminaux attendent une observable physique dédiée")
+    print(f"[OK] {len(unresolved_ids):,}/323 terminaux sans observable physique candidate")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Matrice candidate : {candidate_output}")
     print(f"[OK] Audit exhaustif des canaux : {audit_output}")

@@ -6,7 +6,7 @@ adapter_type: B
 anatomical_region: mechanosensory_organs
 parent_id: sensor.touch
 ports: {inputs: [local_contact_loads, appendage_motion], outputs: [mechanoreceptor_activity]}
-status: {inventory: partial, implementation: tested, parameters: unknown, validation: integration_pass}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
 evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, runs/wiring-smoke/latest.json]
 provenance:
@@ -16,6 +16,6 @@ provenance:
   assumptions: [Each permitted load-to-terminal edge exposes an independent coefficient until calibration]
 parameter_family_ids: [parameter.sensory_transduction]
 validation_ids: [validation.mechanosensation_transduction_candidates]
-next_action: Conserver les 2 048 arêtes candidates sans valeur et ajouter les observables dédiées du notum et des bristles péri-optiques pour les 20 terminaux restants.
+next_action: Conserver les 2 108 arêtes candidates sans valeur; toute sélection de gains relève de la calibration ultérieure.
 blocked_by: []
-completion_criteria: [Classes séparées, Candidats locaux exécutables, Observables absentes explicites, Fonctions locales documentées, Réponses unitaires testées]
+completion_criteria: [Classes séparées, 323 canaux couverts par des candidats locaux, Fonctions locales documentées, Résolution physique limitée explicitement, Réponses unitaires testées]

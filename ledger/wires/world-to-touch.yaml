@@ -5,13 +5,13 @@ sector: mechanosensation
 source: {box_id: world.mujoco, port: contacts, group_query: null}
 target: {box_id: sensor.touch, port: contacts, group_query: null}
 mapping_level: exact
-expected_cardinality: 6 aggregate leg-ground sensors (96 scalars); 57 collision-enabled segments inventoried
+expected_cardinality: 6 aggregate leg-ground sensors (96 scalars) plus 2 local body-force channels (6 scalars); 57 collision-enabled segments inventoried
 candidate_constraints: [same physical contact location]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
 status: {inventory: partial, routing: verified, implementation: tested, validation: integration_pass}
 confidence: high
-evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-touch.json, data/derived/wiring/flybody-touch-channels.csv, runs/wiring-smoke/latest.json]
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-touch.json, data/derived/wiring/flybody-touch-channels.csv, data/derived/wiring/flybody-local-touch-channels.csv, runs/wiring-smoke/latest.json]
 validation_ids: [validation.flybody_touch_sensor]
-next_action: Étendre le flux exact au-delà des six agrégats de patte vers les autres régions corporelles en collision.
+next_action: Préserver les flux exacts des six agrégats de patte et des forces nettes tête/thorax; étendre seulement si un autre terminal l'exige.
 blocked_by: []

@@ -215,7 +215,9 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     if flybody_touch_wiring:
         remote_metrics += (
             f'<div><strong>{flybody_touch_wiring.get("aggregate_leg_channels", 0):,}</strong><span>capteurs de contact de patte</span></div>'
-            f'<div><strong>{flybody_touch_wiring.get("scalar_observables", 0):,}</strong><span>observables tactiles physiques</span></div>'
+            f'<div><strong>{flybody_touch_wiring.get("scalar_observables", 0):,}</strong><span>observables tactiles des pattes</span></div>'
+            f'<div><strong>{flybody_touch_wiring.get("local_body_contact_channels", 0):,}</strong><span>contacts locaux tête/thorax</span></div>'
+            f'<div><strong>{flybody_touch_wiring.get("local_body_contact_scalar_observables", 0):,}</strong><span>forces locales tête/thorax</span></div>'
         )
     if flybody_actuator_wiring:
         config_counts = flybody_actuator_wiring.get("actuator_config_status_counts", {})
@@ -237,7 +239,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{mechano_transduction.get("candidate_edges", 0):,}</strong><span>arêtes mécanoréceptrices candidates</span></div>'
             f'<div><strong>{mechano_transduction.get("resolved_terminal_channels", 0):,}/323</strong><span>canaux mécano reliés au corps</span></div>'
-            f'<div><strong>{mechano_transduction.get("unresolved_terminal_channels", 0):,}</strong><span>canaux attendant un capteur dédié</span></div>'
+            f'<div><strong>{mechano_transduction.get("unresolved_terminal_channels", 0):,}</strong><span>canaux sans candidat physique</span></div>'
         )
     if vision_wiring:
         hex_audit = vision_wiring.get("hex_assignment_audit", {})

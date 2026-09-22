@@ -29,6 +29,7 @@ UNCLASSIFIED_CHANNEL_PATH = WIRING_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_PATH = WIRING_ROOT / "unclassified-sensory-routes.parquet"
 FLYBODY_PROPRIO_CHANNEL_PATH = WIRING_ROOT / "flybody-proprioception-channels.csv"
 FLYBODY_TOUCH_CHANNEL_PATH = WIRING_ROOT / "flybody-touch-channels.csv"
+FLYBODY_LOCAL_TOUCH_CHANNEL_PATH = WIRING_ROOT / "flybody-local-touch-channels.csv"
 FLYBODY_ACTUATOR_CHANNEL_PATH = WIRING_ROOT / "flybody-actuator-channels.csv"
 FLYBODY_VISION_CHANNEL_PATH = WIRING_ROOT / "flybody-vision-channels.csv"
 CENTRAL_NODE_INDEX_PATH = WIRING_ROOT / "central-node-index.parquet"
@@ -435,6 +436,62 @@ class FlyBodyGroundContactSensor:
         )
 
 
+@dataclass(frozen=True)
+class LocalBodyContactState:
+    """Net world-frame contact force on selected FlyBody body segments."""
+
+    segment_names: tuple[str, ...]
+    forces: np.ndarray
+
+    def __post_init__(self) -> None:
+        if self.forces.shape != (len(self.segment_names), 3):
+            raise ValueError(
+                f"forces must have shape {(len(self.segment_names), 3)}"
+            )
+        if not np.isfinite(self.forces).all():
+            raise ValueError("local body contact forces must be finite")
+
+
+class FlyBodyLocalContactSensor:
+    """Validate FlyGym net contact forces for the head and central thorax."""
+
+    box_id = "sensor.touch"
+
+    def __init__(self, channels: pd.DataFrame):
+        if channels.empty:
+            raise ValueError("No generated FlyBody local touch channels found")
+        required = {"channel_id", "segment_name"}
+        missing = required - set(channels.columns)
+        if missing:
+            raise ValueError(f"Missing FlyBody local touch columns: {sorted(missing)}")
+        self.channels = channels.sort_values("segment_name").reset_index(drop=True)
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate FlyBody local touch channel IDs")
+        if self.channels["segment_name"].duplicated().any():
+            raise ValueError("Duplicate FlyBody local touch body segments")
+        self.channel_ids = tuple(self.channels["channel_id"].astype(str))
+        self.segment_names = tuple(self.channels["segment_name"].astype(str))
+        if len(self.segment_names) != 2 or set(self.segment_names) != {"c_head", "c_thorax"}:
+            raise ValueError("Expected exactly the c_head and c_thorax contact segments")
+
+    @classmethod
+    def from_generated_wiring(
+        cls, channel_path: Path = FLYBODY_LOCAL_TOUCH_CHANNEL_PATH
+    ) -> "FlyBodyLocalContactSensor":
+        if not channel_path.is_file():
+            raise FileNotFoundError(
+                "FlyBody local touch wiring is absent; run the wiring builder first"
+            )
+        return cls(pd.read_csv(channel_path))
+
+    def step(self, forces: np.ndarray) -> LocalBodyContactState:
+        values = np.asarray(forces, dtype=np.float64)
+        return LocalBodyContactState(
+            segment_names=self.segment_names,
+            forces=values.copy(),
+        )
+
+
 class MechanosensationTransductionBox:
     """Sparse, uncalibrated local physical candidates feeding mechanoreceptors."""
 
@@ -446,12 +503,14 @@ class MechanosensationTransductionBox:
         candidates: pd.DataFrame,
         receptor_channels: pd.DataFrame,
         contact_channels: pd.DataFrame,
+        local_contact_channels: pd.DataFrame,
         joint_channels: pd.DataFrame,
     ):
         if (
             candidates.empty
             or receptor_channels.empty
             or contact_channels.empty
+            or local_contact_channels.empty
             or joint_channels.empty
         ):
             raise ValueError("No generated mechanosensation transduction candidates found")
@@ -472,6 +531,9 @@ class MechanosensationTransductionBox:
         ).reset_index(drop=True)
         self.receptor_channels = receptor_channels.reset_index(drop=True)
         self.contact_channels = contact_channels.sort_values("sensor_address").reset_index(drop=True)
+        self.local_contact_channels = local_contact_channels.sort_values(
+            "segment_name"
+        ).reset_index(drop=True)
         self.joint_channels = joint_channels.sort_values("joint_id").reset_index(drop=True)
         if self.candidates["parameter_id"].duplicated().any():
             raise ValueError("Duplicate mechanosensation transduction parameter IDs")
@@ -484,22 +546,34 @@ class MechanosensationTransductionBox:
         self.parameter_ids = tuple(self.candidates["parameter_id"].astype(str))
         self.channel_ids = tuple(self.receptor_channels["channel_id"].astype(str))
         self.leg_names = tuple(self.contact_channels["leg"].astype(str))
+        self.local_segment_names = tuple(
+            self.local_contact_channels["segment_name"].astype(str)
+        )
         self.joint_names = tuple(self.joint_channels["joint_name"].astype(str))
         channel_index = {channel_id: index for index, channel_id in enumerate(self.channel_ids)}
         leg_index = {leg: index for index, leg in enumerate(self.leg_names)}
+        local_segment_index = {
+            name: index for index, name in enumerate(self.local_segment_names)
+        }
         unknown_targets = set(self.candidates["target_channel_id"].astype(str)) - set(channel_index)
         source_kinds = self.candidates["source_kind"].astype(str)
-        if not set(source_kinds) <= {"contact_load", "joint_state"}:
+        if not set(source_kinds) <= {"contact_load", "body_contact", "joint_state"}:
             raise ValueError("Unsupported mechanosensation candidate source kind")
         self._contact_edges = source_kinds.eq("contact_load").to_numpy()
+        self._body_contact_edges = source_kinds.eq("body_contact").to_numpy()
         self._joint_edges = source_kinds.eq("joint_state").to_numpy()
         contact_rows = self.candidates.loc[self._contact_edges]
+        body_contact_rows = self.candidates.loc[self._body_contact_edges]
         joint_rows = self.candidates.loc[self._joint_edges]
         unknown_legs = set(contact_rows["source_leg"].astype(str)) - set(leg_index)
-        if unknown_targets or unknown_legs:
+        unknown_segments = set(body_contact_rows["source_body_group"].astype(str)) - set(
+            local_segment_index
+        )
+        if unknown_targets or unknown_legs or unknown_segments:
             raise ValueError(
                 "Mechanosensation candidates reference unknown channels: "
-                f"targets={len(unknown_targets)}, legs={len(unknown_legs)}"
+                f"targets={len(unknown_targets)}, legs={len(unknown_legs)}, "
+                f"body_segments={len(unknown_segments)}"
             )
         self._target_indices = np.asarray(
             [channel_index[str(value)] for value in self.candidates["target_channel_id"]],
@@ -532,6 +606,29 @@ class MechanosensationTransductionBox:
             ],
             dtype=np.int64,
         )
+        self._body_contact_segment_indices = np.asarray(
+            [
+                local_segment_index[str(value)]
+                for value in body_contact_rows["source_body_group"]
+            ],
+            dtype=np.int64,
+        )
+        body_contact_observable_index = {"force_x": 0, "force_y": 1, "force_z": 2}
+        unknown_body_contact_observables = set(
+            body_contact_rows["source_observable"].astype(str)
+        ) - set(body_contact_observable_index)
+        if unknown_body_contact_observables:
+            raise ValueError(
+                "Unsupported local body contact observables: "
+                f"{sorted(unknown_body_contact_observables)}"
+            )
+        self._body_contact_observable_indices = np.asarray(
+            [
+                body_contact_observable_index[str(value)]
+                for value in body_contact_rows["source_observable"]
+            ],
+            dtype=np.int64,
+        )
         self._joint_indices = joint_rows["source_joint_id"].to_numpy(dtype=np.int64)
         if self._joint_indices.size and (
             self._joint_indices.min() < 0 or self._joint_indices.max() >= len(self.joint_names)
@@ -555,9 +652,9 @@ class MechanosensationTransductionBox:
         self._unresolved_indices = np.asarray(
             [channel_index[channel_id] for channel_id in self.unresolved_channel_ids], dtype=np.int64
         )
-        if len(self.parameter_ids) != 2048:
-            raise ValueError("Expected 2,048 constrained mechanosensation parameters")
-        if (len(self.resolved_channel_ids), len(self.unresolved_channel_ids)) != (303, 20):
+        if len(self.parameter_ids) != 2108:
+            raise ValueError("Expected 2,108 constrained mechanosensation parameters")
+        if (len(self.resolved_channel_ids), len(self.unresolved_channel_ids)) != (323, 0):
             raise ValueError("Unexpected mechanoreceptor candidate coverage")
 
     @classmethod
@@ -566,12 +663,14 @@ class MechanosensationTransductionBox:
         candidate_path: Path = MECHANO_INPUT_CANDIDATE_PATH,
         receptor_channel_path: Path = MECHANO_CHANNEL_PATH,
         contact_channel_path: Path = FLYBODY_TOUCH_CHANNEL_PATH,
+        local_contact_channel_path: Path = FLYBODY_LOCAL_TOUCH_CHANNEL_PATH,
         joint_channel_path: Path = FLYBODY_PROPRIO_CHANNEL_PATH,
     ) -> "MechanosensationTransductionBox":
         if (
             not candidate_path.is_file()
             or not receptor_channel_path.is_file()
             or not contact_channel_path.is_file()
+            or not local_contact_channel_path.is_file()
             or not joint_channel_path.is_file()
         ):
             raise FileNotFoundError(
@@ -581,18 +680,22 @@ class MechanosensationTransductionBox:
             pd.read_parquet(candidate_path),
             pd.read_csv(receptor_channel_path),
             pd.read_csv(contact_channel_path),
+            pd.read_csv(local_contact_channel_path),
             pd.read_csv(joint_channel_path),
         )
 
     def step(
         self,
         contact_state: GroundContactState,
+        local_contact_state: LocalBodyContactState,
         joint_state: JointState,
         parameters: Mapping[str, float] | np.ndarray,
         unresolved_values: Mapping[str, float] | np.ndarray,
     ) -> ChannelActivity:
         if contact_state.leg_names != self.leg_names:
             raise ValueError(f"{self.box_id}: physical leg order mismatch")
+        if local_contact_state.segment_names != self.local_segment_names:
+            raise ValueError(f"{self.box_id}: local body segment order mismatch")
         if joint_state.joint_names != self.joint_names:
             raise ValueError(f"{self.box_id}: physical joint order mismatch")
         if isinstance(parameters, Mapping):
@@ -628,6 +731,9 @@ class MechanosensationTransductionBox:
         source_values = np.empty(len(self.parameter_ids), dtype=np.float64)
         source_values[self._contact_edges] = contact_values[
             self._contact_leg_indices, self._contact_observable_indices
+        ]
+        source_values[self._body_contact_edges] = local_contact_state.forces[
+            self._body_contact_segment_indices, self._body_contact_observable_indices
         ]
         joint_values = joint_state.positions[self._joint_indices].copy()
         joint_values[self._joint_velocity_edges] = joint_state.velocities[

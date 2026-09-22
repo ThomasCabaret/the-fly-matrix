@@ -156,17 +156,16 @@ Les routes terminales vers les `bodyId` sont exactes. En amont,
 chaque patte — présence du contact, trois forces et trois couples — aux canaux dont
 le nerf et le côté désignent la même patte. Il utilise également les positions et
 vitesses de 19 articulations FlyBody pour les antennes, ailes, haltères et pièces
-buccales du même côté. Les 2 048 arêtes candidates couvrent ainsi 303 instances et
-3 994 neurones, sans fixer aucun coefficient. Les 20 instances restantes, soit
-297 neurones, conservent une cause explicite d'absence : notum ou bristles
-péri-optiques sans observable physique dédiée.
-`mechanosensation-transduction-channel-audit.csv` conserve ce statut et cette cause
-pour chacun des 323 canaux terminaux. Les 1 246 arêtes issues des contacts et les
-802 arêtes issues du mouvement articulaire sont suivies par deux fils distincts
-dans le registre.
-Le runtime exige une valeur externe pour ces terminaux au lieu de les alimenter
-silencieusement avec un contact de patte. Les modalités non annotées ne sont pas
-reclassées par hypothèse.
+buccales du même côté. Les 16 canaux PDMN du notum reçoivent en plus les trois
+composantes de force nette du thorax central, et les 4 canaux ON péri-optiques
+celles de la tête. Les 2 108 arêtes candidates couvrent ainsi les 323 instances et
+les 4 291 neurones, sans fixer aucun coefficient. Cette dernière association reste
+volontairement grossière : le modèle expose ici une tête et un thorax centraux, et
+le câblage n'invente donc aucune localisation gauche/droite.
+`mechanosensation-transduction-channel-audit.csv` atteste la couverture de chacun
+des 323 canaux terminaux. Les 1 306 arêtes issues des contacts et les 802 arêtes
+issues du mouvement articulaire sont suivies par deux fils distincts dans le
+registre. Les modalités non annotées ne sont pas reclassées par hypothèse.
 
 Côté physique, `flybody-touch-channels.csv` fixe désormais les six capteurs de
 contact au sol réellement compilés par FlyGym, un par patte. Chaque canal expose
@@ -174,7 +173,10 @@ contact au sol réellement compilés par FlyGym, un par patte. Chaque canal expo
 soit 96 observables exécutables. L'inventaire conserve également les 57 segments
 autorisés à entrer en collision et leurs 69 paires avec le sol. Les sept observables
 de charge utiles par patte alimentent désormais la matrice candidate décrite
-ci-dessus. Les charges locales hors pattes restent explicitement différées.
+ci-dessus. `flybody-local-touch-channels.csv` ajoute deux appels explicites à
+`Simulation.get_bodysegment_contact_forces` pour la tête et le thorax, soit six
+composantes de force exécutables. Les autres charges locales restent absentes tant
+qu'aucun terminal représenté ne les exige.
 
 Le manifeste visuel conserve une instance type C par neurone sensoriel du lobe
 optique : 6 091 photorécepteurs et 7 cellules `HBeyelet`, soit 6 098 routes

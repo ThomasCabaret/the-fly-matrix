@@ -15,6 +15,7 @@ from the_fly_matrix.runtime import (
     CentralConnectomeBox,
     CNSInputBuffer,
     FLYBODY_PROPRIO_CHANNEL_PATH,
+    FLYBODY_LOCAL_TOUCH_CHANNEL_PATH,
     FLYBODY_TOUCH_CHANNEL_PATH,
     FLYBODY_ACTUATOR_CHANNEL_PATH,
     FLYBODY_VISION_CHANNEL_PATH,
@@ -43,6 +44,7 @@ from the_fly_matrix.runtime import (
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
     FlyBodyProprioceptionSensor,
+    FlyBodyLocalContactSensor,
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
     FlyBodyVisionSensor,
@@ -222,10 +224,22 @@ class RuntimeTests(unittest.TestCase):
             {"sensory.tactile", "sensory.mechanosensory_other"},
         )
 
+    def test_flybody_local_touch_validates_head_and_thorax_forces(self) -> None:
+        if not FLYBODY_LOCAL_TOUCH_CHANNEL_PATH.is_file():
+            self.skipTest("generated FlyBody local touch wiring is absent")
+        sensor = FlyBodyLocalContactSensor.from_generated_wiring()
+        forces = np.arange(6, dtype=np.float64).reshape(2, 3)
+        state = sensor.step(forces)
+        self.assertEqual(set(state.segment_names), {"c_head", "c_thorax"})
+        self.assertTrue(np.array_equal(state.forces, forces))
+        with self.assertRaises(ValueError):
+            sensor.step(np.zeros((2, 2), dtype=np.float64))
+
     def test_mechanosensation_transduction_executes_local_candidates_and_terminals(self) -> None:
         if not MECHANO_INPUT_CANDIDATE_PATH.is_file():
             self.skipTest("generated mechanosensation transduction candidates are absent")
         sensor = FlyBodyGroundContactSensor.from_generated_wiring()
+        local_sensor = FlyBodyLocalContactSensor.from_generated_wiring()
         joint_sensor = FlyBodyProprioceptionSensor.from_generated_wiring()
         box = MechanosensationTransductionBox.from_generated_wiring()
         contact_state = sensor.step(
@@ -235,16 +249,20 @@ class RuntimeTests(unittest.TestCase):
             np.arange(joint_sensor.qpos_size, dtype=np.float64) + 0.5,
             np.arange(joint_sensor.qvel_size, dtype=np.float64) + 100.5,
         )
+        local_contact_state = local_sensor.step(
+            np.arange(6, dtype=np.float64).reshape(2, 3) + 200.0
+        )
         fallback = np.arange(len(box.unresolved_channel_ids), dtype=np.float64) + 1000.0
         output = box.step(
             contact_state,
+            local_contact_state,
             joint_state,
             np.ones(len(box.parameter_ids), dtype=np.float64),
             fallback,
         )
-        self.assertEqual(len(box.parameter_ids), 2048)
-        self.assertEqual(len(box.resolved_channel_ids), 303)
-        self.assertEqual(len(box.unresolved_channel_ids), 20)
+        self.assertEqual(len(box.parameter_ids), 2108)
+        self.assertEqual(len(box.resolved_channel_ids), 323)
+        self.assertEqual(len(box.unresolved_channel_ids), 0)
         self.assertEqual(len(output.channel_ids), 323)
         self.assertTrue(np.all(output.values > 0))
         values_by_channel = dict(zip(output.channel_ids, output.values))

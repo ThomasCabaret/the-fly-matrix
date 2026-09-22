@@ -22,35 +22,35 @@ attendu.
 - Entrées sensorielles non résolues : **88 %**.
 - Clamps basaux : **87 %**.
 - Vision : **74 %**.
-- Mécanosensation : **81 %**.
+- Mécanosensation : **82 %**.
 - Corps physique : **94 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 
-Le dernier lot étend la matrice mécanoréceptrice à 2 048 arêtes candidates. Les
+Le dernier lot étend la matrice mécanoréceptrice à 2 108 arêtes candidates. Les
 charges des six pattes et les positions/vitesses de 19 articulations d'antenne,
-d'aile, d'haltère et de pièces buccales alimentent désormais 303 des 323 canaux,
-soit 3 994 neurones. Les 20 autres canaux — 297 neurones du notum ou de bristles
-péri-optiques — attendent une observable dédiée. Le registre suit maintenant
-séparément les 1 246 arêtes de contact et les 802 arêtes articulaires. Cet ajout
-d'un fil explicite fait passer l'indice mécanorécepteur agrégé de 82 à 81 %, bien
-que la couverture physique soit passée de 178/323 à 303/323 : l'indice pénalise
-correctement ce nouveau fil tant que ses coefficients restent seulement candidats.
+d'aile, d'haltère et de pièces buccales alimentent 303 canaux. Les 16 canaux PDMN
+du notum consomment maintenant la force nette du thorax central et les 4 canaux ON
+péri-optiques celle de la tête. La couverture atteint donc 323/323 canaux et les
+4 291 neurones. Le registre suit séparément les 1 306 arêtes de contact et les 802
+arêtes articulaires. La résolution tête/thorax reste volontairement centrale et
+grossière, car FlyBody ne fournit pas ici de localisation gauche/droite plus fine.
+L'indice mécanorécepteur passe de 81 à 82 % ; les gains restent seulement candidats.
 Le smoke test traverse 17 884 entrées CNS, 26 028 386 arêtes centrales, 815 sorties
-motrices et 102 actionneurs. Les 30 tests unitaires/intégration locaux passent.
+motrices et 102 actionneurs. Les 31 tests unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
 
-1. Ajouter les observables physiques dédiées aux 16 canaux du notum et aux 4
-   canaux péri-optiques, sans inventer de surfaces ou d'organes absents.
-2. Établir une rétinotopie indépendante entre les ommatidies FlyBody et les
+1. Établir une rétinotopie indépendante entre les ommatidies FlyBody et les
    photorécepteurs MaleCNS.
-3. Ajouter ou représenter explicitement contrainte et vibration pour les terminaux
+2. Ajouter ou représenter explicitement contrainte et vibration pour les terminaux
    proprioceptifs encore ouverts.
-4. Réduire les modalités sensorielles résiduelles lorsque les annotations le
+3. Réduire les modalités sensorielles résiduelles lorsque les annotations le
    permettent, sans modifier leurs routes `bodyId` déjà exactes.
-5. Fermer et tester la boucle physique complète et son interface d'évaluation,
+4. Fermer et tester la boucle physique complète et son interface d'évaluation,
    toujours sans contrôleur comportemental externe.
+5. N'affiner les candidats tête/thorax que si une observable corporelle plus
+   localisée devient disponible, sans inventer de latéralité.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.

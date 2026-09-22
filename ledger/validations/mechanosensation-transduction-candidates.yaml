@@ -15,10 +15,10 @@ protocol_path: src/the_fly_matrix/wiring_smoke.py
 command: run_wiring_smoke.bat
 acceptance_criteria:
   - The six FlyBody leg contact sensors expose seven force torque and presence observables used per leg
-  - Entry nerve appendage and root side constrain a sparse matrix of 2048 local candidate edges
-  - Exactly 303 of 323 terminal channels covering 3994 neurons receive represented local candidates
-  - The other 20 terminal channels covering 297 neurons remain explicit with a missing-observable reason
-  - Runtime coefficients and unresolved terminal values are injected externally and no scientific value is persisted
+  - FlyGym exposes three net world-frame force components for the central thorax and head segments
+  - Entry nerve appendage and root side constrain a sparse matrix of 2108 local candidate edges
+  - All 323 terminal channels covering 4291 neurons receive represented local candidates
+  - Runtime coefficients are injected externally and no scientific value is persisted
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: mechanosensation-transduction-candidates-2026-09-22
@@ -30,7 +30,8 @@ notes:
   - "Johnston's organ source: https://pmc.ncbi.nlm.nih.gov/articles/PMC4007284/"
   - ProLN MesoLN and MetaLN families identify front middle and hind leg candidate sets
   - Antennal wing haltere and mouthpart candidates use same-side joint position and velocity
-  - Notum and peri-optic terminals remain unresolved
+  - PDMN notum terminals use the central thorax force and ON peri-optic terminals use the head force
+  - Head and thorax mappings are deliberately coarse and do not invent left-right localization
   - Candidate execution is deterministic and is not a calibration
 source_references:
   - https://github.com/flyconnectome/2025malecns

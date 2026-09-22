@@ -13,7 +13,8 @@ acceptance_criteria:
   - The compiled flat-ground model contains 69 explicit ground contact pairs
   - All six legs have one unique 16-dimensional aggregate contact sensor
   - The 96 raw sensor values decode deterministically into documented fields
-  - Non-leg local loads and biological receptor assignments remain explicit gaps
+  - The central head and thorax expose two deterministic three-dimensional net-force channels
+  - Biological receptor assignments remain uncalibrated
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: flybody-touch-runtime-2026-09-22
@@ -22,4 +23,5 @@ notes:
   - Six leg channels expose contact presence, force, torque, position, normal and tangent
   - The world-to-touch wire is executable for aggregate leg-ground contacts
   - Seven load observables per leg feed sparse same-leg mechanosensory candidates
-  - Local loads outside the six leg aggregates remain deliberately deferred
+  - Head and thorax net-force channels feed the previously open ON and PDMN terminals
+  - Other local body loads remain deliberately absent unless a represented terminal requires them
