@@ -20,7 +20,7 @@ class LedgerTests(unittest.TestCase):
     def test_top_level_interface_is_exhaustively_represented(self) -> None:
         self.assertEqual(len(self.ledger["boxes"]), 19)
         self.assertEqual(len(self.ledger["groups"]), 17)
-        self.assertEqual(len(self.ledger["wires"]), 22)
+        self.assertEqual(len(self.ledger["wires"]), 23)
         adapter_types = {
             box.get("adapter_type") for box in self.ledger["boxes"] if box.get("adapter_type")
         }
@@ -177,14 +177,29 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(mechano_transduction["source_contact_channels"], 6)
         self.assertEqual(mechano_transduction["target_terminal_channels"], 323)
         self.assertEqual(mechano_transduction["target_neurons"], 4291)
-        self.assertEqual(mechano_transduction["candidate_edges"], 1246)
-        self.assertEqual(mechano_transduction["resolved_terminal_channels"], 178)
-        self.assertEqual(mechano_transduction["resolved_neurons"], 1903)
-        self.assertEqual(mechano_transduction["unresolved_terminal_channels"], 145)
-        self.assertEqual(mechano_transduction["unresolved_neurons"], 2388)
+        self.assertEqual(mechano_transduction["source_joint_channels_used"], 19)
+        self.assertEqual(mechano_transduction["candidate_edges"], 2048)
+        self.assertEqual(mechano_transduction["resolved_terminal_channels"], 303)
+        self.assertEqual(mechano_transduction["resolved_neurons"], 3994)
+        self.assertEqual(mechano_transduction["unresolved_terminal_channels"], 20)
+        self.assertEqual(mechano_transduction["unresolved_neurons"], 297)
+        self.assertEqual(
+            mechano_transduction["source_kind_edge_counts"],
+            {"contact_load": 1246, "joint_state": 802},
+        )
+        self.assertEqual(
+            mechano_transduction["candidate_basis_edge_counts"],
+            {
+                "annotated_leg_entry_nerve_and_side": 1246,
+                "antennal_nerve_side_antenna_motion": 456,
+                "anterior_dorsal_mesothoracic_nerve_side_wing_motion": 102,
+                "dorsal_metathoracic_nerve_side_haltere_motion": 4,
+                "mouthpart_nerve_side_proboscis_motion": 240,
+            },
+        )
         self.assertEqual(
             sum(mechano_transduction["unresolved_reason_channel_counts"].values()),
-            145,
+            20,
         )
         self.assertFalse(mechano_transduction["scientific_parameter_values_selected"])
         mechano_audit = pd.read_csv(
@@ -194,7 +209,7 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(mechano_audit["channel_id"].nunique(), 323)
         self.assertEqual(
             mechano_audit["status"].value_counts().to_dict(),
-            {"candidates_known": 178, "missing_physical_observable": 145},
+            {"candidates_known": 303, "missing_physical_observable": 20},
         )
         self.assertFalse(mechano_audit["reason"].isna().any())
 

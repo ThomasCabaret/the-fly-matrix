@@ -222,23 +222,29 @@ class RuntimeTests(unittest.TestCase):
             {"sensory.tactile", "sensory.mechanosensory_other"},
         )
 
-    def test_mechanosensation_transduction_executes_leg_candidates_and_terminals(self) -> None:
+    def test_mechanosensation_transduction_executes_local_candidates_and_terminals(self) -> None:
         if not MECHANO_INPUT_CANDIDATE_PATH.is_file():
             self.skipTest("generated mechanosensation transduction candidates are absent")
         sensor = FlyBodyGroundContactSensor.from_generated_wiring()
+        joint_sensor = FlyBodyProprioceptionSensor.from_generated_wiring()
         box = MechanosensationTransductionBox.from_generated_wiring()
         contact_state = sensor.step(
             np.arange(sensor.sensor_data_size, dtype=np.float64) + 1.0
         )
+        joint_state = joint_sensor.step(
+            np.arange(joint_sensor.qpos_size, dtype=np.float64) + 0.5,
+            np.arange(joint_sensor.qvel_size, dtype=np.float64) + 100.5,
+        )
         fallback = np.arange(len(box.unresolved_channel_ids), dtype=np.float64) + 1000.0
         output = box.step(
             contact_state,
+            joint_state,
             np.ones(len(box.parameter_ids), dtype=np.float64),
             fallback,
         )
-        self.assertEqual(len(box.parameter_ids), 1246)
-        self.assertEqual(len(box.resolved_channel_ids), 178)
-        self.assertEqual(len(box.unresolved_channel_ids), 145)
+        self.assertEqual(len(box.parameter_ids), 2048)
+        self.assertEqual(len(box.resolved_channel_ids), 303)
+        self.assertEqual(len(box.unresolved_channel_ids), 20)
         self.assertEqual(len(output.channel_ids), 323)
         self.assertTrue(np.all(output.values > 0))
         values_by_channel = dict(zip(output.channel_ids, output.values))

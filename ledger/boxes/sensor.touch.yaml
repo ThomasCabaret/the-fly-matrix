@@ -16,6 +16,6 @@ provenance:
   assumptions: [Aggregate leg loads are candidate inputs only for terminals from the same leg segment and side]
 parameter_family_ids: []
 validation_ids: [validation.flybody_touch_sensor, validation.mechanosensation_transduction_candidates]
-next_action: Ajouter des observables dédiées pour les 145 canaux d'antenne, aile, haltère, bouche, notum et interface optique encore sans source physique.
+next_action: Ajouter des observables locales dédiées pour les 16 canaux du notum et les 4 canaux de bristles péri-optiques encore sans source physique.
 blocked_by: []
 completion_criteria: [57 surfaces énumérées, 6 capteurs de patte exécutables, Charges des pattes reliées aux terminaux compatibles, Charges locales hors pattes disponibles, Test de contact par région]

@@ -3,9 +3,11 @@ id: validation.mechanosensation_transduction_candidates
 name: Matrice candidate locale de transduction mécanoréceptrice
 owner_ids:
   - sensor.touch
+  - sensor.proprioception
   - adapter.touch.transduction
   - adapter.touch.routing
   - wire.touch_sensor_to_transduction
+  - wire.appendage_motion_to_touch_transduction
   - wire.touch_transduction_to_routing
   - parameter.sensory_transduction
 level: integration
@@ -13,9 +15,9 @@ protocol_path: src/the_fly_matrix/wiring_smoke.py
 command: run_wiring_smoke.bat
 acceptance_criteria:
   - The six FlyBody leg contact sensors expose seven force torque and presence observables used per leg
-  - Entry nerve leg segment and root side constrain a sparse matrix of 1246 local candidate edges
-  - Exactly 178 of 323 terminal channels covering 1903 neurons receive represented leg-contact candidates
-  - The other 145 terminal channels covering 2388 neurons remain explicit with a missing-observable reason
+  - Entry nerve appendage and root side constrain a sparse matrix of 2048 local candidate edges
+  - Exactly 303 of 323 terminal channels covering 3994 neurons receive represented local candidates
+  - The other 20 terminal channels covering 297 neurons remain explicit with a missing-observable reason
   - Runtime coefficients and unresolved terminal values are injected externally and no scientific value is persisted
 calibration_dataset_ids: []
 held_out_behavior_ids: []
@@ -24,9 +26,14 @@ status: integration_pass
 notes:
   - "MaleCNS annotation source: https://github.com/flyconnectome/2025malecns"
   - "MANC nerve nomenclature source: https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/"
+  - "FlyBody kinematic source: https://doi.org/10.1038/s41586-025-09029-4"
+  - "Johnston's organ source: https://pmc.ncbi.nlm.nih.gov/articles/PMC4007284/"
   - ProLN MesoLN and MetaLN families identify front middle and hind leg candidate sets
-  - Antennal wing haltere mouthpart notum and optic terminals remain unresolved
+  - Antennal wing haltere and mouthpart candidates use same-side joint position and velocity
+  - Notum and peri-optic terminals remain unresolved
   - Candidate execution is deterministic and is not a calibration
 source_references:
   - https://github.com/flyconnectome/2025malecns
   - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+  - https://doi.org/10.1038/s41586-025-09029-4
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC4007284/

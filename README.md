@@ -154,12 +154,16 @@ groupe annoté, le nerf d'entrée, la sous-classe, les types MANC/MaleCNS et le 
 Les routes terminales vers les `bodyId` sont exactes. En amont,
 `mechanosensation-input-candidates.parquet` relie les sept observables de charge de
 chaque patte — présence du contact, trois forces et trois couples — aux canaux dont
-le nerf et le côté désignent la même patte. Les 1 246 arêtes candidates couvrent
-178 instances et 1 903 neurones, sans fixer aucun coefficient. Les 145 instances
-restantes, soit 2 388 neurones, conservent une cause explicite d'absence : antenne,
-aile, haltère, bouche, notum ou interface optique sans observable physique dédiée.
+le nerf et le côté désignent la même patte. Il utilise également les positions et
+vitesses de 19 articulations FlyBody pour les antennes, ailes, haltères et pièces
+buccales du même côté. Les 2 048 arêtes candidates couvrent ainsi 303 instances et
+3 994 neurones, sans fixer aucun coefficient. Les 20 instances restantes, soit
+297 neurones, conservent une cause explicite d'absence : notum ou bristles
+péri-optiques sans observable physique dédiée.
 `mechanosensation-transduction-channel-audit.csv` conserve ce statut et cette cause
-pour chacun des 323 canaux terminaux.
+pour chacun des 323 canaux terminaux. Les 1 246 arêtes issues des contacts et les
+802 arêtes issues du mouvement articulaire sont suivies par deux fils distincts
+dans le registre.
 Le runtime exige une valeur externe pour ces terminaux au lieu de les alimenter
 silencieusement avec un contact de patte. Les modalités non annotées ne sont pas
 reclassées par hypothèse.

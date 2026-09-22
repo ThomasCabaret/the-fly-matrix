@@ -227,10 +227,16 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         -1.0, 1.0, len(mechano_transduction.unresolved_channel_ids)
     )
     mechano_activity_first = mechano_transduction.step(
-        contact_state_first, mechano_parameters_first, unresolved_mechano_first
+        contact_state_first,
+        joint_state_first,
+        mechano_parameters_first,
+        unresolved_mechano_first,
     )
     mechano_activity_second = mechano_transduction.step(
-        contact_state_second, mechano_parameters_second, unresolved_mechano_second
+        contact_state_second,
+        joint_state_second,
+        mechano_parameters_second,
+        unresolved_mechano_second,
     )
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
@@ -366,7 +372,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {len(proprio_transduction.parameter_ids):,} arêtes proprioceptives candidates "
         f"exécutées vers {len(proprio_transduction.resolved_channel_ids):,} canaux"
     )
-    print("[OK] 6 contacts de patte extraits en 96 observables physiques")
+    print("[OK] 6 contacts de patte et 19 articulations non locomotrices fournissent les observables mécaniques")
     print(
         f"[OK] {len(mechano_transduction.parameter_ids):,} arêtes mécanoréceptrices candidates "
         f"exécutées vers {len(mechano_transduction.resolved_channel_ids):,} canaux"

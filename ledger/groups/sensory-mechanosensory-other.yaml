@@ -11,12 +11,12 @@ named_type_count: 51
 target_box_ids: [adapter.touch.routing, cns.malecns]
 status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-routes.parquet, data/derived/wiring/mechanosensation-transduction-candidates.json]
+evidence: [data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-routes.parquet, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-transduction-channel-audit.csv]
 provenance:
   claim_kinds: [dataset_observation, derived_rule, unresolved]
-  source_references: [male_cns_annotations_v1_0_minconf_0_5, https://github.com/flyconnectome/2025malecns, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
-  used_claims: [MaleCNS class mechanosensory defines the inventoried population, leg nerve and side constrain physical candidates]
+  source_references: [male_cns_annotations_v1_0_minconf_0_5, https://github.com/flyconnectome/2025malecns, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/, https://doi.org/10.1038/s41586-025-09029-4, https://pmc.ncbi.nlm.nih.gov/articles/PMC4007284/]
+  used_claims: [MaleCNS class mechanosensory defines the inventoried population, nerve appendage and side constrain physical candidates]
   assumptions: [Physical candidates are tracked separately from exact downstream bodyId membership]
-next_action: Résoudre les modalités physiques encore absentes sans altérer le routage bodyId des 1 733 neurones.
+next_action: Ajouter une observable péri-optique dédiée pour les 4 canaux et 33 neurones encore sans source physique.
 blocked_by: []
 completion_criteria: [Partition aval exhaustive, Aucun chevauchement silencieux, Inconnues fonctionnelles explicites]

@@ -235,7 +235,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         )
     if mechano_transduction:
         remote_metrics += (
-            f'<div><strong>{mechano_transduction.get("candidate_edges", 0):,}</strong><span>arêtes tactiles candidates</span></div>'
+            f'<div><strong>{mechano_transduction.get("candidate_edges", 0):,}</strong><span>arêtes mécanoréceptrices candidates</span></div>'
             f'<div><strong>{mechano_transduction.get("resolved_terminal_channels", 0):,}/323</strong><span>canaux mécano reliés au corps</span></div>'
             f'<div><strong>{mechano_transduction.get("unresolved_terminal_channels", 0):,}</strong><span>canaux attendant un capteur dédié</span></div>'
         )
