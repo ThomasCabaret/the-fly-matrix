@@ -12,6 +12,11 @@ free_continuous_parameters: 1439
 status: {inventory: complete, routing: candidates_known, implementation: tested, validation: integration_pass}
 confidence: medium
 evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-input-candidates.parquet, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]
+  source_references: [male_cns_annotations_v1_0_minconf_0_5, https://github.com/google-deepmind/mujoco_menagerie/tree/main/flybody, https://doi.org/10.1038/s41467-025-59302-3]
+  used_claims: [Joint state is physically addressable, Entry nerve side and receptor subclass constrain local candidates]
+  assumptions: [Each permitted edge exposes an independent coefficient until a later sharing rule is calibrated]
 validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.proprioception_transduction_candidates]
 next_action: Ajouter contrainte et vibration pour les 91 canaux sans observable; ne sélectionner aucune arête avant calibration.
 blocked_by: []

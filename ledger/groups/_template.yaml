@@ -16,6 +16,11 @@ status:
   validation: not_run
 confidence: low
 evidence: []
+provenance:
+  claim_kinds: []
+  source_references: []
+  used_claims: []
+  assumptions: []
 next_action: Define and enumerate the group.
 blocked_by: []
 completion_criteria: []

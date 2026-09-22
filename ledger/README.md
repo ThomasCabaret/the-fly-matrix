@@ -21,3 +21,14 @@ son affectation reste inconnue.
 Les fichiers `_template.yaml` ne sont pas des éléments du registre. Une fiche réelle
 doit utiliser un identifiant stable, déclarer son parent éventuel et référencer ses
 preuves, paramètres, validations et prochaine action.
+
+La définition de « câblage terminé », le calcul exact de l'indicateur et la
+procédure de reprise sont documentés dans
+[`docs/wiring-methodology.md`](../docs/wiring-methodology.md). La politique de
+justification des routes et les catégories de preuves sont dans
+[`docs/provenance-policy.md`](../docs/provenance-policy.md).
+
+Pour toute fiche nouvelle ou substantiellement modifiée, remplir le bloc
+`provenance` du modèle correspondant. Les fiches historiques sont migrées lorsqu'on
+les touche : une source absente doit rester absente plutôt que d'être reconstruite
+rétrospectivement sans preuve.

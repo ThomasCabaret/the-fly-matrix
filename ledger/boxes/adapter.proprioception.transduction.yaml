@@ -9,6 +9,11 @@ ports: {inputs: [joint_state, strain, vibration], outputs: [proprioceptor_activi
 status: {inventory: partial, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
 evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-input-candidates.parquet, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]
+  source_references: [male_cns_annotations_v1_0_minconf_0_5, https://github.com/flyconnectome/2025malecns, https://doi.org/10.1038/s41467-025-59302-3]
+  used_claims: [Entry nerve and side identify a local appendage candidate set, FeCO claw hook and club classes distinguish position movement and vibration]
+  assumptions: [Ambiguous local observables remain separate candidate edges with unassigned coefficients]
 parameter_family_ids: [parameter.sensory_transduction]
 validation_ids: [validation.proprioception_transduction_candidates]
 next_action: Conserver les 1 439 arêtes candidates sans valeur; compléter les entrées contrainte et vibration avant la calibration.

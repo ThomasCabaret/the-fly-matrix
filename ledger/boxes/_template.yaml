@@ -15,6 +15,11 @@ status:
   validation: not_run
 confidence: low
 evidence: []
+provenance:
+  claim_kinds: []
+  source_references: []
+  used_claims: []
+  assumptions: []
 parameter_family_ids: []
 validation_ids: []
 calibration_datasets: []

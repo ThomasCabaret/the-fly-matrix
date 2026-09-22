@@ -9,6 +9,11 @@ ports: {inputs: [body_state], outputs: [joint_state, strain, vibration]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: high
 evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, unresolved]
+  source_references: [https://github.com/google-deepmind/mujoco_menagerie/tree/main/flybody]
+  used_claims: [The compiled FlyBody model exposes 102 addressable joint positions and velocities]
+  assumptions: [Local strain and vibration are unavailable until separately implemented]
 parameter_family_ids: []
 validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.proprioception_transduction_candidates]
 next_action: Ajouter les observables locales de contrainte et vibration requises par les 91 canaux terminaux encore sans source physique.

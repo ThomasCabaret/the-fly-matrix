@@ -12,6 +12,11 @@ target_box_ids: [adapter.proprioception.transduction, adapter.proprioception.rou
 status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
 evidence: [data/derived/wiring/proprioception-channels.csv, data/derived/wiring/proprioception-routes.parquet, data/derived/wiring/proprioception-transduction-candidates.json]
+provenance:
+  claim_kinds: [dataset_observation, derived_rule]
+  source_references: [male_cns_annotations_v1_0_minconf_0_5, https://github.com/flyconnectome/2025malecns]
+  used_claims: [MaleCNS class mechanosensory_proprioceptive defines the inventoried population]
+  assumptions: [None for downstream bodyId membership; physical candidates are tracked separately]
 next_action: Compléter les observables de contrainte et vibration pour les 468 neurones sans source physique représentée.
 blocked_by: []
 completion_criteria: [Groupes aval disjoints, Couverture totale, Valeurs inconnues conservées explicitement]

@@ -23,6 +23,11 @@ status:
   validation: not_run
 confidence: low
 evidence: []
+provenance:
+  claim_kinds: []
+  source_references: []
+  used_claims: []
+  assumptions: []
 validation_ids: []
 next_action: Enumerate source and target groups.
 blocked_by: []

@@ -8,6 +8,15 @@ explicites, de faible capacité et auditables.
 Le contrat scientifique de référence est
 [`drosophila_virtual_fly_project_contract.md`](drosophila_virtual_fly_project_contract.md).
 
+Pour reprendre le projet sans le contexte des conversations :
+
+1. lire [`PROJECT_STATE.md`](PROJECT_STATE.md) pour l'état courant et les fronts restants ;
+2. lire [`docs/wiring-methodology.md`](docs/wiring-methodology.md) pour la définition
+   du câblage, les statuts et le calcul des pourcentages ;
+3. appliquer [`docs/provenance-policy.md`](docs/provenance-policy.md) à toute nouvelle
+   décision de branchement ;
+4. consulter `ledger/` pour la source de vérité détaillée et les prochaines actions.
+
 ## Commandes Windows
 
 - `download_data.bat` télécharge ou contrôle les trois fichiers MaleCNS minimaux.

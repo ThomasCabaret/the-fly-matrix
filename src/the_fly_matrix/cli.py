@@ -31,6 +31,8 @@ def show_status() -> int:
             f"{len(sector['groups'])} groupes, {len(sector['wires'])} fils)"
         )
     print("Tableau de bord    : dashboard.bat")
+    print("État de reprise    : PROJECT_STATE.md")
+    print("Méthodologie       : docs/wiring-methodology.md")
     return 0
 
 

@@ -2,7 +2,7 @@
 
 ## Statut
 
-Accepté pour l'échafaudage initial.
+Accepté.
 
 ## Décision
 
@@ -13,3 +13,6 @@ générés depuis ces fiches plutôt que maintenus séparément.
 Un statut scientifique, un statut d'implémentation et un niveau de confiance ne
 doivent jamais être fusionnés en un pourcentage unique.
 
+L'indicateur principal de la phase courante est le câblage exécutable défini dans
+`docs/wiring-methodology.md`. L'indice structurel historique reste secondaire et
+ne remplace jamais les axes détaillés du registre.
