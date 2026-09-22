@@ -29,6 +29,7 @@ from .runtime import (
     SparseActivity,
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
+    VisionTransductionBox,
 )
 
 
@@ -108,6 +109,44 @@ def _render_flybody_observations_twice(
         simulation.close()
 
 
+def _arbitrary_retinal_registration(box: VisionTransductionBox) -> dict[str, str]:
+    """Build a deterministic valid registration for structure-only smoke testing."""
+    available: dict[tuple[str, str], list[str]] = {}
+    for row in box.physical_channels.itertuples(index=False):
+        side = "L" if str(row.eye) == "left" else "R"
+        available.setdefault((side, str(row.ommatidium_type)), []).append(
+            str(row.channel_id)
+        )
+    registration: dict[str, str] = {}
+    used: set[str] = set()
+    constrained = box.columns.loc[
+        ~box.columns["expected_flybody_sample_type"].eq("any")
+    ]
+    unconstrained = box.columns.loc[
+        box.columns["expected_flybody_sample_type"].eq("any")
+    ]
+    for row in constrained.itertuples(index=False):
+        candidates = available[(str(row.side), str(row.expected_flybody_sample_type))]
+        source_id = next(value for value in candidates if value not in used)
+        registration[str(row.column_id)] = source_id
+        used.add(source_id)
+    for row in unconstrained.itertuples(index=False):
+        candidates = [
+            str(value)
+            for value in box.physical_channels.loc[
+                box.physical_channels["eye"].eq(
+                    "left" if str(row.side) == "L" else "right"
+                ),
+                "channel_id",
+            ]
+            if str(value) not in used
+        ]
+        source_id = candidates[0]
+        registration[str(row.column_id)] = source_id
+        used.add(source_id)
+    return registration
+
+
 def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object]:
     section("Chargement des boîtes abstraites générées")
     boxes = [BasalClampBox.from_generated_wiring(box_id) for box_id in CLAMP_IDS]
@@ -143,6 +182,12 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"[OK] {vision_sensor.box_id}: {vision_sensor.eye_count} yeux, "
         f"{vision_sensor.ommatidia_per_eye:,} ommatidies par œil, "
         f"{len(vision_sensor.channel_ids):,} échantillons actifs"
+    )
+    vision_transduction = VisionTransductionBox.from_generated_wiring()
+    print(
+        f"[OK] {vision_transduction.box_id}: "
+        f"{len(vision_transduction.column_ids):,} colonnes biologiques, "
+        f"{len(vision_transduction.resolved_channel_ids):,}/6 098 canaux visuels assignés"
     )
     proprioception = ProprioceptionRoutingBox.from_generated_wiring()
     print(
@@ -206,6 +251,31 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     ) = _render_flybody_observations_twice(local_touch_sensor.segment_names)
     vision_samples_first = vision_sensor.step(vision_readouts_first)
     vision_samples_second = vision_sensor.step(vision_readouts_second)
+    retinal_registration = _arbitrary_retinal_registration(vision_transduction)
+    vision_parameters_first = np.random.default_rng(seed + len(boxes) + 14).uniform(
+        -1.0, 1.0, len(vision_transduction.parameter_ids)
+    )
+    vision_parameters_second = np.random.default_rng(seed + len(boxes) + 14).uniform(
+        -1.0, 1.0, len(vision_transduction.parameter_ids)
+    )
+    unresolved_vision_first = np.random.default_rng(seed + len(boxes) + 15).uniform(
+        -1.0, 1.0, len(vision_transduction.unresolved_channel_ids)
+    )
+    unresolved_vision_second = np.random.default_rng(seed + len(boxes) + 15).uniform(
+        -1.0, 1.0, len(vision_transduction.unresolved_channel_ids)
+    )
+    vision_activity_first = vision_transduction.step(
+        vision_samples_first,
+        retinal_registration,
+        vision_parameters_first,
+        unresolved_vision_first,
+    )
+    vision_activity_second = vision_transduction.step(
+        vision_samples_second,
+        retinal_registration,
+        vision_parameters_second,
+        unresolved_vision_second,
+    )
     local_contact_state_first = local_touch_sensor.step(local_forces_first)
     local_contact_state_second = local_touch_sensor.step(local_forces_second)
     qpos_first = np.random.default_rng(seed - 2).uniform(-1.0, 1.0, proprio_sensor.qpos_size)
@@ -272,8 +342,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     proprio_second = proprioception.step(proprio_activity_second.values)
     mechano_first = mechanosensation.step(mechano_activity_first.values)
     mechano_second = mechanosensation.step(mechano_activity_second.values)
-    vision_first = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
-    vision_second = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
+    vision_first = vision.step(vision_activity_first.values)
+    vision_second = vision.step(vision_activity_second.values)
     unclassified_first = unclassified.step(
         _arbitrary_values(unclassified, seed + len(boxes) + 3)
     )
@@ -405,6 +475,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(
             f"1442 échantillons visuels attendus, {len(vision_samples_first.channel_ids)} obtenus"
         )
+    if (
+        vision_activity_first.channel_ids != vision_activity_second.channel_ids
+        or vision_activity_first.channel_ids != vision.channel_ids
+        or not np.array_equal(
+            vision_activity_first.values, vision_activity_second.values
+        )
+    ):
+        raise RuntimeError("Le rejeu de la transduction visuelle n'est pas déterministe")
     print("[OK] 102 articulations FlyBody extraites en 204 observables position/vitesse")
     print(
         f"[OK] {len(proprio_transduction.parameter_ids):,} arêtes proprioceptives candidates "
@@ -420,6 +498,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     print("[OK] 102 commandes placées dans les 102 adresses ctrl FlyBody")
     print("[OK] Rendu réel de 2 × 721 ommatidies extrait de façon déterministe")
+    print(
+        f"[OK] {len(vision_transduction.resolved_channel_ids):,} photorécepteurs R7/R8 "
+        f"exécutés via {len(vision_transduction.column_ids):,} colonnes publiées"
+    )
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(
         f"[OK] {central.expected_induced_edges:,} arêtes CNS parcourues vers "
@@ -494,11 +576,26 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         ]
         + [
             {
+                "id": vision_transduction.box_id,
+                "adapter_type": vision_transduction.adapter_type,
+                "published_optic_columns": len(vision_transduction.column_ids),
+                "resolved_terminal_channels": len(
+                    vision_transduction.resolved_channel_ids
+                ),
+                "unresolved_terminal_channels": len(
+                    vision_transduction.unresolved_channel_ids
+                ),
+                "retinal_registration_status": "arbitrary_smoke_only",
+                "parameter_status": "arbitrary_smoke_only",
+            }
+        ]
+        + [
+            {
                 "id": vision.box_id,
                 "adapter_type": vision.adapter_type,
                 "terminal_box_instances": len(vision.channel_ids),
                 "exact_routes": len(vision.routes),
-                "upstream_retinotopic_mapping": "deferred",
+                "upstream_retinotopic_mapping": "published_R7_R8_columns_registration_unassigned",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ]
@@ -624,7 +721,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "ommatidia_per_eye": vision_sensor.ommatidia_per_eye,
             "active_sample_channels": len(vision_samples_first.channel_ids),
             "actual_mujoco_render_executed": True,
-            "malecns_retinotopic_mapping": "deferred",
+            "published_optic_columns": len(vision_transduction.column_ids),
+            "column_assigned_terminal_channels": len(
+                vision_transduction.resolved_channel_ids
+            ),
+            "unassigned_terminal_channels": len(
+                vision_transduction.unresolved_channel_ids
+            ),
+            "malecns_retinotopic_mapping": "published_R7_R8_columns_registration_unassigned",
         },
         "checks": {
             "all_routes_executed": True,
@@ -640,6 +744,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "mechanosensation_transduction_candidates_executed": True,
             "motor_transduction_to_body_executed": True,
             "world_to_vision_executed": True,
+            "vision_column_transduction_candidates_executed": True,
             "deterministic_replay": True,
             "scientific_parameters_selected": False,
             "activity_values_persisted": False,

@@ -1,0 +1,31 @@
+schema_version: 1
+id: validation.vision_column_transduction
+name: Transduction visuelle partielle par colonnes R7/R8 publiées
+owner_ids:
+  - adapter.vision.transduction
+  - group.sensory.visual
+  - group.sensory.optic_lobe
+  - wire.vision_transduction_to_routing
+  - parameter.sensory_transduction
+level: integration
+protocol_path: src/the_fly_matrix/wiring_smoke.py
+command: run_wiring_smoke.bat
+acceptance_criteria:
+  - Both official workbook sheets contain 1332 distinct represented optic columns
+  - Exactly 2628 unique R7/R8 bodyIds match the MaleCNS visual terminal manifest by side and type
+  - Pale and yellow column classes accept only compatible FlyBody ommatidium samples
+  - One externally supplied injective registration maps represented columns to FlyBody ommatidia within the same eye
+  - Exactly 3470 R1-R6 HBeyelet or unpublished R7/R8 terminals remain explicit
+  - Continuous coefficients and the discrete registration remain external arbitrary smoke values
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: vision-column-transduction-2026-09-22
+status: integration_pass
+notes:
+  - "Official source: https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx"
+  - Biological bodyId-to-column assignment is fixed for the published R7/R8 subset
+  - Workbook order is never interpreted as FlyBody ommatidium order
+  - The smoke test supplies a deterministic valid registration only to exercise data flow
+  - No scientific phototransduction coefficient has been selected
+source_references:
+  - https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx

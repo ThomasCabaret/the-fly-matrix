@@ -10,6 +10,7 @@ EXPECTED_DATA = {
     "body-annotations-male-cns-v1.0-minconf-0.5.feather": 14_483_314,
     "body-neurotransmitters-male-cns-v1.0.feather": 43_282_834,
     "connectome-weights-male-cns-v1.0-minconf-0.5.feather": 1_051_241_946,
+    "optic-column-type-assignments-v1.0.xlsx": 111_565,
 }
 
 

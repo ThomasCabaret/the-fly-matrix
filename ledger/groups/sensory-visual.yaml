@@ -11,7 +11,7 @@ named_type_count: 10
 target_box_ids: [adapter.vision.routing, cns.malecns]
 status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/wiring/vision-channels.csv, data/derived/wiring/vision-routes.parquet]
-next_action: Affecter une origine rétinienne physique à chaque photorécepteur sans inventer de coordonnées absentes.
+evidence: [data/derived/wiring/vision-channels.csv, data/derived/wiring/vision-routes.parquet, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-column-photoreceptors.parquet]
+next_action: Fixer l'enregistrement physique des 2 628 R7/R8 déjà assignés à une colonne et rechercher une source indépendante pour les 3 377 R1-R6.
 blocked_by: []
 completion_criteria: [Photorécepteurs disjoints, Couverture totale, Une route exacte par bodyId]

@@ -11,6 +11,7 @@ charset_normalizer==3.5.1
 colorama==0.4.6
 contourpy==1.4.0
 cycler==0.12.1
+et_xmlfile==2.0.0
 etils==1.14.0
 executing==2.2.1
 filelock==3.32.3
@@ -43,6 +44,7 @@ networkx==3.6.1
 neuprint-python==0.6.3
 numba==0.67.0
 numpy==2.5.3
+openpyxl==3.1.5
 packaging==26.3
 pandas==3.0.6
 parso==0.8.7

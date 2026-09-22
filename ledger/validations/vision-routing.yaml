@@ -26,4 +26,5 @@ notes:
   - Population contains 6091 class-visual photoreceptors and 7 HBeyelet cells
   - No optic-lobe sensory neuron has assignedOlHex1 or assignedOlHex2
   - All 23720 rows carrying both hex coordinates are ol_intrinsic neurons
-  - Physical retinotopy and phototransduction remain deliberately unknown
+  - The separate published optic-column workbook assigns 2628 R7/R8 neurons without reusing intrinsic-cell coordinates
+  - Physical column-to-FlyBody registration remains deliberately unknown

@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-22, lot de transduction mécanoréceptrice.
+Mise à jour : 2026-09-22, lot de colonnes visuelles R7/R8.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -15,41 +15,41 @@ attendu.
 
 ## État synthétique
 
-- Câblage global : **83 %**.
+- Câblage global : **85 %**.
 - Graphe central MaleCNS : **100 % structurel**.
 - Sortie motrice : **100 % structurel**.
 - Proprioception : **86 %**.
 - Entrées sensorielles non résolues : **88 %**.
 - Clamps basaux : **87 %**.
-- Vision : **74 %**.
+- Vision : **86 %**.
 - Mécanosensation : **82 %**.
 - Corps physique : **94 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 
-Le dernier lot étend la matrice mécanoréceptrice à 2 108 arêtes candidates. Les
-charges des six pattes et les positions/vitesses de 19 articulations d'antenne,
-d'aile, d'haltère et de pièces buccales alimentent 303 canaux. Les 16 canaux PDMN
-du notum consomment maintenant la force nette du thorax central et les 4 canaux ON
-péri-optiques celle de la tête. La couverture atteint donc 323/323 canaux et les
-4 291 neurones. Le registre suit séparément les 1 306 arêtes de contact et les 802
-arêtes articulaires. La résolution tête/thorax reste volontairement centrale et
-grossière, car FlyBody ne fournit pas ici de localisation gauche/droite plus fine.
-L'indice mécanorécepteur passe de 81 à 82 % ; les gains restent seulement candidats.
+Le dernier lot intègre le supplément officiel MaleCNS des colonnes optiques. Il
+fixe 2 628 photorécepteurs R7/R8 dans 1 332 colonnes biologiques nommées, soit
+43,1 % des 6 098 canaux visuels. La boîte de transduction impose désormais le même
+œil, la compatibilité pale/jaune et un enregistrement injectif colonne→ommatidie.
+Cet enregistrement et les 2 628 coefficients restent injectés de l'extérieur et
+ne sont pas calibrés. Les 3 470 autres canaux visuels restent explicitement
+ouverts. La vision passe de 74 à 86 % et le câblage global de 83 à 85 %.
 Le smoke test traverse 17 884 entrées CNS, 26 028 386 arêtes centrales, 815 sorties
-motrices et 102 actionneurs. Les 31 tests unitaires/intégration locaux passent.
+motrices et 102 actionneurs. Les 32 tests unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
 
-1. Établir une rétinotopie indépendante entre les ommatidies FlyBody et les
-   photorécepteurs MaleCNS.
-2. Ajouter ou représenter explicitement contrainte et vibration pour les terminaux
+1. Fixer l'enregistrement spatial des 1 332 colonnes publiées sur les ommatidies
+   FlyBody, sans utiliser l'ordre des lignes comme géométrie.
+2. Trouver une source de colonne indépendante pour les 3 377 R1-R6 et traiter
+   séparément les 93 autres canaux visuels encore ouverts.
+3. Ajouter ou représenter explicitement contrainte et vibration pour les terminaux
    proprioceptifs encore ouverts.
-3. Réduire les modalités sensorielles résiduelles lorsque les annotations le
+4. Réduire les modalités sensorielles résiduelles lorsque les annotations le
    permettent, sans modifier leurs routes `bodyId` déjà exactes.
-4. Fermer et tester la boucle physique complète et son interface d'évaluation,
+5. Fermer et tester la boucle physique complète et son interface d'évaluation,
    toujours sans contrôleur comportemental externe.
-5. N'affiner les candidats tête/thorax que si une observable corporelle plus
+6. N'affiner les candidats tête/thorax que si une observable corporelle plus
    localisée devient disponible, sans inventer de latéralité.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
@@ -59,7 +59,7 @@ prochain lot ; cette liste ne remplace pas ces sources de vérité.
 
 ```text
 setup.bat                 # si l'environnement n'existe pas
-download_data.bat         # si les trois tables MaleCNS sont absentes
+download_data.bat         # si les tables MaleCNS ou le supplément optique sont absents
 status.bat
 run_analysis.bat          # inventaires et manifestes ; neuPrint si jeton présent
 run_wiring_smoke.bat      # reconstruction et parcours structurel complet

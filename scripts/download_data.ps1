@@ -23,6 +23,11 @@ $Files = @(
         Name = "connectome-weights-male-cns-v1.0-minconf-0.5.feather"
         Bytes = 1051241946L
         Url = "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather"
+    },
+    @{
+        Name = "optic-column-type-assignments-v1.0.xlsx"
+        Bytes = 111565L
+        Url = "https://raw.githubusercontent.com/flyconnectome/2025malecns/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx"
     }
 )
 
@@ -101,7 +106,7 @@ try {
     $ChecksumPath = Join-Path $Destination "checksums.sha256"
     $ChecksumLines | Set-Content -LiteralPath $ChecksumPath -Encoding ascii
     Write-Step "Resume"
-    Write-Host "Les trois fichiers MaleCNS sont presents, controles et empreintes." -ForegroundColor Green
+    Write-Host "Les quatre fichiers MaleCNS sont presents, controles et empreintes." -ForegroundColor Green
     Write-Host "Empreintes : $ChecksumPath"
 }
 catch {
@@ -117,4 +122,3 @@ finally {
 }
 
 exit $ExitCode
-

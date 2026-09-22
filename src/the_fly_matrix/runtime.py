@@ -22,6 +22,8 @@ MECHANO_ROUTE_PATH = WIRING_ROOT / "mechanosensation-routes.parquet"
 MECHANO_INPUT_CANDIDATE_PATH = WIRING_ROOT / "mechanosensation-input-candidates.parquet"
 VISION_CHANNEL_PATH = WIRING_ROOT / "vision-channels.csv"
 VISION_ROUTE_PATH = WIRING_ROOT / "vision-routes.parquet"
+VISION_COLUMN_PATH = WIRING_ROOT / "vision-optic-columns.csv"
+VISION_COLUMN_RECEPTOR_PATH = WIRING_ROOT / "vision-column-photoreceptors.parquet"
 MOTOR_CHANNEL_PATH = WIRING_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_PATH = WIRING_ROOT / "motor-routes.parquet"
 MOTOR_ACTUATOR_CANDIDATE_PATH = WIRING_ROOT / "motor-actuator-candidates.parquet"
@@ -1057,6 +1059,202 @@ class MechanosensationRoutingBox:
             body_ids=self._target_body_ids.copy(),
             values=values[self._route_channel_indices],
         )
+
+
+class VisionTransductionBox:
+    """Partially column-addressed, uncalibrated visual transduction adapter."""
+
+    adapter_type = "B"
+    box_id = "adapter.vision.transduction"
+
+    def __init__(
+        self,
+        assignments: pd.DataFrame,
+        columns: pd.DataFrame,
+        receptor_channels: pd.DataFrame,
+        physical_channels: pd.DataFrame,
+    ):
+        if (
+            assignments.empty
+            or columns.empty
+            or receptor_channels.empty
+            or physical_channels.empty
+        ):
+            raise ValueError("No generated visual column assignments found")
+        self.assignments = assignments.sort_values(
+            ["side", "column_id", "receptor_class"]
+        ).reset_index(drop=True)
+        self.columns = columns.sort_values(["side", "column_u", "column_v"]).reset_index(
+            drop=True
+        )
+        self.receptor_channels = receptor_channels.reset_index(drop=True)
+        self.physical_channels = physical_channels.sort_values(
+            ["eye_index", "ommatidium_id"]
+        ).reset_index(drop=True)
+        if self.assignments["parameter_id"].duplicated().any():
+            raise ValueError("Duplicate visual transduction parameter IDs")
+        if self.assignments["target_channel_id"].duplicated().any():
+            raise ValueError("Duplicate column-assigned visual targets")
+        if self.columns["column_id"].duplicated().any():
+            raise ValueError("Duplicate optic-column IDs")
+        self.parameter_ids = tuple(self.assignments["parameter_id"].astype(str))
+        self.column_ids = tuple(self.columns["column_id"].astype(str))
+        self.channel_ids = tuple(self.receptor_channels["channel_id"].astype(str))
+        self.physical_channel_ids = tuple(self.physical_channels["channel_id"].astype(str))
+        target_index = {value: index for index, value in enumerate(self.channel_ids)}
+        physical_index = {
+            value: index for index, value in enumerate(self.physical_channel_ids)
+        }
+        unknown_targets = set(self.assignments["target_channel_id"].astype(str)) - set(
+            target_index
+        )
+        if unknown_targets:
+            raise ValueError("Visual column assignments reference unknown terminal channels")
+        self._target_indices = np.asarray(
+            [target_index[str(value)] for value in self.assignments["target_channel_id"]],
+            dtype=np.int64,
+        )
+        self.resolved_channel_ids = tuple(
+            self.assignments["target_channel_id"].astype(str)
+        )
+        resolved = set(self.resolved_channel_ids)
+        self.unresolved_channel_ids = tuple(
+            value for value in self.channel_ids if value not in resolved
+        )
+        self._unresolved_indices = np.asarray(
+            [target_index[value] for value in self.unresolved_channel_ids], dtype=np.int64
+        )
+        self._column_side = dict(
+            zip(self.columns["column_id"].astype(str), self.columns["side"].astype(str))
+        )
+        self._column_sample_type = dict(
+            zip(
+                self.columns["column_id"].astype(str),
+                self.columns["expected_flybody_sample_type"].astype(str),
+            )
+        )
+        self._physical_index = physical_index
+        self._physical_side = {
+            str(row.channel_id): "L" if str(row.eye) == "left" else "R"
+            for row in self.physical_channels.itertuples(index=False)
+        }
+        self._physical_sample_type = dict(
+            zip(
+                self.physical_channels["channel_id"].astype(str),
+                self.physical_channels["ommatidium_type"].astype(str),
+            )
+        )
+        self._assignment_column_ids = tuple(self.assignments["column_id"].astype(str))
+        if (len(self.column_ids), len(self.parameter_ids)) != (1332, 2628):
+            raise ValueError("Unexpected published R7/R8 column coverage")
+        if (len(self.resolved_channel_ids), len(self.unresolved_channel_ids)) != (2628, 3470):
+            raise ValueError("Unexpected visual terminal coverage")
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        assignment_path: Path = VISION_COLUMN_RECEPTOR_PATH,
+        column_path: Path = VISION_COLUMN_PATH,
+        receptor_channel_path: Path = VISION_CHANNEL_PATH,
+        physical_channel_path: Path = FLYBODY_VISION_CHANNEL_PATH,
+    ) -> "VisionTransductionBox":
+        if not all(
+            path.is_file()
+            for path in (
+                assignment_path,
+                column_path,
+                receptor_channel_path,
+                physical_channel_path,
+            )
+        ):
+            raise FileNotFoundError(
+                "Visual column wiring is absent; run the wiring builder first"
+            )
+        return cls(
+            pd.read_parquet(assignment_path),
+            pd.read_csv(column_path),
+            pd.read_csv(receptor_channel_path),
+            pd.read_csv(physical_channel_path),
+        )
+
+    def step(
+        self,
+        retinal_samples: ChannelActivity,
+        registration: Mapping[str, str],
+        parameters: Mapping[str, float] | np.ndarray,
+        unresolved_values: Mapping[str, float] | np.ndarray,
+    ) -> ChannelActivity:
+        if retinal_samples.channel_ids != self.physical_channel_ids:
+            raise ValueError(f"{self.box_id}: physical retinal channel order mismatch")
+        missing = set(self.column_ids) - set(registration)
+        extra = set(registration) - set(self.column_ids)
+        if missing or extra:
+            raise ValueError(
+                f"{self.box_id}: registration mismatch; "
+                f"missing={len(missing)}, extra={len(extra)}"
+            )
+        source_ids = tuple(str(registration[column_id]) for column_id in self.column_ids)
+        if len(set(source_ids)) != len(source_ids):
+            raise ValueError(f"{self.box_id}: optic-column registration must be injective")
+        for column_id, source_id in zip(self.column_ids, source_ids):
+            if source_id not in self._physical_index:
+                raise ValueError(f"{self.box_id}: unknown physical retinal channel {source_id}")
+            expected_side = self._column_side[column_id]
+            expected_type = self._column_sample_type[column_id]
+            if self._physical_side[source_id] != expected_side:
+                raise ValueError(f"{self.box_id}: cross-eye retinal registration")
+            if (
+                expected_type != "any"
+                and self._physical_sample_type[source_id] != expected_type
+            ):
+                raise ValueError(f"{self.box_id}: incompatible ommatidium palette")
+        registered_source_index = {
+            column_id: self._physical_index[source_id]
+            for column_id, source_id in zip(self.column_ids, source_ids)
+        }
+        assignment_source_indices = np.asarray(
+            [registered_source_index[column_id] for column_id in self._assignment_column_ids],
+            dtype=np.int64,
+        )
+        if isinstance(parameters, Mapping):
+            missing = set(self.parameter_ids) - set(parameters)
+            extra = set(parameters) - set(self.parameter_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: parameter mismatch; "
+                    f"missing={len(missing)}, extra={len(extra)}"
+                )
+            weights = np.asarray(
+                [parameters[value] for value in self.parameter_ids], dtype=np.float64
+            )
+        else:
+            weights = np.asarray(parameters, dtype=np.float64)
+        if weights.shape != (len(self.parameter_ids),) or not np.isfinite(weights).all():
+            raise ValueError(f"{self.box_id}: invalid phototransduction parameter vector")
+        if isinstance(unresolved_values, Mapping):
+            missing = set(self.unresolved_channel_ids) - set(unresolved_values)
+            extra = set(unresolved_values) - set(self.unresolved_channel_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: unresolved input mismatch; "
+                    f"missing={len(missing)}, extra={len(extra)}"
+                )
+            fallback = np.asarray(
+                [unresolved_values[value] for value in self.unresolved_channel_ids],
+                dtype=np.float64,
+            )
+        else:
+            fallback = np.asarray(unresolved_values, dtype=np.float64)
+        if fallback.shape != (len(self.unresolved_channel_ids),) or not np.isfinite(
+            fallback
+        ).all():
+            raise ValueError(f"{self.box_id}: invalid unresolved terminal vector")
+        values = np.zeros(len(self.channel_ids), dtype=np.float64)
+        values[self._target_indices] = (
+            retinal_samples.values[assignment_source_indices] * weights
+        )
+        values[self._unresolved_indices] = fallback
+        return ChannelActivity(channel_ids=self.channel_ids, values=values)
 
 
 class VisionRoutingBox:

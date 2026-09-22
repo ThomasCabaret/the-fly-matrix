@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -24,6 +25,14 @@ ANNOTATION_SOURCE = (
     / "v1.0"
     / "body-annotations-male-cns-v1.0-minconf-0.5.feather"
 )
+OPTIC_COLUMN_SOURCE = (
+    ROOT
+    / "data"
+    / "raw"
+    / "malecns"
+    / "v1.0"
+    / "optic-column-type-assignments-v1.0.xlsx"
+)
 OUTPUT_ROOT = ROOT / "data" / "derived" / "wiring"
 SUMMARY_OUTPUT = OUTPUT_ROOT / "basal-clamp-routing.json"
 CHANNEL_OUTPUT = OUTPUT_ROOT / "basal-clamp-channels.csv"
@@ -40,6 +49,9 @@ MECHANO_TRANSDUCTION_AUDIT_OUTPUT = OUTPUT_ROOT / "mechanosensation-transduction
 VISION_SUMMARY_OUTPUT = OUTPUT_ROOT / "vision-routing.json"
 VISION_CHANNEL_OUTPUT = OUTPUT_ROOT / "vision-channels.csv"
 VISION_ROUTE_OUTPUT = OUTPUT_ROOT / "vision-routes.parquet"
+VISION_COLUMN_SUMMARY_OUTPUT = OUTPUT_ROOT / "vision-optic-column-assignments.json"
+VISION_COLUMN_OUTPUT = OUTPUT_ROOT / "vision-optic-columns.csv"
+VISION_COLUMN_RECEPTOR_OUTPUT = OUTPUT_ROOT / "vision-column-photoreceptors.parquet"
 MOTOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "motor-routing.json"
 MOTOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_OUTPUT = OUTPUT_ROOT / "motor-routes.parquet"
@@ -1526,6 +1538,183 @@ def build_vision_wiring(
     return summary
 
 
+def build_vision_optic_column_assignments(
+    source: Path = OPTIC_COLUMN_SOURCE,
+    receptor_channel_path: Path = VISION_CHANNEL_OUTPUT,
+    physical_channel_path: Path = FLYBODY_VISION_CHANNEL_OUTPUT,
+    summary_output: Path = VISION_COLUMN_SUMMARY_OUTPUT,
+    column_output: Path = VISION_COLUMN_OUTPUT,
+    receptor_output: Path = VISION_COLUMN_RECEPTOR_OUTPUT,
+) -> dict[str, Any]:
+    """Preserve published R7/R8 column identities without inventing registration."""
+    for path in (source, receptor_channel_path, physical_channel_path):
+        if not path.is_file():
+            raise FileNotFoundError(f"Source visuelle absente: {path}")
+    section("Inventaire des colonnes optiques R7/R8 publiées")
+    receptors = pd.read_csv(receptor_channel_path)
+    physical = pd.read_csv(physical_channel_path)
+    receptor_by_body = receptors.set_index("target_body_id", drop=False)
+    column_rows: list[dict[str, Any]] = []
+    assignment_rows: list[dict[str, Any]] = []
+    pattern = re.compile(r"^ME_([LR])_col_(\d+)_(\d+)$")
+    for sheet_name, expected_side in (("Right OL", "R"), ("Left OL", "L")):
+        sheet = pd.read_excel(source, sheet_name=sheet_name)
+        for column in sheet.itertuples(index=False):
+            column_id = str(column.column)
+            match = pattern.fullmatch(column_id)
+            if match is None or match.group(1) != expected_side:
+                raise RuntimeError(f"Identifiant de colonne optique inattendu: {column_id}")
+            column_type = str(column.column_type).strip()
+            expected_sample_type = (
+                "pale"
+                if column_type == "pale"
+                else "yellow"
+                if column_type in {"yellow1", "yellow2"}
+                else "any"
+            )
+            receptor_ids = {
+                "R7": int(column.R7),
+                "R8": int(column.R8),
+            }
+            if receptor_ids["R7"] == -99 and receptor_ids["R8"] == -99:
+                continue
+            column_rows.append(
+                {
+                    "column_id": column_id,
+                    "side": expected_side,
+                    "column_u": int(match.group(2)),
+                    "column_v": int(match.group(3)),
+                    "column_type": column_type,
+                    "expected_flybody_sample_type": expected_sample_type,
+                    "r7_body_id": receptor_ids["R7"],
+                    "r8_body_id": receptor_ids["R8"],
+                    "ame12_branch": int(column.aMe12_branch),
+                    "tm5a_branch": int(column.Tm5a_branch),
+                    "registration_status": "unassigned",
+                }
+            )
+            for receptor_class in ("R7", "R8"):
+                body_id = receptor_ids[receptor_class]
+                if body_id == -99:
+                    continue
+                if body_id not in receptor_by_body.index:
+                    raise RuntimeError(
+                        f"Le photorécepteur publié {body_id} est absent du routage MaleCNS"
+                    )
+                receptor = receptor_by_body.loc[body_id]
+                published_type = str(getattr(column, f"{receptor_class}_type")).strip()
+                if (
+                    str(receptor.rootSide) != expected_side
+                    or str(receptor.type) != published_type
+                ):
+                    raise RuntimeError(
+                        f"Annotation incohérente pour {body_id}: "
+                        f"{receptor.rootSide}/{receptor.type} contre "
+                        f"{expected_side}/{published_type}"
+                    )
+                parameter_key = f"{column_id}|{body_id}"
+                assignment_rows.append(
+                    {
+                        "parameter_id": "parameter.vision.edge."
+                        + hashlib.sha256(parameter_key.encode("utf-8")).hexdigest()[:16],
+                        "column_id": column_id,
+                        "side": expected_side,
+                        "column_type": column_type,
+                        "expected_flybody_sample_type": expected_sample_type,
+                        "receptor_class": receptor_class,
+                        "receptor_type": published_type,
+                        "target_channel_id": str(receptor.channel_id),
+                        "target_body_id": body_id,
+                        "registration_status": "unassigned",
+                        "parameter_status": "unassigned",
+                    }
+                )
+    columns = pd.DataFrame(column_rows).sort_values(["side", "column_u", "column_v"])
+    assignments = pd.DataFrame(assignment_rows).sort_values(
+        ["side", "column_id", "receptor_class"]
+    )
+    if columns["column_id"].duplicated().any():
+        raise RuntimeError("Le supplément contient des colonnes optiques dupliquées")
+    if assignments["target_body_id"].duplicated().any():
+        raise RuntimeError("Un photorécepteur est affecté à plusieurs colonnes")
+    if assignments["parameter_id"].duplicated().any():
+        raise RuntimeError("Les paramètres visuels générés ne sont pas uniques")
+    physical_counts = {
+        f"{eye}_{sample_type}": int(count)
+        for (eye, sample_type), count in physical.groupby(
+            ["eye", "ommatidium_type"]
+        ).size().items()
+    }
+    if (
+        len(columns) != 1332
+        or len(assignments) != 2628
+        or assignments["target_channel_id"].nunique() != 2628
+    ):
+        raise RuntimeError(
+            "Couverture des colonnes R7/R8 inattendue: "
+            f"{len(columns)} colonnes, {len(assignments)} photorécepteurs"
+        )
+    all_target_ids = set(receptors["channel_id"].astype(str))
+    resolved_target_ids = set(assignments["target_channel_id"].astype(str))
+    unresolved = receptors.loc[
+        ~receptors["channel_id"].astype(str).isin(resolved_target_ids)
+    ]
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source": str(source.relative_to(ROOT)).replace("\\", "/"),
+        "source_url": "https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx",
+        "purpose": "published R7/R8-to-optic-column inventory with FlyBody retinal registration left as an explicit discrete parameter",
+        "method": {
+            "biological_assignment": "published bodyId-to-column relation copied exactly from both workbook sheets",
+            "physical_constraint": "same eye; pale columns require pale FlyBody samples, yellow1/yellow2 require yellow samples, DRA/unclear remain palette-unconstrained",
+            "registration": "one injective column-to-FlyBody-ommatidium assignment per eye remains externally supplied",
+            "phototransduction": "one free continuous coefficient per represented photoreceptor remains externally supplied",
+            "unresolved_policy": "R1-R6, HBeyelet and R7/R8 absent from the workbook receive explicit external smoke values",
+        },
+        "published_optic_columns": int(len(columns)),
+        "published_receptor_assignments": int(len(assignments)),
+        "assigned_target_channels": int(len(resolved_target_ids)),
+        "assigned_target_neurons": int(len(assignments)),
+        "total_target_channels": int(len(all_target_ids)),
+        "unassigned_target_channels": int(len(unresolved)),
+        "assignment_coverage_percent": round(100 * len(assignments) / len(receptors), 2),
+        "column_side_counts": {
+            str(key): int(value)
+            for key, value in columns["side"].value_counts().sort_index().items()
+        },
+        "column_type_counts": {
+            str(key): int(value)
+            for key, value in columns["column_type"].value_counts().sort_index().items()
+        },
+        "receptor_class_counts": {
+            str(key): int(value)
+            for key, value in assignments["receptor_class"].value_counts().sort_index().items()
+        },
+        "unassigned_type_counts": {
+            str(key): int(value)
+            for key, value in unresolved["type"].value_counts().sort_index().items()
+        },
+        "physical_sample_counts": physical_counts,
+        "free_discrete_registration_parameters": int(len(columns)),
+        "free_continuous_parameters": int(len(assignments)),
+        "biological_column_mapping_status": "fixed_for_published_R7_R8",
+        "flybody_registration_status": "unassigned",
+        "scientific_parameter_values_selected": False,
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    columns.to_csv(column_output, index=False, encoding="utf-8")
+    assignments.to_parquet(receptor_output, index=False)
+    print(f"[OK] {len(columns):,} colonnes R7/R8 publiées conservées")
+    print(f"[OK] {len(assignments):,}/6 098 canaux visuels ont une colonne biologique exacte")
+    print("[INFO] L'enregistrement colonne→ommatidie FlyBody reste un paramètre discret")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Colonnes : {column_output}")
+    print(f"[OK] Photorécepteurs assignés : {receptor_output}")
+    return summary
+
+
 def build_motor_wiring(
     source: Path = SOURCE,
     summary_output: Path = MOTOR_SUMMARY_OUTPUT,
@@ -2171,6 +2360,7 @@ def main() -> int:
         build_mechanosensation_wiring(args.source)
         build_mechanosensation_transduction_candidates()
         build_vision_wiring(args.source)
+        build_vision_optic_column_assignments()
         build_motor_wiring(args.source)
         build_motor_transduction_candidates()
         build_unclassified_sensory_wiring(args.source)

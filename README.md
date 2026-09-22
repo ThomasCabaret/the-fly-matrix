@@ -19,7 +19,8 @@ Pour reprendre le projet sans le contexte des conversations :
 
 ## Commandes Windows
 
-- `download_data.bat` télécharge ou contrôle les trois fichiers MaleCNS minimaux.
+- `download_data.bat` télécharge ou contrôle les trois tables MaleCNS principales
+  et le supplément de 109 Ko sur les colonnes optiques R7/R8.
 - `setup.bat` crée `.venv` avec Python 3.12 et installe le profil demandé.
 - `setup_gpu.bat` installe PyTorch CUDA et vérifie un calcul réel sur le GPU.
 - `status.bat` affiche l'état de l'environnement, des données et du registre.
@@ -31,8 +32,9 @@ Pour reprendre le projet sans le contexte des conversations :
 - `run_wiring_smoke.bat` régénère le manifeste des clamps puis exécute toutes les
   routes olfactives, gustatives et thermo-hygrosensorielles avec des valeurs
   arbitraires reproductibles, ainsi que les transductions candidates proprioceptive
-  et mécanoréceptrice, leurs routages aval, le routage aval visuel, les afférences
-  sensorielles non résolues et les sorties CNS explicitement motrices.
+  et mécanoréceptrice, leurs routages aval, la transduction visuelle R7/R8 par
+  colonnes publiées, le routage aval visuel, les afférences sensorielles non
+  résolues et les sorties CNS explicitement motrices.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -182,16 +184,24 @@ Le manifeste visuel conserve une instance type C par neurone sensoriel du lobe
 optique : 6 091 photorécepteurs et 7 cellules `HBeyelet`, soit 6 098 routes
 terminales un-à-un vers MaleCNS. L'audit empêche explicitement d'utiliser
 `assignedOlHex1` et `assignedOlHex2` comme coordonnées d'entrée : leurs 23 720
-valeurs appartiennent exclusivement à des neurones internes `ol_intrinsic`. La
-correspondance pixel/ommatidie vers photorécepteur reste donc inconnue jusqu'à
-l'obtention d'une source rétinotopique indépendante.
+valeurs appartiennent exclusivement à des neurones internes `ol_intrinsic` et ne
+sont toujours pas détournées. Une source indépendante est maintenant intégrée :
+le supplément officiel `optic-column-type-assignments-v1.0.xlsx` fixe
+l'appartenance de 2 628 photorécepteurs R7/R8 à 1 332 colonnes optiques nommées,
+avec leur côté et leur classe pale/jaune. Les 3 377 R1–R6, 85
+`R7R8_unclear`, un `R7_unclear` absent du supplément et les 7 `HBeyelet` restent
+explicites, soit 3 470 canaux sans colonne publiée dans cette source.
 
 Côté physique, `flybody-vision-channels.csv` décrit deux caméras composées de 721
 ommatidies chacune. Pour chaque ommatidie, le manifeste conserve le canal actif
 jaune ou pâle de la sortie FlyGym `(2, 721, 2)`, soit 1 442 échantillons
 normalisés. Le smoke test effectue un véritable rendu MuJoCo local deux fois et
-vérifie un résultat déterministe. La jonction de ces 1 442 échantillons vers les
-6 098 afférences MaleCNS reste séparée et explicitement différée.
+vérifie un résultat déterministe. La nouvelle boîte de transduction exécute les
+2 628 R7/R8 documentés jusqu'au routeur MaleCNS. Elle exige une correspondance
+injective externe des 1 332 colonnes vers les ommatidies du même œil, avec
+compatibilité pale/jaune. Le smoke test injecte une correspondance arbitraire mais
+valide uniquement pour tester le flux : aucun alignement spatial ni coefficient de
+phototransduction scientifique n'est persisté.
 
 Le manifeste moteur couvre les 708 neurones `vnc_motor` et 107 neurones
 `cb_motor`, avec une instance type E par `bodyId`. L'audit des nerfs de sortie

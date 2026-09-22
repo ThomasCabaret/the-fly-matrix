@@ -32,6 +32,7 @@ from the_fly_matrix.runtime import (
     UNCLASSIFIED_CHANNEL_PATH,
     UNCLASSIFIED_ROUTE_PATH,
     VISION_CHANNEL_PATH,
+    VISION_COLUMN_RECEPTOR_PATH,
     VISION_ROUTE_PATH,
     MechanosensationRoutingBox,
     MechanosensationTransductionBox,
@@ -43,12 +44,14 @@ from the_fly_matrix.runtime import (
     SparseActivity,
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
+    VisionTransductionBox,
     FlyBodyProprioceptionSensor,
     FlyBodyLocalContactSensor,
     FlyBodyGroundContactSensor,
     FlyBodyActuatorInterface,
     FlyBodyVisionSensor,
 )
+from the_fly_matrix.wiring_smoke import _arbitrary_retinal_registration
 
 
 class RuntimeTests(unittest.TestCase):
@@ -282,6 +285,40 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(len(output.body_ids), 6098)
         self.assertEqual(len(np.unique(output.body_ids)), 6098)
         self.assertEqual(len(np.unique(box.routes["channel_id"])), 6098)
+
+    def test_visual_transduction_executes_published_r7_r8_columns(self) -> None:
+        if not VISION_COLUMN_RECEPTOR_PATH.is_file():
+            self.skipTest("generated visual column assignments are absent")
+        sensor = FlyBodyVisionSensor.from_generated_wiring()
+        box = VisionTransductionBox.from_generated_wiring()
+        readouts = np.arange(np.prod(sensor.readout_shape), dtype=np.float64).reshape(
+            sensor.readout_shape
+        ) + 1.0
+        samples = sensor.step(readouts)
+        registration = _arbitrary_retinal_registration(box)
+        fallback = np.arange(len(box.unresolved_channel_ids), dtype=np.float64) + 1.0
+        output = box.step(
+            samples,
+            registration,
+            np.ones(len(box.parameter_ids), dtype=np.float64),
+            fallback,
+        )
+        self.assertEqual(len(box.column_ids), 1332)
+        self.assertEqual(len(box.parameter_ids), 2628)
+        self.assertEqual(len(box.resolved_channel_ids), 2628)
+        self.assertEqual(len(box.unresolved_channel_ids), 3470)
+        self.assertEqual(len(output.channel_ids), 6098)
+        self.assertTrue(np.all(output.values > 0))
+        duplicate_registration = dict(registration)
+        first, second = box.column_ids[:2]
+        duplicate_registration[second] = duplicate_registration[first]
+        with self.assertRaises(ValueError):
+            box.step(
+                samples,
+                duplicate_registration,
+                np.ones(len(box.parameter_ids), dtype=np.float64),
+                fallback,
+            )
 
     def test_motor_router_preserves_one_channel_per_motor_neuron(self) -> None:
         if not MOTOR_CHANNEL_PATH.is_file() or not MOTOR_ROUTE_PATH.is_file():

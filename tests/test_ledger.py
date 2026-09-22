@@ -232,6 +232,18 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(vision["hex_assignment_audit"]["sensory_input_rows"], 0)
         self.assertFalse(vision["hex_assignment_audit"]["used_as_input_coordinates"])
 
+        column_path = path.with_name("vision-optic-column-assignments.json")
+        self.assertTrue(column_path.is_file())
+        columns = json.loads(column_path.read_text(encoding="utf-8"))
+        self.assertEqual(columns["published_optic_columns"], 1332)
+        self.assertEqual(columns["published_receptor_assignments"], 2628)
+        self.assertEqual(columns["assigned_target_channels"], 2628)
+        self.assertEqual(columns["unassigned_target_channels"], 3470)
+        self.assertEqual(columns["column_side_counts"], {"L": 627, "R": 705})
+        self.assertEqual(columns["receptor_class_counts"], {"R7": 1299, "R8": 1329})
+        self.assertEqual(columns["flybody_registration_status"], "unassigned")
+        self.assertFalse(columns["scientific_parameter_values_selected"])
+
         motor_path = path.with_name("motor-routing.json")
         self.assertTrue(motor_path.is_file())
         motor = json.loads(motor_path.read_text(encoding="utf-8"))

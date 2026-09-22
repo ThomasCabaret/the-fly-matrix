@@ -5,13 +5,18 @@ sector: vision
 source: {box_id: adapter.vision.transduction, port: photoreceptor_activity, group_query: null}
 target: {box_id: adapter.vision.routing, port: photoreceptor_activity, group_query: null}
 mapping_level: type-level
-expected_cardinality: receptor classes by ommatidium
-candidate_constraints: [same eye, independently sourced retinal position, same receptor class]
-free_discrete_parameters: 0
-free_continuous_parameters: 0
-status: {inventory: partial, routing: candidates_known, implementation: not_started, validation: not_run}
+expected_cardinality: 2628 published R7/R8 assignments across 1332 optic columns; 3470 explicit unresolved terminals
+candidate_constraints: [same eye, published optic column, pale or yellow column compatibility, injective column-to-ommatidium registration]
+free_discrete_parameters: 1332
+free_continuous_parameters: 2628
+status: {inventory: partial, routing: candidates_known, implementation: tested, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/wiring/vision-routing.json]
-validation_ids: []
-next_action: Trouver une source rétinotopique pour les photorécepteurs; assignedOlHex1 et assignedOlHex2 décrivent uniquement des cellules ol_intrinsic.
+evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-optic-columns.csv, data/derived/wiring/vision-column-photoreceptors.parquet, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, derived_rule, engineering_choice, unresolved]
+  source_references: [https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx]
+  used_claims: [Published R7 and R8 bodyIds belong to named optic columns, Pale and yellow column classes constrain FlyBody sample palette]
+  assumptions: [Spatial registration is externally supplied and must not be inferred from workbook order]
+validation_ids: [validation.vision_column_transduction]
+next_action: Fixer l'enregistrement spatial colonne→ommatidie; assignedOlHex1 et assignedOlHex2 restent exclus car ils décrivent uniquement des cellules ol_intrinsic.
 blocked_by: []

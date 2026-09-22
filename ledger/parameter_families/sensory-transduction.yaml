@@ -2,16 +2,21 @@ schema_version: 1
 id: parameter.sensory_transduction
 name: Familles de transduction sensorielle locale
 owner_id: adapter.vision.transduction
-quantity: local transfer functions and adaptation constants
+quantity: uncalibrated local transfer coefficients
 unit: modality-dependent
-sharing_rule: split into modality and receptor-class families before fitting
-source_kind: unknown
-source_references: []
+sharing_rule: one independent coefficient per currently executable proprioceptive, mechanosensory, or photoreceptor assignment
+source_kind: derived
+source_references:
+  - generated/wiring/proprio-muscle-inputs.parquet
+  - generated/wiring/mechanosensory-muscle-inputs.parquet
+  - generated/wiring/vision-column-photoreceptors.parquet
 value: null
 bounds: null
-free_parameter_count: 0
+free_parameter_count: 6175
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 status: unknown
 confidence: low
-known_limitations: [Temporary umbrella family; must be decomposed before implementation]
+known_limitations:
+  - Parameter values and bounds have not been selected or calibrated.
+  - This umbrella family must be decomposed by modality and receptor class before calibration.

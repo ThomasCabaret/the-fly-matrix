@@ -6,11 +6,16 @@ adapter_type: B
 anatomical_region: retina
 parent_id: sensor.vision
 ports: {inputs: [retinal_samples], outputs: [photoreceptor_activity]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+status: {inventory: partial, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [drosophila_virtual_fly_project_contract.md]
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-optic-columns.csv, data/derived/wiring/vision-column-photoreceptors.parquet, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, derived_rule, engineering_choice, unresolved]
+  source_references: [https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx]
+  used_claims: [The published workbook fixes R7 and R8 bodyIds within named optic columns, Column type constrains pale versus yellow receptor samples]
+  assumptions: [Column-to-FlyBody-ommatidium registration is an external injective parameter and is not inferred from workbook row order]
 parameter_family_ids: [parameter.sensory_transduction]
-validation_ids: []
-next_action: Choisir le sous-modèle FlyVis/phototransduction minimal et ses unités.
+validation_ids: [validation.vision_column_transduction]
+next_action: Enregistrer spatialement les 1 332 colonnes publiées sur les ommatidies FlyBody puis rechercher une source de colonne pour les R1-R6.
 blocked_by: []
-completion_criteria: [Fonction locale définie, Paramètres sourcés, Réponse lumineuse testée]
+completion_criteria: [Fonction locale exécutable, Colonnes R7/R8 conservées, Enregistrement rétinien fixé, R1-R6 traités, HBeyelet conservés séparément]
