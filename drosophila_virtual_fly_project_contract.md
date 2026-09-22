@@ -186,6 +186,26 @@ The adapter must remain local to an anatomical effector and model only the missi
 
 Long-term, replace these adapters with explicit muscle models where adequate data exist.
 
+### Completion rule across adapter types
+
+Wiring completeness means exhaustive executable coverage, not perfect biological
+resolution. Every terminal channel must be assigned exactly one disposition:
+exact mapping, parameterized local adapter, basal clamp, declared physical proxy,
+explicit no-effect sink, or unresolved blocker. Only the last category is a
+dangling wire.
+
+A smoke test may inject arbitrary parameters and declared box inputs. It must not
+stand in for a missing adapter by injecting that adapter's output directly into a
+MaleCNS afferent or an internal port. Such direct injections remain wiring debt
+even when deterministic and clearly labelled.
+
+Adapter policy must also be coherent across a functional sector. Known and
+unknown visual assignments, for example, should traverse the same visual sensor,
+transduction and routing stack: published assignments may be fixed while unknown
+assignments remain parameterized inside that stack. A poorly documented retinal
+subset must not be converted into an unrelated basal clamp unless an explicit
+biological boundary justifies the different treatment.
+
 ## 6. Current qualitative interface picture
 
 This is a working audit, not an authoritative final count. Regenerate it directly from MaleCNS v1.0 plus the chosen body model and maintain a machine-readable audit.

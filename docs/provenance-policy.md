@@ -18,6 +18,12 @@ Une règle de câblage appartient à une ou plusieurs catégories :
 Les catégories ne sont pas des niveaux de qualité. Elles empêchent surtout de
 présenter une déduction ou un choix d'ingénierie comme une mesure biologique.
 
+La nature de l'affirmation est indépendante de la disposition d'un terminal
+(`exact`, `parameterized`, `basal`, `proxy`, `sink` ou `blocked`). Par exemple,
+une boîte `parameterized` peut contenir des limites issues du dataset et un choix
+d'ingénierie pour ses degrés de liberté. La disposition indique comment le canal
+est terminé ; la provenance indique pourquoi ce contrat est défendable.
+
 ## Ce qu'une fiche doit conserver
 
 Pour toute boîte, tout groupe ou tout fil nouveau ou substantiellement modifié :
@@ -70,6 +76,12 @@ nommer l'affirmation utilisée.
 - L'affirmation réellement utilisée est-elle écrite ?
 - Les règles dérivées et choix d'ingénierie sont-ils distingués ?
 - Les candidats, routes fixes et inconnues sont-ils séparés ?
+- Chaque terminal possède-t-il exactement une disposition exécutable ou un statut
+  `blocked` explicite ?
+- Le smoke test traverse-t-il les boîtes déclarées sans injecter directement leurs
+  sorties manquantes ?
+- Les exceptions à la politique homogène d'un secteur ont-elles une frontière
+  biologique ou fonctionnelle sourcée ?
 - Les exclusions et terminaux sans représentation sont-ils comptés ?
 - Les valeurs de test sont-elles absentes des paramètres scientifiques ?
 - Le registre, les tests et la prochaine action concordent-ils ?

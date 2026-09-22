@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-22, lot de fermeture physique FlyBody/MuJoCo.
+Mise à jour : 2026-09-22, contrat de couverture terminale exhaustive.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -12,6 +12,16 @@ Terminer le **câblage structurel** avant toute calibration. À 100 %, les signa
 doivent pouvoir parcourir l'ensemble monde/corps → MaleCNS → actionneurs avec des
 paramètres injectés arbitrairement. Aucun comportement plausible n'est encore
 attendu.
+
+La définition normative est désormais celle de
+[`ADR 0002`](decisions/0002-exhaustive-terminal-coverage.md) : chaque canal doit
+avoir une disposition `exact`, `parameterized`, `basal`, `proxy`, `sink` ou
+`blocked`. Une boîte noire locale paramétrable termine valablement un câblage même
+si sa correspondance interne est inconnue. En revanche, une activité fournie
+directement par le smoke test à la place d'une boîte reste `blocked`.
+Le calcul actuel des 85 % n'applique pas encore automatiquement cette nouvelle
+condition ; le prochain audit machine-readable pourra donc reclasser le score
+sans que le réseau sous-jacent ait régressé.
 
 ## État synthétique
 
@@ -42,14 +52,15 @@ unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
 
-1. Fixer l'enregistrement spatial des 1 332 colonnes publiées sur les ommatidies
-   FlyBody, sans utiliser l'ordre des lignes comme géométrie.
-2. Trouver une source de colonne indépendante pour les 3 377 R1-R6 et traiter
-   séparément les 93 autres canaux visuels encore ouverts.
-3. Ajouter ou représenter explicitement contrainte et vibration pour les terminaux
-   proprioceptifs encore ouverts.
-4. Réduire les modalités sensorielles résiduelles lorsque les annotations le
-   permettent, sans modifier leurs routes `bodyId` déjà exactes.
+1. Auditer toutes les injections `unresolved_values` du parcours global et leur
+   attribuer une disposition terminale machine-readable.
+2. Faire traverser aux 6 098 canaux la même pile visuelle : affectations R7/R8
+   fixes lorsqu'elles sont publiées, sous-routage paramétrable pour les autres,
+   sans clamp basal localisé dans l'œil.
+3. Encapsuler contrainte et vibration proprioceptives manquantes dans une boîte
+   `parameterized` ou `proxy` explicite plutôt que dans des valeurs de test.
+4. Donner aux 1 883 afférences sensorielles résiduelles une boîte source générique
+   locale, quitte à conserver une fonction de transfert très large à calibrer.
 5. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
    commande→MuJoCo→état articulaire est désormais fermée et déterministe.
 6. N'affiner les candidats tête/thorax que si une observable corporelle plus

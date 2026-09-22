@@ -31,3 +31,6 @@ fonctions de transfert et paramètres mécaniques constitue une phase ultérieur
   la fin du câblage, mais restent visibles dans le registre.
 - Une boîte partiellement reliée doit exposer ses entrées manquantes au lieu de les
   remplacer par une hypothèse silencieuse.
+- Exposer une entrée `unresolved_values` au banc d'essai ne termine pas le câblage
+  global : les canaux concernés doivent passer par une boîte `parameterized`,
+  `basal` ou `proxy` déclarée, ou rester explicitement `blocked`.

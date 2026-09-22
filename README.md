@@ -35,6 +35,8 @@ Pour reprendre le projet sans le contexte des conversations :
   et mécanoréceptrice, leurs routages aval, la transduction visuelle R7/R8 par
   colonnes publiées, le routage aval visuel, les afférences sensorielles non
   résolues et les sorties CNS explicitement motrices.
+  Les valeurs de secours encore injectées pour les canaux bloqués prouvent la
+  continuité du code, mais ne valent pas fermeture de leur câblage.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
@@ -94,6 +96,13 @@ vérifiés et que toutes les boîtes et liaisons peuvent s'exécuter avec des pa
 injectés, même arbitraires. L'ancien indice structurel reste affiché à titre
 secondaire.
 
+« Exécutable » ne signifie pas que chaque relation biologique est connue. Chaque
+canal doit toutefois finir dans une boîte ou une politique explicite : branchement
+exact, boîte paramétrable, clamp basal, proxy physique ou terminal sans effecteur.
+Un canal encore alimenté directement par le smoke test reste bloquant. La règle
+détaillée et l'exigence de cohérence par secteur sont fixées dans
+[`ADR 0002`](decisions/0002-exhaustive-terminal-coverage.md).
+
 `run_analysis.bat` produit également, sous `data/derived/inventory/`, une table des
 groupes d'interface et un Parquet de leurs membres. Ces résultats sont reproductibles
 à partir des données brutes locales et volontairement exclus de Git.
@@ -123,7 +132,11 @@ Le runtime minimal dans `src/the_fly_matrix/runtime.py` sait instancier les boî
 type A générées, diffuser une valeur injectée par canal vers chaque `bodyId` et
 fusionner les activités dans un tampon d'entrée CNS type D. Le smoke test utilise
 des valeurs pseudo-aléatoires uniquement pour vérifier le passage des données ;
-elles ne sont jamais enregistrées comme paramètres scientifiques.
+elles ne sont jamais enregistrées comme paramètres scientifiques. À terme, ces
+valeurs ne peuvent entrer que par les ports ou paramètres de boîtes déclarées :
+les injections directes actuellement utilisées pour certains canaux visuels,
+proprioceptifs et sensoriels résiduels sont une dette de câblage suivie, pas une
+solution finale.
 
 Le cœur CNS utilise directement la table creuse publiée, sans en créer une copie
 géante dans le dépôt. `central-node-index.parquet` attribue un indice stable aux
@@ -202,6 +215,12 @@ injective externe des 1 332 colonnes vers les ommatidies du même œil, avec
 compatibilité pale/jaune. Le smoke test injecte une correspondance arbitraire mais
 valide uniquement pour tester le flux : aucun alignement spatial ni coefficient de
 phototransduction scientifique n'est persisté.
+
+Selon le contrat de couverture exhaustive, le secteur visuel n'est donc pas encore
+terminé. Les 2 628 R7/R8 publiés sont une sous-relation mieux contrainte dans la
+même pile visuelle ; les 3 470 autres canaux doivent recevoir une sous-matrice
+paramétrable dans cette pile, et non un clamp basal localisé ni une injection
+directe du smoke test.
 
 Le manifeste moteur couvre les 708 neurones `vnc_motor` et 107 neurones
 `cb_motor`, avec une instance type E par `bodyId`. L'audit des nerfs de sortie
