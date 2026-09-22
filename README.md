@@ -129,10 +129,15 @@ type C. Côté physique, `flybody-proprioception-channels.csv` relie maintenant 
 102 articulations biologiques aux adresses `qpos` et `qvel` du modèle compilé :
 la boîte `sensor.proprioception` extrait ainsi 102 positions et 102 vitesses de
 façon exécutable. Côté CNS, `proprioception-routes.parquet` fixe les 1 454 routes
-terminales MaleCNS regroupées en 262 instances. La correspondance scientifique
-entre ces 204 observables et ces 262 instances reste volontairement inconnue ;
-les contraintes et vibrations sont elles aussi différées. Finir ces deux moitiés
-fiables ne fabrique donc pas une jonction biologique implicite.
+terminales MaleCNS regroupées en 262 instances. Entre les deux,
+`proprioception-input-candidates.parquet` contient 1 439 arêtes locales candidates
+contraintes par nerf d'entrée, côté, appendice et sous-classe réceptrice. Elles
+relient 171 instances, couvrant 986 neurones, à des positions ou vitesses
+articulaires plausibles sans leur attribuer de valeur. Les 91 instances restantes
+(468 neurones) restent explicites : 82 attendent une mesure de contrainte, 5 une
+mesure de vibration et 4 une contrainte du notum. Le runtime exige des valeurs
+externes de smoke test pour ces terminaux au lieu de les mettre silencieusement à
+zéro. Aucune de ces valeurs ni aucun des 1 439 coefficients n'est une calibration.
 
 Le manifeste mécanorécepteur applique la même séparation : 4 291 afférences
 tactiles ou mécanoréceptrices sont divisées en 323 instances type C selon le

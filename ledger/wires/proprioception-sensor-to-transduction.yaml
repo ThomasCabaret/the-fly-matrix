@@ -2,16 +2,16 @@ schema_version: 1
 id: wire.proprioception_sensor_to_transduction
 name: État articulaire vers transduction proprioceptive
 sector: proprioception
-source: {box_id: sensor.proprioception, port: joint_state, group_query: all 102 joints}
-target: {box_id: adapter.proprioception.transduction, port: joint_state, group_query: by joint and axis}
-mapping_level: exact
-expected_cardinality: 102 local joint channels before derived variables
-candidate_constraints: [same joint and axis]
+source: {box_id: sensor.proprioception, port: joint_state, group_query: 102 joints x position/velocity}
+target: {box_id: adapter.proprioception.transduction, port: joint_state, group_query: 171 represented terminal channels}
+mapping_level: group-level
+expected_cardinality: 1439 sparse local candidate edges
+candidate_constraints: [same annotated appendage, same side for paired appendages, receptor subclass compatible observable]
 free_discrete_parameters: 0
-free_continuous_parameters: 0
-status: {inventory: complete, routing: fixed, implementation: not_started, validation: smoke}
-confidence: high
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception-channels.csv]
-validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor]
-next_action: Déterminer quels canaux position/vitesse alimentent chacune des 262 instances biologiques, puis ajouter les dérivées spécifiques nécessaires.
+free_continuous_parameters: 1439
+status: {inventory: complete, routing: candidates_known, implementation: tested, validation: integration_pass}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-input-candidates.parquet, runs/wiring-smoke/latest.json]
+validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.proprioception_transduction_candidates]
+next_action: Ajouter contrainte et vibration pour les 91 canaux sans observable; ne sélectionner aucune arête avant calibration.
 blocked_by: []

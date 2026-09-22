@@ -17,9 +17,10 @@ acceptance_criteria:
   - No biological receptor assignment or calibrated value is inferred
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: flybody-proprioception-runtime-2026-09-20
+latest_run_id: flybody-proprioception-runtime-2026-09-22
 status: integration_pass
 notes:
   - 102 FlyBody joint channels expose 102 positions and 102 velocities
   - The physical body-to-sensor wire is executable
-  - Mapping into the 262 proprioceptive routing instances remains deliberately deferred
+  - A separate sparse candidate matrix now connects joint state to 171 of 262 terminal channels
+  - Strain and vibration observables required by the other 91 channels remain explicit

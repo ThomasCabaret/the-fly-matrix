@@ -22,6 +22,7 @@ from .runtime import (
     MechanosensationRoutingBox,
     MotorRoutingBox,
     MotorTransductionBox,
+    ProprioceptionTransductionBox,
     ProprioceptionRoutingBox,
     SparseActivity,
     UnclassifiedSensoryRoutingBox,
@@ -126,7 +127,14 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     proprioception = ProprioceptionRoutingBox.from_generated_wiring()
     print(
         f"[OK] {proprioception.box_id}: {len(proprioception.channel_ids):,} instances/canaux, "
-        f"{len(proprioception.routes):,} destinations exactes; entrée physique différée"
+        f"{len(proprioception.routes):,} destinations exactes"
+    )
+    proprio_transduction = ProprioceptionTransductionBox.from_generated_wiring()
+    print(
+        f"[OK] {proprio_transduction.box_id}: "
+        f"{len(proprio_transduction.parameter_ids):,} arêtes candidates pour "
+        f"{len(proprio_transduction.resolved_channel_ids):,}/262 canaux; "
+        f"{len(proprio_transduction.unresolved_channel_ids):,} observables manquantes explicites"
     )
     mechanosensation = MechanosensationRoutingBox.from_generated_wiring()
     print(
@@ -172,6 +180,24 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     qvel_second = np.random.default_rng(seed - 1).uniform(-1.0, 1.0, proprio_sensor.qvel_size)
     joint_state_first = proprio_sensor.step(qpos_first, qvel_first)
     joint_state_second = proprio_sensor.step(qpos_second, qvel_second)
+    proprio_parameters_first = np.random.default_rng(seed + len(boxes) + 10).uniform(
+        -1.0, 1.0, len(proprio_transduction.parameter_ids)
+    )
+    proprio_parameters_second = np.random.default_rng(seed + len(boxes) + 10).uniform(
+        -1.0, 1.0, len(proprio_transduction.parameter_ids)
+    )
+    unresolved_proprio_first = np.random.default_rng(seed + len(boxes) + 11).uniform(
+        -1.0, 1.0, len(proprio_transduction.unresolved_channel_ids)
+    )
+    unresolved_proprio_second = np.random.default_rng(seed + len(boxes) + 11).uniform(
+        -1.0, 1.0, len(proprio_transduction.unresolved_channel_ids)
+    )
+    proprio_activity_first = proprio_transduction.step(
+        joint_state_first, proprio_parameters_first, unresolved_proprio_first
+    )
+    proprio_activity_second = proprio_transduction.step(
+        joint_state_second, proprio_parameters_second, unresolved_proprio_second
+    )
     contact_data_first = np.random.default_rng(seed - 4).uniform(
         -1.0, 1.0, touch_sensor.sensor_data_size
     )
@@ -182,8 +208,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     contact_state_second = touch_sensor.step(contact_data_second)
     first_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
     second_outputs = [box.step(_arbitrary_values(box, seed + index)) for index, box in enumerate(boxes)]
-    proprio_first = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
-    proprio_second = proprioception.step(_arbitrary_values(proprioception, seed + len(boxes)))
+    proprio_first = proprioception.step(proprio_activity_first.values)
+    proprio_second = proprioception.step(proprio_activity_second.values)
     mechano_first = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
     mechano_second = mechanosensation.step(_arbitrary_values(mechanosensation, seed + len(boxes) + 1))
     vision_first = vision.step(_arbitrary_values(vision, seed + len(boxes) + 2))
@@ -265,6 +291,12 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError(
             f"102 articulations proprioceptives attendues, {len(joint_state_first.joint_names)} obtenues"
         )
+    if (
+        proprio_activity_first.channel_ids != proprio_activity_second.channel_ids
+        or proprio_activity_first.channel_ids != proprioception.channel_ids
+        or not np.array_equal(proprio_activity_first.values, proprio_activity_second.values)
+    ):
+        raise RuntimeError("Le rejeu de la transduction proprioceptive n'est pas déterministe")
     if contact_state_first.leg_names != contact_state_second.leg_names or not all(
         np.array_equal(first_values, second_values)
         for first_values, second_values in (
@@ -298,6 +330,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             f"1442 échantillons visuels attendus, {len(vision_samples_first.channel_ids)} obtenus"
         )
     print("[OK] 102 articulations FlyBody extraites en 204 observables position/vitesse")
+    print(
+        f"[OK] {len(proprio_transduction.parameter_ids):,} arêtes proprioceptives candidates "
+        f"exécutées vers {len(proprio_transduction.resolved_channel_ids):,} canaux"
+    )
     print("[OK] 6 contacts de patte extraits en 96 observables physiques")
     print("[OK] 102 commandes placées dans les 102 adresses ctrl FlyBody")
     print("[OK] Rendu réel de 2 × 721 ommatidies extrait de façon déterministe")
@@ -331,11 +367,23 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         ]
         + [
             {
+                "id": proprio_transduction.box_id,
+                "adapter_type": proprio_transduction.adapter_type,
+                "candidate_edges": len(proprio_transduction.parameter_ids),
+                "resolved_terminal_channels": len(proprio_transduction.resolved_channel_ids),
+                "unresolved_terminal_channels": len(
+                    proprio_transduction.unresolved_channel_ids
+                ),
+                "parameter_status": "arbitrary_smoke_only",
+            }
+        ]
+        + [
+            {
                 "id": proprioception.box_id,
                 "adapter_type": proprioception.adapter_type,
                 "terminal_box_instances": len(proprioception.channel_ids),
                 "exact_routes": len(proprioception.routes),
-                "upstream_physical_mapping": "deferred",
+                "upstream_physical_mapping": "candidates_known_with_missing_observables",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ]
@@ -447,7 +495,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "scalar_observables": len(joint_state_first.joint_names) * 2,
             "qpos_size": proprio_sensor.qpos_size,
             "qvel_size": proprio_sensor.qvel_size,
-            "biological_receptor_mapping": "deferred",
+            "candidate_edges": len(proprio_transduction.parameter_ids),
+            "resolved_terminal_channels": len(proprio_transduction.resolved_channel_ids),
+            "unresolved_terminal_channels": len(proprio_transduction.unresolved_channel_ids),
+            "biological_receptor_mapping": "candidates_known_with_missing_observables",
         },
         "physical_touch": {
             "source_box_id": "world.mujoco",
@@ -482,6 +533,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "motor_transduction_candidates_executed": True,
             "unsupported_motor_terminals_executed_as_no_output": True,
             "body_to_proprioception_executed": True,
+            "proprioception_transduction_candidates_executed": True,
             "world_to_touch_executed": True,
             "motor_transduction_to_body_executed": True,
             "world_to_vision_executed": True,

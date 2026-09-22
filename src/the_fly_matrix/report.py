@@ -22,6 +22,9 @@ PROPRIO_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "proprioception-rou
 FLYBODY_PROPRIO_WIRING_PATH = (
     ROOT / "data" / "derived" / "wiring" / "flybody-proprioception.json"
 )
+PROPRIO_TRANSDUCTION_PATH = (
+    ROOT / "data" / "derived" / "wiring" / "proprioception-transduction-candidates.json"
+)
 FLYBODY_TOUCH_WIRING_PATH = ROOT / "data" / "derived" / "wiring" / "flybody-touch.json"
 FLYBODY_ACTUATOR_WIRING_PATH = (
     ROOT / "data" / "derived" / "wiring" / "flybody-actuators.json"
@@ -123,6 +126,7 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     wiring_smoke = inventory.get("wiring_smoke")
     proprio_wiring = inventory.get("proprio_wiring")
     flybody_proprio_wiring = inventory.get("flybody_proprio_wiring")
+    proprio_transduction = inventory.get("proprio_transduction")
     flybody_touch_wiring = inventory.get("flybody_touch_wiring")
     flybody_actuator_wiring = inventory.get("flybody_actuator_wiring")
     flybody_vision_wiring = inventory.get("flybody_vision_wiring")
@@ -197,6 +201,12 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{flybody_proprio_wiring.get("joint_channels", 0):,}</strong><span>articulations FlyBody câblées</span></div>'
             f'<div><strong>{flybody_proprio_wiring.get("scalar_observables", 0):,}</strong><span>observables proprio physiques</span></div>'
+        )
+    if proprio_transduction:
+        remote_metrics += (
+            f'<div><strong>{proprio_transduction.get("candidate_edges", 0):,}</strong><span>arêtes proprio candidates</span></div>'
+            f'<div><strong>{proprio_transduction.get("resolved_terminal_channels", 0):,}/262</strong><span>canaux proprio reliés au corps</span></div>'
+            f'<div><strong>{proprio_transduction.get("unresolved_terminal_channels", 0):,}</strong><span>canaux attendant contrainte/vibration</span></div>'
         )
     if flybody_touch_wiring:
         remote_metrics += (
@@ -404,6 +414,11 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
                 f"[OK] Observables proprioceptives FlyBody chargées: "
                 f"{FLYBODY_PROPRIO_WIRING_PATH}"
             )
+        if PROPRIO_TRANSDUCTION_PATH.is_file():
+            inventory["proprio_transduction"] = json.loads(
+                PROPRIO_TRANSDUCTION_PATH.read_text(encoding="utf-8")
+            )
+            print(f"[OK] Matrice proprioceptive candidate chargée: {PROPRIO_TRANSDUCTION_PATH}")
         if FLYBODY_TOUCH_WIRING_PATH.is_file():
             inventory["flybody_touch_wiring"] = json.loads(
                 FLYBODY_TOUCH_WIRING_PATH.read_text(encoding="utf-8")

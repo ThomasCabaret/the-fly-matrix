@@ -13,14 +13,14 @@ acceptance_criteria:
   - All 1454 proprioceptive neurons are assigned exactly once
   - Terminal type-C instances preserve nerve, subclass, MANC type, MaleCNS type and side
   - Every downstream route terminates at an explicit MaleCNS bodyId
-  - Physical joint-to-receptor assignments remain explicitly deferred
+  - Physical candidate assignments are tracked separately from exact downstream bodyId routes
   - Arbitrary smoke values are not promoted to scientific parameters
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: proprioception-routing-2026-09-19
+latest_run_id: proprioception-routing-2026-09-22
 status: integration_pass
 notes:
   - 262 generated type-C instances executed
   - 1454 exact MaleCNS bodyId routes with no duplicate or omission
   - Unknown annotations remain explicit for 1 nerve, 1 subclass, 219 MANC types, 71 MaleCNS types and 1 side
-  - Physical joint-to-receptor mapping remains deliberately unknown
+  - Physical candidates cover 171 terminal channels; 91 strain or vibration channels remain explicit

@@ -89,6 +89,31 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(physical_proprio["qvel_addressing"], "exact")
         self.assertEqual(physical_proprio["biological_receptor_mapping"], "deferred")
 
+        proprio_transduction_path = path.with_name(
+            "proprioception-transduction-candidates.json"
+        )
+        self.assertTrue(proprio_transduction_path.is_file())
+        proprio_transduction = json.loads(
+            proprio_transduction_path.read_text(encoding="utf-8")
+        )
+        self.assertEqual(proprio_transduction["source_joint_channels"], 102)
+        self.assertEqual(proprio_transduction["target_terminal_channels"], 262)
+        self.assertEqual(proprio_transduction["target_neurons"], 1454)
+        self.assertEqual(proprio_transduction["candidate_edges"], 1439)
+        self.assertEqual(proprio_transduction["resolved_terminal_channels"], 171)
+        self.assertEqual(proprio_transduction["resolved_neurons"], 986)
+        self.assertEqual(proprio_transduction["unresolved_terminal_channels"], 91)
+        self.assertEqual(proprio_transduction["unresolved_neurons"], 468)
+        self.assertEqual(
+            proprio_transduction["unresolved_reason_channel_counts"],
+            {
+                "notum_strain_observable_missing": 4,
+                "strain_observable_missing": 82,
+                "vibration_observable_missing": 5,
+            },
+        )
+        self.assertFalse(proprio_transduction["scientific_parameter_values_selected"])
+
         physical_touch_path = path.with_name("flybody-touch.json")
         self.assertTrue(physical_touch_path.is_file())
         physical_touch = json.loads(physical_touch_path.read_text(encoding="utf-8"))

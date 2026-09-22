@@ -8,9 +8,9 @@ parent_id: null
 ports: {inputs: [body_state], outputs: [joint_state, strain, vibration]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, runs/wiring-smoke/latest.json]
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor]
-next_action: Associer les 204 observables position/vitesse aux organes proprioceptifs plausibles; contraintes et vibrations restent différées.
+validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.proprioception_transduction_candidates]
+next_action: Ajouter les observables locales de contrainte et vibration requises par les 91 canaux terminaux encore sans source physique.
 blocked_by: []
-completion_criteria: [102 articulations énumérées, Adresses qpos/qvel exactes, Unités fixées, Extraction déterministe testée]
+completion_criteria: [102 articulations énumérées, Adresses qpos/qvel exactes, Unités fixées, Extraction déterministe testée, Observables manquantes comptées]

@@ -24,6 +24,7 @@ from the_fly_matrix.runtime import (
     MOTOR_ROUTE_PATH,
     MOTOR_ACTUATOR_CANDIDATE_PATH,
     PROPRIO_CHANNEL_PATH,
+    PROPRIO_INPUT_CANDIDATE_PATH,
     PROPRIO_ROUTE_PATH,
     ROUTE_PATH,
     UNCLASSIFIED_CHANNEL_PATH,
@@ -34,6 +35,7 @@ from the_fly_matrix.runtime import (
     GroupedChannelActivity,
     MotorRoutingBox,
     MotorTransductionBox,
+    ProprioceptionTransductionBox,
     ProprioceptionRoutingBox,
     SparseActivity,
     UnclassifiedSensoryRoutingBox,
@@ -123,6 +125,34 @@ class RuntimeTests(unittest.TestCase):
         self.assertTrue(np.array_equal(output.positions, qpos))
         self.assertTrue(np.array_equal(output.velocities, qvel))
         self.assertEqual(set(sensor.channels["observables"]), {"position,velocity"})
+
+    def test_proprioception_transduction_executes_sparse_candidates_and_terminals(self) -> None:
+        if not PROPRIO_INPUT_CANDIDATE_PATH.is_file():
+            self.skipTest("generated proprioception transduction candidates are absent")
+        sensor = FlyBodyProprioceptionSensor.from_generated_wiring()
+        box = ProprioceptionTransductionBox.from_generated_wiring()
+        joint_state = sensor.step(
+            np.ones(sensor.qpos_size, dtype=np.float64),
+            np.full(sensor.qvel_size, 2.0, dtype=np.float64),
+        )
+        fallback = np.arange(len(box.unresolved_channel_ids), dtype=np.float64) + 10.0
+        output = box.step(
+            joint_state,
+            np.ones(len(box.parameter_ids), dtype=np.float64),
+            fallback,
+        )
+        self.assertEqual(len(box.parameter_ids), 1439)
+        self.assertEqual(len(box.resolved_channel_ids), 171)
+        self.assertEqual(len(box.unresolved_channel_ids), 91)
+        self.assertEqual(len(output.channel_ids), 262)
+        self.assertTrue(np.all(output.values > 0))
+        values_by_channel = dict(zip(output.channel_ids, output.values))
+        self.assertTrue(
+            np.array_equal(
+                np.asarray([values_by_channel[item] for item in box.unresolved_channel_ids]),
+                fallback,
+            )
+        )
 
     def test_flybody_ground_contacts_execute_without_receptor_claims(self) -> None:
         if not FLYBODY_TOUCH_CHANNEL_PATH.is_file():

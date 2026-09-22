@@ -49,6 +49,8 @@ UNCLASSIFIED_CHANNEL_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-channels.csv"
 UNCLASSIFIED_ROUTE_OUTPUT = OUTPUT_ROOT / "unclassified-sensory-routes.parquet"
 FLYBODY_PROPRIO_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-proprioception.json"
 FLYBODY_PROPRIO_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-proprioception-channels.csv"
+PROPRIO_TRANSDUCTION_SUMMARY_OUTPUT = OUTPUT_ROOT / "proprioception-transduction-candidates.json"
+PROPRIO_INPUT_CANDIDATE_OUTPUT = OUTPUT_ROOT / "proprioception-input-candidates.parquet"
 FLYBODY_TOUCH_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-touch.json"
 FLYBODY_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-touch-channels.csv"
 FLYBODY_ACTUATOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-actuators.json"
@@ -424,6 +426,245 @@ def build_flybody_proprioception_wiring(
     print(f"[OK] {len(channels) * 2:,} observables scalaires exposées sans calibration")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux physiques : {channel_output}")
+    return summary
+
+
+def build_proprioception_transduction_candidates(
+    receptor_channel_path: Path = PROPRIO_CHANNEL_OUTPUT,
+    receptor_route_path: Path = PROPRIO_ROUTE_OUTPUT,
+    joint_channel_path: Path = FLYBODY_PROPRIO_CHANNEL_OUTPUT,
+    annotation_path: Path = ANNOTATION_SOURCE,
+    summary_output: Path = PROPRIO_TRANSDUCTION_SUMMARY_OUTPUT,
+    candidate_output: Path = PROPRIO_INPUT_CANDIDATE_OUTPUT,
+) -> dict[str, Any]:
+    """Build a sparse local joint-state-to-proprioceptor candidate matrix.
+
+    Only explicit entry-nerve, side and receptor-class annotations are used.
+    Missing strain and vibration observables remain explicit terminals instead
+    of being replaced by joint angle proxies.
+    """
+    for path in (
+        receptor_channel_path,
+        receptor_route_path,
+        joint_channel_path,
+        annotation_path,
+    ):
+        if not path.is_file():
+            raise FileNotFoundError(f"{path} absent; reconstruisez d'abord le câblage")
+    section("Construction de la matrice candidate proprioceptive")
+    receptors = pd.read_csv(receptor_channel_path).fillna("(unknown)")
+    routes = pd.read_parquet(receptor_route_path)
+    joints = pd.read_csv(joint_channel_path).fillna("(unknown)")
+    annotations = pd.read_feather(annotation_path, columns=["bodyId", "synonyms"])
+    annotated_routes = routes[["channel_id", "target_body_id"]].merge(
+        annotations,
+        left_on="target_body_id",
+        right_on="bodyId",
+        how="left",
+        validate="many_to_one",
+    )
+    synonym_sets = {
+        str(channel_id): tuple(sorted(set(values.dropna().astype(str))))
+        for channel_id, values in annotated_routes.groupby("channel_id")["synonyms"]
+    }
+
+    leg_nerve_to_segment = {
+        "ProLN": "f",
+        "ProAN": "f",
+        "VProN": "f",
+        "DProN": "f",
+        "MesoLN": "m",
+        "MetaLN": "h",
+    }
+    candidate_rows: list[dict[str, Any]] = []
+    channel_results: list[dict[str, Any]] = []
+    for receptor in receptors.itertuples(index=False):
+        channel_id = str(receptor.channel_id)
+        nerve = str(receptor.entryNerve)
+        subclass = str(receptor.subclass)
+        side = str(receptor.rootSide).lower()
+        synonyms = synonym_sets.get(channel_id, ())
+        candidates = joints.iloc[0:0]
+        observables: tuple[str, ...] = ()
+        basis = ""
+        unresolved_reason = ""
+
+        if subclass == "campaniform sensilla":
+            unresolved_reason = "strain_observable_missing"
+        elif subclass == "notum":
+            unresolved_reason = "notum_strain_observable_missing"
+        elif "FeCO club" in synonyms:
+            unresolved_reason = "vibration_observable_missing"
+        elif nerve in leg_nerve_to_segment and side in {"l", "r"}:
+            prefix = f"{side}{leg_nerve_to_segment[nerve]}"
+            candidates = joints.loc[
+                joints["body_group"].eq("legs")
+                & joints["joint_name"].str.contains(f"{prefix}_", regex=False)
+            ]
+            if subclass == "chordotonal organ":
+                candidates = candidates.loc[
+                    candidates["joint_name"].str.contains(
+                        f"{prefix}_trochanterfemur-{prefix}_tibia-pitch",
+                        regex=False,
+                    )
+                ]
+                if "FeCO claw" in synonyms:
+                    observables = ("position",)
+                    basis = "annotated_feco_claw_position"
+                elif "FeCO hook" in synonyms:
+                    observables = ("velocity",)
+                    basis = "annotated_feco_hook_movement"
+                else:
+                    observables = ("position", "velocity")
+                    basis = "leg_nerve_side_femur_tibia_chordotonal"
+            elif subclass == "hair plate":
+                observables = ("position",)
+                basis = "leg_nerve_side_hair_plate_position"
+            else:
+                observables = ("position", "velocity")
+                basis = "leg_nerve_side_unspecified_joint_state"
+        elif nerve == "DMetaN" and subclass == "haltere" and side in {"l", "r"}:
+            candidates = joints.loc[
+                joints["body_group"].eq("halteres")
+                & joints["joint_name"].str.contains(f"-{side}_haltere", regex=False)
+            ]
+            observables = ("position", "velocity")
+            basis = "entry_nerve_side_haltere_motion"
+        elif nerve == "ADMN" and subclass == "wing" and side in {"l", "r"}:
+            candidates = joints.loc[
+                joints["body_group"].eq("wings")
+                & joints["joint_name"].str.contains(f"-{side}_wing", regex=False)
+            ]
+            observables = ("position", "velocity")
+            basis = "entry_nerve_side_wing_motion"
+        elif nerve == "AbN3" and subclass == "abdomen":
+            candidates = joints.loc[joints["body_group"].eq("abdomen")]
+            observables = ("position", "velocity")
+            basis = "entry_nerve_abdominal_joint_state"
+        elif nerve == "ProCN" and subclass == "chordotonal organ":
+            candidates = joints.loc[joints["body_group"].eq("head")]
+            observables = ("position", "velocity")
+            basis = "prothoracic_chordotonal_head_motion"
+        elif nerve == "PrN" and subclass in {"hair plate", "neck"}:
+            candidates = joints.loc[joints["body_group"].eq("head")]
+            observables = ("position",) if subclass == "hair plate" else ("position", "velocity")
+            basis = "prosternal_nerve_head_joint_state"
+        else:
+            unresolved_reason = "anatomical_assignment_unresolved"
+
+        if not unresolved_reason and candidates.empty:
+            raise RuntimeError(f"Aucune articulation candidate pour {channel_id} ({nerve}, {subclass})")
+        if not unresolved_reason and not observables:
+            raise RuntimeError(f"Aucune observable candidate pour {channel_id}")
+        if unresolved_reason:
+            channel_results.append(
+                {
+                    "channel_id": channel_id,
+                    "neuron_count": int(receptor.neuron_count),
+                    "status": "missing_physical_observable",
+                    "reason": unresolved_reason,
+                }
+            )
+            continue
+
+        channel_results.append(
+            {
+                "channel_id": channel_id,
+                "neuron_count": int(receptor.neuron_count),
+                "status": "candidates_known",
+                "reason": basis,
+            }
+        )
+        for joint in candidates.itertuples(index=False):
+            for observable in observables:
+                parameter_key = f"{joint.channel_id}|{observable}|{channel_id}"
+                candidate_rows.append(
+                    {
+                        "parameter_id": "parameter.proprioception.edge."
+                        + hashlib.sha256(parameter_key.encode("utf-8")).hexdigest()[:16],
+                        "source_channel_id": str(joint.channel_id),
+                        "source_joint_id": int(joint.joint_id),
+                        "source_joint_name": str(joint.joint_name),
+                        "source_body_group": str(joint.body_group),
+                        "source_observable": observable,
+                        "target_channel_id": channel_id,
+                        "entry_nerve": nerve,
+                        "subclass": subclass,
+                        "side": str(receptor.rootSide),
+                        "candidate_basis": basis,
+                        "parameter_status": "unassigned",
+                    }
+                )
+
+    candidates = pd.DataFrame(candidate_rows).sort_values(
+        ["target_channel_id", "source_joint_id", "source_observable"]
+    ).reset_index(drop=True)
+    results = pd.DataFrame(channel_results)
+    if candidates["parameter_id"].duplicated().any():
+        raise RuntimeError("La matrice proprioceptive contient des paramètres dupliqués")
+    resolved_ids = set(candidates["target_channel_id"].astype(str))
+    unresolved_ids = set(receptors["channel_id"].astype(str)) - resolved_ids
+    if resolved_ids & unresolved_ids or resolved_ids | unresolved_ids != set(
+        receptors["channel_id"].astype(str)
+    ):
+        raise RuntimeError("La partition des canaux proprioceptifs est incohérente")
+    if (len(candidates), len(resolved_ids), len(unresolved_ids)) != (1439, 171, 91):
+        raise RuntimeError(
+            "Matrice proprioceptive inattendue: "
+            f"{len(candidates)} arêtes, {len(resolved_ids)} résolus, {len(unresolved_ids)} non résolus"
+        )
+    unresolved = results.loc[results["status"].eq("missing_physical_observable")]
+    summary = {
+        "schema_version": 1,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "purpose": "sparse local joint-state-to-proprioceptor candidate matrix without fitted values",
+        "scientific_basis": {
+            "male_cns_annotations": "https://github.com/flyconnectome/2025malecns",
+            "feco_publication": "https://doi.org/10.1038/s41467-025-59302-3",
+            "used_claims": [
+                "entryNerve and rootSide constrain the represented appendage",
+                "FeCO claw, hook and club classes encode position, movement and vibration respectively",
+                "unrepresented strain and vibration are not replaced by angle proxies",
+            ],
+        },
+        "method": {
+            "candidate_rule": "same annotated appendage and side; receptor subclass restricts local observable",
+            "parameterization": "one free signed local coefficient per permitted observable-to-terminal edge",
+            "initialization": "absent; all parameter values remain unassigned",
+            "unresolved_policy": "runtime requires explicit external placeholder values for terminals whose physical observable is absent",
+        },
+        "source_joint_channels": int(len(joints)),
+        "source_scalar_observables": int(len(joints) * 2),
+        "target_terminal_channels": int(len(receptors)),
+        "target_neurons": int(receptors["neuron_count"].sum()),
+        "candidate_edges": int(len(candidates)),
+        "free_continuous_parameters": int(len(candidates)),
+        "resolved_terminal_channels": len(resolved_ids),
+        "resolved_neurons": int(
+            receptors.loc[receptors["channel_id"].isin(resolved_ids), "neuron_count"].sum()
+        ),
+        "unresolved_terminal_channels": len(unresolved_ids),
+        "unresolved_neurons": int(unresolved["neuron_count"].sum()),
+        "unresolved_reason_channel_counts": {
+            str(key): int(value)
+            for key, value in unresolved["reason"].value_counts().sort_index().items()
+        },
+        "candidate_basis_edge_counts": {
+            str(key): int(value)
+            for key, value in candidates["candidate_basis"].value_counts().sort_index().items()
+        },
+        "routing_status": "candidates_known_with_explicit_missing_observables",
+        "parameter_status": "unassigned",
+        "scientific_parameter_values_selected": False,
+    }
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    candidates.to_parquet(candidate_output, index=False)
+    print(f"[OK] {len(candidates):,} arêtes locales candidates, toutes sans valeur")
+    print(f"[OK] {len(resolved_ids):,}/262 canaux terminaux reliés à des observables articulaires")
+    print(f"[INFO] {len(unresolved_ids):,}/262 terminaux attendent une observable de contrainte ou vibration")
+    print(f"[OK] Synthèse : {summary_output}")
+    print(f"[OK] Matrice candidate : {candidate_output}")
     return summary
 
 
@@ -1584,6 +1825,7 @@ def main() -> int:
         )
         build_proprioception_wiring(args.source)
         build_flybody_proprioception_wiring()
+        build_proprioception_transduction_candidates()
         build_flybody_touch_wiring()
         build_flybody_actuator_wiring()
         build_flybody_vision_wiring()

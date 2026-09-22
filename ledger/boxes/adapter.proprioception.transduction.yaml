@@ -6,11 +6,11 @@ adapter_type: B
 anatomical_region: chordotonal_and_strain_sensors
 parent_id: sensor.proprioception
 ports: {inputs: [joint_state, strain, vibration], outputs: [proprioceptor_activity]}
-status: {inventory: partial, implementation: not_started, parameters: unknown, validation: not_run}
+status: {inventory: partial, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [drosophila_virtual_fly_project_contract.md]
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-input-candidates.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.sensory_transduction]
-validation_ids: []
-next_action: Définir les fonctions locales par classes position, mouvement et vibration.
+validation_ids: [validation.proprioception_transduction_candidates]
+next_action: Conserver les 1 439 arêtes candidates sans valeur; compléter les entrées contrainte et vibration avant la calibration.
 blocked_by: []
-completion_criteria: [Classes séparées, Homologies partagées, Courbes physiologiques référencées]
+completion_criteria: [Classes séparées, Homologies partagées, Candidats locaux exécutables, Observables absentes explicites, Courbes physiologiques référencées]

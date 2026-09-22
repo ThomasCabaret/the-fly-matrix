@@ -16,6 +16,7 @@ CHANNEL_PATH = WIRING_ROOT / "basal-clamp-channels.csv"
 ROUTE_PATH = WIRING_ROOT / "basal-clamp-routes.parquet"
 PROPRIO_CHANNEL_PATH = WIRING_ROOT / "proprioception-channels.csv"
 PROPRIO_ROUTE_PATH = WIRING_ROOT / "proprioception-routes.parquet"
+PROPRIO_INPUT_CANDIDATE_PATH = WIRING_ROOT / "proprioception-input-candidates.parquet"
 MECHANO_CHANNEL_PATH = WIRING_ROOT / "mechanosensation-channels.csv"
 MECHANO_ROUTE_PATH = WIRING_ROOT / "mechanosensation-routes.parquet"
 VISION_CHANNEL_PATH = WIRING_ROOT / "vision-channels.csv"
@@ -200,6 +201,146 @@ class FlyBodyProprioceptionSensor:
             positions=positions.copy(),
             velocities=velocities.copy(),
         )
+
+
+class ProprioceptionTransductionBox:
+    """Sparse, uncalibrated joint-state candidates feeding proprioceptor channels."""
+
+    adapter_type = "B"
+    box_id = "adapter.proprioception.transduction"
+
+    def __init__(
+        self,
+        candidates: pd.DataFrame,
+        receptor_channels: pd.DataFrame,
+        joint_channels: pd.DataFrame,
+    ):
+        if candidates.empty or receptor_channels.empty or joint_channels.empty:
+            raise ValueError("No generated proprioception transduction candidates found")
+        required = {
+            "parameter_id",
+            "source_joint_id",
+            "source_joint_name",
+            "source_observable",
+            "target_channel_id",
+        }
+        missing = required - set(candidates.columns)
+        if missing:
+            raise ValueError(f"Missing proprioception candidate columns: {sorted(missing)}")
+        self.candidates = candidates.sort_values(
+            ["target_channel_id", "source_joint_id", "source_observable"]
+        ).reset_index(drop=True)
+        self.receptor_channels = receptor_channels.reset_index(drop=True)
+        self.joint_channels = joint_channels.sort_values("joint_id").reset_index(drop=True)
+        if self.candidates["parameter_id"].duplicated().any():
+            raise ValueError("Duplicate proprioception transduction parameter IDs")
+        if self.receptor_channels["channel_id"].duplicated().any():
+            raise ValueError("Duplicate proprioceptor terminal channel IDs")
+        if self.joint_channels["joint_id"].duplicated().any():
+            raise ValueError("Duplicate physical joint IDs")
+        self.parameter_ids = tuple(self.candidates["parameter_id"].astype(str))
+        self.channel_ids = tuple(self.receptor_channels["channel_id"].astype(str))
+        self.joint_names = tuple(self.joint_channels["joint_name"].astype(str))
+        channel_index = {channel_id: index for index, channel_id in enumerate(self.channel_ids)}
+        unknown_targets = set(self.candidates["target_channel_id"].astype(str)) - set(channel_index)
+        if unknown_targets:
+            raise ValueError(f"Unknown proprioceptor candidate targets: {sorted(unknown_targets)[:3]}")
+        self._target_indices = np.asarray(
+            [channel_index[str(value)] for value in self.candidates["target_channel_id"]],
+            dtype=np.int64,
+        )
+        self._source_joint_indices = self.candidates["source_joint_id"].to_numpy(dtype=np.int64)
+        if self._source_joint_indices.min() < 0 or self._source_joint_indices.max() >= len(
+            self.joint_names
+        ):
+            raise ValueError("Proprioception candidates reference invalid physical joint IDs")
+        expected_names = np.asarray(self.joint_names, dtype=object)[self._source_joint_indices]
+        if not np.array_equal(
+            expected_names, self.candidates["source_joint_name"].astype(str).to_numpy()
+        ):
+            raise ValueError("Proprioception candidate joint names do not match joint IDs")
+        observables = self.candidates["source_observable"].astype(str)
+        if not set(observables) <= {"position", "velocity"}:
+            raise ValueError("Unsupported proprioception source observable")
+        self._velocity_edges = observables.eq("velocity").to_numpy()
+        self.resolved_channel_ids = tuple(
+            self.candidates["target_channel_id"].astype(str).drop_duplicates()
+        )
+        self.unresolved_channel_ids = tuple(
+            channel_id for channel_id in self.channel_ids if channel_id not in self.resolved_channel_ids
+        )
+        self._unresolved_indices = np.asarray(
+            [channel_index[channel_id] for channel_id in self.unresolved_channel_ids], dtype=np.int64
+        )
+        if len(self.parameter_ids) != 1439:
+            raise ValueError("Expected 1,439 constrained proprioception parameters")
+        if (len(self.resolved_channel_ids), len(self.unresolved_channel_ids)) != (171, 91):
+            raise ValueError("Unexpected proprioceptor candidate coverage")
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        candidate_path: Path = PROPRIO_INPUT_CANDIDATE_PATH,
+        receptor_channel_path: Path = PROPRIO_CHANNEL_PATH,
+        joint_channel_path: Path = FLYBODY_PROPRIO_CHANNEL_PATH,
+    ) -> "ProprioceptionTransductionBox":
+        if (
+            not candidate_path.is_file()
+            or not receptor_channel_path.is_file()
+            or not joint_channel_path.is_file()
+        ):
+            raise FileNotFoundError(
+                "Proprioception transduction candidates are absent; run the wiring builder first"
+            )
+        return cls(
+            pd.read_parquet(candidate_path),
+            pd.read_csv(receptor_channel_path),
+            pd.read_csv(joint_channel_path),
+        )
+
+    def step(
+        self,
+        joint_state: JointState,
+        parameters: Mapping[str, float] | np.ndarray,
+        unresolved_values: Mapping[str, float] | np.ndarray,
+    ) -> ChannelActivity:
+        if joint_state.joint_names != self.joint_names:
+            raise ValueError(f"{self.box_id}: physical joint order mismatch")
+        if isinstance(parameters, Mapping):
+            missing = set(self.parameter_ids) - set(parameters)
+            extra = set(parameters) - set(self.parameter_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: parameter mismatch; missing={len(missing)}, extra={len(extra)}"
+                )
+            weights = np.asarray([parameters[item] for item in self.parameter_ids], dtype=np.float64)
+        else:
+            weights = np.asarray(parameters, dtype=np.float64)
+        if weights.shape != (len(self.parameter_ids),) or not np.isfinite(weights).all():
+            raise ValueError(f"{self.box_id}: invalid candidate parameter vector")
+        if isinstance(unresolved_values, Mapping):
+            missing = set(self.unresolved_channel_ids) - set(unresolved_values)
+            extra = set(unresolved_values) - set(self.unresolved_channel_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: unresolved input mismatch; "
+                    f"missing={len(missing)}, extra={len(extra)}"
+                )
+            fallback = np.asarray(
+                [unresolved_values[item] for item in self.unresolved_channel_ids], dtype=np.float64
+            )
+        else:
+            fallback = np.asarray(unresolved_values, dtype=np.float64)
+        if fallback.shape != (len(self.unresolved_channel_ids),) or not np.isfinite(fallback).all():
+            raise ValueError(f"{self.box_id}: invalid unresolved terminal vector")
+        source_values = joint_state.positions[self._source_joint_indices].copy()
+        source_values[self._velocity_edges] = joint_state.velocities[
+            self._source_joint_indices[self._velocity_edges]
+        ]
+        values = np.zeros(len(self.channel_ids), dtype=np.float64)
+        np.add.at(values, self._target_indices, source_values * weights)
+        values[self._unresolved_indices] = fallback
+        return ChannelActivity(channel_ids=self.channel_ids, values=values)
 
 
 @dataclass(frozen=True)

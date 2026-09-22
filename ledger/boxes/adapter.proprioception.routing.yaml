@@ -8,9 +8,9 @@ parent_id: sensor.proprioception
 ports: {inputs: [proprioceptor_activity], outputs: [proprioceptive_afferents]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/wiring/proprioception-routing.json, data/derived/wiring/proprioception-routes.parquet, runs/wiring-smoke/latest.json]
+evidence: [data/derived/wiring/proprioception-routing.json, data/derived/wiring/proprioception-routes.parquet, data/derived/wiring/proprioception-transduction-candidates.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
-validation_ids: [validation.proprioception_routing]
-next_action: Relier les observables mécaniques aux 262 entrées type C sans modifier le routage aval fixé.
+validation_ids: [validation.proprioception_routing, validation.proprioception_transduction_candidates]
+next_action: Préserver les 262 identités terminales pendant l'ajout des 91 observables physiques manquantes.
 blocked_by: []
 completion_criteria: [Groupes aval exhaustifs, Routages bodyId fixes, Ambiguïtés amont comptées séparément]
