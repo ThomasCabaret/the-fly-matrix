@@ -40,6 +40,11 @@ Pour reprendre le projet sans le contexte des conversations :
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 
+The next dashboard generation will add an exhaustive interactive wiring map. Its
+data contract, semantic-zoom rules, traceability requirements, and initial local
+web architecture are recorded in
+[`ADR 0003`](decisions/0003-interactive-wiring-map.md).
+
 Chaque script affiche ses étapes, conserve un code de sortie exploitable et attend
 une touche avant de fermer sa console.
 

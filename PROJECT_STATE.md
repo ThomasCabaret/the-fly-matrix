@@ -23,6 +23,13 @@ Le calcul actuel des 85 % n'applique pas encore automatiquement cette nouvelle
 condition ; le prochain audit machine-readable pourra donc reclasser le score
 sans que le réseau sous-jacent ait régressé.
 
+Avant le prochain grand lot de câblage, la priorité est désormais de construire
+une première carte interactive exhaustive du routage. Elle doit représenter les
+terminaux connectés comme non connectés, préserver la granularité réelle des
+boîtes et adapter seulement le détail graphique au niveau de zoom. L'architecture,
+les invariants visuels et le contrat de traçabilité sont actés en anglais dans
+[`ADR 0003`](decisions/0003-interactive-wiring-map.md).
+
 ## État synthétique
 
 - Câblage global : **85 %**.
