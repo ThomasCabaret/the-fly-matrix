@@ -52,6 +52,7 @@ VISION_ROUTE_OUTPUT = OUTPUT_ROOT / "vision-routes.parquet"
 VISION_COLUMN_SUMMARY_OUTPUT = OUTPUT_ROOT / "vision-optic-column-assignments.json"
 VISION_COLUMN_OUTPUT = OUTPUT_ROOT / "vision-optic-columns.csv"
 VISION_COLUMN_RECEPTOR_OUTPUT = OUTPUT_ROOT / "vision-column-photoreceptors.parquet"
+VISION_REMAINDER_RECEPTOR_OUTPUT = OUTPUT_ROOT / "vision-remainder-transduction.parquet"
 MOTOR_SUMMARY_OUTPUT = OUTPUT_ROOT / "motor-routing.json"
 MOTOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "motor-channels.csv"
 MOTOR_ROUTE_OUTPUT = OUTPUT_ROOT / "motor-routes.parquet"
@@ -1545,6 +1546,7 @@ def build_vision_optic_column_assignments(
     summary_output: Path = VISION_COLUMN_SUMMARY_OUTPUT,
     column_output: Path = VISION_COLUMN_OUTPUT,
     receptor_output: Path = VISION_COLUMN_RECEPTOR_OUTPUT,
+    remainder_output: Path = VISION_REMAINDER_RECEPTOR_OUTPUT,
 ) -> dict[str, Any]:
     """Preserve published R7/R8 column identities without inventing registration."""
     for path in (source, receptor_channel_path, physical_channel_path):
@@ -1658,7 +1660,80 @@ def build_vision_optic_column_assignments(
     resolved_target_ids = set(assignments["target_channel_id"].astype(str))
     unresolved = receptors.loc[
         ~receptors["channel_id"].astype(str).isin(resolved_target_ids)
-    ]
+    ].copy()
+    physical_side_counts = {
+        "L": int(physical["eye"].eq("left").sum()),
+        "R": int(physical["eye"].eq("right").sum()),
+    }
+    if physical_side_counts != {"L": 721, "R": 721}:
+        raise RuntimeError(f"Couverture physique visuelle inattendue: {physical_side_counts}")
+    remainder_rows: list[dict[str, Any]] = []
+    for receptor in unresolved.itertuples(index=False):
+        receptor_type = str(receptor.type)
+        instance = str(receptor.instance)
+        if receptor_type == "HBeyelet":
+            side_match = re.search(r"_([LR])$", instance)
+            if side_match is None:
+                raise RuntimeError(f"Côté HBeyelet absent de l'instance: {instance}")
+            side = side_match.group(1)
+            source_policy = "same_eye_mean_retinal_proxy"
+            terminal_disposition = "proxy"
+            registration_parameter_id = None
+        else:
+            side = str(receptor.rootSide)
+            if side not in {"L", "R"}:
+                raise RuntimeError(
+                    f"Côté rétinien absent pour le canal {receptor.channel_id}"
+                )
+            source_policy = "same_eye_discrete_ommatidium"
+            terminal_disposition = "parameterized"
+            registration_parameter_id = (
+                "parameter.vision.registration."
+                + hashlib.sha256(str(receptor.channel_id).encode("utf-8")).hexdigest()[:16]
+            )
+        remainder_rows.append(
+            {
+                "parameter_id": "parameter.vision.edge."
+                + hashlib.sha256(
+                    f"remainder|{receptor.channel_id}".encode("utf-8")
+                ).hexdigest()[:16],
+                "registration_parameter_id": registration_parameter_id,
+                "target_channel_id": str(receptor.channel_id),
+                "target_body_id": int(receptor.target_body_id),
+                "target_type": receptor_type,
+                "target_instance": instance,
+                "side": side,
+                "source_policy": source_policy,
+                "candidate_source_count": physical_side_counts[side],
+                "terminal_disposition": terminal_disposition,
+                "registration_status": (
+                    "not_applicable_proxy"
+                    if registration_parameter_id is None
+                    else "unassigned"
+                ),
+                "parameter_status": "unassigned",
+            }
+        )
+    remainder = pd.DataFrame(remainder_rows).sort_values(
+        ["terminal_disposition", "side", "target_type", "target_channel_id"]
+    )
+    if remainder["target_channel_id"].duplicated().any():
+        raise RuntimeError("Un terminal visuel résiduel apparaît plusieurs fois")
+    if remainder["parameter_id"].duplicated().any():
+        raise RuntimeError("Les paramètres visuels résiduels ne sont pas uniques")
+    if set(remainder["parameter_id"]) & set(assignments["parameter_id"]):
+        raise RuntimeError("Collision entre paramètres visuels publiés et résiduels")
+    disposition_counts = {
+        str(key): int(value)
+        for key, value in remainder["terminal_disposition"].value_counts().items()
+    }
+    if len(remainder) != 3470 or disposition_counts != {
+        "parameterized": 3463,
+        "proxy": 7,
+    }:
+        raise RuntimeError(
+            f"Partition du reste visuel inattendue: {len(remainder)}, {disposition_counts}"
+        )
     summary = {
         "schema_version": 1,
         "generated_at": datetime.now(UTC).isoformat(),
@@ -1670,7 +1745,7 @@ def build_vision_optic_column_assignments(
             "physical_constraint": "same eye; pale columns require pale FlyBody samples, yellow1/yellow2 require yellow samples, DRA/unclear remain palette-unconstrained",
             "registration": "one injective column-to-FlyBody-ommatidium assignment per eye remains externally supplied",
             "phototransduction": "one free continuous coefficient per represented photoreceptor remains externally supplied",
-            "unresolved_policy": "R1-R6, HBeyelet and R7/R8 absent from the workbook receive explicit external smoke values",
+            "remainder_policy": "R1-R6 and unpublished R7/R8 select one same-eye ommatidium; HBeyelet uses an explicit same-eye mean-light proxy; all gains remain external",
         },
         "published_optic_columns": int(len(columns)),
         "published_receptor_assignments": int(len(assignments)),
@@ -1678,6 +1753,14 @@ def build_vision_optic_column_assignments(
         "assigned_target_neurons": int(len(assignments)),
         "total_target_channels": int(len(all_target_ids)),
         "unassigned_target_channels": int(len(unresolved)),
+        "parameterized_remainder_photoreceptors": 3463,
+        "proxy_hbeyelet_channels": 7,
+        "structurally_covered_target_channels": int(len(assignments) + len(remainder)),
+        "blocked_target_channels": 0,
+        "terminal_disposition_counts": {
+            "parameterized": int(len(assignments) + 3463),
+            "proxy": 7,
+        },
         "assignment_coverage_percent": round(100 * len(assignments) / len(receptors), 2),
         "column_side_counts": {
             str(key): int(value)
@@ -1696,22 +1779,26 @@ def build_vision_optic_column_assignments(
             for key, value in unresolved["type"].value_counts().sort_index().items()
         },
         "physical_sample_counts": physical_counts,
-        "free_discrete_registration_parameters": int(len(columns)),
-        "free_continuous_parameters": int(len(assignments)),
+        "free_discrete_registration_parameters": int(len(columns) + 3463),
+        "free_continuous_parameters": int(len(assignments) + len(remainder)),
         "biological_column_mapping_status": "fixed_for_published_R7_R8",
-        "flybody_registration_status": "unassigned",
+        "flybody_registration_status": "externally_parameterized",
+        "structural_wiring_status": "parameterized_complete",
         "scientific_parameter_values_selected": False,
     }
     summary_output.parent.mkdir(parents=True, exist_ok=True)
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     columns.to_csv(column_output, index=False, encoding="utf-8")
     assignments.to_parquet(receptor_output, index=False)
+    remainder.to_parquet(remainder_output, index=False)
     print(f"[OK] {len(columns):,} colonnes R7/R8 publiées conservées")
     print(f"[OK] {len(assignments):,}/6 098 canaux visuels ont une colonne biologique exacte")
-    print("[INFO] L'enregistrement colonne→ommatidie FlyBody reste un paramètre discret")
+    print("[OK] 3 463 photorécepteurs résiduels ont une sélection paramétrable du même œil")
+    print("[OK] 7 HBeyelet utilisent un proxy lumineux moyen explicite du même œil")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Colonnes : {column_output}")
     print(f"[OK] Photorécepteurs assignés : {receptor_output}")
+    print(f"[OK] Transduction résiduelle : {remainder_output}")
     return summary
 
 

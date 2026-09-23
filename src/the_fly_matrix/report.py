@@ -259,7 +259,10 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         remote_metrics += (
             f'<div><strong>{vision_columns.get("published_optic_columns", 0):,}</strong><span>colonnes R7/R8 publiées</span></div>'
             f'<div><strong>{vision_columns.get("assigned_target_channels", 0):,}/6 098</strong><span>canaux visuels avec colonne biologique</span></div>'
-            f'<div><strong>{vision_columns.get("unassigned_target_channels", 0):,}</strong><span>canaux visuels sans colonne publiée</span></div>'
+            f'<div><strong>{vision_columns.get("parameterized_remainder_photoreceptors", 0):,}</strong><span>photorécepteurs à routage paramétrable</span></div>'
+            f'<div><strong>{vision_columns.get("proxy_hbeyelet_channels", 0):,}</strong><span>HBeyelet sur proxy lumineux explicite</span></div>'
+            f'<div><strong>{vision_columns.get("structurally_covered_target_channels", 0):,}/6 098</strong><span>terminaux visuels structurellement couverts</span></div>'
+            f'<div><strong>{vision_columns.get("blocked_target_channels", 0):,}</strong><span>terminaux visuels bloqués</span></div>'
         )
     if motor_wiring:
         exits = motor_wiring.get("exit_nerve_inventory", {})

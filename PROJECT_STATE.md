@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-23, première carte de câblage interactive exhaustive.
+Mise à jour : 2026-09-23, fermeture structurelle exhaustive du secteur visuel.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -19,32 +19,47 @@ avoir une disposition `exact`, `parameterized`, `basal`, `proxy`, `sink` ou
 `blocked`. Une boîte noire locale paramétrable termine valablement un câblage même
 si sa correspondance interne est inconnue. En revanche, une activité fournie
 directement par le smoke test à la place d'une boîte reste `blocked`.
-Le calcul actuel des 85 % n'applique pas encore automatiquement cette nouvelle
+Le calcul actuel des 86 % n'applique pas encore automatiquement toute cette nouvelle
 condition ; le prochain audit machine-readable pourra donc reclasser le score
 sans que le réseau sous-jacent ait régressé.
 
 La première carte interactive exhaustive est désormais implémentée. Elle exporte
-depuis les manifestes locaux 31 037 nœuds et 45 496 relations : 1 552 observables
+depuis les manifestes locaux 31 038 nœuds et 53 036 relations : 1 552 observables
 physiques, 8 895 boîtes d'entrée, 17 884 entrées CNS, 815 sorties CNS, 441 groupes
 moteurs et 102 actionneurs. Les terminaux bloqués restent visibles au lieu d'être
-filtrés. La carte offre zoom/panoramique, focus sectoriel sans retrait de topologie,
+filtrés. Après le lot visuel, elle compte 1 974 boîtes d'entrée bloquées contre
+8 072 auparavant. La carte offre zoom/panoramique, focus sectoriel sans retrait de topologie,
 recherche et panneau de traçabilité. Elle ne contient aucune valeur de calibration.
 L'architecture, les invariants visuels et le contrat de traçabilité sont actés en anglais dans
 [`ADR 0003`](decisions/0003-interactive-wiring-map.md).
 
 ## État synthétique
 
-- Câblage global : **85 %**.
+- Câblage global : **86 %**.
 - Graphe central MaleCNS : **100 % structurel**.
 - Sortie motrice : **100 % structurel**.
 - Proprioception : **86 %**.
 - Entrées sensorielles non résolues : **88 %**.
 - Clamps basaux : **87 %**.
-- Vision : **86 %**.
+- Vision : **89 %**.
 - Mécanosensation : **82 %**.
 - Corps physique : **100 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
+
+Le dernier lot élimine toute injection directe dans les 6 098 terminaux visuels.
+Les 2 628 R7/R8 présents dans le supplément officiel conservent leur colonne
+biologique exacte et un enregistrement colonne→ommatidie externe. Les 3 463 autres
+photorécepteurs possèdent chacun un choix discret parmi les 721 ommatidies du même
+œil et un gain libre. Les 7 HBeyelet, absents du capteur FlyBody, utilisent un proxy
+explicitement déclaré : la moyenne lumineuse de l'œil indiqué par leur instance,
+avec un gain libre. Le smoke test calcule désormais les 6 098 activités depuis le
+rendu MuJoCo et les paramètres de boîte; il n'accepte plus de vecteur terminal de
+secours. Aucun choix rétinotopique ni gain scientifique n'a été persisté.
+
+Le score visuel passe de 86 à 89 % et le score global de 85 à 86 %. La différence
+restante dans ce secteur mesure surtout la résolution et la validation à affiner,
+pas un fil pendant : la disposition terminale visuelle est exhaustive.
 
 Le dernier lot ferme l'exécution physique après la sortie motrice. Le runtime
 construit un FlyBody articulé dans MuJoCo, vérifie l'ordre des 102 actionneurs,
@@ -52,10 +67,10 @@ applique réellement les commandes pendant 20 pas, puis relit les 102 positions 
 vitesses par l'interface proprioceptive. Le rejeu depuis le même état est identique
 bit à bit et diffère du témoin passif. Une enveloppe numérique propre au smoke test
 protège MuJoCo des paramètres arbitraires; elle n'est pas une calibration. Le
-secteur corps physique passe de 94 à 100 %. Le score global reste arrondi à 85 %,
+secteur corps physique était alors passé de 94 à 100 %. Le score global restait arrondi à 85 %,
 mais son composant de routage des fils passe de 69 à 70 %.
 
-Le lot d'interface ne modifie pas ce score. `wiring_map.bat` compile l'application
+Le lot d'interface n'avait pas modifié ce score. `wiring_map.bat` compile l'application
 React/Cytoscape, régénère `reports/generated/wiring-map/wiring-map.json`, démarre
 un serveur HTTP strictement local et ouvre la vue. La disposition fixe les colonnes
 monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS → sorties CNS
@@ -69,16 +84,13 @@ unitaires/intégration locaux passent.
 
 1. Auditer toutes les injections `unresolved_values` du parcours global et leur
    attribuer une disposition terminale machine-readable.
-2. Faire traverser aux 6 098 canaux la même pile visuelle : affectations R7/R8
-   fixes lorsqu'elles sont publiées, sous-routage paramétrable pour les autres,
-   sans clamp basal localisé dans l'œil.
-3. Encapsuler contrainte et vibration proprioceptives manquantes dans une boîte
+2. Encapsuler contrainte et vibration proprioceptives manquantes dans une boîte
    `parameterized` ou `proxy` explicite plutôt que dans des valeurs de test.
-4. Donner aux 1 883 afférences sensorielles résiduelles une boîte source générique
+3. Donner aux 1 883 afférences sensorielles résiduelles une boîte source générique
    locale, quitte à conserver une fonction de transfert très large à calibrer.
-5. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
+4. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
    commande→MuJoCo→état articulaire est désormais fermée et déterministe.
-6. N'affiner les candidats tête/thorax que si une observable corporelle plus
+5. N'affiner les candidats tête/thorax que si une observable corporelle plus
    localisée devient disponible, sans inventer de latéralité.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du

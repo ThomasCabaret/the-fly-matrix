@@ -242,6 +242,7 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
             "flybody-vision-channels.csv",
             "vision-optic-columns.csv",
             "vision-column-photoreceptors.parquet",
+            "vision-remainder-transduction.parquet",
             "proprioception-input-candidates.parquet",
             "mechanosensation-input-candidates.parquet",
             "motor-channels.csv",
@@ -581,6 +582,7 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
         )
 
     optic_assignments = _read_parquet(derived_root / "vision-column-photoreceptors.parquet")
+    vision_remainder = _read_parquet(derived_root / "vision-remainder-transduction.parquet")
     optic_columns = {row["column_id"]: row for row in _read_csv(derived_root / "vision-optic-columns.csv")}
     assignments_by_column: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in optic_assignments:
@@ -599,7 +601,7 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
                 sector="vision",
                 x=LANE_X["source_model"],
                 y=y,
-                state="blocked",
+                state="parameterized",
                 details={
                     **_compact(
                         column,
@@ -614,13 +616,13 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
                         ),
                     ),
                     "source_file": "data/derived/wiring/vision-optic-columns.csv",
-                    "blocking_gap": "FlyBody ommatidium registration is unassigned",
+                    "free_parameter": "FlyBody ommatidium registration",
                 },
             )
         )
         for assignment in assignments:
             target_channel = str(assignment["target_channel_id"])
-            inbound_states[target_channel].add("blocked")
+            inbound_states[target_channel].add("parameterized")
             add_edge(
                 _edge(
                     f"edge:optic-column:{assignment['parameter_id']}",
@@ -647,6 +649,95 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
                     },
                 )
             )
+
+    remainder_by_channel = {
+        str(row["target_channel_id"]): row for row in vision_remainder
+    }
+    published_vision_channels = {
+        str(row["target_channel_id"]) for row in optic_assignments
+    }
+    all_vision_channels = {
+        channel_id
+        for channel_id, sector in channel_sector.items()
+        if sector == "vision"
+    }
+    if published_vision_channels | set(remainder_by_channel) != all_vision_channels:
+        raise WiringMapError("Visual transduction does not cover every terminal channel")
+    vision_box_id = "box:adapter.vision.transduction"
+    add_node(
+        _node(
+            vision_box_id,
+            label="Visual transduction\n6,098 terminal channels",
+            kind="input_transform_box",
+            lane="source_model",
+            sector="vision",
+            x=2_500.0,
+            y=(
+                float(sector_spans["vision"]["start_y"])
+                + float(sector_spans["vision"]["end_y"])
+            )
+            / 2,
+            state="parameterized",
+            width=170,
+            height=80,
+            details={
+                "ledger_box_id": "adapter.vision.transduction",
+                "ledger_path": boxes["adapter.vision.transduction"]["_path"],
+                "physical_inputs": 1442,
+                "published_column_channels": len(published_vision_channels),
+                "parameterized_remainder_channels": sum(
+                    row["terminal_disposition"] == "parameterized"
+                    for row in vision_remainder
+                ),
+                "proxy_hbeyelet_channels": sum(
+                    row["terminal_disposition"] == "proxy"
+                    for row in vision_remainder
+                ),
+                "source_file": "data/derived/wiring/vision-remainder-transduction.parquet",
+            },
+        )
+    )
+    for physical_channel_id, (sector, _kind, _row, _filename) in physical_records.items():
+        if sector != "vision":
+            continue
+        nodes[f"physical:{physical_channel_id}"]["data"]["state"] = "exact"
+        add_edge(
+            _edge(
+                f"edge:vision-sample:{_stable_id(physical_channel_id)}",
+                source=f"physical:{physical_channel_id}",
+                target=vision_box_id,
+                kind="physical_sample_input",
+                sector="vision",
+                state="exact",
+                details={"mapping_level": "exact FlyBody sample channel"},
+            )
+        )
+    for channel_id in sorted(all_vision_channels):
+        remainder = remainder_by_channel.get(channel_id)
+        disposition = (
+            str(remainder["terminal_disposition"])
+            if remainder is not None
+            else "parameterized"
+        )
+        inbound_states[channel_id].add(disposition)
+        add_edge(
+            _edge(
+                f"edge:vision-transduction:{_stable_id(channel_id)}",
+                source=vision_box_id,
+                target=f"adapter:{channel_id}",
+                kind="visual_transduction",
+                sector="vision",
+                state=disposition,
+                details={
+                    "terminal_disposition": disposition,
+                    "mapping_level": (
+                        "published column with external retinal registration"
+                        if channel_id in published_vision_channels
+                        else str(remainder["source_policy"])
+                    ),
+                },
+            )
+        )
 
     basal_channels: dict[str, list[str]] = defaultdict(list)
     for channel_id, channel in input_channels.items():
@@ -695,6 +786,8 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
         states = inbound_states.get(channel_id, set())
         if "basal" in states:
             state = "basal"
+        elif "proxy" in states:
+            state = "proxy"
         elif "parameterized" in states:
             state = "parameterized"
         else:

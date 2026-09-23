@@ -239,10 +239,26 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(columns["published_receptor_assignments"], 2628)
         self.assertEqual(columns["assigned_target_channels"], 2628)
         self.assertEqual(columns["unassigned_target_channels"], 3470)
+        self.assertEqual(columns["parameterized_remainder_photoreceptors"], 3463)
+        self.assertEqual(columns["proxy_hbeyelet_channels"], 7)
+        self.assertEqual(columns["structurally_covered_target_channels"], 6098)
+        self.assertEqual(columns["blocked_target_channels"], 0)
+        self.assertEqual(
+            columns["terminal_disposition_counts"],
+            {"parameterized": 6091, "proxy": 7},
+        )
         self.assertEqual(columns["column_side_counts"], {"L": 627, "R": 705})
         self.assertEqual(columns["receptor_class_counts"], {"R7": 1299, "R8": 1329})
-        self.assertEqual(columns["flybody_registration_status"], "unassigned")
+        self.assertEqual(columns["free_discrete_registration_parameters"], 4795)
+        self.assertEqual(columns["free_continuous_parameters"], 6098)
+        self.assertEqual(columns["flybody_registration_status"], "externally_parameterized")
+        self.assertEqual(columns["structural_wiring_status"], "parameterized_complete")
         self.assertFalse(columns["scientific_parameter_values_selected"])
+        remainder = pd.read_parquet(path.with_name("vision-remainder-transduction.parquet"))
+        self.assertEqual(len(remainder), 3470)
+        self.assertEqual(remainder["target_channel_id"].nunique(), 3470)
+        self.assertEqual(remainder["candidate_source_count"].unique().tolist(), [721])
+        self.assertEqual(remainder["terminal_disposition"].value_counts().to_dict(), {"parameterized": 3463, "proxy": 7})
 
         motor_path = path.with_name("motor-routing.json")
         self.assertTrue(motor_path.is_file())

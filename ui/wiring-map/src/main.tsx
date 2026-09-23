@@ -47,6 +47,7 @@ const COLORS = {
   exact: "#55d98b",
   parameterized: "#ffb84a",
   basal: "#64a9ff",
+  proxy: "#b485ff",
   blocked: "#ff6174",
   structural: "#93a8bd",
 };
@@ -150,6 +151,7 @@ function App() {
     { selector: 'node[state = "exact"]', style: { "background-color": COLORS.exact } },
     { selector: 'node[state = "parameterized"]', style: { "background-color": COLORS.parameterized } },
     { selector: 'node[state = "basal"]', style: { "background-color": COLORS.basal } },
+    { selector: 'node[state = "proxy"]', style: { "background-color": COLORS.proxy } },
     { selector: 'node[state = "blocked"]', style: { "background-color": COLORS.blocked } },
     {
       selector: 'node[kind = "cns_input_terminal"], node[kind = "cns_output_terminal"]',
@@ -166,6 +168,10 @@ function App() {
     {
       selector: 'node[kind = "anatomical_source_model"], node[kind = "basal_source"]',
       style: { width: 28, height: 10, shape: "round-rectangle" },
+    },
+    {
+      selector: 'node[kind = "input_transform_box"]',
+      style: { width: "data(width)", height: "data(height)", shape: "round-rectangle", "border-width": 2, "border-color": "#ffb84a" },
     },
     {
       selector: 'node[kind = "cns_core"]',
@@ -207,6 +213,7 @@ function App() {
     { selector: 'edge[state = "exact"]', style: { "line-color": COLORS.exact, opacity: 0.22 } },
     { selector: 'edge[state = "parameterized"]', style: { "line-color": COLORS.parameterized, opacity: 0.34 } },
     { selector: 'edge[state = "basal"]', style: { "line-color": COLORS.basal, opacity: 0.34 } },
+    { selector: 'edge[state = "proxy"]', style: { "line-color": COLORS.proxy, opacity: 0.34 } },
     {
       selector: 'edge[kind = "cns_interface"]',
       style: { "line-color": "#334b5e", opacity: 0.13, width: 0.7 },

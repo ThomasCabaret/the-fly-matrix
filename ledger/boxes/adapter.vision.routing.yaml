@@ -11,6 +11,6 @@ confidence: high
 evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-routes.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.vision_routing]
-next_action: Relier pixels ou ommatidies aux 6 098 entrées type C sans réutiliser les coordonnées des cellules ol_intrinsic.
+next_action: Préserver les 6 098 routes bodyId exactes pendant la calibration séparée des paramètres de transduction amont.
 blocked_by: []
 completion_criteria: [Groupes aval exhaustifs, Affectations bodyId figées, Rétinotopie amont isolée]

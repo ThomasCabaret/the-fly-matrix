@@ -1,6 +1,6 @@
 schema_version: 1
 id: validation.vision_column_transduction
-name: Transduction visuelle partielle par colonnes R7/R8 publiées
+name: Transduction visuelle exhaustive paramétrable
 owner_ids:
   - adapter.vision.transduction
   - group.sensory.visual
@@ -15,17 +15,23 @@ acceptance_criteria:
   - Exactly 2628 unique R7/R8 bodyIds match the MaleCNS visual terminal manifest by side and type
   - Pale and yellow column classes accept only compatible FlyBody ommatidium samples
   - One externally supplied injective registration maps represented columns to FlyBody ommatidia within the same eye
-  - Exactly 3470 R1-R6 HBeyelet or unpublished R7/R8 terminals remain explicit
-  - Continuous coefficients and the discrete registration remain external arbitrary smoke values
+  - Exactly 3463 remaining photoreceptors select one externally supplied FlyBody ommatidium from the same eye
+  - Exactly 7 HBeyelet terminals use an explicit same-eye mean-light proxy because FlyBody has no eyelet sensor
+  - All 6098 terminal activities are computed from physical retinal samples and explicit box parameters
+  - No direct terminal activity injection is accepted by the runtime
+  - The 4795 discrete registrations and 6098 continuous gains remain external arbitrary smoke values
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: vision-column-transduction-2026-09-22
+latest_run_id: vision-column-transduction-2026-09-23
 status: integration_pass
 notes:
   - "Official source: https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx"
   - Biological bodyId-to-column assignment is fixed for the published R7/R8 subset
   - Workbook order is never interpreted as FlyBody ommatidium order
   - The smoke test supplies a deterministic valid registration only to exercise data flow
+  - Remaining photoreceptor selections are engineering parameters constrained to the annotated eye
+  - HBeyelet mean-light inputs are declared proxies rather than anatomical mappings
+  - The former unresolved_values terminal bypass has been removed
   - No scientific phototransduction coefficient has been selected
 source_references:
   - https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx

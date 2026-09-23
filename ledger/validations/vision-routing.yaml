@@ -15,7 +15,7 @@ acceptance_criteria:
   - The 6091 photoreceptors and 7 HBeyelet cells remain distinct
   - Every type-C instance maps one-to-one to an explicit MaleCNS bodyId
   - The 23720 optic-lobe hex assignments are verified as ol_intrinsic and never imputed onto sensory inputs
-  - Physical pixel or ommatidium assignments remain explicitly deferred
+  - Physical registration remains externally parameterized and every terminal traverses the declared transduction box
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: vision-routing-2026-09-19
@@ -27,4 +27,5 @@ notes:
   - No optic-lobe sensory neuron has assignedOlHex1 or assignedOlHex2
   - All 23720 rows carrying both hex coordinates are ol_intrinsic neurons
   - The separate published optic-column workbook assigns 2628 R7/R8 neurons without reusing intrinsic-cell coordinates
-  - Physical column-to-FlyBody registration remains deliberately unknown
+  - Physical column-to-FlyBody registration values remain deliberately unknown but structurally encapsulated
+  - The downstream exact bodyId routing is unchanged by upstream parameterization

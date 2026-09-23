@@ -107,6 +107,7 @@ button { cursor: pointer; }
 .state-exact { background: #55d98b; }
 .state-parameterized { background: #ffb84a; }
 .state-basal { background: #64a9ff; }
+.state-proxy { background: #b485ff; }
 .state-blocked { background: #ff6174; }
 .state-structural { background: #93a8bd; }
 .element-id { display: block; color: #67a9c4; font: 400 10px/1.45 "IBM Plex Mono", monospace; word-break: break-all; }

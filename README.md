@@ -218,18 +218,22 @@ Côté physique, `flybody-vision-channels.csv` décrit deux caméras composées 
 ommatidies chacune. Pour chaque ommatidie, le manifeste conserve le canal actif
 jaune ou pâle de la sortie FlyGym `(2, 721, 2)`, soit 1 442 échantillons
 normalisés. Le smoke test effectue un véritable rendu MuJoCo local deux fois et
-vérifie un résultat déterministe. La nouvelle boîte de transduction exécute les
-2 628 R7/R8 documentés jusqu'au routeur MaleCNS. Elle exige une correspondance
-injective externe des 1 332 colonnes vers les ommatidies du même œil, avec
-compatibilité pale/jaune. Le smoke test injecte une correspondance arbitraire mais
-valide uniquement pour tester le flux : aucun alignement spatial ni coefficient de
-phototransduction scientifique n'est persisté.
+vérifie un résultat déterministe. La boîte de transduction exécute les 6 098
+terminaux jusqu'au routeur MaleCNS sans vecteur d'activité injecté en sortie.
 
-Selon le contrat de couverture exhaustive, le secteur visuel n'est donc pas encore
-terminé. Les 2 628 R7/R8 publiés sont une sous-relation mieux contrainte dans la
-même pile visuelle ; les 3 470 autres canaux doivent recevoir une sous-matrice
-paramétrable dans cette pile, et non un clamp basal localisé ni une injection
-directe du smoke test.
+Les 2 628 R7/R8 documentés gardent une correspondance injective externe des 1 332
+colonnes vers les ommatidies du même œil, avec compatibilité pâle/jaune. Les 3 463
+photorécepteurs sans colonne publiée possèdent chacun un choix discret d'ommatidie
+parmi les 721 du même œil. Les 7 HBeyelet forment une frontière biologique séparée :
+FlyBody n'expose pas de capteur d'œillet, donc la boîte utilise explicitement la
+moyenne lumineuse de l'œil correspondant comme proxy. Chaque terminal conserve un
+gain libre. Le smoke test fournit des choix et gains arbitraires uniquement pour
+tester le flux ; aucun alignement ni coefficient scientifique n'est persisté.
+
+La disposition terminale du secteur visuel est ainsi structurellement exhaustive :
+6 091 canaux `parameterized`, 7 canaux `proxy` et aucun canal `blocked`. La
+résolution rétinotopique et les paramètres restent à calibrer, mais il n'existe plus
+de contournement direct de la boîte de transduction.
 
 Le manifeste moteur couvre les 708 neurones `vnc_motor` et 107 neurones
 `cb_motor`, avec une instance type E par `bodyId`. L'audit des nerfs de sortie
