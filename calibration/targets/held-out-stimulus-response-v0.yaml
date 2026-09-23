@@ -1,0 +1,59 @@
+schema_version: 1
+id: target.held_out_stimulus_response.v0
+title: Held-out bounded and stimulus-specific embodied response
+status: proposed
+primary_class: evaluation_only
+optimization_exposure: evaluation_only
+claim_label: held_out_system_evaluation
+
+scope:
+  includes:
+    - frozen reference parameter set
+    - short-horizon embodied simulation
+    - stimulus, sham, and mirrored trials where meaningful
+  excludes:
+    - use in loss, model selection, early stopping, or manual parameter selection
+    - a prescribed jump, gait, grooming sequence, or exact trajectory
+
+candidate_stimulus_families:
+  - localized_contact
+  - simple_visual_change
+
+metrics:
+  - response_latency
+  - response_magnitude_relative_to_sham
+  - trial_repeatability
+  - mirrored_stimulus_sensitivity
+  - post_stimulus_boundedness
+  - recovery_to_non_runaway_state
+
+acceptance_policy:
+  summary: >-
+    Frozen parameters yield a repeatable time-locked response that differs from
+    sham and remains bounded. The protocol does not require a named action.
+  thresholds: unresolved
+
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: []
+  held_out: []
+
+contamination_policy: >-
+  Any parameter or model-selection change made after inspecting this protocol's
+  outcomes contaminates version v0 and requires a newly registered held-out
+  protocol before a held-out claim.
+
+dependencies:
+  - promoted reference parameter set
+  - accepted technical neural and embodied stability targets
+  - locked scenario generator and seeds
+
+provenance:
+  sources: []
+  assumptions:
+    - Stimulus family, intensity, duration, and thresholds remain to be fixed.
+
+validation: not_run
+blocked_reason: Protocol cannot be locked before a runnable calibrated system exists.
+next_action: Keep evaluation unexposed until technical calibration is complete.

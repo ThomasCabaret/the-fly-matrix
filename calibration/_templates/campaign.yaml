@@ -1,0 +1,45 @@
+schema_version: 1
+id: campaign.example.v0
+title: Replace with a stable campaign title
+status: proposed
+target_ids: []
+scope_ids: []
+parent_parameter_set_ids: []
+output_parameter_set_id: null
+
+method:
+  kind: unresolved
+  implementation: unresolved
+  objective_terms: []
+  bounds: {}
+  frozen_parameters: []
+  seeds: []
+  compute_budget: unresolved
+
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: []
+  held_out: []
+
+reproducibility:
+  command: unresolved
+  git_commit: unresolved
+  environment: unresolved
+  input_hashes: {}
+
+behavior_exposure:
+  behavior_targeted: false
+  exposed_behavior_ids: []
+  contamination_notes: []
+
+result:
+  status: not_run
+  metrics: {}
+  artifact_refs: []
+  failures: []
+  decision: pending
+
+sources: []
+assumptions: []
+next_action: Replace this template with a versioned campaign record.

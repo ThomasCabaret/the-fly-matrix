@@ -28,6 +28,12 @@ procédure de reprise sont documentés dans
 justification des routes et les catégories de preuves sont dans
 [`docs/provenance-policy.md`](../docs/provenance-policy.md).
 
+La calibration possède un registre transversal séparé dans
+[`calibration/`](../calibration/README.md). Il référence les boîtes, groupes,
+paramètres et validations du ledger sans les dupliquer. Sa méthode distingue
+notamment stabilité technique, données biologiques transférées, interfaces locales,
+cibles comportementales exposées et évaluations tenues à l'écart.
+
 Pour toute fiche nouvelle ou substantiellement modifiée, remplir le bloc
 `provenance` du modèle correspondant. Les fiches historiques sont migrées lorsqu'on
 les touche : une source absente doit rester absente plutôt que d'être reconstruite

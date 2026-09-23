@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-23, fermeture terminale exhaustive des entrées sensorielles résiduelles.
+Mise à jour : 2026-09-23, cadre de calibration traçable après fermeture terminale exhaustive.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -8,10 +8,21 @@ recalculé font autorité.
 
 ## Objectif courant
 
-Terminer le **câblage structurel** avant toute calibration. À 100 %, les signaux
-doivent pouvoir parcourir l'ensemble monde/corps → MaleCNS → actionneurs avec des
-paramètres injectés arbitrairement. Aucun comportement plausible n'est encore
+La couverture terminale du **câblage structurel v0 est complète** : aucun fil
+d'interface inventorié ne reste sans disposition. Le câblage reste raffinable,
+mais il est assez mûr pour ouvrir l'infrastructure de calibration. Aucun paramètre
+scientifique n'est encore accepté et aucun comportement plausible n'est encore
 attendu.
+
+Le front actif est de rendre la calibration traçable et exécutable, en commençant
+par une dynamique MaleCNS temporelle déterministe et une caractérisation sans
+fitting. Les cibles initiales séparent strictement stabilité neuronale technique,
+stabilité corporelle neutre et réponse au stimulus tenue à l'écart. Une stabilité
+optimisée ne sera jamais présentée comme comportement émergent. La méthode est
+définie dans [`docs/calibration-methodology.md`](docs/calibration-methodology.md),
+la politique de claims dans
+[`ADR 0005`](decisions/0005-calibration-evidence-and-claims.md) et l'état compact
+dans [`calibration/state.yaml`](calibration/state.yaml).
 
 La définition normative est désormais celle de
 [`ADR 0002`](decisions/0002-exhaustive-terminal-coverage.md) : chaque canal doit
@@ -127,6 +138,22 @@ unitaires/intégration locaux passent.
 4. N'affiner les candidats tête/thorax que si une observable corporelle plus
    localisée devient disponible, sans inventer de latéralité.
 
+## Front de calibration
+
+1. Implémenter une dynamique MaleCNS temporelle minimale et déterministe sans
+   choisir encore de gains physiologiques ni de comportement cible.
+2. Construire un runner qui sépare les scénarios train, validation, diagnostic et
+   `evaluation_only`, puis enregistrer le baseline non calibré.
+3. Inventorier les familles de paramètres des interfaces sensorielles, motrices,
+   basales et des éventuels feedbacks externes, avec unités, origines et scopes.
+4. Calibrer d'abord l'activité bornée et récupérable, puis les interfaces locales
+   et la stabilité corporelle neutre sur sol plat.
+5. Geler les paramètres avant d'ouvrir le protocole stimulus/sham tenu à l'écart.
+
+À ce jour : aucune campagne n'a été exécutée, aucun parameter set n'a été promu et
+aucune cible comportementale n'est autorisée. Les fichiers de `calibration/`
+déterminent désormais le prochain lot ; cette section en est le résumé humain.
+
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
 
@@ -150,3 +177,6 @@ mais doit régénérer ces artefacts. Le rapport principal est alors
 La méthode complète est dans [`docs/wiring-methodology.md`](docs/wiring-methodology.md)
 et la politique de sources dans
 [`docs/provenance-policy.md`](docs/provenance-policy.md).
+La méthode de calibration et son registre sont dans
+[`docs/calibration-methodology.md`](docs/calibration-methodology.md) et
+[`calibration/`](calibration/README.md).

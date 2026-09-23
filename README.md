@@ -15,7 +15,11 @@ Pour reprendre le projet sans le contexte des conversations :
    du câblage, les statuts et le calcul des pourcentages ;
 3. appliquer [`docs/provenance-policy.md`](docs/provenance-policy.md) à toute nouvelle
    décision de branchement ;
-4. consulter `ledger/` pour la source de vérité détaillée et les prochaines actions.
+4. consulter `ledger/` pour la source de vérité détaillée du câblage ;
+5. avant tout réglage, lire
+   [`docs/calibration-methodology.md`](docs/calibration-methodology.md),
+   [`ADR 0005`](decisions/0005-calibration-evidence-and-claims.md) et
+   [`calibration/state.yaml`](calibration/state.yaml).
 
 ## Commandes Windows
 
@@ -92,6 +96,14 @@ Le répertoire `ledger/` est la source de vérité. Il contient une fiche par bo
 par groupe anatomique, par fil, par famille de paramètres et par validation. Les rapports présents dans
 `reports/generated/` seront produits depuis ce registre et ne devront pas être
 maintenus manuellement.
+
+Le répertoire [`calibration/`](calibration/README.md) complète ce registre pour les
+cibles, scopes, campagnes, jeux de paramètres et évaluations. Il ne réduit jamais
+l'état à un booléen « calibré ». Il distingue valeurs biologiques transférées,
+stabilité technique entraînée, fonctions d'interface locales, calibration
+comportementale explicite et protocoles réellement tenus à l'écart. Un comportement
+utilisé pour optimiser ou choisir les paramètres ne pourra pas être présenté comme
+émergent ; toute exception devra être autorisée et visible dans toute la lignée.
 
 Le pourcentage affiché est un indicateur structurel, pas une mesure de réussite
 scientifique. Il agrège séparément l'inventaire, le routage, l'implémentation, les

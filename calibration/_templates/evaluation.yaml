@@ -1,0 +1,30 @@
+schema_version: 1
+id: evaluation.example.v0
+title: Replace with a stable evaluation title
+status: proposed
+target_id: null
+parameter_set_id: null
+protocol_version: null
+exposure_policy: unresolved
+
+scenario_ids: []
+seeds: []
+metrics: {}
+acceptance_result: pending
+
+reproducibility:
+  command: unresolved
+  git_commit: unresolved
+  environment: unresolved
+  input_hashes: {}
+  artifact_refs: []
+
+contamination:
+  inspected_before_parameter_freeze: false
+  used_for_model_selection: false
+  used_for_manual_tuning: false
+  notes: []
+
+failures: []
+conclusion: null
+next_action: Replace this template with a versioned evaluation record.

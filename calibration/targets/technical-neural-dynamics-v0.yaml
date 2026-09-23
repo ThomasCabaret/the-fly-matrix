@@ -1,0 +1,55 @@
+schema_version: 1
+id: target.technical_neural_dynamics.v0
+title: Bounded and recoverable MaleCNS temporal dynamics
+status: proposed
+primary_class: technical
+optimization_exposure: allowed
+claim_label: trained_technical_stability
+
+scope:
+  includes:
+    - MaleCNS temporal neuron and synapse dynamics
+    - declared basal inputs used by the runtime
+    - typed or global dynamic parameter families
+  excludes:
+    - named actions, trajectories, gaits, and task success
+    - structural rewiring
+    - external behavioral control
+
+metrics:
+  - finite_state_fraction
+  - active_neuron_fraction
+  - persistently_quiescent_fraction
+  - persistently_saturated_fraction
+  - perturbation_amplification
+  - perturbation_recovery_time
+  - activity_distribution_by_declared_neuron_class
+
+acceptance_policy:
+  summary: >-
+    Values remain finite and bounded, the system is neither globally irreversibly
+    silent nor dominated by runaway saturation, and a small perturbation has a
+    measurable but recoverable effect.
+  thresholds: unresolved
+  criticality: diagnostic_only_without_additional_evidence
+
+behavior_targets: []
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: []
+  held_out: []
+
+dependencies:
+  - temporal MaleCNS runtime
+  - deterministic seed control
+  - compact activity metrics
+
+provenance:
+  sources: []
+  assumptions:
+    - Exact acceptable ranges are not yet known and must not be invented.
+
+validation: not_run
+blocked_reason: Temporal recurrent runtime not implemented.
+next_action: Build the runtime and run an uncalibrated deterministic baseline.

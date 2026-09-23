@@ -1,0 +1,37 @@
+schema_version: 1
+id: parameters.example.v0
+title: Replace with a stable parameter-set title
+status: candidate
+created: null
+parent_ids: []
+campaign_id: null
+
+claim_label: unresolved
+behavior_exposure:
+  behavior_targeted: false
+  inherited_from: []
+  exposed_behavior_ids: []
+
+parameter_families: []
+# Each parameter family should record scope, origin
+# (unknown/assumed/borrowed/measured/fitted/frozen), units, values or a content
+# reference, source transformations, uncertainty, and frozen state.
+
+reproducibility:
+  git_commit: unresolved
+  input_hashes: {}
+  artifact_refs: []
+
+validation:
+  level: not_run
+  evaluation_ids: []
+  known_failures: []
+
+promotion:
+  status: not_promoted
+  decision_reason: null
+  previous_reference_id: null
+
+sources: []
+assumptions: []
+next_action: Replace this template with an immutable parameter-set record.

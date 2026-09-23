@@ -1,0 +1,60 @@
+schema_version: 1
+id: target.technical_embodied_stability.v0
+title: Neutral embodied closed-loop stability on flat ground
+status: proposed
+primary_class: technical
+optimization_exposure: allowed
+claim_label: trained_technical_stability
+
+scope:
+  includes:
+    - accepted MaleCNS runtime parameters
+    - declared sensory and motor interface parameters
+    - basal-source parameters
+    - simulator parameters explicitly admitted by a campaign
+  excludes:
+    - a prescribed pose sequence, gait, step timing, or named action
+    - task reward
+    - external stabilization controller
+
+environment:
+  scene: simple_flat_ground
+  stimulus: nominal_or_sham
+
+metrics:
+  - simulation_completion
+  - finite_cns_state_fraction
+  - body_orientation_bounds
+  - center_of_mass_displacement
+  - joint_limit_violation_count
+  - contact_instability_count
+  - actuator_energy
+  - actuator_jerk
+  - recovery_after_small_generic_perturbation
+
+acceptance_policy:
+  summary: >-
+    The coupled simulation remains finite, bounded and recoverable for the declared
+    short horizon without prescribing a recognizable action.
+  thresholds: unresolved
+
+behavior_targets: []
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: []
+  held_out: []
+
+dependencies:
+  - target.technical_neural_dynamics.v0 accepted parameter set
+  - executable body-world-connectome closed loop
+  - fixed simple 3D scene protocol
+
+provenance:
+  sources: []
+  assumptions:
+    - Neutral stability is an engineering target, not an emergent-behavior claim.
+
+validation: not_run
+blocked_reason: Neural runtime and closed-loop calibration runner not implemented.
+next_action: Define the flat-ground protocol after the temporal runtime is runnable.

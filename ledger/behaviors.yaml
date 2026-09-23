@@ -1,6 +1,12 @@
-schema_version: 1
-calibration_behaviors: []
+schema_version: 2
+behavior_targeted_calibrations: []
+technical_targets:
+  - target.technical_neural_dynamics.v0
+  - target.technical_embodied_stability.v0
+evaluation_only_targets:
+  - target.held_out_stimulus_response.v0
 held_out_behaviors: []
 notes:
-  - No behavior is assigned until a versioned protocol fixes the calibration/evaluation split.
-
+  - Technical stability targets are not fly behaviors and cannot support an emergence claim.
+  - No named behavior is assigned until a locked protocol fixes the calibration/evaluation split.
+  - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.

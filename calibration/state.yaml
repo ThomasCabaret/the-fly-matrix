@@ -1,0 +1,37 @@
+schema_version: 1
+phase: framework
+updated: 2026-09-23
+
+wiring_baseline:
+  terminal_coverage: complete
+  refinement: incomplete_but_sufficient_for_calibration_infrastructure
+
+active_target_ids:
+  - target.technical_neural_dynamics.v0
+  - target.technical_embodied_stability.v0
+evaluation_target_ids:
+  - target.held_out_stimulus_response.v0
+
+reference_parameter_set_id: null
+last_promoted_parameter_set_id: null
+last_completed_campaign_id: null
+
+readiness:
+  governance_and_registry: documented
+  temporal_cns_runtime: not_started
+  calibration_runner: not_started
+  baseline_characterization: not_run
+  local_interface_parameter_inventory: not_started
+  held_out_protocol_locked: false
+
+behavior_exposure:
+  behavior_targeted_campaigns: []
+  contaminated_parameter_sets: []
+
+blocked_by:
+  - A temporal recurrent MaleCNS runtime and calibration runner do not yet exist.
+
+next_action: >-
+  Implement a minimal deterministic temporal MaleCNS runtime and baseline
+  characterization harness without choosing physiological gains or optimizing a
+  fly behavior.

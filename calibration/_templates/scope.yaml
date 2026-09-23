@@ -1,0 +1,17 @@
+schema_version: 1
+id: scope.example.v0
+title: Replace with a stable scope title
+status: draft
+includes:
+  boxes: []
+  channel_groups: []
+  neuron_populations: []
+  body_degrees_of_freedom: []
+  parameter_families: []
+excludes: []
+allowed_parameter_names: []
+frozen_parameter_names: []
+structural_changes_allowed: false
+assumptions: []
+sources: []
+next_action: Replace this template with a versioned scope record.

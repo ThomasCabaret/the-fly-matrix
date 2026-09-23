@@ -8,13 +8,14 @@ doivent être locales, explicites, paramétrables et auditables. Un résultat vi
 mais produit par un contrôleur comportemental externe n'est pas un succès du
 projet.
 
-La phase courante est le **câblage structurel avant calibration**. Ne choisissez
-pas de valeurs physiologiques, gains, signes, seuils ou comportements cibles sauf
-demande explicite ouvrant la phase de calibration.
+La couverture terminale du **câblage structurel v0 est complète**. La phase
+courante ouvre l'infrastructure de calibration, sans considérer le câblage comme
+maximalement raffiné. Ne choisissez pas de valeurs physiologiques, gains, signes,
+seuils ou comportements cibles hors d'une cible et d'une campagne versionnées.
 
 ## Sources de vérité à lire
 
-Avant une modification structurelle, consulter au minimum :
+Avant une modification structurelle ou de calibration, consulter au minimum :
 
 1. `PROJECT_STATE.md` pour l'état courant et les fronts ouverts ;
 2. `docs/wiring-methodology.md` pour la définition de « câblé » ;
@@ -23,6 +24,8 @@ Avant une modification structurelle, consulter au minimum :
 4. les fiches pertinentes de `ledger/` et leurs validations ;
 5. `docs/provenance-policy.md` lorsqu'une relation scientifique est ajoutée ou
    modifiée.
+6. `docs/calibration-methodology.md`, l'ADR 0005 et `calibration/state.yaml` pour
+   tout paramètre, cible, campagne ou protocole d'évaluation.
 
 Le registre, les ADR et les manifestes reproductibles restent canoniques. Les
 skills indiquent comment travailler avec eux ; ils ne remplacent pas leur contenu.
@@ -61,6 +64,25 @@ Toute décision substantielle doit permettre de retrouver :
 Une absence de source doit être déclarée. Ne jamais transformer une intuition en
 fait pour améliorer un pourcentage.
 
+## Contrat de calibration
+
+- Distinguer `evidence_transfer`, `technical`, `local_interface`,
+  `behavior_targeted` et `evaluation_only`.
+- Une stabilité entraînée est un résultat technique, pas un comportement émergent.
+- Toute action reconnaissable utilisée dans une loss, la sélection de modèle,
+  l'early stopping ou le réglage manuel contamine la lignée pour ce comportement.
+- Toute calibration comportementale exige l'accord explicite de l'utilisateur et
+  un marquage très visible dans les registres, rapports et descendants.
+- Les protocoles `evaluation_only` sont verrouillés avant fitting et ne servent
+  jamais à choisir des paramètres. Une inspection qui entraîne un changement
+  contamine cette version du protocole.
+- Les valeurs biologiques reprises conservent source, unités, transformation,
+  incertitude et limites d'applicabilité.
+- La calibration ne doit ni modifier silencieusement la topologie, ni ajouter un
+  contrôleur comportemental externe autour de MaleCNS.
+- Les sorties lourdes vont sous `runs/calibration/`; Git conserve les configs,
+  lignées, hashes, résumés, échecs, décisions et prochaines actions.
+
 ## Initiative et cas non prévus
 
 Ces règles définissent des invariants, pas une recette rigide. Adapter la méthode à
@@ -96,4 +118,7 @@ du projet. Documenter ensuite la décision sous forme d'ADR si elle est transver
   fil, un manifeste ou un chemin runtime de câblage.
 - Utiliser `flymatrix-wiring-audit` pour déterminer ce qui est réellement terminé,
   trouver les contournements et vérifier l'honnêteté des statuts et indicateurs.
-
+- Utiliser `flymatrix-calibration` pour créer ou exécuter une cible, une campagne,
+  un jeu de paramètres, un runner ou une dynamique temporelle de calibration.
+- Utiliser `flymatrix-calibration-audit` pour auditer en lecture seule la
+  reproductibilité, la provenance, les fuites comportementales et les claims.
