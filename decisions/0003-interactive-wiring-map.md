@@ -29,7 +29,8 @@ derived manifests. The initial architecture is:
 - a Python exporter that validates and normalizes the real project state;
 - a TypeScript, React, and Vite application shell;
 - Cytoscape.js as the initial interactive graph renderer;
-- ELK.js layered layout, normally computed during report generation and cached;
+- deterministic horizontal lanes and stable sector-local ordering computed during
+  report generation; ELK.js remains an option for later nested layouts;
 - generated, chunkable JSON under `reports/generated/`, never a second manually
   maintained source of truth.
 
@@ -117,6 +118,21 @@ Selecting a terminal, route, group, or box should expose, when applicable:
 
 Missing evidence or validation must remain explicit. The viewer reports state; it
 does not manufacture confidence or completion.
+## Initial implementation checkpoint
+
+The first read-only implementation exports 31,037 nodes and 45,496 visible
+relations from the current derived manifests. It includes every CNS input and
+output terminal in scope, physical observables, anatomical source models, input
+adapter channels, motor groups, actuators, and the collapsed MaleCNS core.
+
+The viewer currently provides deterministic lanes, pan and zoom, fit-width and
+fit-all controls, sector focus by dimming rather than removing other elements,
+search, state colouring, and a traceability panel for nodes and edges. Individual
+terminals remain distinct even where many marks share pixels at overview scale.
+The generated manifest and compiled frontend remain ignored build artifacts.
+
+This checkpoint does not yet implement hierarchy expansion, revision comparison,
+raw-edge switching, or true multi-level semantic styling. Those are incremental
 
 ## Interaction and delivery
 

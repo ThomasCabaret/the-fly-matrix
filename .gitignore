@@ -20,4 +20,7 @@ tools/uv/
 .ruff_cache/
 .idea/
 .vscode/
+ui/wiring-map/node_modules/
+ui/wiring-map/dist/
+ui/wiring-map/*.tsbuildinfo
 Thumbs.db

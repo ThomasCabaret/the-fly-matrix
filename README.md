@@ -39,9 +39,13 @@ Pour reprendre le projet sans le contexte des conversations :
   continuité du code, mais ne valent pas fermeture de leur câblage.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
+- `wiring_map.bat` compile l'interface locale, régénère son graphe exhaustif depuis
+  les manifestes réels, démarre un serveur local et ouvre la carte interactive.
 
-The next dashboard generation will add an exhaustive interactive wiring map. Its
-data contract, semantic-zoom rules, traceability requirements, and initial local
+The exhaustive interactive wiring map is now available as a first read-only
+inspection surface. It exposes connected and blocked terminals, real box
+granularity, deterministic lanes, sector focus, search, pan/zoom, and an element
+traceability panel. Its evolving data contract, semantic-zoom rules, and local
 web architecture are recorded in
 [`ADR 0003`](decisions/0003-interactive-wiring-map.md).
 

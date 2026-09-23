@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-22, contrat de couverture terminale exhaustive.
+Mise à jour : 2026-09-23, première carte de câblage interactive exhaustive.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -23,11 +23,13 @@ Le calcul actuel des 85 % n'applique pas encore automatiquement cette nouvelle
 condition ; le prochain audit machine-readable pourra donc reclasser le score
 sans que le réseau sous-jacent ait régressé.
 
-Avant le prochain grand lot de câblage, la priorité est désormais de construire
-une première carte interactive exhaustive du routage. Elle doit représenter les
-terminaux connectés comme non connectés, préserver la granularité réelle des
-boîtes et adapter seulement le détail graphique au niveau de zoom. L'architecture,
-les invariants visuels et le contrat de traçabilité sont actés en anglais dans
+La première carte interactive exhaustive est désormais implémentée. Elle exporte
+depuis les manifestes locaux 31 037 nœuds et 45 496 relations : 1 552 observables
+physiques, 8 895 boîtes d'entrée, 17 884 entrées CNS, 815 sorties CNS, 441 groupes
+moteurs et 102 actionneurs. Les terminaux bloqués restent visibles au lieu d'être
+filtrés. La carte offre zoom/panoramique, focus sectoriel sans retrait de topologie,
+recherche et panneau de traçabilité. Elle ne contient aucune valeur de calibration.
+L'architecture, les invariants visuels et le contrat de traçabilité sont actés en anglais dans
 [`ADR 0003`](decisions/0003-interactive-wiring-map.md).
 
 ## État synthétique
@@ -53,8 +55,14 @@ protège MuJoCo des paramètres arbitraires; elle n'est pas une calibration. Le
 secteur corps physique passe de 94 à 100 %. Le score global reste arrondi à 85 %,
 mais son composant de routage des fils passe de 69 à 70 %.
 
+Le lot d'interface ne modifie pas ce score. `wiring_map.bat` compile l'application
+React/Cytoscape, régénère `reports/generated/wiring-map/wiring-map.json`, démarre
+un serveur HTTP strictement local et ouvre la vue. La disposition fixe les colonnes
+monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS → sorties CNS
+→ groupes moteurs → actionneurs afin que deux générations restent comparables.
+
 Le smoke test traverse toujours 17 884 entrées CNS, 26 028 386 arêtes centrales,
-815 sorties motrices et 102 actionneurs avant le pas physique. Les 33 tests
+815 sorties motrices et 102 actionneurs avant le pas physique. Les 35 tests
 unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
@@ -85,6 +93,7 @@ status.bat
 run_analysis.bat          # inventaires et manifestes ; neuPrint si jeton présent
 run_wiring_smoke.bat      # reconstruction et parcours structurel complet
 dashboard.bat             # état HTML/DOT recalculé
+wiring_map.bat            # carte exhaustive interactive locale
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les
