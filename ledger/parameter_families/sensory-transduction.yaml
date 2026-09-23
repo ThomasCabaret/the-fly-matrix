@@ -8,12 +8,13 @@ sharing_rule: one independent coefficient per currently executable proprioceptiv
 source_kind: derived
 source_references:
   - generated/wiring/proprio-muscle-inputs.parquet
+  - generated/wiring/proprioception-proxy-candidates.parquet
   - generated/wiring/mechanosensory-muscle-inputs.parquet
   - generated/wiring/vision-column-photoreceptors.parquet
   - generated/wiring/vision-remainder-transduction.parquet
 value: null
 bounds: null
-free_parameter_count: 9645
+free_parameter_count: 10198
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 status: unknown

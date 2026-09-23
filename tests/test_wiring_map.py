@@ -29,6 +29,8 @@ class WiringMapTests(unittest.TestCase):
             sum(payload["meta"]["input_box_states"].values()),
             counts["input_boxes"],
         )
+        self.assertEqual(payload["meta"]["input_box_states"]["blocked"], 1_883)
+        self.assertEqual(payload["meta"]["input_box_states"]["proxy"], 98)
 
         nodes = payload["elements"]["nodes"]
         edges = payload["elements"]["edges"]
@@ -55,6 +57,17 @@ class WiringMapTests(unittest.TestCase):
                 for node in nodes
             )
         )
+        proprio_nodes = [
+            node
+            for node in nodes
+            if node["data"]["kind"] == "input_adapter_channel"
+            and node["data"]["sector"] == "proprioception"
+        ]
+        self.assertEqual(len(proprio_nodes), 262)
+        self.assertEqual(
+            sum(node["data"]["state"] == "proxy" for node in proprio_nodes), 91
+        )
+        self.assertFalse(any(node["data"]["state"] == "blocked" for node in proprio_nodes))
 
 
 if __name__ == "__main__":

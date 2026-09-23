@@ -1,11 +1,12 @@
 schema_version: 1
 id: validation.proprioception_transduction_candidates
-name: Matrice candidate locale de transduction proprioceptive
+name: Couverture locale paramétrée et proxy de la transduction proprioceptive
 owner_ids:
   - sensor.proprioception
   - adapter.proprioception.transduction
   - adapter.proprioception.routing
   - wire.proprioception_sensor_to_transduction
+  - wire.proprioception_proxy_to_transduction
   - wire.proprioception_transduction_to_routing
   - parameter.sensory_transduction
 level: integration
@@ -13,18 +14,21 @@ protocol_path: src/the_fly_matrix/wiring_smoke.py
 command: run_wiring_smoke.bat
 acceptance_criteria:
   - The 102 FlyBody joints expose 204 exact position and velocity observables
-  - Entry nerve, side and receptor subclass constrain a sparse matrix of 1439 local candidate edges
+  - Entry nerve, side and receptor subclass constrain 1439 direct local candidate edges
   - Exactly 171 of 262 terminal channels, covering 986 neurons, receive represented joint-state candidates
-  - The other 91 terminal channels remain explicit because strain or vibration is absent from the physical interface
-  - Runtime coefficients and unresolved terminal values are injected externally and no scientific value is persisted
+  - The other 91 terminal channels, covering 468 neurons, receive 553 separately declared local kinematic proxy edges
+  - Direct and proxy target channel sets are disjoint and exhaust all 262 terminal channels
+  - Runtime coefficients are injected externally; no terminal activity bypass or scientific value is persisted
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: proprioception-transduction-candidates-2026-09-22
+latest_run_id: proprioception-transduction-proxy-closure-2026-09-23
 status: integration_pass
 notes:
   - "MaleCNS annotation source: https://github.com/flyconnectome/2025malecns"
   - "FeCO functional-class source: https://doi.org/10.1038/s41467-025-59302-3"
   - FeCO claw and hook labels restrict candidates to position and movement respectively
-  - FeCO club channels remain unresolved because joint vibration is not exposed
-  - Campaniform and notum channels remain unresolved because local strain is not exposed
+  - FeCO club channels use same-leg femur-tibia velocity as an explicit vibration proxy
+  - Campaniform and notum channels use same-appendage kinematics as explicit strain proxies
+  - The single anatomically unlocalized campaniform channel is restricted to five central thorax attachment joints
+  - All proxies remain replaceable because FlyBody does not expose local strain or vibration
   - Candidate execution is deterministic and is not a calibration

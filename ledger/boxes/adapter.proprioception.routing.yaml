@@ -11,6 +11,6 @@ confidence: medium
 evidence: [data/derived/wiring/proprioception-routing.json, data/derived/wiring/proprioception-routes.parquet, data/derived/wiring/proprioception-transduction-candidates.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.proprioception_routing, validation.proprioception_transduction_candidates]
-next_action: Préserver les 262 identités terminales pendant l'ajout des 91 observables physiques manquantes.
+next_action: Preserve the 262 terminal identities while the 91 proxy branches are replaced or calibrated.
 blocked_by: []
 completion_criteria: [Groupes aval exhaustifs, Routages bodyId fixes, Ambiguïtés amont comptées séparément]

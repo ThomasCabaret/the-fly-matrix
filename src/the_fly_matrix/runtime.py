@@ -17,6 +17,7 @@ ROUTE_PATH = WIRING_ROOT / "basal-clamp-routes.parquet"
 PROPRIO_CHANNEL_PATH = WIRING_ROOT / "proprioception-channels.csv"
 PROPRIO_ROUTE_PATH = WIRING_ROOT / "proprioception-routes.parquet"
 PROPRIO_INPUT_CANDIDATE_PATH = WIRING_ROOT / "proprioception-input-candidates.parquet"
+PROPRIO_PROXY_CANDIDATE_PATH = WIRING_ROOT / "proprioception-proxy-candidates.parquet"
 MECHANO_CHANNEL_PATH = WIRING_ROOT / "mechanosensation-channels.csv"
 MECHANO_ROUTE_PATH = WIRING_ROOT / "mechanosensation-routes.parquet"
 MECHANO_INPUT_CANDIDATE_PATH = WIRING_ROOT / "mechanosensation-input-candidates.parquet"
@@ -217,10 +218,16 @@ class ProprioceptionTransductionBox:
     def __init__(
         self,
         candidates: pd.DataFrame,
+        proxies: pd.DataFrame,
         receptor_channels: pd.DataFrame,
         joint_channels: pd.DataFrame,
     ):
-        if candidates.empty or receptor_channels.empty or joint_channels.empty:
+        if (
+            candidates.empty
+            or proxies.empty
+            or receptor_channels.empty
+            or joint_channels.empty
+        ):
             raise ValueError("No generated proprioception transduction candidates found")
         required = {
             "parameter_id",
@@ -232,9 +239,22 @@ class ProprioceptionTransductionBox:
         missing = required - set(candidates.columns)
         if missing:
             raise ValueError(f"Missing proprioception candidate columns: {sorted(missing)}")
-        self.candidates = candidates.sort_values(
+        missing_proxy = (required | {"proxy_for", "terminal_disposition"}) - set(
+            proxies.columns
+        )
+        if missing_proxy:
+            raise ValueError(f"Missing proprioception proxy columns: {sorted(missing_proxy)}")
+        if set(proxies["terminal_disposition"].astype(str)) != {"proxy"}:
+            raise ValueError("Proprioception proxy manifest has an invalid disposition")
+        self.direct_candidates = candidates.sort_values(
             ["target_channel_id", "source_joint_id", "source_observable"]
         ).reset_index(drop=True)
+        self.proxy_candidates = proxies.sort_values(
+            ["target_channel_id", "source_joint_id", "source_observable"]
+        ).reset_index(drop=True)
+        self.candidates = pd.concat(
+            [self.direct_candidates, self.proxy_candidates], ignore_index=True
+        )
         self.receptor_channels = receptor_channels.reset_index(drop=True)
         self.joint_channels = joint_channels.sort_values("joint_id").reset_index(drop=True)
         if self.candidates["parameter_id"].duplicated().any():
@@ -244,6 +264,12 @@ class ProprioceptionTransductionBox:
         if self.joint_channels["joint_id"].duplicated().any():
             raise ValueError("Duplicate physical joint IDs")
         self.parameter_ids = tuple(self.candidates["parameter_id"].astype(str))
+        self.direct_parameter_ids = tuple(
+            self.direct_candidates["parameter_id"].astype(str)
+        )
+        self.proxy_parameter_ids = tuple(
+            self.proxy_candidates["parameter_id"].astype(str)
+        )
         self.channel_ids = tuple(self.receptor_channels["channel_id"].astype(str))
         self.joint_names = tuple(self.joint_channels["joint_name"].astype(str))
         channel_index = {channel_id: index for index, channel_id in enumerate(self.channel_ids)}
@@ -268,29 +294,41 @@ class ProprioceptionTransductionBox:
         if not set(observables) <= {"position", "velocity"}:
             raise ValueError("Unsupported proprioception source observable")
         self._velocity_edges = observables.eq("velocity").to_numpy()
+        self.parameterized_channel_ids = tuple(
+            self.direct_candidates["target_channel_id"].astype(str).drop_duplicates()
+        )
+        self.proxy_channel_ids = tuple(
+            self.proxy_candidates["target_channel_id"].astype(str).drop_duplicates()
+        )
+        if set(self.parameterized_channel_ids) & set(self.proxy_channel_ids):
+            raise ValueError("Parameterized and proxy proprioceptor channels overlap")
         self.resolved_channel_ids = tuple(
-            self.candidates["target_channel_id"].astype(str).drop_duplicates()
+            channel_id
+            for channel_id in self.channel_ids
+            if channel_id in set(self.parameterized_channel_ids) | set(self.proxy_channel_ids)
         )
-        self.unresolved_channel_ids = tuple(
-            channel_id for channel_id in self.channel_ids if channel_id not in self.resolved_channel_ids
-        )
-        self._unresolved_indices = np.asarray(
-            [channel_index[channel_id] for channel_id in self.unresolved_channel_ids], dtype=np.int64
-        )
-        if len(self.parameter_ids) != 1439:
-            raise ValueError("Expected 1,439 constrained proprioception parameters")
-        if (len(self.resolved_channel_ids), len(self.unresolved_channel_ids)) != (171, 91):
+        self.unresolved_channel_ids: tuple[str, ...] = ()
+        parameter_counts = len(self.direct_parameter_ids), len(self.proxy_parameter_ids)
+        if parameter_counts != (1439, 553):
+            raise ValueError("Unexpected proprioception direct/proxy parameter counts")
+        if (
+            len(self.parameterized_channel_ids),
+            len(self.proxy_channel_ids),
+            len(self.resolved_channel_ids),
+        ) != (171, 91, 262):
             raise ValueError("Unexpected proprioceptor candidate coverage")
 
     @classmethod
     def from_generated_wiring(
         cls,
         candidate_path: Path = PROPRIO_INPUT_CANDIDATE_PATH,
+        proxy_path: Path = PROPRIO_PROXY_CANDIDATE_PATH,
         receptor_channel_path: Path = PROPRIO_CHANNEL_PATH,
         joint_channel_path: Path = FLYBODY_PROPRIO_CHANNEL_PATH,
     ) -> "ProprioceptionTransductionBox":
         if (
             not candidate_path.is_file()
+            or not proxy_path.is_file()
             or not receptor_channel_path.is_file()
             or not joint_channel_path.is_file()
         ):
@@ -299,6 +337,7 @@ class ProprioceptionTransductionBox:
             )
         return cls(
             pd.read_parquet(candidate_path),
+            pd.read_parquet(proxy_path),
             pd.read_csv(receptor_channel_path),
             pd.read_csv(joint_channel_path),
         )
@@ -307,7 +346,6 @@ class ProprioceptionTransductionBox:
         self,
         joint_state: JointState,
         parameters: Mapping[str, float] | np.ndarray,
-        unresolved_values: Mapping[str, float] | np.ndarray,
     ) -> ChannelActivity:
         if joint_state.joint_names != self.joint_names:
             raise ValueError(f"{self.box_id}: physical joint order mismatch")
@@ -323,28 +361,12 @@ class ProprioceptionTransductionBox:
             weights = np.asarray(parameters, dtype=np.float64)
         if weights.shape != (len(self.parameter_ids),) or not np.isfinite(weights).all():
             raise ValueError(f"{self.box_id}: invalid candidate parameter vector")
-        if isinstance(unresolved_values, Mapping):
-            missing = set(self.unresolved_channel_ids) - set(unresolved_values)
-            extra = set(unresolved_values) - set(self.unresolved_channel_ids)
-            if missing or extra:
-                raise ValueError(
-                    f"{self.box_id}: unresolved input mismatch; "
-                    f"missing={len(missing)}, extra={len(extra)}"
-                )
-            fallback = np.asarray(
-                [unresolved_values[item] for item in self.unresolved_channel_ids], dtype=np.float64
-            )
-        else:
-            fallback = np.asarray(unresolved_values, dtype=np.float64)
-        if fallback.shape != (len(self.unresolved_channel_ids),) or not np.isfinite(fallback).all():
-            raise ValueError(f"{self.box_id}: invalid unresolved terminal vector")
         source_values = joint_state.positions[self._source_joint_indices].copy()
         source_values[self._velocity_edges] = joint_state.velocities[
             self._source_joint_indices[self._velocity_edges]
         ]
         values = np.zeros(len(self.channel_ids), dtype=np.float64)
         np.add.at(values, self._target_indices, source_values * weights)
-        values[self._unresolved_indices] = fallback
         return ChannelActivity(channel_ids=self.channel_ids, values=values)
 
 

@@ -166,11 +166,19 @@ terminales MaleCNS regroupées en 262 instances. Entre les deux,
 `proprioception-input-candidates.parquet` contient 1 439 arêtes locales candidates
 contraintes par nerf d'entrée, côté, appendice et sous-classe réceptrice. Elles
 relient 171 instances, couvrant 986 neurones, à des positions ou vitesses
-articulaires plausibles sans leur attribuer de valeur. Les 91 instances restantes
-(468 neurones) restent explicites : 82 attendent une mesure de contrainte, 5 une
-mesure de vibration et 4 une contrainte du notum. Le runtime exige des valeurs
-externes de smoke test pour ces terminaux au lieu de les mettre silencieusement à
-zéro. Aucune de ces valeurs ni aucun des 1 439 coefficients n'est une calibration.
+articulaires plausibles sans leur attribuer de valeur.
+
+Les 91 instances restantes (468 neurones) ne contournent plus cette boîte.
+`proprioception-proxy-candidates.parquet` contient 553 arêtes cinématiques locales
+séparées : les campaniformes d'aile, d'haltère ou de patte restent limités au même
+appendice et côté, les cinq groupes FeCO `club` utilisent uniquement la vitesse de
+l'articulation fémur-tibia correspondante, et les quatre groupes du notum utilisent
+les articulations aile/haltère du même côté. L'unique groupe sans localisation
+anatomique reste limité aux cinq attaches centrales thorax–tête/abdomen. Ces
+branches sont marquées `proxy`, donc remplaçables par de véritables mesures de
+contrainte ou vibration. Le runtime exécute désormais les 262 instances sans
+vecteur terminal injecté directement. Aucun des 1 992 coefficients n'est une
+calibration.
 
 Le manifeste mécanorécepteur applique la même séparation : 4 291 afférences
 tactiles ou mécanoréceptrices sont divisées en 323 instances type C selon le

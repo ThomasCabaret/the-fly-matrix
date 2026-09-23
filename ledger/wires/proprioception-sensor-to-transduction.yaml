@@ -18,5 +18,5 @@ provenance:
   used_claims: [Joint state is physically addressable, Entry nerve side and receptor subclass constrain local candidates]
   assumptions: [Each permitted edge exposes an independent coefficient until a later sharing rule is calibrated]
 validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.proprioception_transduction_candidates]
-next_action: Ajouter contrainte et vibration pour les 91 canaux sans observable; ne sélectionner aucune arête avant calibration.
+next_action: Preserve these 1,439 direct candidate edges separately from the 553 proxy edges; select no coefficient before calibration.
 blocked_by: []

@@ -216,8 +216,9 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
     if proprio_transduction:
         remote_metrics += (
             f'<div><strong>{proprio_transduction.get("candidate_edges", 0):,}</strong><span>arêtes proprio candidates</span></div>'
-            f'<div><strong>{proprio_transduction.get("resolved_terminal_channels", 0):,}/262</strong><span>canaux proprio reliés au corps</span></div>'
-            f'<div><strong>{proprio_transduction.get("unresolved_terminal_channels", 0):,}</strong><span>canaux attendant contrainte/vibration</span></div>'
+            f'<div><strong>{proprio_transduction.get("resolved_terminal_channels", 0):,}/262</strong><span>canaux proprio structurellement couverts</span></div>'
+            f'<div><strong>{proprio_transduction.get("proxy_terminal_channels", 0):,}</strong><span>proxies contrainte/vibration remplaçables</span></div>'
+            f'<div><strong>{proprio_transduction.get("unresolved_terminal_channels", 0):,}</strong><span>canaux proprio bloqués</span></div>'
         )
     if flybody_touch_wiring:
         remote_metrics += (

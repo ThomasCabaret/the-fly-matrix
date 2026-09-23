@@ -5,17 +5,17 @@ sector: proprioception
 adapter_type: null
 anatomical_region: joints_and_strain
 parent_id: null
-ports: {inputs: [body_state], outputs: [joint_state, strain, vibration]}
+ports: {inputs: [body_state], outputs: [joint_state]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, runs/wiring-smoke/latest.json]
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-proxy-candidates.parquet, runs/wiring-smoke/latest.json]
 provenance:
-  claim_kinds: [dataset_observation, unresolved]
+  claim_kinds: [dataset_observation, engineering_choice]
   source_references: [https://github.com/google-deepmind/mujoco_menagerie/tree/main/flybody]
   used_claims: [The compiled FlyBody model exposes 102 addressable joint positions and velocities]
-  assumptions: [Local strain and vibration are unavailable until separately implemented]
+  assumptions: [Local strain and vibration are unavailable; the downstream transduction box declares replaceable local kinematic proxies instead]
 parameter_family_ids: []
 validation_ids: [validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.proprioception_transduction_candidates]
-next_action: Ajouter les observables locales de contrainte et vibration requises par les 91 canaux terminaux encore sans source physique.
+next_action: Replace the 91 declared proxy branches when true local strain and vibration observables become available.
 blocked_by: []
-completion_criteria: [102 articulations énumérées, Adresses qpos/qvel exactes, Unités fixées, Extraction déterministe testée, Observables manquantes comptées]
+completion_criteria: [102 articulations énumérées, Adresses qpos/qvel exactes, Unités fixées, Extraction déterministe testée, Proxies de remplacement comptés séparément]

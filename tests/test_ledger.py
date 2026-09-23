@@ -20,7 +20,7 @@ class LedgerTests(unittest.TestCase):
     def test_top_level_interface_is_exhaustively_represented(self) -> None:
         self.assertEqual(len(self.ledger["boxes"]), 19)
         self.assertEqual(len(self.ledger["groups"]), 17)
-        self.assertEqual(len(self.ledger["wires"]), 23)
+        self.assertEqual(len(self.ledger["wires"]), 24)
         adapter_types = {
             box.get("adapter_type") for box in self.ledger["boxes"] if box.get("adapter_type")
         }
@@ -101,19 +101,37 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(proprio_transduction["source_joint_channels"], 102)
         self.assertEqual(proprio_transduction["target_terminal_channels"], 262)
         self.assertEqual(proprio_transduction["target_neurons"], 1454)
-        self.assertEqual(proprio_transduction["candidate_edges"], 1439)
-        self.assertEqual(proprio_transduction["resolved_terminal_channels"], 171)
-        self.assertEqual(proprio_transduction["resolved_neurons"], 986)
-        self.assertEqual(proprio_transduction["unresolved_terminal_channels"], 91)
-        self.assertEqual(proprio_transduction["unresolved_neurons"], 468)
+        self.assertEqual(proprio_transduction["candidate_edges"], 1992)
+        self.assertEqual(proprio_transduction["direct_candidate_edges"], 1439)
+        self.assertEqual(proprio_transduction["proxy_candidate_edges"], 553)
+        self.assertEqual(proprio_transduction["resolved_terminal_channels"], 262)
+        self.assertEqual(proprio_transduction["resolved_neurons"], 1454)
+        self.assertEqual(proprio_transduction["parameterized_terminal_channels"], 171)
+        self.assertEqual(proprio_transduction["proxy_terminal_channels"], 91)
+        self.assertEqual(proprio_transduction["proxy_neurons"], 468)
+        self.assertEqual(proprio_transduction["unresolved_terminal_channels"], 0)
+        self.assertEqual(proprio_transduction["unresolved_neurons"], 0)
         self.assertEqual(
-            proprio_transduction["unresolved_reason_channel_counts"],
+            proprio_transduction["former_missing_reason_channel_counts"],
             {
                 "notum_strain_observable_missing": 4,
                 "strain_observable_missing": 82,
                 "vibration_observable_missing": 5,
             },
         )
+        self.assertEqual(
+            proprio_transduction["terminal_disposition_counts"],
+            {"parameterized": 171, "proxy": 91},
+        )
+        self.assertEqual(
+            sum(proprio_transduction["proxy_basis_edge_counts"].values()), 553
+        )
+        proprio_proxy_path = path.with_name("proprioception-proxy-candidates.parquet")
+        self.assertTrue(proprio_proxy_path.is_file())
+        proprio_proxies = pd.read_parquet(proprio_proxy_path)
+        self.assertEqual(len(proprio_proxies), 553)
+        self.assertEqual(proprio_proxies["target_channel_id"].nunique(), 91)
+        self.assertEqual(set(proprio_proxies["terminal_disposition"]), {"proxy"})
         self.assertFalse(proprio_transduction["scientific_parameter_values_selected"])
 
         physical_touch_path = path.with_name("flybody-touch.json")

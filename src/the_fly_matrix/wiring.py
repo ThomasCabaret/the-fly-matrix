@@ -67,6 +67,7 @@ FLYBODY_PROPRIO_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-proprioception.json"
 FLYBODY_PROPRIO_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-proprioception-channels.csv"
 PROPRIO_TRANSDUCTION_SUMMARY_OUTPUT = OUTPUT_ROOT / "proprioception-transduction-candidates.json"
 PROPRIO_INPUT_CANDIDATE_OUTPUT = OUTPUT_ROOT / "proprioception-input-candidates.parquet"
+PROPRIO_PROXY_CANDIDATE_OUTPUT = OUTPUT_ROOT / "proprioception-proxy-candidates.parquet"
 FLYBODY_TOUCH_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-touch.json"
 FLYBODY_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-touch-channels.csv"
 FLYBODY_LOCAL_TOUCH_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-local-touch-channels.csv"
@@ -453,12 +454,14 @@ def build_proprioception_transduction_candidates(
     annotation_path: Path = ANNOTATION_SOURCE,
     summary_output: Path = PROPRIO_TRANSDUCTION_SUMMARY_OUTPUT,
     candidate_output: Path = PROPRIO_INPUT_CANDIDATE_OUTPUT,
+    proxy_output: Path = PROPRIO_PROXY_CANDIDATE_OUTPUT,
 ) -> dict[str, Any]:
     """Build a sparse local joint-state-to-proprioceptor candidate matrix.
 
     Only explicit entry-nerve, side and receptor-class annotations are used.
-    Missing strain and vibration observables remain explicit terminals instead
-    of being replaced by joint angle proxies.
+    Missing strain and vibration observables receive explicit, local kinematic
+    proxies. They remain distinct from represented joint-state candidates and
+    no proxy coefficient is selected here.
     """
     for path in (
         receptor_channel_path,
@@ -494,6 +497,7 @@ def build_proprioception_transduction_candidates(
         "MetaLN": "h",
     }
     candidate_rows: list[dict[str, Any]] = []
+    proxy_rows: list[dict[str, Any]] = []
     channel_results: list[dict[str, Any]] = []
     for receptor in receptors.itertuples(index=False):
         channel_id = str(receptor.channel_id)
@@ -574,14 +578,89 @@ def build_proprioception_transduction_candidates(
         if not unresolved_reason and not observables:
             raise RuntimeError(f"Aucune observable candidate pour {channel_id}")
         if unresolved_reason:
+            proxy_candidates = joints.iloc[0:0]
+            proxy_observables: tuple[str, ...] = ()
+            proxy_basis = ""
+            if unresolved_reason == "strain_observable_missing":
+                if nerve == "ADMN" and side in {"l", "r"}:
+                    proxy_candidates = joints.loc[
+                        joints["body_group"].eq("wings")
+                        & joints["joint_name"].str.contains(f"-{side}_wing", regex=False)
+                    ]
+                    proxy_basis = "same_side_wing_kinematics_for_strain_proxy"
+                elif nerve == "DMetaN" and side in {"l", "r"}:
+                    proxy_candidates = joints.loc[
+                        joints["body_group"].eq("halteres")
+                        & joints["joint_name"].str.contains(f"-{side}_haltere", regex=False)
+                    ]
+                    proxy_basis = "same_side_haltere_kinematics_for_strain_proxy"
+                elif nerve in leg_nerve_to_segment and side in {"l", "r"}:
+                    prefix = f"{side}{leg_nerve_to_segment[nerve]}"
+                    proxy_candidates = joints.loc[
+                        joints["body_group"].eq("legs")
+                        & joints["joint_name"].str.contains(f"{prefix}_", regex=False)
+                    ]
+                    proxy_basis = "same_leg_kinematics_for_strain_proxy"
+                else:
+                    proxy_candidates = joints.loc[
+                        joints["joint_name"].str.startswith("c_thorax-c_head")
+                        | joints["joint_name"].str.startswith("c_thorax-c_abdomen1")
+                    ]
+                    proxy_basis = "central_body_kinematics_for_unlocalized_strain_proxy"
+                proxy_observables = ("position", "velocity")
+            elif unresolved_reason == "vibration_observable_missing":
+                prefix = f"{side}{leg_nerve_to_segment[nerve]}"
+                proxy_candidates = joints.loc[
+                    joints["body_group"].eq("legs")
+                    & joints["joint_name"].str.contains(
+                        f"{prefix}_trochanterfemur-{prefix}_tibia-pitch",
+                        regex=False,
+                    )
+                ]
+                proxy_observables = ("velocity",)
+                proxy_basis = "femur_tibia_velocity_for_vibration_proxy"
+            elif unresolved_reason == "notum_strain_observable_missing":
+                proxy_candidates = joints.loc[
+                    joints["joint_name"].str.contains(f"-{side}_wing", regex=False)
+                    | joints["joint_name"].str.contains(f"-{side}_haltere", regex=False)
+                ]
+                proxy_observables = ("position", "velocity")
+                proxy_basis = (
+                    "same_side_thoracic_appendage_kinematics_for_notum_strain_proxy"
+                )
+            if proxy_candidates.empty or not proxy_observables:
+                raise RuntimeError(f"Aucun proxy proprioceptif local pour {channel_id}")
             channel_results.append(
                 {
                     "channel_id": channel_id,
                     "neuron_count": int(receptor.neuron_count),
-                    "status": "missing_physical_observable",
+                    "status": "proxy_available",
                     "reason": unresolved_reason,
+                    "proxy_basis": proxy_basis,
                 }
             )
+            for joint in proxy_candidates.itertuples(index=False):
+                for observable in proxy_observables:
+                    parameter_key = f"proxy|{joint.channel_id}|{observable}|{channel_id}"
+                    proxy_rows.append(
+                        {
+                            "parameter_id": "parameter.proprioception.proxy."
+                            + hashlib.sha256(parameter_key.encode("utf-8")).hexdigest()[:16],
+                            "source_channel_id": str(joint.channel_id),
+                            "source_joint_id": int(joint.joint_id),
+                            "source_joint_name": str(joint.joint_name),
+                            "source_body_group": str(joint.body_group),
+                            "source_observable": observable,
+                            "target_channel_id": channel_id,
+                            "entry_nerve": nerve,
+                            "subclass": subclass,
+                            "side": str(receptor.rootSide),
+                            "candidate_basis": proxy_basis,
+                            "proxy_for": unresolved_reason,
+                            "terminal_disposition": "proxy",
+                            "parameter_status": "unassigned",
+                        }
+                    )
             continue
 
         channel_results.append(
@@ -616,21 +695,29 @@ def build_proprioception_transduction_candidates(
     candidates = pd.DataFrame(candidate_rows).sort_values(
         ["target_channel_id", "source_joint_id", "source_observable"]
     ).reset_index(drop=True)
+    proxies = pd.DataFrame(proxy_rows).sort_values(
+        ["target_channel_id", "source_joint_id", "source_observable"]
+    ).reset_index(drop=True)
     results = pd.DataFrame(channel_results)
-    if candidates["parameter_id"].duplicated().any():
-        raise RuntimeError("La matrice proprioceptive contient des paramètres dupliqués")
-    resolved_ids = set(candidates["target_channel_id"].astype(str))
-    unresolved_ids = set(receptors["channel_id"].astype(str)) - resolved_ids
-    if resolved_ids & unresolved_ids or resolved_ids | unresolved_ids != set(
-        receptors["channel_id"].astype(str)
+    if (
+        candidates["parameter_id"].duplicated().any()
+        or proxies["parameter_id"].duplicated().any()
     ):
+        raise RuntimeError("La matrice proprioceptive contient des paramètres dupliqués")
+    direct_ids = set(candidates["target_channel_id"].astype(str))
+    proxy_ids = set(proxies["target_channel_id"].astype(str))
+    resolved_ids = direct_ids | proxy_ids
+    unresolved_ids = set(receptors["channel_id"].astype(str)) - resolved_ids
+    if direct_ids & proxy_ids or unresolved_ids:
         raise RuntimeError("La partition des canaux proprioceptifs est incohérente")
-    if (len(candidates), len(resolved_ids), len(unresolved_ids)) != (1439, 171, 91):
+    coverage_counts = len(candidates), len(proxies), len(direct_ids), len(proxy_ids)
+    if coverage_counts != (1439, 553, 171, 91):
         raise RuntimeError(
             "Matrice proprioceptive inattendue: "
-            f"{len(candidates)} arêtes, {len(resolved_ids)} résolus, {len(unresolved_ids)} non résolus"
+            f"{len(candidates)} arêtes directes, {len(proxies)} proxies, "
+            f"{len(direct_ids)} paramétrés, {len(proxy_ids)} proxifiés"
         )
-    unresolved = results.loc[results["status"].eq("missing_physical_observable")]
+    proxied = results.loc[results["status"].eq("proxy_available")]
     summary = {
         "schema_version": 1,
         "generated_at": datetime.now(UTC).isoformat(),
@@ -641,47 +728,65 @@ def build_proprioception_transduction_candidates(
             "used_claims": [
                 "entryNerve and rootSide constrain the represented appendage",
                 "FeCO claw, hook and club classes encode position, movement and vibration respectively",
-                "unrepresented strain and vibration are not replaced by angle proxies",
+                "strain and vibration absent from FlyBody remain explicit proxy branches",
             ],
         },
         "method": {
             "candidate_rule": "same annotated appendage and side; receptor subclass restricts local observable",
             "parameterization": "one free signed local coefficient per permitted observable-to-terminal edge",
             "initialization": "absent; all parameter values remain unassigned",
-            "unresolved_policy": "runtime requires explicit external placeholder values for terminals whose physical observable is absent",
+            "proxy_policy": "missing strain and vibration use local joint kinematics through separately declared replaceable proxy edges",
         },
         "source_joint_channels": int(len(joints)),
         "source_scalar_observables": int(len(joints) * 2),
         "target_terminal_channels": int(len(receptors)),
         "target_neurons": int(receptors["neuron_count"].sum()),
-        "candidate_edges": int(len(candidates)),
-        "free_continuous_parameters": int(len(candidates)),
+        "candidate_edges": int(len(candidates) + len(proxies)),
+        "direct_candidate_edges": int(len(candidates)),
+        "proxy_candidate_edges": int(len(proxies)),
+        "free_continuous_parameters": int(len(candidates) + len(proxies)),
         "resolved_terminal_channels": len(resolved_ids),
         "resolved_neurons": int(
             receptors.loc[receptors["channel_id"].isin(resolved_ids), "neuron_count"].sum()
         ),
-        "unresolved_terminal_channels": len(unresolved_ids),
-        "unresolved_neurons": int(unresolved["neuron_count"].sum()),
-        "unresolved_reason_channel_counts": {
+        "parameterized_terminal_channels": len(direct_ids),
+        "proxy_terminal_channels": len(proxy_ids),
+        "proxy_neurons": int(proxied["neuron_count"].sum()),
+        "unresolved_terminal_channels": 0,
+        "unresolved_neurons": 0,
+        "former_missing_reason_channel_counts": {
             str(key): int(value)
-            for key, value in unresolved["reason"].value_counts().sort_index().items()
+            for key, value in proxied["reason"].value_counts().sort_index().items()
+        },
+        "terminal_disposition_counts": {
+            "parameterized": len(direct_ids),
+            "proxy": len(proxy_ids),
         },
         "candidate_basis_edge_counts": {
             str(key): int(value)
             for key, value in candidates["candidate_basis"].value_counts().sort_index().items()
         },
-        "routing_status": "candidates_known_with_explicit_missing_observables",
+        "proxy_basis_edge_counts": {
+            str(key): int(value)
+            for key, value in proxies["candidate_basis"].value_counts().sort_index().items()
+        },
+        "routing_status": "parameterized_and_proxy_complete",
         "parameter_status": "unassigned",
         "scientific_parameter_values_selected": False,
     }
     summary_output.parent.mkdir(parents=True, exist_ok=True)
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     candidates.to_parquet(candidate_output, index=False)
-    print(f"[OK] {len(candidates):,} arêtes locales candidates, toutes sans valeur")
-    print(f"[OK] {len(resolved_ids):,}/262 canaux terminaux reliés à des observables articulaires")
-    print(f"[INFO] {len(unresolved_ids):,}/262 terminaux attendent une observable de contrainte ou vibration")
+    proxies.to_parquet(proxy_output, index=False)
+    print(
+        f"[OK] {len(candidates):,} arêtes locales candidates et "
+        f"{len(proxies):,} arêtes proxy, toutes sans valeur"
+    )
+    print(f"[OK] {len(resolved_ids):,}/262 canaux terminaux couverts sans injection directe")
+    print(f"[INFO] {len(proxy_ids):,}/262 terminaux utilisent un proxy local remplaçable")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Matrice candidate : {candidate_output}")
+    print(f"[OK] Matrice proxy : {proxy_output}")
     return summary
 
 

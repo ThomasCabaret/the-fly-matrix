@@ -17,6 +17,6 @@ provenance:
   source_references: [male_cns_annotations_v1_0_minconf_0_5, https://github.com/flyconnectome/2025malecns]
   used_claims: [MaleCNS class mechanosensory_proprioceptive defines the inventoried population]
   assumptions: [None for downstream bodyId membership; physical candidates are tracked separately]
-next_action: Compléter les observables de contrainte et vibration pour les 468 neurones sans source physique représentée.
+next_action: Preserve the exhaustive 171 parameterized plus 91 proxy terminal partition; replace proxies when true strain or vibration becomes available.
 blocked_by: []
 completion_criteria: [Groupes aval disjoints, Couverture totale, Valeurs inconnues conservées explicitement]

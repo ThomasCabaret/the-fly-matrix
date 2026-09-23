@@ -59,5 +59,6 @@ fonctionnelle explicite et une justification dans le registre.
   elles rendent un smoke test exécutable.
 - Les clamps olfactif, gustatif et thermo-hygrométrique sont des terminaisons
   complètes de type `basal`, pas des secteurs inachevés.
-- La vision actuelle reste inachevée au sens exécutable tant que 3 470 canaux
-  contournent une boîte déclarée, malgré les 2 628 affectations R7/R8 publiées.
+- Au moment de l'adoption, 3 470 canaux visuels contournaient encore une boîte
+  déclarée. Cette dette historique est maintenant fermée; l'état courant et ses
+  dispositions restent décrits dans le registre plutôt que figés dans cet ADR.

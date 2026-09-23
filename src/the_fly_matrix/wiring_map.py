@@ -244,6 +244,7 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
             "vision-column-photoreceptors.parquet",
             "vision-remainder-transduction.parquet",
             "proprioception-input-candidates.parquet",
+            "proprioception-proxy-candidates.parquet",
             "mechanosensation-input-candidates.parquet",
             "motor-channels.csv",
             "motor-routes.parquet",
@@ -488,6 +489,12 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
         "target_channel_id",
         ("source_observable", "candidate_basis", "parameter_status"),
     )
+    proprio_proxies = _aggregate_candidates(
+        _read_parquet(derived_root / "proprioception-proxy-candidates.parquet"),
+        "source_channel_id",
+        "target_channel_id",
+        ("source_observable", "candidate_basis", "proxy_for", "parameter_status"),
+    )
     mechano_candidates = _aggregate_candidates(
         _read_parquet(derived_root / "mechanosensation-input-candidates.parquet"),
         "source_channel_id",
@@ -526,6 +533,34 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
                     },
                 )
             )
+    for candidate in proprio_proxies:
+        source_channel = candidate["source"]
+        target_channel = candidate["target"]
+        if target_channel not in channel_y:
+            raise WiringMapError(f"Unknown proprioception proxy target {target_channel}")
+        source_targets[source_channel].append(channel_y[target_channel])
+        inbound_states[target_channel].add("proxy")
+        add_edge(
+            _edge(
+                "edge:proxy-in:"
+                f"{_stable_id('proprioception', source_channel, target_channel)}",
+                source=f"physical:{source_channel}",
+                target=f"adapter:{target_channel}",
+                kind="physical_proxy",
+                sector="proprioception",
+                state="proxy",
+                count=candidate["count"],
+                label=str(candidate["count"]) if candidate["count"] > 1 else "",
+                details={
+                    **candidate["details"],
+                    "free_parameter_edges": candidate["count"],
+                    "terminal_disposition": "proxy",
+                    "source_file": (
+                        "data/derived/wiring/proprioception-proxy-candidates.parquet"
+                    ),
+                },
+            )
+        )
 
     for channel_id, (sector, kind, row, filename) in physical_records.items():
         span = sector_spans[sector]

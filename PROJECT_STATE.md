@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-23, fermeture structurelle exhaustive du secteur visuel.
+Mise à jour : 2026-09-23, fermeture structurelle exhaustive de la proprioception.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -24,10 +24,10 @@ condition ; le prochain audit machine-readable pourra donc reclasser le score
 sans que le réseau sous-jacent ait régressé.
 
 La première carte interactive exhaustive est désormais implémentée. Elle exporte
-depuis les manifestes locaux 31 038 nœuds et 53 036 relations : 1 552 observables
+depuis les manifestes locaux 31 038 nœuds et 53 315 relations : 1 552 observables
 physiques, 8 895 boîtes d'entrée, 17 884 entrées CNS, 815 sorties CNS, 441 groupes
 moteurs et 102 actionneurs. Les terminaux bloqués restent visibles au lieu d'être
-filtrés. Après le lot visuel, elle compte 1 974 boîtes d'entrée bloquées contre
+filtrés. Après le lot proprioceptif, elle compte 1 883 boîtes d'entrée bloquées contre
 8 072 auparavant. La carte offre zoom/panoramique, focus sectoriel sans retrait de topologie,
 recherche et panneau de traçabilité. Elle ne contient aucune valeur de calibration.
 L'architecture, les invariants visuels et le contrat de traçabilité sont actés en anglais dans
@@ -38,7 +38,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Câblage global : **86 %**.
 - Graphe central MaleCNS : **100 % structurel**.
 - Sortie motrice : **100 % structurel**.
-- Proprioception : **86 %**.
+- Proprioception : **85 %**.
 - Entrées sensorielles non résolues : **88 %**.
 - Clamps basaux : **87 %**.
 - Vision : **89 %**.
@@ -46,6 +46,22 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Corps physique : **100 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
+
+Le dernier lot supprime l'injection directe des 91 groupes proprioceptifs qui
+attendaient une mesure de contrainte ou de vibration. Les 171 groupes déjà reliés
+au corps conservent leurs 1 439 arêtes candidates `parameterized`. Les 91 autres,
+couvrant 468 neurones, traversent désormais 553 arêtes `proxy` limitées aux
+cinématiques du même appendice et du même côté lorsque l'annotation le permet.
+L'unique groupe sans nerf ni côté connus ne voit que cinq articulations centrales
+thorax–tête/abdomen. Les 262/262 groupes sont exécutables sans vecteur terminal de
+secours et aucun coefficient n'est fixé.
+
+Le score global historique reste à 86 %. Le score proprioceptif passe de 86 à
+85 % parce que le nouveau fil proxy est honnêtement enregistré au palier
+`candidates_known`, ce qui augmente le dénominateur de cet ancien indicateur. Il
+ne s'agit pas d'une régression du réseau : les canaux `blocked` proprioceptifs
+passent de 91 à zéro. La carte ne conserve maintenant que les 1 883 afférences
+sensorielles résiduelles comme boîtes d'entrée bloquées.
 
 Le dernier lot élimine toute injection directe dans les 6 098 terminaux visuels.
 Les 2 628 R7/R8 présents dans le supplément officiel conservent leur colonne
@@ -82,15 +98,13 @@ unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
 
-1. Auditer toutes les injections `unresolved_values` du parcours global et leur
-   attribuer une disposition terminale machine-readable.
-2. Encapsuler contrainte et vibration proprioceptives manquantes dans une boîte
-   `parameterized` ou `proxy` explicite plutôt que dans des valeurs de test.
-3. Donner aux 1 883 afférences sensorielles résiduelles une boîte source générique
+1. Donner aux 1 883 afférences sensorielles résiduelles une boîte source générique
    locale, quitte à conserver une fonction de transfert très large à calibrer.
-4. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
+2. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
    commande→MuJoCo→état articulaire est désormais fermée et déterministe.
-5. N'affiner les candidats tête/thorax que si une observable corporelle plus
+3. Remplacer les proxies proprioceptifs par des mesures locales de contrainte ou
+   vibration si le corps physique les expose un jour, sans rouvrir la couverture.
+4. N'affiner les candidats tête/thorax que si une observable corporelle plus
    localisée devient disponible, sans inventer de latéralité.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du

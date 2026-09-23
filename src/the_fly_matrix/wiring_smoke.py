@@ -223,9 +223,9 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     proprio_transduction = ProprioceptionTransductionBox.from_generated_wiring()
     print(
         f"[OK] {proprio_transduction.box_id}: "
-        f"{len(proprio_transduction.parameter_ids):,} arêtes candidates pour "
-        f"{len(proprio_transduction.resolved_channel_ids):,}/262 canaux; "
-        f"{len(proprio_transduction.unresolved_channel_ids):,} observables manquantes explicites"
+        f"{len(proprio_transduction.direct_parameter_ids):,} arêtes paramétrées et "
+        f"{len(proprio_transduction.proxy_parameter_ids):,} arêtes proxy pour "
+        f"{len(proprio_transduction.resolved_channel_ids):,}/262 canaux"
     )
     mechanosensation = MechanosensationRoutingBox.from_generated_wiring()
     print(
@@ -311,17 +311,11 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     proprio_parameters_second = np.random.default_rng(seed + len(boxes) + 10).uniform(
         -1.0, 1.0, len(proprio_transduction.parameter_ids)
     )
-    unresolved_proprio_first = np.random.default_rng(seed + len(boxes) + 11).uniform(
-        -1.0, 1.0, len(proprio_transduction.unresolved_channel_ids)
-    )
-    unresolved_proprio_second = np.random.default_rng(seed + len(boxes) + 11).uniform(
-        -1.0, 1.0, len(proprio_transduction.unresolved_channel_ids)
-    )
     proprio_activity_first = proprio_transduction.step(
-        joint_state_first, proprio_parameters_first, unresolved_proprio_first
+        joint_state_first, proprio_parameters_first
     )
     proprio_activity_second = proprio_transduction.step(
-        joint_state_second, proprio_parameters_second, unresolved_proprio_second
+        joint_state_second, proprio_parameters_second
     )
     contact_data_first = np.random.default_rng(seed - 4).uniform(
         -1.0, 1.0, touch_sensor.sensor_data_size
@@ -603,6 +597,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "id": proprio_transduction.box_id,
                 "adapter_type": proprio_transduction.adapter_type,
                 "candidate_edges": len(proprio_transduction.parameter_ids),
+                "direct_candidate_edges": len(proprio_transduction.direct_parameter_ids),
+                "proxy_candidate_edges": len(proprio_transduction.proxy_parameter_ids),
                 "resolved_terminal_channels": len(proprio_transduction.resolved_channel_ids),
                 "unresolved_terminal_channels": len(
                     proprio_transduction.unresolved_channel_ids
@@ -616,7 +612,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
                 "adapter_type": proprioception.adapter_type,
                 "terminal_box_instances": len(proprioception.channel_ids),
                 "exact_routes": len(proprioception.routes),
-                "upstream_physical_mapping": "candidates_known_with_missing_observables",
+                "upstream_physical_mapping": "parameterized_and_proxy_complete",
                 "parameter_status": "arbitrary_smoke_only",
             }
         ]
@@ -759,9 +755,15 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "qpos_size": proprio_sensor.qpos_size,
             "qvel_size": proprio_sensor.qvel_size,
             "candidate_edges": len(proprio_transduction.parameter_ids),
+            "direct_candidate_edges": len(proprio_transduction.direct_parameter_ids),
+            "proxy_candidate_edges": len(proprio_transduction.proxy_parameter_ids),
+            "parameterized_terminal_channels": len(
+                proprio_transduction.parameterized_channel_ids
+            ),
+            "proxy_terminal_channels": len(proprio_transduction.proxy_channel_ids),
             "resolved_terminal_channels": len(proprio_transduction.resolved_channel_ids),
             "unresolved_terminal_channels": len(proprio_transduction.unresolved_channel_ids),
-            "biological_receptor_mapping": "candidates_known_with_missing_observables",
+            "biological_receptor_mapping": "parameterized_and_proxy_complete",
         },
         "physical_touch": {
             "source_box_id": "world.mujoco",
@@ -827,6 +829,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
             "unsupported_motor_terminals_executed_as_no_output": True,
             "body_to_proprioception_executed": True,
             "proprioception_transduction_candidates_executed": True,
+            "proprioception_proxy_transduction_executed": True,
+            "proprioception_direct_terminal_injection_used": False,
             "world_to_touch_executed": True,
             "mechanosensation_transduction_candidates_executed": True,
             "motor_transduction_to_body_executed": True,
