@@ -1,0 +1,17 @@
+schema_version: 1
+id: parameter.residual_sensory.mechanosensory_tbc_nominal
+name: Residual mechanosensory-TBC nominal activities
+owner_id: source.sensory.residual.mechanosensory_tbc
+quantity: one nominal source activity per residual terminal
+unit: arbitrary_activity_until_calibration
+sharing_rule: independent per terminal channel until receptor localization is supported
+source_kind: structural_fallback
+source_references: [decisions/0004-residual-sensory-nominal-sources.md]
+value: null
+bounds: null
+free_parameter_count: 11
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+status: unknown
+confidence: low
+known_limitations: [No physiological value has been selected, No body observable is assigned, Replaceable by a local physical proxy]

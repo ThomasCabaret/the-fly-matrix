@@ -412,6 +412,9 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
                     "upstream_physical_mapping",
                     "upstream_retinotopic_mapping",
                     "upstream_modality_mapping",
+                    "source_model_box_id",
+                    "source_policy",
+                    "source_parameter_id",
                 ),
             )
             details.update(
@@ -817,6 +820,62 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
                 )
             )
 
+    residual_source_channels: dict[str, list[str]] = defaultdict(list)
+    for channel_id, channel in input_channels.items():
+        if channel_sector[channel_id] == "unclassified_sensory":
+            source_box_id = str(_clean(channel.get("source_model_box_id")) or "")
+            if not source_box_id:
+                raise WiringMapError(
+                    f"Residual sensory channel has no declared source model: {channel_id}"
+                )
+            residual_source_channels[source_box_id].append(channel_id)
+    for source_box_id, channel_ids in sorted(residual_source_channels.items()):
+        y = _median(
+            (channel_y[channel_id] for channel_id in channel_ids),
+            float(sector_spans["unclassified_sensory"]["start_y"]),
+        )
+        source_id = f"source-model:{source_box_id}"
+        ledger_box = boxes.get(source_box_id, {})
+        add_node(
+            _node(
+                source_id,
+                label=str(ledger_box.get("name", source_box_id)),
+                kind="nominal_source",
+                lane="source_model",
+                sector="unclassified_sensory",
+                x=LANE_X["source_model"],
+                y=y,
+                state="basal",
+                details={
+                    "ledger_box_id": source_box_id,
+                    "ledger_path": ledger_box.get("_path"),
+                    "evidence": ledger_box.get("evidence", []),
+                    "parameter_family_ids": ledger_box.get("parameter_family_ids", []),
+                    "physical_modality_claim": "none",
+                    "replaceable_policy": True,
+                },
+            )
+        )
+        for channel_id in channel_ids:
+            inbound_states[channel_id].add("basal")
+            channel = input_channels[channel_id]
+            add_edge(
+                _edge(
+                    f"edge:residual-nominal:{_stable_id(source_box_id, channel_id)}",
+                    source=source_id,
+                    target=f"adapter:{channel_id}",
+                    kind="nominal_generation",
+                    sector="unclassified_sensory",
+                    state="basal",
+                    details={
+                        "disposition": "basal",
+                        "source_policy": channel.get("source_policy"),
+                        "source_parameter_id": channel.get("source_parameter_id"),
+                        "physical_modality_claim": "none",
+                    },
+                )
+            )
+
     for channel_id, sector in channel_sector.items():
         states = inbound_states.get(channel_id, set())
         if "basal" in states:
@@ -980,10 +1039,10 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
         )
     for group_id in motor_groups:
         nodes[f"motor-group:{group_id}"]["data"]["state"] = (
-            "parameterized" if group_id in resolved_motor_groups else "blocked"
+            "parameterized" if group_id in resolved_motor_groups else "sink"
         )
         nodes[f"motor-group:{group_id}"]["data"]["details"]["terminal_disposition"] = (
-            "parameterized" if group_id in resolved_motor_groups else "blocked"
+            "parameterized" if group_id in resolved_motor_groups else "sink"
         )
 
     actuator_rows = _read_csv(derived_root / "flybody-actuator-channels.csv")

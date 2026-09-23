@@ -43,6 +43,7 @@ from the_fly_matrix.runtime import (
     MotorTransductionBox,
     ProprioceptionTransductionBox,
     ProprioceptionRoutingBox,
+    ResidualSensoryNominalSourceBox,
     SparseActivity,
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
@@ -423,6 +424,31 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(len(box.channel_ids), 1883)
         self.assertEqual(len(output.body_ids), 1883)
         self.assertEqual(len(np.unique(output.body_ids)), 1883)
+
+    def test_residual_sensory_sources_own_every_unclassified_terminal(self) -> None:
+        if not UNCLASSIFIED_CHANNEL_PATH.is_file():
+            self.skipTest("generated unclassified sensory wiring is absent")
+        source_ids = (
+            "source.sensory.residual.chemosensory",
+            "source.sensory.residual.mechanosensory_tbc",
+            "source.sensory.residual.unknown",
+        )
+        sources = [
+            ResidualSensoryNominalSourceBox.from_generated_wiring(source_id)
+            for source_id in source_ids
+        ]
+        activities = [
+            source.step(np.arange(len(source.parameter_ids), dtype=np.float64))
+            for source in sources
+        ]
+        all_channel_ids = [
+            channel_id for activity in activities for channel_id in activity.channel_ids
+        ]
+        router = UnclassifiedSensoryRoutingBox.from_generated_wiring()
+        self.assertEqual([len(source.channel_ids) for source in sources], [57, 11, 1815])
+        self.assertEqual(len(all_channel_ids), 1883)
+        self.assertEqual(len(set(all_channel_ids)), 1883)
+        self.assertEqual(set(all_channel_ids), set(router.channel_ids))
 
 
 if __name__ == "__main__":

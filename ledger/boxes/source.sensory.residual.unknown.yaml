@@ -1,0 +1,16 @@
+schema_version: 1
+id: source.sensory.residual.unknown
+name: Unknown residual sensory nominal source
+sector: unclassified_sensory
+adapter_type: A
+anatomical_region: unresolved_sensory_afferents
+parent_id: null
+ports: {inputs: [], outputs: [residual_unknown_nominal_activity]}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: low
+evidence: [decisions/0004-residual-sensory-nominal-sources.md, data/derived/wiring/unclassified-sensory-routing.json, data/derived/wiring/unclassified-sensory-channels.csv, runs/wiring-smoke/latest.json]
+parameter_family_ids: [parameter.residual_sensory.unknown_nominal]
+validation_ids: [validation.unclassified_sensory_routing]
+next_action: Refine channels independently when a supported modality, receptor location or body observable is identified.
+blocked_by: []
+completion_criteria: [All 1815 unknown-modality terminals are owned exactly once, Runtime values enter through declared parameters, The source makes no physical modality claim]

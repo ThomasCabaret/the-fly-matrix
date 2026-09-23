@@ -1,0 +1,16 @@
+schema_version: 1
+id: source.sensory.residual.mechanosensory_tbc
+name: Residual mechanosensory-TBC nominal source
+sector: unclassified_sensory
+adapter_type: A
+anatomical_region: unresolved_mechanosensory_afferents
+parent_id: null
+ports: {inputs: [], outputs: [residual_mechanosensory_tbc_nominal_activity]}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+confidence: low
+evidence: [decisions/0004-residual-sensory-nominal-sources.md, data/derived/wiring/unclassified-sensory-routing.json, data/derived/wiring/unclassified-sensory-channels.csv, runs/wiring-smoke/latest.json]
+parameter_family_ids: [parameter.residual_sensory.mechanosensory_tbc_nominal]
+validation_ids: [validation.unclassified_sensory_routing]
+next_action: Replace each nominal channel with a local physical proxy only after its receptor location or observable is supported.
+blocked_by: []
+completion_criteria: [All 11 mechanosensory-TBC terminals are owned exactly once, Runtime values enter through declared parameters, No unsupported body observable is assigned]

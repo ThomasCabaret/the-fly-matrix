@@ -18,9 +18,9 @@ class LedgerTests(unittest.TestCase):
         self.assertEqual(len(checks), 5)
 
     def test_top_level_interface_is_exhaustively_represented(self) -> None:
-        self.assertEqual(len(self.ledger["boxes"]), 19)
+        self.assertEqual(len(self.ledger["boxes"]), 22)
         self.assertEqual(len(self.ledger["groups"]), 17)
-        self.assertEqual(len(self.ledger["wires"]), 24)
+        self.assertEqual(len(self.ledger["wires"]), 27)
         adapter_types = {
             box.get("adapter_type") for box in self.ledger["boxes"] if box.get("adapter_type")
         }
@@ -327,6 +327,18 @@ class LedgerTests(unittest.TestCase):
         )
         self.assertEqual(residual["sensory_coverage"]["total_routed_unique_body_ids"], 17884)
         self.assertEqual(residual["sensory_coverage"]["coverage_percent"], 100.0)
+        self.assertEqual(
+            residual["source_model_counts"],
+            {
+                "source.sensory.residual.chemosensory": 57,
+                "source.sensory.residual.mechanosensory_tbc": 11,
+                "source.sensory.residual.unknown": 1815,
+            },
+        )
+        self.assertEqual(residual["terminal_disposition_counts"], {"basal": 1883})
+        self.assertEqual(residual["source_parameter_count"], 1883)
+        self.assertEqual(residual["upstream_mapping_status"], "explicit_nominal_sources_complete")
+        self.assertFalse(residual["scientific_parameter_values_selected"])
 
         central_path = path.with_name("central-connectome.json")
         self.assertTrue(central_path.is_file())

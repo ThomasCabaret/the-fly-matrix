@@ -8,9 +8,9 @@ parent_id: null
 ports: {inputs: [unclassified_sensory_activity], outputs: [sensory_afferents]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: medium
-evidence: [data/derived/wiring/unclassified-sensory-routing.json, data/derived/wiring/unclassified-sensory-routes.parquet, runs/wiring-smoke/latest.json]
+evidence: [decisions/0004-residual-sensory-nominal-sources.md, data/derived/wiring/unclassified-sensory-routing.json, data/derived/wiring/unclassified-sensory-channels.csv, data/derived/wiring/unclassified-sensory-routes.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.unclassified_sensory_routing]
-next_action: Relier des observables physiques uniquement lorsque la modalité de chaque canal sera étayée.
+next_action: Remplacer localement une source nominale uniquement lorsque la modalité et l'observable physique du canal seront étayées.
 blocked_by: []
-completion_criteria: [1883 sources exhaustives, Routages bodyId fixes, Modalités amont non inventées]
+completion_criteria: [1883 sources exhaustives, Routages bodyId fixes, Trois familles de sources nominales explicites, Aucune injection terminale directe, Modalités amont non inventées]

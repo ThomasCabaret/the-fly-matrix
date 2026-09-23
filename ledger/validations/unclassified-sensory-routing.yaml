@@ -2,12 +2,21 @@ schema_version: 1
 id: validation.unclassified_sensory_routing
 name: Couverture exacte des afférences sensorielles non résolues
 owner_ids:
+  - source.sensory.residual.chemosensory
+  - source.sensory.residual.mechanosensory_tbc
+  - source.sensory.residual.unknown
   - adapter.sensory.unclassified.routing
   - group.sensory.unclassified_residual
   - group.sensory.unknown
   - group.sensory.central_brain
   - group.sensory.vnc
   - wire.unclassified_sensory_routing_to_cns
+  - wire.residual_chemosensory_source_to_routing
+  - wire.residual_mechanosensory_tbc_source_to_routing
+  - wire.residual_unknown_source_to_routing
+  - parameter.residual_sensory.chemosensory_nominal
+  - parameter.residual_sensory.mechanosensory_tbc_nominal
+  - parameter.residual_sensory.unknown_nominal
   - cns.malecns
 level: integration
 protocol_path: src/the_fly_matrix/wiring.py
@@ -18,9 +27,11 @@ acceptance_criteria:
   - The residual contains 1712 unknown_sensory, 57 chemosensory, 11 mechanosensory_tbc and 103 class-unknown neurons
   - The complete inventoried sensory union contains 17884 unique bodyIds and is fully routed
   - No unresolved modality is silently relabelled or assigned a physical transduction
+  - Exactly three disjoint nominal source families own 57, 11 and 1815 terminal channels
+  - The smoke runtime reaches all 1883 residual terminals through declared source boxes with no direct terminal injection
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: unclassified-sensory-routing-2026-09-20
+latest_run_id: unclassified-sensory-nominal-sources-2026-09-23
 status: integration_pass
 notes:
   - 1883 generated type-C instances executed
@@ -28,3 +39,5 @@ notes:
   - Residual anatomy comprises 1709 vnc_sensory, 130 cb_sensory, 32 sensory_ascending and 12 sensory_descending neurons
   - All 17884 unique neurons in the inventoried sensory union now have an exact CNS route
   - Physical modality and transduction remain deliberately unknown
+  - 1883 uncalibrated nominal parameters are explicit and no smoke-test value is persisted as scientific
+  - The three fallback source policies are reversible per channel without changing exact downstream routes

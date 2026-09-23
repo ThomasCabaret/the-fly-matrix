@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-23, fermeture structurelle exhaustive de la proprioception.
+Mise à jour : 2026-09-23, fermeture terminale exhaustive des entrées sensorielles résiduelles.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -19,33 +19,53 @@ avoir une disposition `exact`, `parameterized`, `basal`, `proxy`, `sink` ou
 `blocked`. Une boîte noire locale paramétrable termine valablement un câblage même
 si sa correspondance interne est inconnue. En revanche, une activité fournie
 directement par le smoke test à la place d'une boîte reste `blocked`.
-Le calcul actuel des 86 % n'applique pas encore automatiquement toute cette nouvelle
-condition ; le prochain audit machine-readable pourra donc reclasser le score
-sans que le réseau sous-jacent ait régressé.
+Le score historique du registre mesure aussi la maturité des décompositions et des
+routes. Il ne doit donc pas être confondu avec la couverture terminale : celle-ci
+est désormais exhaustive dans la carte, sans canal d'entrée ni groupe moteur
+`blocked`, alors que l'indicateur global reste inférieur à 100 %.
 
 La première carte interactive exhaustive est désormais implémentée. Elle exporte
-depuis les manifestes locaux 31 038 nœuds et 53 315 relations : 1 552 observables
+depuis les manifestes locaux 31 041 nœuds et 55 198 relations : 1 552 observables
 physiques, 8 895 boîtes d'entrée, 17 884 entrées CNS, 815 sorties CNS, 441 groupes
 moteurs et 102 actionneurs. Les terminaux bloqués restent visibles au lieu d'être
-filtrés. Après le lot proprioceptif, elle compte 1 883 boîtes d'entrée bloquées contre
-8 072 auparavant. La carte offre zoom/panoramique, focus sectoriel sans retrait de topologie,
+filtrés. Après le présent lot, elle compte 2 212 entrées `basal`, 6 585
+`parameterized`, 98 `proxy` et aucune entrée `blocked`. Côté sortie, 431 groupes
+sont `parameterized` et les 10 groupes sans effecteur représenté sont explicitement
+`sink`, pas `blocked`. La carte offre zoom/panoramique, focus sectoriel sans retrait de topologie,
 recherche et panneau de traçabilité. Elle ne contient aucune valeur de calibration.
 L'architecture, les invariants visuels et le contrat de traçabilité sont actés en anglais dans
 [`ADR 0003`](decisions/0003-interactive-wiring-map.md).
 
 ## État synthétique
 
-- Câblage global : **86 %**.
+- Câblage global : **87 %**.
 - Graphe central MaleCNS : **100 % structurel**.
 - Sortie motrice : **100 % structurel**.
 - Proprioception : **85 %**.
-- Entrées sensorielles non résolues : **88 %**.
+- Entrées sensorielles non résolues : **96 %**.
 - Clamps basaux : **87 %**.
 - Vision : **89 %**.
 - Mécanosensation : **82 %**.
 - Corps physique : **100 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
+- Couverture terminale de la carte : **100 % sans disposition `blocked`**.
+
+Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
+afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
+désormais possédées par trois sources nominales type A disjointes : 57 canaux
+`chemosensory`, 11 `mechanosensory_tbc` et 1 815 canaux de modalité inconnue. Chaque
+canal a un paramètre explicite non calibré. Cette disposition `basal` est un joker
+structurel réversible, sans attribution de capteur physique ni valeur
+physiologique. Le smoke test traverse ces trois boîtes avant le routeur et atteste
+qu'aucun vecteur terminal n'est injecté directement. La politique est actée dans
+[`ADR 0004`](decisions/0004-residual-sensory-nominal-sources.md).
+
+La carte corrige en parallèle la disposition des 10 groupes moteurs sans effecteur
+FlyBody : les 11 neurones concernés sont des terminaux `sink` explicites, conformément
+au runtime qui consomme leur activité sans produire de commande. Il ne reste donc
+aucun terminal `blocked` dans les interfaces cartographiées. Cela ne signifie pas
+que les paramètres ou les comportements sont calibrés.
 
 Le dernier lot supprime l'injection directe des 91 groupes proprioceptifs qui
 attendaient une mesure de contrainte ou de vibration. Les 171 groupes déjà reliés
@@ -56,12 +76,12 @@ L'unique groupe sans nerf ni côté connus ne voit que cinq articulations centra
 thorax–tête/abdomen. Les 262/262 groupes sont exécutables sans vecteur terminal de
 secours et aucun coefficient n'est fixé.
 
-Le score global historique reste à 86 %. Le score proprioceptif passe de 86 à
+Le score global historique était resté à 86 %. Le score proprioceptif passe de 86 à
 85 % parce que le nouveau fil proxy est honnêtement enregistré au palier
 `candidates_known`, ce qui augmente le dénominateur de cet ancien indicateur. Il
 ne s'agit pas d'une régression du réseau : les canaux `blocked` proprioceptifs
-passent de 91 à zéro. La carte ne conserve maintenant que les 1 883 afférences
-sensorielles résiduelles comme boîtes d'entrée bloquées.
+passent de 91 à zéro. Les 1 883 afférences résiduelles sont maintenant terminées
+par les sources nominales décrites ci-dessus, sans modifier ce lot proprioceptif.
 
 Le dernier lot élimine toute injection directe dans les 6 098 terminaux visuels.
 Les 2 628 R7/R8 présents dans le supplément officiel conservent leur colonne
@@ -93,15 +113,15 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 → groupes moteurs → actionneurs afin que deux générations restent comparables.
 
 Le smoke test traverse toujours 17 884 entrées CNS, 26 028 386 arêtes centrales,
-815 sorties motrices et 102 actionneurs avant le pas physique. Les 35 tests
+815 sorties motrices et 102 actionneurs avant le pas physique. Les 36 tests
 unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
 
-1. Donner aux 1 883 afférences sensorielles résiduelles une boîte source générique
-   locale, quitte à conserver une fonction de transfert très large à calibrer.
-2. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
+1. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
    commande→MuJoCo→état articulaire est désormais fermée et déterministe.
+2. Remplacer progressivement les sources nominales résiduelles par des capteurs,
+   transductions ou proxies locaux uniquement lorsque les annotations le permettent.
 3. Remplacer les proxies proprioceptifs par des mesures locales de contrainte ou
    vibration si le corps physique les expose un jour, sans rouvrir la couverture.
 4. N'affiner les candidats tête/thorax que si une observable corporelle plus

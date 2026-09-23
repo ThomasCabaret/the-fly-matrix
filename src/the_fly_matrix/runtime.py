@@ -1825,6 +1825,73 @@ class UnclassifiedSensoryRoutingBox:
         )
 
 
+class ResidualSensoryNominalSourceBox:
+    """Executable type-A fallback for a declared residual sensory family.
+
+    Each output has an externally supplied parameter. The box makes the source
+    boundary explicit without asserting a physical modality or choosing a
+    physiological baseline.
+    """
+
+    adapter_type = "A"
+
+    def __init__(self, box_id: str, channels: pd.DataFrame):
+        required = {
+            "channel_id",
+            "source_model_box_id",
+            "source_parameter_id",
+            "terminal_disposition",
+        }
+        missing = required - set(channels.columns)
+        if missing:
+            raise ValueError(f"Residual sensory source manifest is missing {sorted(missing)}")
+        self.box_id = box_id
+        self.channels = channels.loc[channels["source_model_box_id"].eq(box_id)].copy()
+        if self.channels.empty:
+            raise ValueError(f"No generated residual sensory source wiring found for {box_id}")
+        if self.channels["channel_id"].duplicated().any():
+            raise ValueError(f"Duplicate residual sensory channel IDs for {box_id}")
+        if self.channels["source_parameter_id"].duplicated().any():
+            raise ValueError(f"Duplicate residual sensory parameter IDs for {box_id}")
+        dispositions = set(self.channels["terminal_disposition"].astype(str))
+        if dispositions != {"basal"}:
+            raise ValueError(f"Unexpected residual sensory dispositions for {box_id}: {dispositions}")
+        self.channel_ids = tuple(self.channels["channel_id"].astype(str))
+        self.parameter_ids = tuple(self.channels["source_parameter_id"].astype(str))
+
+    @classmethod
+    def from_generated_wiring(
+        cls,
+        box_id: str,
+        channel_path: Path = UNCLASSIFIED_CHANNEL_PATH,
+    ) -> "ResidualSensoryNominalSourceBox":
+        if not channel_path.is_file():
+            raise FileNotFoundError(
+                "Unclassified sensory source wiring is absent; run the wiring builder first"
+            )
+        return cls(box_id, pd.read_csv(channel_path))
+
+    def step(self, parameters: Mapping[str, float] | np.ndarray) -> ChannelActivity:
+        if isinstance(parameters, Mapping):
+            missing = set(self.parameter_ids) - set(parameters)
+            extra = set(parameters) - set(self.parameter_ids)
+            if missing or extra:
+                raise ValueError(
+                    f"{self.box_id}: source parameter mismatch; "
+                    f"missing={len(missing)}, extra={len(extra)}"
+                )
+            values = np.asarray([parameters[item] for item in self.parameter_ids], dtype=np.float64)
+        else:
+            values = np.asarray(parameters, dtype=np.float64)
+        if values.shape != (len(self.parameter_ids),):
+            raise ValueError(
+                f"{self.box_id}: expected {len(self.parameter_ids)} parameters, got {values.shape}"
+            )
+        if not np.isfinite(values).all():
+            raise ValueError("residual sensory nominal source parameters must be finite")
+        return ChannelActivity(channel_ids=self.channel_ids, values=values.copy())
+
+
 class CNSInputBuffer:
     """Minimal type-D ingress stub keyed by MaleCNS body ID."""
 

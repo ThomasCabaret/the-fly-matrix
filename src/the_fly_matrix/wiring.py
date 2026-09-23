@@ -76,6 +76,24 @@ FLYBODY_ACTUATOR_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-actuator-channels.csv"
 FLYBODY_VISION_SUMMARY_OUTPUT = OUTPUT_ROOT / "flybody-vision.json"
 FLYBODY_VISION_CHANNEL_OUTPUT = OUTPUT_ROOT / "flybody-vision-channels.csv"
 
+UNCLASSIFIED_SOURCE_SPECS = {
+    "chemosensory": {
+        "box_id": "source.sensory.residual.chemosensory",
+        "port": "residual_chemosensory_nominal_activity",
+        "policy": "neutral_nominal_source_for_unresolved_chemosensation",
+    },
+    "mechanosensory_tbc": {
+        "box_id": "source.sensory.residual.mechanosensory_tbc",
+        "port": "residual_mechanosensory_tbc_nominal_activity",
+        "policy": "neutral_nominal_source_pending_physical_localization",
+    },
+    "unknown": {
+        "box_id": "source.sensory.residual.unknown",
+        "port": "residual_unknown_nominal_activity",
+        "policy": "neutral_nominal_source_without_modality_claim",
+    },
+}
+
 CLAMP_SPECS = {
     "sensory.olfactory": {
         "clamp_id": "clamp.olfaction",
@@ -2352,7 +2370,13 @@ def build_unclassified_sensory_wiring(
     channel_output: Path = UNCLASSIFIED_CHANNEL_OUTPUT,
     route_output: Path = UNCLASSIFIED_ROUTE_OUTPUT,
 ) -> dict[str, Any]:
-    """Route the exact complement of known sensory modalities without relabelling it."""
+    """Terminate and route the exact complement of known sensory modalities.
+
+    The downstream bodyId routes stay exact. Upstream, each terminal is owned by
+    an explicit type-A nominal source so an executable smoke test never injects a
+    vector directly into the routing box. These sources are structural fallbacks,
+    not physiological values or inferred physical modalities.
+    """
     if not source.is_file():
         raise FileNotFoundError(f"{source} absent; lancez d'abord l'inventaire MaleCNS")
     section("Câblage des afférences sensorielles non résolues")
@@ -2407,6 +2431,23 @@ def build_unclassified_sensory_wiring(
         "channel.", "box.", n=1, regex=False
     )
     selected["adapter_type"] = "C"
+    source_spec_keys = selected["class"].where(
+        selected["class"].isin({"chemosensory", "mechanosensory_tbc"}),
+        "unknown",
+    )
+    selected["source_model_box_id"] = source_spec_keys.map(
+        lambda key: UNCLASSIFIED_SOURCE_SPECS[str(key)]["box_id"]
+    )
+    selected["source_model_port"] = source_spec_keys.map(
+        lambda key: UNCLASSIFIED_SOURCE_SPECS[str(key)]["port"]
+    )
+    selected["source_policy"] = source_spec_keys.map(
+        lambda key: UNCLASSIFIED_SOURCE_SPECS[str(key)]["policy"]
+    )
+    selected["source_parameter_id"] = selected["bodyId"].map(
+        lambda body_id: f"parameter.residual_sensory_nominal.body_id_{int(body_id)}"
+    )
+    selected["terminal_disposition"] = "basal"
 
     channel_rows = [
         {
@@ -2415,6 +2456,11 @@ def build_unclassified_sensory_wiring(
             "group_id": "sensory.unclassified_residual",
             "routing_box_id": "adapter.sensory.unclassified.routing",
             "adapter_type": "C",
+            "source_model_box_id": row.source_model_box_id,
+            "source_model_port": row.source_model_port,
+            "source_policy": row.source_policy,
+            "source_parameter_id": row.source_parameter_id,
+            "terminal_disposition": "basal",
             "source_port": "sensory_afferents",
             "target_box_id": "cns.malecns",
             "target_port": "sensory_afferents",
@@ -2426,7 +2472,7 @@ def build_unclassified_sensory_wiring(
             "rootSide": row.rootSide,
             "mapping_level": "exact_body_id",
             "free_discrete_parameters_downstream": 0,
-            "upstream_modality_mapping": "deferred",
+            "upstream_modality_mapping": "explicit_nominal_source_without_modality_claim",
         }
         for row in selected.itertuples(index=False)
     ]
@@ -2492,7 +2538,10 @@ def build_unclassified_sensory_wiring(
             "terminal_channels": "one type-C instance per unique residual bodyId",
             "target_mapping": "each instance maps one-to-one to its MaleCNS bodyId",
             "classification_policy": "all missing and unresolved labels remain explicit",
-            "upstream_policy": "physical modality and transduction remain unknown",
+            "upstream_policy": (
+                "three explicit neutral nominal source families terminate every channel; "
+                "physical modality and physiological values remain unknown"
+            ),
         },
         "group_id": "sensory.unclassified_residual",
         "routing_box_id": "adapter.sensory.unclassified.routing",
@@ -2502,6 +2551,12 @@ def build_unclassified_sensory_wiring(
         "neuron_count": int(len(selected)),
         "terminal_channels": len(channel_rows),
         "generated_box_instances": len(channel_rows),
+        "source_model_counts": {
+            str(key): int(value)
+            for key, value in selected["source_model_box_id"].value_counts().sort_index().items()
+        },
+        "terminal_disposition_counts": {"basal": int(len(selected))},
+        "source_parameter_count": int(len(selected)),
         "exact_routes": int(len(routes)),
         "duplicate_routes": 0,
         "unassigned_neurons": 0,
@@ -2515,13 +2570,15 @@ def build_unclassified_sensory_wiring(
             "coverage_percent": 100.0,
         },
         "downstream_routing_status": "fixed",
-        "upstream_mapping_status": "unknown",
+        "upstream_mapping_status": "explicit_nominal_sources_complete",
+        "scientific_parameter_values_selected": False,
     }
     summary_output.parent.mkdir(parents=True, exist_ok=True)
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     pd.DataFrame(channel_rows).to_csv(channel_output, index=False, encoding="utf-8")
     routes.to_parquet(route_output, index=False)
     print("[OK] 1,883 afférences résiduelles isolées sans reclassification")
+    print("[OK] 1,883 sources nominales explicites réparties en 3 politiques réversibles")
     print("[OK] 17,884 neurones sensoriels inventoriés disposent maintenant d'une route CNS")
     print(f"[OK] Synthèse : {summary_output}")
     print(f"[OK] Canaux résiduels : {channel_output}")

@@ -29,8 +29,13 @@ class WiringMapTests(unittest.TestCase):
             sum(payload["meta"]["input_box_states"].values()),
             counts["input_boxes"],
         )
-        self.assertEqual(payload["meta"]["input_box_states"]["blocked"], 1_883)
+        self.assertNotIn("blocked", payload["meta"]["input_box_states"])
+        self.assertEqual(payload["meta"]["input_box_states"]["basal"], 2_212)
         self.assertEqual(payload["meta"]["input_box_states"]["proxy"], 98)
+        self.assertEqual(
+            payload["meta"]["motor_group_states"],
+            {"parameterized": 431, "sink": 10},
+        )
 
         nodes = payload["elements"]["nodes"]
         edges = payload["elements"]["edges"]
@@ -50,13 +55,21 @@ class WiringMapTests(unittest.TestCase):
             ),
             counts["cns_inputs"] + counts["cns_outputs"],
         )
-        self.assertTrue(
+        self.assertFalse(
             any(
                 node["data"]["kind"] == "input_adapter_channel"
                 and node["data"]["state"] == "blocked"
                 for node in nodes
             )
         )
+        residual_sources = [
+            node
+            for node in nodes
+            if node["data"]["kind"] == "nominal_source"
+            and node["data"]["sector"] == "unclassified_sensory"
+        ]
+        self.assertEqual(len(residual_sources), 3)
+        self.assertTrue(all(node["data"]["state"] == "basal" for node in residual_sources))
         proprio_nodes = [
             node
             for node in nodes

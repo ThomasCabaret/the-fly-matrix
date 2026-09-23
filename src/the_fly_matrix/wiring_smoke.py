@@ -28,6 +28,7 @@ from .runtime import (
     MotorTransductionBox,
     ProprioceptionTransductionBox,
     ProprioceptionRoutingBox,
+    ResidualSensoryNominalSourceBox,
     SparseActivity,
     UnclassifiedSensoryRoutingBox,
     VisionRoutingBox,
@@ -37,6 +38,11 @@ from .runtime import (
 
 OUTPUT = ROOT / "runs" / "wiring-smoke" / "latest.json"
 CLAMP_IDS = ("clamp.olfaction", "clamp.gustation", "clamp.thermohygro")
+RESIDUAL_SOURCE_IDS = (
+    "source.sensory.residual.chemosensory",
+    "source.sensory.residual.mechanosensory_tbc",
+    "source.sensory.residual.unknown",
+)
 SMOKE_SEED = 260919
 
 
@@ -49,6 +55,7 @@ def _arbitrary_values(
     | ProprioceptionRoutingBox
     | MechanosensationRoutingBox
     | VisionRoutingBox
+    | ResidualSensoryNominalSourceBox
     | UnclassifiedSensoryRoutingBox,
     seed: int,
 ) -> np.ndarray:
@@ -258,9 +265,26 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         "paramètres non fixés"
     )
     unclassified = UnclassifiedSensoryRoutingBox.from_generated_wiring()
+    residual_sources = [
+        ResidualSensoryNominalSourceBox.from_generated_wiring(box_id)
+        for box_id in RESIDUAL_SOURCE_IDS
+    ]
+    residual_source_channels = {
+        channel_id for source in residual_sources for channel_id in source.channel_ids
+    }
+    if residual_source_channels != set(unclassified.channel_ids):
+        raise RuntimeError("Les sources nominales résiduelles ne couvrent pas exactement le routeur")
+    if sum(len(source.channel_ids) for source in residual_sources) != len(
+        residual_source_channels
+    ):
+        raise RuntimeError("Un canal sensoriel résiduel appartient à plusieurs sources nominales")
+    print(
+        f"[OK] {len(residual_sources)} sources nominales type A: "
+        f"{len(residual_source_channels):,} canaux, valeurs scientifiques non choisies"
+    )
     print(
         f"[OK] {unclassified.box_id}: {len(unclassified.channel_ids):,} instances/canaux, "
-        f"{len(unclassified.routes):,} destinations exactes; modalités physiques différées"
+        f"{len(unclassified.routes):,} destinations exactes; sources nominales explicites"
     )
     central = CentralConnectomeBox.from_generated_wiring()
     print(
@@ -359,12 +383,26 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     mechano_second = mechanosensation.step(mechano_activity_second.values)
     vision_first = vision.step(vision_activity_first.values)
     vision_second = vision.step(vision_activity_second.values)
-    unclassified_first = unclassified.step(
-        _arbitrary_values(unclassified, seed + len(boxes) + 3)
-    )
-    unclassified_second = unclassified.step(
-        _arbitrary_values(unclassified, seed + len(boxes) + 3)
-    )
+    residual_source_activity_first = [
+        source.step(_arbitrary_values(source, seed + len(boxes) + 20 + index))
+        for index, source in enumerate(residual_sources)
+    ]
+    residual_source_activity_second = [
+        source.step(_arbitrary_values(source, seed + len(boxes) + 20 + index))
+        for index, source in enumerate(residual_sources)
+    ]
+    residual_values_first = {
+        channel_id: float(value)
+        for activity in residual_source_activity_first
+        for channel_id, value in zip(activity.channel_ids, activity.values)
+    }
+    residual_values_second = {
+        channel_id: float(value)
+        for activity in residual_source_activity_second
+        for channel_id, value in zip(activity.channel_ids, activity.values)
+    }
+    unclassified_first = unclassified.step(residual_values_first)
+    unclassified_second = unclassified.step(residual_values_second)
     first = CNSInputBuffer.merge(
         *first_outputs, proprio_first, mechano_first, vision_first, unclassified_first
     )
@@ -564,6 +602,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         f"{len(vision_transduction.registration_channel_ids):,} via routage paramétrable, "
         f"{len(vision_transduction.proxy_channel_ids):,} via proxy HBeyelet"
     )
+    print(
+        f"[OK] {len(unclassified.channel_ids):,}/{len(unclassified.channel_ids):,} terminaux "
+        "sensoriels résiduels exécutés via 3 sources nominales, sans injection directe"
+    )
     print(f"[OK] {len(first.body_ids):,} entrées CNS uniques reçues")
     print(
         f"[OK] {central.expected_induced_edges:,} arêtes CNS parcourues vers "
@@ -693,11 +735,23 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         ]
         + [
             {
+                "id": source.box_id,
+                "adapter_type": source.adapter_type,
+                "terminal_box_instances": len(source.channel_ids),
+                "source_parameters": len(source.parameter_ids),
+                "terminal_disposition": "basal",
+                "parameter_status": "arbitrary_smoke_only",
+            }
+            for source in residual_sources
+        ]
+        + [
+            {
                 "id": unclassified.box_id,
                 "adapter_type": unclassified.adapter_type,
                 "terminal_box_instances": len(unclassified.channel_ids),
                 "exact_routes": len(unclassified.routes),
-                "upstream_modality_mapping": "deferred",
+                "upstream_modality_mapping": "explicit_nominal_sources_complete",
+                "direct_terminal_injection_used": False,
                 "parameter_status": "arbitrary_smoke_only",
             }
         ]

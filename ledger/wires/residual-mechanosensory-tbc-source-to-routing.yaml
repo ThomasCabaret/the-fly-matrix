@@ -1,0 +1,17 @@
+schema_version: 1
+id: wire.residual_mechanosensory_tbc_source_to_routing
+name: Residual mechanosensory-TBC nominal source to router
+sector: unclassified_sensory
+source: {box_id: source.sensory.residual.mechanosensory_tbc, port: residual_mechanosensory_tbc_nominal_activity, group_query: class == mechanosensory_tbc within sensory.unclassified_residual}
+target: {box_id: adapter.sensory.unclassified.routing, port: unclassified_sensory_activity, group_query: same channel_id}
+mapping_level: exact
+expected_cardinality: 11 terminal channels
+candidate_constraints: [residual membership, class equals mechanosensory_tbc, exact channel_id]
+free_discrete_parameters: 0
+free_continuous_parameters: 11
+status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
+confidence: low
+evidence: [decisions/0004-residual-sensory-nominal-sources.md, data/derived/wiring/unclassified-sensory-channels.csv, runs/wiring-smoke/latest.json]
+validation_ids: [validation.unclassified_sensory_routing]
+next_action: Preserve exact ownership until a supported local physical proxy replaces a nominal channel.
+blocked_by: []

@@ -35,8 +35,8 @@ Pour reprendre le projet sans le contexte des conversations :
   et mécanoréceptrice, leurs routages aval, la transduction visuelle R7/R8 par
   colonnes publiées, le routage aval visuel, les afférences sensorielles non
   résolues et les sorties CNS explicitement motrices.
-  Les valeurs de secours encore injectées pour les canaux bloqués prouvent la
-  continuité du code, mais ne valent pas fermeture de leur câblage.
+  Toutes les valeurs de test entrent désormais par des ports ou paramètres de
+  boîtes déclarées; aucune injection terminale directe ne subsiste.
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 - `wiring_map.bat` compile l'interface locale, régénère son graphe exhaustif depuis
@@ -143,9 +143,8 @@ fusionner les activités dans un tampon d'entrée CNS type D. Le smoke test util
 des valeurs pseudo-aléatoires uniquement pour vérifier le passage des données ;
 elles ne sont jamais enregistrées comme paramètres scientifiques. À terme, ces
 valeurs ne peuvent entrer que par les ports ou paramètres de boîtes déclarées :
-les injections directes actuellement utilisées pour certains canaux visuels,
-proprioceptifs et sensoriels résiduels sont une dette de câblage suivie, pas une
-solution finale.
+les valeurs arbitraires du smoke test ne deviennent jamais des paramètres
+scientifiques et ne peuvent pas court-circuiter une boîte déclarée.
 
 Le cœur CNS utilise directement la table creuse publiée, sans en créer une copie
 géante dans le dépôt. `central-node-index.parquet` attribue un indice stable aux
@@ -279,11 +278,19 @@ scientifique ni aux paramètres persistés. La boucle physique exécutable est d
 fermée, sans prétendre produire un mouvement biologiquement plausible.
 
 Le manifeste sensoriel résiduel ferme la couverture des entrées inventoriées sans
-inventer leur fonction. Il route individuellement 1 883 neurones encore hors des
-modalités établies : 1 712 `unknown_sensory`, 57 `chemosensory`, 11
+inventer leur fonction. Il route individuellement 1 883 neurones encore hors des
+modalités établies : 1 712 `unknown_sensory`, 57 `chemosensory`, 11
 `mechanosensory_tbc` et 103 sans classe. Avec les modalités déjà câblées, les
-17 884 `bodyId` de l'union sensorielle suivie disposent ainsi d'une route CNS
-exacte. Leur origine physique et leur transduction restent inconnues.
+17 884 `bodyId` de l'union sensorielle suivie disposent ainsi d'une route CNS
+exacte. Trois sources nominales type A terminent maintenant explicitement les 57,
+11 et 1 815 canaux de ces familles avant le routeur. Chaque canal conserve un
+paramètre non calibré indépendant; le smoke test traverse ces boîtes et n'injecte
+plus directement le routeur. La disposition `basal` est ici un joker structurel
+réversible, pas une activité physiologique choisie ni une attribution de modalité.
+L'origine physique et la transduction restent donc inconnues et pourront être
+remplacées canal par canal lorsque des preuves suffisantes existeront. La décision
+et ses invariants sont consignés dans
+[`ADR 0004`](decisions/0004-residual-sensory-nominal-sources.md).
 
 ## Rattachement Git distant
 
