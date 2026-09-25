@@ -50,6 +50,10 @@ Pour reprendre le projet sans le contexte des conversations :
   MaleCNS et la transduction motrice pour explorer la physique et la caméra ; son
   overlay et ses sorties le marquent `NOT MALECNS / NOT CALIBRATION`. Voir
   [`docs/diagnostic-viewer.md`](docs/diagnostic-viewer.md).
+- `cycle_topology.bat` analyse le vrai graphe MaleCNS depuis toutes les entrées,
+  puis produit les profondeurs BFS, les composantes fortement connexes et deux
+  profils de récurrence complémentaires. Voir
+  [`docs/connectome-cycle-topology.md`](docs/connectome-cycle-topology.md).
 
 The exhaustive interactive wiring map is now available as a first read-only
 inspection surface. It exposes connected and blocked terminals, real box

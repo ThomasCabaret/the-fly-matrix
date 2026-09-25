@@ -34,6 +34,15 @@ contrôleur à 100 Hz et un rendu à 30 FPS ; le pas physique natif de 0,1 ms re
 accessible par option. La séparation est actée dans
 [`ADR 0006`](decisions/0006-isolated-physical-viewer-diagnostic.md).
 
+Une analyse structurelle de la récurrence du vrai MaleCNS est disponible via
+`cycle_topology.bat`. Elle parcourt toutes les générations depuis les 17 884
+entrées déclarées, mesure les composantes fortement connexes exactes et distingue
+les retours de profondeur confirmés par SCC des cycles exacts fermés dans la forêt
+BFS. Elle n'énumère pas tous les cycles simples — quantité potentiellement
+exponentielle — et ne fait aucun claim dynamique. La méthode et les limites sont
+décrites dans
+[`docs/connectome-cycle-topology.md`](docs/connectome-cycle-topology.md).
+
 La définition normative est désormais celle de
 [`ADR 0002`](decisions/0002-exhaustive-terminal-coverage.md) : chaque canal doit
 avoir une disposition `exact`, `parameterized`, `basal`, `proxy`, `sink` ou
@@ -178,6 +187,7 @@ run_wiring_smoke.bat      # reconstruction et parcours structurel complet
 dashboard.bat             # état HTML/DOT recalculé
 wiring_map.bat            # carte exhaustive interactive locale
 diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
+cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les
