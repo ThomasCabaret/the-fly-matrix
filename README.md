@@ -45,6 +45,11 @@ Pour reprendre le projet sans le contexte des conversations :
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 - `wiring_map.bat` compile l'interface locale, régénère son graphe exhaustif depuis
   les manifestes réels, démarre un serveur local et ouvre la carte interactive.
+- `diagnostic_viewer.bat` ouvre le viewer MuJoCo et anime FlyBody avec un petit
+  réseau récurrent aléatoire déterministe. Cet outil contourne volontairement
+  MaleCNS et la transduction motrice pour explorer la physique et la caméra ; son
+  overlay et ses sorties le marquent `NOT MALECNS / NOT CALIBRATION`. Voir
+  [`docs/diagnostic-viewer.md`](docs/diagnostic-viewer.md).
 
 The exhaustive interactive wiring map is now available as a first read-only
 inspection surface. It exposes connected and blocked terminals, real box

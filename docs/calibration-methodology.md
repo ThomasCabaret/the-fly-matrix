@@ -13,6 +13,11 @@ environment that remains bounded and recoverable at rest, then produces a
 stimulus-specific response. This is a sequence of engineering and scientific
 claims, not one optimization objective.
 
+An isolated body/viewer diagnostic may bypass MaleCNS only under ADR 0006. It is
+not a calibration target, campaign, parameter set, baseline for CNS quality, or
+closed-loop validation. Its code, warning overlay and run outputs must remain in
+the diagnostic namespace and cannot be reused by calibration or evaluation.
+
 ## Calibration classes
 
 Every target and every parameter set declares exactly one primary class. A

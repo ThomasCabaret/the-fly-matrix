@@ -80,6 +80,11 @@ fait pour améliorer un pourcentage.
   incertitude et limites d'applicabilité.
 - La calibration ne doit ni modifier silencieusement la topologie, ni ajouter un
   contrôleur comportemental externe autour de MaleCNS.
+- ADR 0006 autorise une unique exception diagnostique isolée :
+  `diagnostic_viewer.bat` peut contourner MaleCNS pour explorer MuJoCo, mais son
+  overlay, son namespace et ses sorties doivent rester `NOT MALECNS / NOT
+  CALIBRATION`. Rien de ce chemin ne peut entrer dans une calibration, une
+  évaluation scientifique ou un claim comportemental.
 - Les sorties lourdes vont sous `runs/calibration/`; Git conserve les configs,
   lignées, hashes, résumés, échecs, décisions et prochaines actions.
 

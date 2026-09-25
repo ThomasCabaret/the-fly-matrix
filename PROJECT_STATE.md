@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-23, cadre de calibration traçable après fermeture terminale exhaustive.
+Mise à jour : 2026-09-25, viewer physique diagnostique isolé avant runtime MaleCNS temporel.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -23,6 +23,16 @@ définie dans [`docs/calibration-methodology.md`](docs/calibration-methodology.m
 la politique de claims dans
 [`ADR 0005`](decisions/0005-calibration-evidence-and-claims.md) et l'état compact
 dans [`calibration/state.yaml`](calibration/state.yaml).
+
+Un viewer physique temps réel est maintenant disponible via
+`diagnostic_viewer.bat`. Il utilise un faux CNS récurrent de 64 états, déterministe
+par seed, qui lit les 102 positions/vitesses articulaires et commande les 102
+adresses FlyBody. Il contourne explicitement MaleCNS et la transduction motrice,
+affiche en permanence `NOT MALECNS / NOT CALIBRATION` et ne modifie aucun statut
+scientifique. Son profil interactif utilise un pas diagnostique de 0,5 ms, un
+contrôleur à 100 Hz et un rendu à 30 FPS ; le pas physique natif de 0,1 ms reste
+accessible par option. La séparation est actée dans
+[`ADR 0006`](decisions/0006-isolated-physical-viewer-diagnostic.md).
 
 La définition normative est désormais celle de
 [`ADR 0002`](decisions/0002-exhaustive-terminal-coverage.md) : chaque canal doit
@@ -124,7 +134,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 → groupes moteurs → actionneurs afin que deux générations restent comparables.
 
 Le smoke test traverse toujours 17 884 entrées CNS, 26 028 386 arêtes centrales,
-815 sorties motrices et 102 actionneurs avant le pas physique. Les 36 tests
+815 sorties motrices et 102 actionneurs avant le pas physique. Les 43 tests
 unitaires/intégration locaux passent.
 
 ## Fronts structurels restants
@@ -167,6 +177,7 @@ run_analysis.bat          # inventaires et manifestes ; neuPrint si jeton prése
 run_wiring_smoke.bat      # reconstruction et parcours structurel complet
 dashboard.bat             # état HTML/DOT recalculé
 wiring_map.bat            # carte exhaustive interactive locale
+diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les
