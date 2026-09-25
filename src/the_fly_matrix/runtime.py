@@ -1915,7 +1915,7 @@ class CNSInputBuffer:
 
 
 class CentralConnectomeBox:
-    """Stream the annotated-neuron subgraph as a sparse structural operator.
+    """Stream the explicitly flagged canonical-neuron graph as a sparse operator.
 
     This computes raw one-hop synaptic drive from published integer connection
     weights.  It deliberately does not implement time constants, thresholds,
@@ -1935,10 +1935,19 @@ class CentralConnectomeBox:
         missing = required - set(nodes.columns)
         if missing:
             raise ValueError(f"Missing central node-index columns: {sorted(missing)}")
-        self.nodes = nodes.sort_values("node_index").reset_index(drop=True)
+        self.inventory_nodes = nodes.sort_values("node_index").reset_index(drop=True)
+        if "included_in_neural_runtime" in self.inventory_nodes.columns:
+            runtime_mask = self.inventory_nodes["included_in_neural_runtime"].astype(bool)
+            self.nodes = self.inventory_nodes.loc[runtime_mask].copy()
+            if "runtime_node_index" not in self.nodes.columns:
+                raise ValueError("Flagged central index lacks runtime_node_index")
+            self.nodes = self.nodes.sort_values("runtime_node_index").reset_index(drop=True)
+        else:
+            self.nodes = self.inventory_nodes.copy()
         expected_indices = np.arange(len(self.nodes), dtype=np.int64)
-        if not np.array_equal(self.nodes["node_index"].to_numpy(dtype=np.int64), expected_indices):
-            raise ValueError("Central node indices must be contiguous and zero-based")
+        index_column = "runtime_node_index" if "runtime_node_index" in self.nodes else "node_index"
+        if not np.array_equal(self.nodes[index_column].to_numpy(dtype=np.int64), expected_indices):
+            raise ValueError("Central runtime node indices must be contiguous and zero-based")
         self.body_ids = self.nodes["body_id"].to_numpy(dtype=np.int64)
         if len(np.unique(self.body_ids)) != len(self.body_ids):
             raise ValueError("Central node body IDs must be unique")
@@ -1959,10 +1968,15 @@ class CentralConnectomeBox:
         if not node_path.is_file() or not summary_path.is_file():
             raise FileNotFoundError("Central graph index is absent; run the wiring builder first")
         summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        nodes = pd.read_parquet(node_path)
+        if "included_in_neural_runtime" not in nodes.columns:
+            raise RuntimeError(
+                "Central node index predates population classification; regenerate wiring artifacts"
+            )
         return cls(
-            pd.read_parquet(node_path),
+            nodes,
             weight_path,
-            expected_induced_edges=int(summary["induced_edge_rows"]),
+            expected_induced_edges=int(summary.get("runtime_induced_edge_rows", summary["induced_edge_rows"])),
         )
 
     def _locate(self, body_ids: np.ndarray) -> tuple[np.ndarray, np.ndarray]:

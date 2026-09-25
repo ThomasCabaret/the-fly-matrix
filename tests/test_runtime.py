@@ -116,6 +116,47 @@ class RuntimeTests(unittest.TestCase):
         self.assertTrue(np.array_equal(output.body_ids, np.asarray([10, 20, 30])))
         self.assertTrue(np.array_equal(output.values, np.asarray([0.0, 8.0, 12.0])))
 
+    def test_central_connectome_retains_inventory_but_excludes_flagged_bodies(self) -> None:
+        nodes = pd.DataFrame(
+            {
+                "node_index": [0, 1, 2, 3],
+                "body_id": [10, 15, 20, 30],
+                "included_in_neural_runtime": [True, False, True, True],
+                "runtime_node_index": [0, -1, 1, 2],
+            }
+        )
+        table = pa.table(
+            {
+                "body_pre": [10, 10, 15, 20, 30],
+                "body_post": [20, 15, 20, 30, 99],
+                "weight": [2, 7, 11, 3, 100],
+            }
+        )
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "weights.feather"
+            feather.write_feather(table, path)
+            central = CentralConnectomeBox(nodes, path, expected_induced_edges=2)
+            output = central.project(SparseActivity(
+                body_ids=np.asarray([10], dtype=np.int64),
+                values=np.asarray([4.0], dtype=np.float64),
+            ))
+        self.assertEqual(len(central.inventory_nodes), 4)
+        self.assertTrue(np.array_equal(output.values, np.asarray([0.0, 8.0, 0.0])))
+        self.assertTrue(np.array_equal(output.body_ids, np.asarray([10, 20, 30])))
+
+    def test_generated_central_runtime_rejects_unclassified_legacy_index(self) -> None:
+        legacy_nodes = pd.DataFrame({"node_index": [0], "body_id": [10]})
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            node_path = root / "central-node-index.parquet"
+            summary_path = root / "central-connectome.json"
+            legacy_nodes.to_parquet(node_path, index=False)
+            summary_path.write_text('{"induced_edge_rows": 0}', encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "predates population classification"):
+                CentralConnectomeBox.from_generated_wiring(
+                    node_path=node_path, weight_path=root / "weights.feather", summary_path=summary_path
+                )
+
     def test_proprioception_router_executes_downstream_only(self) -> None:
         if not PROPRIO_CHANNEL_PATH.is_file() or not PROPRIO_ROUTE_PATH.is_file():
             self.skipTest("generated proprioceptive wiring is absent")

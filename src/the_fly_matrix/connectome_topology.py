@@ -18,7 +18,9 @@ from scipy.sparse.csgraph import breadth_first_order, connected_components
 
 from .central_graph import (
     EXPECTED_ANNOTATED_NODES,
+    EXPECTED_CANONICAL_NEURONS,
     EXPECTED_INDUCED_EDGES,
+    EXPECTED_RUNTIME_EDGES,
     NODE_OUTPUT,
     WEIGHT_SOURCE,
     _locate,
@@ -38,6 +40,7 @@ OUTPUT_ROUTE_FILE = "motor-routes.parquet"
 CACHE_ROOT = ROOT / "data" / "derived" / "analysis" / "cycle-topology"
 REPORT_OUTPUT = ROOT / "reports" / "generated" / "connectome-cycle-topology.html"
 SUMMARY_OUTPUT = CACHE_ROOT / "summary.json"
+NODE_CLASSIFICATION_OUTPUT = CACHE_ROOT / "node-classification.parquet"
 
 
 def _section(title: str) -> None:
@@ -491,13 +494,13 @@ def render_report(summary: dict[str, Any], output: Path = REPORT_OUTPUT) -> None
 .kpis{{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0}}.kpi,.panel,.note{{background:rgba(16,29,43,.92);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 12px 30px #0004}}.kpi strong{{display:block;font-size:1.75rem;color:var(--accent)}}.kpi span{{color:var(--muted)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:16px}}.panel{{overflow:auto}}svg{{width:100%;min-width:680px}}.axis{{stroke:#6e88a2;stroke-width:1}}.bar{{fill:var(--accent2)}}.bar:hover{{fill:var(--accent)}}.tick,.xlabel,.ylabel{{fill:var(--muted);font-size:10px;text-anchor:middle}}
 .note{{margin:18px 0;border-left:5px solid #f1c75b}}code{{color:#aee8ff}}table{{width:100%;border-collapse:collapse}}th,td{{padding:8px;border-bottom:1px solid var(--line);text-align:right}}th:first-child,td:first-child{{text-align:left}}.good{{color:var(--accent)}}footer{{color:var(--muted);margin:30px 0}}
 </style></head><body><main><p class='good'>THE FLY MATRIX · STRUCTURAL ANALYSIS · NO CALIBRATION</p><h1>Cycle topology of MaleCNS</h1>
-<p class='lede'>Multi-source breadth-first generations begin at every declared connectome input. The report runs to traversal exhaustion, records motor-output depths, measures exact strongly connected components, and separates an exact BFS-tree cycle subset from the broader feedback-depth profile.</p>
-<div class='note'><strong>Important interpretation.</strong> A connection from generation 10 back to generation 5 has a <em>generation return gap</em> of 5, matching the exploratory quantity requested. It is counted only when both neurons lie in the same strongly connected component, so the edge really belongs to a directed cycle. The exact cycle length is not generally 5: the “BFS-tree closures” panel counts only edges returning to an actual ancestor in the selected BFS forest; its length includes the closing edge. Enumerating every simple directed cycle is deliberately not attempted because its output can be exponential.</div>
-<div class='kpis'><div class='kpi'><strong>{_format_int(graph['nodes'])}</strong><span>annotated neurons</span></div><div class='kpi'><strong>{_format_int(graph['edges'])}</strong><span>directed connections</span></div><div class='kpi'><strong>{traversal['reachable_percent']:.2f}%</strong><span>reachable from inputs</span></div><div class='kpi'><strong>{traversal['maximum_depth']}</strong><span>maximum shortest-path depth</span></div><div class='kpi'><strong>{_format_int(scc['cyclic_nodes'])}</strong><span>neurons in cyclic SCCs</span></div><div class='kpi'><strong>{_format_int(cycles['recurrent_edges'])}</strong><span>edges inside cyclic SCCs</span></div></div>
+<p class='lede'>All 211,577 annotation rows are retained and classified. Graph metrics below use only the 166,700 bodies explicitly flagged as canonical neurons. Multi-source breadth-first generations begin at every declared connectome input and run to exhaustion.</p>
+<div class='note'><strong>Important correction.</strong> Shortest-path depth from 17,884 simultaneous inputs is strongly compressed and is <em>not</em> a measure of biological processing depth or actual cycle length. A same-generation edge may participate in a macroscopic cycle. SCC size is exact; the feedback-depth charts are traversal diagnostics only.</div>
+<div class='kpis'><div class='kpi'><strong>{_format_int(graph['canonical_neurons'])}</strong><span>canonical neurons</span></div><div class='kpi'><strong>{_format_int(graph['annotated_body_rows'])}</strong><span>retained annotation rows</span></div><div class='kpi'><strong>{_format_int(graph['canonical_edges'])}</strong><span>neuron-to-neuron connections</span></div><div class='kpi'><strong>{traversal['reachable_percent']:.2f}%</strong><span>neurons reachable from inputs</span></div><div class='kpi'><strong>{_format_int(scc['largest_component_nodes'])}</strong><span>largest exact SCC</span></div><div class='kpi'><strong>{_format_int(summary['behavioral_relevance']['causal_core'])}</strong><span>input→motor causal core</span></div></div>
 <div class='grid'>{_bar_chart('Neurons by shortest input depth', traversal['depth_histogram'], exact_until=48)}{_bar_chart('Motor outputs by shortest input depth', traversal['output_depth_histogram'], exact_until=48)}{_bar_chart('SCC sizes (number of components)', _expand_sparse_histogram(scc['size_histogram']), exact_until=16)}{_bar_chart('SCC-confirmed feedback generation gaps', cycles['feedback_generation_gap_histogram'], exact_until=32, zero_label='same depth')}{_bar_chart('Exact BFS-tree cycle lengths', cycles['exact_tree_cycle_histogram'], exact_until=32)}</div>
 <section class='panel' style='margin-top:16px'><h2>Largest strongly connected components</h2><table><thead><tr><th>Rank</th><th>Nodes</th><th>Input-reachable</th><th>Min depth</th><th>Max depth</th></tr></thead><tbody>{top_rows}</tbody></table></section>
-<section class='panel' style='margin-top:16px'><h2>Coverage and edge classes</h2><table><tbody><tr><th>Declared input terminals</th><td>{_format_int(traversal['input_count'])}</td></tr><tr><th>Declared motor outputs</th><td>{_format_int(traversal['output_count'])}</td></tr><tr><th>Reached motor outputs</th><td>{_format_int(traversal['reachable_outputs'])}</td></tr><tr><th>Unreachable annotated neurons</th><td>{_format_int(traversal['unreachable_nodes'])}</td></tr><tr><th>Forward edges by input depth</th><td>{_format_int(cycles['edge_depth_classes']['forward'])}</td></tr><tr><th>Same-generation edges</th><td>{_format_int(cycles['edge_depth_classes']['same_generation'])}</td></tr><tr><th>Backward edges by input depth</th><td>{_format_int(cycles['edge_depth_classes']['backward'])}</td></tr><tr><th>Exact BFS-tree closing edges</th><td>{_format_int(cycles['fundamental_cycle_closing_edges'])}</td></tr></tbody></table></section>
-<div class='note'><strong>What this can test.</strong> A concentration near zero/short gaps supports local recurrent structure; mass in the tail supports long-range recurrence. SCC sizes reveal whether recurrence is split into modules or dominated by a giant recurrent core. These are structural statements only: synapse signs, weights, time constants, and dynamical stability are outside this report.</div>
+<section class='panel' style='margin-top:16px'><h2>Scope, causal relevance and edge classes</h2><table><tbody><tr><th>Non-neuronal or unresolved bodies retained but excluded from neural metrics</th><td>{_format_int(graph['noncanonical_annotated_bodies'])}</td></tr><tr><th>Declared input terminals (all canonical)</th><td>{_format_int(traversal['input_count'])}</td></tr><tr><th>Declared motor outputs (all canonical)</th><td>{_format_int(traversal['output_count'])}</td></tr><tr><th>Input→motor causal core</th><td>{_format_int(summary['behavioral_relevance']['causal_core'])}</td></tr><tr><th>Input-reachable, cannot reach modeled motor output</th><td>{_format_int(summary['behavioral_relevance']['input_reachable_no_modeled_motor_output'])}</td></tr><tr><th>No declared input, can reach modeled motor output</th><td>{_format_int(summary['behavioral_relevance']['no_declared_input_can_reach_motor_output'])}</td></tr><tr><th>Neither input-reachable nor motor-output-relevant</th><td>{_format_int(summary['behavioral_relevance']['neither'])}</td></tr><tr><th>Forward edges by input depth</th><td>{_format_int(cycles['edge_depth_classes']['forward'])}</td></tr><tr><th>Same-generation edges</th><td>{_format_int(cycles['edge_depth_classes']['same_generation'])}</td></tr><tr><th>Backward edges by input depth</th><td>{_format_int(cycles['edge_depth_classes']['backward'])}</td></tr></tbody></table></section>
+<div class='note'><strong>Interpretation boundary.</strong> The giant SCC proves macroscopic recurrence, but this report does not yet recover a feed-forward backbone. That requires a weighted hierarchy / feedback-arc analysis. Synapse signs, time constants and dynamics remain outside this structural report.</div>
 <footer>Generated {html.escape(summary['generated_at'])} · MaleCNS v1.0 minconf 0.5 · summary digest <code>{summary['summary_sha256'][:16]}</code> · machine-readable data: <code>data/derived/analysis/cycle-topology/summary.json</code></footer></main></body></html>"""
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(body, encoding="utf-8")
@@ -511,28 +514,46 @@ def analyze_connectome_topology(
     cache_root: Path = CACHE_ROOT,
     summary_output: Path = SUMMARY_OUTPUT,
     report_output: Path = REPORT_OUTPUT,
+    classification_output: Path = NODE_CLASSIFICATION_OUTPUT,
 ) -> dict[str, Any]:
     for path in (node_path, weight_source):
         if not path.is_file():
             raise FileNotFoundError(f"Source requise absente: {path}")
 
     _section("Univers neuronal et frontieres du connectome")
-    nodes = pd.read_parquet(node_path, columns=["node_index", "body_id"]).sort_values("node_index")
+    required_columns = ["node_index", "body_id", "population_scope", "scope_reason", "is_canonical_neuron", "included_in_neural_runtime", "runtime_node_index"]
+    nodes = pd.read_parquet(node_path, columns=required_columns).sort_values("node_index").reset_index(drop=True)
     body_ids = nodes["body_id"].to_numpy(np.int64)
     if len(body_ids) != EXPECTED_ANNOTATED_NODES or not np.all(body_ids[:-1] < body_ids[1:]):
         raise RuntimeError("Index central inattendu ou non trie")
-    input_indices, output_indices, route_counts = _load_boundary_ids(body_ids, route_root)
+    canonical_mask = nodes["is_canonical_neuron"].to_numpy(dtype=bool)
+    if int(canonical_mask.sum()) != EXPECTED_CANONICAL_NEURONS:
+        raise RuntimeError("Classification neuronale centrale inattendue")
+    input_full_indices, output_full_indices, route_counts = _load_boundary_ids(body_ids, route_root)
+    if not canonical_mask[input_full_indices].all() or not canonical_mask[output_full_indices].all():
+        raise RuntimeError("Une route d'interface vise un corps non canonique")
+    full_to_runtime = np.full(len(nodes), -1, dtype=np.int32)
+    full_to_runtime[canonical_mask] = np.arange(int(canonical_mask.sum()), dtype=np.int32)
+    input_indices = full_to_runtime[input_full_indices]
+    output_indices = full_to_runtime[output_full_indices]
     print(f"[OK] {len(input_indices):,} entrees CNS uniques; {len(output_indices):,} sorties motrices uniques.", flush=True)
 
     _section("Adjacence topologique")
-    indptr, indices, cache_reused = build_or_load_adjacency(body_ids, weight_source, cache_root)
-    graph = csr_matrix((np.ones(len(indices), dtype=np.uint8), indices, indptr), shape=(len(body_ids), len(body_ids)), copy=False)
+    full_indptr, full_indices, cache_reused = build_or_load_adjacency(body_ids, weight_source, cache_root)
+    full_graph = csr_matrix((np.ones(len(full_indices), dtype=np.uint8), full_indices, full_indptr), shape=(len(body_ids), len(body_ids)), copy=False)
+    graph = full_graph[canonical_mask][:, canonical_mask].tocsr()
+    if graph.nnz != EXPECTED_RUNTIME_EDGES:
+        raise RuntimeError(f"Arêtes neuronales inattendues: {graph.nnz}")
+    indptr, indices = graph.indptr, graph.indices
 
     _section("Generations BFS depuis toutes les entrees")
     depth, parent, order = bfs_generations(indptr, indices, input_indices)
     reachable = depth >= 0
     reachable_outputs_mask = depth[output_indices] >= 0
-    print(f"[OK] {reachable.sum():,}/{len(body_ids):,} neurones atteints; {reachable_outputs_mask.sum():,}/{len(output_indices):,} sorties atteintes; profondeur maximale {depth[reachable].max() if reachable.any() else -1}.", flush=True)
+    reverse_graph = graph.transpose().tocsr()
+    output_distance, _, _ = bfs_generations(reverse_graph.indptr, reverse_graph.indices, output_indices)
+    can_reach_output = output_distance >= 0
+    print(f"[OK] {reachable.sum():,}/{len(depth):,} neurones canoniques atteints; {reachable_outputs_mask.sum():,}/{len(output_indices):,} sorties atteintes; profondeur maximale {depth[reachable].max() if reachable.any() else -1}.", flush=True)
 
     _section("Composantes fortement connexes exactes")
     component_count, labels = connected_components(graph, directed=True, connection="strong", return_labels=True)
@@ -545,6 +566,24 @@ def analyze_connectome_topology(
     cyclic_nodes = int(component_sizes[cyclic_mask].sum())
     cyclic_component_count = int(cyclic_mask.sum())
     print(f"[OK] {cyclic_component_count:,} SCC cycliques couvrant {cyclic_nodes:,} neurones; {cycle_data['fundamental_cycle_closing_edges']:,} fermetures exactes du foret BFS.", flush=True)
+
+    relevance = np.full(len(nodes), "excluded_noncanonical_body", dtype=object)
+    canonical_relevance = np.select(
+        [reachable & can_reach_output, reachable & ~can_reach_output, ~reachable & can_reach_output],
+        ["causal_core", "input_reachable_no_modeled_motor_output", "no_declared_input_can_reach_motor_output"],
+        default="neither",
+    )
+    relevance[canonical_mask] = canonical_relevance
+    node_classification = nodes.copy()
+    node_classification["reachable_from_declared_input"] = False
+    node_classification["can_reach_modeled_motor_output"] = False
+    node_classification["shortest_input_depth"] = -1
+    node_classification.loc[canonical_mask, "reachable_from_declared_input"] = reachable
+    node_classification.loc[canonical_mask, "can_reach_modeled_motor_output"] = can_reach_output
+    node_classification.loc[canonical_mask, "shortest_input_depth"] = depth
+    node_classification["behavioral_relevance"] = relevance
+    classification_output.parent.mkdir(parents=True, exist_ok=True)
+    node_classification.to_parquet(classification_output, index=False, compression="zstd")
 
     largest: list[dict[str, Any]] = []
     for rank, component in enumerate(np.argsort(component_sizes)[::-1][:12], start=1):
@@ -576,7 +615,13 @@ def analyze_connectome_topology(
             "A feedback depth gap is a recurrent-span proxy, not generally the exact length of a simple cycle.",
         ],
         "sources": {"node_index": _fingerprint(node_path), "connectome_edges": _fingerprint(weight_source), "route_files": route_counts},
-        "graph": {"nodes": int(len(body_ids)), "edges": int(len(indices)), "cache_reused": cache_reused},
+        "graph": {"annotated_body_rows": int(len(body_ids)), "canonical_neurons": int(canonical_mask.sum()), "noncanonical_annotated_bodies": int((~canonical_mask).sum()), "annotated_body_edges": int(len(full_indices)), "canonical_edges": int(len(indices)), "cache_reused": cache_reused},
+        "behavioral_relevance": {
+            "causal_core": int((reachable & can_reach_output).sum()),
+            "input_reachable_no_modeled_motor_output": int((reachable & ~can_reach_output).sum()),
+            "no_declared_input_can_reach_motor_output": int((~reachable & can_reach_output).sum()),
+            "neither": int((~reachable & ~can_reach_output).sum()),
+        },
         "traversal": {
             "input_count": int(len(input_indices)), "output_count": int(len(output_indices)),
             "reachable_nodes": int(reachable.sum()), "unreachable_nodes": int((~reachable).sum()),
@@ -598,6 +643,7 @@ def analyze_connectome_topology(
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     render_report(summary, report_output)
     print(f"[OK] Donnees: {summary_output}", flush=True)
+    print(f"[OK] Classification par corps: {classification_output}", flush=True)
     print(f"[OK] Rapport: {report_output}", flush=True)
     return summary
 

@@ -1085,7 +1085,10 @@ def build_wiring_map(derived_root: Path = DERIVED_WIRING) -> dict[str, Any]:
     add_node(
         _node(
             "cns-core",
-            label="MaleCNS\n211,577 annotated neurons\n26,028,386 induced edges",
+            label=(
+                "MaleCNS\n166,700 canonical neurons\n"
+                "25,582,938 runtime edges\n211,577 retained annotation rows"
+            ),
             kind="cns_core",
             lane="cns_core",
             sector="central_nervous_system",

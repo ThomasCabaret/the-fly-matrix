@@ -288,7 +288,7 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
     )
     central = CentralConnectomeBox.from_generated_wiring()
     print(
-        f"[OK] {central.box_id}: {len(central.body_ids):,} neurones annotés; "
+        f"[OK] {central.box_id}: {len(central.body_ids):,} neurones canoniques; "
         f"{central.expected_induced_edges:,} arêtes creuses à parcourir"
     )
 
@@ -415,7 +415,10 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         raise RuntimeError("Le rejeu avec la même graine n'est pas déterministe")
     if len(first.body_ids) != 17884:
         raise RuntimeError(f"17884 destinations attendues, {len(first.body_ids)} obtenues")
-    print("[INFO] Projection des entrées dans les 26 028 386 arêtes du sous-graphe annoté")
+    print(
+        f"[INFO] Projection des entrées dans les {central.expected_induced_edges:,} "
+        "arêtes du graphe neuronal canonique"
+    )
     central_first, central_second = central.project_many((first, second))
     if not np.array_equal(central_first.values, central_second.values):
         raise RuntimeError("Le rejeu de la projection creuse CNS n'est pas déterministe")
@@ -772,7 +775,8 @@ def run_smoke(output: Path = OUTPUT, seed: int = SMOKE_SEED) -> dict[str, object
         },
         "central_graph": {
             "adapter_type": central.adapter_type,
-            "annotated_nodes": len(central.body_ids),
+            "canonical_neurons": len(central.body_ids),
+            "retained_annotation_rows": len(central.inventory_nodes),
             "induced_edges": central.expected_induced_edges,
             "nonzero_projected_nodes": int(np.count_nonzero(central_first.values)),
             "motor_outputs_read": len(motor.source_body_ids),

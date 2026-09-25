@@ -30,6 +30,13 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
 Le registre, les ADR et les manifestes reproductibles restent canoniques. Les
 skills indiquent comment travailler avec eux ; ils ne remplacent pas leur contenu.
 
+## Périmètre neuronal MaleCNS
+
+La table d'annotations contient 211 577 corps, pas 211 577 neurones. Ne jamais
+assimiler une ligne annotée à un neurone. Appliquer et contrôler les drapeaux de
+l'ADR 0007 : les 166 700 neurones canoniques sont inclus dans le runtime, tandis
+que glies et corps non résolus restent conservés, classifiés et auditables.
+
 ## Contrat de câblage
 
 Chaque canal terminal d'entrée ou de sortie doit avoir exactement une disposition :

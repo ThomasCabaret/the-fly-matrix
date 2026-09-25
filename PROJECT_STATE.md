@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-25, viewer physique diagnostique isolé avant runtime MaleCNS temporel.
+Mise à jour : 2026-09-25, périmètre neuronal MaleCNS corrigé et classifié sans suppression.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -35,12 +35,20 @@ accessible par option. La séparation est actée dans
 [`ADR 0006`](decisions/0006-isolated-physical-viewer-diagnostic.md).
 
 Une analyse structurelle de la récurrence du vrai MaleCNS est disponible via
-`cycle_topology.bat`. Elle parcourt toutes les générations depuis les 17 884
-entrées déclarées, mesure les composantes fortement connexes exactes et distingue
-les retours de profondeur confirmés par SCC des cycles exacts fermés dans la forêt
-BFS. Elle n'énumère pas tous les cycles simples — quantité potentiellement
-exponentielle — et ne fait aucun claim dynamique. La méthode et les limites sont
-décrites dans
+`cycle_topology.bat`. L'analyse corrigée conserve les 211 577 corps annotés dans
+un registre par corps, mais calcule le graphe neuronal sur les 166 700 corps
+canoniques seulement. Elle marque séparément l'accessibilité depuis les 17 884
+entrées et la capacité à atteindre les 815 sorties motrices. Les quatre classes
+obtenues sont 165 494 neurones du cœur causal entrée→sortie, 1 126 accessibles
+sans conséquence sur les sorties motrices modélisées, 9 capables d'atteindre une
+sortie sans être accessibles depuis les entrées déclarées et 71 dans aucun des
+deux ensembles. Ces étiquettes décrivent le périmètre actuel ; elles ne déclarent
+pas les neurones biologiquement inutiles.
+
+Les composantes fortement connexes sont exactes. En revanche, la profondeur BFS
+multi-source est comprimée et ne mesure ni une profondeur biologique ni la taille
+réelle des cycles ; l'ancienne lecture « retours surtout locaux » est retirée.
+La méthode et les limites sont décrites dans
 [`docs/connectome-cycle-topology.md`](docs/connectome-cycle-topology.md).
 
 La définition normative est désormais celle de
@@ -142,9 +150,11 @@ un serveur HTTP strictement local et ouvre la vue. La disposition fixe les colon
 monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS → sorties CNS
 → groupes moteurs → actionneurs afin que deux générations restent comparables.
 
-Le smoke test traverse toujours 17 884 entrées CNS, 26 028 386 arêtes centrales,
-815 sorties motrices et 102 actionneurs avant le pas physique. Les 43 tests
-unitaires/intégration locaux passent.
+Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
+canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
+entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
+conservées et classifiées. Les **50 tests**, leurs 5 sous-tests et le smoke test
+bout en bout passent après cette correction.
 
 ## Fronts structurels restants
 

@@ -344,12 +344,23 @@ class LedgerTests(unittest.TestCase):
         self.assertTrue(central_path.is_file())
         central = json.loads(central_path.read_text(encoding="utf-8"))
         self.assertEqual(central["annotated_nodes"], 211577)
+        self.assertEqual(central["annotated_body_rows"], 211577)
+        self.assertEqual(central["canonical_neurons"], 166700)
+        self.assertEqual(central["noncanonical_annotated_bodies"], 44877)
+        self.assertEqual(central["population_classification"]["scope_counts"], {
+            "canonical_neuron": 166700,
+            "unresolved_or_non_neuronal_body": 33013,
+            "non_neuronal_glia": 11864,
+        })
         self.assertEqual(central["raw_edge_rows"], 151856684)
         self.assertEqual(central["induced_edge_rows"], 26028386)
+        self.assertEqual(central["runtime_induced_edge_rows"], 25582938)
+        self.assertEqual(central["runtime_excluded_annotated_body_edge_rows"], 445448)
         self.assertEqual(central["excluded_fragment_edge_rows"], 125828298)
         self.assertEqual(sum(central["edge_scope_counts"].values()), 151856684)
         self.assertEqual(central["raw_synapse_weight"], 311833243)
         self.assertEqual(central["induced_synapse_weight"], 125365933)
+        self.assertEqual(central["runtime_induced_synapse_weight"], 124177617)
         self.assertFalse(central["scientific_parameter_values_selected"])
 
     def test_group_counts_match_local_inventory_when_available(self) -> None:

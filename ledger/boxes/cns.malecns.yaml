@@ -8,9 +8,14 @@ parent_id: null
 ports: {inputs: [sensory_afferents, basal_activity], outputs: [motor_neuron_activity, cns_activity]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
 confidence: high
-evidence: [ledger/datasets.yaml, data/derived/inventory/inventory.json, data/derived/wiring/central-connectome.json, data/derived/wiring/central-node-index.parquet, src/the_fly_matrix/central_graph.py, src/the_fly_matrix/runtime.py, runs/wiring-smoke/latest.json]
+evidence: [ledger/datasets.yaml, decisions/0007-annotated-body-and-neuron-scope.md, data/derived/inventory/inventory.json, data/derived/wiring/central-connectome.json, data/derived/wiring/central-node-index.parquet, data/derived/analysis/cycle-topology/node-classification.parquet, src/the_fly_matrix/central_graph.py, src/the_fly_matrix/runtime.py, runs/wiring-smoke/latest.json]
+provenance:
+  claim_kinds: [dataset_observation, derived_rule, engineering_choice]
+  source_references: [malecns-v1.0-body-annotations, malecns-v1.0-connectome-weights, decisions/0007-annotated-body-and-neuron-scope.md]
+  used_claims: [The annotation table contains bodies of mixed scope rather than neurons only, Published superclass presence identifies the 166700 canonical-neuron scope, Every retained body remains individually flagged and auditable]
+  assumptions: [The v1.0 superclass-based rule is a project runtime boundary and may require a versioned revision for another dataset release]
 parameter_family_ids: [parameter.central.neuron_dynamics, parameter.central.synaptic_gain]
 validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.central_graph_runtime, validation.resting_dynamics]
-next_action: Choisir puis calibrer la dynamique neuronale partagée sur le graphe creux désormais exécutable.
+next_action: Utiliser exclusivement le sous-graphe des 166700 neurones canoniques pour toute dynamique temporelle et conserver les 44877 corps exclus dans l'inventaire auditable.
 blocked_by: []
-completion_criteria: [Sous-graphe annoté intégral chargé, Projection creuse déterministe, Fragments non annotés explicitement exclus, Régime basal stable après calibration]
+completion_criteria: [Les 211577 corps annotés sont conservés et flagués, Les 166700 neurones canoniques et 25582938 arêtes runtime sont contrôlés, Chaque terminal vise un neurone canonique, Projection creuse déterministe, Régime basal stable après calibration]

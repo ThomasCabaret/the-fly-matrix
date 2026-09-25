@@ -37,6 +37,28 @@ smoke tests prouvent uniquement que les interfaces s'exécutent.
 - Une **validation** possède un protocole, des critères d'acceptation et le dernier
   résultat connu.
 
+## Classifier les corps avant de construire le graphe neuronal
+
+Une ligne de la table d'annotations MaleCNS n'implique pas que le corps soit un
+neurone. Avant tout graphe, runtime ou statistique dite « neuronale », le pipeline
+doit appliquer et versionner une règle de population. Pour MaleCNS v1.0, l'ADR
+0007 impose de conserver les 211 577 lignes et de leur ajouter au minimum :
+
+- `population_scope` et `scope_reason` ;
+- `is_canonical_neuron` ;
+- `included_in_neural_runtime` ;
+- un `runtime_node_index` distinct de l'indice d'inventaire.
+
+La glie et les corps non résolus ne sont ni supprimés ni renommés en neurones. Ils
+restent interrogeables dans l'inventaire et leurs arêtes restent comptées, mais ils
+n'entrent pas silencieusement dans la propagation neuronale. Chaque route terminale
+doit en outre être vérifiée contre le drapeau canonique. Un artefact ancien sans
+classification doit faire échouer le runtime et demander une régénération.
+
+L'accessibilité depuis une entrée et la capacité à atteindre une sortie sont des
+étiquettes topologiques relatives aux frontières actuellement modélisées. Elles ne
+constituent jamais, à elles seules, une preuve d'inutilité biologique.
+
 Les identifiants sont stables. Un changement de connaissance modifie une fiche ;
 il ne doit pas créer un nouvel identifiant pour faire disparaître l'historique.
 

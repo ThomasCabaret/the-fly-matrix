@@ -21,10 +21,14 @@ SUMMARY_OUTPUT = OUTPUT_ROOT / "central-connectome.json"
 NODE_OUTPUT = OUTPUT_ROOT / "central-node-index.parquet"
 
 EXPECTED_ANNOTATED_NODES = 211_577
+EXPECTED_CANONICAL_NEURONS = 166_700
 EXPECTED_RAW_EDGES = 151_856_684
 EXPECTED_INDUCED_EDGES = 26_028_386
+EXPECTED_RUNTIME_EDGES = 25_582_938
 EXPECTED_RAW_WEIGHT = 311_833_243
 EXPECTED_INDUCED_WEIGHT = 125_365_933
+EXPECTED_RUNTIME_WEIGHT = 124_177_617
+POPULATION_RULE_ID = "malecns-v1.0-population-scope-v1"
 
 
 def section(title: str) -> None:
@@ -53,13 +57,38 @@ def _role_coverage(nodes: pd.DataFrame, superclass: str) -> dict[str, int]:
     }
 
 
+def classify_population_scope(nodes: pd.DataFrame) -> pd.DataFrame:
+    """Flag every annotation row without deleting non-neuronal or unresolved bodies."""
+    classified = nodes.copy()
+    superclass = classified["superclass"].fillna("(unknown)").astype(str).str.strip()
+    status = classified["status"].fillna("(unknown)").astype(str).str.strip()
+    glia = status.eq("Glia")
+    canonical = superclass.ne("(unknown)") & superclass.ne("") & ~glia
+    classified["is_canonical_neuron"] = canonical
+    classified["included_in_neural_runtime"] = canonical
+    classified["population_scope"] = np.select(
+        [canonical, glia],
+        ["canonical_neuron", "non_neuronal_glia"],
+        default="unresolved_or_non_neuronal_body",
+    )
+    classified["scope_reason"] = np.select(
+        [canonical, glia],
+        ["published_superclass_present", "published_status_glia"],
+        default="published_superclass_absent",
+    )
+    runtime_index = np.full(len(classified), -1, dtype=np.int64)
+    runtime_index[canonical.to_numpy()] = np.arange(int(canonical.sum()), dtype=np.int64)
+    classified["runtime_node_index"] = runtime_index
+    return classified
+
+
 def build_central_graph_index(
     annotation_source: Path = ANNOTATION_SOURCE,
     weight_source: Path = WEIGHT_SOURCE,
     summary_output: Path = SUMMARY_OUTPUT,
     node_output: Path = NODE_OUTPUT,
 ) -> dict[str, Any]:
-    """Index the annotated-neuron subgraph without duplicating the 1 GB edge file."""
+    """Retain/classify annotated bodies and index the canonical-neuron runtime graph."""
     for path in (annotation_source, weight_source):
         if not path.is_file():
             raise FileNotFoundError(f"Source MaleCNS absente: {path}")
@@ -71,7 +100,11 @@ def build_central_graph_index(
         nodes[column] = nodes[column].fillna("(unknown)").astype(str)
     nodes = nodes.sort_values("bodyId").reset_index(drop=True)
     if len(nodes) != EXPECTED_ANNOTATED_NODES or nodes["bodyId"].duplicated().any():
-        raise RuntimeError("L'univers des neurones annotés MaleCNS est inattendu")
+        raise RuntimeError("L'univers des corps annotés MaleCNS est inattendu")
+    nodes = classify_population_scope(nodes)
+    canonical_mask = nodes["is_canonical_neuron"].to_numpy(dtype=bool)
+    if int(canonical_mask.sum()) != EXPECTED_CANONICAL_NEURONS:
+        raise RuntimeError("La classification neuronale MaleCNS est inattendue")
     body_ids = nodes["bodyId"].to_numpy(dtype=np.int64)
 
     incoming_edge_count = np.zeros(len(nodes), dtype=np.int64)
@@ -87,6 +120,8 @@ def build_central_graph_index(
     raw_edges = 0
     raw_weight = 0
     induced_weight = 0
+    runtime_edges = 0
+    runtime_weight = 0
     self_edges = 0
     minimum_weight: int | None = None
     maximum_weight = 0
@@ -127,10 +162,13 @@ def build_central_graph_index(
                     local_minimum if minimum_weight is None else min(minimum_weight, local_minimum)
                 )
                 maximum_weight = max(maximum_weight, int(selected_weight.max()))
+                runtime = canonical_mask[source] & canonical_mask[target]
+                runtime_edges += int(runtime.sum())
+                runtime_weight += int(selected_weight[runtime].sum())
             if (batch_index + 1) % 500 == 0 or batch_index + 1 == batch_count:
                 print(
                     f"[INFO] {batch_index + 1:,}/{batch_count:,} lots; "
-                    f"{scope_counts['annotated_to_annotated']:,} arêtes neuronales",
+                    f"{scope_counts['annotated_to_annotated']:,} arêtes entre corps annotés",
                     flush=True,
                 )
 
@@ -143,6 +181,11 @@ def build_central_graph_index(
         raise RuntimeError(
             "Sous-graphe annoté inattendu: "
             f"{scope_counts['annotated_to_annotated']} arêtes, poids {induced_weight}"
+        )
+    if runtime_edges != EXPECTED_RUNTIME_EDGES or runtime_weight != EXPECTED_RUNTIME_WEIGHT:
+        raise RuntimeError(
+            "Sous-graphe neuronal canonique inattendu: "
+            f"{runtime_edges} arêtes, poids {runtime_weight}"
         )
     if sum(scope_counts.values()) != raw_edges:
         raise RuntimeError("La partition annoté/fragment ne couvre pas toutes les arêtes")
@@ -160,7 +203,17 @@ def build_central_graph_index(
     summary: dict[str, Any] = {
         "schema_version": 1,
         "generated_at": datetime.now(UTC).isoformat(),
-        "purpose": "streamable sparse structural CNS graph without fitted dynamics",
+        "purpose": "auditable annotated-body inventory plus canonical-neuron runtime graph without fitted dynamics",
+        "population_classification": {
+            "rule_id": POPULATION_RULE_ID,
+            "retention_policy": "all annotation rows retained and flagged",
+            "canonical_neuron_rule": "status is not Glia and superclass is published/non-empty",
+            "runtime_rule": "included_in_neural_runtime equals is_canonical_neuron",
+            "scope_counts": {
+                str(key): int(value)
+                for key, value in nodes["population_scope"].value_counts().items()
+            },
+        },
         "sources": {
             "annotations": str(annotation_source.relative_to(ROOT)).replace("\\", "/"),
             "weights": str(weight_source.relative_to(ROOT)).replace("\\", "/"),
@@ -168,21 +221,30 @@ def build_central_graph_index(
         "representation": {
             "node_order": "ascending annotated bodyId",
             "edge_storage": "original Arrow IPC/Feather batches streamed without duplication",
-            "edge_scope": "induced subgraph whose pre and post bodyIds are both annotated",
+            "edge_scope": "inventory counts all annotated-body endpoints; runtime requires both endpoints flagged canonical_neuron",
             "weight_semantics": "published integer synapse-count weight",
             "batch_count": batch_count,
         },
         "annotated_nodes": int(len(nodes)),
+        "annotated_body_rows": int(len(nodes)),
+        "canonical_neurons": int(canonical_mask.sum()),
+        "noncanonical_annotated_bodies": int((~canonical_mask).sum()),
         "connected_nodes": int(connected.sum()),
         "isolated_annotated_nodes": int((~connected).sum()),
         "nodes_with_incoming_edges": int(nodes["has_incoming_edge"].sum()),
         "nodes_with_outgoing_edges": int(nodes["has_outgoing_edge"].sum()),
         "raw_edge_rows": raw_edges,
         "induced_edge_rows": scope_counts["annotated_to_annotated"],
+        "annotated_body_induced_edge_rows": scope_counts["annotated_to_annotated"],
+        "runtime_induced_edge_rows": runtime_edges,
+        "runtime_excluded_annotated_body_edge_rows": (
+            scope_counts["annotated_to_annotated"] - runtime_edges
+        ),
         "excluded_fragment_edge_rows": raw_edges - scope_counts["annotated_to_annotated"],
         "edge_scope_counts": scope_counts,
         "raw_synapse_weight": raw_weight,
         "induced_synapse_weight": induced_weight,
+        "runtime_induced_synapse_weight": runtime_weight,
         "self_edges": self_edges,
         "minimum_edge_weight": minimum_weight,
         "maximum_edge_weight": maximum_weight,
@@ -202,10 +264,13 @@ def build_central_graph_index(
     summary_output.parent.mkdir(parents=True, exist_ok=True)
     nodes.to_parquet(node_output, index=False, compression="zstd")
     summary_output.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[OK] {len(nodes):,} neurones annotés indexés; {connected.sum():,} connectés")
     print(
-        f"[OK] {scope_counts['annotated_to_annotated']:,} arêtes neuronales "
-        f"sur {raw_edges:,} lignes brutes"
+        f"[OK] {len(nodes):,} corps annotés conservés et classifiés; "
+        f"{canonical_mask.sum():,} neurones canoniques"
+    )
+    print(
+        f"[OK] {runtime_edges:,} arêtes du runtime neuronal; "
+        f"{scope_counts['annotated_to_annotated']:,} arêtes entre corps annotés"
     )
     print(f"[INFO] {raw_edges - scope_counts['annotated_to_annotated']:,} arêtes de fragments exclues")
     print(f"[OK] Index des nœuds : {node_output}")

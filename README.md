@@ -168,11 +168,18 @@ les valeurs arbitraires du smoke test ne deviennent jamais des paramètres
 scientifiques et ne peuvent pas court-circuiter une boîte déclarée.
 
 Le cœur CNS utilise directement la table creuse publiée, sans en créer une copie
-géante dans le dépôt. `central-node-index.parquet` attribue un indice stable aux
-211 577 `bodyId` annotés et conserve leurs degrés et poids synaptiques entrants
-et sortants. Sur les 151 856 684 lignes brutes, 26 028 386 relient deux neurones
-annotés ; les 125 828 298 lignes touchant un fragment de segmentation non annoté
-sont comptées puis exclues explicitement. Le runtime parcourt les lots Arrow et
+géante dans le dépôt. La table d'annotations mélange des neurones, de la glie et
+des corps non résolus : une ligne annotée n'est donc jamais assimilée implicitement
+à un neurone. `central-node-index.parquet` conserve et classe les 211 577 `bodyId`
+sans en supprimer aucun. Il marque 166 700 neurones canoniques utilisables par le
+runtime, 11 864 corps gliaux et 33 013 corps non neuronaux ou non résolus. La règle,
+sa provenance et l'erreur historique qu'elle corrige sont fixées dans
+[`ADR 0007`](decisions/0007-annotated-body-and-neuron-scope.md).
+
+Sur les 151 856 684 lignes brutes, 26 028 386 relient deux corps annotés, mais
+seules 25 582 938 relient deux neurones canoniques et entrent dans le runtime.
+Les autres lignes et leurs comptes restent audités, jamais effacés. Le runtime
+parcourt les lots Arrow et
 calcule un entraînement synaptique à un saut avec les poids entiers publiés. Cette
 opération ferme le chemin structurel entrée→CNS→sortie motrice, sans choisir de
 seuil, signe, constante de temps, non-linéarité ni activité physiologique.

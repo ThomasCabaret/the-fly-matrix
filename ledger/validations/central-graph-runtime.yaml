@@ -1,6 +1,6 @@
 schema_version: 1
 id: validation.central_graph_runtime
-name: Sous-graphe central annoté et projection creuse
+name: Inventaire de corps et graphe neuronal canonique
 owner_ids:
   - cns.malecns
   - group.projection.ascending
@@ -9,16 +9,20 @@ level: integration
 protocol_path: src/the_fly_matrix/central_graph.py
 command: run_wiring_smoke.bat
 acceptance_criteria:
-  - All 211577 annotated bodyIds receive one stable dense node index
-  - The induced annotated-neuron graph contains exactly 26028386 published weighted edges
+  - All 211577 annotation rows are retained with one stable inventory node index and explicit population-scope flags
+  - Exactly 166700 bodies are flagged canonical neurons with dense runtime indices
+  - The retained annotated-body graph contains 26028386 edges and the canonical-neuron runtime contains 25582938 edges
+  - Exactly 11864 bodies are flagged non-neuronal glia and 33013 unresolved or non-neuronal bodies remain retained
+  - All 17884 CNS input terminals and all 815 motor output terminals are canonical neurons
   - All 125828298 rows touching unannotated segmentation fragments are counted and excluded explicitly
-  - One-hop weighted projection traverses the complete induced graph deterministically
+  - One-hop weighted projection traverses the canonical-neuron graph deterministically
   - No threshold, sign, time constant, nonlinearity or fitted activity value is selected
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: central-graph-runtime-2026-09-22
+latest_run_id: central-graph-runtime-2026-09-25
 status: integration_pass
 notes:
   - The original 1 GB Arrow edge table remains the single sparse edge store
-  - The generated node index records in/out edge counts and synapse-count weights
+  - No annotation row is deleted; runtime inclusion is a visible per-body flag
+  - ADR 0007 records the earlier annotation-row/neuron conflation and its impact audit
   - The smoke path executes sensory ingress through the CNS projection into all 815 motor outputs
