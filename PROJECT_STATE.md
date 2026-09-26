@@ -76,6 +76,13 @@ réelle des cycles ; l'ancienne lecture « retours surtout locaux » est retiré
 La méthode et les limites sont décrites dans
 [`docs/connectome-cycle-topology.md`](docs/connectome-cycle-topology.md).
 
+La prochaine analyse topologique ne cherchera pas à assimiler les SCC à des
+modules. Elle testera une hypothèse de **modularité hiérarchique quasi
+feed-forward** : chaque module doit admettre un ordre interne majoritairement
+feed-forward avec des skips et retours surtout locaux, tandis que le graphe dirigé
+des modules conserve ses arêtes et peut former des cycles macroscopiques longs.
+Cette hypothèse doit pouvoir être rejetée si aucune partition stable ne l'explique.
+
 La définition normative est désormais celle de
 [`ADR 0002`](decisions/0002-exhaustive-terminal-coverage.md) : chaque canal doit
 avoir une disposition `exact`, `parameterized`, `basal`, `proxy`, `sink` ou

@@ -44,36 +44,86 @@ profiles provide reproducible structural diagnostics without presenting a
 traversal proxy as a full cycle census, a cycle-length distribution or a measure
 of biological locality.
 
-## Planned feed-forward-backbone diagnostic
+## Planned hierarchical quasi-feed-forward module diagnostic
 
-A closer answer to the intended question is computationally realistic without
-enumerating cycles. First condense exact strongly connected components: the
-resulting component graph is a unique directed acyclic graph and therefore an
-exact feed-forward description between recurrent modules.
+### Hypothesis to test
 
-Inside every non-trivial SCC, finding the maximum acyclic subgraph—or,
-equivalently, the minimum set of feedback edges to remove—is NP-hard. The planned
-diagnostic will therefore compute a deterministic weighted ordering heuristic,
-not claim an exact optimum. Relative to that ordering, every edge can be classified
-as local forward, forward skip, same-level or backward, with both edge-count and
-synapse-weight statistics and an ordering span.
+The intended model is recursive and explicitly permits recurrence at the coarse
+scale. A candidate module should admit a local ordering in which most internal
+connection weight moves forward. Forward skips are allowed, while backward edges
+should be relatively sparse and preferentially local, closing short intramodule
+cycles. A module may contain smaller modules with the same property.
 
-If a giant SCC hides useful structure, the same measurement can be repeated on a
-hierarchical directed community partition. This yields a module-level recurrent
-map plus an approximate feed-forward backbone inside each module. Robustness must
-be checked across synapse-weight thresholds and deterministic heuristic restarts;
-unstable orderings are a result, not something to hide.
+After replacing neurons by modules, the directed module graph is **not** required
+to be acyclic. Outputs of one largely feed-forward module may enter another module
+whose outputs eventually return to the first, producing a long macroscopic ring.
+The analysis must preserve and describe these intermodule cycles rather than
+remove them to manufacture a global feed-forward graph.
 
-The existing CSR cache makes SCC condensation and a small number of linear edge
-passes realistic for 166,700 nodes and 25,582,938 edges. Exact maximum-acyclic-
-subgraph optimization and exhaustive simple-cycle enumeration are explicitly out
-of scope. Expected outputs are distributions of forward-skip span and backward
-span, the fraction of edge count and synapse weight carried by each class, SCC and
-community summaries, and a machine-readable ordering with uncertainty metadata.
+This is the concrete hypothesis to accept, qualify or reject:
 
-This is a structural characterization, not a neural-dynamics validation. It can
-show whether “mostly feed-forward plus sparse skips and returns” is a defensible
-description of MaleCNS, but cannot establish timing, sign or functional influence.
+> MaleCNS can be compressed into a hierarchy of locally quasi-feed-forward modules
+> with predominantly local intramodule feedback, sparse forward skips and a
+> potentially recurrent, long-cycle intermodule graph.
+
+### Why SCC condensation is not the module definition
+
+Exact strongly connected components remain useful measurements, but they are not
+candidate biological modules. A ring of many feed-forward modules is itself one
+SCC, so condensing SCCs would collapse precisely the macroscopic recurrent
+organization of interest. Whole-brain FlyWire analysis has likewise reported one
+giant SCC containing most neurons, despite separate evidence for hierarchical
+communities. SCCs will therefore be reported as constraints and comparison
+baselines, not used as the terminal partition.
+
+### Realistic analysis strategy
+
+There is no unique exact decomposition. The planned diagnostic will compare
+hierarchical directed partitions rather than assume the hypothesis is true:
+
+1. build candidate nested communities from the directed weighted graph, including
+   a hierarchical stochastic block model and at least one alternative partition;
+2. fit a deterministic weighted ordering inside every candidate module, using a
+   maximum-acyclic-subgraph or feedback-arc heuristic rather than claiming an
+   NP-hard exact optimum;
+3. classify internal edges as local forward, forward skip, same-level or backward
+   and measure their count, synapse weight and ordering span;
+4. retain every intermodule edge, construct the directed quotient at each scale,
+   and measure its long cycles, rings, reciprocity and recurrent motifs;
+5. split, merge and recursively refine modules according to description length,
+   boundary sparsity and local-order quality, without forcing the quotient to be
+   acyclic;
+6. test stability across synapse thresholds, seeds and degree-preserving null
+   graphs, and compare recovered modules with annotations only after the
+   unsupervised fit.
+
+The hypothesis is supported only if stable partitions explain substantially more
+edge weight by local forward structure than matched null graphs, leave a bounded
+and interpretable residual of internal feedback/skips, and expose reproducible
+macroscopic recurrence between modules. Failure to find such a partition is an
+informative rejection, not a reason to tune the method until the picture appears.
+
+The existing CSR cache makes repeated linear edge passes realistic for 166,700
+nodes and 25,582,938 edges. Exact maximum-acyclic-subgraph optimization and
+exhaustive simple-cycle enumeration remain out of scope. This is a structural
+characterization and cannot establish temporal direction, synaptic sign or
+functional influence.
+
+### Related primary work
+
+The ingredients are established in connectome network science, although the exact
+joint hypothesis above is project-specific:
+
+- Kunin et al., *Hierarchical Modular Structure of the Drosophila Connectome*,
+  J. Neurosci. 43, 6384–6400 (2023),
+  https://doi.org/10.1523/JNEUROSCI.0134-23.2023.
+- Betzel et al., *Hierarchical communities in the larval Drosophila connectome*,
+  PNAS 121, e2320177121 (2024), https://doi.org/10.1073/pnas.2320177121.
+- Baker et al., *Neural Network Organization for Courtship Song Feature Detection
+  in Drosophila*, Curr. Biol. 32, 3317–3333 (2022), which applies orderability,
+  feedforwardness and treeness to a directed fly circuit.
+- Lin et al., *Network statistics of the whole-brain connectome of Drosophila*,
+  Nature 634, 153–165 (2024), https://doi.org/10.1038/s41586-024-07968-y.
 
 ## Running it
 
