@@ -9,8 +9,8 @@ expected_cardinality: 815 exact member routes into 441 annotation-backed type/si
 candidate_constraints: [same appendage, joint action and side]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
-confidence: high
+status: {inventory: complete, routing: proposed, implementation: tested, validation: integration_pass}
+confidence: low
 evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, runs/wiring-smoke/latest.json, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
 validation_ids: [validation.motor_grouping]
 next_action: Préserver les 815 valeurs membres et les 441 groupes pendant la calibration séparée.

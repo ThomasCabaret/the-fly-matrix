@@ -57,6 +57,16 @@ Une URL générale dans le contrat scientifique ne suffit pas toujours. Pour une
 règle locale importante, la fiche ou sa validation doit citer la source précise et
 nommer l'affirmation utilisée.
 
+## Provenance d'une revalidation indépendante
+
+Une revalidation scientifique ne doit pas recopier les références ou les règles
+du manifeste qu'elle contrôle. Elle repart des données brutes versionnées et de
+sources primaires identifiées, écrit l'affirmation effectivement soutenue, puis
+compare sa reconstruction au précâblage. Les identifiants vagues, liens cassés et
+citations sans affirmation associée sont des résultats d'audit à corriger, pas des
+preuves. Toute relation non soutenue reste explicitement `engineering_candidate`,
+`proxy`, `unsupported` ou `removed` selon le constat.
+
 ## Exemples d'interprétation
 
 - `entryNerve=MetaLN` et `rootSide=L` lus dans MaleCNS sont des

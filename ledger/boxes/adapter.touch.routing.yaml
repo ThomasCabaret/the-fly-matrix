@@ -7,7 +7,7 @@ anatomical_region: peripheral_nerves
 parent_id: sensor.touch
 ports: {inputs: [mechanoreceptor_activity], outputs: [mechanosensory_afferents]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [data/derived/wiring/mechanosensation-routing.json, data/derived/wiring/mechanosensation-routes.parquet, data/derived/wiring/mechanosensation-transduction-candidates.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.mechanosensation_routing, validation.mechanosensation_transduction_candidates]

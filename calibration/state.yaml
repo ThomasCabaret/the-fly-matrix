@@ -1,10 +1,10 @@
 schema_version: 1
-phase: framework
-updated: 2026-09-25
+phase: wiring_scientific_revalidation
+updated: 2026-09-26
 
 wiring_baseline:
   terminal_coverage: complete
-  refinement: incomplete_but_sufficient_for_calibration_infrastructure
+  refinement: executable_prewiring_requires_independent_scientific_revalidation
 
 active_target_ids:
   - target.technical_neural_dynamics.v0
@@ -23,6 +23,7 @@ readiness:
   calibration_runner: not_started
   baseline_characterization: not_run
   local_interface_parameter_inventory: not_started
+  scientific_wiring_revalidation: required_before_affected_calibration
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -30,9 +31,11 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
+  - validation.scientific_wiring_reaudit blocks calibration of its 26 owned wiring and parameter records.
   - A temporal recurrent MaleCNS runtime and calibration runner do not yet exist.
 
 next_action: >-
-  Implement a minimal deterministic temporal MaleCNS runtime and baseline
-  characterization harness without choosing physiological gains or optimizing a
-  fly behavior.
+  Independently reconstruct and compare the vision, proprioception,
+  mechanosensation and motor-output scientific mappings before fitting any owned
+  parameter family; runtime infrastructure may proceed only without accepting or
+  calibrating those mappings.

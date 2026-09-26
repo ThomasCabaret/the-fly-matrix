@@ -56,6 +56,36 @@ class LedgerTests(unittest.TestCase):
             self.assertGreaterEqual(sector["wiring_progress"], 0)
             self.assertLessEqual(sector["wiring_progress"], 100)
 
+    def test_scientific_revalidation_is_visible_on_every_owned_record(self) -> None:
+        summary = build_summary(self.ledger)
+        self.assertEqual(
+            summary["scientific_review_counts"],
+            {"revalidation_required": 26},
+        )
+        owned = [
+            record
+            for kind in ("boxes", "groups", "wires", "parameters")
+            for record in summary[kind]
+            if "scientific_review" in record
+        ]
+        self.assertEqual(len(owned), 26)
+        for record in owned:
+            self.assertEqual(
+                record["scientific_review"]["validation_id"],
+                "validation.scientific_wiring_reaudit",
+            )
+            self.assertEqual(
+                record["scientific_review"]["status"], "revalidation_required"
+            )
+        expected_action_ids = {
+            record["id"]
+            for record in owned
+            if record["id"].startswith(("adapter.", "group.", "wire."))
+        }
+        self.assertTrue(
+            expected_action_ids.issubset({item["id"] for item in summary["next_actions"]})
+        )
+
     def test_basal_clamp_wiring_is_exact_when_generated(self) -> None:
         path = (
             Path(__file__).resolve().parents[1]

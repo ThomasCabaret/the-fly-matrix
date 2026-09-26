@@ -7,7 +7,7 @@ anatomical_region: motor_neurons_and_muscles
 parent_id: null
 ports: {inputs: [motor_neuron_activity], outputs: [muscle_group_activity]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: high
+confidence: low
 evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-routes.parquet, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.motor_routing, validation.motor_grouping]

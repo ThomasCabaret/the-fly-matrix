@@ -8,6 +8,13 @@ declared boxes and of the recurrent MaleCNS runtime. It must not conceal missing
 wiring, add an external behavioral controller, or turn a requested behavior into
 evidence that the behavior emerged from the connectome.
 
+Terminal coverage is necessary but not sufficient for fitting an interface. When
+a box, group, wire or parameter family is owned by an open
+`scientific_wiring_revalidation`, its current manifest is executable prewiring,
+not accepted calibration topology. No affected parameter may be fitted, borrowed
+or promoted until that review is `independently_validated`. Runtime scaffolding
+may still be built if it does not accept or tune the disputed mapping.
+
 The long-term system-level demonstration is an embodied fly in a simple 3D
 environment that remains bounded and recoverable at rest, then produces a
 stimulus-specific response. This is a sequence of engineering and scientific

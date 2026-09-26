@@ -7,7 +7,7 @@ anatomical_region: muscles_and_joints
 parent_id: null
 ports: {inputs: [muscle_group_activity], outputs: [actuator_commands]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [data/derived/inventory/inventory.json, data/derived/wiring/motor-routing.json, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, data/derived/wiring/motor-transduction-candidates.json, data/derived/wiring/motor-actuator-candidates.parquet, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.motor.transduction]
 validation_ids: [validation.motor_grouping, validation.motor_transduction_candidates, validation.flybody_actuator_interface]

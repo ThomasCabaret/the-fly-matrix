@@ -10,7 +10,7 @@ candidate_constraints: [same annotated appendage, same root side, central probos
 free_discrete_parameters: 0
 free_continuous_parameters: 802
 status: {inventory: complete, routing: candidates_known, implementation: tested, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice]

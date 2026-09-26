@@ -94,6 +94,37 @@ connus peuvent y avoir une affectation fixée et les autres une matrice libre, m
 ils ne sont pas remplacés ponctuellement par du basal. Une exception exige une
 frontière biologique ou fonctionnelle justifiée et enregistrée.
 
+## Exécution et acceptation scientifique sont deux statuts distincts
+
+Un `implementation: tested` ou un `validation: integration_pass` prouve seulement
+que le contrat courant s'exécute, respecte les cardinalités testées et traverse
+le runtime. Il ne prouve ni que le groupe biologique a la bonne granularité, ni
+que la matrice candidate contient les bonnes relations, ni que le proxy est
+scientifiquement adéquat.
+
+Une validation de type `scientific_wiring_revalidation` peut donc posséder une
+boîte, un groupe, un fil ou une famille de paramètres pourtant exécutable. Son
+statut de revue est l'un de :
+
+- `revalidation_required` : précâblage conservé mais non accepté ;
+- `in_progress` : reconstruction indépendante commencée ;
+- `independently_validated` : reconstruction comparée et critères satisfaits ;
+- `rejected` : hypothèse actuelle invalidée et à remplacer.
+
+Les statuts `revalidation_required`, `in_progress` et `rejected` bloquent la
+calibration de l'objet et remplacent sa `next_action` de calibration dans le
+tableau de bord. Ils ne rouvrent pas artificiellement un terminal : l'identité
+brute d'un `bodyId` et sa disposition peuvent rester complètes pendant que la
+décomposition fonctionnelle ou le routage scientifique repasse à `proposed`.
+
+La revalidation doit reconstruire la relation depuis les données brutes
+versionnées et les sources primaires, sans utiliser le manifeste courant comme
+recette. Le résultat indépendant est ensuite comparé au précâblage. Chaque
+relation doit être classée `exact`, `source_supported_candidate`,
+`engineering_candidate`, `proxy`, `unsupported` ou `removed`, avec les écarts,
+sources, hypothèses et tests enregistrés. Un smoke test vert ne peut jamais clore
+cette revue.
+
 ## Ordre normal d'un lot
 
 1. Inventorier les sources et les destinations sans interprétation implicite.

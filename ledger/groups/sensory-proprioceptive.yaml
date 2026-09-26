@@ -9,8 +9,8 @@ query: class == mechanosensory_proprioceptive
 member_count: 1454
 named_type_count: 84
 target_box_ids: [adapter.proprioception.transduction, adapter.proprioception.routing, cns.malecns]
-status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
-confidence: high
+status: {inventory: complete, decomposition: proposed, routing: proposed, validation: integration_pass}
+confidence: low
 evidence: [data/derived/wiring/proprioception-channels.csv, data/derived/wiring/proprioception-routes.parquet, data/derived/wiring/proprioception-transduction-candidates.json]
 provenance:
   claim_kinds: [dataset_observation, derived_rule]

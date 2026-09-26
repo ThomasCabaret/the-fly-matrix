@@ -7,7 +7,7 @@ anatomical_region: chordotonal_and_strain_sensors
 parent_id: sensor.proprioception
 ports: {inputs: [joint_state], outputs: [proprioceptor_activity]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-input-candidates.parquet, data/derived/wiring/proprioception-proxy-candidates.parquet, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]

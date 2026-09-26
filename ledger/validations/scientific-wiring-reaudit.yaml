@@ -1,0 +1,69 @@
+schema_version: 1
+id: validation.scientific_wiring_reaudit
+name: Revalidation scientifique indépendante du précâblage
+owner_ids:
+  - adapter.vision.transduction
+  - adapter.proprioception.routing
+  - adapter.proprioception.transduction
+  - adapter.touch.routing
+  - adapter.touch.transduction
+  - adapter.motor.routing
+  - adapter.motor.transduction
+  - group.sensory.visual
+  - group.sensory.optic_lobe
+  - group.sensory.proprioceptive
+  - group.sensory.tactile
+  - group.sensory.mechanosensory_other
+  - group.motor.vnc
+  - group.motor.central_brain
+  - wire.vision_transduction_to_routing
+  - wire.proprioception_sensor_to_transduction
+  - wire.proprioception_proxy_to_transduction
+  - wire.proprioception_transduction_to_routing
+  - wire.proprioception_routing_to_cns
+  - wire.touch_sensor_to_transduction
+  - wire.appendage_motion_to_touch_transduction
+  - wire.touch_transduction_to_routing
+  - wire.touch_routing_to_cns
+  - wire.motor_routing_to_transduction
+  - parameter.sensory_transduction
+  - parameter.motor.transduction
+level: scientific_audit
+protocol_path: docs/wiring-methodology.md
+command: null
+acceptance_criteria:
+  - Reconstruct every affected population, grouping and candidate relation directly from raw versioned data and cited primary sources without trusting the current manifest
+  - Compare the independent reconstruction with every current group, candidate edge, proxy and exclusion and record all discrepancies
+  - Preserve the independently confirmed 17884 input and 815 motor terminal bodyId inventories unless contrary raw evidence is found
+  - Classify every reviewed relation as exact, source_supported_candidate, engineering_candidate, proxy, unsupported or removed
+  - Replace vague or broken source identifiers with canonical dataset IDs, stable URLs or DOIs and state the exact claim each source supports
+  - Keep runtime execution tests separate from scientific acceptance; a passing smoke test cannot satisfy this validation
+  - Complete vision, proprioception, mechanosensation and motor workstreams before any affected parameter family enters calibration
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: null
+status: not_run
+review_kind: scientific_wiring_revalidation
+review_status: revalidation_required
+reason: A prior annotation-row versus neuron scope error invalidated confidence in the reasoning process used for scientific grouping and candidate construction, even though terminal inventories and runtime execution were subsequently checked.
+preserved_claims:
+  - Raw files and checksums are reproducible
+  - The independently recomputed terminal inventories contain exactly 17884 input and 815 motor bodyIds, all canonical and without overlap
+  - The current graph remains executable without direct terminal injection
+unaccepted_claims:
+  - Current group granularity is biologically optimal
+  - Current candidate matrices contain every plausible relation and exclude every implausible relation
+  - Current proxy choices are scientifically adequate
+  - Current motor groups and actuator candidate sets are ready for calibration
+workstreams:
+  - vision
+  - proprioception
+  - mechanosensation
+  - motor_output
+next_action: Rebuild and compare the four affected wiring sectors independently, one source-backed rule at a time, before calibration.
+notes:
+  - Existing integration_pass results prove execution and cardinality only.
+  - This review status overrides calibration-oriented next actions on owned records until the validation passes.
+source_references:
+  - decisions/0007-annotated-body-and-neuron-scope.md
+  - decisions/0008-independent-scientific-wiring-reaudit.md

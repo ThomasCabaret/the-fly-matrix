@@ -1,6 +1,7 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-25, périmètre neuronal MaleCNS corrigé et classifié sans suppression.
+Mise à jour : 2026-09-26, précâblage scientifique rétrogradé et placé sous
+revalidation indépendante avant calibration.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -9,20 +10,30 @@ recalculé font autorité.
 ## Objectif courant
 
 La couverture terminale du **câblage structurel v0 est complète** : aucun fil
-d'interface inventorié ne reste sans disposition. Le câblage reste raffinable,
-mais il est assez mûr pour ouvrir l'infrastructure de calibration. Aucun paramètre
-scientifique n'est encore accepté et aucun comportement plausible n'est encore
-attendu.
+d'interface inventorié ne reste sans disposition. Cette couverture exécutable
+n'est cependant plus considérée comme une acceptation scientifique des
+regroupements, matrices candidates ou proxies. La découverte puis la correction
+d'une confusion antérieure entre corps annotés et neurones impose de recontrôler
+le raisonnement ayant produit ces relations, et pas seulement le périmètre du
+graphe central.
 
-Le front actif est de rendre la calibration traçable et exécutable, en commençant
-par une dynamique MaleCNS temporelle déterministe et une caractérisation sans
-fitting. Les cibles initiales séparent strictement stabilité neuronale technique,
-stabilité corporelle neutre et réponse au stimulus tenue à l'écart. Une stabilité
-optimisée ne sera jamais présentée comme comportement émergent. La méthode est
-définie dans [`docs/calibration-methodology.md`](docs/calibration-methodology.md),
-la politique de claims dans
-[`ADR 0005`](decisions/0005-calibration-evidence-and-claims.md) et l'état compact
-dans [`calibration/state.yaml`](calibration/state.yaml).
+Le front actif est donc la **revalidation scientifique indépendante du
+précâblage**, avant toute calibration des familles concernées. Le registre marque
+26 objets `revalidation_required` : 7 boîtes, 7 groupes, 10 fils et 2 familles de
+paramètres couvrant vision, proprioception, mécanoréception et sortie motrice.
+Leurs implémentations et `integration_pass` restent des preuves d'exécution et de
+cardinalité, pas des preuves biologiques. Les groupes et routes auparavant trop
+affirmatifs ont été rétrogradés à `proposed` et leur confiance à `low`, sans
+supprimer les manifestes ni les données.
+
+La méthode de revue est fixée par
+[`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
+[`validation.scientific_wiring_reaudit`](ledger/validations/scientific-wiring-reaudit.yaml).
+Chaque secteur doit être reconstruit depuis les données brutes versionnées et les
+sources primaires sans prendre le manifeste courant comme recette, puis comparé
+relation par relation. Aucun paramètre scientifique n'est accepté et aucune
+calibration des objets possédés par cette validation ne doit commencer avant sa
+clôture.
 
 Un viewer physique temps réel est maintenant disponible via
 `diagnostic_viewer.bat`. Il utilise un faux CNS récurrent de 64 états, déterministe
@@ -76,18 +87,20 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 
 ## État synthétique
 
-- Câblage global : **87 %**.
+- Maturité historique du câblage : **81 %**.
 - Graphe central MaleCNS : **100 % structurel**.
-- Sortie motrice : **100 % structurel**.
-- Proprioception : **85 %**.
+- Sortie motrice : **79 %**, précâblage exécutable à revalider.
+- Proprioception : **81 %**, précâblage exécutable à revalider.
 - Entrées sensorielles non résolues : **96 %**.
 - Clamps basaux : **87 %**.
-- Vision : **89 %**.
-- Mécanosensation : **82 %**.
+- Vision : **79 %**, précâblage exécutable à revalider.
+- Mécanosensation : **74 %**, précâblage exécutable à revalider.
 - Corps physique : **100 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
+- Revalidation scientifique : **26 objets `revalidation_required`**.
+- Calibration des familles concernées : **bloquée avant revalidation**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -158,16 +171,21 @@ bout en bout passent après cette correction.
 
 ## Fronts structurels restants
 
-1. Définir plus tard l'interface d'évaluation tenue à l'écart; la boucle physique
-   commande→MuJoCo→état articulaire est désormais fermée et déterministe.
-2. Remplacer progressivement les sources nominales résiduelles par des capteurs,
-   transductions ou proxies locaux uniquement lorsque les annotations le permettent.
-3. Remplacer les proxies proprioceptifs par des mesures locales de contrainte ou
-   vibration si le corps physique les expose un jour, sans rouvrir la couverture.
-4. N'affiner les candidats tête/thorax que si une observable corporelle plus
-   localisée devient disponible, sans inventer de latéralité.
+1. Refaire indépendamment la décomposition et les relations visuelles, puis
+   comparer chaque choix exact, candidat ou proxy au précâblage actuel.
+2. Refaire le même audit pour la proprioception, notamment les 91 proxies de
+   contrainte/vibration et leurs frontières appendice/côté.
+3. Refaire le même audit pour la mécanoréception et les proxies de mouvement ou de
+   contact local.
+4. Refaire le même audit pour les 441 groupes moteurs et les ensembles
+   d'actionneurs permis, en conservant séparément les 815 routes `bodyId` brutes.
+5. Corriger les sources vagues ou cassées et enregistrer, pour chaque règle, la
+   source, l'affirmation soutenue, l'hypothèse restante et le test associé.
 
 ## Front de calibration
+
+**En pause pour les 26 objets possédés par la revalidation scientifique.** Les
+éléments ci-dessous restent la suite prévue, mais ne sont pas la prochaine action.
 
 1. Implémenter une dynamique MaleCNS temporelle minimale et déterministe sans
    choisir encore de gains physiologiques ni de comportement cible.

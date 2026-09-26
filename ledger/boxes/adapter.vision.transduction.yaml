@@ -7,7 +7,7 @@ anatomical_region: retina
 parent_id: sensor.vision
 ports: {inputs: [retinal_samples], outputs: [photoreceptor_activity]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-optic-columns.csv, data/derived/wiring/vision-column-photoreceptors.parquet, data/derived/wiring/vision-remainder-transduction.parquet, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, derived_rule, engineering_choice, unresolved]

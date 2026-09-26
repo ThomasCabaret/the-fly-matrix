@@ -9,8 +9,8 @@ query: superclass == ol_sensory
 member_count: 6098
 named_type_count: 11
 target_box_ids: [adapter.vision.routing, cns.malecns]
-status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
-confidence: high
+status: {inventory: complete, decomposition: proposed, routing: proposed, validation: integration_pass}
+confidence: low
 evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-routes.parquet, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-column-photoreceptors.parquet, data/derived/wiring/vision-remainder-transduction.parquet]
 next_action: Conserver cette partition 2 628 + 3 463 + 7 pendant la calibration et toute future amélioration rétinotopique.
 blocked_by: []

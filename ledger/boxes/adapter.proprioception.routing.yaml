@@ -7,7 +7,7 @@ anatomical_region: leg_and_body_nerves
 parent_id: sensor.proprioception
 ports: {inputs: [proprioceptor_activity], outputs: [proprioceptive_afferents]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [data/derived/wiring/proprioception-routing.json, data/derived/wiring/proprioception-routes.parquet, data/derived/wiring/proprioception-transduction-candidates.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.proprioception_routing, validation.proprioception_transduction_candidates]

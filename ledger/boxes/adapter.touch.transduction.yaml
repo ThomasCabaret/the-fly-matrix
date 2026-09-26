@@ -7,7 +7,7 @@ anatomical_region: mechanosensory_organs
 parent_id: sensor.touch
 ports: {inputs: [local_contact_loads, appendage_motion], outputs: [mechanoreceptor_activity]}
 status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]

@@ -10,7 +10,7 @@ candidate_constraints: [same eye, published optic column when available, pale or
 free_discrete_parameters: 4795
 free_continuous_parameters: 6098
 status: {inventory: complete, routing: candidates_known, implementation: tested, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-optic-columns.csv, data/derived/wiring/vision-column-photoreceptors.parquet, data/derived/wiring/vision-remainder-transduction.parquet, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, derived_rule, engineering_choice, unresolved]

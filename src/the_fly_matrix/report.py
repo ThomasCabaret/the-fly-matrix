@@ -82,10 +82,16 @@ def build_dot(summary: dict[str, Any]) -> str:
         )
         for box_id in sector["boxes"]:
             box = boxes[box_id]
-            label = f'{box["name"]}\ncâblage {box["wiring_progress"]}%'
+            needs_review = (
+                box.get("scientific_review", {}).get("status")
+                == "revalidation_required"
+            )
+            review_label = "\nREVALIDATION SCIENTIFIQUE REQUISE" if needs_review else ""
+            label = f'{box["name"]}\ncâblage {box["wiring_progress"]}%{review_label}'
+            fill = "#fecaca" if needs_review else _color(box["wiring_progress"])
             lines.append(
                 f'    "{_dot_escape(box_id)}" [label="{_dot_escape(label)}", '
-                f'fillcolor="{_color(box["wiring_progress"])}"];'
+                f'fillcolor="{fill}"];'
             )
         lines.append("  }")
     edge_colors = {
@@ -100,9 +106,13 @@ def build_dot(summary: dict[str, Any]) -> str:
         source = wire["source"]["box_id"]
         target = wire["target"]["box_id"]
         style = "solid" if routing in {"fixed", "verified"} else "dashed"
+        color = edge_colors[routing]
+        if wire.get("scientific_review", {}).get("status") == "revalidation_required":
+            color = "#dc2626"
+            style = "dashed"
         lines.append(
             f'  "{_dot_escape(source)}" -> "{_dot_escape(target)}" '
-            f'[color="{edge_colors[routing]}", style="{style}", '
+            f'[color="{color}", style="{style}", '
             f'tooltip="{_dot_escape(wire["name"])} — {routing}, {wire["progress"]}%"];'
         )
     lines.append("}")
@@ -118,7 +128,16 @@ def _bar(progress: int) -> str:
 
 def _status_text(record: dict[str, Any]) -> str:
     status = record["status"]
-    return " · ".join(f"{html.escape(key)}: {html.escape(str(value))}" for key, value in status.items())
+    text = " · ".join(
+        f"{html.escape(key)}: {html.escape(str(value))}" for key, value in status.items()
+    )
+    review = record.get("scientific_review")
+    if review:
+        text += (
+            '<br><strong class="review-alert">scientific_review: '
+            f'{html.escape(review["status"])}</strong>'
+        )
+    return text
 
 
 def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
@@ -288,8 +307,9 @@ def _inventory_metrics(inventory: dict[str, Any] | None) -> str:
         )
     if central_graph:
         remote_metrics += (
-            f'<div><strong>{central_graph.get("annotated_nodes", 0):,}</strong><span>nœuds CNS annotés indexés</span></div>'
-            f'<div><strong>{central_graph.get("induced_edge_rows", 0):,}</strong><span>arêtes CNS neuronales</span></div>'
+            f'<div><strong>{central_graph.get("annotated_body_rows", 0):,}</strong><span>corps annotés conservés</span></div>'
+            f'<div><strong>{central_graph.get("canonical_neurons", 0):,}</strong><span>neurones canoniques du runtime</span></div>'
+            f'<div><strong>{central_graph.get("runtime_induced_edge_rows", 0):,}</strong><span>arêtes du runtime neuronal</span></div>'
             f'<div><strong>{central_graph.get("excluded_fragment_edge_rows", 0):,}</strong><span>arêtes de fragments isolées</span></div>'
         )
     return (
@@ -343,6 +363,17 @@ def build_html(summary: dict[str, Any], inventory: dict[str, Any] | None) -> str
     )
     routing = summary["routing_counts"]
     validations = summary["validation_counts"]
+    review_required = summary.get("scientific_review_counts", {}).get(
+        "revalidation_required", 0
+    )
+    review_banner = ""
+    if review_required:
+        review_banner = (
+            '<section class="review-banner"><strong>Revalidation scientifique requise</strong>'
+            f'<p>{review_required} objets sont exécutables mais leur regroupement ou leur '
+            'correspondance scientifique doit être reconstruite et contrôlée indépendamment '
+            'avant toute calibration.</p></section>'
+        )
     wiring = summary["wiring_components"]
     generated = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     return f'''<!doctype html>
@@ -367,16 +398,20 @@ code{{font-size:12px;color:#475569}} .progress-cell{{min-width:120px}} .actions{
 .compact{{margin-top:12px}} .compact table{{min-width:700px}}
 .actions ol{{list-style:none;padding:0;margin:0}} .actions li{{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}} .actions li:last-child{{border:0}}
 .actions p{{margin:4px 0}} .actions small{{display:block}} .pct{{font-weight:700;min-width:38px}} .legend{{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted)}}
+.review-alert{{color:#b91c1c}} .review-banner{{margin:20px 0;padding:16px 18px;border:2px solid #dc2626;border-radius:10px;background:#fef2f2;color:#7f1d1d}}
+.review-banner p{{margin:5px 0 0}}
 @media(max-width:900px){{main{{padding:16px}}.grid2{{grid-template-columns:1fr}}.overall{{font-size:40px}}}}
 </style></head><body><main>
 <header class="hero"><div><h1>The Fly Matrix</h1><p class="muted">État calculé depuis le registre · {generated}</p></div>
-<div class="overall">{summary['wiring_progress']}%<span>câblage exécutable — paramètres exclus</span></div></header>
+<div class="overall">{summary['wiring_progress']}%<span>maturité historique du câblage — pas la couverture terminale</span></div></header>
+{review_banner}
 <div class="metrics">
   <div><strong>{summary['counts']['boxes']}</strong><span>boîtes suivies</span></div>
   <div><strong>{summary['counts']['groups']}</strong><span>groupes suivis</span></div>
   <div><strong>{summary['counts']['wires']}</strong><span>fils suivis</span></div>
   <div><strong>{routing.get('fixed',0)+routing.get('verified',0)}</strong><span>routages fixés/vérifiés</span></div>
   <div><strong>{validations.get('local_pass',0)+validations.get('integration_pass',0)+validations.get('held_out_pass',0)}</strong><span>validations réussies</span></div>
+  <div><strong>{review_required}</strong><span>objets à revalider scientifiquement</span></div>
   <div><strong>{summary['overall_progress']}%</strong><span>ancien indice structurel secondaire</span></div>
 </div>
 <h2>Composantes du câblage</h2>
@@ -541,7 +576,7 @@ def build_report(output_dir: Path = REPORT_ROOT) -> dict[str, Path]:
     )
     for path in (json_path, dot_path, svg_path, png_path, html_path):
         print(f"[OK] {path}")
-    print(f"\nCâblage exécutable: {summary['wiring_progress']}%")
+    print(f"\nMaturité historique du câblage: {summary['wiring_progress']}%")
     print(f"Indice structurel secondaire: {summary['overall_progress']}%")
     return {
         "json": json_path,

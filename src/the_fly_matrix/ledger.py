@@ -51,6 +51,12 @@ STATUS_SCORES: dict[str, dict[str, float]] = {
 
 PARAMETER_SCORES = STATUS_SCORES["parameters"]
 VALIDATION_SCORES = STATUS_SCORES["validation"]
+SCIENTIFIC_REVIEW_STATUSES = {
+    "revalidation_required",
+    "in_progress",
+    "independently_validated",
+    "rejected",
+}
 WIRING_STATUS_SCORES: dict[str, dict[str, float]] = {
     "inventory": {"missing": 0.0, "partial": 0.5, "complete": 1.0},
     "routing": {
@@ -183,6 +189,15 @@ def validate_ledger(ledger: dict[str, list[dict[str, Any]]]) -> list[str]:
     for validation in validations.values():
         if validation.get("status") not in VALIDATION_SCORES:
             raise LedgerError(f"{validation['_path']}: statut de validation invalide")
+        review_kind = validation.get("review_kind")
+        if review_kind is not None:
+            if review_kind != "scientific_wiring_revalidation":
+                raise LedgerError(f"{validation['_path']}: review_kind inconnu {review_kind}")
+            review_status = validation.get("review_status")
+            if review_status not in SCIENTIFIC_REVIEW_STATUSES:
+                raise LedgerError(
+                    f"{validation['_path']}: review_status invalide {review_status}"
+                )
         valid_owners = set(boxes) | set(groups) | set(wires) | set(parameters)
         for owner_id in validation.get("owner_ids", []):
             if owner_id not in valid_owners:
@@ -254,6 +269,23 @@ def _axis_average(records: list[dict[str, Any]], axis: str) -> int:
 
 def build_summary(ledger: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
     validate_ledger(ledger)
+    scientific_review_by_owner: dict[str, dict[str, Any]] = {}
+    for validation in ledger["validations"]:
+        if validation.get("review_kind") != "scientific_wiring_revalidation":
+            continue
+        review = {
+            "validation_id": validation["id"],
+            "status": validation["review_status"],
+            "reason": validation.get("reason", ""),
+            "next_action": validation.get("next_action", ""),
+        }
+        for owner_id in validation.get("owner_ids", []):
+            if owner_id in scientific_review_by_owner:
+                raise LedgerError(
+                    f"Plusieurs revues scientifiques actives possèdent {owner_id}"
+                )
+            scientific_review_by_owner[owner_id] = review
+
     enriched: dict[str, list[dict[str, Any]]] = {}
     all_scores: list[float] = []
     wiring_scores: list[float] = []
@@ -262,6 +294,8 @@ def build_summary(ledger: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
         for original in records:
             record = dict(original)
             record["progress"] = round(record_progress(kind, record) * 100)
+            if record["id"] in scientific_review_by_owner:
+                record["scientific_review"] = scientific_review_by_owner[record["id"]]
             if kind in {"boxes", "groups", "wires"}:
                 record["wiring_progress"] = round(wiring_record_progress(kind, record) * 100)
                 wiring_scores.append(wiring_record_progress(kind, record))
@@ -296,11 +330,31 @@ def build_summary(ledger: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
 
     routing_counts = Counter(wire["status"]["routing"] for wire in enriched["wires"])
     validation_counts = Counter(item["status"] for item in enriched["validations"])
+    scientific_review_counts = Counter(
+        record["scientific_review"]["status"]
+        for kind in ("boxes", "groups", "wires", "parameters")
+        for record in enriched[kind]
+        if "scientific_review" in record
+    )
     next_actions = []
     for kind in ("boxes", "groups", "wires"):
         for record in enriched[kind]:
             action = record.get("next_action")
-            if action and record["progress"] < 100:
+            scientific_review = record.get("scientific_review")
+            if scientific_review and scientific_review["status"] in {
+                "revalidation_required",
+                "in_progress",
+                "rejected",
+            }:
+                action = scientific_review["next_action"]
+                record["blocked_by"] = sorted(
+                    set(record.get("blocked_by", []))
+                    | {scientific_review["validation_id"]}
+                )
+            review_is_open = scientific_review and scientific_review["status"] != (
+                "independently_validated"
+            )
+            if action and (record["progress"] < 100 or review_is_open):
                 next_actions.append(
                     {
                         "kind": {"boxes": "box", "groups": "group", "wires": "wire"}[kind],
@@ -332,6 +386,7 @@ def build_summary(ledger: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
         "counts": {kind: len(records) for kind, records in enriched.items()},
         "routing_counts": dict(routing_counts),
         "validation_counts": dict(validation_counts),
+        "scientific_review_counts": dict(scientific_review_counts),
         "sectors": sector_rows,
         "next_actions": next_actions,
         **enriched,

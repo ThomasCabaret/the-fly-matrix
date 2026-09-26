@@ -9,8 +9,8 @@ query: class == mechanosensory
 member_count: 1733
 named_type_count: 51
 target_box_ids: [adapter.touch.routing, cns.malecns]
-status: {inventory: complete, decomposition: fixed, routing: fixed, validation: integration_pass}
-confidence: medium
+status: {inventory: complete, decomposition: proposed, routing: proposed, validation: integration_pass}
+confidence: low
 evidence: [data/derived/wiring/mechanosensation-channels.csv, data/derived/wiring/mechanosensation-routes.parquet, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-transduction-channel-audit.csv]
 provenance:
   claim_kinds: [dataset_observation, derived_rule, unresolved]

@@ -9,9 +9,15 @@ mais produit par un contrôleur comportemental externe n'est pas un succès du
 projet.
 
 La couverture terminale du **câblage structurel v0 est complète**. La phase
-courante ouvre l'infrastructure de calibration, sans considérer le câblage comme
-maximalement raffiné. Ne choisissez pas de valeurs physiologiques, gains, signes,
-seuils ou comportements cibles hors d'une cible et d'une campagne versionnées.
+courante revalide indépendamment les regroupements et correspondances
+scientifiques avant calibration. Une fiche `integration_pass` peut être
+exécutable tout en restant un précâblage non accepté. Ne choisissez pas de
+valeurs physiologiques, gains, signes, seuils ou comportements cibles hors d'une
+cible et d'une campagne versionnées.
+
+Tout objet possédé par une validation `scientific_wiring_revalidation` ouverte
+bloque la calibration de sa famille. Ni un smoke test vert, ni une cardinalité
+correcte ne suffisent à lever ce blocage.
 
 ## Sources de vérité à lire
 

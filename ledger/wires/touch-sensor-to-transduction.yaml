@@ -10,7 +10,7 @@ candidate_constraints: [same annotated leg segment, same root side, PDMN uses ce
 free_discrete_parameters: 0
 free_continuous_parameters: 1306
 status: {inventory: complete, routing: candidates_known, implementation: tested, validation: integration_pass}
-confidence: medium
+confidence: low
 evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/flybody-touch-channels.csv, data/derived/wiring/flybody-local-touch-channels.csv, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]

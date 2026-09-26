@@ -9,8 +9,8 @@ query: superclass == vnc_motor
 member_count: 708
 named_type_count: 142
 target_box_ids: [adapter.motor.routing]
-status: {inventory: complete, decomposition: verified, routing: verified, validation: integration_pass}
-confidence: high
+status: {inventory: complete, decomposition: proposed, routing: proposed, validation: integration_pass}
+confidence: low
 evidence: [data/derived/wiring/motor-routing.json, data/derived/wiring/motor-routes.parquet, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet]
 next_action: Conserver les 708 membres exacts pendant la future calibration des gains.
 blocked_by: []
