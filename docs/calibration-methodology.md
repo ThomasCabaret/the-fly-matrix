@@ -160,6 +160,23 @@ silently; such a need returns to the wiring workflow.
 
 ## Recommended staged program
 
+### Stage -1 — Establish execution readiness
+
+Before fitting, benchmark the real canonical MaleCNS graph with a deterministic
+CPU reference and a GPU sparse backend. Measure loading, memory, warm-up,
+steady-state neural steps per second and simulated time per wall-clock second on
+the available hardware. Test the full graph and declared induced subgraphs, and
+check CPU/GPU agreement within explicit tolerances.
+
+A provisional temporal rule is allowed only as a versioned `BENCHMARK ONLY /
+UNCALIBRATED` profile. It is not a parameter set and must not be promoted by
+accident. Produce compact neural and physical traces that can be replayed offline,
+so interactive rendering is not required for calibration throughput. The detailed
+contract is in `docs/runtime-execution-benchmark.md`.
+
+This engineering stage may proceed while scientific wiring is revalidated. It
+does not authorize fitting any parameter family whose review remains open.
+
 ### Stage 0 — Characterize the uncalibrated system
 
 Run deterministic sanity cases and record numerical failures, silence, saturation,

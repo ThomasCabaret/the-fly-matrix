@@ -44,6 +44,7 @@ dependencies:
   - temporal MaleCNS runtime
   - deterministic seed control
   - compact activity metrics
+  - measured CPU reference and GPU sparse execution benchmark
 
 provenance:
   sources: []
@@ -51,5 +52,5 @@ provenance:
     - Exact acceptable ranges are not yet known and must not be invented.
 
 validation: not_run
-blocked_reason: Temporal recurrent runtime not implemented.
-next_action: Build the runtime and run an uncalibrated deterministic baseline.
+blocked_reason: Real-connectome CPU/GPU execution benchmark and temporal recurrent runtime are not implemented.
+next_action: Build the execution benchmark, then run an uncalibrated deterministic baseline.

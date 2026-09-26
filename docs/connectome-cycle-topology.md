@@ -44,6 +44,37 @@ profiles provide reproducible structural diagnostics without presenting a
 traversal proxy as a full cycle census, a cycle-length distribution or a measure
 of biological locality.
 
+## Planned feed-forward-backbone diagnostic
+
+A closer answer to the intended question is computationally realistic without
+enumerating cycles. First condense exact strongly connected components: the
+resulting component graph is a unique directed acyclic graph and therefore an
+exact feed-forward description between recurrent modules.
+
+Inside every non-trivial SCC, finding the maximum acyclic subgraph—or,
+equivalently, the minimum set of feedback edges to remove—is NP-hard. The planned
+diagnostic will therefore compute a deterministic weighted ordering heuristic,
+not claim an exact optimum. Relative to that ordering, every edge can be classified
+as local forward, forward skip, same-level or backward, with both edge-count and
+synapse-weight statistics and an ordering span.
+
+If a giant SCC hides useful structure, the same measurement can be repeated on a
+hierarchical directed community partition. This yields a module-level recurrent
+map plus an approximate feed-forward backbone inside each module. Robustness must
+be checked across synapse-weight thresholds and deterministic heuristic restarts;
+unstable orderings are a result, not something to hide.
+
+The existing CSR cache makes SCC condensation and a small number of linear edge
+passes realistic for 166,700 nodes and 25,582,938 edges. Exact maximum-acyclic-
+subgraph optimization and exhaustive simple-cycle enumeration are explicitly out
+of scope. Expected outputs are distributions of forward-skip span and backward
+span, the fraction of edge count and synapse weight carried by each class, SCC and
+community summaries, and a machine-readable ordering with uncertainty metadata.
+
+This is a structural characterization, not a neural-dynamics validation. It can
+show whether “mostly feed-forward plus sparse skips and returns” is a defensible
+description of MaleCNS, but cannot establish timing, sign or functional influence.
+
 ## Running it
 
 Double-click `cycle_topology.bat`, or run:

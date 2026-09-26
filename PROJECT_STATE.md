@@ -35,6 +35,20 @@ relation par relation. Aucun paramètre scientifique n'est accepté et aucune
 calibration des objets possédés par cette validation ne doit commencer avant sa
 clôture.
 
+Le **prochain lot d'ingénierie** est un banc d'exécution du vrai graphe MaleCNS,
+avant toute campagne de calibration. Il doit fournir une référence CPU
+déterministe, un backend GPU creux, des mesures de mémoire et de débit, des runs
+du graphe complet et de sous-graphes déclarés, ainsi qu'un export de traces pour
+rejeu hors ligne dans MuJoCo. Le premier run visible devra réellement traverser
+MaleCNS et les boîtes déclarées ; il pourra employer un profil dynamique arbitraire
+mais versionné `BENCHMARK ONLY / UNCALIBRATED`, et son comportement ne constituera
+aucun résultat scientifique.
+
+Le contrat de ce banc est dans
+[`docs/runtime-execution-benchmark.md`](docs/runtime-execution-benchmark.md). Sa
+construction peut avancer pendant la revalidation du câblage, mais elle ne lève
+aucun des 26 blocages scientifiques.
+
 Un viewer physique temps réel est maintenant disponible via
 `diagnostic_viewer.bat`. Il utilise un faux CNS récurrent de 64 états, déterministe
 par seed, qui lit les 102 positions/vitesses articulaires et commande les 102
@@ -166,7 +180,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **50 tests**, leurs 5 sous-tests et le smoke test
+conservées et classifiées. Les **51 tests**, leurs 5 sous-tests et le smoke test
 bout en bout passent après cette correction.
 
 ## Fronts structurels restants
@@ -187,8 +201,9 @@ bout en bout passent après cette correction.
 **En pause pour les 26 objets possédés par la revalidation scientifique.** Les
 éléments ci-dessous restent la suite prévue, mais ne sont pas la prochaine action.
 
-1. Implémenter une dynamique MaleCNS temporelle minimale et déterministe sans
-   choisir encore de gains physiologiques ni de comportement cible.
+1. Construire le banc CPU/GPU du vrai MaleCNS, mesurer le coût réel, puis produire
+   un court run non calibré et son rejeu hors ligne sans choisir de gains
+   physiologiques ni de comportement cible.
 2. Construire un runner qui sépare les scénarios train, validation, diagnostic et
    `evaluation_only`, puis enregistrer le baseline non calibré.
 3. Inventorier les familles de paramètres des interfaces sensorielles, motrices,

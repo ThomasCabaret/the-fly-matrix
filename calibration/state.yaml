@@ -1,5 +1,5 @@
 schema_version: 1
-phase: wiring_scientific_revalidation
+phase: wiring_revalidation_and_runtime_readiness
 updated: 2026-09-26
 
 wiring_baseline:
@@ -19,7 +19,8 @@ last_completed_campaign_id: null
 readiness:
   governance_and_registry: documented
   diagnostic_physical_viewer: implemented_isolated_bypass
-  temporal_cns_runtime: not_started
+  real_connectome_execution_benchmark: next_engineering_milestone
+  temporal_cns_runtime: benchmark_not_started
   calibration_runner: not_started
   baseline_characterization: not_run
   local_interface_parameter_inventory: not_started
@@ -35,7 +36,7 @@ blocked_by:
   - A temporal recurrent MaleCNS runtime and calibration runner do not yet exist.
 
 next_action: >-
-  Independently reconstruct and compare the vision, proprioception,
-  mechanosensation and motor-output scientific mappings before fitting any owned
-  parameter family; runtime infrastructure may proceed only without accepting or
-  calibrating those mappings.
+  Build and measure a deterministic CPU reference plus GPU sparse execution path
+  for the real canonical MaleCNS graph, then produce a short uncalibrated offline
+  trace and replay. Continue independent wiring revalidation in parallel; do not
+  accept or calibrate any disputed mapping.
