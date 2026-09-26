@@ -35,6 +35,15 @@ relation par relation. Aucun paramètre scientifique n'est accepté et aucune
 calibration des objets possédés par cette validation ne doit commencer avant sa
 clôture.
 
+Le projet adopte désormais une politique d'**automatisation proportionnée par
+règles avec rapports d'exception**. Les travaux répétitifs doivent, lorsque c'est
+rentable, être exprimés comme des règles versionnées appliquées hors quota ; chaque
+exécution comptabilise ce qui a été traité, exclu, bloqué ou surpris, puis produit
+les cas ambigus pour une décision compacte. Cette préférence ne justifie pas une
+infrastructure plus coûteuse que le traitement direct des rares cas restants. Le
+contrat est dans [`docs/rules-first-automation.md`](docs/rules-first-automation.md)
+et l'[`ADR 0009`](decisions/0009-proportional-rules-first-automation.md).
+
 Le **prochain lot d'ingénierie** est un banc d'exécution du vrai graphe MaleCNS,
 avant toute campagne de calibration. Il doit fournir une référence CPU
 déterministe, un backend GPU creux, des mesures de mémoire et de débit, des runs

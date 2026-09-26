@@ -32,6 +32,8 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
    modifiée.
 6. `docs/calibration-methodology.md`, l'ADR 0005 et `calibration/state.yaml` pour
    tout paramètre, cible, campagne ou protocole d'évaluation.
+7. `docs/rules-first-automation.md` lorsqu'un lot répète une décision sur de
+   nombreux objets, construit un pipeline ou lance une campagne hors ligne.
 
 Le registre, les ADR et les manifestes reproductibles restent canoniques. Les
 skills indiquent comment travailler avec eux ; ils ne remplacent pas leur contenu.
@@ -76,6 +78,23 @@ Toute décision substantielle doit permettre de retrouver :
 
 Une absence de source doit être déclarée. Ne jamais transformer une intuition en
 fait pour améliorer un pourcentage.
+
+## Automatisation proportionnée et sensible aux exceptions
+
+Privilégier les petites procédures reproductibles lorsque la même règle doit être
+appliquée plusieurs fois, qu'un invariant important doit être contrôlé ou que le
+calcul peut être délégué hors quota. Une exécution doit comptabiliser chaque objet
+du périmètre comme traité, explicitement exclu, bloqué ou exceptionnel. Elle doit
+signaler les cas sans règle, les règles en conflit, les fallbacks, les dérives de
+données et les écarts matériels avec l'exécution acceptée précédente.
+
+Cette préférence n'est pas une obligation de construire un framework. Employer le
+mécanisme le plus léger qui ferme la boucle, et arrêter d'automatiser lorsque les
+cas restants sont rares, irréductiblement scientifiques ou moins coûteux à traiter
+directement. Les décisions directes conservent la même traçabilité. Ne jamais
+masquer une surprise par un défaut silencieux ; une exception acceptée garde une
+raison et une prochaine action. La politique complète est définie par l'ADR 0009
+et `docs/rules-first-automation.md`.
 
 ## Contrat de calibration
 

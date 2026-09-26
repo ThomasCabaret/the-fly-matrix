@@ -140,6 +140,26 @@ cette revue.
 Un lot ne doit pas promouvoir une hypothèse en fait pour obtenir un meilleur
 pourcentage. Une inconnue correctement localisée est un résultat utile.
 
+## Règles reproductibles et rapports d'exception
+
+Lorsqu'une même décision s'applique à de nombreux corps, groupes ou routes, le lot
+devrait préférer une règle versionnée à une succession de modifications manuelles.
+Le pipeline peut commencer avec des règles incomplètes : il doit alors montrer les
+cas non couverts, ambigus, contradictoires ou dépendants d'un fallback, ainsi que
+les différences avec le dernier résultat accepté. Chaque terminal du périmètre
+reste compté comme traité, exclu explicitement, bloqué ou exceptionnel.
+
+La revalidation scientifique utilise ce mécanisme pour reconstruire inventaires,
+sélecteurs et ensembles candidats puis produire un paquet compact pour les seuls
+choix biologiques non dérivables. La construction indépendante ne prend jamais le
+précâblage courant comme recette ; celui-ci sert uniquement à la comparaison.
+
+Cette préférence reste proportionnée. Une fonction de validation ou un script
+court peut suffire, et quelques exceptions réellement uniques peuvent être
+traitées directement avec provenance. Le contrat transversal, les catégories de
+surprise et la règle d'arrêt sont dans
+[`rules-first-automation.md`](rules-first-automation.md) et l'ADR 0009.
+
 ## Définition de « 100 % câblé »
 
 Le câblage atteint 100 % lorsque :

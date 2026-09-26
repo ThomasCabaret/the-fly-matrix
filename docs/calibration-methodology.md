@@ -158,6 +158,21 @@ degrees of freedom, frozen values, constraints, and inheritance rules must remai
 explicit. Calibration must never change structural cardinality or topology
 silently; such a need returns to the wiring workflow.
 
+## Rules-first campaign execution
+
+Calibration campaigns should concentrate scientific choices in versioned target,
+scope, bounds, sharing, metric, exposure, and acceptance rules. Once declared, a
+runner should execute trials, detect invalid states, retain failures, compare
+reference implementations, compute metrics, and produce compact result and
+exception reports without requiring an agent decision for each trial.
+
+The runner must account for every scheduled trial and surface new failure classes,
+conflicting objectives, exhausted bounds, data drift, forbidden exposure, and
+non-reproducible results. These events return to human or agent review; ordinary
+trials do not. This is a proportional preference rather than a mandate to build a
+general optimizer before the first benchmark. The detailed cross-project policy
+is in [`rules-first-automation.md`](rules-first-automation.md) and ADR 0009.
+
 ## Recommended staged program
 
 ### Stage -1 — Establish execution readiness
