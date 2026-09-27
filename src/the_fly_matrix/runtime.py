@@ -905,7 +905,7 @@ class FlyBodyPhysicsLoop:
             raise ValueError("compiled FlyBody joint order differs from the wiring manifest")
 
     @classmethod
-    def from_generated_wiring(cls) -> "FlyBodyPhysicsLoop":
+    def from_generated_wiring(cls, *, with_vision: bool = False) -> "FlyBodyPhysicsLoop":
         from flygym.compose import ActuatorType
         from flygym.compose.fly.flybody import FlyBody
         from flygym.compose.world import FlatGroundWorld
@@ -920,6 +920,8 @@ class FlyBodyPhysicsLoop:
         from flygym.utils.math import Rotation3D
 
         fly = FlyBody()
+        if with_vision:
+            fly.add_vision()
         skeleton = FlyBodySkeleton(
             axis_order=FlyBodyAxisOrder.YAW_PITCH_ROLL,
             joint_preset=FlyBodyJointPreset.ALL_BIOLOGICAL,
@@ -960,6 +962,38 @@ class FlyBodyPhysicsLoop:
             dict(zip(self.joint_names, positions)),
             dict(zip(self.joint_names, velocities)),
         )
+
+    def read_ground_contact_state(
+        self, sensor: FlyBodyGroundContactSensor
+    ) -> GroundContactState:
+        contact_found, forces, torques, positions, normals, tangents = (
+            self.simulation.get_ground_contact_info("flybody")
+        )
+        raw = np.column_stack(
+            (contact_found, forces, torques, positions, normals, tangents)
+        ).reshape(-1)
+        return sensor.step(raw)
+
+    def read_local_contact_state(
+        self, sensor: FlyBodyLocalContactSensor
+    ) -> LocalBodyContactState:
+        from flygym.flybody.anatomy_flybody import FlyBodyBodySegment
+
+        forces = self.simulation.get_bodysegment_contact_forces(
+            "flybody",
+            [FlyBodyBodySegment(name) for name in sensor.segment_names],
+            ground_only=False,
+        )
+        return sensor.step(forces)
+
+    def read_vision(self, sensor: FlyBodyVisionSensor) -> ChannelActivity:
+        try:
+            readouts = self.simulation.get_ommatidia_readouts("flybody")
+        except ValueError as exc:
+            raise RuntimeError(
+                "FlyBody vision is unavailable; construct the loop with with_vision=True"
+            ) from exc
+        return sensor.step(readouts)
 
     def step(self, commands: ActuatorCommands, substeps: int = 1) -> PhysicalStep:
         if commands.actuator_names != self.actuator_names:
