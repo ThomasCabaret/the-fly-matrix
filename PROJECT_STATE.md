@@ -64,9 +64,35 @@ d'exécution, pas la validité du comportement produit.
 
 Le contrat de ce banc est dans
 [`docs/runtime-execution-benchmark.md`](docs/runtime-execution-benchmark.md). Le
-prochain lot d'ingénierie est le **rejeu MuJoCo hors ligne** de cette trace avec
-état physique compact, puis son inspection interactive. Le benchmark ne lève
-aucun des 26 blocages scientifiques et ne constitue pas une calibration.
+benchmark ne lève aucun des 26 blocages scientifiques et ne constitue pas une
+calibration.
+
+La **boucle incarnée réelle est maintenant exécutable et enregistrable**. À
+chaque pas de 5 ms, elle lit la vision FlyBody, les contacts et la proprioception,
+traverse toutes les boîtes d'entrée, avance le vrai graphe MaleCNS sur CUDA,
+décode ses 815 sorties motrices, applique 102 commandes protégées par une enveloppe
+numérique explicitement non physiologique, puis exécute 50 sous-pas MuJoCo natifs.
+Il n'existe aucun contrôleur comportemental externe dans ce chemin.
+
+Le run `closed-loop-20260927T124854Z`, produit depuis le commit moteur `add05df`,
+a calculé **une seconde fermée complète** : 200 pas neuronaux, 10 000 pas MuJoCo
+et une nouvelle acquisition visuelle à chaque pas neuronal. Il a pris 16,854 s,
+soit 0,0593 fois le temps réel. Les capteurs et interfaces ont pris 8,079 s,
+MaleCNS 2,799 s et la physique 2,072 s. La trajectoire autonome de 200 trames
+occupe 971 225 octets et son rejeu contre une instance FlyBody neuve a passé le
+contrat de modèle.
+
+Le format `the_fly_matrix.physical_trajectory` conserve `qpos`, `qvel`, commandes,
+forces, observations articulaires, contacts, rétine, résumés neuronaux et
+provenance. Le player ne dépend pas du contrôleur producteur. Les modes headless,
+live et replay partagent la même construction FlyBody et le même shell de viewer.
+L'architecture est actée dans l'[`ADR 0010`](decisions/0010-controller-independent-physical-trajectories.md)
+et documentée dans [`docs/embodied-runtime.md`](docs/embodied-runtime.md).
+
+Cette validation est uniquement une preuve d'intégration. La règle neuronale,
+les paramètres d'interface et le garde-fou moteur restent non calibrés. Le front
+d'ingénierie suivant consiste à inspecter le replay, profiler surtout la vision et
+préparer l'injection de jeux de paramètres versionnés dans cette unique boucle.
 
 Un viewer physique temps réel est maintenant disponible via
 `diagnostic_viewer.bat`. Il utilise un faux CNS récurrent de 64 états, déterministe
@@ -227,9 +253,8 @@ bout en bout passent après cette correction.
 **En pause pour les 26 objets possédés par la revalidation scientifique.** Les
 éléments ci-dessous restent la suite prévue, mais ne sont pas la prochaine action.
 
-1. Construire le banc CPU/GPU du vrai MaleCNS, mesurer le coût réel, puis produire
-   un court run non calibré et son rejeu hors ligne sans choisir de gains
-   physiologiques ni de comportement cible.
+1. Préserver le banc CPU/GPU et la boucle fermée désormais mesurés; inspecter le
+   replay physique et profiler le chemin vision/interfaces avant optimisation.
 2. Construire un runner qui sépare les scénarios train, validation, diagnostic et
    `evaluation_only`, puis enregistrer le baseline non calibré.
 3. Inventorier les familles de paramètres des interfaces sensorielles, motrices,
@@ -256,6 +281,9 @@ run_wiring_smoke.bat      # reconstruction et parcours structurel complet
 dashboard.bat             # état HTML/DOT recalculé
 wiring_map.bat            # carte exhaustive interactive locale
 connectome_benchmark.bat  # vrai MaleCNS CPU/GPU + trace compacte non calibrée
+closed_loop_record.bat    # vrai MaleCNS en boucle fermée + trajectoire physique
+physical_replay.bat       # viewer autonome de la dernière trajectoire physique
+closed_loop_live.bat      # même boucle directement dans le viewer, même si lente
 diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 ```

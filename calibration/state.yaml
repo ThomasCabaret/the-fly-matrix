@@ -21,8 +21,10 @@ readiness:
   diagnostic_physical_viewer: implemented_isolated_bypass
   real_connectome_execution_benchmark: integration_pass_full_graph_cuda
   temporal_cns_runtime: benchmark_only_uncalibrated_v0
+  embodied_closed_loop: integration_pass_uncalibrated_one_second
+  controller_independent_physical_replay: integration_pass
   calibration_runner: not_started
-  baseline_characterization: five_second_neural_trace_recorded_no_physics
+  baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
   local_interface_parameter_inventory: not_started
   scientific_wiring_revalidation: required_before_affected_calibration
   held_out_protocol_locked: false
@@ -36,7 +38,7 @@ blocked_by:
   - A calibration runner and accepted dynamics model do not yet exist; the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Replay the recorded 102-command real-connectome trace through MuJoCo and retain
-  compact physical state for interactive offline viewing. Then characterize the
-  uncalibrated baseline and build the calibration runner. Continue independent
-  wiring revalidation in parallel; do not accept or calibrate any disputed mapping.
+  Inspect the one-second controller-independent physical replay, profile the
+  vision-rich closed loop, and define the calibration runner without promoting
+  the benchmark profile. Continue independent wiring revalidation in parallel;
+  do not accept or calibrate any disputed mapping.

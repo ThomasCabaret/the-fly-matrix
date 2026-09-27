@@ -1,13 +1,19 @@
 schema_version: 1
 id: validation.closed_loop
 name: Boucle complète connectome-corps-monde
-owner_ids: [evaluation.held_out]
+owner_ids: [cns.malecns, body.flybody, evaluation.held_out]
 level: end_to_end
-protocol_path: null
-command: null
-acceptance_criteria: [All live inputs reach MaleCNS, Motor outputs reach body, Replay is deterministic, No external behavioral controller]
+protocol_path: docs/embodied-runtime.md
+command: closed_loop_record.bat
+acceptance_criteria: [All live inputs reach MaleCNS, Motor outputs reach body, Physical replay passes the FlyBody model contract, No external behavioral controller]
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: null
-status: not_run
-notes: []
+latest_run_id: closed-loop-20260927T124854Z
+status: integration_pass
+notes:
+  - This is an uncalibrated engineering integration result and makes no behavioral claim.
+  - The run executed 200 neural ticks and 10000 native MuJoCo steps with fresh vision, contacts and proprioception at every 5 ms tick.
+  - One simulated second took 16.854 wall-clock seconds (0.0593x real time); sensors and interfaces took 8.079 s, MaleCNS 2.799 s and physics 2.072 s.
+  - The 971225-byte controller-independent trajectory contains 200 physical frames, applied commands, compact neural summaries and auditable sensory observations.
+  - Headless replay passed against a fresh FlyBody instance with matching model-contract hash.
+  - The run identifies engine commit add05dfd8a599a83b21fb036cf440c0f9de60f81.

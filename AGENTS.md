@@ -19,6 +19,13 @@ Tout objet possédé par une validation `scientific_wiring_revalidation` ouverte
 bloque la calibration de sa famille. Ni un smoke test vert, ni une cardinalité
 correcte ne suffisent à lever ce blocage.
 
+Le runtime incarné non calibré existe désormais sous trois modes :
+`closed_loop_record.bat` calcule et enregistre, `physical_replay.bat` présente une
+trajectoire physique indépendante de son producteur, et `closed_loop_live.bat`
+exécute directement la même boucle dans le viewer. Ces chemins prouvent
+l'intégration, jamais un comportement biologique. Leur contrat est défini par
+l'ADR 0010 et `docs/embodied-runtime.md`.
+
 ## Sources de vérité à lire
 
 Avant une modification structurelle ou de calibration, consulter au minimum :

@@ -8,9 +8,9 @@ parent_id: null
 ports: {inputs: [actuator_commands], outputs: [body_state, contacts]}
 status: {inventory: complete, implementation: tested, parameters: borrowed, validation: integration_pass}
 confidence: high
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-actuators.json, reports/generated/install-smoke-flybody.png, runs/wiring-smoke/latest.json]
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-actuators.json, reports/generated/install-smoke-flybody.png, runs/wiring-smoke/latest.json, decisions/0010-controller-independent-physical-trajectories.md, runs/closed-loop/latest.json]
 parameter_family_ids: []
-validation_ids: [validation.installation, validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.flybody_actuator_interface]
-next_action: Préserver la boucle physique déterministe; documenter les limites et la contrôlabilité avant calibration.
+validation_ids: [validation.installation, validation.flybody_inventory, validation.flybody_proprioception_sensor, validation.flybody_actuator_interface, validation.closed_loop]
+next_action: Inspecter le replay physique fermé puis profiler la vision et les interfaces sans modifier silencieusement le modèle corporel.
 blocked_by: []
 completion_criteria: [Inventaire versionné, Limites auditées, Rejeu physique déterministe]

@@ -55,6 +55,12 @@ Pour reprendre le projet sans le contexte des conversations :
   mémoire, puis écrit une trace compacte de 102 commandes sous
   `runs/execution-benchmark/`. La dynamique est explicitement
   `BENCHMARK ONLY / UNCALIBRATED`.
+- `closed_loop_record.bat` exécute le vrai MaleCNS en boucle fermée avec vision,
+  contacts, proprioception et physique, puis enregistre une trajectoire physique
+  autonome. `physical_replay.bat` ouvre la dernière trajectoire sans recalculer le
+  connectome. `closed_loop_live.bat` exécute la même boucle directement dans le
+  viewer, même lorsqu'elle est plus lente que le temps réel. Voir
+  [`docs/embodied-runtime.md`](docs/embodied-runtime.md).
 - `cycle_topology.bat` analyse le vrai graphe MaleCNS depuis toutes les entrées,
   puis produit les profondeurs BFS, les composantes fortement connexes et deux
   profils de récurrence complémentaires. Voir

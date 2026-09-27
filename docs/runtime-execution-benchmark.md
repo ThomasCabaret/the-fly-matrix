@@ -74,9 +74,10 @@ states. Run it with:
 connectome_benchmark.bat
 ```
 
-The next implementation step is to apply that trace to MuJoCo offline, record
-compact joint/body state, and add interactive replay. The present benchmark does
-not yet animate the fly.
+The separate embodied runtime now applies real MaleCNS output to MuJoCo in a
+closed loop and writes a controller-independent physical trajectory. See
+`docs/embodied-runtime.md` and ADR 0010. This isolated benchmark intentionally
+remains available as the neural-throughput reference.
 
 ## First visible real-connectome run
 
