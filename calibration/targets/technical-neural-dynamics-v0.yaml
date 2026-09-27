@@ -52,5 +52,7 @@ provenance:
     - Exact acceptable ranges are not yet known and must not be invented.
 
 validation: not_run
-blocked_reason: Real-connectome CPU/GPU execution benchmark and temporal recurrent runtime are not implemented.
-next_action: Build the execution benchmark, then run an uncalibrated deterministic baseline.
+blocked_reason: >-
+  The execution benchmark exists, but no calibration runner or evidence-backed
+  acceptance thresholds exist and affected interfaces remain under revalidation.
+next_action: Replay the five-second benchmark trace in MuJoCo, characterize the uncalibrated baseline, then define a runner without promoting the benchmark profile.

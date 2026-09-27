@@ -1,6 +1,6 @@
 schema_version: 1
 phase: wiring_revalidation_and_runtime_readiness
-updated: 2026-09-26
+updated: 2026-09-27
 
 wiring_baseline:
   terminal_coverage: complete
@@ -19,10 +19,10 @@ last_completed_campaign_id: null
 readiness:
   governance_and_registry: documented
   diagnostic_physical_viewer: implemented_isolated_bypass
-  real_connectome_execution_benchmark: next_engineering_milestone
-  temporal_cns_runtime: benchmark_not_started
+  real_connectome_execution_benchmark: integration_pass_full_graph_cuda
+  temporal_cns_runtime: benchmark_only_uncalibrated_v0
   calibration_runner: not_started
-  baseline_characterization: not_run
+  baseline_characterization: five_second_neural_trace_recorded_no_physics
   local_interface_parameter_inventory: not_started
   scientific_wiring_revalidation: required_before_affected_calibration
   held_out_protocol_locked: false
@@ -33,10 +33,10 @@ behavior_exposure:
 
 blocked_by:
   - validation.scientific_wiring_reaudit blocks calibration of its 26 owned wiring and parameter records.
-  - A temporal recurrent MaleCNS runtime and calibration runner do not yet exist.
+  - A calibration runner and accepted dynamics model do not yet exist; the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Build and measure a deterministic CPU reference plus GPU sparse execution path
-  for the real canonical MaleCNS graph, then produce a short uncalibrated offline
-  trace and replay. Continue independent wiring revalidation in parallel; do not
-  accept or calibrate any disputed mapping.
+  Replay the recorded 102-command real-connectome trace through MuJoCo and retain
+  compact physical state for interactive offline viewing. Then characterize the
+  uncalibrated baseline and build the calibration runner. Continue independent
+  wiring revalidation in parallel; do not accept or calibrate any disputed mapping.

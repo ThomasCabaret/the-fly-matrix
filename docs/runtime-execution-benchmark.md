@@ -35,6 +35,49 @@ arbitrary reproducible parameters at their declared ports, but it must not injec
 terminal activity downstream of a missing box or reuse the fake CNS from
 `diagnostic_viewer.bat`.
 
+## Implemented v0 benchmark
+
+`connectome_benchmark.bat` runs the versioned profile in
+`benchmarks/profiles/malecns-benchmark-v0.yaml`. On first use it streams the
+1 GB Feather edge table and creates an uncompressed derived CSR cache under
+`data/derived/execution-benchmark/`; later runs load that cache. Neither cache nor
+run output is versioned.
+
+The v0 rule applies incoming-L1-normalized published edge weights followed by a
+leaky `tanh` update. The rule, its 5 ms step and every interface value are
+engineering placeholders. They are intentionally bounded for timing and replay
+but carry no physiological meaning and cannot become a parameter set implicitly.
+
+The interface compiler executes all declared input boxes once using deterministic
+benchmark-only values, verifies all 17,884 terminal inputs, and compiles their
+result into the ordered graph vector. It similarly verifies the declared motor
+routing and transduction boxes, then compiles the 815 motor outputs into a dense
+102-command decoder. This keeps the timed loop on the GPU without bypassing the
+box contracts. Later calibration can replace the input, recurrent and decoder
+tensors without changing terminal identities.
+
+The accepted engineering run `benchmark-20260927T081439Z`, produced from engine
+commit `ba7e9f4`, measured the full
+166,700-neuron, 25,582,938-edge graph on the local RTX 4060 Laptop GPU. It reached
+481.4 neural steps/s, corresponding to 2.407 simulated seconds per wall-clock
+second at the arbitrary 5 ms step. CSR storage was 205,330,308 bytes and peak
+allocated device memory was 220,390,912 bytes. The three-step CPU/GPU maximum
+absolute difference was 1.49e-08.
+
+Five simulated seconds produced a 1,277,722-byte compressed trace containing the
+102 actuator command chronograms, six global neural summaries and 256 fixed
+neuron probes. This is the parametric replay boundary: MuJoCo needs the initial
+physical state, model/version and these ordered commands, not all 166,700 neural
+states. Run it with:
+
+```text
+connectome_benchmark.bat
+```
+
+The next implementation step is to apply that trace to MuJoCo offline, record
+compact joint/body state, and add interactive replay. The present benchmark does
+not yet animate the fly.
+
 ## First visible real-connectome run
 
 After the benchmark kernel is trustworthy, a short uncalibrated run should couple

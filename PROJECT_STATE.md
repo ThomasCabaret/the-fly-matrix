@@ -1,7 +1,7 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-26, précâblage scientifique rétrogradé et placé sous
-revalidation indépendante avant calibration.
+Mise à jour : 2026-09-27, banc CPU/GPU du vrai MaleCNS mesuré tandis que le
+précâblage scientifique reste sous revalidation indépendante avant calibration.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -44,19 +44,29 @@ infrastructure plus coûteuse que le traitement direct des rares cas restants. L
 contrat est dans [`docs/rules-first-automation.md`](docs/rules-first-automation.md)
 et l'[`ADR 0009`](decisions/0009-proportional-rules-first-automation.md).
 
-Le **prochain lot d'ingénierie** est un banc d'exécution du vrai graphe MaleCNS,
-avant toute campagne de calibration. Il doit fournir une référence CPU
-déterministe, un backend GPU creux, des mesures de mémoire et de débit, des runs
-du graphe complet et de sous-graphes déclarés, ainsi qu'un export de traces pour
-rejeu hors ligne dans MuJoCo. Le premier run visible devra réellement traverser
-MaleCNS et les boîtes déclarées ; il pourra employer un profil dynamique arbitraire
-mais versionné `BENCHMARK ONLY / UNCALIBRATED`, et son comportement ne constituera
-aucun résultat scientifique.
+Le **banc d'exécution du vrai graphe MaleCNS est maintenant implémenté et mesuré**.
+Il transforme les 25 582 938 arêtes canoniques en CSR float32, compare chaque run
+GPU à une référence CPU déterministe et compile les boîtes déclarées en un vecteur
+de 17 884 entrées et un décodeur de 815 sorties motrices vers 102 commandes. Le
+profil temporel `benchmark.malecns.leaky_tanh.v0` est explicitement
+`BENCHMARK ONLY / UNCALIBRATED` : sa normalisation, sa fuite et ses paramètres
+aléatoires déterministes sont des choix d'ingénierie et aucunement une dynamique
+biologique acceptée.
+
+Le run `benchmark-20260927T081439Z`, produit depuis le commit moteur `ba7e9f4`, a
+simulé 5,0 secondes du graphe complet en 2,077 secondes de noyau sur la RTX 4060
+Laptop : **481,4 pas/s**, soit **2,407 fois le temps réel** au pas arbitraire de
+5 ms. Le CSR occupe 195,8 Mio, le pic alloué
+sur le GPU 210,2 Mio et l'accord CPU/GPU présente une erreur absolue maximale de
+1,49e-08 après trois pas. La trace compacte des 102 commandes, six métriques et
+256 sondes neuronales occupe 1,22 Mio. Ces mesures démontrent la faisabilité
+d'exécution, pas la validité du comportement produit.
 
 Le contrat de ce banc est dans
-[`docs/runtime-execution-benchmark.md`](docs/runtime-execution-benchmark.md). Sa
-construction peut avancer pendant la revalidation du câblage, mais elle ne lève
-aucun des 26 blocages scientifiques.
+[`docs/runtime-execution-benchmark.md`](docs/runtime-execution-benchmark.md). Le
+prochain lot d'ingénierie est le **rejeu MuJoCo hors ligne** de cette trace avec
+état physique compact, puis son inspection interactive. Le benchmark ne lève
+aucun des 26 blocages scientifiques et ne constitue pas une calibration.
 
 Un viewer physique temps réel est maintenant disponible via
 `diagnostic_viewer.bat`. Il utilise un faux CNS récurrent de 64 états, déterministe
@@ -245,6 +255,7 @@ run_analysis.bat          # inventaires et manifestes ; neuPrint si jeton prése
 run_wiring_smoke.bat      # reconstruction et parcours structurel complet
 dashboard.bat             # état HTML/DOT recalculé
 wiring_map.bat            # carte exhaustive interactive locale
+connectome_benchmark.bat  # vrai MaleCNS CPU/GPU + trace compacte non calibrée
 diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 ```

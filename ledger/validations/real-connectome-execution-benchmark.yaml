@@ -1,0 +1,34 @@
+schema_version: 1
+id: validation.real_connectome_execution_benchmark
+name: Real canonical MaleCNS CPU/GPU execution benchmark
+owner_ids:
+  - cns.malecns
+level: runtime_benchmark
+protocol_path: docs/runtime-execution-benchmark.md
+command: connectome_benchmark.bat
+acceptance_criteria:
+  - The exact canonical graph scope and input hashes are recorded
+  - A deterministic CPU reference traverses the sparse graph
+  - The CUDA backend agrees with the CPU reference within the profile tolerances
+  - Loading, warm-up, steady-state throughput, real-time ratio and memory are measured
+  - Declared input and output boxes compile to the fast path without terminal bypasses
+  - A compact actuator and neural-summary trace is exported for offline replay
+  - Every dynamics and interface value is labelled BENCHMARK ONLY / UNCALIBRATED
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: benchmark-20260927T081439Z
+status: integration_pass
+next_action: Add MuJoCo offline physical replay of the five-second 102-command trace and record compact joint and body state.
+notes:
+  - This validation demonstrates execution readiness only and cannot accept disputed scientific wiring.
+  - The v0 temporal rule is bounded engineering scaffolding, not a biological neuron model or parameter set.
+  - The full 166700-neuron and 25582938-edge graph ran for 1000 measured steps on an NVIDIA GeForce RTX 4060 Laptop GPU.
+  - The measured kernel reached 481.4 neural steps/s and 2.407 simulated/wall-clock ratio at the profile's arbitrary 5 ms step.
+  - CPU execution was bitwise deterministic and the three-step CPU/GPU maximum absolute error was 1.49e-08.
+  - CSR storage was 205330308 bytes, peak allocated VRAM was 220390912 bytes and host RSS after the run was 1353330688 bytes.
+  - Five simulated seconds produced a 1277722-byte compact trace with 102 actuator chronograms and 256 fixed neuron probes.
+  - The recorded run identifies engine commit ba7e9f4569ca9e24fdcf8192ebd07ef8a35a2fb7 and profile SHA-256 ccbfa2ea153874d9babb05fc3325fbef91919225fab00d43c6b37f53e270ea42.
+source_references:
+  - malecns-v1.0-connectome-weights
+  - benchmarks/profiles/malecns-benchmark-v0.yaml
+  - docs/runtime-execution-benchmark.md

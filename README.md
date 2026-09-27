@@ -50,6 +50,11 @@ Pour reprendre le projet sans le contexte des conversations :
   MaleCNS et la transduction motrice pour explorer la physique et la caméra ; son
   overlay et ses sorties le marquent `NOT MALECNS / NOT CALIBRATION`. Voir
   [`docs/diagnostic-viewer.md`](docs/diagnostic-viewer.md).
+- `connectome_benchmark.bat` exécute le vrai graphe canonique MaleCNS sur CPU et
+  GPU, traverse les contrats de boîtes d'entrée/sortie compilés, mesure débit et
+  mémoire, puis écrit une trace compacte de 102 commandes sous
+  `runs/execution-benchmark/`. La dynamique est explicitement
+  `BENCHMARK ONLY / UNCALIBRATED`.
 - `cycle_topology.bat` analyse le vrai graphe MaleCNS depuis toutes les entrées,
   puis produit les profondeurs BFS, les composantes fortement connexes et deux
   profils de récurrence complémentaires. Voir
