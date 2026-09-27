@@ -300,9 +300,12 @@ def run_replay(path: Path, *, speed: float = 1.0, render_fps: float = 60.0, head
             wall_anchor = perf_counter()
             sim_anchor = float(trajectory.timestamps_s[0])
             last_wall = wall_anchor
-            while presentation.is_running() and index < trajectory.frame_count:
+            ended = False
+            while presentation.is_running():
                 if presentation.controls.reset_requested:
                     index = 0
+                    ended = False
+                    presentation.controls.paused = False
                     wall_anchor = perf_counter()
                     sim_anchor = float(trajectory.timestamps_s[0])
                     presentation.controls.reset_requested = False
@@ -312,12 +315,20 @@ def run_replay(path: Path, *, speed: float = 1.0, render_fps: float = 60.0, head
                     wall_anchor = perf_counter()
                     effective_speed = requested_speed
                 if presentation.controls.paused:
-                    presentation.sync(float(trajectory.timestamps_s[index]), "PAUSED")
+                    detail = "END — R restart" if ended else "PAUSED"
+                    presentation.sync(float(trajectory.timestamps_s[index]), detail)
                     sleep(0.02)
                     wall_anchor = perf_counter()
                     sim_anchor = float(trajectory.timestamps_s[index])
                     continue
                 target_sim = sim_anchor + (perf_counter() - wall_anchor) * effective_speed
+                if target_sim >= trajectory.timestamps_s[-1]:
+                    index = trajectory.frame_count - 1
+                    apply_frame(loop, trajectory.frame(index))
+                    ended = True
+                    presentation.controls.paused = True
+                    presentation.sync(float(trajectory.timestamps_s[index]), "END — R restart")
+                    continue
                 index = min(
                     max(int(np.searchsorted(trajectory.timestamps_s, target_sim, side="right")) - 1, 0),
                     trajectory.frame_count - 1,
@@ -325,7 +336,6 @@ def run_replay(path: Path, *, speed: float = 1.0, render_fps: float = 60.0, head
                 frame = trajectory.frame(index)
                 apply_frame(loop, frame)
                 presentation.sync(frame.timestamp_s, f"replay {effective_speed:.2f}x | frame {index + 1:,}/{trajectory.frame_count:,}")
-                index += 1
                 now = perf_counter()
                 remaining = 1.0 / render_fps - (now - last_wall)
                 if remaining > 0:
