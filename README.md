@@ -41,6 +41,12 @@ Pour reprendre le projet sans le contexte des conversations :
   résolues et les sorties CNS explicitement motrices.
   Toutes les valeurs de test entrent désormais par des ports ou paramètres de
   boîtes déclarées; aucune injection terminale directe ne subsiste.
+- `wiring_revalidation.bat` reconstruit indépendamment les populations terminales
+  et groupes depuis les annotations brutes, applique les règles versionnées,
+  compare le précâblage et produit décisions, surprises et blocages. Les options
+  `-Direction input` et `-Direction output` isolent une frontière. Un passage vert
+  n'accepte pas les matrices candidates fines encore listées comme bloquées. Voir
+  [`docs/wiring-revalidation.md`](docs/wiring-revalidation.md).
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 - `wiring_map.bat` compile l'interface locale, régénère son graphe exhaustif depuis

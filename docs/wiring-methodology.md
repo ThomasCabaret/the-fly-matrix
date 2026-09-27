@@ -153,6 +153,11 @@ La revalidation scientifique utilise ce mécanisme pour reconstruire inventaires
 sélecteurs et ensembles candidats puis produire un paquet compact pour les seuls
 choix biologiques non dérivables. La construction indépendante ne prend jamais le
 précâblage courant comme recette ; celui-ci sert uniquement à la comparaison.
+La procédure opérationnelle actuelle, son ruleset versionné, ses sorties et la
+portée exacte de son premier palier sont décrits dans
+[`wiring-revalidation.md`](wiring-revalidation.md). Elle se lance par
+`wiring_revalidation.bat` pour tout le périmètre, ou avec `-Direction input` et
+`-Direction output` pour une frontière isolée.
 
 Cette préférence reste proportionnée. Une fonction de validation ou un script
 court peut suffire, et quelques exceptions réellement uniques peuvent être

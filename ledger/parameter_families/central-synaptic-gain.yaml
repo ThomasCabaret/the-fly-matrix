@@ -5,8 +5,10 @@ owner_id: cns.malecns
 quantity: synaptic gain by transmitter and connection family
 unit: model-dependent
 sharing_rule: shared by transmitter class before any finer split
-source_kind: unknown
-source_references: []
+source_kind: predicted_transmitter_prior_available_not_compiled
+source_references:
+  - malecns-v1.0-body-neurotransmitters
+prior_status: Neuron-level consensus predictions are inventoried; no confidence-weighted signed synaptic matrix has been compiled.
 value: null
 bounds: null
 free_parameter_count: 0
@@ -14,4 +16,7 @@ calibration_dataset_ids: []
 held_out_behavior_ids: []
 status: unknown
 confidence: low
-known_limitations: [Static weights are counts, not physiological conductances]
+known_limitations:
+  - Static weights are counts, not physiological conductances.
+  - Transmitter identity does not define a universal synaptic sign without receptor context.
+  - The current benchmark propagates non-negative counts and is not a calibrated dynamics model.

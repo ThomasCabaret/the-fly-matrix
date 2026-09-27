@@ -27,3 +27,12 @@ datasets:
     url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
     roles: [connectome, central_dynamics]
     behaviors_present: []
+  - id: malecns-v1.0-optic-column-supplement
+    version: "1.0"
+    license: CC-BY-4.0
+    path: data/raw/malecns/v1.0/optic-column-type-assignments-v1.0.xlsx
+    expected_bytes: 111565
+    sha256: d4af1cacb751036f7e84bfecc9bec79ca010066ac066559c29b566003ec080d3
+    url: https://raw.githubusercontent.com/flyconnectome/2025malecns/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx
+    roles: [anatomy, wiring]
+    behaviors_present: []

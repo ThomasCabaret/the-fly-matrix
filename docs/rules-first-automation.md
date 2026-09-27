@@ -101,6 +101,13 @@ Rules reconstructed from raw versioned data and primary sources should report al
 differences from it, including unchanged, added, removed, unsupported, and
 ambiguous relations.
 
+The executable implementation is described in
+[`wiring-revalidation.md`](wiring-revalidation.md). `wiring_revalidation.bat`
+runs the versioned input/output rules, produces exhaustive group decisions and
+exception packets, and keeps relation families blocked until an independent
+candidate builder exists. The procedure is allowed to reach zero unexpected
+exceptions while retaining explicit expected blockers.
+
 ## Application to runtime and calibration
 
 Runtime and calibration should use the same pattern at a different level. A

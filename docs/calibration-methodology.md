@@ -158,6 +158,44 @@ degrees of freedom, frozen values, constraints, and inheritance rules must remai
 explicit. Calibration must never change structural cardinality or topology
 silently; such a need returns to the wiring workflow.
 
+## MaleCNS static priors and synaptic-sign policy
+
+MaleCNS v1.0 includes aggregate neurotransmitter records for nearly every
+canonical neuron, but a presynaptic transmitter label is not a complete
+postsynaptic sign or conductance measurement. On the current checked dataset,
+166,522 of 166,700 canonical neurons have a consensus label; 2,999 of those are
+`unclear`, and 85,484 have a non-null `ground_truth` field. These counts are an
+evidence inventory, not a calibrated signed graph.
+
+Calibration must preserve these levels separately:
+
+1. directly measured or source-curated transmitter evidence;
+2. predicted transmitter and its confidence;
+3. receptor- or pathway-supported effect sign where available;
+4. a typed sign prior when the biological interpretation is sufficiently stable;
+5. context-dependent, modulatory or unknown effects that remain free or use a
+   dedicated model rather than being forced to `+1` or `-1`.
+
+Acetylcholine and GABA may seed typed excitatory and inhibitory priors where the
+source scope supports that interpretation. Glutamate, histamine and monoaminergic
+signals must not receive a universal sign without receptor or pathway evidence.
+Per-presynapse probabilities can refine uncertainty later, but still do not by
+themselves identify the postsynaptic response.
+
+The current `benchmark.malecns.leaky_tanh.v0` runtime uses unsigned positive
+synapse counts with incoming normalization. It remains an execution profile and
+must not be promoted as a biological initial parameter set. A future evidence
+transfer step should compile a signed or typed prior matrix with confidence and
+unknown masks before technical fitting.
+
+The calibration runner should optimize shared families before individual
+connections: global parameters, then transmitter or cell classes, anatomical
+regions and only finally justified local exceptions. Stability objectives can
+constrain gain scales, time constants, thresholds, biases, delays and basal
+statistics. They cannot determine an unknown anatomical routing or local
+input/output transfer uniquely; those require local evidence or must remain
+explicitly underdetermined.
+
 ## Rules-first campaign execution
 
 Calibration campaigns should concentrate scientific choices in versioned target,

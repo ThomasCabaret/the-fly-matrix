@@ -7,7 +7,8 @@ $ExitCode = 0
 $ExpectedData = @(
     @{ Name = "body-annotations-male-cns-v1.0-minconf-0.5.feather"; Bytes = 14483314L },
     @{ Name = "body-neurotransmitters-male-cns-v1.0.feather"; Bytes = 43282834L },
-    @{ Name = "connectome-weights-male-cns-v1.0-minconf-0.5.feather"; Bytes = 1051241946L }
+    @{ Name = "connectome-weights-male-cns-v1.0-minconf-0.5.feather"; Bytes = 1051241946L },
+    @{ Name = "optic-column-type-assignments-v1.0.xlsx"; Bytes = 111565L }
 )
 
 function Write-Section([string]$Title) {

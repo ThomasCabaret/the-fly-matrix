@@ -1,7 +1,7 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-27, banc CPU/GPU du vrai MaleCNS mesuré tandis que le
-précâblage scientifique reste sous revalidation indépendante avant calibration.
+Mise à jour : 2026-09-27, première passe automatisée de revalidation scientifique
+terminée ; les relations candidates fines restent à reconstruire avant calibration.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -18,8 +18,9 @@ le raisonnement ayant produit ces relations, et pas seulement le périmètre du
 graphe central.
 
 Le front actif est donc la **revalidation scientifique indépendante du
-précâblage**, avant toute calibration des familles concernées. Le registre marque
-26 objets `revalidation_required` : 7 boîtes, 7 groupes, 10 fils et 2 familles de
+précâblage**, avant toute calibration des familles concernées. Le registre place
+désormais la validation en `in_progress` et lui laisse la propriété de 26 objets :
+7 boîtes, 7 groupes, 10 fils et 2 familles de
 paramètres couvrant vision, proprioception, mécanoréception et sortie motrice.
 Leurs implémentations et `integration_pass` restent des preuves d'exécution et de
 cardinalité, pas des preuves biologiques. Les groupes et routes auparavant trop
@@ -34,6 +35,18 @@ sources primaires sans prendre le manifeste courant comme recette, puis comparé
 relation par relation. Aucun paramètre scientifique n'est accepté et aucune
 calibration des objets possédés par cette validation ne doit commencer avant sa
 clôture.
+
+Le ruleset `wiring-revalidation.rules.v1` et son runner constituent le premier
+palier reproductible de cette revue. Le run
+`wiring-revalidation-20260927T183911Z` a reconstruit depuis les sources brutes
+12 658 terminaux uniques et 7 124 groupes, puis comparé leurs appartenances et
+dispositions au précâblage : aucune différence et aucune exception inattendue ne
+subsistent. Le supplément officiel a aussi reproduit exactement les 2 628
+relations R7/R8 `bodyId`→colonne optique. Cette passe ne régénère pas encore les
+quatre familles de matrices candidates fines — vision non enregistrée,
+proprioception, mécanoréception et moteur — qui restent donc bloquées et non
+acceptées. La portée et les commandes sont documentées dans
+[`docs/wiring-revalidation.md`](docs/wiring-revalidation.md).
 
 Le projet adopte désormais une politique d'**automatisation proportionnée par
 règles avec rapports d'exception**. Les travaux répétitifs doivent, lorsque c'est
@@ -165,7 +178,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
-- Revalidation scientifique : **26 objets `revalidation_required`**.
+- Revalidation scientifique : **`in_progress` ; 26 objets possédés, premier palier passé, 4 familles de relations fines bloquées**.
 - Calibration des familles concernées : **bloquée avant revalidation**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
@@ -237,16 +250,17 @@ bout en bout passent après cette correction.
 
 ## Fronts structurels restants
 
-1. Refaire indépendamment la décomposition et les relations visuelles, puis
-   comparer chaque choix exact, candidat ou proxy au précâblage actuel.
-2. Refaire le même audit pour la proprioception, notamment les 91 proxies de
-   contrainte/vibration et leurs frontières appendice/côté.
-3. Refaire le même audit pour la mécanoréception et les proxies de mouvement ou de
-   contact local.
-4. Refaire le même audit pour les 441 groupes moteurs et les ensembles
-   d'actionneurs permis, en conservant séparément les 815 routes `bodyId` brutes.
-5. Corriger les sources vagues ou cassées et enregistrer, pour chaque règle, la
-   source, l'affirmation soutenue, l'hypothèse restante et le test associé.
+1. Ajouter au runner la reconstruction indépendante de la matrice visuelle hors
+   des 2 628 relations R7/R8 déjà confirmées, y compris le proxy HBeyelet.
+2. Régénérer puis comparer les arêtes candidates proprioceptives, notamment les
+   91 proxies de contrainte/vibration et leurs frontières appendice/côté.
+3. Régénérer puis comparer les arêtes mécanoréceptrices et leurs proxies de
+   mouvement ou de contact local.
+4. Régénérer puis comparer les ensembles d'actionneurs permis pour les 441 groupes
+   moteurs, en conservant séparément les 815 routes `bodyId` déjà confirmées.
+5. Étendre les règles seulement à partir des exceptions observées, conserver les
+   claims précis et ne promouvoir aucun objet tant que ces quatre paquets bloqués
+   ne sont pas indépendamment comparés.
 
 ## Front de calibration
 
@@ -286,6 +300,7 @@ physical_replay.bat       # viewer autonome de la dernière trajectoire physique
 closed_loop_live.bat      # même boucle directement dans le viewer, même si lente
 diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
+wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

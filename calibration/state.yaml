@@ -26,7 +26,9 @@ readiness:
   calibration_runner: not_started
   baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
   local_interface_parameter_inventory: not_started
-  scientific_wiring_revalidation: required_before_affected_calibration
+  scientific_wiring_revalidation: in_progress_terminal_and_group_pass_complete
+  neurotransmitter_prior_inventory: documented_not_compiled
+  synaptic_sign_matrix: absent_current_runtime_is_unsigned_benchmark_only
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -38,7 +40,7 @@ blocked_by:
   - A calibration runner and accepted dynamics model do not yet exist; the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Inspect the one-second controller-independent physical replay, profile the
-  vision-rich closed loop, and define the calibration runner without promoting
-  the benchmark profile. Continue independent wiring revalidation in parallel;
-  do not accept or calibrate any disputed mapping.
+  Independently regenerate and compare the four fine candidate-relation families
+  before calibrating any disputed mapping. Then compile confidence-weighted
+  transmitter/sign priors and a calibration runner without promoting the current
+  unsigned benchmark profile or treating transmitter identity as a universal sign.

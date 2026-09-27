@@ -30,7 +30,7 @@ owner_ids:
   - parameter.motor.transduction
 level: scientific_audit
 protocol_path: docs/wiring-methodology.md
-command: null
+command: wiring_revalidation.bat
 acceptance_criteria:
   - Reconstruct every affected population, grouping and candidate relation directly from raw versioned data and cited primary sources without trusting the current manifest
   - Compare the independent reconstruction with every current group, candidate edge, proxy and exclusion and record all discrepancies
@@ -41,10 +41,10 @@ acceptance_criteria:
   - Complete vision, proprioception, mechanosensation and motor workstreams before any affected parameter family enters calibration
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: null
-status: not_run
+latest_run_id: wiring-revalidation-20260927T183911Z
+status: local_pass
 review_kind: scientific_wiring_revalidation
-review_status: revalidation_required
+review_status: in_progress
 reason: A prior annotation-row versus neuron scope error invalidated confidence in the reasoning process used for scientific grouping and candidate construction, even though terminal inventories and runtime execution were subsequently checked.
 preserved_claims:
   - Raw files and checksums are reproducible
@@ -60,10 +60,13 @@ workstreams:
   - proprioception
   - mechanosensation
   - motor_output
-next_action: Rebuild and compare the four affected wiring sectors independently, one source-backed rule at a time, before calibration.
+next_action: Independently regenerate and compare the four fine candidate-edge families; terminal populations, annotation-backed groups, dispositions and published R7/R8 column relations already pass the rules-first comparison.
 notes:
   - Existing integration_pass results prove execution and cardinality only.
   - This review status overrides calibration-oriented next actions on owned records until the validation passes.
+  - The first rules-first pass accounted for 12658 unique terminals and 7124 groups with zero unexpected exceptions or membership differences.
+  - The official optic supplement independently reproduced all 2628 current R7/R8 bodyId-to-column relations.
+  - Proprioceptive, mechanosensory, motor and unregistered-vision fine candidate matrices remain explicitly blocked; this local pass does not accept them.
 source_references:
   - decisions/0007-annotated-body-and-neuron-scope.md
   - decisions/0008-independent-scientific-wiring-reaudit.md

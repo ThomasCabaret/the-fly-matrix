@@ -1,0 +1,82 @@
+# Rules-first wiring revalidation
+
+## Purpose
+
+`wiring_revalidation.bat` reconstructs the reviewed interface populations from
+raw, versioned MaleCNS data, applies a versioned rule set, and compares the result
+with executable prewiring. It can run all workstreams or only one direction:
+
+```text
+wiring_revalidation.bat
+wiring_revalidation.bat -Direction input
+wiring_revalidation.bat -Direction output
+```
+
+The procedure never calibrates parameters and never promotes scientific status
+automatically. A successful accounting run means that the declared scope was
+fully explained by the rules. It does not mean that every candidate relation is
+biologically accepted.
+
+## Iterative loop
+
+The intended loop is deliberately simple:
+
+1. reconstruct a declared scope from raw data without consulting current
+   scientific manifests;
+2. apply the smallest versioned rules justified by data or sources;
+3. classify every item as `applied`, `excluded`, `blocked`, or `exception`;
+4. compare the independent result with prewiring only after reconstruction;
+5. inspect new exception classes and add or correct a rule when justified;
+6. rerun until no unexpected exception remains, while preserving legitimate
+   scientific blockers;
+7. stop automating when the remaining cases are rare or irreducibly scientific.
+
+A broad fallback is not an acceptable way to reach zero exceptions. A known
+missing independent builder is reported as `blocked`, whereas an unanticipated
+data shape or conflicting rule is an `exception`.
+
+## Rules v1
+
+The canonical first rule set is
+[`wiring/revalidation/rules-v1.yaml`](../wiring/revalidation/rules-v1.yaml). It
+independently reconstructs from the raw annotation table:
+
+- 6,098 visual input terminals and 6,098 terminal groups;
+- 1,454 proprioceptive terminals in 262 annotation-backed groups;
+- 4,291 mechanosensory terminals in 323 annotation-backed groups;
+- 815 motor outputs in 441 lossless type/side groups.
+
+The rules classify terminal dispositions and distinguish dataset observations,
+source-supported candidates, engineering candidates and proxies. The 2,628
+published R7/R8 body-to-optic-column relations are reconstructed directly from
+the official workbook and compared relation by relation.
+
+Rules v1 intentionally do **not** independently regenerate the complete fine
+candidate matrices for proprioception, mechanosensation, vision remainder or
+motor transduction. Those four relation families remain explicit blockers. Their
+current executable manifests are comparison baselines, not construction recipes.
+
+## Output contract
+
+Each run writes under `data/derived/wiring-revalidation/<run-id>/`:
+
+- `summary.json`: hashes, counts, gates, workstream status and next action;
+- `group-decisions.parquet`: every independently reconstructed group, matched
+  rules, provenance class, disposition and current comparison;
+- `exceptions.json`: every unexpected or conflicting case;
+- `blocked-review-packets.json`: known scientific gaps and their next actions.
+
+`data/derived/wiring-revalidation/latest.json` points to the latest run. The
+human report is regenerated at
+`reports/generated/wiring-revalidation.html`. These derived artifacts are ignored
+by Git; the rules, code, tests, validation record and compact project status are
+versioned.
+
+## Acceptance boundary
+
+The global `scientific_wiring_revalidation` may become
+`independently_validated` only when every affected candidate relation has also
+been independently generated and classified as `exact`,
+`source_supported_candidate`, `engineering_candidate`, `proxy`, `unsupported` or
+`removed`, with source claims and tests. Terminal equality, zero exceptions and a
+green smoke test are necessary evidence but not sufficient acceptance.

@@ -1,0 +1,287 @@
+schema_version: 1
+id: wiring-revalidation.rules.v1
+version: 1
+title: Independent terminal and group reconstruction rules
+claim: >-
+  Reconstruct terminal populations and annotation-backed groups from raw MaleCNS
+  data, classify every reconstructed group, and compare the result with executable
+  prewiring. Candidate-edge reconstruction remains a separate acceptance gate.
+
+sources:
+  annotations:
+    dataset_id: malecns-v1.0-body-annotations
+    path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  population_scope:
+    path: data/derived/analysis/cycle-topology/node-classification.parquet
+  optic_columns:
+    dataset_id: malecns-v1.0-optic-column-supplement
+    path: data/raw/malecns/v1.0/optic-column-type-assignments-v1.0.xlsx
+    source_url: https://raw.githubusercontent.com/flyconnectome/2025malecns/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx
+
+workstreams:
+  vision:
+    direction: input
+    selector:
+      field: superclass
+      op: equals
+      value: ol_sensory
+    family:
+      constant: sensory.optic_lobe
+    group_by: [bodyId]
+    current:
+      route_path: data/derived/wiring/vision-routes.parquet
+      body_column: target_body_id
+      group_column: channel_id
+    rules:
+      - id: vision.published-r7-r8.v1
+        priority: 100
+        selector:
+          field: published_optic_column
+          op: equals
+          value: true
+        outcome: applied
+        relation_class: exact
+        terminal_disposition: parameterized
+        provenance_kind: dataset_observation
+        source_references: [malecns-v1.0-optic-column-supplement]
+        used_claim: The supplement assigns this R7 or R8 bodyId to one biological optic column; physical ommatidium registration remains free.
+      - id: vision.hbeyelet-mean-light-proxy.v1
+        priority: 90
+        selector:
+          field: type
+          op: equals
+          value: HBeyelet
+        outcome: applied
+        relation_class: proxy
+        terminal_disposition: proxy
+        provenance_kind: engineering_choice
+        source_references: []
+        used_claim: FlyBody has no dedicated HB eyelet sensor, so the current same-eye mean-light replacement remains a visible proxy pending review.
+      - id: vision.same-eye-unregistered-photoreceptor.v1
+        priority: 50
+        selector:
+          field: class
+          op: equals
+          value: visual
+        outcome: applied
+        relation_class: engineering_candidate
+        terminal_disposition: parameterized
+        provenance_kind: engineering_choice
+        source_references: [malecns-v1.0-body-annotations]
+        used_claim: The terminal is a visual afferent with a recorded eye side, while its physical ommatidium assignment remains an explicit local parameter.
+
+  proprioception:
+    direction: input
+    selector:
+      field: class
+      op: equals
+      value: mechanosensory_proprioceptive
+    family:
+      constant: sensory.proprioceptive
+    group_by: [entryNerve, subclass, mancType, type, rootSide]
+    current:
+      route_path: data/derived/wiring/proprioception-routes.parquet
+      body_column: target_body_id
+      group_column: channel_id
+    rules:
+      - id: proprioception.strain-proxy.v1
+        priority: 100
+        selector:
+          any:
+            - {field: subclass, op: equals, value: campaniform sensilla}
+            - {field: subclass, op: equals, value: notum}
+        outcome: applied
+        relation_class: proxy
+        terminal_disposition: proxy
+        provenance_kind: engineering_choice
+        source_references: [malecns-v1.0-body-annotations]
+        used_claim: A strain-sensitive annotated group lacks a represented strain observable and is kept behind a replaceable local kinematic proxy.
+      - id: proprioception.feco-club-vibration-proxy.v1
+        priority: 100
+        selector:
+          field: synonyms
+          op: contains
+          value: FeCO club
+        outcome: applied
+        relation_class: proxy
+        terminal_disposition: proxy
+        provenance_kind: engineering_choice
+        source_references: [https://doi.org/10.1038/s41467-025-59302-3]
+        used_claim: FeCO club neurons encode vibration, which FlyBody does not expose directly; femur-tibia velocity is only a replaceable proxy.
+      - id: proprioception.annotated-leg-local-state.v1
+        priority: 60
+        selector:
+          all:
+            - {field: entryNerve, op: in, value: [ProLN, ProAN, VProN, DProN, MesoLN, MetaLN]}
+            - {field: rootSide, op: in, value: [L, R]}
+        outcome: applied
+        relation_class: source_supported_candidate
+        terminal_disposition: parameterized
+        provenance_kind: literature_supported
+        source_references: [https://doi.org/10.1038/s41467-025-59302-3]
+        used_claim: Entry nerve and side constrain a leg-local joint-state candidate set; exact receptor transfer remains free.
+      - id: proprioception.annotated-appendage-local-state.v1
+        priority: 60
+        selector:
+          any:
+            - all:
+                - {field: entryNerve, op: equals, value: DMetaN}
+                - {field: subclass, op: equals, value: haltere}
+                - {field: rootSide, op: in, value: [L, R]}
+            - all:
+                - {field: entryNerve, op: equals, value: ADMN}
+                - {field: subclass, op: equals, value: wing}
+                - {field: rootSide, op: in, value: [L, R]}
+            - all:
+                - {field: entryNerve, op: equals, value: AbN3}
+                - {field: subclass, op: equals, value: abdomen}
+            - all:
+                - {field: entryNerve, op: equals, value: ProCN}
+                - {field: subclass, op: equals, value: chordotonal organ}
+            - all:
+                - {field: entryNerve, op: equals, value: PrN}
+                - {field: subclass, op: in, value: [hair plate, neck]}
+        outcome: applied
+        relation_class: source_supported_candidate
+        terminal_disposition: parameterized
+        provenance_kind: derived_rule
+        source_references: [malecns-v1.0-body-annotations]
+        used_claim: Nerve, receptor class and side restrict the candidate observable to the corresponding represented appendage.
+
+  mechanosensation:
+    direction: input
+    selector:
+      field: class
+      op: in
+      value: [mechanosensory_tactile, mechanosensory]
+    family:
+      field_map:
+        field: class
+        values:
+          mechanosensory_tactile: sensory.tactile
+          mechanosensory: sensory.mechanosensory_other
+    group_by: [family, entryNerve, subclass, mancType, type, rootSide]
+    current:
+      route_path: data/derived/wiring/mechanosensation-routes.parquet
+      body_column: target_body_id
+      group_column: channel_id
+    rules:
+      - id: mechanosensation.leg-contact-local.v1
+        priority: 70
+        selector:
+          all:
+            - {field: entryNerve, op: in, value: [ProLN, ProAN, VProN, DProN, MesoLN, MetaLN]}
+            - {field: rootSide, op: in, value: [L, R]}
+        outcome: applied
+        relation_class: source_supported_candidate
+        terminal_disposition: parameterized
+        provenance_kind: literature_supported
+        source_references: [https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
+        used_claim: Annotated leg nerve and side restrict the terminal to contact-load observables from the same leg.
+      - id: mechanosensation.appendage-motion-local.v1
+        priority: 70
+        selector:
+          all:
+            - {field: entryNerve, op: in, value: [AN, ADMN, DMetaN, MxLbN, aPhN]}
+            - {field: rootSide, op: in, value: [L, R]}
+        outcome: applied
+        relation_class: source_supported_candidate
+        terminal_disposition: parameterized
+        provenance_kind: literature_supported
+        source_references:
+          - https://pmc.ncbi.nlm.nih.gov/articles/PMC4007284/
+          - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+        used_claim: Nerve and side restrict the candidate to the represented antenna, wing, haltere or mouthpart motion.
+      - id: mechanosensation.coarse-central-contact.v1
+        priority: 60
+        selector:
+          field: entryNerve
+          op: in
+          value: [PDMN, "ON"]
+        outcome: applied
+        relation_class: engineering_candidate
+        terminal_disposition: parameterized
+        provenance_kind: engineering_choice
+        source_references: [malecns-v1.0-body-annotations]
+        used_claim: Only coarse thorax or head contact is represented; no unsupported finer localization is asserted.
+
+  motor_output:
+    direction: output
+    selector:
+      field: superclass
+      op: in
+      value: [vnc_motor, cb_motor]
+    family:
+      field_map:
+        field: superclass
+        values:
+          vnc_motor: motor.vnc
+          cb_motor: motor.central_brain
+    group_by: [subclass, grouping_type, somaSide]
+    current:
+      route_path: data/derived/wiring/motor-routes.parquet
+      body_column: source_body_id
+      group_column: motor_group_id
+    rules:
+      - id: motor.published-broad-effector-class.v1
+        priority: 70
+        selector:
+          field: subclass
+          op: in
+          value: [ad, nm, wm, hm, fl, ml, hl]
+        outcome: applied
+        relation_class: source_supported_candidate
+        terminal_disposition: parameterized
+        provenance_kind: literature_supported
+        source_references: [https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
+        used_claim: Motor subclass, annotated type and side define a local broad-effector candidate group without selecting gains.
+      - id: motor.head-appendage-annotation-candidate.v1
+        priority: 70
+        selector:
+          field: subclass
+          op: in
+          value: [am, pm]
+        outcome: applied
+        relation_class: engineering_candidate
+        terminal_disposition: parameterized
+        provenance_kind: derived_rule
+        source_references: [malecns-v1.0-body-annotations]
+        used_claim: Annotation constrains a local head-appendage group, but its fine actuator candidate relation still requires independent source-backed reconstruction.
+      - id: motor.ps349-antennal-candidate.v1
+        priority: 100
+        selector:
+          all:
+            - {field: subclass, op: equals, value: rm}
+            - {field: type, op: equals, value: PS349}
+        outcome: applied
+        relation_class: source_supported_candidate
+        terminal_disposition: parameterized
+        provenance_kind: literature_supported
+        source_references: [https://pmc.ncbi.nlm.nih.gov/articles/PMC12154692/]
+        used_claim: The PS349 pair exits through the antennal nerve and is restricted to same-side antenna effectors.
+      - id: motor.unrepresented-effector-sink.v1
+        priority: 50
+        selector:
+          field: subclass
+          op: in
+          value: [rm, xm]
+        outcome: applied
+        relation_class: exact
+        terminal_disposition: sink
+        provenance_kind: dataset_observation
+        source_references: [malecns-v1.0-body-annotations]
+        used_claim: The annotated effector has no represented FlyBody actuator; activity is retained and consumed without physical effect.
+
+acceptance_gates:
+  - every independently selected terminal is canonical
+  - independent and current terminal bodyId sets are identical
+  - independent and current annotation-backed group memberships are identical
+  - every independent group matches exactly one highest-priority compatible rule
+  - independent and current terminal dispositions are identical
+  - published R7/R8 bodyId-to-column relations are identical to the current manifest
+  - no unexpected exception remains
+
+known_limits:
+  - This ruleset does not independently regenerate proprioceptive, mechanosensory or motor candidate edges.
+  - Vision remainder registration and the HBeyelet proxy remain engineering hypotheses.
+  - A green run advances the audit to in_progress; it cannot mark the global scientific review independently_validated.
