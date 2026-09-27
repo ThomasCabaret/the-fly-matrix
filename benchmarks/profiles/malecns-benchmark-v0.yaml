@@ -1,0 +1,38 @@
+schema_version: 1
+id: benchmark.malecns.leaky_tanh.v0
+claim_label: BENCHMARK ONLY / UNCALIBRATED
+description: >-
+  Engineering-only bounded temporal rule used to benchmark the canonical
+  MaleCNS graph and compiled interface boxes. It is not a biological neuron
+  model and none of its values may be promoted as calibrated parameters.
+
+dataset:
+  id: malecns-v1.0-connectome-weights
+  sha256: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+
+dynamics:
+  rule: leaky_tanh_v0
+  dtype: float32
+  dt_ms: 5.0
+  leak: 0.2
+  recurrent_scale: 1.0
+  input_scale: 0.25
+  edge_weight_normalization: incoming_l1
+  initial_state_std: 0.01
+
+interfaces:
+  parameter_origin: deterministic_random_benchmark_only
+  input_normalization: max_abs
+  motor_weight_std: 0.02
+
+benchmark:
+  seed: 260927
+  warmup_steps: 20
+  measured_steps: 200
+  reference_steps: 3
+  trace_stride: 1
+  sampled_neurons: 256
+  agreement_atol: 0.00005
+  agreement_rtol: 0.0005
