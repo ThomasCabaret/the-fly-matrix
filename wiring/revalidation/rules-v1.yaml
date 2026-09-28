@@ -254,11 +254,13 @@ workstreams:
             - {field: subclass, op: equals, value: rm}
             - {field: type, op: equals, value: PS349}
         outcome: applied
-        relation_class: source_supported_candidate
+        relation_class: engineering_candidate
         terminal_disposition: parameterized
-        provenance_kind: literature_supported
-        source_references: [https://pmc.ncbi.nlm.nih.gov/articles/PMC12154692/]
-        used_claim: The PS349 pair exits through the antennal nerve and is restricted to same-side antenna effectors.
+        provenance_kind: derived_rule
+        source_references:
+          - malecns-v1.0-body-annotations
+          - https://www.virtualflybrain.org/blog/2022/01/01/ps349_l-malecns11265-vfb_jrmc1k3h/
+        used_claim: PS349 is recorded as a motor neuron exiting the antennal nerve; restricting it to same-side antenna controls is an engineering candidate, not a biological muscle identification.
       - id: motor.unrepresented-effector-sink.v1
         priority: 50
         selector:
@@ -266,7 +268,7 @@ workstreams:
           op: in
           value: [rm, xm]
         outcome: applied
-        relation_class: exact
+        relation_class: unsupported
         terminal_disposition: sink
         provenance_kind: dataset_observation
         source_references: [malecns-v1.0-body-annotations]
@@ -282,6 +284,7 @@ acceptance_gates:
   - no unexpected exception remains
 
 known_limits:
-  - This ruleset does not independently regenerate proprioceptive, mechanosensory or motor candidate edges.
+  - This ruleset does not independently regenerate proprioceptive or mechanosensory candidate edges.
+  - Motor candidate edges are reconstructed by the companion motor-output-v1 clean builder and compared only after its semantic hash is finalized.
   - Vision remainder registration and the HBeyelet proxy remain engineering hypotheses.
   - A green run advances the audit to in_progress; it cannot mark the global scientific review independently_validated.

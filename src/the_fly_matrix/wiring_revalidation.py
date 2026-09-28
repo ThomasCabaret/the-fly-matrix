@@ -456,6 +456,33 @@ def run_revalidation(
     if not selected_workstreams:
         raise RuntimeError(f"No workstream selected for direction={direction}")
 
+    now = datetime.now(UTC)
+    run_id = "wiring-revalidation-" + now.strftime("%Y%m%dT%H%M%SZ")
+    run_dir = output_root / run_id
+    run_dir.mkdir(parents=True, exist_ok=False)
+    fine_family_results: dict[str, Any] = {}
+    if "motor_output" in selected_workstreams:
+        from .motor_output_revalidation import (
+            build_motor_output_envelope,
+            compare_motor_output_with_prewiring,
+        )
+
+        print(
+            "[2b/6] Clean-building the motor-output candidate envelope before comparison...",
+            flush=True,
+        )
+        motor_dir = run_dir / "motor-output"
+        build_motor_output_envelope(motor_dir)
+        fine_family_results["motor_output"] = compare_motor_output_with_prewiring(motor_dir)
+        motor_comparison = fine_family_results["motor_output"]["prewiring_comparison"]
+        print(
+            "  [motor_output] "
+            f"{motor_comparison['confirmed_relations']:,}/"
+            f"{motor_comparison['independent_terminal_actuator_relations']:,} "
+            "terminal-actuator relations independently confirmed",
+            flush=True,
+        )
+
     decisions: list[dict[str, Any]] = []
     exceptions: list[dict[str, Any]] = []
     blocked: list[dict[str, Any]] = []
@@ -570,6 +597,10 @@ def run_revalidation(
                 relation_counts[str(selected_rule["relation_class"])] += 1
             decisions.append(decision)
 
+        fine_result = fine_family_results.get(name)
+        fine_validated = bool(
+            fine_result and fine_result.get("topology_independently_validated")
+        )
         relation_block = {
             "workstream": name,
             "scope": "candidate_edge_reconstruction",
@@ -585,7 +616,8 @@ def run_revalidation(
         }
         if name == "vision" and optic_comparison["pass"]:
             relation_block["reason"] += " The 2628 published R7/R8 column relations already match exactly."
-        blocked.append(relation_block)
+        if not fine_validated:
+            blocked.append(relation_block)
         initial_exception_count = sum(
             1 for item in exceptions if item["workstream"] == name
         )
@@ -598,10 +630,29 @@ def run_revalidation(
             "applied_groups": applied_count,
             "disposition_counts": dict(disposition_counts),
             "relation_class_counts": dict(relation_counts),
-            "blocked_relation_families": 1,
+            "blocked_relation_families": 0 if fine_validated else 1,
             "unexpected_exceptions": initial_exception_count,
-            "status": "partial_pass" if initial_exception_count == 0 else "exceptions_present",
+            "status": (
+                "independently_validated"
+                if fine_validated and initial_exception_count == 0
+                else "partial_pass"
+                if initial_exception_count == 0
+                else "exceptions_present"
+            ),
         }
+        if fine_result is not None:
+            workstream_summaries[name]["fine_candidate_envelope"] = {
+                "semantic_topology_sha256": fine_result["semantic_topology_sha256"],
+                "candidate_edge_count": fine_result["candidate_edge_count"],
+                "expanded_terminal_actuator_relations": fine_result[
+                    "prewiring_comparison"
+                ]["independent_terminal_actuator_relations"],
+                "current_relation_match": fine_result["prewiring_comparison"]["pass"],
+                "clean_rebuild_repeat_pass": fine_result["clean_rebuild_repeat"]["pass"],
+                "topology_independently_validated": fine_result[
+                    "topology_independently_validated"
+                ],
+            }
         print(
             f"  [{name}] {len(terminal_ids):,} terminals, {len(groups):,} groups, "
             f"{applied_count:,} applied, {initial_exception_count:,} unexpected exceptions",
@@ -628,10 +679,6 @@ def run_revalidation(
     decision_digest = hashlib.sha256(
         json.dumps(stable_decisions, ensure_ascii=False, sort_keys=True).encode("utf-8")
     ).hexdigest()
-    now = datetime.now(UTC)
-    run_id = "wiring-revalidation-" + now.strftime("%Y%m%dT%H%M%SZ")
-    run_dir = output_root / run_id
-    run_dir.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(stable_decisions).to_parquet(run_dir / "group-decisions.parquet", index=False)
     (run_dir / "exceptions.json").write_text(
         json.dumps(exceptions, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -669,6 +716,19 @@ def run_revalidation(
             "blocked_relation_families": len(blocked),
         },
         "workstreams": workstream_summaries,
+        "fine_family_results": {
+            name: {
+                "status": item["status"],
+                "semantic_topology_sha256": item["semantic_topology_sha256"],
+                "candidate_edge_count": item["candidate_edge_count"],
+                "prewiring_comparison": item["prewiring_comparison"],
+                "clean_rebuild_repeat": item["clean_rebuild_repeat"],
+                "degrees_of_freedom": item["degrees_of_freedom"],
+                "candidate_set_statistics": item["candidate_set_statistics"],
+                "masked_gold_standard": item["masked_gold_standard"],
+            }
+            for name, item in fine_family_results.items()
+        },
         "optic_assignment_comparison": optic_comparison,
         "unexpected_exception_count": len(exceptions),
         "exceptions": exceptions,
@@ -676,12 +736,12 @@ def run_revalidation(
         "acceptance": {
             "terminal_and_group_accounting_pass": len(exceptions) == 0,
             "published_vision_subgraph_pass": optic_comparison["pass"],
-            "fine_candidate_matrices_independently_reconstructed": False,
+            "fine_candidate_matrices_independently_reconstructed": len(blocked) == 0,
             "global_scientific_revalidation_pass": False,
         },
         "next_action": (
-            "Implement independent candidate-edge builders one workstream at a time, beginning "
-            "with motor output or proprioception, and rerun until every current relation is "
+            "Implement independent candidate-edge builders for unregistered vision, "
+            "proprioception and mechanosensation, and rerun until every current relation is "
             "classified as confirmed, added, removed, unsupported or explicitly blocked."
         ),
     }

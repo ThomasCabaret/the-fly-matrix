@@ -14,4 +14,4 @@ calibration_dataset_ids: []
 held_out_behavior_ids: []
 status: unknown
 confidence: low
-known_limitations: [FlyBody actionneurs are not explicit biological muscles, Five optic-nerve rm and six accessory-nerve xm effectors are absent from FlyBody and terminate explicitly, Candidate gains remain deliberately uncalibrated]
+known_limitations: [FlyBody actionneurs are not explicit biological muscles, Five optic-nerve rm and six accessory-nerve xm effectors are absent from FlyBody and terminate explicitly, Candidate gains remain deliberately uncalibrated, The independently validated topology constrains eligible relations but does not identify any of the 7849 continuous transfer values]

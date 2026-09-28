@@ -14,11 +14,26 @@ acceptance_criteria:
   - Five optic-nerve rm and six accessory-nerve xm neurons remain explicit no-output terminals because FlyBody lacks their effectors
   - Each of the 815 motor channels is assigned to either a candidate edge set or the explicit terminal policy, never both
   - Runtime weights are injected externally and no scientific parameter value is persisted
+  - An empty-destination build from raw annotations, canonical population flags, versioned rules, an empty singular-exception table and the FlyBody actuator inventory reproduces all relations without reading prewiring
+  - A repeated clean build reproduces the canonical semantic topology hash
+  - Side, appendage, actuator coverage and mirrored-capacity constraints pass with no exception
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: motor-transduction-candidates-2026-09-21
+latest_run_id: wiring-revalidation-20260928T205213Z
 status: integration_pass
+scientific_topology_status: independently_validated
+semantic_topology_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
 notes:
   - Candidate rules use only broad muscle category, published exit-nerve effector and side
   - A free signed gain is exposed for each permitted edge
   - Arbitrary smoke weights verify execution but are never calibration values
+  - The independent builder emits 3746 group-to-actuator candidates which expand to the exact 7849 terminal-to-actuator relations already compiled by the runtime
+  - All 7849 current relations were independently confirmed; none were added, removed or duplicated
+  - No non-circular exact muscle-to-FlyBody-control gold standard exists, so this validates a bounded candidate envelope rather than an exact biological muscle crosswalk
+  - Routing capacity and 7849 continuous transfer gains are reported separately; no gain is accepted by this validation
+source_references:
+  - wiring/revalidation/motor-output-v1.yaml
+  - wiring/revalidation/motor-output-exceptions-v1.yaml
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+  - https://male-cns.janelia.org/download/
+  - https://github.com/google-deepmind/mujoco_menagerie/tree/main/flybody

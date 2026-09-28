@@ -1,0 +1,216 @@
+schema_version: 1
+id: wiring-revalidation.motor-output.v1
+version: 1
+title: Independent MaleCNS motor-output candidate-envelope rules
+claim: >-
+  Reconstruct a finite, local motor-neuron-to-FlyBody-actuator candidate envelope
+  from raw MaleCNS annotations and the independently inventoried FlyBody actuator
+  surface. The rules identify anatomical capacity, never gains, signs, thresholds,
+  timing, or a desired behavior.
+
+sources:
+  annotations:
+    dataset_id: malecns-v1.0-body-annotations
+    path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+    source_url: https://male-cns.janelia.org/download/
+  population_scope:
+    path: data/derived/analysis/cycle-topology/node-classification.parquet
+  actuators:
+    dataset_id: flybody-actuator-inventory
+    path: data/derived/wiring/flybody-actuator-channels.csv
+    source_url: https://github.com/google-deepmind/mujoco_menagerie/tree/main/flybody
+
+scope:
+  field: superclass
+  op: in
+  value: [vnc_motor, cb_motor]
+
+group_by: [subclass, grouping_type, somaSide]
+
+rules:
+  - id: motor.vnc.front-leg.same-side.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: fl}
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - flybody-actuator-inventory
+    used_claim: >-
+      The published subclass denotes front-leg muscle targets. FlyBody exposes
+      eleven controls on the homologous same-side front leg; exact muscle-to-joint
+      transfer is not asserted.
+    actuator_selector: {body_group: legs, leg_position: front, side_policy: same}
+
+  - id: motor.vnc.middle-leg.same-side.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: ml}
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - flybody-actuator-inventory
+    used_claim: >-
+      The published subclass denotes middle-leg muscle targets. FlyBody exposes
+      eleven controls on the homologous same-side middle leg; exact muscle-to-joint
+      transfer is not asserted.
+    actuator_selector: {body_group: legs, leg_position: middle, side_policy: same}
+
+  - id: motor.vnc.hind-leg.same-side.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: hl}
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - flybody-actuator-inventory
+    used_claim: >-
+      The published subclass denotes hind-leg muscle targets. FlyBody exposes
+      eleven controls on the homologous same-side hind leg; exact muscle-to-joint
+      transfer is not asserted.
+    actuator_selector: {body_group: legs, leg_position: hind, side_policy: same}
+
+  - id: motor.vnc.wing.same-side.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: wm}
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - flybody-actuator-inventory
+    used_claim: >-
+      The published subclass denotes wing muscle targets. The candidate envelope
+      is restricted to the three same-side FlyBody wing controls.
+    actuator_selector: {body_group: wings, side_policy: same}
+
+  - id: motor.vnc.haltere.same-side.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: hm}
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - flybody-actuator-inventory
+    used_claim: >-
+      The published subclass denotes haltere muscle targets. FlyBody has one
+      represented same-side haltere control; transfer remains uncalibrated.
+    actuator_selector: {body_group: halteres, side_policy: same}
+
+  - id: motor.vnc.neck.central-head.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: nm}
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - flybody-actuator-inventory
+    used_claim: >-
+      The published subclass denotes neck muscle targets. FlyBody represents
+      head pose by three central controls, so laterality cannot be expressed more
+      finely without inventing anatomy.
+    actuator_selector: {body_group: head, side_policy: neutral}
+
+  - id: motor.vnc.abdomen.central-chain.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: ad}
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - flybody-actuator-inventory
+    used_claim: >-
+      The published subclass denotes abdominal muscle targets. FlyBody exposes a
+      fourteen-control central abdominal chain and no muscle-level crosswalk.
+    actuator_selector: {body_group: abdomen, side_policy: neutral}
+
+  - id: motor.cb.antennal.same-side.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: am}
+    outcome: applied
+    relation_class: engineering_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references: [malecns-v1.0-body-annotations, flybody-actuator-inventory]
+    used_claim: >-
+      The annotation and antennal-nerve exit constrain a same-side antenna
+      envelope. This is an engineering candidate, not an exact muscle crosswalk.
+    actuator_selector: {body_group: antennae, side_policy: same}
+
+  - id: motor.cb.proboscis.local.v1
+    priority: 100
+    selector: {field: subclass, op: equals, value: pm}
+    outcome: applied
+    relation_class: engineering_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references: [malecns-v1.0-body-annotations, flybody-actuator-inventory]
+    used_claim: >-
+      The annotation and mouthpart/pharyngeal exit nerves constrain the FlyBody
+      proboscis envelope. Central controls and the same-side labrum are eligible;
+      exact transfer is unknown.
+    actuator_selector: {body_group: proboscis, side_policy: neutral_or_same}
+
+  - id: motor.cb.ps349-antennal-engineering-candidate.v1
+    priority: 200
+    selector:
+      all:
+        - {field: subclass, op: equals, value: rm}
+        - {field: type, op: equals, value: PS349}
+        - {field: exitNerve, op: equals, value: AN}
+    outcome: applied
+    relation_class: engineering_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://www.virtualflybrain.org/blog/2022/01/01/ps349_l-malecns11265-vfb_jrmc1k3h/
+      - flybody-actuator-inventory
+    used_claim: >-
+      PS349 is recorded as a motor neuron exiting the antennal nerve. Restriction
+      to same-side antenna controls is a visible engineering candidate, not a
+      biological identification of its peripheral muscle.
+    actuator_selector: {body_group: antennae, side_policy: same}
+
+  - id: motor.unrepresented-output.sink.v1
+    priority: 50
+    selector: {field: subclass, op: in, value: [rm, xm]}
+    outcome: applied
+    relation_class: unsupported
+    terminal_disposition: sink
+    provenance_kind: dataset_observation
+    source_references: [malecns-v1.0-body-annotations, flybody-actuator-inventory]
+    used_claim: >-
+      The peripheral target is unknown or has no defensible represented FlyBody
+      actuator. Activity is retained and consumed by an explicit sink.
+    actuator_selector: null
+
+acceptance_gates:
+  - exactly 815 canonical motor terminals are reconstructed
+  - every terminal belongs to exactly one lossless group
+  - every group is classified by one highest-priority compatible rule
+  - every parameterized group has a finite non-empty local actuator set
+  - sink groups have no actuator relation
+  - no candidate crosses side or appendage boundaries declared by its rule
+  - all 102 inventoried actuators are covered by at least one candidate
+  - mirrored groups have equal candidate capacities when both sides exist
+  - a repeated clean build has the same semantic topology hash
+
+gold_standard:
+  status: not_applicable_no_independent_exact_crosswalk
+  reason: >-
+    MaleCNS records broad or named muscle targets while FlyBody exposes abstract
+    joint controls; no non-circular exact muscle-to-control table is available.

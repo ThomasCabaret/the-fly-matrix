@@ -1,0 +1,5 @@
+schema_version: 1
+id: wiring-revalidation.motor-output.exceptions.v1
+version: 1
+title: Singular exceptions for independent motor-output reconstruction
+entries: []

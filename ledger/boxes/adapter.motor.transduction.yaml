@@ -6,11 +6,11 @@ adapter_type: F
 anatomical_region: muscles_and_joints
 parent_id: null
 ports: {inputs: [muscle_group_activity], outputs: [actuator_commands]}
-status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: low
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/motor-routing.json, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, data/derived/wiring/motor-transduction-candidates.json, data/derived/wiring/motor-actuator-candidates.parquet, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, runs/wiring-smoke/latest.json]
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass, scientific_topology: independently_validated}
+confidence: medium
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/motor-routing.json, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, data/derived/wiring/motor-transduction-candidates.json, data/derived/wiring/motor-actuator-candidates.parquet, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, data/derived/wiring-revalidation/latest.json, wiring/revalidation/motor-output-v1.yaml, wiring/revalidation/motor-output-exceptions-v1.yaml, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.motor.transduction]
-validation_ids: [validation.motor_grouping, validation.motor_transduction_candidates, validation.flybody_actuator_interface]
-next_action: Réduire puis calibrer les 7 849 gains candidats sans modifier le câblage exhaustif des 815 entrées et 102 sorties.
-blocked_by: []
+validation_ids: [validation.motor_grouping, validation.motor_transduction_candidates, validation.flybody_actuator_interface, validation.scientific_wiring_reaudit]
+next_action: Geler le hash topologique moteur et attendre la clôture de la revalidation scientifique globale avant toute calibration des 7 849 gains.
+blocked_by: [validation.scientific_wiring_reaudit]
 completion_criteria: [102 actionneurs physiques couverts, 11 effecteurs absents traités comme terminaux explicites, Groupes musculaires biologiques affectés, Transformations locales, Limites mécaniques testées]

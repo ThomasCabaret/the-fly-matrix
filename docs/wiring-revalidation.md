@@ -51,10 +51,33 @@ source-supported candidates, engineering candidates and proxies. The 2,628
 published R7/R8 body-to-optic-column relations are reconstructed directly from
 the official workbook and compared relation by relation.
 
-Rules v1 intentionally do **not** independently regenerate the complete fine
-candidate matrices for proprioception, mechanosensation, vision remainder or
-motor transduction. Those four relation families remain explicit blockers. Their
-current executable manifests are comparison baselines, not construction recipes.
+Rules v1 intentionally do **not** by itself regenerate complete fine candidate
+matrices. The first companion builder now handles motor output; proprioception,
+mechanosensation and vision remainder remain explicit blockers. Their current
+executable manifests are comparison baselines, not construction recipes.
+
+## Motor-output clean builder
+
+[`motor-output-v1.yaml`](../wiring/revalidation/motor-output-v1.yaml) and its
+empty, versioned singular-exception table reconstruct the motor candidate
+envelope without opening `motor-actuator-candidates.parquet`. The clean build
+uses only raw MaleCNS annotations, canonical-neuron flags and the independently
+inventoried FlyBody actuator surface. It groups all 815 terminals losslessly into
+441 type/side groups, produces 3,746 group-to-actuator candidates and expands to
+7,849 terminal-to-actuator relations. Ten groups whose effectors are absent or
+unknown remain explicit `sink` terminals.
+
+The finalized semantic topology hash is
+`0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3`.
+A second empty-destination build reproduced it. Only then was executable
+prewiring opened: all 7,849 relations matched, with no addition, removal or
+duplicate. Negative side/appendage constraints, mirrored candidate capacities
+and coverage of all 102 actuators passed. This validates a bounded candidate
+topology, not an exact muscle crosswalk and not any of the 7,849 transfer gains.
+
+`wiring_revalidation.bat -Direction output` performs this complete sequence and
+reports motor output as `independently_validated`. The global review remains
+`in_progress` until the three input fine families have equivalent builders.
 
 ## Target clean-build contract
 

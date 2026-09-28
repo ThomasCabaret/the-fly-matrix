@@ -47,7 +47,7 @@ acceptance_criteria:
   - Freeze topology, candidate-envelope and exception hashes before any affected calibration campaign
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: wiring-revalidation-20260927T183911Z
+latest_run_id: wiring-revalidation-20260928T205213Z
 status: local_pass
 review_kind: scientific_wiring_revalidation
 review_status: in_progress
@@ -60,19 +60,32 @@ unaccepted_claims:
   - Current group granularity is biologically optimal
   - Current candidate matrices contain every plausible relation and exclude every implausible relation
   - Current proxy choices are scientifically adequate
-  - Current motor groups and actuator candidate sets are ready for calibration
+accepted_claims:
+  - The motor-output candidate topology is independently reconstructible from declared sources and versioned rules with semantic hash 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  - The independent motor envelope reproduces all 7849 executable terminal-to-actuator relations with no addition, removal, duplicate or singular exception
+  - Motor candidates obey declared side and appendage boundaries, preserve all 102 represented actuators and keep 10 unrepresented groups as explicit sinks
 workstreams:
   - vision
   - proprioception
   - mechanosensation
   - motor_output
-next_action: Add clean independent builders for the four fine candidate-edge families, including bounded-capacity metrics, negative constraints, semantic hashes and non-circular gold-standard tests where possible; terminal populations, annotation-backed groups, dispositions and published R7/R8 column relations already pass the rules-first comparison.
+next_action: >-
+  Add clean independent builders for the three remaining input relation families:
+  unregistered vision and HBeyelet, proprioception including its proxies, and
+  mechanosensation including contact/motion proxies. Preserve the independently
+  validated motor hash and rerun the global comparison after each family.
 notes:
   - Existing integration_pass results prove execution and cardinality only.
   - This review status overrides calibration-oriented next actions on owned records until the validation passes.
   - The first rules-first pass accounted for 12658 unique terminals and 7124 groups with zero unexpected exceptions or membership differences.
   - The official optic supplement independently reproduced all 2628 current R7/R8 bodyId-to-column relations.
-  - Proprioceptive, mechanosensory, motor and unregistered-vision fine candidate matrices remain explicitly blocked; this local pass does not accept them.
+  - Motor output is the first fine family independently validated: two clean builds have the same hash and all 7849 current terminal-actuator relations match exactly.
+  - Proprioceptive, mechanosensory and unregistered-vision fine candidate matrices remain explicitly blocked; therefore the global review stays in_progress.
+workstream_status:
+  vision: fine_candidate_builder_blocked
+  proprioception: fine_candidate_builder_blocked
+  mechanosensation: fine_candidate_builder_blocked
+  motor_output: independently_validated
 source_references:
   - decisions/0007-annotated-body-and-neuron-scope.md
   - decisions/0008-independent-scientific-wiring-reaudit.md

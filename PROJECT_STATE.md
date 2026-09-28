@@ -1,7 +1,7 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-28, politique de clean rebuild et d'enveloppes de routage
-bornées intégrée ; les relations candidates fines restent à reconstruire avant calibration.
+Mise à jour : 2026-09-28, première famille fine reconstruite indépendamment :
+la topologie candidate de sortie motrice est validée ; trois familles d'entrée restent ouvertes.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -43,10 +43,21 @@ palier reproductible de cette revue. Le run
 dispositions au précâblage : aucune différence et aucune exception inattendue ne
 subsistent. Le supplément officiel a aussi reproduit exactement les 2 628
 relations R7/R8 `bodyId`→colonne optique. Cette passe ne régénère pas encore les
-quatre familles de matrices candidates fines — vision non enregistrée,
-proprioception, mécanoréception et moteur — qui restent donc bloquées et non
-acceptées. La portée et les commandes sont documentées dans
+familles de matrices candidates fines. La sortie motrice dispose maintenant de
+son propre clean builder ; vision non enregistrée, proprioception et
+mécanoréception restent bloquées et non acceptées. La portée et les commandes sont documentées dans
 [`docs/wiring-revalidation.md`](docs/wiring-revalidation.md).
+
+Le run global `wiring-revalidation-20260928T205213Z` a reconstruit les 815
+terminaux moteurs et 441 groupes dans une destination vide, puis produit 3 746
+relations groupe→actionneur, soit 7 849 relations terminal→actionneur. Le hash
+sémantique `0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3`
+a été reproduit par un second clean build. Après seulement, la matrice exécutable
+a été ouverte : ses 7 849 relations sont toutes confirmées, sans ajout, retrait
+ni doublon. Les contraintes négatives de côté et d'appendice, la capacité miroir
+et la couverture des 102 actionneurs passent ; les 10 groupes non représentés
+restent des `sink`. Cette validation accepte l'enveloppe topologique candidate,
+pas une correspondance muscle biologique exacte et aucun des 7 849 gains.
 
 Le projet adopte désormais une politique d'**automatisation proportionnée par
 règles avec rapports d'exception**. Les travaux répétitifs doivent, lorsque c'est
@@ -177,7 +188,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 
 - Maturité historique du câblage : **81 %**.
 - Graphe central MaleCNS : **100 % structurel**.
-- Sortie motrice : **79 %**, précâblage exécutable à revalider.
+- Sortie motrice : **79 %** historique ; topologie candidate indépendamment validée, gains inconnus.
 - Proprioception : **81 %**, précâblage exécutable à revalider.
 - Entrées sensorielles non résolues : **96 %**.
 - Clamps basaux : **87 %**.
@@ -187,7 +198,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
-- Revalidation scientifique : **`in_progress` ; 26 objets possédés, premier palier passé, 4 familles de relations fines bloquées**.
+- Revalidation scientifique : **`in_progress` ; 26 objets possédés, sortie motrice validée, 3 familles d'entrée fines bloquées**.
 - Calibration des familles concernées : **bloquée avant revalidation**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
@@ -254,7 +265,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **63 tests**, leurs sous-tests et le smoke test
+conservées et classifiées. Les **67 tests**, leurs sous-tests et le smoke test
 bout en bout passent après cette correction.
 
 ## Fronts structurels restants
@@ -265,14 +276,12 @@ bout en bout passent après cette correction.
    91 proxies de contrainte/vibration et leurs frontières appendice/côté.
 3. Régénérer puis comparer les arêtes mécanoréceptrices et leurs proxies de
    mouvement ou de contact local.
-4. Régénérer puis comparer les ensembles d'actionneurs permis pour les 441 groupes
-   moteurs, en conservant séparément les 815 routes `bodyId` déjà confirmées.
-5. Construire chaque famille dans une sortie vide sans lire son précâblage,
+4. Construire chaque famille restante dans une sortie vide sans lire son précâblage,
    reproduire son hash sémantique, mesurer la distribution des ensembles candidats
    et tester les contraintes négatives et gold standards applicables.
-6. Étendre les règles seulement à partir des exceptions observées, conserver une
+5. Étendre les règles seulement à partir des exceptions observées, conserver une
    petite table de vraies singularités et ne promouvoir aucun objet tant que ces
-   quatre paquets bloqués ne sont pas indépendamment comparés.
+   trois paquets bloqués ne sont pas indépendamment comparés.
 
 ## Front de calibration
 
