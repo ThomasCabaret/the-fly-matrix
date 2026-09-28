@@ -56,6 +56,21 @@ candidate matrices for proprioception, mechanosensation, vision remainder or
 motor transduction. Those four relation families remain explicit blockers. Their
 current executable manifests are comparison baselines, not construction recipes.
 
+## Target clean-build contract
+
+The next builders must write each fine family into an empty output root from
+declared sources, rules, and a versioned singular-exception table. Independent
+construction must not import the current candidate matrix, current relation IDs,
+or a hand-maintained derivative of them. The current matrix is opened only after
+the independent result and its semantic hash have been finalized.
+
+The generated topology is a bounded candidate envelope. Reports distinguish
+structural routing degrees of freedom from continuous transfer-function degrees
+of freedom. No universal candidate-count threshold is imposed, but each builder
+must justify its locality boundary and expose any group whose capacity could mix
+unrelated anatomy or encode a global policy. Such a group remains blocked even
+when the runtime can execute it.
+
 ## Output contract
 
 Each run writes under `data/derived/wiring-revalidation/<run-id>/`:
@@ -65,6 +80,12 @@ Each run writes under `data/derived/wiring-revalidation/<run-id>/`:
   rules, provenance class, disposition and current comparison;
 - `exceptions.json`: every unexpected or conflicting case;
 - `blocked-review-packets.json`: known scientific gaps and their next actions.
+
+For a fine-family acceptance run, the summary additionally reports counts by
+relation/provenance class, candidate-set mean, quantiles and maximum, discrete and
+continuous degrees of freedom, negative-constraint violations, symmetry and
+topography checks, singular-exception count, masked-gold performance when valid,
+and the canonical semantic topology hash.
 
 `data/derived/wiring-revalidation/latest.json` points to the latest run. The
 human report is regenerated at
@@ -80,3 +101,10 @@ been independently generated and classified as `exact`,
 `source_supported_candidate`, `engineering_candidate`, `proxy`, `unsupported` or
 `removed`, with source claims and tests. Terminal equality, zero exceptions and a
 green smoke test are necessary evidence but not sufficient acceptance.
+
+Acceptance also requires a repeated clean build with the same semantic hash,
+explicit negative constraints, bounded local candidate capacity, and a compiled
+runtime path. A family may be topologically accepted while still marked
+`not_ready_for_calibration` when its remaining parameters have no credible local
+identification route; that missing route must be visible rather than repaired by
+expanding the candidate envelope.

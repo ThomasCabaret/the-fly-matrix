@@ -1,8 +1,10 @@
 # Méthodologie du câblage
 
 Ce document décrit la méthode de travail durable de The Fly Matrix. Le registre
-`ledger/` reste la source de vérité machine-readable ; ce texte explique comment
-l'interpréter et le faire évoluer.
+`ledger/` reste la source de vérité machine-readable pour statuts, claims,
+validations et prochaines actions ; les relations générées suivent les couches
+canoniques précisées ci-dessous. Ce texte explique comment les interpréter et les
+faire évoluer.
 
 ## Objectif de la phase actuelle
 
@@ -36,6 +38,21 @@ smoke tests prouvent uniquement que les interfaces s'exécutent.
   valeurs devront être partagées.
 - Une **validation** possède un protocole, des critères d'acceptation et le dernier
   résultat connu.
+
+## Couches canoniques et artefacts dérivés
+
+La topologie périphérique suit quatre couches ordonnées :
+
+1. données brutes immuables ou références immuables, versionnées et hashées ;
+2. règles biologiques, anatomiques et d'ingénierie versionnées ;
+3. petite table d'exceptions réellement singulières, chacune justifiée et suivie ;
+4. groupes, matrices candidates, manifestes et rapports générés.
+
+La quatrième couche est un cache dérivé. Le registre reste la source canonique des
+statuts, propriétaires, claims, validations et prochaines actions, tandis que les
+relations détaillées doivent être reconstructibles depuis les trois premières
+couches. Une matrice générée peut accélérer un run ou servir de baseline de diff ;
+elle ne devient jamais la recette de sa propre revalidation. Voir l'ADR 0011.
 
 ## Classifier les corps avant de construire le graphe neuronal
 
@@ -94,6 +111,29 @@ connus peuvent y avoir une affectation fixée et les autres une matrice libre, m
 ils ne sont pas remplacés ponctuellement par du basal. Une exception exige une
 frontière biologique ou fonctionnelle justifiée et enregistrée.
 
+## Incertitude de routage et capacité des boîtes
+
+Le câblage fixe l'**enveloppe des routages admissibles**. Si l'identité exacte est
+inconnue, cette enveloppe peut contenir plusieurs relations candidates ; la
+calibration pourra ensuite choisir ou pondérer uniquement à l'intérieur de cette
+enveloppe. Ajouter un candidat hors de l'enveloppe est une modification de
+câblage, pas un simple changement de paramètre.
+
+Deux familles de degrés de liberté restent séparées dans le registre et la
+provenance, même si un composant runtime commun les exécute :
+
+- routage structurel : permutation, choix discret, matrice creuse locale ;
+- fonction de transfert : gain, seuil, constante de temps, adaptation, délai,
+  bruit ou autre dynamique physiologique.
+
+Il n'existe pas de taille candidate universelle : certains circuits ont un
+fan-in biologique élevé. Chaque famille doit néanmoins justifier une borne de
+capacité locale par le côté, le nerf, le segment, la classe réceptrice ou motrice
+et la topographie disponible. Le rapport expose moyenne, quantiles, maximum et
+degrés de liberté. Un petit nombre de capteurs relié librement à des secteurs sans
+rapport n'est pas un câblage fini : la famille reste `blocked` jusqu'à ce que
+l'espace soit réduit ou qu'une frontière scientifique explicite soit acceptée.
+
 ## Exécution et acceptation scientifique sont deux statuts distincts
 
 Un `implementation: tested` ou un `validation: integration_pass` prouve seulement
@@ -124,6 +164,19 @@ relation doit être classée `exact`, `source_supported_candidate`,
 `engineering_candidate`, `proxy`, `unsupported` ou `removed`, avec les écarts,
 sources, hypothèses et tests enregistrés. Un smoke test vert ne peut jamais clore
 cette revue.
+
+Une famille `independently_validated` doit en outre être reconstruite dans une
+destination vide sans lire ses artefacts courants. Le build enregistre les
+identités des données, règles, exceptions, code et environnement, puis calcule un
+hash sémantique sur des relations triées canoniquement. Ce hash, plutôt qu'un seul
+hash binaire de Parquet, doit être identique lors d'un rejeu à entrées identiques.
+
+La validation cherche les relations interdites autant que les relations
+plausibles : contraintes négatives, exclusivité, symétries homologues et
+asymétries documentées, topographie, cardinalités et chemins vides. Lorsqu'un
+mapping connu peut être masqué sans circularité, un protocole versionné mesure sa
+récupération comme gold standard. Une règle écrite à partir des relations testées
+ne peut pas revendiquer ce score comme validation indépendante.
 
 ## Ordre normal d'un lot
 
@@ -165,9 +218,9 @@ traitées directement avec provenance. Le contrat transversal, les catégories d
 surprise et la règle d'arrêt sont dans
 [`rules-first-automation.md`](rules-first-automation.md) et l'ADR 0009.
 
-## Définition de « 100 % câblé »
+## Deux portes de complétion
 
-Le câblage atteint 100 % lorsque :
+La **couverture terminale exécutable** atteint 100 % lorsque :
 
 - toutes les populations terminales dans le périmètre sont inventoriées et
   décomposées ;
@@ -184,9 +237,24 @@ Le câblage atteint 100 % lorsque :
 - aucune valeur de calibration n'est nécessaire pour construire la topologie ;
 - les omissions, ambiguïtés et composants physiques absents sont comptés.
 
-Cela ne signifie pas que la mouche se comporte correctement. À 100 %, elle peut
-être exécutée structurellement avec des valeurs arbitraires ; la calibration peut
-alors commencer comme phase distincte.
+Cela ne signifie ni que la mouche se comporte correctement, ni que la topologie
+scientifique est acceptée.
+
+Le **câblage périphérique scientifiquement validé** exige en plus :
+
+- un clean build déterministe depuis sources, règles et exceptions ;
+- une provenance et une classe explicites pour chaque relation ;
+- des enveloppes candidates locales dont la capacité et les degrés de liberté
+  sont quantifiés et justifiés ;
+- les tests négatifs, symétries, topographies et gold standards applicables ;
+- une table d'exceptions petite, explicite et sans fallback silencieux ;
+- un runtime compilable et une note d'identifiabilité/calibration pour chaque
+  famille, sans exiger qu'elle soit déjà calibrée.
+
+Une absence de données de calibration n'autorise pas un mapping inventé. Elle
+peut laisser la couverture exécutable intacte tout en bloquant l'état
+`ready_for_calibration`. Le snapshot de topologie, son enveloppe candidate et la
+table d'exceptions sont gelés et hashés avant toute campagne affectée.
 
 ## Calcul de l'indicateur de câblage
 

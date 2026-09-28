@@ -158,6 +158,30 @@ degrees of freedom, frozen values, constraints, and inheritance rules must remai
 explicit. Calibration must never change structural cardinality or topology
 silently; such a need returns to the wiring workflow.
 
+### Routing parameters versus transfer parameters
+
+Peripheral boxes may expose two different parameter classes that must never be
+collapsed into one anonymous vector:
+
+- **routing parameters** select or weight relations inside an already accepted,
+  finite candidate envelope and represent residual structural uncertainty;
+- **transfer parameters** describe local physiology or mechanics such as gain,
+  threshold, time constant, adaptation, delay, saturation, or noise.
+
+The topology snapshot, candidate-envelope semantic hash, rule-set hash, and
+exception-table hash are frozen in the campaign scope. Selecting within that
+envelope is calibration; adding a new candidate edge or crossing its anatomical
+boundary is a wiring change that invalidates the affected campaign lineage.
+
+Before fitting, each family declares the number and domain of discrete routing
+variables, the number and sharing rule of continuous transfer variables, and an
+identifiability status such as `evidence_supported`, `technically_constrained`,
+`underdetermined`, or `no_local_observation`. An underdetermined family may remain
+executable, but it is not silently made learnable by widening its routing space or
+using a global behavioral target. Calibration-runner engineering and isolated
+central studies may continue while peripheral review is open; affected parameter
+sets cannot be fitted or promoted until their topology is accepted.
+
 ## MaleCNS static priors and synaptic-sign policy
 
 MaleCNS v1.0 includes aggregate neurotransmitter records for nearly every

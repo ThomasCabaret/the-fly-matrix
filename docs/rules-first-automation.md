@@ -14,6 +14,12 @@ manual work, review risk, or future repetition it replaces. A one-off, genuinely
 ambiguous case may be handled directly as long as its decision and provenance are
 recorded in the normal registries.
 
+For generated peripheral topology, the canonical dependency order is immutable
+source identities → versioned rules → versioned singular exceptions → derived
+artifacts. Generated matrices are caches and comparison baselines, not editable
+scientific truth. The ledger remains authoritative for status, ownership, claims,
+validation, and next actions. ADR 0011 defines this division.
+
 ## The preferred loop
 
 For work that is sufficiently regular or repeated:
@@ -64,6 +70,12 @@ reason, disposition, owner or next action, and—when appropriate—an expiry or
 version that should trigger review. “Zero unexpected exceptions” is a meaningful
 acceptance gate; “zero exceptions” is not always necessary.
 
+Accepted singular exceptions live in a small versioned table separate from the
+generated exception report. Each has a stable ID, exact scope, provenance or
+engineering rationale, expected cardinality, review trigger, and replacement
+path. If many exceptions share a rationale, they are a missing rule rather than
+many singular exceptions.
+
 Each run should report at least:
 
 - input and rule-set identifiers or hashes;
@@ -100,6 +112,19 @@ The current prewiring must be comparison output, not the construction recipe.
 Rules reconstructed from raw versioned data and primary sources should report all
 differences from it, including unchanged, added, removed, unsupported, and
 ambiguous relations.
+
+An acceptance run builds into an empty destination and prevents the independent
+builder from reading the current family. It records hashes for inputs, rules,
+exceptions, code, and environment, plus a semantic hash over canonically sorted
+relations. Byte hashes remain useful but cannot replace the semantic hash when
+formats such as Parquet contain environment-dependent metadata.
+
+Validation must exercise negative as well as positive knowledge: forbidden
+cross-side or cross-segment relations, overlaps, empty candidate sets, unexpected
+asymmetry, and topographic violations. Where a known mapping can be withheld
+without having authored the evaluated rule, a versioned masked-gold protocol
+reports precision, recall, or equivalent recovery measures. Circular recovery is
+labelled diagnostic rather than independent evidence.
 
 The executable implementation is described in
 [`wiring-revalidation.md`](wiring-revalidation.md). `wiring_revalidation.bat`

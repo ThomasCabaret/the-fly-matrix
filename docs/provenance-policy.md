@@ -34,6 +34,9 @@ Pour toute boîte, tout groupe ou tout fil nouveau ou substantiellement modifié
 - `provenance.used_claims` : phrase courte indiquant exactement ce que la source
   justifie ;
 - `provenance.assumptions` : choix non directement imposés par les sources ;
+- `rule_id` et version de règle, ou `exception_id` stable pour une singularité ;
+- pour une relation candidate, la frontière anatomique qui l'autorise et les
+  contraintes négatives qui excluent les autres relations ;
 - `confidence` et `known_limitations` lorsque la fiche les accepte ;
 - une validation avec critères chiffrés pour les cardinalités importantes.
 
@@ -53,6 +56,13 @@ source plus précise que celle réellement utilisée.
   suivie dans le registre.
 - Git conserve le lot dans lequel la décision a été introduite ou révisée.
 
+Pour une topologie relationnelle générée, les sources, règles et exceptions
+singulières versionnées constituent la recette canonique. Les matrices et
+manifestes générés sont des caches. Le registre porte leur statut et leurs claims,
+mais ne remplace pas la recette relationnelle. Un rapport de clean build conserve
+les hashes de ces trois couches, du code et de l'environnement, ainsi qu'un hash
+sémantique des relations triées canoniquement.
+
 Une URL générale dans le contrat scientifique ne suffit pas toujours. Pour une
 règle locale importante, la fiche ou sa validation doit citer la source précise et
 nommer l'affirmation utilisée.
@@ -66,6 +76,12 @@ compare sa reconstruction au précâblage. Les identifiants vagues, liens cassé
 citations sans affirmation associée sont des résultats d'audit à corriger, pas des
 preuves. Toute relation non soutenue reste explicitement `engineering_candidate`,
 `proxy`, `unsupported` ou `removed` selon le constat.
+
+Une provenance complète doit pouvoir être émise avec chaque relation ou groupe,
+sans recherche manuelle dans le code : source observée, règle appliquée, classe de
+relation, hypothèse restante et éventuelle exception. Une grande table
+d'exceptions partageant la même justification signale une règle manquante ; elle
+ne doit pas devenir une seconde matrice manuelle cachée.
 
 ## Exemples d'interprétation
 

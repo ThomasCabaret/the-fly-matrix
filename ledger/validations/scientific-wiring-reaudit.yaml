@@ -39,6 +39,12 @@ acceptance_criteria:
   - Replace vague or broken source identifiers with canonical dataset IDs, stable URLs or DOIs and state the exact claim each source supports
   - Keep runtime execution tests separate from scientific acceptance; a passing smoke test cannot satisfy this validation
   - Complete vision, proprioception, mechanosensation and motor workstreams before any affected parameter family enters calibration
+  - Rebuild every fine relation family into an empty destination from immutable sources, versioned rules and a versioned singular-exception table without reading the current family
+  - Reproduce a canonical semantic relation hash on a repeated clean build with the same declared inputs
+  - Quantify candidate-set mean, quantiles and maximum plus discrete routing and continuous transfer degrees of freedom, and block any unjustified cross-sector capacity
+  - Test negative anatomical constraints, cardinalities, exclusivity, expected symmetry or documented asymmetry, and supported topography
+  - Measure recovery on masked known mappings when a non-circular gold-standard protocol can be defined
+  - Freeze topology, candidate-envelope and exception hashes before any affected calibration campaign
 calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: wiring-revalidation-20260927T183911Z
@@ -60,7 +66,7 @@ workstreams:
   - proprioception
   - mechanosensation
   - motor_output
-next_action: Independently regenerate and compare the four fine candidate-edge families; terminal populations, annotation-backed groups, dispositions and published R7/R8 column relations already pass the rules-first comparison.
+next_action: Add clean independent builders for the four fine candidate-edge families, including bounded-capacity metrics, negative constraints, semantic hashes and non-circular gold-standard tests where possible; terminal populations, annotation-backed groups, dispositions and published R7/R8 column relations already pass the rules-first comparison.
 notes:
   - Existing integration_pass results prove execution and cardinality only.
   - This review status overrides calibration-oriented next actions on owned records until the validation passes.
@@ -70,3 +76,4 @@ notes:
 source_references:
   - decisions/0007-annotated-body-and-neuron-scope.md
   - decisions/0008-independent-scientific-wiring-reaudit.md
+  - decisions/0011-reconstructible-peripheral-topology.md

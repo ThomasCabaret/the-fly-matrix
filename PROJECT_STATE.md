@@ -1,7 +1,7 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-27, première passe automatisée de revalidation scientifique
-terminée ; les relations candidates fines restent à reconstruire avant calibration.
+Mise à jour : 2026-09-28, politique de clean rebuild et d'enveloppes de routage
+bornées intégrée ; les relations candidates fines restent à reconstruire avant calibration.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -56,6 +56,15 @@ les cas ambigus pour une décision compacte. Cette préférence ne justifie pas 
 infrastructure plus coûteuse que le traitement direct des rares cas restants. Le
 contrat est dans [`docs/rules-first-automation.md`](docs/rules-first-automation.md)
 et l'[`ADR 0009`](decisions/0009-proportional-rules-first-automation.md).
+
+L'[`ADR 0011`](decisions/0011-reconstructible-peripheral-topology.md) fixe le
+jalon de sortie de cette revalidation : sources immuables, règles versionnées et
+petite table d'exceptions doivent reconstruire chaque famille dans une destination
+vide avec le même hash sémantique. Les matrices générées sont des caches. Les
+espaces candidats doivent rester locaux et leur capacité être quantifiée ; les
+paramètres discrets de routage sont séparés des paramètres continus de fonction de
+transfert. Les tests doivent inclure contraintes négatives, symétries/topographies
+pertinentes et gold standards masqués non circulaires lorsqu'ils existent.
 
 Le **banc d'exécution du vrai graphe MaleCNS est maintenant implémenté et mesuré**.
 Il transforme les 25 582 938 arêtes canoniques en CSR float32, compare chaque run
@@ -245,7 +254,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **51 tests**, leurs 5 sous-tests et le smoke test
+conservées et classifiées. Les **63 tests**, leurs sous-tests et le smoke test
 bout en bout passent après cette correction.
 
 ## Fronts structurels restants
@@ -258,9 +267,12 @@ bout en bout passent après cette correction.
    mouvement ou de contact local.
 4. Régénérer puis comparer les ensembles d'actionneurs permis pour les 441 groupes
    moteurs, en conservant séparément les 815 routes `bodyId` déjà confirmées.
-5. Étendre les règles seulement à partir des exceptions observées, conserver les
-   claims précis et ne promouvoir aucun objet tant que ces quatre paquets bloqués
-   ne sont pas indépendamment comparés.
+5. Construire chaque famille dans une sortie vide sans lire son précâblage,
+   reproduire son hash sémantique, mesurer la distribution des ensembles candidats
+   et tester les contraintes négatives et gold standards applicables.
+6. Étendre les règles seulement à partir des exceptions observées, conserver une
+   petite table de vraies singularités et ne promouvoir aucun objet tant que ces
+   quatre paquets bloqués ne sont pas indépendamment comparés.
 
 ## Front de calibration
 

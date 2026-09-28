@@ -206,6 +206,25 @@ assignments remain parameterized inside that stack. A poorly documented retinal
 subset must not be converted into an unrelated basal clamp unless an explicit
 biological boundary justifies the different treatment.
 
+An unknown mapping is complete only as a **bounded candidate envelope**. The
+envelope must be finite, local, anatomically constrained, and small enough that it
+cannot act as a substitute behavioral controller. There is no universal numeric
+fan-out limit: each family must justify its capacity from side, nerve, segment,
+receptor or effector class, and available topography. Candidate-set size and free
+routing degrees of freedom must be reported.
+
+Structural routing parameters (permutation, sparse assignment, candidate choice)
+and physiological transfer parameters (gain, threshold, dynamics, adaptation,
+noise) remain separate in provenance and calibration even when implemented by the
+same adapter. Calibration may select within an accepted candidate envelope; it
+must not silently expand that envelope.
+
+Peripheral relation topology is reconstructed from immutable source identities,
+versioned rules, and a small versioned exception table. Generated matrices and
+manifests are derived caches. An accepted family must support a deterministic
+clean rebuild into an empty destination and a canonical semantic relation hash,
+as specified by ADR 0011.
+
 ## 6. Current qualitative interface picture
 
 This is a working audit, not an authoritative final count. Regenerate it directly from MaleCNS v1.0 plus the chosen body model and maintain a machine-readable audit.

@@ -42,8 +42,12 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
 7. `docs/rules-first-automation.md` lorsqu'un lot répète une décision sur de
    nombreux objets, construit un pipeline ou lance une campagne hors ligne.
 
-Le registre, les ADR et les manifestes reproductibles restent canoniques. Les
-skills indiquent comment travailler avec eux ; ils ne remplacent pas leur contenu.
+Le registre reste canonique pour les statuts, propriétaires, claims, validations
+et prochaines actions. Pour la topologie relationnelle générée, les sources
+versionnées, règles et exceptions singulières sont canoniques ; les matrices et
+manifestes générés sont des caches reproductibles. L'ADR 0011 fixe cette
+stratification. Les skills indiquent comment travailler avec ces sources ; ils ne
+remplacent pas leur contenu.
 
 ## Périmètre neuronal MaleCNS
 
@@ -69,6 +73,12 @@ Chaque canal terminal d'entrée ou de sortie doit avoir exactement une dispositi
 - Une différence de cardinalité n'impose pas une correspondance point-à-point :
   utiliser une boîte de routage ou de transfert dont les degrés de liberté sont
   explicitement comptés.
+- Séparer les paramètres de routage structurel (choix, permutation, matrice locale
+  admissible) des paramètres de fonction de transfert (gain, seuil, dynamique),
+  même si une même classe runtime les exécute.
+- Un ensemble candidat n'est terminé scientifiquement que s'il est fini, local et
+  borné par des contraintes anatomiques explicites. Une matrice capable de relier
+  librement des secteurs sans rapport reste `blocked`, même si elle s'exécute.
 
 ## Traçabilité attendue
 
@@ -103,6 +113,13 @@ masquer une surprise par un défaut silencieux ; une exception acceptée garde u
 raison et une prochaine action. La politique complète est définie par l'ADR 0009
 et `docs/rules-first-automation.md`.
 
+Une famille déclarée `independently_validated` doit pouvoir être reconstruite
+dans une destination vide depuis les sources, règles et exceptions, sans lire son
+précâblage, puis reproduire un hash sémantique canonique. Tester également les
+contraintes négatives, les symétries/topographies pertinentes et, lorsqu'il est
+non circulaire, un gold standard masqué. Le rapport expose la distribution des
+tailles d'ensembles candidats et les degrés de liberté, pas seulement leur nombre.
+
 ## Contrat de calibration
 
 - Distinguer `evidence_transfer`, `technical`, `local_interface`,
@@ -119,6 +136,10 @@ et `docs/rules-first-automation.md`.
   incertitude et limites d'applicabilité.
 - La calibration ne doit ni modifier silencieusement la topologie, ni ajouter un
   contrôleur comportemental externe autour de MaleCNS.
+- Le choix ou la pondération à l'intérieur d'une enveloppe candidate acceptée est
+  un paramètre de routage ; élargir cette enveloppe est une modification de
+  câblage. Geler et enregistrer les hashes de topologie et d'exceptions avant une
+  campagne.
 - ADR 0006 autorise une unique exception diagnostique isolée :
   `diagnostic_viewer.bat` peut contourner MaleCNS pour explorer MuJoCo, mais son
   overlay, son namespace et ses sorties doivent rester `NOT MALECNS / NOT
