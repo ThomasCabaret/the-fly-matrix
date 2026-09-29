@@ -6,9 +6,9 @@ adapter_type: B
 anatomical_region: mechanosensory_organs
 parent_id: sensor.touch
 ports: {inputs: [local_contact_loads, appendage_motion], outputs: [mechanoreceptor_activity]}
-status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
-confidence: low
-evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, runs/wiring-smoke/latest.json]
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass, scientific_topology: independently_validated}
+confidence: medium
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/mechanosensation-transduction-candidates.json, data/derived/wiring/mechanosensation-input-candidates.parquet, data/derived/wiring/mechanosensation-transduction-channel-audit.csv, data/derived/wiring-revalidation/latest.json, wiring/revalidation/mechanosensation-v1.yaml, wiring/revalidation/mechanosensation-exceptions-v1.yaml, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, literature_supported, derived_rule, engineering_choice, unresolved]
   source_references: [https://github.com/flyconnectome/2025malecns, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/, https://doi.org/10.1038/s41586-025-09029-4, https://pmc.ncbi.nlm.nih.gov/articles/PMC4007284/]
@@ -16,6 +16,6 @@ provenance:
   assumptions: [Each permitted load-to-terminal edge exposes an independent coefficient until calibration]
 parameter_family_ids: [parameter.sensory_transduction]
 validation_ids: [validation.mechanosensation_transduction_candidates]
-next_action: Conserver les 2 108 arêtes candidates sans valeur; toute sélection de gains relève de la calibration ultérieure.
-blocked_by: []
+next_action: Geler le hash topologique mécanorécepteur et attendre la clôture de la revalidation globale avant toute calibration des 28 514 coefficients terminaux.
+blocked_by: [validation.scientific_wiring_reaudit]
 completion_criteria: [Classes séparées, 323 canaux couverts par des candidats locaux, Fonctions locales documentées, Résolution physique limitée explicitement, Réponses unitaires testées]

@@ -284,7 +284,8 @@ acceptance_gates:
   - no unexpected exception remains
 
 known_limits:
-  - This ruleset does not independently regenerate proprioceptive or mechanosensory candidate edges.
+  - This ruleset does not independently regenerate proprioceptive candidate edges.
+  - Mechanosensory candidate edges are reconstructed by the companion mechanosensation-v1 clean builder and compared only after its semantic hash is finalized.
   - Motor candidate edges are reconstructed by the companion motor-output-v1 clean builder and compared only after its semantic hash is finalized.
   - Vision remainder registration and the HBeyelet proxy remain engineering hypotheses.
   - A green run advances the audit to in_progress; it cannot mark the global scientific review independently_validated.

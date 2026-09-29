@@ -1,0 +1,224 @@
+schema_version: 1
+id: mechanosensation-revalidation.rules.v1
+version: 1
+title: Independent mechanosensation candidate-envelope reconstruction
+claim: >-
+  Reconstruct the local physical-observable envelope of every annotated
+  mechanosensory terminal from raw MaleCNS annotations and FlyBody sensor
+  inventories, without reading the executable mechanosensation prewiring.
+
+sources:
+  annotations:
+    dataset_id: malecns-v1.0-body-annotations
+    path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  population_scope:
+    path: data/derived/analysis/cycle-topology/node-classification.parquet
+  leg_contacts:
+    path: data/derived/wiring/flybody-touch-channels.csv
+  local_contacts:
+    path: data/derived/wiring/flybody-local-touch-channels.csv
+  joint_state:
+    path: data/derived/wiring/flybody-proprioception-channels.csv
+
+scope:
+  field: class
+  op: in
+  value: [mechanosensory_tactile, mechanosensory]
+
+group_by: [family, entryNerve, subclass, mancType, type, rootSide]
+
+rules:
+  - id: mechanosensation.front-leg-contact.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: in, value: [ProLN, ProAN, VProN, DProN]}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: leg_contact, leg_position: front, side_policy: same}
+    expected_candidate_count: 7
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      Prothoracic sensory nerves and root side bound the terminal to aggregate
+      force, torque and contact-presence observables of the same front leg.
+
+  - id: mechanosensation.middle-leg-contact.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MesoLN}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: leg_contact, leg_position: middle, side_policy: same}
+    expected_candidate_count: 7
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      Mesothoracic leg nerve and root side bound the terminal to aggregate force,
+      torque and contact-presence observables of the same middle leg.
+
+  - id: mechanosensation.hind-leg-contact.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: leg_contact, leg_position: hind, side_policy: same}
+    expected_candidate_count: 7
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      Metathoracic leg nerve and root side bound the terminal to aggregate force,
+      torque and contact-presence observables of the same hind leg.
+
+  - id: mechanosensation.antennal-motion.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: AN}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_group: antennae, side_policy: same}
+    expected_candidate_count: 6
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC4007284/
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      Johnston's organ senses antennal motion; root side bounds the candidate set
+      to position and velocity of the three represented joints of that antenna.
+
+  - id: mechanosensation.wing-motion.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: ADMN}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_group: wings, side_policy: same}
+    expected_candidate_count: 6
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      The annotated dorsal mesothoracic nerve and side bound the candidate set to
+      position and velocity of the represented wing joints on that side.
+
+  - id: mechanosensation.haltere-motion.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: DMetaN}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_group: halteres, side_policy: same}
+    expected_candidate_count: 2
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      The annotated dorsal metathoracic nerve and side bound the candidate set to
+      position and velocity of the represented haltere joint on that side.
+
+  - id: mechanosensation.mouthpart-motion.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: in, value: [MxLbN, aPhN]}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector:
+      kind: joint_state
+      body_group: proboscis
+      side_policy: neutral_or_same
+    expected_candidate_count: 8
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      Maxillary-labial or anterior pharyngeal nerve and side bound the candidate
+      set to the three midline proboscis joints and the ipsilateral labrum joint.
+
+  - id: mechanosensation.thorax-contact-proxy.v1
+    priority: 100
+    selector: {field: entryNerve, op: equals, value: PDMN}
+    observable_selector: {kind: local_contact, segment_name: c_thorax}
+    expected_candidate_count: 3
+    outcome: applied
+    relation_class: engineering_candidate
+    terminal_disposition: parameterized
+    provenance_kind: engineering_choice
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      FlyBody exposes only a three-axis net contact force for the central thorax;
+      it is a deliberately coarse local candidate and asserts no left-right site.
+
+  - id: mechanosensation.head-contact-proxy.v1
+    priority: 100
+    selector: {field: entryNerve, op: equals, value: "ON"}
+    observable_selector: {kind: local_contact, segment_name: c_head}
+    expected_candidate_count: 3
+    outcome: applied
+    relation_class: engineering_candidate
+    terminal_disposition: parameterized
+    provenance_kind: engineering_choice
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://doi.org/10.1038/s41586-025-09029-4
+    used_claim: >-
+      FlyBody exposes only a three-axis net contact force for the head; it is a
+      deliberately coarse local candidate and asserts no left-right site.
+
+negative_constraints:
+  - every selected terminal is canonical and belongs to exactly one group
+  - every group matches exactly one highest-priority rule
+  - every parameterized group has the rule-declared candidate count
+  - leg and appendage candidates never cross the annotated root side
+  - leg candidates never cross the nerve-implied front, middle or hind position
+  - head and thorax coarse candidates remain segment-local and side-neutral
+
+gold_standard:
+  applicable: false
+  reason: >-
+    No independent receptor-to-FlyBody-observable crosswalk exists for these
+    aggregate contact and kinematic sensors. The rules validate local candidate
+    envelopes, not a pointwise physiological mapping.
+
+known_limits:
+  - Aggregate leg loads do not localize individual bristles or sensilla.
+  - Antennal joint position and velocity do not model acoustic waveform transduction.
+  - Head and thorax contacts do not localize the stimulated cuticular site.
+  - Candidate membership is structural; gains, signs, delays and dynamics remain uncalibrated.

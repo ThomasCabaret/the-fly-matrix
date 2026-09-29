@@ -51,9 +51,9 @@ source-supported candidates, engineering candidates and proxies. The 2,628
 published R7/R8 body-to-optic-column relations are reconstructed directly from
 the official workbook and compared relation by relation.
 
-Rules v1 intentionally do **not** by itself regenerate complete fine candidate
-matrices. The first companion builder now handles motor output; proprioception,
-mechanosensation and vision remainder remain explicit blockers. Their current
+Rules v1 intentionally does **not** by itself regenerate complete fine candidate
+matrices. Companion clean builders now handle motor output and mechanosensation;
+proprioception and vision remainder remain explicit blockers. Their current
 executable manifests are comparison baselines, not construction recipes.
 
 ## Motor-output clean builder
@@ -77,7 +77,35 @@ topology, not an exact muscle crosswalk and not any of the 7,849 transfer gains.
 
 `wiring_revalidation.bat -Direction output` performs this complete sequence and
 reports motor output as `independently_validated`. The global review remains
-`in_progress` until the three input fine families have equivalent builders.
+`in_progress` until the two remaining input fine families have equivalent builders.
+
+## Mechanosensation clean builder
+
+[`mechanosensation-v1.yaml`](../wiring/revalidation/mechanosensation-v1.yaml)
+and its empty singular-exception table reconstruct the mechanosensory candidate
+envelope without opening `mechanosensation-input-candidates.parquet`. The clean
+build uses raw MaleCNS annotations, canonical-neuron flags, six FlyBody leg
+contact inventories, two local body-contact inventories and the FlyBody joint
+inventory. It losslessly groups 4,291 terminals into 323 annotation-backed
+groups and produces 2,108 group-to-observable candidates, expanding to 28,514
+terminal-to-observable relations.
+
+The rules bound front, middle and hind leg loads by nerve and side; antenna,
+wing, haltere and mouthpart motion by appendage and side; and the deliberately
+coarse head/thorax contacts by physical segment. The finalized semantic topology
+hash is
+`70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2`.
+A repeated empty-destination build reproduced it. Only then was executable
+prewiring opened: all 2,108 group relations and 28,514 expanded terminal
+relations matched, with no addition, removal or duplicate. Side/topography
+constraints and all 131 comparable mirrored group capacities passed.
+
+This accepts a bounded local candidate envelope, not pointwise receptor
+physiology. Aggregate leg loads, antennal motion and coarse head/thorax force
+still require transfer calibration or better future observables. No gain, sign,
+delay or dynamic parameter is accepted here. `wiring_revalidation.bat
+-Direction input` performs this reconstruction and comparison alongside the
+still-blocked vision and proprioception workstreams.
 
 ## Target clean-build contract
 

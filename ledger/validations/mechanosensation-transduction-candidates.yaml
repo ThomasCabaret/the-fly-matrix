@@ -19,10 +19,15 @@ acceptance_criteria:
   - Entry nerve appendage and root side constrain a sparse matrix of 2108 local candidate edges
   - All 323 terminal channels covering 4291 neurons receive represented local candidates
   - Runtime coefficients are injected externally and no scientific value is persisted
+  - An empty-destination build from raw annotations, canonical flags and FlyBody sensor inventories reconstructs the full envelope without reading prewiring
+  - A repeated clean build reproduces the canonical semantic topology hash
+  - Side, leg-position, appendage, segment-locality and mirrored-capacity constraints pass with no exception
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: mechanosensation-transduction-candidates-2026-09-22
+latest_run_id: wiring-revalidation-20260929T140029Z
 status: integration_pass
+scientific_topology_status: independently_validated
+semantic_topology_sha256: 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2
 notes:
   - "MaleCNS annotation source: https://github.com/flyconnectome/2025malecns"
   - "MANC nerve nomenclature source: https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/"
@@ -33,7 +38,14 @@ notes:
   - PDMN notum terminals use the central thorax force and ON peri-optic terminals use the head force
   - Head and thorax mappings are deliberately coarse and do not invent left-right localization
   - Candidate execution is deterministic and is not a calibration
+  - The independent builder emits 2108 group-to-observable candidates which expand to 28514 terminal-to-observable relations
+  - All 28514 current relations were independently confirmed; none were added, removed or duplicated
+  - The 131 mirrored group keys have identical candidate capacity and every edge respects side, appendage and segment constraints
+  - No non-circular receptor-to-FlyBody-observable gold standard exists, so this validates a bounded local candidate envelope rather than pointwise physiology
+  - Routing capacity and 28514 continuous transfer coefficients are reported separately; no coefficient is accepted by this validation
 source_references:
+  - wiring/revalidation/mechanosensation-v1.yaml
+  - wiring/revalidation/mechanosensation-exceptions-v1.yaml
   - https://github.com/flyconnectome/2025malecns
   - https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/
   - https://doi.org/10.1038/s41586-025-09029-4

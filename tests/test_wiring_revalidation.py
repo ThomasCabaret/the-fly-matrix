@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 import unittest
+from tempfile import TemporaryDirectory
 from pathlib import Path
 
 import yaml
 
 from the_fly_matrix.ledger import ROOT
+from the_fly_matrix.mechanosensation_revalidation import (
+    build_mechanosensation_envelope,
+    compare_mechanosensation_with_prewiring,
+)
 from the_fly_matrix.wiring_revalidation import apply_rules, matches, validate_ruleset
 
 
@@ -79,6 +84,23 @@ class WiringRevalidationRuleTests(unittest.TestCase):
             {"vision", "proprioception", "mechanosensation", "motor_output"},
         )
         validate_ruleset(ruleset)
+
+    def test_mechanosensation_clean_build_matches_frozen_prewiring(self) -> None:
+        with TemporaryDirectory(prefix="flymatrix-test-mechanosensation-") as temporary:
+            output = Path(temporary) / "clean-build"
+            built = build_mechanosensation_envelope(output)
+            self.assertEqual(built["terminal_count"], 4_291)
+            self.assertEqual(built["group_count"], 323)
+            self.assertEqual(built["candidate_edge_count"], 2_108)
+            self.assertEqual(built["expanded_terminal_observable_relations"], 28_514)
+            self.assertEqual(
+                built["semantic_topology_sha256"],
+                "70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2",
+            )
+            compared = compare_mechanosensation_with_prewiring(output)
+            self.assertTrue(compared["clean_rebuild_repeat"]["pass"])
+            self.assertTrue(compared["prewiring_comparison"]["pass"])
+            self.assertTrue(compared["topology_independently_validated"])
 
 
 if __name__ == "__main__":

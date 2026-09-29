@@ -483,6 +483,32 @@ def run_revalidation(
             flush=True,
         )
 
+    if "mechanosensation" in selected_workstreams:
+        from .mechanosensation_revalidation import (
+            build_mechanosensation_envelope,
+            compare_mechanosensation_with_prewiring,
+        )
+
+        print(
+            "[2c/6] Clean-building the mechanosensation candidate envelope before comparison...",
+            flush=True,
+        )
+        mechanosensation_dir = run_dir / "mechanosensation"
+        build_mechanosensation_envelope(mechanosensation_dir)
+        fine_family_results["mechanosensation"] = (
+            compare_mechanosensation_with_prewiring(mechanosensation_dir)
+        )
+        mechanosensation_comparison = fine_family_results["mechanosensation"][
+            "prewiring_comparison"
+        ]
+        print(
+            "  [mechanosensation] "
+            f"{mechanosensation_comparison['confirmed_relations']:,}/"
+            f"{mechanosensation_comparison['independent_terminal_observable_relations']:,} "
+            "terminal-observable relations independently confirmed",
+            flush=True,
+        )
+
     decisions: list[dict[str, Any]] = []
     exceptions: list[dict[str, Any]] = []
     blocked: list[dict[str, Any]] = []
@@ -641,12 +667,17 @@ def run_revalidation(
             ),
         }
         if fine_result is not None:
+            expanded_relation_key = (
+                "independent_terminal_actuator_relations"
+                if name == "motor_output"
+                else "independent_terminal_observable_relations"
+            )
             workstream_summaries[name]["fine_candidate_envelope"] = {
                 "semantic_topology_sha256": fine_result["semantic_topology_sha256"],
                 "candidate_edge_count": fine_result["candidate_edge_count"],
-                "expanded_terminal_actuator_relations": fine_result[
-                    "prewiring_comparison"
-                ]["independent_terminal_actuator_relations"],
+                "expanded_terminal_relations": fine_result["prewiring_comparison"][
+                    expanded_relation_key
+                ],
                 "current_relation_match": fine_result["prewiring_comparison"]["pass"],
                 "clean_rebuild_repeat_pass": fine_result["clean_rebuild_repeat"]["pass"],
                 "topology_independently_validated": fine_result[
@@ -704,7 +735,8 @@ def run_revalidation(
         "direction": direction,
         "claim": (
             "Independent raw-data reconstruction of terminal scopes, annotation-backed groups "
-            "and group dispositions; fine candidate matrices remain under scientific review."
+            "and group dispositions; registered family-specific builders independently "
+            "reconstruct and compare their fine candidate matrices."
         ),
         "scientific_review_status": "in_progress",
         "source_hashes": source_hashes,
@@ -740,8 +772,8 @@ def run_revalidation(
             "global_scientific_revalidation_pass": False,
         },
         "next_action": (
-            "Implement independent candidate-edge builders for unregistered vision, "
-            "proprioception and mechanosensation, and rerun until every current relation is "
+            "Implement independent candidate-edge builders for unregistered vision and "
+            "proprioception, and rerun until every current relation is "
             "classified as confirmed, added, removed, unsupported or explicitly blocked."
         ),
     }

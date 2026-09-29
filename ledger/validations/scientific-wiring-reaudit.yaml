@@ -47,7 +47,7 @@ acceptance_criteria:
   - Freeze topology, candidate-envelope and exception hashes before any affected calibration campaign
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: wiring-revalidation-20260928T205213Z
+latest_run_id: wiring-revalidation-20260929T140029Z
 status: local_pass
 review_kind: scientific_wiring_revalidation
 review_status: in_progress
@@ -64,29 +64,35 @@ accepted_claims:
   - The motor-output candidate topology is independently reconstructible from declared sources and versioned rules with semantic hash 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
   - The independent motor envelope reproduces all 7849 executable terminal-to-actuator relations with no addition, removal, duplicate or singular exception
   - Motor candidates obey declared side and appendage boundaries, preserve all 102 represented actuators and keep 10 unrepresented groups as explicit sinks
+  - The mechanosensation candidate topology is independently reconstructible from declared sources and versioned rules with semantic hash 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2
+  - The independent mechanosensation envelope reproduces all 2108 group-to-observable and 28514 terminal-to-observable relations with no addition, removal, duplicate or singular exception
+  - Mechanosensation candidates obey declared side, leg-position, appendage and segment-locality boundaries; 131 mirrored group keys have equal capacity
 workstreams:
   - vision
   - proprioception
   - mechanosensation
   - motor_output
 next_action: >-
-  Add clean independent builders for the three remaining input relation families:
-  unregistered vision and HBeyelet, proprioception including its proxies, and
-  mechanosensation including contact/motion proxies. Preserve the independently
-  validated motor hash and rerun the global comparison after each family.
+  Add clean independent builders for the two remaining input relation families:
+  unregistered vision including HBeyelet, and proprioception including its
+  strain/vibration proxies. Preserve the independently validated motor and
+  mechanosensation hashes and rerun the global comparison after each family.
 notes:
   - Existing integration_pass results prove execution and cardinality only.
   - This review status overrides calibration-oriented next actions on owned records until the validation passes.
   - The first rules-first pass accounted for 12658 unique terminals and 7124 groups with zero unexpected exceptions or membership differences.
   - The official optic supplement independently reproduced all 2628 current R7/R8 bodyId-to-column relations.
-  - Motor output is the first fine family independently validated: two clean builds have the same hash and all 7849 current terminal-actuator relations match exactly.
-  - Proprioceptive, mechanosensory and unregistered-vision fine candidate matrices remain explicitly blocked; therefore the global review stays in_progress.
+  - "Motor output is the first fine family independently validated: two clean builds have the same hash and all 7849 current terminal-actuator relations match exactly."
+  - "Mechanosensation is independently validated: two clean builds have the same hash and all 28514 current terminal-observable relations match exactly."
+  - Proprioceptive and unregistered-vision fine candidate matrices remain explicitly blocked; therefore the global review stays in_progress.
 workstream_status:
   vision: fine_candidate_builder_blocked
   proprioception: fine_candidate_builder_blocked
-  mechanosensation: fine_candidate_builder_blocked
+  mechanosensation: independently_validated
   motor_output: independently_validated
 source_references:
   - decisions/0007-annotated-body-and-neuron-scope.md
   - decisions/0008-independent-scientific-wiring-reaudit.md
   - decisions/0011-reconstructible-peripheral-topology.md
+  - wiring/revalidation/mechanosensation-v1.yaml
+  - wiring/revalidation/mechanosensation-exceptions-v1.yaml
