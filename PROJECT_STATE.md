@@ -1,8 +1,8 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-29, troisième famille fine reconstruite indépendamment :
-les topologies candidates motrice, mécanoréceptrice et proprioceptive sont
-validées ; seule la vision reste ouverte.
+Mise à jour : 2026-09-29, revalidation scientifique du câblage terminée : les
+quatre topologies candidates périphériques — vision, proprioception,
+mécanoréception et sortie motrice — sont reconstruites indépendamment et validées.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -18,9 +18,9 @@ d'une confusion antérieure entre corps annotés et neurones impose de recontrô
 le raisonnement ayant produit ces relations, et pas seulement le périmètre du
 graphe central.
 
-Le front actif est donc la **revalidation scientifique indépendante du
-précâblage**, avant toute calibration des familles concernées. Le registre place
-désormais la validation en `in_progress` et lui laisse la propriété de 26 objets :
+La **revalidation scientifique indépendante du précâblage est maintenant
+terminée**. Le registre place la validation en `independently_validated`; elle
+conserve la portée historique de 26 objets :
 7 boîtes, 7 groupes, 10 fils et 2 familles de
 paramètres couvrant vision, proprioception, mécanoréception et sortie motrice.
 Leurs implémentations et `integration_pass` restent des preuves d'exécution et de
@@ -33,9 +33,9 @@ La méthode de revue est fixée par
 [`validation.scientific_wiring_reaudit`](ledger/validations/scientific-wiring-reaudit.yaml).
 Chaque secteur doit être reconstruit depuis les données brutes versionnées et les
 sources primaires sans prendre le manifeste courant comme recette, puis comparé
-relation par relation. Aucun paramètre scientifique n'est accepté et aucune
-calibration des objets possédés par cette validation ne doit commencer avant sa
-clôture.
+relation par relation. Aucun paramètre scientifique n'est accepté par cette
+clôture. Les futures campagnes peuvent désormais prendre les hashes acceptés comme
+frontière topologique gelée, selon le contrat de calibration séparé.
 
 Le ruleset `wiring-revalidation.rules.v1` et son runner constituent le premier
 palier reproductible de cette revue. Le run
@@ -44,9 +44,9 @@ palier reproductible de cette revue. Le run
 dispositions au précâblage : aucune différence et aucune exception inattendue ne
 subsistent. Le supplément officiel a aussi reproduit exactement les 2 628
 relations R7/R8 `bodyId`→colonne optique. Cette passe ne régénère pas encore les
-familles de matrices candidates fines. La sortie motrice, la mécanoréception et
-la proprioception disposent maintenant de clean builders acceptés ; seule la
-vision non enregistrée reste bloquée et non acceptée. La portée et les commandes sont documentées dans
+familles de matrices candidates fines. La sortie motrice, la mécanoréception, la
+proprioception et la vision disposent maintenant de clean builders acceptés ;
+aucune famille fine ne reste bloquée. La portée et les commandes sont documentées dans
 [`docs/wiring-revalidation.md`](docs/wiring-revalidation.md).
 
 Le run global `wiring-revalidation-20260928T205213Z` a reconstruit les 815
@@ -89,6 +89,19 @@ FeCO, partition direct/proxy et capacité miroir passent. Cette acceptation port
 sur l'enveloppe structurelle locale. Les proxies de déformation/vibration et les
 10 518 paramètres continus restent non calibrés.
 
+Le run global `wiring-revalidation-20260929T182220Z` clôt la vision et la revue
+globale. Il reconstruit 6 098 terminaux visuels et 4 802 unités d'enregistrement :
+1 332 colonnes publiées contenant 2 628 R7/R8, 3 463 photorécepteurs sans colonne
+et 7 HBeyelet proxy. Une représentation normalisée de six ensembles de sources
+compte exhaustivement 3 091 576 relations candidates, soit 3 665 347 relations
+terminal→observable développées. Le hash
+`130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152`
+a été reproduit avant ouverture du précâblage ; les 6 098 décisions terminales et
+4 802 enveloppes existantes correspondent exactement. Les contraintes de côté,
+palette, injectivité des colonnes et séparation HBeyelet passent sans exception.
+Les 4 795 enregistrements discrets, 6 098 gains et dynamiques visuelles restent
+non calibrés.
+
 Le projet adopte désormais une politique d'**automatisation proportionnée par
 règles avec rapports d'exception**. Les travaux répétitifs doivent, lorsque c'est
 rentable, être exprimés comme des règles versionnées appliquées hors quota ; chaque
@@ -127,8 +140,8 @@ d'exécution, pas la validité du comportement produit.
 
 Le contrat de ce banc est dans
 [`docs/runtime-execution-benchmark.md`](docs/runtime-execution-benchmark.md). Le
-benchmark ne lève aucun des 26 blocages scientifiques et ne constitue pas une
-calibration.
+benchmark ne remplace aucune preuve de câblage scientifique et ne constitue pas
+une calibration.
 
 La **boucle incarnée réelle est maintenant exécutable et enregistrable**. À
 chaque pas de 5 ms, elle lit la vision FlyBody, les contacts et la proprioception,
@@ -219,17 +232,17 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Maturité historique du câblage : **81 %**.
 - Graphe central MaleCNS : **100 % structurel**.
 - Sortie motrice : **79 %** historique ; topologie candidate indépendamment validée, gains inconnus.
-- Proprioception : **81 %**, précâblage exécutable à revalider.
+- Proprioception : **81 %** historique ; topologie candidate indépendamment validée, paramètres inconnus.
 - Entrées sensorielles non résolues : **96 %**.
 - Clamps basaux : **87 %**.
-- Vision : **79 %**, précâblage exécutable à revalider.
+- Vision : **79 %** historique ; topologie candidate indépendamment validée, enregistrements et gains inconnus.
 - Mécanosensation : **74 %** historique ; topologie candidate indépendamment validée, coefficients inconnus.
 - Corps physique : **100 %**.
 - Monde physique : **100 %**.
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
-- Revalidation scientifique : **`in_progress` ; 26 objets possédés, sortie motrice et mécanoréception validées, 2 familles d'entrée fines bloquées**.
-- Calibration des familles concernées : **bloquée avant revalidation**.
+- Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
+- Calibration : **non commencée ; la porte topologique est ouverte mais aucun paramètre n'est accepté**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont

@@ -287,5 +287,6 @@ known_limits:
   - Mechanosensory candidate edges are reconstructed by the companion mechanosensation-v1 clean builder and compared only after its semantic hash is finalized.
   - Proprioceptive direct and proxy candidate edges are reconstructed by the companion proprioception-v1 clean builder and compared only after its semantic hash is finalized.
   - Motor candidate edges are reconstructed by the companion motor-output-v1 clean builder and compared only after its semantic hash is finalized.
-  - Vision remainder registration and the HBeyelet proxy remain engineering hypotheses.
-  - A green run advances the audit to in_progress; it cannot mark the global scientific review independently_validated.
+  - Visual registration envelopes and the HBeyelet proxy are reconstructed by the companion vision-v1 clean builder and compared only after its semantic hash is finalized.
+  - Same-eye visual registration choices and the HBeyelet mean-light proxy remain explicit engineering hypotheses; independent topology validation does not calibrate or biologically endorse their values.
+  - Only a zero-exception run in which every companion clean builder passes may mark the global scientific review independently_validated.

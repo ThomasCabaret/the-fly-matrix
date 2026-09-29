@@ -15,6 +15,10 @@ from the_fly_matrix.proprioception_revalidation import (
     build_proprioception_envelope,
     compare_proprioception_with_prewiring,
 )
+from the_fly_matrix.vision_revalidation import (
+    build_vision_envelope,
+    compare_vision_with_prewiring,
+)
 from the_fly_matrix.wiring_revalidation import apply_rules, matches, validate_ruleset
 
 
@@ -120,6 +124,32 @@ class WiringRevalidationRuleTests(unittest.TestCase):
                 "782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665",
             )
             compared = compare_proprioception_with_prewiring(output)
+            self.assertTrue(compared["clean_rebuild_repeat"]["pass"])
+            self.assertTrue(compared["prewiring_comparison"]["pass"])
+            self.assertTrue(compared["topology_independently_validated"])
+
+    def test_vision_clean_build_matches_frozen_prewiring(self) -> None:
+        with TemporaryDirectory(prefix="flymatrix-test-vision-") as temporary:
+            output = Path(temporary) / "clean-build"
+            built = build_vision_envelope(output)
+            self.assertEqual(built["terminal_count"], 6_098)
+            self.assertEqual(built["registration_unit_count"], 4_802)
+            self.assertEqual(built["published_column_count"], 1_332)
+            self.assertEqual(built["candidate_edge_count"], 3_091_576)
+            self.assertEqual(built["expanded_terminal_observable_relations"], 3_665_347)
+            self.assertEqual(
+                built["partition_counts"],
+                {
+                    "published_column": 2_628,
+                    "unregistered_photoreceptor": 3_463,
+                    "hbeyelet_proxy": 7,
+                },
+            )
+            self.assertEqual(
+                built["semantic_topology_sha256"],
+                "130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152",
+            )
+            compared = compare_vision_with_prewiring(output)
             self.assertTrue(compared["clean_rebuild_repeat"]["pass"])
             self.assertTrue(compared["prewiring_comparison"]["pass"])
             self.assertTrue(compared["topology_independently_validated"])

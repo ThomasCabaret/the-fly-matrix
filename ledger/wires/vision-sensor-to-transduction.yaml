@@ -9,9 +9,9 @@ expected_cardinality: 1442 active ommatidial samples
 candidate_constraints: [same eye and retinal location]
 free_discrete_parameters: 0
 free_continuous_parameters: 0
-status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass}
+status: {inventory: complete, routing: verified, implementation: tested, validation: integration_pass, scientific_topology: independently_validated}
 confidence: high
-evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/flybody-vision.json, data/derived/wiring/flybody-vision-channels.csv, runs/wiring-smoke/latest.json]
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/wiring/flybody-vision.json, data/derived/wiring/flybody-vision-channels.csv, wiring/revalidation/vision-v1.yaml, data/derived/wiring-revalidation/latest.json, runs/wiring-smoke/latest.json]
 validation_ids: [validation.flybody_vision_sensor]
 next_action: Définir la phototransduction et la correspondance rétinotopique vers les 6 098 afférences sans fusionner les étapes.
 blocked_by: []

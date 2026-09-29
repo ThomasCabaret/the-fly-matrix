@@ -49,7 +49,15 @@ try {
     Write-Host "`n[OK] Comptabilite des regles terminee." -ForegroundColor Green
     Write-Host "Rapport : reports\generated\wiring-revalidation.html"
     Write-Host "Dernier run : data\derived\wiring-revalidation\latest.json"
-    Write-Host "La revue scientifique globale reste ouverte tant que les matrices candidates fines ne sont pas reconstruites."
+    $LatestPath = Join-Path $ProjectRoot "data\derived\wiring-revalidation\latest.json"
+    $Latest = Get-Content -LiteralPath $LatestPath -Raw | ConvertFrom-Json
+    if ($Latest.scientific_review_status -eq "independently_validated") {
+        Write-Host "La revalidation scientifique globale du cablage est independamment validee." -ForegroundColor Green
+        Write-Host "Cela ne calibre aucun routage ni parametre de transfert." -ForegroundColor Yellow
+    }
+    else {
+        Write-Host "La revue scientifique globale reste ouverte tant que les matrices candidates fines ne sont pas reconstruites."
+    }
 }
 catch {
     $ExitCode = 1

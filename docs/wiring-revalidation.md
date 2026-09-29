@@ -52,9 +52,9 @@ published R7/R8 body-to-optic-column relations are reconstructed directly from
 the official workbook and compared relation by relation.
 
 Rules v1 intentionally does **not** by itself regenerate complete fine candidate
-matrices. Companion clean builders now handle motor output, mechanosensation and
-proprioception; only the vision remainder remains an explicit blocker. Current
-executable manifests are comparison baselines, not construction recipes.
+matrices. Companion clean builders now handle motor output, mechanosensation,
+proprioception and vision. Current executable manifests are comparison baselines,
+not construction recipes. The four-family run is independently validated.
 
 ## Motor-output clean builder
 
@@ -76,8 +76,7 @@ and coverage of all 102 actuators passed. This validates a bounded candidate
 topology, not an exact muscle crosswalk and not any of the 7,849 transfer gains.
 
 `wiring_revalidation.bat -Direction output` performs this complete sequence and
-reports motor output as `independently_validated`. The global review remains
-`in_progress` until the remaining vision fine family has an equivalent builder.
+reports motor output as `independently_validated`.
 
 ## Mechanosensation clean builder
 
@@ -105,7 +104,7 @@ physiology. Aggregate leg loads, antennal motion and coarse head/thorax force
 still require transfer calibration or better future observables. No gain, sign,
 delay or dynamic parameter is accepted here. `wiring_revalidation.bat
 -Direction input` performs this reconstruction and comparison alongside the
-still-blocked vision workstream and the independently validated proprioception workstream.
+independently validated vision and proprioception workstreams.
 
 ## Proprioception clean builder
 
@@ -132,9 +131,33 @@ no addition, removal, duplicate or exception. This accepts local candidate
 membership and the direct/proxy partition, not strain/vibration equivalence and
 not any routing or transfer value.
 
-## Target clean-build contract
+## Vision clean builder
 
-The remaining vision builder must write its fine family into an empty output root from
+[`vision-v1.yaml`](../wiring/revalidation/vision-v1.yaml) and its empty exception
+table reconstruct the visual registration envelope without opening the executable
+column, remainder or route manifests. Raw annotations, the official optic-column
+workbook and the 2 × 721 FlyBody retinal inventory yield 6,098 terminals and
+4,802 registration units: 1,332 published columns containing 2,628 R7/R8 cells,
+3,463 unregistered photoreceptors and 7 HBeyelet proxies.
+
+The normalized representation references six physical source sets rather than
+materializing millions of repeated rows. It still accounts for 3,091,576
+registration-unit candidate relations and 3,665,347 expanded
+terminal-to-observable relations. Published columns are injective within each
+eye; pale and yellow columns use compatible FlyBody palettes, while DRA and
+unclear columns remain explicitly same-eye `any`. Unregistered terminals remain
+same-eye candidates and HBeyelet use a replaceable same-eye mean-light proxy.
+
+The semantic topology hash is
+`130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152`.
+A repeated empty-destination build reproduced it. Only then was prewiring opened:
+all 6,098 terminal records and 4,802 registration envelopes matched, without
+addition, removal, duplicate or exception. This validates the bounded structural
+envelope, not the 4,795 discrete registrations, 6,098 gains or visual dynamics.
+
+## Clean-build contract
+
+Each accepted builder writes its fine family into an empty output root from
 declared sources, rules, and a versioned singular-exception table. Independent
 construction must not import the current candidate matrix, current relation IDs,
 or a hand-maintained derivative of them. The current matrix is opened only after

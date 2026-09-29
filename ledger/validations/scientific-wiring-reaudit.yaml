@@ -47,11 +47,11 @@ acceptance_criteria:
   - Freeze topology, candidate-envelope and exception hashes before any affected calibration campaign
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: wiring-revalidation-20260929T144947Z
+latest_run_id: wiring-revalidation-20260929T182220Z
 status: local_pass
 review_kind: scientific_wiring_revalidation
-review_status: in_progress
-reason: A prior annotation-row versus neuron scope error invalidated confidence in the reasoning process used for scientific grouping and candidate construction, even though terminal inventories and runtime execution were subsequently checked.
+review_status: independently_validated
+reason: All four peripheral relation families were rebuilt into empty destinations from immutable inputs and versioned rules before comparison with the executable prewiring; repeated semantic hashes, negative constraints and exact comparisons passed with zero exceptions.
 preserved_claims:
   - Raw files and checksums are reproducible
   - The independently recomputed terminal inventories contain exactly 17884 input and 815 motor bodyIds, all canonical and without overlap
@@ -70,26 +70,30 @@ accepted_claims:
   - The proprioception candidate topology is independently reconstructible from declared sources and versioned rules with semantic hash 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
   - The independent proprioception envelope reproduces all 1992 group-to-observable and 10518 terminal-to-observable relations with no addition, removal, duplicate or singular exception
   - Proprioception candidates obey side, appendage and FeCO modality boundaries; the 171 parameterized and 91 proxy groups form a disjoint exhaustive partition
+  - The visual candidate topology is independently reconstructible from declared sources and versioned rules with semantic hash 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152
+  - The independent visual envelope reproduces all 6098 terminal records and 4802 physical-registration envelopes with no addition, removal, duplicate or singular exception
+  - Vision candidates obey eye side, published pale/yellow palette and within-eye injectivity constraints; all 7 HBeyelet terminals remain explicit same-eye mean-light proxies
 workstreams:
   - vision
   - proprioception
   - mechanosensation
   - motor_output
 next_action: >-
-  Add the clean independent builder for the sole remaining relation family:
-  unregistered vision including HBeyelet. Preserve the independently validated
-  motor, mechanosensation and proprioception hashes, then rerun the global comparison.
+  Freeze the four accepted semantic topology hashes and exception-table hashes at
+  the boundary of every calibration campaign. Treat any candidate-envelope change
+  as a new version of structural wiring and rerun the affected clean builder.
 notes:
   - Existing integration_pass results prove execution and cardinality only.
-  - This review status overrides calibration-oriented next actions on owned records until the validation passes.
+  - This review previously overrode calibration-oriented next actions on owned records; the topology gate is now open, while all physiological and transfer values remain uncalibrated.
   - The first rules-first pass accounted for 12658 unique terminals and 7124 groups with zero unexpected exceptions or membership differences.
   - The official optic supplement independently reproduced all 2628 current R7/R8 bodyId-to-column relations.
   - "Motor output is the first fine family independently validated: two clean builds have the same hash and all 7849 current terminal-actuator relations match exactly."
   - "Mechanosensation is independently validated: two clean builds have the same hash and all 28514 current terminal-observable relations match exactly."
   - "Proprioception is independently validated: two clean builds have the same hash and all 10518 current terminal-observable relations match exactly."
-  - The unregistered-vision fine candidate matrix remains explicitly blocked; therefore the global review stays in_progress.
+  - "Vision is independently validated: two clean builds have the same hash and all 6098 terminal records plus 4802 physical-registration envelopes match exactly."
+  - The global structural-wiring v0 review covers 4 of 4 peripheral workstreams with zero blocked fine candidate families and zero singular exceptions.
 workstream_status:
-  vision: fine_candidate_builder_blocked
+  vision: independently_validated
   proprioception: independently_validated
   mechanosensation: independently_validated
   motor_output: independently_validated
@@ -101,3 +105,5 @@ source_references:
   - wiring/revalidation/mechanosensation-exceptions-v1.yaml
   - wiring/revalidation/proprioception-v1.yaml
   - wiring/revalidation/proprioception-exceptions-v1.yaml
+  - wiring/revalidation/vision-v1.yaml
+  - wiring/revalidation/vision-exceptions-v1.yaml

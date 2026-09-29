@@ -461,6 +461,25 @@ def run_revalidation(
     run_dir = output_root / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     fine_family_results: dict[str, Any] = {}
+    if "vision" in selected_workstreams:
+        from .vision_revalidation import build_vision_envelope, compare_vision_with_prewiring
+
+        print(
+            "[2a/6] Clean-building the vision registration envelope before comparison...",
+            flush=True,
+        )
+        vision_dir = run_dir / "vision"
+        build_vision_envelope(vision_dir)
+        fine_family_results["vision"] = compare_vision_with_prewiring(vision_dir)
+        vision_comparison = fine_family_results["vision"]["prewiring_comparison"]
+        print(
+            "  [vision] "
+            f"{vision_comparison['confirmed_registration_envelopes']:,}/"
+            f"{vision_comparison['independent_registration_envelopes']:,} "
+            "registration envelopes independently confirmed",
+            flush=True,
+        )
+
     if "motor_output" in selected_workstreams:
         from .motor_output_revalidation import (
             build_motor_output_envelope,
@@ -750,6 +769,10 @@ def run_revalidation(
     }
     total_groups = len(decisions)
     total_applied = sum(item.get("outcome") == "applied" for item in decisions)
+    global_review_pass = len(exceptions) == 0 and len(blocked) == 0
+    scientific_review_status = (
+        "independently_validated" if global_review_pass else "in_progress"
+    )
     summary = {
         "schema_version": 1,
         "run_id": run_id,
@@ -764,7 +787,7 @@ def run_revalidation(
             "and group dispositions; registered family-specific builders independently "
             "reconstruct and compare their fine candidate matrices."
         ),
-        "scientific_review_status": "in_progress",
+        "scientific_review_status": scientific_review_status,
         "source_hashes": source_hashes,
         "decision_sha256": decision_digest,
         "totals": {
@@ -795,12 +818,15 @@ def run_revalidation(
             "terminal_and_group_accounting_pass": len(exceptions) == 0,
             "published_vision_subgraph_pass": optic_comparison["pass"],
             "fine_candidate_matrices_independently_reconstructed": len(blocked) == 0,
-            "global_scientific_revalidation_pass": False,
+            "global_scientific_revalidation_pass": global_review_pass,
         },
         "next_action": (
-            "Implement the independent candidate-edge builder for unregistered vision, "
-            "and rerun until every current relation is "
-            "classified as confirmed, added, removed, unsupported or explicitly blocked."
+            "Freeze the four accepted semantic topology hashes before calibration and "
+            "keep all routing and transfer values external to the wiring manifests."
+            if global_review_pass
+            else "Implement missing independent candidate-edge builders and rerun until "
+            "every current relation is classified as confirmed, added, removed, unsupported "
+            "or explicitly blocked."
         ),
     }
     (run_dir / "summary.json").write_text(
@@ -814,7 +840,7 @@ def run_revalidation(
                 "summary": _relative(run_dir / "summary.json"),
                 "decision_sha256": decision_digest,
                 "unexpected_exception_count": len(exceptions),
-                "scientific_review_status": "in_progress",
+                "scientific_review_status": scientific_review_status,
             },
             ensure_ascii=False,
             indent=2,

@@ -6,9 +6,9 @@ adapter_type: C
 anatomical_region: retina_optic_lobe
 parent_id: sensor.vision
 ports: {inputs: [photoreceptor_activity], outputs: [visual_afferents]}
-status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass, scientific_topology: independently_validated}
 confidence: high
-evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-routes.parquet, runs/wiring-smoke/latest.json]
+evidence: [data/derived/wiring/vision-routing.json, data/derived/wiring/vision-routes.parquet, wiring/revalidation/vision-v1.yaml, data/derived/wiring-revalidation/latest.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.vision_routing]
 next_action: Préserver les 6 098 routes bodyId exactes pendant la calibration séparée des paramètres de transduction amont.

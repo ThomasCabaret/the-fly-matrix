@@ -9,9 +9,9 @@ query: class == visual
 member_count: 6091
 named_type_count: 10
 target_box_ids: [adapter.vision.routing, cns.malecns]
-status: {inventory: complete, decomposition: proposed, routing: proposed, validation: integration_pass}
+status: {inventory: complete, decomposition: proposed, routing: proposed, validation: integration_pass, scientific_topology: independently_validated}
 confidence: low
-evidence: [data/derived/wiring/vision-channels.csv, data/derived/wiring/vision-routes.parquet, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-column-photoreceptors.parquet, data/derived/wiring/vision-remainder-transduction.parquet]
+evidence: [data/derived/wiring/vision-channels.csv, data/derived/wiring/vision-routes.parquet, data/derived/wiring/vision-optic-column-assignments.json, data/derived/wiring/vision-column-photoreceptors.parquet, data/derived/wiring/vision-remainder-transduction.parquet, wiring/revalidation/vision-v1.yaml, data/derived/wiring-revalidation/latest.json]
 next_action: Calibrer ou remplacer par une source indépendante les 3 377 choix R1-R6 actuellement paramétrables sans changer leurs routes CNS exactes.
 blocked_by: []
 completion_criteria: [Photorécepteurs disjoints, Couverture totale, Une route exacte par bodyId]

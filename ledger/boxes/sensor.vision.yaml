@@ -6,9 +6,9 @@ adapter_type: null
 anatomical_region: compound_eyes
 parent_id: null
 ports: {inputs: [light], outputs: [retinal_samples]}
-status: {inventory: complete, implementation: tested, parameters: borrowed, validation: integration_pass}
+status: {inventory: complete, implementation: tested, parameters: borrowed, validation: integration_pass, scientific_topology: independently_validated}
 confidence: high
-evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-vision.json, data/derived/wiring/flybody-vision-channels.csv, runs/wiring-smoke/latest.json]
+evidence: [drosophila_virtual_fly_project_contract.md, data/derived/inventory/inventory.json, data/derived/wiring/flybody-vision.json, data/derived/wiring/flybody-vision-channels.csv, wiring/revalidation/vision-v1.yaml, data/derived/wiring-revalidation/latest.json, runs/wiring-smoke/latest.json]
 parameter_family_ids: []
 validation_ids: [validation.flybody_vision_sensor]
 next_action: Conserver les 1 442 échantillons physiques pendant la construction séparée de la rétinotopie MaleCNS.

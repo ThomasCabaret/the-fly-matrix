@@ -18,8 +18,10 @@ acceptance_criteria:
   - Physical registration remains externally parameterized and every terminal traverses the declared transduction box
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: vision-routing-2026-09-19
+latest_run_id: wiring-revalidation-20260929T182220Z
 status: integration_pass
+scientific_topology_status: independently_validated
+semantic_topology_sha256: 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152
 notes:
   - 6098 generated type-C instances executed
   - 6098 exact MaleCNS bodyId routes with no duplicate or omission

@@ -1,0 +1,102 @@
+schema_version: 1
+id: vision-revalidation.rules.v1
+version: 1
+title: Independent vision candidate-envelope reconstruction
+claim: >-
+  Reconstruct every visual terminal's biological-column assignment and bounded
+  physical-retina registration envelope from raw MaleCNS annotations, the official
+  optic-column supplement and the FlyBody retinal inventory, without reading
+  executable vision prewiring.
+
+sources:
+  annotations:
+    dataset_id: malecns-v1.0-body-annotations
+    path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  population_scope:
+    path: data/derived/analysis/cycle-topology/node-classification.parquet
+  optic_columns:
+    dataset_id: malecns-v1.0-optic-column-supplement
+    path: data/raw/malecns/v1.0/optic-column-type-assignments-v1.0.xlsx
+    source_url: https://raw.githubusercontent.com/flyconnectome/2025malecns/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx
+  physical_retina:
+    dataset_id: flybody-physical-retina-inventory
+    path: data/derived/wiring/flybody-vision-channels.csv
+
+scope: {field: superclass, op: equals, value: ol_sensory}
+
+policies:
+  published_columns:
+    rule_id: vision.published-column-registration.v1
+    terminal_disposition: parameterized
+    relation_class: exact_biological_column_bounded_physical_candidate
+    registration_policy: injective_within_eye
+    column_palette:
+      pale: pale
+      yellow1: yellow
+      yellow2: yellow
+      DRA: any
+      unclear: any
+    provenance_kind: dataset_observation_and_bounded_parameterization
+    source_references:
+      - malecns-v1.0-optic-column-supplement
+      - https://www.nature.com/articles/s41586-025-08746-0
+      - https://doi.org/10.1038/s41592-024-02497-y
+    used_claim: >-
+      The official supplement fixes R7/R8 bodyIds, receptor types, eye side and
+      biological columns. Pale and yellow column classes restrict the compatible
+      FlyBody palette; DRA and unclear columns remain same-eye because FlyBody has
+      no matching dedicated palette. Physical column placement remains external.
+
+  unregistered_photoreceptors:
+    rule_id: vision.unregistered-same-eye.v1
+    terminal_disposition: parameterized
+    relation_class: anatomy_bounded_candidate
+    registration_policy: independent_choice_within_eye
+    physical_palette: any
+    provenance_kind: annotation_supported_engineering_candidate
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://www.nature.com/articles/s41586-025-08746-0
+      - https://doi.org/10.1038/s41592-024-02497-y
+    used_claim: >-
+      The remaining R1-R6 and unresolved R7/R8 annotations identify the compound
+      eye side but no biological column, so each terminal retains a same-eye
+      ommatidium choice without cross-eye capacity.
+
+  hbeyelet_proxy:
+    rule_id: vision.hbeyelet-mean-light-proxy.v1
+    terminal_disposition: proxy
+    relation_class: engineering_proxy
+    registration_policy: same_eye_mean
+    physical_palette: any
+    provenance_kind: engineering_choice
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://doi.org/10.1038/s41592-024-02497-y
+    used_claim: >-
+      MaleCNS annotations identify HBeyelet side through the instance label, while
+      FlyBody exposes only compound-eye ommatidia. Same-eye mean light is therefore
+      an explicit replaceable proxy, not an anatomical correspondence.
+
+negative_constraints:
+  - every selected body is a canonical neuron and belongs to exactly one visual terminal partition
+  - published workbook bodyIds and receptor types match the raw annotations exactly
+  - every physical registration envelope remains within one eye
+  - pale columns can use only pale FlyBody samples and yellow columns only yellow samples
+  - DRA and unclear columns remain visibly broader because FlyBody has no dedicated representation
+  - published column registration is injective within each eye and physically feasible
+  - HBeyelet terminals never masquerade as compound-eye photoreceptors
+  - the physical workbook row order is never interpreted as FlyBody spatial order
+
+gold_standard:
+  applicable: false
+  reason: >-
+    The official workbook is the construction source for biological R7/R8 column
+    membership, not a held-out physical retina registration. No independent
+    MaleCNS-column-to-FlyBody-ommatidium crosswalk exists.
+
+known_limits:
+  - Physical placement of all 1332 published columns remains an injective same-eye registration parameter.
+  - The 3463 unregistered photoreceptors retain a broad same-eye candidate envelope.
+  - FlyBody has no dedicated DRA or HB eyelet sensor.
+  - Candidate membership is structural; gains, spectral transfer, delays and dynamics remain uncalibrated.

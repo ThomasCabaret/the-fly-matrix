@@ -60,7 +60,7 @@ class LedgerTests(unittest.TestCase):
         summary = build_summary(self.ledger)
         self.assertEqual(
             summary["scientific_review_counts"],
-            {"in_progress": 26},
+            {"independently_validated": 26},
         )
         owned = [
             record
@@ -75,7 +75,7 @@ class LedgerTests(unittest.TestCase):
                 "validation.scientific_wiring_reaudit",
             )
             self.assertEqual(
-                record["scientific_review"]["status"], "in_progress"
+                record["scientific_review"]["status"], "independently_validated"
             )
         expected_action_ids = {
             record["id"]

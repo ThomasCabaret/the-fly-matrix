@@ -20,10 +20,15 @@ acceptance_criteria:
   - All 6098 terminal activities are computed from physical retinal samples and explicit box parameters
   - No direct terminal activity injection is accepted by the runtime
   - The 4795 discrete registrations and 6098 continuous gains remain external arbitrary smoke values
+  - A clean build into an empty destination reproduces all terminal records and physical-registration envelopes without reading the current vision manifests
+  - Two clean builds reproduce semantic topology hash 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152
+  - Eye-side, pale-yellow palette, injectivity and HBeyelet proxy constraints pass with no singular exception
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: vision-column-transduction-2026-09-23
+latest_run_id: wiring-revalidation-20260929T182220Z
 status: integration_pass
+scientific_topology_status: independently_validated
+semantic_topology_sha256: 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152
 notes:
   - "Official source: https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx"
   - Biological bodyId-to-column assignment is fixed for the published R7/R8 subset
@@ -33,5 +38,12 @@ notes:
   - HBeyelet mean-light inputs are declared proxies rather than anatomical mappings
   - The former unresolved_values terminal bypass has been removed
   - No scientific phototransduction coefficient has been selected
+  - The independent builder accounts for 3091576 normalized candidate relations and 3665347 expanded terminal-to-observable relations without materializing either matrix in Git
+  - The accepted topology contains 6098 terminal records, 4802 physical-registration envelopes and 3463 independently parameterized unregistered photoreceptors
+  - No non-circular gold standard fixes the physical registration; independent validation accepts the bounded candidate envelope, not a chosen registration or transfer value
 source_references:
   - https://github.com/flyconnectome/2025malecns/blob/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx
+  - https://www.nature.com/articles/s41586-025-08746-0
+  - https://www.nature.com/articles/s41592-024-02497-y
+  - wiring/revalidation/vision-v1.yaml
+  - wiring/revalidation/vision-exceptions-v1.yaml
