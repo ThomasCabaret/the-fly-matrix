@@ -509,6 +509,32 @@ def run_revalidation(
             flush=True,
         )
 
+    if "proprioception" in selected_workstreams:
+        from .proprioception_revalidation import (
+            build_proprioception_envelope,
+            compare_proprioception_with_prewiring,
+        )
+
+        print(
+            "[2d/6] Clean-building the proprioception candidate envelope before comparison...",
+            flush=True,
+        )
+        proprioception_dir = run_dir / "proprioception"
+        build_proprioception_envelope(proprioception_dir)
+        fine_family_results["proprioception"] = compare_proprioception_with_prewiring(
+            proprioception_dir
+        )
+        proprioception_comparison = fine_family_results["proprioception"][
+            "prewiring_comparison"
+        ]
+        print(
+            "  [proprioception] "
+            f"{proprioception_comparison['confirmed_relations']:,}/"
+            f"{proprioception_comparison['independent_terminal_observable_relations']:,} "
+            "terminal-observable relations independently confirmed",
+            flush=True,
+        )
+
     decisions: list[dict[str, Any]] = []
     exceptions: list[dict[str, Any]] = []
     blocked: list[dict[str, Any]] = []
@@ -772,8 +798,8 @@ def run_revalidation(
             "global_scientific_revalidation_pass": False,
         },
         "next_action": (
-            "Implement independent candidate-edge builders for unregistered vision and "
-            "proprioception, and rerun until every current relation is "
+            "Implement the independent candidate-edge builder for unregistered vision, "
+            "and rerun until every current relation is "
             "classified as confirmed, added, removed, unsupported or explicitly blocked."
         ),
     }

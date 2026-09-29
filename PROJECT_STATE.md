@@ -1,8 +1,8 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-29, deuxième famille fine reconstruite indépendamment :
-les topologies candidates motrice et mécanoréceptrice sont validées ; vision et
-proprioception restent ouvertes.
+Mise à jour : 2026-09-29, troisième famille fine reconstruite indépendamment :
+les topologies candidates motrice, mécanoréceptrice et proprioceptive sont
+validées ; seule la vision reste ouverte.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -44,9 +44,9 @@ palier reproductible de cette revue. Le run
 dispositions au précâblage : aucune différence et aucune exception inattendue ne
 subsistent. Le supplément officiel a aussi reproduit exactement les 2 628
 relations R7/R8 `bodyId`→colonne optique. Cette passe ne régénère pas encore les
-familles de matrices candidates fines. La sortie motrice et la mécanoréception
-disposent maintenant de clean builders acceptés ; vision non enregistrée et
-proprioception restent bloquées et non acceptées. La portée et les commandes sont documentées dans
+familles de matrices candidates fines. La sortie motrice, la mécanoréception et
+la proprioception disposent maintenant de clean builders acceptés ; seule la
+vision non enregistrée reste bloquée et non acceptée. La portée et les commandes sont documentées dans
 [`docs/wiring-revalidation.md`](docs/wiring-revalidation.md).
 
 Le run global `wiring-revalidation-20260928T205213Z` a reconstruit les 815
@@ -74,6 +74,20 @@ Les contraintes de côté, position de patte, appendice et segment, ainsi que le
 capacités de 131 clés miroir, passent sans exception. Cette validation accepte
 l'enveloppe candidate locale, pas la physiologie récepteur→signal et aucun des
 28 514 coefficients de transfert.
+
+Le run global `wiring-revalidation-20260929T144947Z` a ensuite reconstruit les
+1 454 terminaux proprioceptifs et leurs 262 groupes depuis les annotations, les
+drapeaux canoniques et le seul inventaire articulaire FlyBody. Les règles
+produisent 1 439 arêtes candidates directes pour 171 groupes et 553 arêtes proxy
+pour 91 groupes, soit 1 992 relations groupe→observable et 10 518 relations
+terminal→observable. Le hash sémantique
+`782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665`
+a été reproduit dans une deuxième destination vide avant ouverture du
+précâblage. Les 10 518 relations existantes sont toutes confirmées sans ajout,
+retrait, doublon ni exception ; les contraintes de côté, appendice, spécialisation
+FeCO, partition direct/proxy et capacité miroir passent. Cette acceptation porte
+sur l'enveloppe structurelle locale. Les proxies de déformation/vibration et les
+10 518 paramètres continus restent non calibrés.
 
 Le projet adopte désormais une politique d'**automatisation proportionnée par
 règles avec rapports d'exception**. Les travaux répétitifs doivent, lorsque c'est

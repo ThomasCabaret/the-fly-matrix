@@ -52,8 +52,8 @@ published R7/R8 body-to-optic-column relations are reconstructed directly from
 the official workbook and compared relation by relation.
 
 Rules v1 intentionally does **not** by itself regenerate complete fine candidate
-matrices. Companion clean builders now handle motor output and mechanosensation;
-proprioception and vision remainder remain explicit blockers. Their current
+matrices. Companion clean builders now handle motor output, mechanosensation and
+proprioception; only the vision remainder remains an explicit blocker. Current
 executable manifests are comparison baselines, not construction recipes.
 
 ## Motor-output clean builder
@@ -77,7 +77,7 @@ topology, not an exact muscle crosswalk and not any of the 7,849 transfer gains.
 
 `wiring_revalidation.bat -Direction output` performs this complete sequence and
 reports motor output as `independently_validated`. The global review remains
-`in_progress` until the two remaining input fine families have equivalent builders.
+`in_progress` until the remaining vision fine family has an equivalent builder.
 
 ## Mechanosensation clean builder
 
@@ -105,11 +105,36 @@ physiology. Aggregate leg loads, antennal motion and coarse head/thorax force
 still require transfer calibration or better future observables. No gain, sign,
 delay or dynamic parameter is accepted here. `wiring_revalidation.bat
 -Direction input` performs this reconstruction and comparison alongside the
-still-blocked vision and proprioception workstreams.
+still-blocked vision workstream and the independently validated proprioception workstream.
+
+## Proprioception clean builder
+
+[`proprioception-v1.yaml`](../wiring/revalidation/proprioception-v1.yaml) and its
+empty exception table reconstruct the complete direct-plus-proxy candidate
+envelope without opening either executable candidate matrix. Raw MaleCNS
+annotations and the FlyBody joint inventory yield 1,454 terminals in 262 groups:
+171 parameterized groups with 1,439 candidate edges and 91 explicit proxy groups
+with 553 edges. These 1,992 group relations expand to 10,518
+terminal-to-observable relations.
+
+Nerve, side and receptor class constrain candidates to the same represented
+appendage. FeCO claw uses femur-tibia position, hook uses movement and club uses
+velocity as an explicit vibration proxy. Campaniform and notum groups retain
+bounded local kinematic proxies because FlyBody exposes no strain field. The
+single anatomically unlocalized campaniform group is limited to five central
+attachment joints rather than a global fallback.
+
+The semantic topology hash is
+`782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665`.
+A repeated empty-destination build reproduced it; only afterward were the direct
+and proxy prewiring matrices opened. All 10,518 expanded relations matched with
+no addition, removal, duplicate or exception. This accepts local candidate
+membership and the direct/proxy partition, not strain/vibration equivalence and
+not any routing or transfer value.
 
 ## Target clean-build contract
 
-The next builders must write each fine family into an empty output root from
+The remaining vision builder must write its fine family into an empty output root from
 declared sources, rules, and a versioned singular-exception table. Independent
 construction must not import the current candidate matrix, current relation IDs,
 or a hand-maintained derivative of them. The current matrix is opened only after

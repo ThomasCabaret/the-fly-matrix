@@ -1,0 +1,467 @@
+schema_version: 1
+id: proprioception-revalidation.rules.v1
+version: 1
+title: Independent proprioception candidate-envelope reconstruction
+claim: >-
+  Reconstruct every annotated proprioceptive terminal's local FlyBody joint-state
+  candidate envelope from raw MaleCNS annotations and the physical joint inventory,
+  without reading the executable proprioception prewiring.
+
+sources:
+  annotations:
+    dataset_id: malecns-v1.0-body-annotations
+    path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  population_scope:
+    path: data/derived/analysis/cycle-topology/node-classification.parquet
+  joint_state:
+    path: data/derived/wiring/flybody-proprioception-channels.csv
+
+scope: {field: class, op: equals, value: mechanosensory_proprioceptive}
+group_by: [family, entryNerve, subclass, mancType, type, rootSide]
+
+rules:
+  - id: proprioception.feco-club-hind.v1
+    priority: 300
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: synonyms, op: contains, value: club}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: hind, joint_role: femur_tibia, components: [velocity], side_policy: same}
+    expected_candidate_count: 1
+    outcome: applied
+    relation_class: source_supported_proxy
+    terminal_disposition: proxy
+    provenance_kind: literature_supported
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://www.nature.com/articles/s41467-025-59302-3
+    used_claim: >-
+      FeCO club neurons encode bidirectional tibial movement and vibration; the
+      represented same-side femur-tibia angular velocity is the narrow local proxy.
+
+  - id: proprioception.feco-claw-hind.v1
+    priority: 300
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: synonyms, op: contains, value: claw}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: hind, joint_role: femur_tibia, components: [position], side_policy: same}
+    expected_candidate_count: 1
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://www.nature.com/articles/s41467-025-59302-3
+    used_claim: >-
+      FeCO claw neurons encode tibia position; the same-side femur-tibia angle is
+      the local represented candidate without assigning transfer values.
+
+  - id: proprioception.feco-hook-hind.v1
+    priority: 300
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: synonyms, op: contains, value: hook}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: hind, joint_role: femur_tibia, components: [velocity], side_policy: same}
+    expected_candidate_count: 1
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://www.nature.com/articles/s41467-025-59302-3
+    used_claim: >-
+      FeCO hook neurons encode tibial movement; the same-side femur-tibia angular
+      velocity is the local represented candidate.
+
+  - id: proprioception.leg-campaniform-front.v1
+    priority: 220
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: ProLN}
+        - {field: subclass, op: equals, value: campaniform sensilla}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: front, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 22
+    outcome: applied
+    relation_class: engineering_proxy
+    terminal_disposition: proxy
+    provenance_kind: engineering_choice
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: >-
+      The physical model exposes no cuticular strain sensors; all same-side front
+      leg joint states form an explicit bounded proxy, not an exact receptor map.
+
+  - id: proprioception.leg-campaniform-middle.v1
+    priority: 220
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MesoLN}
+        - {field: subclass, op: equals, value: campaniform sensilla}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: middle, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 22
+    outcome: applied
+    relation_class: engineering_proxy
+    terminal_disposition: proxy
+    provenance_kind: engineering_choice
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: >-
+      The physical model exposes no cuticular strain sensors; all same-side middle
+      leg joint states form an explicit bounded proxy.
+
+  - id: proprioception.leg-campaniform-hind.v1
+    priority: 220
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: subclass, op: equals, value: campaniform sensilla}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: hind, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 22
+    outcome: applied
+    relation_class: engineering_proxy
+    terminal_disposition: proxy
+    provenance_kind: engineering_choice
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: >-
+      The physical model exposes no cuticular strain sensors; all same-side hind
+      leg joint states form an explicit bounded proxy.
+
+  - id: proprioception.wing-campaniform.v1
+    priority: 220
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: ADMN}
+        - {field: subclass, op: equals, value: campaniform sensilla}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_group: wings, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 6
+    outcome: applied
+    relation_class: engineering_proxy
+    terminal_disposition: proxy
+    provenance_kind: literature_supported_proxy
+    source_references:
+      - malecns-v1.0-body-annotations
+      - https://pmc.ncbi.nlm.nih.gov/articles/PMC12975126/
+    used_claim: >-
+      Wing campaniform sensilla report cuticular deformation and enter through ADMN;
+      same-side wing kinematics are a bounded proxy because FlyBody has no strain field.
+
+  - id: proprioception.haltere-campaniform.v1
+    priority: 220
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: DMetaN}
+        - {field: subclass, op: equals, value: campaniform sensilla}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_group: halteres, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 2
+    outcome: applied
+    relation_class: engineering_proxy
+    terminal_disposition: proxy
+    provenance_kind: literature_supported_proxy
+    source_references: [malecns-v1.0-body-annotations, https://doi.org/10.1242/dev.71.1.41]
+    used_claim: >-
+      Same-side haltere kinematics are an explicit bounded proxy for strain-sensing
+      campaniform afferents because the physical inventory exposes no strain sensors.
+
+  - id: proprioception.central-campaniform-proxy.v1
+    priority: 220
+    selector:
+      all:
+        - {field: subclass, op: equals, value: campaniform sensilla}
+        - {field: entryNerve, op: is_unknown}
+        - {field: rootSide, op: is_unknown}
+    observable_selector: {kind: joint_state, joint_ids: [0, 1, 2, 14, 15], components: [position, velocity], side_policy: any}
+    expected_candidate_count: 10
+    outcome: applied
+    relation_class: engineering_proxy
+    terminal_disposition: proxy
+    provenance_kind: engineering_choice
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: >-
+      The single unlocalized campaniform group is bounded to central head/thorax and
+      first-abdominal attachment kinematics; no side or exact receptor site is claimed.
+
+  - id: proprioception.notum-wing-haltere-proxy.v1
+    priority: 220
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: PDMN}
+        - {field: subclass, op: equals, value: notum}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_groups: [wings, halteres], components: [position, velocity], side_policy: same}
+    expected_candidate_count: 8
+    outcome: applied
+    relation_class: engineering_proxy
+    terminal_disposition: proxy
+    provenance_kind: engineering_choice
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: >-
+      FlyBody has no notum strain channel; same-side wing and haltere attachment
+      kinematics form a declared local proxy rather than a physiological equivalence.
+
+  - id: proprioception.leg-chordotonal-front.v1
+    priority: 120
+    selector:
+      all:
+        - {field: entryNerve, op: in, value: [ProLN, ProAN]}
+        - {field: subclass, op: equals, value: chordotonal organ}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: front, joint_role: femur_tibia, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 2
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references: [malecns-v1.0-body-annotations, https://www.nature.com/articles/s41467-025-59302-3]
+    used_claim: Same-side femur-tibia position and velocity bound the front-leg chordotonal candidate envelope.
+
+  - id: proprioception.leg-chordotonal-middle.v1
+    priority: 120
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MesoLN}
+        - {field: subclass, op: equals, value: chordotonal organ}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: middle, joint_role: femur_tibia, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 2
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references: [malecns-v1.0-body-annotations, https://www.nature.com/articles/s41467-025-59302-3]
+    used_claim: Same-side femur-tibia position and velocity bound the middle-leg chordotonal candidate envelope.
+
+  - id: proprioception.leg-chordotonal-hind.v1
+    priority: 120
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: subclass, op: equals, value: chordotonal organ}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: hind, joint_role: femur_tibia, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 2
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: derived_rule
+    source_references: [malecns-v1.0-body-annotations, https://www.nature.com/articles/s41467-025-59302-3]
+    used_claim: Same-side femur-tibia position and velocity bound the hind-leg chordotonal candidate envelope.
+
+  - id: proprioception.leg-hair-plate-front.v1
+    priority: 120
+    selector:
+      all:
+        - {field: entryNerve, op: in, value: [ProLN, DProN, VProN]}
+        - {field: subclass, op: equals, value: hair plate}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: front, components: [position], side_policy: same}
+    expected_candidate_count: 11
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references: [malecns-v1.0-body-annotations, https://pmc.ncbi.nlm.nih.gov/articles/PMC12139860/]
+    used_claim: Leg hair plates act as joint limit detectors; all same-leg joint positions form a bounded local envelope.
+
+  - id: proprioception.leg-hair-plate-middle.v1
+    priority: 120
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MesoLN}
+        - {field: subclass, op: equals, value: hair plate}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: middle, components: [position], side_policy: same}
+    expected_candidate_count: 11
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references: [malecns-v1.0-body-annotations, https://pmc.ncbi.nlm.nih.gov/articles/PMC12139860/]
+    used_claim: Leg hair plates act as joint limit detectors; all same-leg joint positions form a bounded local envelope.
+
+  - id: proprioception.leg-hair-plate-hind.v1
+    priority: 120
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: subclass, op: equals, value: hair plate}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: hind, components: [position], side_policy: same}
+    expected_candidate_count: 11
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references: [malecns-v1.0-body-annotations, https://pmc.ncbi.nlm.nih.gov/articles/PMC12139860/]
+    used_claim: Leg hair plates act as joint limit detectors; all same-leg joint positions form a bounded local envelope.
+
+  - id: proprioception.generic-leg-front.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: in, value: [ProLN, ProAN, VProN]}
+        - {field: subclass, op: in, value: [leg, "(unknown)"]}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: front, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 22
+    outcome: applied
+    relation_class: anatomy_bounded_candidate
+    terminal_disposition: parameterized
+    provenance_kind: annotation_supported
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: Front-leg nerve and side bound the otherwise unresolved local joint-state envelope.
+
+  - id: proprioception.generic-leg-middle.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MesoLN}
+        - {field: subclass, op: equals, value: leg}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: middle, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 22
+    outcome: applied
+    relation_class: anatomy_bounded_candidate
+    terminal_disposition: parameterized
+    provenance_kind: annotation_supported
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: Middle-leg nerve and side bound the otherwise unresolved local joint-state envelope.
+
+  - id: proprioception.generic-leg-hind.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: MetaLN}
+        - {field: subclass, op: equals, value: leg}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, leg_position: hind, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 22
+    outcome: applied
+    relation_class: anatomy_bounded_candidate
+    terminal_disposition: parameterized
+    provenance_kind: annotation_supported
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: Hind-leg nerve and side bound the otherwise unresolved local joint-state envelope.
+
+  - id: proprioception.wing-motion.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: ADMN}
+        - {field: subclass, op: equals, value: wing}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_group: wings, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 6
+    outcome: applied
+    relation_class: anatomy_bounded_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references: [malecns-v1.0-body-annotations, https://pmc.ncbi.nlm.nih.gov/articles/PMC12975126/]
+    used_claim: ADMN and root side bound wing proprioceptors to the represented same-side wing joints.
+
+  - id: proprioception.haltere-motion.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: DMetaN}
+        - {field: subclass, op: equals, value: haltere}
+        - {field: rootSide, op: in, value: [L, R]}
+    observable_selector: {kind: joint_state, body_group: halteres, components: [position, velocity], side_policy: same}
+    expected_candidate_count: 2
+    outcome: applied
+    relation_class: anatomy_bounded_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references: [malecns-v1.0-body-annotations, https://doi.org/10.1242/dev.71.1.41]
+    used_claim: DMetaN and root side bound haltere proprioceptors to the represented same-side haltere joint.
+
+  - id: proprioception.abdomen-motion.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: AbN3}
+        - {field: subclass, op: equals, value: abdomen}
+    observable_selector: {kind: joint_state, body_group: abdomen, components: [position, velocity], side_policy: any}
+    expected_candidate_count: 28
+    outcome: applied
+    relation_class: anatomy_bounded_candidate
+    terminal_disposition: parameterized
+    provenance_kind: annotation_supported
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: Abdominal nerve annotation bounds candidates to the represented abdominal joint states.
+
+  - id: proprioception.neck-chordotonal.v1
+    priority: 110
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: ProCN}
+        - {field: subclass, op: equals, value: chordotonal organ}
+    observable_selector: {kind: joint_state, body_group: head, components: [position, velocity], side_policy: any}
+    expected_candidate_count: 6
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references: [malecns-v1.0-body-annotations, https://www.nature.com/articles/s41586-024-07222-5]
+    used_claim: Neck chordotonal feedback is bounded to the represented head-thorax joint states.
+
+  - id: proprioception.neck-hair-plate.v1
+    priority: 110
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: PrN}
+        - {field: subclass, op: equals, value: hair plate}
+    observable_selector: {kind: joint_state, body_group: head, components: [position], side_policy: any}
+    expected_candidate_count: 3
+    outcome: applied
+    relation_class: source_supported_candidate
+    terminal_disposition: parameterized
+    provenance_kind: literature_supported
+    source_references: [malecns-v1.0-body-annotations, https://www.nature.com/articles/s41586-024-07222-5]
+    used_claim: Neck hair plates are locally bounded to represented head-thorax joint positions.
+
+  - id: proprioception.neck-generic.v1
+    priority: 100
+    selector:
+      all:
+        - {field: entryNerve, op: equals, value: PrN}
+        - {field: subclass, op: equals, value: neck}
+    observable_selector: {kind: joint_state, body_group: head, components: [position, velocity], side_policy: any}
+    expected_candidate_count: 6
+    outcome: applied
+    relation_class: anatomy_bounded_candidate
+    terminal_disposition: parameterized
+    provenance_kind: annotation_supported
+    source_references: [malecns-v1.0-body-annotations]
+    used_claim: Neck annotation bounds the unresolved candidate envelope to represented head-thorax joint states.
+
+negative_constraints:
+  - every selected terminal is canonical and belongs to exactly one group
+  - every group matches exactly one highest-priority rule
+  - every group has exactly the rule-declared candidate count
+  - appendage candidates never cross the annotated root side
+  - leg candidates never cross front, middle or hind position implied by the nerve
+  - proxy and parameterized group memberships are disjoint and exhaustive
+  - specialized FeCO claw, hook and club rules override the generic chordotonal rule
+
+gold_standard:
+  applicable: false
+  reason: >-
+    No independent receptor-to-FlyBody-observable pointwise crosswalk exists. The
+    literature supports modality-local envelopes, while FlyBody's aggregate joint
+    states require explicit proxies for strain receptors.
+
+known_limits:
+  - Joint states do not reproduce campaniform or notum strain fields.
+  - Candidate membership is structural; gains, thresholds, signs, delays and dynamics remain uncalibrated.
+  - Generic leg groups retain all local joint states where annotations do not resolve a narrower receptor modality.
+  - The central unlocalized campaniform group is deliberately coarse and cannot support a sided claim.

@@ -6,9 +6,9 @@ adapter_type: null
 anatomical_region: joints_and_strain
 parent_id: null
 ports: {inputs: [body_state], outputs: [joint_state]}
-status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass}
+status: {inventory: complete, implementation: tested, parameters: unknown, validation: integration_pass, scientific_topology: independently_validated}
 confidence: high
-evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-proxy-candidates.parquet, runs/wiring-smoke/latest.json]
+evidence: [data/derived/inventory/inventory.json, data/derived/wiring/flybody-proprioception.json, data/derived/wiring/flybody-proprioception-channels.csv, data/derived/wiring/proprioception-transduction-candidates.json, data/derived/wiring/proprioception-proxy-candidates.parquet, data/derived/wiring-revalidation/latest.json, wiring/revalidation/proprioception-v1.yaml, runs/wiring-smoke/latest.json]
 provenance:
   claim_kinds: [dataset_observation, engineering_choice]
   source_references: [https://github.com/google-deepmind/mujoco_menagerie/tree/main/flybody]

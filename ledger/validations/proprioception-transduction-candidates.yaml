@@ -19,10 +19,15 @@ acceptance_criteria:
   - The other 91 terminal channels, covering 468 neurons, receive 553 separately declared local kinematic proxy edges
   - Direct and proxy target channel sets are disjoint and exhaust all 262 terminal channels
   - Runtime coefficients are injected externally; no terminal activity bypass or scientific value is persisted
+  - An empty-destination build reconstructs direct and proxy envelopes without reading executable prewiring
+  - A repeated clean build reproduces the canonical semantic topology hash
+  - Side, appendage, FeCO modality, direct/proxy exclusivity and mirrored-capacity constraints pass without exception
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: proprioception-transduction-proxy-closure-2026-09-23
+latest_run_id: wiring-revalidation-20260929T144947Z
 status: integration_pass
+scientific_topology_status: independently_validated
+semantic_topology_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
 notes:
   - "MaleCNS annotation source: https://github.com/flyconnectome/2025malecns"
   - "FeCO functional-class source: https://doi.org/10.1038/s41467-025-59302-3"
@@ -32,3 +37,15 @@ notes:
   - The single anatomically unlocalized campaniform channel is restricted to five central thorax attachment joints
   - All proxies remain replaceable because FlyBody does not expose local strain or vibration
   - Candidate execution is deterministic and is not a calibration
+  - The independent builder emits 1992 group-to-observable candidates which expand to 10518 terminal-to-observable relations
+  - All 10518 current relations were independently confirmed; none were added, removed or duplicated
+  - No non-circular pointwise receptor-to-FlyBody gold standard exists; this validates a bounded local candidate envelope
+  - Routing capacity and 10518 continuous transfer parameters are reported separately; no value is accepted by this validation
+source_references:
+  - wiring/revalidation/proprioception-v1.yaml
+  - wiring/revalidation/proprioception-exceptions-v1.yaml
+  - https://github.com/flyconnectome/2025malecns
+  - https://www.nature.com/articles/s41467-025-59302-3
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC12139860/
+  - https://pmc.ncbi.nlm.nih.gov/articles/PMC12975126/
+  - https://www.nature.com/articles/s41586-024-07222-5

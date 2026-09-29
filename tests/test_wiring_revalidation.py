@@ -11,6 +11,10 @@ from the_fly_matrix.mechanosensation_revalidation import (
     build_mechanosensation_envelope,
     compare_mechanosensation_with_prewiring,
 )
+from the_fly_matrix.proprioception_revalidation import (
+    build_proprioception_envelope,
+    compare_proprioception_with_prewiring,
+)
 from the_fly_matrix.wiring_revalidation import apply_rules, matches, validate_ruleset
 
 
@@ -98,6 +102,24 @@ class WiringRevalidationRuleTests(unittest.TestCase):
                 "70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2",
             )
             compared = compare_mechanosensation_with_prewiring(output)
+            self.assertTrue(compared["clean_rebuild_repeat"]["pass"])
+            self.assertTrue(compared["prewiring_comparison"]["pass"])
+            self.assertTrue(compared["topology_independently_validated"])
+
+    def test_proprioception_clean_build_matches_frozen_prewiring(self) -> None:
+        with TemporaryDirectory(prefix="flymatrix-test-proprioception-") as temporary:
+            output = Path(temporary) / "clean-build"
+            built = build_proprioception_envelope(output)
+            self.assertEqual(built["terminal_count"], 1_454)
+            self.assertEqual(built["group_count"], 262)
+            self.assertEqual(built["candidate_edge_count"], 1_992)
+            self.assertEqual(built["expanded_terminal_observable_relations"], 10_518)
+            self.assertEqual(built["disposition_counts"], {"proxy": 91, "parameterized": 171})
+            self.assertEqual(
+                built["semantic_topology_sha256"],
+                "782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665",
+            )
+            compared = compare_proprioception_with_prewiring(output)
             self.assertTrue(compared["clean_rebuild_repeat"]["pass"])
             self.assertTrue(compared["prewiring_comparison"]["pass"])
             self.assertTrue(compared["topology_independently_validated"])
