@@ -45,6 +45,9 @@ def main() -> int:
     subparsers.add_parser("wiring-smoke", help="execute wired boxes with arbitrary values")
     subparsers.add_parser("report", help="generate the project dashboard")
     subparsers.add_parser("neuprint-audit", help="verify authenticated neuPrint access")
+    subparsers.add_parser(
+        "calibration-status", help="validate and summarize the calibration inventory and DAG"
+    )
     args = parser.parse_args()
     if args.command == "status":
         return show_status()
@@ -68,6 +71,10 @@ def main() -> int:
         from .neuprint_audit import main as neuprint_audit_main
 
         return neuprint_audit_main()
+    if args.command == "calibration-status":
+        from .calibration_registry import main as calibration_status_main
+
+        return calibration_status_main()
     return 2
 
 

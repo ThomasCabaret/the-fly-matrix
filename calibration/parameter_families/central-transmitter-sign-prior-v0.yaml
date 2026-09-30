@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.central.transmitter_sign_prior.v0
+title: Confidence-weighted neurotransmitter and synaptic-sign prior
+status: inventoried_evidence_not_compiled
+primary_class: evidence_transfer
+parameter_kind: neural_dynamics
+claim_role: biological
+meaning: {biological_or_technical_role: Neuron-level transmitter evidence compiled into edge-level sign priors with unknown masks, units: categorical_probability, applicability_limits: [Transmitter identity is not a universal receptor-context sign]}
+scope:
+  owner_ids: [cns.malecns]
+  parameter_names: [transmitter_class_probability, synaptic_sign_prior, unknown_mask]
+  dimension: {canonical_neurons_max: 166700, runtime_edges_max: 25582938, compiled_known_neurons: unresolved, compiled_known_edges: unresolved}
+  topology_snapshot: {semantic_topology_sha256: canonical_malecns_runtime_graph, candidate_envelope_sha256: not_applicable, ruleset_sha256: not_yet_compiled, exception_table_sha256: not_yet_compiled}
+sharing: {candidate_hierarchy: [measured_neuron_label, neurotransmitter_class, unknown], selected_level: evidence_determined, justification: preserve confidence and unknowns instead of fitting labels, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer], current_origin: predicted_transmitter_prior_available_not_compiled, prior_or_bounds: confidence_weighted_categorical_with_unknown_mask, fallback: remain_unknown}
+identifiability: {status: evidence_compilation_required, allowed_dataset_ids: [malecns-v1.0-body-neurotransmitters], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.central.synaptic_efficacy.v0]}
+uncertainty: {representation: categorical_probabilities_and_unknown_mask, admissible_set_criteria: [source_confidence_preserved, receptor_context_limit_declared], reference_selection_rule: evidence_only}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: malecns-v1.0-body-neurotransmitters, supports: neuron-level consensus transmitter predictions}]
+assumptions: [Unknown or context-dependent signs remain masked rather than coerced to excitatory or inhibitory.]
+next_action: Build and test the evidence compiler with per-class coverage and confidence reports.

@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.technical.motor_command_envelope.v0
+title: Numerical motor command safety envelope
+status: inventoried_diagnostic_only
+primary_class: technical
+parameter_kind: technical_nuisance
+claim_role: technical
+meaning: {biological_or_technical_role: Numerical tanh saturation and scale protecting MuJoCo during uncalibrated runs, units: actuator_command, applicability_limits: [Not a neuromuscular parameter and not promotable as biology]}
+scope:
+  owner_ids: [body.flybody]
+  parameter_names: [command_scale]
+  dimension: {scalar_parameters: 1, current_implementation: tanh_raw_command_times_command_scale}
+  topology_snapshot: {semantic_topology_sha256: not_applicable, candidate_envelope_sha256: not_applicable, ruleset_sha256: not_applicable, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [one_global_safety_scale], selected_level: one_global_safety_scale, justification: numerical guard only, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [technical_bound], current_origin: engineering_placeholder, prior_or_bounds: implementation_bound_0_to_0.01, fallback: fail_closed}
+identifiability: {status: diagnostic_only_not_biological, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [parameter.motor.transfer.v0], downstream_family_ids: []}
+uncertainty: {representation: technical_interval, admissible_set_criteria: [finite_physics, no_numerical_explosion], reference_selection_rule: smallest_safe_nonzero_value}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: src/the_fly_matrix/embodied_runtime.py, supports: current diagnostic envelope implementation}]
+assumptions: [This guard must remain separately reported from biological motor transfer.]
+next_action: Pre-register a numerical safety criterion and prevent this scalar from compensating for transfer calibration.

@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.vision.routing.v0
+title: Vision registration and local routing
+status: inventoried_unfitted
+primary_class: local_interface
+parameter_kind: routing
+claim_role: biological
+meaning: {biological_or_technical_role: Discrete registration of MaleCNS visual units to FlyBody retinal observables, units: categorical_assignment, applicability_limits: [Same-eye candidate envelopes and HBeyelet proxy only]}
+scope:
+  owner_ids: [adapter.vision.transduction]
+  parameter_names: [retinal_registration]
+  dimension: {discrete_registration_parameters: 4795, routing_simplex_dimensions_upper_bound: 3081734, published_fixed_columns: 1332, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152, candidate_envelope_sha256: 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152, ruleset_sha256: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [published_column_fixed, eye_palette_class, local_retinotopic_transform, individual_registration], selected_level: unresolved, justification: published R7_R8 columns remain fixed; remainder needs minimum-capacity registration, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: accepted_same_eye_candidate_envelope, fallback: unresolved_or_explicit_only}
+identifiability: {status: partially_fixed_partially_unresolved, allowed_dataset_ids: [malecns_optic_column_assignments_v1], local_held_out_dataset_ids: [], forbidden_behavior_ids: [optomotor_response, phototaxis], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.vision.transfer.v0]}
+uncertainty: {representation: admissible_registration_set, admissible_set_criteria: [same_eye, published_column_injectivity, HBeyelet_separation], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: independently reconstructed candidate envelope and dimensions}]
+assumptions: [The accepted topology bounds eligible assignments but does not identify a unique retina registration.]
+next_action: Define a non-behavioral registration dataset or preserve an ensemble of admissible maps.

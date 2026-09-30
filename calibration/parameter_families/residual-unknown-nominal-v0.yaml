@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.residual_sensory.unknown_nominal.v0
+title: Unknown residual sensory nominal activity
+status: inventoried_unfitted
+primary_class: local_interface
+parameter_kind: basal
+claim_role: surrogate
+meaning: {biological_or_technical_role: Reversible nominal source for afferents of unknown modality, units: model_activity, applicability_limits: [No physical modality claim]}
+scope:
+  owner_ids: [source.sensory.residual.unknown]
+  parameter_names: [terminal_nominal_activity]
+  dimension: {terminal_neurons: 1815, runtime_channels: 1815, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: fixed_body_id_routes, candidate_envelope_sha256: not_applicable, ruleset_sha256: decisions/0004-residual-sensory-nominal-sources.md, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [one_global_value, annotation_cluster, terminal_channel], selected_level: unresolved, justification: prefer minimum capacity, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
+identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [], downstream_family_ids: []}
+uncertainty: {representation: interval_or_shared_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: decisions/0004-residual-sensory-nominal-sources.md, supports: surrogate ownership and non-claim contract}]
+assumptions: [This large family must not default to 1815 independently fitted values.]
+next_action: Propose an annotation-based low-capacity sharing rule and keep unknown channels visible.

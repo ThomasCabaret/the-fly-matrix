@@ -1,5 +1,5 @@
 schema_version: 1
-phase: calibration_foundation
+phase: calibration_inventory_complete
 updated: 2026-09-30
 
 wiring_baseline:
@@ -16,6 +16,8 @@ evaluation_target_ids:
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
 last_completed_campaign_id: null
+parameter_family_inventory_id: parameter_family_inventory.v0
+parameter_dependency_dag_id: calibration.parameter_dependency_dag.v0
 
 readiness:
   governance_and_registry: hierarchical_reconstructible_policy_documented
@@ -26,9 +28,9 @@ readiness:
   controller_independent_physical_replay: integration_pass
   calibration_runner: not_started
   baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
-  parameter_family_inventory: not_started
-  parameter_dependency_dag: not_started
-  local_interface_parameter_inventory: not_started
+  parameter_family_inventory: complete_19_families_values_unfitted
+  parameter_dependency_dag: complete_acyclic_8_edges
+  local_interface_parameter_inventory: complete_runtime_dimensions_and_couplings_declared
   scientific_wiring_revalidation: independently_validated_zero_blocked_families
   neurotransmitter_prior_inventory: documented_not_compiled
   synaptic_sign_matrix: absent_current_runtime_is_unsigned_benchmark_only
@@ -39,12 +41,14 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - The parameter-family inventory, sharing rules and dependency DAG do not yet exist.
-  - A calibration runner and accepted dynamics model do not yet exist; the benchmark-only profile cannot be promoted.
+  - Evidence/sign priors have not been compiled and the biological dynamics model has not been selected.
+  - Proprioceptive, mechanosensory and motor runtime coefficients still need a compiler that keeps logical routing separate from transfer.
+  - A calibration runner and accepted parameter sets do not yet exist; the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Build the versioned parameter-family inventory and dependency DAG, beginning
-  with evidence-transfer and basal families plus confidence-weighted transmitter
-  and sign priors. Declare sharing, identifiability, allowed data, topology hashes,
-  uncertainty representation and freeze policy before implementing the first
-  autonomous campaign runner. Do not promote the unsigned benchmark profile.
+  Implement the confidence-preserving transmitter/sign evidence compiler and the
+  logical parameter compiler for families whose current runtime vector couples
+  routing and transfer. Then build the minimal autonomous campaign runner around
+  immutable configs, topology hashes, acceptance gates and parameter-set lineage.
+  Do not promote the unsigned benchmark profile or select physiological values
+  outside a versioned campaign.

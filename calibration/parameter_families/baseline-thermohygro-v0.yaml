@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.baseline.thermohygro.v0
+title: Thermo-hygrosensory basal activity
+status: inventoried_unfitted
+primary_class: local_interface
+parameter_kind: basal
+claim_role: surrogate
+meaning: {biological_or_technical_role: Neutral temperature and humidity activity without an environmental field model, units: spikes_per_second, applicability_limits: [No thermotaxis or hygrotaxis claim]}
+scope:
+  owner_ids: [clamp.thermohygro]
+  parameter_names: [channel_baseline_rate, optional_channel_noise]
+  dimension: {terminal_neurons: 91, runtime_channels: 16, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: fixed_exact_routes, candidate_envelope_sha256: not_applicable, ruleset_sha256: wiring-revalidation.rules.v1, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [one_global_rate, thermo_or_hygro_class, receptor_class, terminal_channel], selected_level: unresolved, justification: must_be_selected_from_evidence, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
+identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [thermotaxis, hygrotaxis], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [], downstream_family_ids: []}
+uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: data/derived/wiring/basal-clamp-routing.json, supports: 16 exact fan-out channels covering 91 terminals}, {ref: https://pmc.ncbi.nlm.nih.gov/articles/PMC7443704/, supports: receptor-class context only; no value transferred yet}]
+assumptions: [Neutral environmental conditions are represented by basal source statistics in v0.]
+next_action: Define neutral conditions and compile admissible class-level evidence without using thermotaxis behavior.

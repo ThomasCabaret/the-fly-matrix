@@ -1,0 +1,68 @@
+schema_version: 1
+id: parameter_family_inventory.v0
+status: complete_inventory_values_unfitted
+updated: 2026-09-30
+scope_statement: >-
+  Exhaustive inventory of parameter families currently exposed or required by
+  the accepted wiring-v0 embodied runtime. Completeness means every known family
+  has a record; it does not mean values, sharing levels, models, or routes have
+  been selected.
+
+family_ids:
+  - parameter.baseline.olfaction.v0
+  - parameter.baseline.gustation.v0
+  - parameter.baseline.thermohygro.v0
+  - parameter.residual_sensory.chemosensory_nominal.v0
+  - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  - parameter.residual_sensory.unknown_nominal.v0
+  - parameter.vision.routing.v0
+  - parameter.vision.transfer.v0
+  - parameter.proprioception.routing.v0
+  - parameter.proprioception.transfer.v0
+  - parameter.mechanosensation.routing.v0
+  - parameter.mechanosensation.transfer.v0
+  - parameter.motor.routing.v0
+  - parameter.motor.transfer.v0
+  - parameter.central.transmitter_sign_prior.v0
+  - parameter.central.synaptic_efficacy.v0
+  - parameter.central.neuron_dynamics.v0
+  - parameter.body.flybody_mechanics.v0
+  - parameter.technical.motor_command_envelope.v0
+
+accounting:
+  total_families: 19
+  by_kind: {basal: 6, routing: 4, transfer: 4, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
+  by_claim_role: {biological: 11, surrogate: 7, technical: 1}
+  frozen_external: 1
+  accepted_parameter_sets: 0
+  fitted_families: 0
+  unresolved_sharing_or_model_families: 18
+
+known_runtime_couplings:
+  - families: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0]
+    issue: One executable coefficient vector currently combines route weighting and transfer gain.
+    required_resolution: Compile distinct logical families into the existing runtime vector.
+  - families: [parameter.mechanosensation.routing.v0, parameter.mechanosensation.transfer.v0]
+    issue: One executable coefficient vector currently combines route weighting and transfer gain.
+    required_resolution: Compile distinct logical families into the existing runtime vector.
+  - families: [parameter.motor.routing.v0, parameter.motor.transfer.v0]
+    issue: The terminal-actuator matrix currently combines route weighting and activation gain.
+    required_resolution: Compile distinct logical families into the existing runtime matrix.
+
+milestone_boundary:
+  name: first_scientifically_interpretable_closed_loop
+  required_before_run_claim:
+    - Evidence/sign compiler reports coverage and unknown masks.
+    - Every non-external family consumed by the run has a frozen parameter set or an explicit unresolved exclusion.
+    - Routing and transfer are compiled separately even when the runtime representation is shared.
+    - Technical neural and embodied stability gates pass without named-behavior optimization.
+    - The held-out stimulus/sham protocol is locked before inspection.
+  not_required_for_first_milestone:
+    - Individual per-neuron or per-edge physiological identification.
+    - Exhaustive behavior repertoire.
+    - Recalibration of FlyBody mechanical constants.
+
+next_action: >-
+  Compile evidence-transfer inputs and implement the parameter compiler plus
+  minimal autonomous campaign runner. Do not fit values until a target, scope,
+  acceptance gate, topology boundary, and output parameter-set lineage exist.

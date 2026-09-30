@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.motor.routing.v0
+title: Motor group to actuator routing
+status: inventoried_unfitted
+primary_class: local_interface
+parameter_kind: routing
+claim_role: biological
+meaning: {biological_or_technical_role: Local assignment or mixture from 431 represented motor groups to 102 FlyBody actuators, units: simplex_or_categorical_weight, applicability_limits: [Ten unsupported groups remain explicit sinks]}
+scope:
+  owner_ids: [adapter.motor.transduction]
+  parameter_names: [candidate_route_weight]
+  dimension: {groups_with_actuator_candidates: 431, sink_groups: 10, group_candidate_edges: 3746, routing_simplex_dimensions_upper_bound: 3315, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3, candidate_envelope_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3, ruleset_sha256: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [named_target_fixed_where_supported, homologous_left_right_group, anatomical_group_simplex, group_local_simplex], selected_level: unresolved, justification: use the smallest supported routing capacity, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: unknown, prior_or_bounds: accepted_candidate_envelope, fallback: unresolved_or_explicit_only}
+identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [walking, grooming, escape, jump], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.motor.transfer.v0]}
+uncertainty: {representation: admissible_routing_set, admissible_set_criteria: [same_side, same_appendage, mirror_capacity, explicit_sinks], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}]
+assumptions: [FlyBody actuators are abstract joint controls rather than one-to-one biological muscles.]
+next_action: Define a minimum-capacity route representation or preserve an admissible ensemble.

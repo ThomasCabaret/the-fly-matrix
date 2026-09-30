@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.central.neuron_dynamics.v0
+title: Central neuron temporal dynamics
+status: inventoried_model_not_selected
+primary_class: technical
+parameter_kind: neural_dynamics
+claim_role: biological
+meaning: {biological_or_technical_role: Time constants thresholds biases nonlinearities and integration rule for canonical MaleCNS neurons, units: mixed, applicability_limits: [Benchmark leaky-tanh values are excluded]}
+scope:
+  owner_ids: [cns.malecns]
+  parameter_names: [time_constant, threshold, bias, nonlinearity, integration_step]
+  dimension: {canonical_neurons: 166700, selected_model: unresolved, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: canonical_malecns_runtime_graph, candidate_envelope_sha256: fixed_runtime_edges, ruleset_sha256: not_applicable, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [one_global_profile, neurotransmitter_or_neuron_class, anatomical_class, local_vector, individual_neuron], selected_level: unresolved, justification: choose model before dimension and start with class sharing, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
+identifiability: {status: blocked_by_model_selection, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [parameter.central.synaptic_efficacy.v0], downstream_family_ids: []}
+uncertainty: {representation: interval_or_model_ensemble, admissible_set_criteria: [bounded_activity, recoverable_perturbations, nonzero_responsiveness], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: benchmarks/profiles/malecns-benchmark-v0.yaml, supports: engineering throughput only and explicitly no parameter values}]
+assumptions: [A 5 ms step is a benchmark choice until supported by the selected dynamics model.]
+next_action: Compare minimal executable dynamics models and lock technical acceptance metrics before fitting.

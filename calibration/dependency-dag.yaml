@@ -1,0 +1,53 @@
+schema_version: 1
+id: calibration.parameter_dependency_dag.v0
+status: complete_structure_values_unfitted
+updated: 2026-09-30
+inventory_id: parameter_family_inventory.v0
+node_ids:
+  - parameter.baseline.olfaction.v0
+  - parameter.baseline.gustation.v0
+  - parameter.baseline.thermohygro.v0
+  - parameter.residual_sensory.chemosensory_nominal.v0
+  - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  - parameter.residual_sensory.unknown_nominal.v0
+  - parameter.vision.routing.v0
+  - parameter.vision.transfer.v0
+  - parameter.proprioception.routing.v0
+  - parameter.proprioception.transfer.v0
+  - parameter.mechanosensation.routing.v0
+  - parameter.mechanosensation.transfer.v0
+  - parameter.motor.routing.v0
+  - parameter.motor.transfer.v0
+  - parameter.central.transmitter_sign_prior.v0
+  - parameter.central.synaptic_efficacy.v0
+  - parameter.central.neuron_dynamics.v0
+  - parameter.body.flybody_mechanics.v0
+  - parameter.technical.motor_command_envelope.v0
+edges:
+  - {upstream: parameter.vision.routing.v0, downstream: parameter.vision.transfer.v0, reason: Freeze admissible registration before fitting response gains.}
+  - {upstream: parameter.proprioception.routing.v0, downstream: parameter.proprioception.transfer.v0, reason: Separate local route selection from sensor transfer.}
+  - {upstream: parameter.mechanosensation.routing.v0, downstream: parameter.mechanosensation.transfer.v0, reason: Separate local route selection from sensor transfer.}
+  - {upstream: parameter.motor.routing.v0, downstream: parameter.motor.transfer.v0, reason: Separate actuator assignment from activation gain.}
+  - {upstream: parameter.body.flybody_mechanics.v0, downstream: parameter.motor.transfer.v0, reason: Interpret actuator transfer against a frozen mechanical plant.}
+  - {upstream: parameter.motor.transfer.v0, downstream: parameter.technical.motor_command_envelope.v0, reason: The technical guard must not absorb an unidentified motor transfer.}
+  - {upstream: parameter.central.transmitter_sign_prior.v0, downstream: parameter.central.synaptic_efficacy.v0, reason: Preserve sign confidence and unknown masks before fitting efficacy.}
+  - {upstream: parameter.central.synaptic_efficacy.v0, downstream: parameter.central.neuron_dynamics.v0, reason: Characterize temporal dynamics against a declared signed coupling model.}
+root_ids:
+  - parameter.baseline.olfaction.v0
+  - parameter.baseline.gustation.v0
+  - parameter.baseline.thermohygro.v0
+  - parameter.residual_sensory.chemosensory_nominal.v0
+  - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  - parameter.residual_sensory.unknown_nominal.v0
+  - parameter.vision.routing.v0
+  - parameter.proprioception.routing.v0
+  - parameter.mechanosensation.routing.v0
+  - parameter.motor.routing.v0
+  - parameter.central.transmitter_sign_prior.v0
+  - parameter.body.flybody_mechanics.v0
+notes:
+  - This DAG orders parameter-family acceptance; targets and campaigns add their own dependency edges.
+  - Independent roots may be processed in parallel.
+  - A joint campaign may replace an edge only with a versioned non-identifiability reason.
+  - Basal families remain roots; the embodied stability campaign consumes them without turning that use into a family dependency.
+next_action: Add campaign nodes and frozen parameter-set edges when the runner is implemented.

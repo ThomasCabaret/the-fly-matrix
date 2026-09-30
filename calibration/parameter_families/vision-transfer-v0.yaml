@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.vision.transfer.v0
+title: Vision local transfer and gain
+status: inventoried_unfitted
+primary_class: local_interface
+parameter_kind: transfer
+claim_role: biological
+meaning: {biological_or_technical_role: Local retinal intensity-to-afferent activity transform after registration, units: model_activity_per_retinal_intensity, applicability_limits: [No behavior-trained visual controller]}
+scope:
+  owner_ids: [adapter.vision.transduction]
+  parameter_names: [gain, offset, optional_temporal_filter]
+  dimension: {runtime_gain_slots: 6098, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152, candidate_envelope_sha256: 130b45c285aa86f97886648a607de29617422e9c8c94aed51be711ae5a836152, ruleset_sha256: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [one_global_gain, photoreceptor_palette, receptor_type, local_vector, individual], selected_level: unresolved, justification: runtime slots are an upper bound not an accepted capacity, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
+identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [optomotor_response, phototaxis], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [parameter.vision.routing.v0], downstream_family_ids: []}
+uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: src/the_fly_matrix/runtime.py, supports: 6098 executable gain slots}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: accepted topology boundary}]
+assumptions: [Routing is frozen before transfer fitting unless joint non-identifiability is documented.]
+next_action: Select a minimal transfer model and local non-behavioral evidence protocol.

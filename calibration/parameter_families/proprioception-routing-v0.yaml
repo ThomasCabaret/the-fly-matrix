@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.proprioception.routing.v0
+title: Proprioception local routing
+status: inventoried_unfitted
+primary_class: local_interface
+parameter_kind: routing
+claim_role: biological
+meaning: {biological_or_technical_role: Group-local selection or weighting of FlyBody joint observables for proprioceptor groups, units: simplex_or_categorical_weight, applicability_limits: [Accepted same-side appendage envelopes only]}
+scope:
+  owner_ids: [adapter.proprioception.transduction]
+  parameter_names: [candidate_route_weight]
+  dimension: {candidate_edges: 1992, routing_simplex_dimensions_upper_bound: 1730, groups: 262, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665, candidate_envelope_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665, ruleset_sha256: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [annotation_exact_or_fixed, receptor_class, homologous_left_right_group, group_local_simplex], selected_level: unresolved, justification: use the smallest supported local routing capacity, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: unknown, prior_or_bounds: accepted_candidate_envelope, fallback: unresolved_or_explicit_only}
+identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [walking, grooming, stance], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.proprioception.transfer.v0]}
+uncertainty: {representation: admissible_routing_set, admissible_set_criteria: [same_side, same_appendage, FeCO_partition, direct_proxy_partition], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}]
+assumptions: [The current runtime weight vector couples route selection and gain and must be compiled from two logical families.]
+next_action: Define the routing representation and compiler without widening the accepted envelope.

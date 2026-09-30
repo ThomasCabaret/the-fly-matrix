@@ -11,8 +11,9 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
   objectives;
 - `_templates/`: minimum schemas for parameter families, scopes, campaigns,
   parameter sets, and evaluations;
-- future `parameter_families/` and `scopes/`: the inventory and dependency-DAG
-  nodes created before fitting;
+- `parameter_families/`: 19 versioned family records plus an exhaustive index;
+- `dependency-dag.yaml`: the validated partial order between those families;
+- future `scopes/`: reusable local and closed-loop fitting scopes;
 - future `campaigns/`, `parameter_sets/`, and `evaluations/`: compact records
   added when experiments begin.
 
@@ -44,3 +45,8 @@ Start from a template, assign a stable identifier, and link the new record from
 `state.yaml` or its parent object. Unknown cases should be represented honestly
 and may justify a new ADR rather than being forced into an existing category.
 The dependency and reopening contract is in ADR 0012.
+
+Run `calibration_status.bat` to validate that the family files, inventory counts,
+reciprocal dependency declarations, and acyclic DAG agree. A successful result
+means that the unknowns are accounted for; it does **not** mean any value has been
+fitted or accepted.

@@ -1,0 +1,22 @@
+schema_version: 1
+id: parameter.central.synaptic_efficacy.v0
+title: Central signed synaptic efficacy
+status: inventoried_model_not_selected
+primary_class: technical
+parameter_kind: neural_dynamics
+claim_role: biological
+meaning: {biological_or_technical_role: Convert structural synapse counts and sign priors into dynamical coupling strengths, units: model_dependent, applicability_limits: [Structural counts are not conductances]}
+scope:
+  owner_ids: [cns.malecns]
+  parameter_names: [class_gain, connection_family_gain, optional_edge_residual]
+  dimension: {runtime_edges_max: 25582938, minimum_class_dimension: unresolved, selected_free_parameters: unresolved}
+  topology_snapshot: {semantic_topology_sha256: canonical_malecns_runtime_graph, candidate_envelope_sha256: fixed_runtime_edges, ruleset_sha256: not_applicable, exception_table_sha256: none}
+sharing: {candidate_hierarchy: [one_global_scale, transmitter_class, connection_family, local_vector, individual_edge], selected_level: unresolved, justification: begin with transmitter classes and add capacity only with residual evidence, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
+identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [], joint_calibration_reason: null}
+dependencies: {upstream_family_ids: [parameter.central.transmitter_sign_prior.v0], downstream_family_ids: [parameter.central.neuron_dynamics.v0]}
+uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [no_runaway_activity, no_absorbing_silence], reference_selection_rule: unresolved}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources: [{ref: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather, supports: structural synapse counts only}]
+assumptions: [The unsigned incoming-L1 benchmark normalization is not an accepted model.]
+next_action: Select a signed dynamics model and preregister technical local response criteria.

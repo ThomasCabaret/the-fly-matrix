@@ -1,8 +1,8 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-30, entrée dans la phase de calibration : le câblage v0 et
-sa revalidation scientifique sont terminés, et la politique de campagnes
-hiérarchiques reconstructibles est actée par l'ADR 0012.
+Mise à jour : 2026-09-30, premier lot de calibration : le câblage v0 et sa
+revalidation scientifique sont terminés, la politique de campagnes hiérarchiques
+est actée et l'inventaire/DAG des paramètres est maintenant explicite.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -32,6 +32,18 @@ données autorisés, représentation de l'incertitude, protocoles de gel/réouve
 et runner autonome minimal. La politique est définie par
 [`ADR 0012`](decisions/0012-hierarchical-reconstructible-calibration.md) et
 [`docs/calibration-methodology.md`](docs/calibration-methodology.md).
+
+Le premier jalon de cette infrastructure est franchi. Le registre
+[`calibration/parameter_families/`](calibration/parameter_families/) inventorie
+19 familles : six sources basales, quatre routages, quatre transferts, trois
+familles de dynamique centrale, la mécanique FlyBody conservée comme dépendance
+externe gelée et l'enveloppe numérique motrice isolée comme nuisance technique.
+Le [`DAG`](calibration/dependency-dag.yaml) contient huit dépendances et est validé
+acyclique. Les dimensions maximales exécutables sont séparées des degrés de
+liberté scientifiques encore à choisir. En particulier, le couplage actuel entre
+routage et gain en proprioception, mécanoréception et sortie motrice est désormais
+un blocage explicite à résoudre par un compilateur, pas une permission de fitter
+tous les coefficients indépendamment.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -249,7 +261,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **non commencée ; la porte topologique est ouverte mais aucun paramètre n'est accepté**.
+- Calibration : **inventaire/DAG terminés ; 0 famille ajustée et 0 jeu de paramètres accepté**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -348,9 +360,11 @@ de rendre les campagnes reconstructibles et auditables.
    paramètres et du protocole.
 
 À ce jour : aucune campagne n'a été exécutée, aucun parameter set n'a été promu et
-aucune cible comportementale n'est autorisée. La gouvernance et les gabarits sont
-prêts ; l'inventaire concret et le DAG sont le prochain lot. Les fichiers de
-`calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
+aucune cible comportementale n'est autorisée. La gouvernance, les gabarits,
+l'inventaire concret et le DAG sont prêts. Le prochain lot compile les preuves de
+neurotransmetteurs/signes et sépare logiquement routage et transfert avant le
+runner autonome. Les fichiers de `calibration/` déterminent l'ordre effectif ;
+cette section en est le résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -372,6 +386,7 @@ closed_loop_live.bat      # même boucle directement dans le viewer, même si le
 diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
+calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les
