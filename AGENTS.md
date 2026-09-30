@@ -8,12 +8,11 @@ doivent être locales, explicites, paramétrables et auditables. Un résultat vi
 mais produit par un contrôleur comportemental externe n'est pas un succès du
 projet.
 
-La couverture terminale du **câblage structurel v0 est complète**. La phase
-courante revalide indépendamment les regroupements et correspondances
-scientifiques avant calibration. Une fiche `integration_pass` peut être
-exécutable tout en restant un précâblage non accepté. Ne choisissez pas de
-valeurs physiologiques, gains, signes, seuils ou comportements cibles hors d'une
-cible et d'une campagne versionnées.
+La couverture terminale et la revalidation scientifique du **câblage structurel
+v0 sont complètes**. La phase courante construit l'inventaire des familles de
+paramètres, leur DAG de dépendances et les campagnes reproductibles de
+calibration. Ne choisissez pas de valeurs physiologiques, gains, signes, seuils
+ou comportements cibles hors d'une cible et d'une campagne versionnées.
 
 Tout objet possédé par une validation `scientific_wiring_revalidation` ouverte
 bloque la calibration de sa famille. Ni un smoke test vert, ni une cardinalité
@@ -39,6 +38,8 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
    modifiée.
 6. `docs/calibration-methodology.md`, l'ADR 0005 et `calibration/state.yaml` pour
    tout paramètre, cible, campagne ou protocole d'évaluation.
+   Lire aussi l'ADR 0012 pour le DAG, le partage, le gel et la réouverture des
+   familles de paramètres.
 7. `docs/rules-first-automation.md` lorsqu'un lot répète une décision sur de
    nombreux objets, construit un pipeline ou lance une campagne hors ligne.
 
@@ -134,6 +135,17 @@ tailles d'ensembles candidats et les degrés de liberté, pas seulement leur nom
   contamine cette version du protocole.
 - Les valeurs biologiques reprises conservent source, unités, transformation,
   incertitude et limites d'applicabilité.
+- Les campagnes forment un DAG explicite. Calibrer localement et geler les
+  dépendances acceptées avant les objectifs globaux ; une calibration conjointe
+  reste possible si la non-identifiabilité séparée est documentée.
+- Minimiser la liberté par une hiérarchie de partage justifiée. Ne créer des
+  paramètres individuels ni augmenter la capacité du modèle pour absorber un
+  échec sans décision versionnée et preuve qu'un modèle plus simple est insuffisant.
+- Distinguer le meilleur essai de l'ensemble scientifiquement admissible et
+  conserver une incertitude proportionnée : intervalle, ensemble de solutions ou
+  distribution selon le problème.
+- Le gel d'une famille est explicite. Sa réouverture crée une nouvelle campagne,
+  enregistre le diagnostic qui la motive et invalide ou revalide ses descendants.
 - La calibration ne doit ni modifier silencieusement la topologie, ni ajouter un
   contrôleur comportemental externe autour de MaleCNS.
 - Le choix ou la pondération à l'intérieur d'une enveloppe candidate acceptée est

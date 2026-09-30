@@ -1,0 +1,64 @@
+schema_version: 1
+id: parameter_family.example.v0
+title: Replace with a stable parameter-family title
+status: proposed
+primary_class: unresolved
+parameter_kind: unresolved
+claim_role: unresolved
+# parameter_kind: routing, transfer, basal, neural_dynamics, mechanical, or technical_nuisance
+# claim_role: biological, technical, or surrogate
+
+meaning:
+  biological_or_technical_role: unresolved
+  units: unresolved
+  applicability_limits: []
+
+scope:
+  owner_ids: []
+  parameter_names: []
+  dimension: unresolved
+  topology_snapshot:
+    semantic_topology_sha256: unresolved
+    candidate_envelope_sha256: unresolved
+    ruleset_sha256: unresolved
+    exception_table_sha256: unresolved
+
+sharing:
+  candidate_hierarchy: []
+  selected_level: unresolved
+  justification: unresolved
+  individual_parameters_require_evidence: true
+
+origin_policy:
+  preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual]
+  current_origin: unknown
+  prior_or_bounds: unresolved
+  fallback: unresolved_or_explicit_only
+
+identifiability:
+  status: unresolved
+  allowed_dataset_ids: []
+  local_held_out_dataset_ids: []
+  forbidden_behavior_ids: []
+  jointly_identified_with: []
+  joint_calibration_reason: null
+
+dependencies:
+  upstream_family_ids: []
+  downstream_family_ids: []
+
+uncertainty:
+  representation: unresolved
+  admissible_set_criteria: []
+  reference_selection_rule: unresolved
+
+freeze:
+  status: not_frozen
+  parameter_set_id: null
+  acceptance_evaluation_ids: []
+  reopen_reason: null
+  stale_descendant_ids: []
+
+sources: []
+assumptions: []
+next_action: Replace this template with a versioned parameter-family record.

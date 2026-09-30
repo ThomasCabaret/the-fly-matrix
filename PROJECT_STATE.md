@@ -1,8 +1,8 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-29, revalidation scientifique du câblage terminée : les
-quatre topologies candidates périphériques — vision, proprioception,
-mécanoréception et sortie motrice — sont reconstruites indépendamment et validées.
+Mise à jour : 2026-09-30, entrée dans la phase de calibration : le câblage v0 et
+sa revalidation scientifique sont terminés, et la politique de campagnes
+hiérarchiques reconstructibles est actée par l'ADR 0012.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -11,22 +11,27 @@ recalculé font autorité.
 ## Objectif courant
 
 La couverture terminale du **câblage structurel v0 est complète** : aucun fil
-d'interface inventorié ne reste sans disposition. Cette couverture exécutable
-n'est cependant plus considérée comme une acceptation scientifique des
-regroupements, matrices candidates ou proxies. La découverte puis la correction
-d'une confusion antérieure entre corps annotés et neurones impose de recontrôler
-le raisonnement ayant produit ces relations, et pas seulement le périmètre du
-graphe central.
+d'interface inventorié ne reste sans disposition. La revalidation indépendante
+des regroupements, matrices candidates et proxies est également terminée. Il ne
+reste donc aucun lot de câblage obligatoire avant calibration ; toute future
+extension d'une enveloppe candidate ou modification de topologie ouvrira une
+nouvelle version de câblage plutôt qu'une correction silencieuse.
 
-La **revalidation scientifique indépendante du précâblage est maintenant
-terminée**. Le registre place la validation en `independently_validated`; elle
-conserve la portée historique de 26 objets :
+La **revalidation scientifique indépendante du précâblage est
+`independently_validated`**. Elle conserve la portée historique de 26 objets :
 7 boîtes, 7 groupes, 10 fils et 2 familles de
 paramètres couvrant vision, proprioception, mécanoréception et sortie motrice.
 Leurs implémentations et `integration_pass` restent des preuves d'exécution et de
-cardinalité, pas des preuves biologiques. Les groupes et routes auparavant trop
-affirmatifs ont été rétrogradés à `proposed` et leur confiance à `low`, sans
-supprimer les manifestes ni les données.
+cardinalité ; l'acceptation scientifique supplémentaire porte sur les enveloppes
+topologiques bornées, jamais sur les valeurs physiologiques ou de transfert.
+
+L'objectif courant est de construire l'**infrastructure de calibration** avant de
+chercher un comportement convaincant : inventaire versionné des familles de
+paramètres, DAG de dépendances, règles de partage et d'identifiabilité, jeux de
+données autorisés, représentation de l'incertitude, protocoles de gel/réouverture
+et runner autonome minimal. La politique est définie par
+[`ADR 0012`](decisions/0012-hierarchical-reconstructible-calibration.md) et
+[`docs/calibration-methodology.md`](docs/calibration-methodology.md).
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -167,8 +172,10 @@ et documentée dans [`docs/embodied-runtime.md`](docs/embodied-runtime.md).
 
 Cette validation est uniquement une preuve d'intégration. La règle neuronale,
 les paramètres d'interface et le garde-fou moteur restent non calibrés. Le front
-d'ingénierie suivant consiste à inspecter le replay, profiler surtout la vision et
-préparer l'injection de jeux de paramètres versionnés dans cette unique boucle.
+d'ingénierie suivant consiste à inventorier les familles et leurs dépendances,
+puis à préparer l'injection de jeux de paramètres versionnés dans cette unique
+boucle. L'inspection du replay et le profilage de la vision restent des outils du
+baseline et du futur runner, pas un substitut à cet inventaire.
 
 Un viewer physique temps réel est maintenant disponible via
 `diagnostic_viewer.bat`. Il utilise un faux CNS récurrent de 64 états, déterministe
@@ -308,40 +315,42 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **67 tests**, leurs sous-tests et le smoke test
+conservées et classifiées. Les **70 tests**, leurs sous-tests et le smoke test
 bout en bout passent après cette correction.
 
-## Fronts structurels restants
+## Statut structurel
 
-1. Ajouter au runner la reconstruction indépendante de la matrice visuelle hors
-   des 2 628 relations R7/R8 déjà confirmées, y compris le proxy HBeyelet.
-2. Régénérer puis comparer les arêtes candidates proprioceptives, notamment les
-   91 proxies de contrainte/vibration et leurs frontières appendice/côté.
-3. Construire chaque famille restante dans une sortie vide sans lire son précâblage,
-   reproduire son hash sémantique, mesurer la distribution des ensembles candidats
-   et tester les contraintes négatives et gold standards applicables.
-4. Étendre les règles seulement à partir des exceptions observées, conserver une
-   petite table de vraies singularités et ne promouvoir aucun objet tant que ces
-   deux paquets bloqués ne sont pas indépendamment comparés.
+Le câblage structurel v0 est terminé : couverture terminale 100 %, quatre familles
+fines sur quatre indépendamment validées, aucune exception inattendue et aucune
+famille bloquée. Aucun travail structurel n'est requis pour ouvrir la calibration.
+Les raffinements futurs restent possibles, mais deviennent de nouvelles versions
+topologiques et invalident explicitement les campagnes qui dépendaient des hashes
+précédents.
 
 ## Front de calibration
 
-**En pause pour les 26 objets possédés par la revalidation scientifique.** Les
-éléments ci-dessous restent la suite prévue, mais ne sont pas la prochaine action.
+**Ouvert.** La prochaine action n'est pas encore de lancer un fitting global, mais
+de rendre les campagnes reconstructibles et auditables.
 
-1. Préserver le banc CPU/GPU et la boucle fermée désormais mesurés; inspecter le
-   replay physique et profiler le chemin vision/interfaces avant optimisation.
-2. Construire un runner qui sépare les scénarios train, validation, diagnostic et
-   `evaluation_only`, puis enregistrer le baseline non calibré.
-3. Inventorier les familles de paramètres des interfaces sensorielles, motrices,
-   basales et des éventuels feedbacks externes, avec unités, origines et scopes.
-4. Calibrer d'abord l'activité bornée et récupérable, puis les interfaces locales
-   et la stabilité corporelle neutre sur sol plat.
-5. Geler les paramètres avant d'ouvrir le protocole stimulus/sham tenu à l'écart.
+1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
+   partage, origine, données autorisées, identifiabilité et incertitude.
+2. Construire leur DAG de dépendances et geler pour chaque campagne les hashes de
+   topologie, règles et exceptions issus du câblage accepté.
+3. Compiler les transferts de preuves, statistiques basales et priors de
+   neurotransmetteurs/signes avec confiance et masques inconnus.
+4. Construire le runner autonome minimal avec comptabilité exhaustive des essais,
+   splits locaux et comportementaux, critères préenregistrés et artefacts immuables.
+5. Calibrer et geler les familles locales avant les contraintes globales, sauf
+   non-identifiabilité documentée justifiant une campagne conjointe.
+6. Conserver séparément le meilleur essai et l'ensemble scientifiquement
+   admissible ; un échec ne doit pas augmenter silencieusement la capacité.
+7. N'ouvrir le protocole stimulus/sham `evaluation_only` qu'après gel des
+   paramètres et du protocole.
 
 À ce jour : aucune campagne n'a été exécutée, aucun parameter set n'a été promu et
-aucune cible comportementale n'est autorisée. Les fichiers de `calibration/`
-déterminent désormais le prochain lot ; cette section en est le résumé humain.
+aucune cible comportementale n'est autorisée. La gouvernance et les gabarits sont
+prêts ; l'inventaire concret et le DAG sont le prochain lot. Les fichiers de
+`calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.

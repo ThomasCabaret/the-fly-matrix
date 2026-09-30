@@ -12,6 +12,15 @@ excludes: []
 allowed_parameter_names: []
 frozen_parameter_names: []
 structural_changes_allowed: false
+topology_boundary:
+  semantic_topology_hashes: {}
+  candidate_envelope_hashes: {}
+  ruleset_hashes: {}
+  exception_table_hashes: {}
+identifiability:
+  status: unresolved
+  jointly_identified_family_ids: []
+  reason: null
 assumptions: []
 sources: []
 next_action: Replace this template with a versioned scope record.

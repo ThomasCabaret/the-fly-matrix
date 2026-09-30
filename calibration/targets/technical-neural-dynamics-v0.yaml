@@ -53,6 +53,9 @@ provenance:
 
 validation: not_run
 blocked_reason: >-
-  The execution benchmark exists, but no calibration runner or evidence-backed
-  acceptance thresholds exist and affected interfaces remain under revalidation.
-next_action: Replay the five-second benchmark trace in MuJoCo, characterize the uncalibrated baseline, then define a runner without promoting the benchmark profile.
+  Structural wiring is accepted, but the parameter-family inventory, dependency
+  DAG, calibration runner and evidence-backed acceptance thresholds do not exist.
+next_action: >-
+  Inventory typed temporal and synaptic families, compile confidence-weighted
+  transmitter/sign priors, register sharing and uncertainty rules, then
+  characterize the uncalibrated baseline without promoting the benchmark profile.

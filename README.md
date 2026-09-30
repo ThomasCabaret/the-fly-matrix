@@ -19,6 +19,7 @@ Pour reprendre le projet sans le contexte des conversations :
 5. avant tout réglage, lire
    [`docs/calibration-methodology.md`](docs/calibration-methodology.md),
    [`ADR 0005`](decisions/0005-calibration-evidence-and-claims.md) et
+   [`ADR 0012`](decisions/0012-hierarchical-reconstructible-calibration.md), puis
    [`calibration/state.yaml`](calibration/state.yaml).
 
 ## Commandes Windows
@@ -44,8 +45,9 @@ Pour reprendre le projet sans le contexte des conversations :
 - `wiring_revalidation.bat` reconstruit indépendamment les populations terminales
   et groupes depuis les annotations brutes, applique les règles versionnées,
   compare le précâblage et produit décisions, surprises et blocages. Les options
-  `-Direction input` et `-Direction output` isolent une frontière. Un passage vert
-  n'accepte pas les matrices candidates fines encore listées comme bloquées. Voir
+  `-Direction input` et `-Direction output` isolent une frontière. Les quatre
+  familles fines actuelles disposent d'un clean builder et sont validées ; toute
+  modification future doit reproduire cette porte d'acceptation. Voir
   [`docs/wiring-revalidation.md`](docs/wiring-revalidation.md).
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
@@ -124,12 +126,16 @@ par groupe anatomique, par fil, par famille de paramètres et par validation. Le
 maintenus manuellement.
 
 Le répertoire [`calibration/`](calibration/README.md) complète ce registre pour les
-cibles, scopes, campagnes, jeux de paramètres et évaluations. Il ne réduit jamais
-l'état à un booléen « calibré ». Il distingue valeurs biologiques transférées,
+cibles, familles de paramètres, scopes, campagnes, jeux de paramètres et
+évaluations. Il ne réduit jamais l'état à un booléen « calibré ». Il distingue
+valeurs biologiques transférées,
 stabilité technique entraînée, fonctions d'interface locales, calibration
 comportementale explicite et protocoles réellement tenus à l'écart. Un comportement
 utilisé pour optimiser ou choisir les paramètres ne pourra pas être présenté comme
 émergent ; toute exception devra être autorisée et visible dans toute la lignée.
+Les familles et campagnes forment un DAG reconstructible : la liberté est partagée
+au niveau le plus simple justifié, les familles acceptées sont gelées, et leur
+réouverture ou toute augmentation de capacité est explicitement versionnée.
 
 Le pourcentage affiché est un indicateur structurel, pas une mesure de réussite
 scientifique. Il agrège séparément l'inventaire, le routage, l'implémentation, les

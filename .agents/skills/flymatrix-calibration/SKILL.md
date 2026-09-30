@@ -12,8 +12,9 @@ Lire intégralement :
 1. `PROJECT_STATE.md` ;
 2. `docs/calibration-methodology.md` ;
 3. `decisions/0005-calibration-evidence-and-claims.md` ;
-4. `calibration/state.yaml` et les cibles actives ;
-5. les fiches de câblage, validations et sources des boîtes concernées.
+4. `decisions/0012-hierarchical-reconstructible-calibration.md` ;
+5. `calibration/state.yaml` et les cibles actives ;
+6. les fiches de câblage, validations et sources des boîtes concernées.
 
 Le câblage reste canonique pour la topologie. La calibration modifie des paramètres
 déclarés. Si le travail exige une nouvelle boîte, une cardinalité ou un chemin,
@@ -41,22 +42,37 @@ signification d'un résultat ou l'exposition d'un comportement.
 
 ## Construire un lot
 
-1. Définir une cible versionnée, son scope exact, ses métriques, dépendances,
+1. Inventorier la famille de paramètres, sa dimension, son type, son niveau de
+   partage, son identifiabilité, ses données autorisées et ses dépendances.
+2. Définir une cible versionnée, son scope exact, ses métriques, dépendances,
    critères, hypothèses, sources et `next_action`.
-2. Inventorier les paramètres autorisés, gelés et inconnus. Compter les degrés de
+3. Inventorier les paramètres autorisés, gelés et inconnus. Compter les degrés de
    liberté et conserver les unités.
-3. Créer une campagne reproductible : parents, bornes, méthode, seeds, budget,
+4. Créer une campagne reproductible : parents, bornes, méthode, seeds, budget,
    commande, commit, hashes et séparation train/validation/diagnostic/held-out.
-4. Enregistrer chaque sortie dans un nouveau parameter set immuable. Ne pas
+5. Enregistrer chaque sortie dans un nouveau parameter set immuable. Ne pas
    écraser la référence active.
-5. Conserver sous `runs/calibration/` les sorties lourdes et versionner seulement
+6. Conserver sous `runs/calibration/` les sorties lourdes et versionner seulement
    résumés, configurations, identifiants de contenu et résultats compacts.
-6. Enregistrer les échecs, régressions et résultats négatifs ; ne pas sélectionner
+7. Enregistrer les échecs, régressions et résultats négatifs ; ne pas sélectionner
    silencieusement un essai visuellement plaisant.
-7. Vérifier les invariants structurels, les métriques locales, la boucle fermée si
+8. Vérifier les invariants structurels, les métriques locales, la boucle fermée si
    concernée et les non-régressions avant promotion.
-8. Mettre à jour `calibration/state.yaml`, `PROJECT_STATE.md` et le tableau de bord
+9. Mettre à jour `calibration/state.yaml`, `PROJECT_STATE.md` et le tableau de bord
    quand le statut change.
+
+Le DAG est un ordre partiel, pas une recette universelle. Préférer mesure directe,
+transfert documenté et partage biologique avant un paramètre individuel. Une
+campagne conjointe est acceptable si la séparation est réellement non identifiable
+et si la fusion, les ablations et la capacité supplémentaire sont explicites.
+
+Une famille acceptée est gelée par identifiants et hashes. La rouvrir exige une
+nouvelle campagne, une raison diagnostique et la revalidation des descendants.
+Un échec ne doit pas élargir automatiquement le modèle ou l'enveloppe de routage.
+Conserver le meilleur essai séparément de l'ensemble admissible et représenter
+l'incertitude par le mécanisme proportionné le plus simple : bornes, ensemble ou
+distribution. Pour un solveur stochastique, reproduire les propriétés et critères
+de cet ensemble peut remplacer l'identité bit à bit du vecteur final.
 
 ## Discipline comportementale
 

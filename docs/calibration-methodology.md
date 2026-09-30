@@ -122,6 +122,97 @@ Large traces, checkpoints, videos, and optimizer histories belong under
 `runs/calibration/` and remain unversioned. Git stores compact summaries,
 configuration, checksums or content identifiers, and promoted parameter sets.
 
+The durable dependency, sharing, uncertainty and reopening rules are fixed by
+[`ADR 0012`](../decisions/0012-hierarchical-reconstructible-calibration.md).
+
+## Parameter-family inventory and dependency DAG
+
+Before fitting values, create one versioned record per parameter family. A family
+is the smallest useful unit that can be scoped, constrained, calibrated, frozen
+and reopened coherently. Its record includes:
+
+- biological or technical meaning, parameter kind, units and applicability;
+- owners, names, dimension and continuous or discrete domain;
+- sharing hierarchy and the currently selected sharing level;
+- origin policy, priors, bounds and explicit fallback;
+- allowed fitting data, local held-out data and forbidden behavior exposures;
+- identifiability and any family that must be estimated jointly;
+- upstream and downstream dependencies;
+- topology, candidate-envelope, ruleset and exception hashes where applicable;
+- uncertainty representation, accepted-set criteria and reference-selection rule;
+- freeze state, accepted parameter set, reopening reason and stale descendants.
+
+`parameter_kind` distinguishes `routing`, `transfer`, `basal`,
+`neural_dynamics`, `mechanical` and `technical_nuisance`. `claim_role` separately
+states whether a value is interpreted as `biological`, `technical` or
+`surrogate`. Fitting a technical stabilizer does not turn it into estimated
+physiology, and behavioral exposure is tracked independently through lineage.
+
+Families and campaigns form a DAG. The expected broad flow is evidence transfers
+and basal priors → local sensory and motor interfaces → typed central dynamics →
+physical closed loop → global technical constraints → held-out evaluation. This
+is an order of dependencies, not a rigid serial recipe: independent branches may
+run in parallel and central diagnostic studies may begin before every interface is
+accepted. A value may not flow downstream until its required acceptance gate is
+satisfied.
+
+A joint campaign is permitted when separate fitting is genuinely
+non-identifiable. It must state the compensation risk, capacity, local evidence,
+ablation or sensitivity checks, and why a smaller factorization failed. Do not
+force an artificial separation, but do not use global fitting merely because it
+is convenient.
+
+## Sharing hierarchy and capacity discipline
+
+Prefer, in order, direct measurement, documented evidence transfer, sharing by a
+biologically justified class, a small local vector, and only then individual
+parameters. Cell, receptor, transmitter or muscle type is a candidate sharing key
+rather than proof of identical physiology. Select the level using independent
+local evidence and complexity-aware validation.
+
+Campaign failure is information. It may indicate an inadequate transfer model, a
+missing variable, incorrect routing, incompatible evidence or genuine biological
+heterogeneity. The runner must not silently respond by adding parameters,
+widening bounds or candidate envelopes, relaxing locality, or introducing a
+behavioral objective. A material capacity increase creates a new model or wiring
+version, records the residual that motivates it and re-evaluates simpler
+alternatives.
+
+An explicit fallback chain may use a measured value, documented homologue,
+accepted class value or generic prior before leaving the family unresolved. The
+fallback retains its real origin and uncertainty; it is never relabelled as a
+measurement merely because it makes the runtime executable.
+
+## Admissible solutions and reproducibility
+
+The numerically best trial and the scientifically admissible set are different
+objects. When the observations do not identify a unique value, retain uncertainty
+as the simplest adequate representation: intervals, a finite accepted ensemble,
+samples or a fitted distribution. A full posterior is optional, not a default
+requirement. Downstream claims must be tested across the relevant accepted
+variation rather than only on one lucky seed.
+
+The canonical source is the campaign recipe and immutable inputs; parameter files
+are derived artifacts. Deterministic campaigns should reproduce semantic outputs
+exactly. For stochastic or multi-modal problems, reconstruction succeeds when the
+declared metrics, acceptance rate and admissible domain are reproduced within
+predeclared tolerances. Exact equality of one optimum is neither expected nor
+scientifically meaningful in that case.
+
+## Freeze and reopen
+
+The normal unit of progress is **calibrate locally, validate, then freeze**. A
+freeze records parameter-set and input identifiers, structural hashes, evaluation
+results and descendants. Downstream failure does not automatically reopen an
+accepted family.
+
+Reopening requires a new campaign version, a diagnostic reason and an explicit
+statement of affected descendants. Descendants become stale until sensitivity
+analysis proves them unaffected or they are revalidated. The previous parameter
+set remains immutable and available for rollback. If reopening follows inspection
+of an `evaluation_only` behavior, the inspected protocol is contaminated as
+specified by ADR 0005.
+
 ## Independent status dimensions
 
 There is no single `calibrated` boolean. Records track at least:
@@ -235,7 +326,18 @@ trials do not. This is a proportional preference rather than a mandate to build 
 general optimizer before the first benchmark. The detailed cross-project policy
 is in [`rules-first-automation.md`](rules-first-automation.md) and ADR 0009.
 
+Rules decide which family exists, its sharing, evidence, priors, model class,
+solver, seeds, budget and acceptance gates. They do not need to predict the final
+numeric value. Autonomous runners may consume substantial GPU time, but they must
+produce exhaustive trial accounting, compact summaries, exception classes and a
+clear stop state without interactive model decisions.
+
 ## Recommended staged program
+
+These stages are milestones over the dependency DAG, not an obligation to finish
+every item in one stage before any independent work in another. Evidence transfers
+and local interface branches should usually be resolved before global fitting;
+documented identifiability may justify a joint campaign.
 
 ### Stage -1 — Establish execution readiness
 
@@ -256,21 +358,31 @@ does not authorize fitting any parameter family whose review remains open.
 
 ### Stage 0 — Characterize the uncalibrated system
 
-Run deterministic sanity cases and record numerical failures, silence, saturation,
-activity distributions, latency, and runtime cost. This baseline is not a failed
-calibration; it is the reference against which progress is judged.
+Inventory parameter families, sharing candidates, dependencies and structural
+hashes. Run deterministic sanity cases and record numerical failures, silence,
+saturation, activity distributions, latency, and runtime cost. This baseline is
+not a failed calibration; it is the reference against which progress is judged.
 
-### Stage 1 — Technical neural dynamics
+### Stage 0.5 — Evidence transfers and basal priors
+
+Compile directly measured or externally transferable constants, basal-source
+statistics and typed transmitter/sign priors with units, confidence, unknown masks
+and applicability limits. This stage creates reproducible derived parameter sets;
+it does not turn uncertain transmitter identity into a universal synaptic sign.
+
+### Stage 1 — Local interfaces and bounded routing
+
+Calibrate evidence-backed sensory transduction, discrete routing choices, motor
+interfaces, basal sources and justified missing-feedback models independently
+where possible. Use local physiological or physical measurements and local held-
+out splits. Keep physical feedback through MuJoCo unless a documented biological
+pathway or validated surrogate justifies a shortcut.
+
+### Stage 2 — Technical neural dynamics
 
 Establish finite, bounded and recoverable temporal activity under basal input and
 small perturbations. Measure both pathological extremes: irreversible quiescence
 and self-amplifying or saturating echoes. Do not prescribe a fly action.
-
-### Stage 2 — Local interfaces
-
-Calibrate evidence-backed sensory, motor, basal, and missing-feedback transfer
-functions independently where possible. Use local measurements or generic
-physical constraints before whole-body behavioral objectives.
 
 ### Stage 3 — Neutral embodied stability
 

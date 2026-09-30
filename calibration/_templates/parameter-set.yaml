@@ -17,6 +17,19 @@ parameter_families: []
 # (unknown/assumed/borrowed/measured/fitted/frozen), units, values or a content
 # reference, source transformations, uncertainty, and frozen state.
 
+solution_set:
+  representation: unresolved
+  selected_reference_id: null
+  admissible_member_ids: []
+  uncertainty_artifact_refs: []
+  selection_rule: unresolved
+
+freeze:
+  frozen_family_ids: []
+  stale_family_ids: []
+  topology_boundary_hashes: {}
+  reopen_history: []
+
 reproducibility:
   git_commit: unresolved
   input_hashes: {}

@@ -1,10 +1,11 @@
 schema_version: 1
-phase: wiring_revalidation_and_runtime_readiness
-updated: 2026-09-27
+phase: calibration_foundation
+updated: 2026-09-30
 
 wiring_baseline:
   terminal_coverage: complete
-  refinement: executable_prewiring_requires_independent_scientific_revalidation
+  refinement: independently_validated_four_of_four_peripheral_families
+  calibration_boundary: freeze_semantic_topology_ruleset_and_exception_hashes_per_campaign
 
 active_target_ids:
   - target.technical_neural_dynamics.v0
@@ -17,7 +18,7 @@ last_promoted_parameter_set_id: null
 last_completed_campaign_id: null
 
 readiness:
-  governance_and_registry: documented
+  governance_and_registry: hierarchical_reconstructible_policy_documented
   diagnostic_physical_viewer: implemented_isolated_bypass
   real_connectome_execution_benchmark: integration_pass_full_graph_cuda
   temporal_cns_runtime: benchmark_only_uncalibrated_v0
@@ -25,8 +26,10 @@ readiness:
   controller_independent_physical_replay: integration_pass
   calibration_runner: not_started
   baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
+  parameter_family_inventory: not_started
+  parameter_dependency_dag: not_started
   local_interface_parameter_inventory: not_started
-  scientific_wiring_revalidation: in_progress_terminal_and_group_pass_complete
+  scientific_wiring_revalidation: independently_validated_zero_blocked_families
   neurotransmitter_prior_inventory: documented_not_compiled
   synaptic_sign_matrix: absent_current_runtime_is_unsigned_benchmark_only
   held_out_protocol_locked: false
@@ -36,11 +39,12 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - validation.scientific_wiring_reaudit blocks calibration of its 26 owned wiring and parameter records.
+  - The parameter-family inventory, sharing rules and dependency DAG do not yet exist.
   - A calibration runner and accepted dynamics model do not yet exist; the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Independently regenerate and compare the four fine candidate-relation families
-  before calibrating any disputed mapping. Then compile confidence-weighted
-  transmitter/sign priors and a calibration runner without promoting the current
-  unsigned benchmark profile or treating transmitter identity as a universal sign.
+  Build the versioned parameter-family inventory and dependency DAG, beginning
+  with evidence-transfer and basal families plus confidence-weighted transmitter
+  and sign priors. Declare sharing, identifiability, allowed data, topology hashes,
+  uncertainty representation and freeze policy before implementing the first
+  autonomous campaign runner. Do not promote the unsigned benchmark profile.

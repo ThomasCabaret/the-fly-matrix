@@ -9,10 +9,12 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
   action;
 - `targets/`: versioned technical, local-interface, behavioral, and held-out
   objectives;
-- `_templates/`: minimum schemas for new scopes, campaigns, parameter sets, and
-  evaluations;
-- future `campaigns/`, `parameter_sets/`, and `evaluations/`: compact records added
-  when experiments begin.
+- `_templates/`: minimum schemas for parameter families, scopes, campaigns,
+  parameter sets, and evaluations;
+- future `parameter_families/` and `scopes/`: the inventory and dependency-DAG
+  nodes created before fitting;
+- future `campaigns/`, `parameter_sets/`, and `evaluations/`: compact records
+  added when experiments begin.
 
 Heavy outputs belong in ignored `runs/calibration/`: traces, videos, checkpoints,
 optimizer histories, and temporary datasets. A versioned record references them
@@ -28,7 +30,17 @@ with a path plus checksum or stable content identifier when the result matters.
 - Calibration changes parameters, not hidden topology. Structural changes return
   to the wiring ledger.
 - Negative results and blockers remain visible in compact form.
+- Parameter families and campaigns form an explicit dependency DAG; accepted
+  upstream families are frozen before their values are consumed downstream.
+- Sharing starts at the smallest justified capacity. Extra degrees of freedom,
+  joint campaigns and reopened families require versioned reasons.
+- A selected reference is distinct from the admissible solution set; uncertainty
+  survives as bounds, an ensemble or a distribution when one value is not
+  identifiable.
+- Deterministic recipes reproduce semantic values exactly; stochastic recipes
+  reproduce predeclared acceptance statistics and admissible domains.
 
 Start from a template, assign a stable identifier, and link the new record from
 `state.yaml` or its parent object. Unknown cases should be represented honestly
 and may justify a new ADR rather than being forced into an existing category.
+The dependency and reopening contract is in ADR 0012.

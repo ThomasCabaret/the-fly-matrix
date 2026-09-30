@@ -66,3 +66,7 @@ and the no-external-controller invariant. A choice that changes the scientific
 claim, exposes a held-out behavior, or introduces a controller requires user
 review and a superseding ADR. This decision is intentionally evolvable; it is not
 a ban on experimentation.
+
+Campaign dependency, sharing, uncertainty, freeze and reopening rules are refined
+by ADR 0012. ADR 0012 does not weaken the behavioral exposure or held-out claims
+defined here.

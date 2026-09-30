@@ -8,9 +8,19 @@ protocol_version: null
 exposure_policy: unresolved
 
 scenario_ids: []
+dataset_split_ids:
+  fitting: []
+  local_validation: []
+  local_held_out: []
+  behavior_held_out: []
 seeds: []
 metrics: {}
 acceptance_result: pending
+
+admissible_set_evaluation:
+  member_count: 0
+  acceptance_rate: null
+  metric_distribution: {}
 
 reproducibility:
   command: unresolved
