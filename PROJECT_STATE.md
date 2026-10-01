@@ -1,8 +1,8 @@
 # État de reprise du projet
 
-Mise à jour : 2026-09-30, premier lot de calibration : le câblage v0 et sa
-revalidation scientifique sont terminés, la politique de campagnes hiérarchiques
-est actée et l'inventaire/DAG des paramètres est maintenant explicite.
+Mise à jour : 2026-10-01, deuxième lot de calibration : l'inventaire/DAG est
+explicite et le premier transfert de preuve, le prior neurotransmetteur/signe,
+est compilé, validé et gelé.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -44,6 +44,23 @@ liberté scientifiques encore à choisir. En particulier, le couplage actuel ent
 routage et gain en proprioception, mécanoréception et sortie motrice est désormais
 un blocage explicite à résoudre par un compilateur, pas une permission de fitter
 tous les coefficients indépendamment.
+
+Le premier nœud de preuve du DAG est également franchi. La recette
+[`evidence.transmitter_sign_prior.v0`](calibration/evidence/transmitter-sign-prior-v0.yaml)
+reconstruit une ligne pour chacun des 166 700 neurones canoniques à partir des
+trois sources MaleCNS v1.0 hashées. Elle trouve 166 522 enregistrements de
+neurotransmetteur et conserve 178 absences explicites. Le parameter set
+[`parameters.central_transmitter_sign_prior.v0`](calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml)
+est gelé comme dépendance de preuve, pas comme dynamique calibrée.
+
+Le prior attribue une classe excitatrice aux 103 720 neurones cholinergiques et
+une classe inhibitrice aux 22 069 neurones GABAergiques. Glutamate, histamine,
+monoamines, consensus `unclear` et absences restent contextuels ou inconnus. À
+l'échelle du graphe, 14 745 137 arêtes ont un prior excitateur, 4 925 557 un
+prior inhibiteur et **5 912 244 restent inconnues ou dépendantes du contexte**.
+Le code numérique zéro encode cette absence d'affirmation ; il ne supprime jamais
+une synapse. Deux exécutions propres ont reproduit le hash sémantique
+`fb3777b99eb913b41a86962cae33b8bf41a96bc0c26c25ca68ce34229a7a44da`.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -261,7 +278,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG terminés ; 0 famille ajustée et 0 jeu de paramètres accepté**.
+- Calibration : **inventaire/DAG terminés ; 1 famille de preuve gelée, 0 famille ajustée et aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -359,12 +376,12 @@ de rendre les campagnes reconstructibles et auditables.
 7. N'ouvrir le protocole stimulus/sham `evaluation_only` qu'après gel des
    paramètres et du protocole.
 
-À ce jour : aucune campagne n'a été exécutée, aucun parameter set n'a été promu et
-aucune cible comportementale n'est autorisée. La gouvernance, les gabarits,
-l'inventaire concret et le DAG sont prêts. Le prochain lot compile les preuves de
-neurotransmetteurs/signes et sépare logiquement routage et transfert avant le
-runner autonome. Les fichiers de `calibration/` déterminent l'ordre effectif ;
-cette section en est le résumé humain.
+À ce jour : une campagne déterministe de transfert de preuve a été acceptée ; elle
+n'a ajusté aucune valeur. Aucun parameter set complet n'a été promu et aucune cible
+comportementale n'est autorisée. Le prochain lot sépare logiquement routage et
+transfert dans les vecteurs exécutables, puis construit le runner autonome. Les
+fichiers de `calibration/` déterminent l'ordre effectif ; cette section en est le
+résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -387,6 +404,7 @@ diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG
+compile_calibration_evidence.bat # prior neurotransmetteur/signe reproductible
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

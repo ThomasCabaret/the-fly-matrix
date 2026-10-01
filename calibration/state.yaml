@@ -1,6 +1,6 @@
 schema_version: 1
-phase: calibration_inventory_complete
-updated: 2026-09-30
+phase: calibration_evidence_transfer
+updated: 2026-10-01
 
 wiring_baseline:
   terminal_coverage: complete
@@ -12,10 +12,14 @@ active_target_ids:
   - target.technical_embodied_stability.v0
 evaluation_target_ids:
   - target.held_out_stimulus_response.v0
+completed_target_ids:
+  - target.evidence_transmitter_sign_prior.v0
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: null
+last_completed_campaign_id: campaign.evidence_transmitter_sign_prior.v0
+accepted_dependency_parameter_set_ids:
+  - parameters.central_transmitter_sign_prior.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
 parameter_dependency_dag_id: calibration.parameter_dependency_dag.v0
 
@@ -32,8 +36,8 @@ readiness:
   parameter_dependency_dag: complete_acyclic_8_edges
   local_interface_parameter_inventory: complete_runtime_dimensions_and_couplings_declared
   scientific_wiring_revalidation: independently_validated_zero_blocked_families
-  neurotransmitter_prior_inventory: documented_not_compiled
-  synaptic_sign_matrix: absent_current_runtime_is_unsigned_benchmark_only
+  neurotransmitter_prior_inventory: compiled_frozen_166700_neurons
+  synaptic_sign_matrix: typed_prior_compiled_not_applied_to_runtime_5912244_edges_unknown_or_contextual
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -41,14 +45,13 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - Evidence/sign priors have not been compiled and the biological dynamics model has not been selected.
+  - The biological dynamics model has not been selected; the frozen typed prior leaves 5912244 runtime edges explicitly unknown or context-dependent.
   - Proprioceptive, mechanosensory and motor runtime coefficients still need a compiler that keeps logical routing separate from transfer.
   - A calibration runner and accepted parameter sets do not yet exist; the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Implement the confidence-preserving transmitter/sign evidence compiler and the
-  logical parameter compiler for families whose current runtime vector couples
-  routing and transfer. Then build the minimal autonomous campaign runner around
-  immutable configs, topology hashes, acceptance gates and parameter-set lineage.
-  Do not promote the unsigned benchmark profile or select physiological values
-  outside a versioned campaign.
+  Implement the logical parameter compiler for families whose current runtime
+  vector couples routing and transfer, then build the minimal autonomous campaign
+  runner around immutable configs, topology hashes, acceptance gates and
+  parameter-set lineage. Integrate the frozen sign prior only through an explicit
+  signed dynamics model; do not promote the unsigned benchmark profile.

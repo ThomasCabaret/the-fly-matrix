@@ -1,0 +1,31 @@
+schema_version: 1
+id: scope.central_transmitter_sign_prior.v0
+title: Canonical MaleCNS transmitter evidence and presynaptic sign-prior scope
+status: accepted
+includes:
+  boxes: [cns.malecns]
+  channel_groups: []
+  neuron_populations: [canonical_malecns_166700]
+  body_degrees_of_freedom: []
+  parameter_families: [parameter.central.transmitter_sign_prior.v0]
+excludes:
+  - Noncanonical annotated bodies and unannotated segmentation fragments
+  - Synaptic gain, receptor response, neuron dynamics, and behavior
+allowed_parameter_names: [transmitter_class_probability, synaptic_sign_prior, unknown_mask]
+frozen_parameter_names: []
+structural_changes_allowed: false
+topology_boundary:
+  semantic_topology_hashes: {population_rule: malecns-v1.0-population-scope-v1}
+  candidate_envelope_hashes: {runtime_edges: fixed_25582938}
+  ruleset_hashes: {evidence_recipe: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e}
+  exception_table_hashes: {exceptions: none}
+identifiability:
+  status: accepted_as_prior_not_effect
+  jointly_identified_family_ids: []
+  reason: The source identifies transmitter evidence; receptor-context effects remain outside this scope.
+assumptions:
+  - Source-curated ground-truth labels have no numeric confidence in the flat file.
+sources:
+  - calibration/evidence/transmitter-sign-prior-v0.yaml
+  - ledger/datasets.yaml
+next_action: Keep this scope frozen while fitting downstream shared synaptic efficacy.

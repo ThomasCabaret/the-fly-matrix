@@ -216,8 +216,11 @@ def main() -> int:
     for status, count in sorted(status_counts.items()):
         print(f"  {status:38} {count:2}")
     print(f"Familles non gelees : {len(inventory.unresolved_family_ids)}")
-    print("Jeux de parametres acceptes : 0")
-    print("Prochaine etape : compilateur de preuves/parametres et runner minimal.")
+    print(
+        "Jeux de parametres acceptes : "
+        f"{inventory.index['accounting']['accepted_parameter_sets']}"
+    )
+    print("Prochaine etape : compilateur routage/transfert et runner minimal.")
     print("IMPORTANT : inventaire complet ne signifie pas calibration terminee.")
     return 0
 

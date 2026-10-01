@@ -13,9 +13,10 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
   parameter sets, and evaluations;
 - `parameter_families/`: 19 versioned family records plus an exhaustive index;
 - `dependency-dag.yaml`: the validated partial order between those families;
-- future `scopes/`: reusable local and closed-loop fitting scopes;
-- future `campaigns/`, `parameter_sets/`, and `evaluations/`: compact records
-  added when experiments begin.
+- `evidence/`: deterministic evidence-transfer recipes;
+- `scopes/`: reusable local and closed-loop scopes;
+- `campaigns/`, `parameter_sets/`, and `evaluations/`: compact immutable lineage
+  records. The first accepted dependency is the transmitter/sign prior.
 
 Heavy outputs belong in ignored `runs/calibration/`: traces, videos, checkpoints,
 optimizer histories, and temporary datasets. A versioned record references them
@@ -50,3 +51,9 @@ Run `calibration_status.bat` to validate that the family files, inventory counts
 reciprocal dependency declarations, and acyclic DAG agree. A successful result
 means that the unknowns are accounted for; it does **not** mean any value has been
 fitted or accepted.
+
+Run `compile_calibration_evidence.bat` to rebuild the frozen MaleCNS transmitter
+and typed sign-prior dependency. Its zero sign code means “unknown or
+context-dependent”, never “zero synaptic effect”. Derived tables remain outside
+Git under `data/derived/calibration/`; the recipe, semantic hash, counts, campaign,
+evaluation, and parameter-set lineage are versioned here.

@@ -34,9 +34,10 @@ accounting:
   by_kind: {basal: 6, routing: 4, transfer: 4, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
   by_claim_role: {biological: 11, surrogate: 7, technical: 1}
   frozen_external: 1
-  accepted_parameter_sets: 0
+  accepted_parameter_sets: 1
   fitted_families: 0
-  unresolved_sharing_or_model_families: 18
+  frozen_parameter_families: 2
+  unresolved_or_unfrozen_families: 17
 
 known_runtime_couplings:
   - families: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0]
@@ -63,6 +64,6 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  Compile evidence-transfer inputs and implement the parameter compiler plus
-  minimal autonomous campaign runner. Do not fit values until a target, scope,
-  acceptance gate, topology boundary, and output parameter-set lineage exist.
+  Implement the logical parameter compiler for coupled routing/transfer families
+  and the minimal autonomous campaign runner. Consume the frozen transmitter/sign
+  prior without asserting effects for its unknown or context-dependent mask.

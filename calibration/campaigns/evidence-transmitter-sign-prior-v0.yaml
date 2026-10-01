@@ -1,0 +1,79 @@
+schema_version: 1
+id: campaign.evidence_transmitter_sign_prior.v0
+title: Deterministic MaleCNS transmitter and sign-prior compilation
+status: accepted
+target_ids: [target.evidence_transmitter_sign_prior.v0]
+scope_ids: [scope.central_transmitter_sign_prior.v0]
+parameter_family_ids: [parameter.central.transmitter_sign_prior.v0]
+dependency_campaign_ids: []
+parent_parameter_set_ids: []
+output_parameter_set_id: parameters.central_transmitter_sign_prior.v0
+
+topology_boundary:
+  semantic_topology_hashes: {population_rule: malecns-v1.0-population-scope-v1}
+  ruleset_hashes: {evidence_recipe: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e}
+  exception_table_hashes: {exceptions: none}
+
+method:
+  kind: deterministic_evidence_compilation
+  implementation: src/the_fly_matrix/calibration_evidence.py
+  objective_terms: []
+  bounds: {}
+  sharing_rules: {presynaptic_neuron_label_inherited_by_outgoing_edges: true}
+  frozen_parameters: []
+  seeds: []
+  compute_budget: one full pass over three local MaleCNS source files
+
+capacity_policy:
+  model_family: categorical_transmitter_evidence_and_typed_sign_mask
+  degrees_of_freedom: 0_fitted_values
+  automatic_capacity_increase_allowed: false
+  joint_calibration_reason: null
+
+scenario_splits: {train: [], validation: [], diagnostic: [], held_out: []}
+reproducibility:
+  command: compile_calibration_evidence.bat
+  git_commit: 619afe0e682653ca5a0c2e1b77781f18e98e3503
+  environment: Python 3.12.5; pandas 3.0.6; pyarrow 23.0.1; numpy 2.5.3
+  input_hashes:
+    annotations: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2
+    neurotransmitters: 95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621
+    connectome_weights: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+    recipe: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e
+
+behavior_exposure: {behavior_targeted: false, exposed_behavior_ids: [], contamination_notes: []}
+result:
+  status: accepted
+  metrics:
+    canonical_neurons: 166700
+    source_records: 166522
+    missing_records: 178
+    excitatory_prior_neurons: 103720
+    inhibitory_prior_neurons: 22069
+    context_dependent_neurons: 37734
+    unresolved_neurons: 3177
+    runtime_edges: 25582938
+    excitatory_prior_edges: 14745137
+    inhibitory_prior_edges: 4925557
+    unknown_or_context_dependent_edges: 5912244
+    semantic_prior_sha256: fb3777b99eb913b41a86962cae33b8bf41a96bc0c26c25ca68ce34229a7a44da
+  artifact_refs:
+    - data/derived/calibration/transmitter-sign-prior-v0/summary.json
+    - data/derived/calibration/transmitter-sign-prior-v0/neuron-priors.parquet
+    - data/derived/calibration/transmitter-sign-prior-v0/runtime-prior.npz
+  failures: []
+  decision: accept_as_frozen_evidence_prior_not_dynamics
+  admissible_solution_count: 1
+  uncertainty_artifact_refs: [data/derived/calibration/transmitter-sign-prior-v0/neuron-priors.parquet]
+
+acceptance:
+  criteria_locked_before_run: true
+  local_held_out_dataset_ids: []
+  reproducibility_mode: exact_semantic_hash
+  reproducibility_tolerances: {counts: exact, semantic_hash: exact}
+reopening: {reopened_family_ids: [], reasons: [], stale_descendant_ids: []}
+sources:
+  - calibration/evidence/transmitter-sign-prior-v0.yaml
+assumptions:
+  - The source ground-truth column is source-curated but not independently revalidated here.
+next_action: Compile this immutable prior into a signed dynamics representation with unknown effects still learnable or marginalized.

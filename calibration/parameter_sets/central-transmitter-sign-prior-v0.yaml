@@ -1,0 +1,60 @@
+schema_version: 1
+id: parameters.central_transmitter_sign_prior.v0
+title: Frozen MaleCNS transmitter evidence and typed sign-prior set
+status: accepted_dependency
+created: 2026-10-01
+parent_ids: []
+campaign_id: campaign.evidence_transmitter_sign_prior.v0
+
+claim_label: EVIDENCE TRANSFER / TYPED PRIOR / NOT CALIBRATED DYNAMICS
+behavior_exposure: {behavior_targeted: false, inherited_from: [], exposed_behavior_ids: []}
+
+parameter_families:
+  - family_id: parameter.central.transmitter_sign_prior.v0
+    scope_id: scope.central_transmitter_sign_prior.v0
+    origin: evidence_transfer
+    units: categorical_label_probability_and_sign_mask
+    values_ref: data/derived/calibration/transmitter-sign-prior-v0/neuron-priors.parquet
+    semantic_values_sha256: fb3777b99eb913b41a86962cae33b8bf41a96bc0c26c25ca68ce34229a7a44da
+    transformation: source label preservation plus typed ACh/GABA prior; all other sign codes zero-as-unknown
+    uncertainty: raw neuron and cell-type confidence fields plus explicit context-dependent and missing masks
+    frozen: true
+
+solution_set:
+  representation: deterministic_evidence_table_with_uncertainty_columns
+  selected_reference_id: parameters.central_transmitter_sign_prior.v0
+  admissible_member_ids: [parameters.central_transmitter_sign_prior.v0]
+  uncertainty_artifact_refs: [data/derived/calibration/transmitter-sign-prior-v0/neuron-priors.parquet]
+  selection_rule: exact deterministic recipe output
+
+freeze:
+  frozen_family_ids: [parameter.central.transmitter_sign_prior.v0]
+  stale_family_ids: []
+  topology_boundary_hashes: {semantic_prior: fb3777b99eb913b41a86962cae33b8bf41a96bc0c26c25ca68ce34229a7a44da}
+  reopen_history: []
+
+reproducibility:
+  git_commit: 619afe0e682653ca5a0c2e1b77781f18e98e3503
+  input_hashes:
+    annotations: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2
+    neurotransmitters: 95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621
+    connectome_weights: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+    recipe: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e
+  artifact_refs:
+    - data/derived/calibration/transmitter-sign-prior-v0/summary.json
+    - data/derived/calibration/transmitter-sign-prior-v0/runtime-prior.npz
+
+validation:
+  level: local
+  evaluation_ids: [evaluation.evidence_transmitter_sign_prior.v0]
+  known_failures: []
+promotion:
+  status: accepted_dependency_not_project_reference
+  decision_reason: This is an upstream evidence prior, not a runnable complete parameter set.
+  previous_reference_id: null
+sources:
+  - malecns-v1.0-body-neurotransmitters
+  - calibration/evidence/transmitter-sign-prior-v0.yaml
+assumptions:
+  - Zero sign code means unknown or context-dependent, never a zero synaptic effect.
+next_action: Consume as a frozen dependency of central synaptic-efficacy campaigns.

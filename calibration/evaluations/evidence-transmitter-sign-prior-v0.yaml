@@ -1,0 +1,35 @@
+schema_version: 1
+id: evaluation.evidence_transmitter_sign_prior.v0
+title: Exact reconstruction of MaleCNS transmitter and typed sign priors
+status: accepted
+target_id: target.evidence_transmitter_sign_prior.v0
+parameter_set_id: parameters.central_transmitter_sign_prior.v0
+protocol_version: evidence.transmitter_sign_prior.v0
+exposure_policy: allowed
+scenario_ids: []
+dataset_split_ids: {fitting: [], local_validation: [three_immutable_source_files], local_held_out: [], behavior_held_out: []}
+seeds: []
+metrics:
+  canonical_neuron_accounting: {observed: 166700, expected: 166700, pass: true}
+  missing_source_records: {observed: 178, expected: 178, pass: true}
+  runtime_edge_accounting: {observed: 25582938, expected: 25582938, pass: true}
+  runtime_synapse_weight: {observed: 124177617, expected: 124177617, pass: true}
+  repeated_semantic_hash: {observed: fb3777b99eb913b41a86962cae33b8bf41a96bc0c26c25ca68ce34229a7a44da, repetitions: 2, pass: true}
+  unknown_or_context_dependent_edges: {observed: 5912244, hidden_or_defaulted: 0, pass: true}
+acceptance_result: pass
+admissible_set_evaluation: {member_count: 1, acceptance_rate: 1.0, metric_distribution: {deterministic_repetitions: 2}}
+reproducibility:
+  command: compile_calibration_evidence.bat
+  git_commit: 619afe0e682653ca5a0c2e1b77781f18e98e3503
+  environment: Python 3.12.5; pandas 3.0.6; pyarrow 23.0.1; numpy 2.5.3
+  input_hashes:
+    annotations: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2
+    neurotransmitters: 95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621
+    connectome_weights: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+  artifact_refs: [data/derived/calibration/transmitter-sign-prior-v0/summary.json]
+contamination: {inspected_before_parameter_freeze: false, used_for_model_selection: false, used_for_manual_tuning: false, notes: []}
+failures: []
+conclusion: >-
+  The evidence transfer is reproducible and exhaustive. It accepts a typed prior,
+  not a complete signed connectome and not a dynamical calibration.
+next_action: Keep the prior frozen and test downstream dynamics across its unknown masks.

@@ -53,9 +53,9 @@ provenance:
 
 validation: not_run
 blocked_reason: >-
-  Structural wiring is accepted, but the parameter-family inventory, dependency
-  DAG, calibration runner and evidence-backed acceptance thresholds do not exist.
+  Structural wiring, the family inventory, the dependency DAG and the typed
+  transmitter/sign prior are accepted. The signed dynamics model, calibration
+  runner and evidence-backed acceptance thresholds do not yet exist.
 next_action: >-
-  Inventory typed temporal and synaptic families, compile confidence-weighted
-  transmitter/sign priors, register sharing and uncertainty rules, then
-  characterize the uncalibrated baseline without promoting the benchmark profile.
+  Build the signed dynamics compiler and autonomous runner, then characterize
+  the uncalibrated baseline without promoting the unsigned benchmark profile.

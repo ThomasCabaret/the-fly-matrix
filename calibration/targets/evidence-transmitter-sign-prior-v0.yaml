@@ -1,0 +1,50 @@
+schema_version: 1
+id: target.evidence_transmitter_sign_prior.v0
+title: Reproducible MaleCNS transmitter and typed sign-prior transfer
+status: accepted
+primary_class: evidence_transfer
+optimization_exposure: allowed
+claim_label: evidence_backed_prior_not_calibrated_dynamics
+
+scope:
+  includes:
+    - All 166700 canonical MaleCNS neurons
+    - Source-provided ground-truth, prediction, confidence, and consensus fields
+    - Presynaptic typed sign priors and explicit unknown masks
+  excludes:
+    - Conductance or gain values
+    - Postsynaptic receptor effects
+    - Any behavioral or dynamical target
+
+metrics:
+  - canonical_neuron_accounting
+  - source_record_accounting
+  - evidence_origin_distribution
+  - transmitter_label_distribution
+  - typed_sign_prior_distribution
+  - runtime_edge_and_synapse_weight_coverage
+  - deterministic_semantic_hash
+
+acceptance_policy:
+  summary: >-
+    Exact source hashes and population rules reproduce one row per canonical
+    neuron; all runtime edges are accounted for; unknown and context-dependent
+    effects remain masked; a repeated clean execution reproduces the semantic hash.
+  thresholds: exact_counts_and_hashes_from_recipe
+
+behavior_targets: []
+scenario_splits: {train: [], validation: [], diagnostic: [], held_out: []}
+dependencies:
+  - malecns-v1.0-population-scope-v1
+  - three immutable MaleCNS v1.0 source hashes
+  - evidence.transmitter_sign_prior.v0
+provenance:
+  sources:
+    - malecns-v1.0-body-neurotransmitters
+    - https://doi.org/10.1101/2025.10.09.680999
+  assumptions:
+    - Acetylcholine and GABA support typed priors, not fixed synaptic effects.
+    - Other transmitters require receptor or pathway context and stay sign-unknown.
+validation: deterministic_evidence_transfer_pass
+blocked_reason: null
+next_action: Consume the frozen prior through a signed dynamics compiler without converting unknown code zero into zero effect.

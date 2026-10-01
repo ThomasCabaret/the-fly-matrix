@@ -34,7 +34,11 @@ class CalibrationRegistryTests(unittest.TestCase):
         }
 
     def test_state_references_existing_targets(self) -> None:
-        referenced = self.state["active_target_ids"] + self.state["evaluation_target_ids"]
+        referenced = (
+            self.state["active_target_ids"]
+            + self.state["evaluation_target_ids"]
+            + self.state["completed_target_ids"]
+        )
         self.assertEqual(len(referenced), len(set(referenced)))
         self.assertEqual(set(referenced), set(self.targets))
 
@@ -105,7 +109,7 @@ class CalibrationRegistryTests(unittest.TestCase):
 
     def test_inventory_does_not_claim_fitted_values(self) -> None:
         self.assertEqual(
-            self.inventory.index["accounting"]["accepted_parameter_sets"], 0
+            self.inventory.index["accounting"]["accepted_parameter_sets"], 1
         )
         self.assertEqual(self.inventory.index["accounting"]["fitted_families"], 0)
         externally_frozen = {
@@ -116,6 +120,40 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(
             externally_frozen, {"parameter.body.flybody_mechanics.v0"}
         )
+
+    def test_transmitter_prior_is_frozen_but_not_a_complete_signed_graph(self) -> None:
+        family = self.inventory.families["parameter.central.transmitter_sign_prior.v0"]
+        self.assertEqual(family["freeze"]["status"], "frozen")
+        self.assertEqual(
+            family["freeze"]["parameter_set_id"],
+            "parameters.central_transmitter_sign_prior.v0",
+        )
+        self.assertEqual(
+            family["scope"]["dimension"]["unknown_or_context_dependent_neurons"],
+            40911,
+        )
+
+    def test_first_evidence_campaign_lineage_is_closed(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "evidence-transmitter-sign-prior-v0.yaml"
+        )
+        parameter_set = load_yaml(
+            CALIBRATION_ROOT
+            / "parameter_sets"
+            / "central-transmitter-sign-prior-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluations"
+            / "evidence-transmitter-sign-prior-v0.yaml"
+        )
+        self.assertEqual(campaign["result"]["status"], "accepted")
+        self.assertEqual(campaign["output_parameter_set_id"], parameter_set["id"])
+        self.assertEqual(parameter_set["campaign_id"], campaign["id"])
+        self.assertIn(evaluation["id"], parameter_set["validation"]["evaluation_ids"])
+        self.assertEqual(evaluation["parameter_set_id"], parameter_set["id"])
+        self.assertEqual(evaluation["acceptance_result"], "pass")
+        self.assertFalse(parameter_set["behavior_exposure"]["behavior_targeted"])
 
     def test_state_references_inventory_and_dag(self) -> None:
         self.assertEqual(
