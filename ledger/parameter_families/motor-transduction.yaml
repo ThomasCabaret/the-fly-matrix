@@ -4,7 +4,7 @@ name: Gains et dynamiques neuromusculaires locales
 owner_id: adapter.motor.transduction
 quantity: activation-to-actuator transformation
 unit: actuator-dependent
-sharing_rule: homologous left-right muscle groups share parameters initially
+sharing_rule: unresolved capacity chosen from global, actuator-class, homologous, family, local-vector, or justified individual levels before compilation
 source_kind: unknown
 source_references: [data/derived/wiring/motor-transduction-candidates.json, https://pmc.ncbi.nlm.nih.gov/articles/PMC13384506/]
 value: null
@@ -14,4 +14,4 @@ calibration_dataset_ids: []
 held_out_behavior_ids: []
 status: unknown
 confidence: low
-known_limitations: [FlyBody actionneurs are not explicit biological muscles, Five optic-nerve rm and six accessory-nerve xm effectors are absent from FlyBody and terminate explicitly, Candidate gains remain deliberately uncalibrated, The independently validated topology constrains eligible relations but does not identify any of the 7849 continuous transfer values]
+known_limitations: [FlyBody actionneurs are not explicit biological muscles, Five optic-nerve rm and six accessory-nerve xm effectors are absent from FlyBody and terminate explicitly, Candidate routes and gains remain deliberately uncalibrated, The independently validated topology constrains eligible relations but does not identify the 3746 route weights or any transfer value, The compiler expands logical routes into 7849 runtime slots but does not select parameter sharing]

@@ -311,6 +311,29 @@ statistics. They cannot determine an unknown anatomical routing or local
 input/output transfer uniquely; those require local evidence or must remain
 explicitly underdetermined.
 
+## Logical parameter compilation
+
+An executable coefficient vector is not necessarily the scientific parameter
+model. When a runtime class stores the product of routing and transfer, calibration
+must keep two logical families and compile them only at the runtime boundary. The
+compiler validates the exact candidate-key set, frozen source hashes, deterministic
+runtime order and one normalized routing simplex per declared route group.
+
+Transfer sharing is an explicit versioned assignment from runtime edges to
+transfer keys. It is never inferred by the compiler. This permits global,
+class-shared, homologous, local-vector or individual transfer models without
+changing runtime code, while making any capacity increase reviewable. A logical
+route may expand to several runtime slots: in the motor interface, one
+group-to-actuator routing decision is replicated over the terminals belonging to
+that group and then combined with their declared transfer keys.
+
+Compilation does not select routes, gains, offsets, filters or dynamics. Synthetic
+unit gains and uniform simplexes may be used only for structural tests carrying a
+visible `NOT CALIBRATION` label; they are not parameter sets and cannot be
+promoted. Offset and temporal terms remain distinct parameters rather than being
+silently folded into a scalar gain. Any need to add an edge or widen a candidate
+set returns to the wiring workflow.
+
 ## Rules-first campaign execution
 
 Calibration campaigns should concentrate scientific choices in versioned target,

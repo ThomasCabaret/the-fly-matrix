@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.mechanosensation.transfer.v0
 title: Mechanosensation local transfer
-status: inventoried_runtime_coupling_blocker
+status: compiler_ready_unfitted
 primary_class: local_interface
 parameter_kind: transfer
 claim_role: biological
@@ -13,10 +13,10 @@ scope:
   topology_snapshot: {semantic_topology_sha256: 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2, candidate_envelope_sha256: 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2, ruleset_sha256: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [one_global_transform, receptor_class, observable_kind, homologous_left_right_group, local_vector, individual], selected_level: unresolved, justification: runtime dimension is not accepted scientific capacity, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
-identifiability: {status: blocked_by_runtime_route_gain_coupling, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [walking, grooming, escape], jointly_identified_with: [], joint_calibration_reason: null}
+identifiability: {status: unresolved_runtime_factorization_available, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [walking, grooming, escape], jointly_identified_with: [], joint_calibration_reason: null}
 dependencies: {upstream_family_ids: [parameter.mechanosensation.routing.v0], downstream_family_ids: []}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: src/the_fly_matrix/runtime.py, supports: current 2108-coefficient compiled execution}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: expanded relation upper bound}]
-assumptions: [A compiler may multiply frozen routing weights by shared transfer parameters while preserving runtime shape.]
-next_action: Implement a logical routing-plus-transfer compiler before fitting this family.
+sources: [{ref: src/the_fly_matrix/runtime.py, supports: current 2108-coefficient compiled execution}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: expanded relation upper bound}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: explicit routing-transfer factorization and exact expansion}]
+assumptions: [compiler.peripheral_routing_transfer.v0 can multiply explicit routing weights by an explicit transfer-sharing assignment while preserving runtime shape; it does not choose either one.]
+next_action: Define an evidence-backed transfer-sharing assignment and local calibration scope; keep offsets and temporal filters separate from the scalar compiler.

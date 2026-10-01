@@ -40,10 +40,13 @@ familles de dynamique centrale, la mécanique FlyBody conservée comme dépendan
 externe gelée et l'enveloppe numérique motrice isolée comme nuisance technique.
 Le [`DAG`](calibration/dependency-dag.yaml) contient huit dépendances et est validé
 acyclique. Les dimensions maximales exécutables sont séparées des degrés de
-liberté scientifiques encore à choisir. En particulier, le couplage actuel entre
-routage et gain en proprioception, mécanoréception et sortie motrice est désormais
-un blocage explicite à résoudre par un compilateur, pas une permission de fitter
-tous les coefficients indépendamment.
+liberté scientifiques encore à choisir. Le couplage historique entre routage et
+gain en proprioception, mécanoréception et sortie motrice est désormais résolu à
+la frontière runtime par `compiler.peripheral_routing_transfer.v0`. Il impose des
+simplexes de routage explicites, des affectations de partage explicites et les
+hashes des enveloppes acceptées ; il ne choisit ni route, ni gain, ni valeur.
+Les 3 746 routes motrices logiques sont notamment distinguées de leurs 7 849
+coefficients runtime développés.
 
 Le premier nœud de preuve du DAG est également franchi. La recette
 [`evidence.transmitter_sign_prior.v0`](calibration/evidence/transmitter-sign-prior-v0.yaml)
@@ -278,7 +281,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG terminés ; 1 famille de preuve gelée, 0 famille ajustée et aucun jeu complet promu**.
+- Calibration : **inventaire/DAG terminés ; compilateur périphérique validé sur 3 familles ; 1 famille de preuve gelée, 0 famille ajustée et aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -367,21 +370,26 @@ de rendre les campagnes reconstructibles et auditables.
    topologie, règles et exceptions issus du câblage accepté.
 3. Compiler les transferts de preuves, statistiques basales et priors de
    neurotransmetteurs/signes avec confiance et masques inconnus.
-4. Construire le runner autonome minimal avec comptabilité exhaustive des essais,
+4. Séparer les paramètres logiques de routage/transfert des vecteurs runtime et
+   verrouiller leurs enveloppes candidates sans choisir de valeur.
+5. Construire le runner autonome minimal avec comptabilité exhaustive des essais,
    splits locaux et comportementaux, critères préenregistrés et artefacts immuables.
-5. Calibrer et geler les familles locales avant les contraintes globales, sauf
+6. Calibrer et geler les familles locales avant les contraintes globales, sauf
    non-identifiabilité documentée justifiant une campagne conjointe.
-6. Conserver séparément le meilleur essai et l'ensemble scientifiquement
+7. Conserver séparément le meilleur essai et l'ensemble scientifiquement
    admissible ; un échec ne doit pas augmenter silencieusement la capacité.
-7. N'ouvrir le protocole stimulus/sham `evaluation_only` qu'après gel des
+8. N'ouvrir le protocole stimulus/sham `evaluation_only` qu'après gel des
    paramètres et du protocole.
 
 À ce jour : une campagne déterministe de transfert de preuve a été acceptée ; elle
-n'a ajusté aucune valeur. Aucun parameter set complet n'a été promu et aucune cible
-comportementale n'est autorisée. Le prochain lot sépare logiquement routage et
-transfert dans les vecteurs exécutables, puis construit le runner autonome. Les
-fichiers de `calibration/` déterminent l'ordre effectif ; cette section en est le
-résumé humain.
+n'a ajusté aucune valeur. Le compilateur factorisé vérifie maintenant les 1 992
+coefficients proprioceptifs, 2 108 mécanorécepteurs et 7 849 moteurs à partir de
+routes et transferts séparés. Son test uniforme/unitaire est synthétique, en
+mémoire et explicitement non calibré. Aucun parameter set complet n'a été promu et
+aucune cible comportementale n'est autorisée. Le prochain lot est le runner
+autonome minimal, puis les scopes locaux et règles de partage fondés sur des
+données. Les fichiers de `calibration/` déterminent l'ordre effectif ; cette
+section en est le résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -405,6 +413,7 @@ cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG
 compile_calibration_evidence.bat # prior neurotransmetteur/signe reproductible
+parameter_compiler_check.bat # factorisation routage/transfert, test structurel seulement
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

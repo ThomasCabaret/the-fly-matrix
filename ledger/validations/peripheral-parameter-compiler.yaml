@@ -1,0 +1,36 @@
+schema_version: 1
+id: validation.peripheral_parameter_compiler
+name: Separation logique routage-transfert aux interfaces périphériques
+owner_ids:
+  - adapter.proprioception.transduction
+  - adapter.touch.transduction
+  - adapter.motor.transduction
+  - parameter.sensory_transduction
+  - parameter.motor.transduction
+level: integration
+protocol_path: src/the_fly_matrix/calibration_parameters.py
+command: parameter_compiler_check.bat
+acceptance_criteria:
+  - Candidate parquet files match their frozen SHA-256 hashes
+  - Proprioception compiles exactly 1992 logical routes into 1992 runtime coefficients across 262 groups
+  - Mechanosensation compiles exactly 2108 logical routes into 2108 runtime coefficients across 323 groups
+  - Motor output compiles exactly 3746 group-to-actuator routes into 7849 terminal-to-actuator runtime coefficients across 431 groups
+  - Every routing group is a finite non-negative unit simplex with an exact route-key set
+  - Every runtime edge has one explicit transfer-sharing assignment and every used transfer key has one finite value
+  - Repeated compilation preserves exact runtime parameter order and identical values
+  - Synthetic test values remain in memory and no parameter value or parameter set is accepted
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: parameter-compiler-check-20261001
+status: integration_pass
+notes:
+  - This validates factorization and expansion only; it is not a calibration campaign.
+  - Transfer sharing remains a versioned scientific choice supplied to the compiler, never inferred by it.
+  - Offsets and temporal dynamics are outside this scalar compiler and remain explicit future parameters.
+source_references:
+  - calibration/compilers/peripheral-routing-transfer-v0.yaml
+  - decisions/0012-hierarchical-reconstructible-calibration.md
+  - data/derived/wiring/proprioception-input-candidates.parquet
+  - data/derived/wiring/proprioception-proxy-candidates.parquet
+  - data/derived/wiring/mechanosensation-input-candidates.parquet
+  - data/derived/wiring/motor-actuator-candidates.parquet

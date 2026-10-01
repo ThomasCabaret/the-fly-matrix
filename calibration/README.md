@@ -14,6 +14,8 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
 - `parameter_families/`: 19 versioned family records plus an exhaustive index;
 - `dependency-dag.yaml`: the validated partial order between those families;
 - `evidence/`: deterministic evidence-transfer recipes;
+- `compilers/`: hash-locked contracts that compile logical parameter families
+  into runtime vectors without choosing or fitting their values;
 - `scopes/`: reusable local and closed-loop scopes;
 - `campaigns/`, `parameter_sets/`, and `evaluations/`: compact immutable lineage
   records. The first accepted dependency is the transmitter/sign prior.
@@ -31,6 +33,9 @@ with a path plus checksum or stable content identifier when the result matters.
   change the system, that protocol version is contaminated.
 - Calibration changes parameters, not hidden topology. Structural changes return
   to the wiring ledger.
+- Routing and transfer remain separate logical families even when a runtime vector
+  stores their product. A compiler may expand them only inside a frozen candidate
+  envelope and must not infer sharing, routes, gains, offsets, or dynamics.
 - Negative results and blockers remain visible in compact form.
 - Parameter families and campaigns form an explicit dependency DAG; accepted
   upstream families are frozen before their values are consumed downstream.
@@ -57,3 +62,10 @@ and typed sign-prior dependency. Its zero sign code means “unknown or
 context-dependent”, never “zero synaptic effect”. Derived tables remain outside
 Git under `data/derived/calibration/`; the recipe, semantic hash, counts, campaign,
 evaluation, and parameter-set lineage are versioned here.
+
+Run `parameter_compiler_check.bat` to verify the proprioceptive,
+mechanosensory, and motor factorization contracts. It hash-checks the accepted
+candidate manifests and expands explicit in-memory test simplexes twice. The test
+values are deliberately synthetic, are never persisted, and accept no scientific
+parameter. The motor contract is intentionally asymmetric: 3,746 logical
+group-to-actuator routes expand to 7,849 terminal-to-actuator runtime slots.

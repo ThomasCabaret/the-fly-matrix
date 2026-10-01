@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.motor.routing.v0
 title: Motor group to actuator routing
-status: inventoried_unfitted
+status: compiler_ready_unfitted
 primary_class: local_interface
 parameter_kind: routing
 claim_role: biological
@@ -17,6 +17,6 @@ identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_da
 dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.motor.transfer.v0]}
 uncertainty: {representation: admissible_routing_set, admissible_set_criteria: [same_side, same_appendage, mirror_capacity, explicit_sinks], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}]
+sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: 3746 logical route keys and exact runtime expansion contract}]
 assumptions: [FlyBody actuators are abstract joint controls rather than one-to-one biological muscles.]
-next_action: Define a minimum-capacity route representation or preserve an admissible ensemble.
+next_action: Select a minimum-capacity route representation or admissible ensemble, then supply its 3746 logical route weights to compiler.peripheral_routing_transfer.v0.

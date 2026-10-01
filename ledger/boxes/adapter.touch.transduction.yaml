@@ -15,7 +15,7 @@ provenance:
   used_claims: [Nerve and rootSide constrain the local appendage, Johnston's organ detects antennal motion, FlyBody exposes explicit joint motion for antennae wings halteres and mouthparts]
   assumptions: [Each permitted load-to-terminal edge exposes an independent coefficient until calibration]
 parameter_family_ids: [parameter.sensory_transduction]
-validation_ids: [validation.mechanosensation_transduction_candidates]
-next_action: Geler le hash topologique mécanorécepteur et attendre la clôture de la revalidation globale avant toute calibration des 28 514 coefficients terminaux.
-blocked_by: [validation.scientific_wiring_reaudit]
+validation_ids: [validation.mechanosensation_transduction_candidates, validation.peripheral_parameter_compiler]
+next_action: Define local datasets, route simplexes and transfer-sharing assignments, then compile them through compiler.peripheral_routing_transfer.v0 without widening the accepted envelope.
+blocked_by: []
 completion_criteria: [Classes séparées, 323 canaux couverts par des candidats locaux, Fonctions locales documentées, Résolution physique limitée explicitement, Réponses unitaires testées]

@@ -35,6 +35,7 @@ readiness:
   parameter_family_inventory: complete_19_families_values_unfitted
   parameter_dependency_dag: complete_acyclic_8_edges
   local_interface_parameter_inventory: complete_runtime_dimensions_and_couplings_declared
+  peripheral_parameter_compiler: structure_validated_three_families_values_unfitted
   scientific_wiring_revalidation: independently_validated_zero_blocked_families
   neurotransmitter_prior_inventory: compiled_frozen_166700_neurons
   synaptic_sign_matrix: typed_prior_compiled_not_applied_to_runtime_5912244_edges_unknown_or_contextual
@@ -46,12 +47,12 @@ behavior_exposure:
 
 blocked_by:
   - The biological dynamics model has not been selected; the frozen typed prior leaves 5912244 runtime edges explicitly unknown or context-dependent.
-  - Proprioceptive, mechanosensory and motor runtime coefficients still need a compiler that keeps logical routing separate from transfer.
+  - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - A calibration runner and accepted parameter sets do not yet exist; the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Implement the logical parameter compiler for families whose current runtime
-  vector couples routing and transfer, then build the minimal autonomous campaign
-  runner around immutable configs, topology hashes, acceptance gates and
-  parameter-set lineage. Integrate the frozen sign prior only through an explicit
-  signed dynamics model; do not promote the unsigned benchmark profile.
+  Build the minimal autonomous campaign runner around immutable configs, topology
+  hashes, acceptance gates and parameter-set lineage. Then define evidence-backed
+  local scopes and sharing assignments for the compiler-ready peripheral families.
+  Integrate the frozen sign prior only through an explicit signed dynamics model;
+  do not promote the unsigned benchmark profile.

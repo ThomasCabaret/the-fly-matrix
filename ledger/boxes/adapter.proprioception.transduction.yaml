@@ -15,7 +15,7 @@ provenance:
   used_claims: [Entry nerve and side identify a local appendage candidate set, FeCO claw hook and club classes distinguish position movement and vibration]
   assumptions: [Ambiguous local observables remain separate candidate edges with unassigned coefficients, Missing strain and vibration use explicit local kinematic proxies that must remain distinguishable and replaceable]
 parameter_family_ids: [parameter.sensory_transduction]
-validation_ids: [validation.proprioception_transduction_candidates]
-next_action: Preserve 1,439 direct and 553 proxy edges without values; replace proxies when true strain or vibration is exposed, then calibrate by receptor family.
+validation_ids: [validation.proprioception_transduction_candidates, validation.peripheral_parameter_compiler]
+next_action: Use compiler.peripheral_routing_transfer.v0 with an evidence-backed route simplex and explicit transfer-sharing assignment; replace proxies when true strain or vibration is exposed.
 blocked_by: []
 completion_criteria: [Classes séparées, Homologies partagées, Candidats locaux exécutables, Proxies locaux séparés, Aucun terminal bloqué, Courbes physiologiques référencées]

@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.motor.transfer.v0
 title: Motor activation to actuator transfer
-status: inventoried_runtime_coupling_blocker
+status: compiler_ready_unfitted
 primary_class: local_interface
 parameter_kind: transfer
 claim_role: biological
@@ -13,10 +13,10 @@ scope:
   topology_snapshot: {semantic_topology_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3, candidate_envelope_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3, ruleset_sha256: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [one_global_gain, actuator_class, homologous_left_right_group, muscle_or_joint_family, local_vector, individual], selected_level: unresolved, justification: 7849 runtime slots are an upper bound not accepted capacity, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
-identifiability: {status: blocked_by_runtime_route_gain_coupling, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [walking, grooming, escape, jump], jointly_identified_with: [], joint_calibration_reason: null}
+identifiability: {status: unresolved_runtime_factorization_available, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [walking, grooming, escape, jump], jointly_identified_with: [], joint_calibration_reason: null}
 dependencies: {upstream_family_ids: [parameter.motor.routing.v0, parameter.body.flybody_mechanics.v0], downstream_family_ids: [parameter.technical.motor_command_envelope.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: src/the_fly_matrix/runtime.py, supports: 7849 executable terminal-actuator coefficient slots}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: accepted topology boundary}]
-assumptions: [A compiler may combine frozen routing with class-shared transfer parameters while preserving runtime shape.]
-next_action: Implement the routing-plus-transfer compiler and a local actuator-response calibration scope.
+sources: [{ref: src/the_fly_matrix/runtime.py, supports: 7849 executable terminal-actuator coefficient slots}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: accepted topology boundary}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: 3746 logical routes expanded with explicit transfer assignments into 7849 runtime slots}]
+assumptions: [compiler.peripheral_routing_transfer.v0 expands 3746 group-to-actuator route decisions into 7849 runtime coefficients and combines them with an explicit transfer-sharing assignment; it chooses neither values nor sharing.]
+next_action: Define the local actuator-response scope and evidence-backed transfer-sharing assignment before fitting any motor gain.

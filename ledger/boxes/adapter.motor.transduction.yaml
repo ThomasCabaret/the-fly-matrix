@@ -10,7 +10,7 @@ status: {inventory: complete, implementation: tested, parameters: unknown, valid
 confidence: medium
 evidence: [data/derived/inventory/inventory.json, data/derived/wiring/motor-routing.json, data/derived/wiring/motor-muscle-groups.csv, data/derived/wiring/motor-muscle-members.parquet, data/derived/wiring/motor-transduction-candidates.json, data/derived/wiring/motor-actuator-candidates.parquet, data/derived/wiring/flybody-actuators.json, data/derived/wiring/flybody-actuator-channels.csv, data/derived/wiring-revalidation/latest.json, wiring/revalidation/motor-output-v1.yaml, wiring/revalidation/motor-output-exceptions-v1.yaml, runs/wiring-smoke/latest.json]
 parameter_family_ids: [parameter.motor.transduction]
-validation_ids: [validation.motor_grouping, validation.motor_transduction_candidates, validation.flybody_actuator_interface, validation.scientific_wiring_reaudit]
-next_action: Geler le hash topologique moteur et attendre la clôture de la revalidation scientifique globale avant toute calibration des 7 849 gains.
-blocked_by: [validation.scientific_wiring_reaudit]
+validation_ids: [validation.motor_grouping, validation.motor_transduction_candidates, validation.flybody_actuator_interface, validation.scientific_wiring_reaudit, validation.peripheral_parameter_compiler]
+next_action: Define a local actuator-response scope plus route and transfer-sharing parameters, then compile 3746 logical routes into the 7849 runtime slots.
+blocked_by: []
 completion_criteria: [102 actionneurs physiques couverts, 11 effecteurs absents traités comme terminaux explicites, Groupes musculaires biologiques affectés, Transformations locales, Limites mécaniques testées]

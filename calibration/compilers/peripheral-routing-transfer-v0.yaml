@@ -1,0 +1,53 @@
+schema_version: 1
+id: compiler.peripheral_routing_transfer.v0
+status: implemented_structure_validated_values_unfitted
+claim_label: COMPILER INFRASTRUCTURE / SYNTHETIC STRUCTURE TEST / NOT CALIBRATION
+contract:
+  equation: runtime_coefficient[edge] = routing_weight[logical_route(edge)] * transfer_value[transfer_assignment(edge)]
+  routing_constraints: [finite, non_negative, exact_key_set, unit_simplex_per_route_group]
+  transfer_constraints: [finite, explicit_assignment_for_every_runtime_edge, exact_used_key_set]
+  invariants:
+    - Candidate sources are hash-locked and cannot be widened by compilation.
+    - Runtime parameter order is deterministic and matches each box manifest.
+    - Transfer sharing is supplied explicitly; the compiler never chooses it.
+    - A logical route may expand to multiple runtime edges without becoming multiple routing decisions.
+    - Offsets and temporal dynamics remain separate future parameters and are not hidden in this scalar compiler.
+families:
+  parameter.proprioception.transfer.v0:
+    parameter_family_record: calibration/parameter_families/proprioception-transfer-v0.yaml
+    topology_semantic_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    candidate_sources:
+      - {path: data/derived/wiring/proprioception-input-candidates.parquet, sha256: 17384b5924ac0879237a1466af46b18270381a4fed3adae33693af656005f7f1}
+      - {path: data/derived/wiring/proprioception-proxy-candidates.parquet, sha256: 85edb225017ef999c7196b33b0d33ab828392cec590557ef8fe79cead5385d18}
+    runtime_parameter_id_column: parameter_id
+    runtime_sort_columns: [target_channel_id, source_joint_id, source_observable]
+    route_group_column: target_channel_id
+    route_key_columns: [parameter_id]
+    expected_counts: {runtime_coefficients: 1992, logical_routes: 1992, route_groups: 262}
+  parameter.mechanosensation.transfer.v0:
+    parameter_family_record: calibration/parameter_families/mechanosensation-transfer-v0.yaml
+    topology_semantic_sha256: 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2
+    candidate_sources:
+      - {path: data/derived/wiring/mechanosensation-input-candidates.parquet, sha256: 7985a59254eca86e10a14782fe327e546a4c080efd0850cc3d1d1122afe4d974}
+    runtime_parameter_id_column: parameter_id
+    runtime_sort_columns: [target_channel_id, source_kind, source_channel_id, source_observable]
+    route_group_column: target_channel_id
+    route_key_columns: [parameter_id]
+    expected_counts: {runtime_coefficients: 2108, logical_routes: 2108, route_groups: 323}
+  parameter.motor.transfer.v0:
+    parameter_family_record: calibration/parameter_families/motor-transfer-v0.yaml
+    topology_semantic_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+    candidate_sources:
+      - {path: data/derived/wiring/motor-actuator-candidates.parquet, sha256: a4ebad77da9ce2176d63824195eb017f0543090bdeeb1151ebb3f11d5e163352}
+    runtime_parameter_id_column: parameter_id
+    runtime_sort_columns: [source_body_id, target_actuator_id]
+    route_group_column: motor_group_id
+    route_key_columns: [motor_group_id, target_actuator_id]
+    expected_counts: {runtime_coefficients: 7849, logical_routes: 3746, route_groups: 431}
+validation:
+  command: parameter_compiler_check.bat
+  last_result: pass
+  last_run_date: 2026-10-01
+  synthetic_values_persisted: false
+  accepted_parameter_values: 0
+next_action: Select evidence-backed sharing assignments and local datasets in versioned scopes before any fitting.

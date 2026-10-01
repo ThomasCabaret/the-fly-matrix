@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.proprioception.routing.v0
 title: Proprioception local routing
-status: inventoried_unfitted
+status: compiler_ready_unfitted
 primary_class: local_interface
 parameter_kind: routing
 claim_role: biological
@@ -17,6 +17,6 @@ identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_da
 dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.proprioception.transfer.v0]}
 uncertainty: {representation: admissible_routing_set, admissible_set_criteria: [same_side, same_appendage, FeCO_partition, direct_proxy_partition], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}]
+sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: exact route-key and runtime expansion contract}]
 assumptions: [The current runtime weight vector couples route selection and gain and must be compiled from two logical families.]
-next_action: Define the routing representation and compiler without widening the accepted envelope.
+next_action: Select a minimum-capacity routing representation from local evidence, then supply its complete simplex weights to compiler.peripheral_routing_transfer.v0.
