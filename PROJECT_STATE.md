@@ -56,12 +56,13 @@ modes fitting/validation d'accéder aux scénarios held-out et n'exécute que de
 `rejected`, `error` ou `skipped_budget_exhausted`; les répétitions sont comparées
 par hash sémantique et aucun essai planifié ne peut disparaître du décompte.
 
-Le run `20261002T112713975467Z--runner-validation-peripheral-parameter-compiler-v0`
+Le run `20261002T113512989298Z--runner-validation-peripheral-parameter-compiler-v0`
 a exécuté deux fois chacun des trois contrats périphériques : **6/6 essais
 acceptés, zéro rejet, zéro erreur et zéro cas non déterministe**. Son hash
 sémantique est `1efcfd166625598d7f259e24dad4d948ee546dcff4dce3d709defa88f6e8d34a`.
 Ce run utilise des simplexes uniformes et gains unitaires éphémères ; il valide
-l'infrastructure seulement et n'accepte aucune valeur de mouche. Le contrat est
+l'infrastructure seulement et n'accepte aucune valeur de mouche. Il a été produit
+depuis le commit `f90f052` avec un worktree propre. Le contrat est
 documenté dans [`docs/calibration-runner.md`](docs/calibration-runner.md).
 
 Le premier nœud de preuve du DAG est également franchi. La recette

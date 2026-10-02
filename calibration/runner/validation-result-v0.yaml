@@ -5,7 +5,7 @@ claim_label: RUNNER VALIDATION / SYNTHETIC STRUCTURE TEST / NOT CALIBRATION
 validated_job_id: runner_validation.peripheral_parameter_compiler.v0
 validated_evaluator_id: peripheral_parameter_compiler_contract.v0
 latest_run:
-  run_id: 20261002T112713975467Z--runner-validation-peripheral-parameter-compiler-v0
+  run_id: 20261002T113512989298Z--runner-validation-peripheral-parameter-compiler-v0
   date: 2026-10-02
   status: passed
   scheduled_trials: 6
@@ -16,9 +16,9 @@ latest_run:
   nondeterministic_cases: []
   semantic_result_sha256: 1efcfd166625598d7f259e24dad4d948ee546dcff4dce3d709defa88f6e8d34a
   job_config_sha256: 619c8b400f126f0ac0910a5c25dd4a387c826d5514c76d9c727aba5047e83f8e
-  git_commit: 0efbf00e4c6bdbe1642f58027699939acf9d7fd3
-  git_worktree_clean: false
-  artifact_ref: runs/calibration/runner/20261002T112713975467Z--runner-validation-peripheral-parameter-compiler-v0/summary.json
+  git_commit: f90f0529aa6c0895a90b3e8a3d19b23b4efd415b
+  git_worktree_clean: true
+  artifact_ref: runs/calibration/runner/20261002T113512989298Z--runner-validation-peripheral-parameter-compiler-v0/summary.json
 accepted_claims:
   - The runner validates immutable input hashes and topology boundaries before execution.
   - Every scheduled trial is retained as accepted, rejected, error, or budget-skipped.
@@ -38,5 +38,4 @@ known_limitations:
   - Only the peripheral compiler validation evaluator is registered; scientific fitting evaluators remain to be implemented.
   - The runner records, gates and accounts for trials but does not yet emit a candidate parameter-set record.
   - Wall-time budgets are checked between trials and after completion; they do not forcibly interrupt a running evaluator.
-  - This development run preceded the implementation commit and is retained only until the clean-worktree acceptance rerun in this batch.
 next_action: Register the first local or technical scientific evaluator and a versioned runnable campaign without weakening exposure or topology guards.
