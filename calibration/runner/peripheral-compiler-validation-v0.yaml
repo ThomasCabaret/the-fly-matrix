@@ -1,0 +1,91 @@
+schema_version: 1
+id: runner_validation.peripheral_parameter_compiler.v0
+record_kind: runner_validation
+status: runnable
+title: Exhaustive calibration-runner validation over peripheral compiler contracts
+claim_label: RUNNER VALIDATION / SYNTHETIC STRUCTURE TEST / NOT CALIBRATION
+mode: validation
+primary_class: technical
+optimization_exposure: diagnostic_only
+behavior_targeted: false
+user_authorization_ref: null
+
+target_ids: []
+parameter_family_ids:
+  - parameter.proprioception.routing.v0
+  - parameter.proprioception.transfer.v0
+  - parameter.mechanosensation.routing.v0
+  - parameter.mechanosensation.transfer.v0
+  - parameter.motor.routing.v0
+  - parameter.motor.transfer.v0
+parent_parameter_set_ids: []
+output_parameter_set_id: null
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.proprioception.routing.v0: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    parameter.proprioception.transfer.v0: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    parameter.mechanosensation.routing.v0: 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2
+    parameter.mechanosensation.transfer.v0: 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2
+    parameter.motor.routing.v0: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+    parameter.motor.transfer.v0: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  ruleset_hashes:
+    wiring_revalidation_rules_v1: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed
+  exception_table_hashes:
+    peripheral_exceptions: none
+
+input_files:
+  - path: calibration/compilers/peripheral-routing-transfer-v0.yaml
+    sha256: c778d8b19a55c8f10d41e8e77338529374d51a7871a0d6fe2469910d43551cf5
+
+evaluator_id: peripheral_parameter_compiler_contract.v0
+repeat_each: 2
+trials:
+  - case_id: proprioception_contract
+    seed: 0
+    args: {family_id: parameter.proprioception.transfer.v0}
+    gates:
+      runtime_coefficients: {operator: eq, value: 1992}
+      logical_routes: {operator: eq, value: 1992}
+      route_groups: {operator: eq, value: 262}
+      deterministic: {operator: eq, value: true}
+  - case_id: mechanosensation_contract
+    seed: 0
+    args: {family_id: parameter.mechanosensation.transfer.v0}
+    gates:
+      runtime_coefficients: {operator: eq, value: 2108}
+      logical_routes: {operator: eq, value: 2108}
+      route_groups: {operator: eq, value: 323}
+      deterministic: {operator: eq, value: true}
+  - case_id: motor_contract
+    seed: 0
+    args: {family_id: parameter.motor.transfer.v0}
+    gates:
+      runtime_coefficients: {operator: eq, value: 7849}
+      logical_routes: {operator: eq, value: 3746}
+      route_groups: {operator: eq, value: 431}
+      deterministic: {operator: eq, value: true}
+
+budget:
+  max_trials: 6
+  max_wall_seconds: 120
+
+scenario_splits: {train: [], validation: [], diagnostic: [], held_out: [], behavior_held_out: []}
+acceptance:
+  criteria_locked_before_run: true
+  require_all_trials_accepted: true
+  require_repetition_determinism: true
+  maximum_errors: 0
+  reproducibility_mode: exact_semantic_metrics
+
+capacity_policy:
+  automatic_capacity_increase_allowed: false
+  fitted_degrees_of_freedom: 0
+
+sources:
+  - calibration/compilers/peripheral-routing-transfer-v0.yaml
+  - decisions/0012-hierarchical-reconstructible-calibration.md
+assumptions:
+  - Uniform route simplexes and unit transfer values are ephemeral structural probes only.
+  - This job accepts runner infrastructure, not any fly parameter value.
+next_action: Use the validated runner contract for the first versioned local or technical calibration campaign.

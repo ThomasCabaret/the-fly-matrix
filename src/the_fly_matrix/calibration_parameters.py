@@ -214,38 +214,49 @@ def _synthetic_structure_inputs(
 
 def validate_all_contracts(path: Path = CONTRACT_PATH) -> dict[str, Any]:
     contract = load_compiler_contract(path)
-    results: dict[str, Any] = {}
-    for family_id, spec in contract["families"].items():
-        validate_family_boundary(family_id, spec)
-        frame = load_candidate_frame(spec)
-        counts = validate_candidate_contract(frame, spec)
-        routing, assignment, transfer = _synthetic_structure_inputs(frame, spec)
-        first = compile_factorized_parameters(
-            family_id=family_id,
-            candidates=frame,
-            spec=spec,
-            routing_weights=routing,
-            transfer_assignment=assignment,
-            transfer_values=transfer,
-        )
-        second = compile_factorized_parameters(
-            family_id=family_id,
-            candidates=frame,
-            spec=spec,
-            routing_weights=routing,
-            transfer_assignment=assignment,
-            transfer_values=transfer,
-        )
-        if first.parameter_ids != second.parameter_ids or not np.array_equal(
-            first.values, second.values
-        ):
-            raise ParameterCompilationError(f"Non-deterministic compilation for {family_id}")
-        results[family_id] = {
-            **counts,
-            "synthetic_test_transfer_keys": len(transfer),
-            "deterministic": True,
-        }
-    return results
+    return {
+        family_id: validate_contract_family(family_id, contract=contract)
+        for family_id in contract["families"]
+    }
+
+
+def validate_contract_family(
+    family_id: str, *, contract: Mapping[str, Any] | None = None
+) -> dict[str, Any]:
+    contract = contract or load_compiler_contract()
+    families = contract.get("families", {})
+    if family_id not in families:
+        raise ParameterCompilationError(f"Unknown compiler family: {family_id}")
+    spec = families[family_id]
+    validate_family_boundary(family_id, spec)
+    frame = load_candidate_frame(spec)
+    counts = validate_candidate_contract(frame, spec)
+    routing, assignment, transfer = _synthetic_structure_inputs(frame, spec)
+    first = compile_factorized_parameters(
+        family_id=family_id,
+        candidates=frame,
+        spec=spec,
+        routing_weights=routing,
+        transfer_assignment=assignment,
+        transfer_values=transfer,
+    )
+    second = compile_factorized_parameters(
+        family_id=family_id,
+        candidates=frame,
+        spec=spec,
+        routing_weights=routing,
+        transfer_assignment=assignment,
+        transfer_values=transfer,
+    )
+    if first.parameter_ids != second.parameter_ids or not np.array_equal(
+        first.values, second.values
+    ):
+        raise ParameterCompilationError(f"Non-deterministic compilation for {family_id}")
+    return {
+        **counts,
+        "synthetic_test_transfer_keys": len(transfer),
+        "deterministic": True,
+    }
 
 
 def main() -> int:

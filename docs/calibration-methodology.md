@@ -355,6 +355,13 @@ numeric value. Autonomous runners may consume substantial GPU time, but they mus
 produce exhaustive trial accounting, compact summaries, exception classes and a
 clear stop state without interactive model decisions.
 
+The runner contract is specified in [`calibration-runner.md`](calibration-runner.md).
+Jobs cannot name arbitrary shell commands: evaluators are registered code paths.
+Every trial remains accounted as accepted, rejected, errored or budget-skipped,
+and fitting/validation jobs reject held-out scenario identifiers before execution.
+A passed runner-validation job proves only this infrastructure. It does not accept
+the scientific parameters exercised by a synthetic probe.
+
 ## Recommended staged program
 
 These stages are milestones over the dependency DAG, not an obligation to finish

@@ -1,6 +1,6 @@
 schema_version: 1
-phase: calibration_evidence_transfer
-updated: 2026-10-01
+phase: calibration_infrastructure_ready
+updated: 2026-10-02
 
 wiring_baseline:
   terminal_coverage: complete
@@ -30,7 +30,7 @@ readiness:
   temporal_cns_runtime: benchmark_only_uncalibrated_v0
   embodied_closed_loop: integration_pass_uncalibrated_one_second
   controller_independent_physical_replay: integration_pass
-  calibration_runner: not_started
+  calibration_runner: minimal_runner_validated_no_scientific_fit_yet
   baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
   parameter_family_inventory: complete_19_families_values_unfitted
   parameter_dependency_dag: complete_acyclic_8_edges
@@ -48,11 +48,11 @@ behavior_exposure:
 blocked_by:
   - The biological dynamics model has not been selected; the frozen typed prior leaves 5912244 runtime edges explicitly unknown or context-dependent.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
-  - A calibration runner and accepted parameter sets do not yet exist; the benchmark-only profile cannot be promoted.
+  - No scientific fitting evaluator or runnable scientific campaign exists yet; the validated runner job accepts infrastructure only, and the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Build the minimal autonomous campaign runner around immutable configs, topology
-  hashes, acceptance gates and parameter-set lineage. Then define evidence-backed
-  local scopes and sharing assignments for the compiler-ready peripheral families.
-  Integrate the frozen sign prior only through an explicit signed dynamics model;
-  do not promote the unsigned benchmark profile.
+  Define evidence-backed local scopes and sharing assignments for the
+  compiler-ready peripheral families, then register the first scientific evaluator
+  and runnable campaign in the validated runner. In parallel, select an explicit
+  signed dynamics model before integrating the frozen sign prior; do not promote
+  the unsigned benchmark profile.

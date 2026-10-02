@@ -48,6 +48,9 @@ def main() -> int:
     subparsers.add_parser(
         "calibration-status", help="validate and summarize the calibration inventory and DAG"
     )
+    subparsers.add_parser(
+        "calibration-runner-check", help="validate the autonomous calibration runner"
+    )
     args = parser.parse_args()
     if args.command == "status":
         return show_status()
@@ -75,6 +78,10 @@ def main() -> int:
         from .calibration_registry import main as calibration_status_main
 
         return calibration_status_main()
+    if args.command == "calibration-runner-check":
+        from .calibration_runner import main as calibration_runner_main
+
+        return calibration_runner_main()
     return 2
 
 

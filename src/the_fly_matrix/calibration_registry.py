@@ -220,7 +220,7 @@ def main() -> int:
         "Jeux de parametres acceptes : "
         f"{inventory.index['accounting']['accepted_parameter_sets']}"
     )
-    print("Prochaine etape : runner minimal, puis scopes locaux et partage des parametres.")
+    print("Prochaine etape : scopes locaux, partage des parametres et premier evaluateur scientifique.")
     print("IMPORTANT : inventaire complet ne signifie pas calibration terminee.")
     return 0
 

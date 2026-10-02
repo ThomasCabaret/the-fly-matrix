@@ -16,6 +16,7 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
 - `evidence/`: deterministic evidence-transfer recipes;
 - `compilers/`: hash-locked contracts that compile logical parameter families
   into runtime vectors without choosing or fitting their values;
+- `runner/`: immutable runner jobs plus compact accepted infrastructure results;
 - `scopes/`: reusable local and closed-loop scopes;
 - `campaigns/`, `parameter_sets/`, and `evaluations/`: compact immutable lineage
   records. The first accepted dependency is the transmitter/sign prior.
@@ -69,3 +70,9 @@ candidate manifests and expands explicit in-memory test simplexes twice. The tes
 values are deliberately synthetic, are never persisted, and accept no scientific
 parameter. The motor contract is intentionally asymmetric: 3,746 logical
 group-to-actuator routes expand to 7,849 terminal-to-actuator runtime slots.
+
+Run `calibration_runner_check.bat` to exercise the autonomous runner. Its current
+six-trial job validates infrastructure only: topology and input hashes, exact
+trial accounting, locked gates, repetition consistency and held-out isolation.
+Per-trial artifacts remain under ignored `runs/calibration/runner/`. See
+`docs/calibration-runner.md` for the execution and leakage contract.

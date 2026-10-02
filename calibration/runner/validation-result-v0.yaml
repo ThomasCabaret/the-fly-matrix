@@ -1,0 +1,42 @@
+schema_version: 1
+id: validation.calibration_runner.v0
+status: accepted_infrastructure
+claim_label: RUNNER VALIDATION / SYNTHETIC STRUCTURE TEST / NOT CALIBRATION
+validated_job_id: runner_validation.peripheral_parameter_compiler.v0
+validated_evaluator_id: peripheral_parameter_compiler_contract.v0
+latest_run:
+  run_id: 20261002T112713975467Z--runner-validation-peripheral-parameter-compiler-v0
+  date: 2026-10-02
+  status: passed
+  scheduled_trials: 6
+  accounted_trials: 6
+  accepted_trials: 6
+  rejected_trials: 0
+  error_trials: 0
+  nondeterministic_cases: []
+  semantic_result_sha256: 1efcfd166625598d7f259e24dad4d948ee546dcff4dce3d709defa88f6e8d34a
+  job_config_sha256: 619c8b400f126f0ac0910a5c25dd4a387c826d5514c76d9c727aba5047e83f8e
+  git_commit: 0efbf00e4c6bdbe1642f58027699939acf9d7fd3
+  git_worktree_clean: false
+  artifact_ref: runs/calibration/runner/20261002T112713975467Z--runner-validation-peripheral-parameter-compiler-v0/summary.json
+accepted_claims:
+  - The runner validates immutable input hashes and topology boundaries before execution.
+  - Every scheduled trial is retained as accepted, rejected, error, or budget-skipped.
+  - Repetitions are compared by semantic metric hash and reproduce exactly for the validation evaluator.
+  - Fitting and validation modes reject held-out scenario identifiers.
+  - Evaluators must be explicitly registered in code; a job cannot execute an arbitrary shell command.
+  - Evaluator policy prevents the infrastructure validator from being reused as a fitting campaign.
+forbidden_claims:
+  - Any peripheral routing or transfer value is calibrated.
+  - A scientific calibration campaign has passed.
+  - The runner alone proves MaleCNS dynamics or embodied behavior.
+tests:
+  command: .venv/Scripts/python.exe -m unittest tests.test_calibration_runner -v
+  result: pass
+  covered_failures: [rejected_trial_retention, evaluator_exception_retention, held_out_access_rejection, repeated_semantic_reconstruction]
+known_limitations:
+  - Only the peripheral compiler validation evaluator is registered; scientific fitting evaluators remain to be implemented.
+  - The runner records, gates and accounts for trials but does not yet emit a candidate parameter-set record.
+  - Wall-time budgets are checked between trials and after completion; they do not forcibly interrupt a running evaluator.
+  - This development run preceded the implementation commit and is retained only until the clean-worktree acceptance rerun in this batch.
+next_action: Register the first local or technical scientific evaluator and a versioned runnable campaign without weakening exposure or topology guards.

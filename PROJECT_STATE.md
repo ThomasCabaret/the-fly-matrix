@@ -1,8 +1,9 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-01, deuxième lot de calibration : l'inventaire/DAG est
-explicite et le premier transfert de preuve, le prior neurotransmetteur/signe,
-est compilé, validé et gelé.
+Mise à jour : 2026-10-02. L'inventaire/DAG, le compilateur périphérique et le
+runner autonome minimal sont validés. Le premier transfert de preuve, le prior
+neurotransmetteur/signe, reste compilé, validé et gelé ; aucune famille n'a encore
+été ajustée.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -47,6 +48,21 @@ simplexes de routage explicites, des affectations de partage explicites et les
 hashes des enveloppes acceptées ; il ne choisit ni route, ni gain, ni valeur.
 Les 3 746 routes motrices logiques sont notamment distinguées de leurs 7 849
 coefficients runtime développés.
+
+Le runner autonome minimal est maintenant validé. Il refuse les entrées dont le
+hash a dérivé, vérifie les frontières topologiques de chaque famille, interdit aux
+modes fitting/validation d'accéder aux scénarios held-out et n'exécute que des
+évaluateurs enregistrés dans le code. Chaque essai est conservé comme `accepted`,
+`rejected`, `error` ou `skipped_budget_exhausted`; les répétitions sont comparées
+par hash sémantique et aucun essai planifié ne peut disparaître du décompte.
+
+Le run `20261002T112713975467Z--runner-validation-peripheral-parameter-compiler-v0`
+a exécuté deux fois chacun des trois contrats périphériques : **6/6 essais
+acceptés, zéro rejet, zéro erreur et zéro cas non déterministe**. Son hash
+sémantique est `1efcfd166625598d7f259e24dad4d948ee546dcff4dce3d709defa88f6e8d34a`.
+Ce run utilise des simplexes uniformes et gains unitaires éphémères ; il valide
+l'infrastructure seulement et n'accepte aucune valeur de mouche. Le contrat est
+documenté dans [`docs/calibration-runner.md`](docs/calibration-runner.md).
 
 Le premier nœud de preuve du DAG est également franchi. La recette
 [`evidence.transmitter_sign_prior.v0`](calibration/evidence/transmitter-sign-prior-v0.yaml)
@@ -281,7 +297,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG terminés ; compilateur périphérique validé sur 3 familles ; 1 famille de preuve gelée, 0 famille ajustée et aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner minimal validés ; 1 famille de preuve gelée, 0 famille ajustée et aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -347,8 +363,9 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **70 tests**, leurs sous-tests et le smoke test
-bout en bout passent après cette correction.
+conservées et classifiées. Les **85 tests** actuels passent, y compris les
+garde-fous du runner, les tests de compilation, le runtime et les validations
+structurelles.
 
 ## Statut structurel
 
@@ -385,11 +402,13 @@ de rendre les campagnes reconstructibles et auditables.
 n'a ajusté aucune valeur. Le compilateur factorisé vérifie maintenant les 1 992
 coefficients proprioceptifs, 2 108 mécanorécepteurs et 7 849 moteurs à partir de
 routes et transferts séparés. Son test uniforme/unitaire est synthétique, en
-mémoire et explicitement non calibré. Aucun parameter set complet n'a été promu et
-aucune cible comportementale n'est autorisée. Le prochain lot est le runner
-autonome minimal, puis les scopes locaux et règles de partage fondés sur des
-données. Les fichiers de `calibration/` déterminent l'ordre effectif ; cette
-section en est le résumé humain.
+mémoire et explicitement non calibré. Le runner autonome reproduit ce contrôle en
+six essais exhaustivement comptabilisés et protège déjà frontières, lignée,
+budgets et scénarios tenus à l'écart. Aucun parameter set complet n'a été promu et
+aucune cible comportementale n'est autorisée. Le prochain lot doit définir les
+premiers scopes locaux, règles de partage et données autorisées, puis enregistrer
+un véritable évaluateur scientifique dans ce runner. Les fichiers de
+`calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -414,6 +433,7 @@ wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions i
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG
 compile_calibration_evidence.bat # prior neurotransmetteur/signe reproductible
 parameter_compiler_check.bat # factorisation routage/transfert, test structurel seulement
+calibration_runner_check.bat # runner autonome, six essais d'infrastructure non calibrants
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les
