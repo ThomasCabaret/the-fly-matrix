@@ -364,7 +364,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **85 tests** actuels passent, y compris les
+conservées et classifiées. Les **86 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
