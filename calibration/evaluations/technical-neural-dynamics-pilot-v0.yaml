@@ -1,0 +1,91 @@
+schema_version: 1
+id: evaluation.technical_neural_dynamics_pilot.v0
+title: Constraint evaluation of the shared signed MaleCNS pilot ensemble
+status: pass_nonidentifying
+target_id: target.technical_neural_dynamics.v0
+parameter_set_id: parameters.central_technical_dynamics_pilot_ensemble.v0
+protocol_version: campaign.technical_neural_dynamics_pilot.v0
+exposure_policy: allowed
+claim_label: TRAINED TECHNICAL STABILITY PILOT / NOT PHYSIOLOGY / NO BEHAVIOR
+
+scenario_ids:
+  - central_technical_train_low_v0
+  - central_technical_train_nominal_v0
+  - central_technical_train_high_v0
+  - central_technical_validation_low_v0
+  - central_technical_validation_high_v0
+dataset_split_ids:
+  fitting: [central_technical_train_low_v0, central_technical_train_nominal_v0, central_technical_train_high_v0]
+  local_validation: [central_technical_validation_low_v0, central_technical_validation_high_v0]
+  local_held_out: []
+  behavior_held_out: []
+seeds: [64003, 65003, 66101, 66102, 66103, 66201, 66202]
+
+metrics:
+  exhaustive_accounting: {scheduled: 32, accepted: 32, rejected: 0, errors: 0, unaccounted: 0, pass: true}
+  train_active_fraction_min: {observed_range: [0.9429394, 0.9998560], threshold_min: 0.01, pass: true}
+  validation_active_fraction_min: {observed_range: [0.9437492, 0.9998920], threshold_min: 0.01, pass: true}
+  saturated_fraction_max: {observed_range: [0.0, 0.0], threshold_max: 0.01, pass: true}
+  perturbation_peak_gain_max: {observed_range: [0.6327429, 0.9368788], threshold_max: 2.0, pass: true}
+  perturbation_final_gain_max: {observed_range: [0.000000585, 0.1700160], threshold_max: 0.25, pass: true}
+  stable_half_recovery_step_max: {observed_range: [2, 11], threshold_max: 20, pass: true}
+  cpu_gpu_agreement: {accepted_candidates: 32, failed_candidates: 0, pass: true}
+  repeated_semantic_hash:
+    observed: 68b0166693c21734d0cf2c7dc195e2377e156a21c2ee96aa30ec89512289a8ff
+    clean_runs: 2
+    pass: true
+
+admissible_set_evaluation:
+  member_count: 32
+  acceptance_rate: 1.0
+  coverage_kind: deterministic_scrambled_sobol_sample_not_continuous_domain_proof
+  selected_reference_id: null
+  identification_result: nonidentifying_all_sampled_candidates_pass
+  parameter_sample_ranges:
+    time_constant_ms: [10.5084134, 76.4515953]
+    input_gain: [0.2643814, 1.8806958]
+    bias: [-0.0190243, 0.0199691]
+    acetylcholine: [0.0505715, 1.8800786]
+    dopamine: [-1.4492587, 1.2596733]
+    gaba: [-1.9235249, -0.0560804]
+    glutamate: [-1.1560473, 1.3176461]
+    histamine: [-1.2333121, 1.2056436]
+    missing: [-1.3516537, 1.4415698]
+    octopamine: [-1.2210070, 1.2418701]
+    serotonin: [-1.1518724, 1.2571558]
+    unclear: [-1.3256985, 1.2108675]
+
+reproducibility:
+  command: fit_signed_dynamics_pilot.bat
+  git_commit: 014a737b7e644439d870e513e7538f469e39748c
+  git_worktree_clean: true
+  job_config_sha256: 9415b448496b34f7ce2358e631a9a3639ebbf0d303557822784ca6c6b9b1ebe3
+  semantic_result_sha256: 68b0166693c21734d0cf2c7dc195e2377e156a21c2ee96aa30ec89512289a8ff
+  input_hashes:
+    campaign_recipe: ba71f366fab45616adc84666d126bd141267097f8775f714718da7299bb8b2c8
+    model: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e
+    sign_prior_parameter_set: dc9f14cc12f590f05d504ff8868f250ca25c83b76ab05914a6a6d06bb785d2d5
+  run_ids:
+    - 20261003T132548498439Z--campaign-technical-neural-dynamics-pilot-v0
+    - 20261003T132656622969Z--campaign-technical-neural-dynamics-pilot-v0
+  artifact_refs:
+    - runs/calibration/runner/20261003T132548498439Z--campaign-technical-neural-dynamics-pilot-v0/summary.json
+    - runs/calibration/runner/20261003T132656622969Z--campaign-technical-neural-dynamics-pilot-v0/summary.json
+
+contamination:
+  behavior_targeted: false
+  diagnostic_probe_used_for_selection: false
+  held_out_opened: false
+  visual_selection: false
+failures:
+  - The technical gates reject none of the 32 sampled candidates and therefore do not identify a reference vector.
+  - The finite Sobol ensemble is not proof that every point in the continuous bounds is admissible.
+acceptance_result: pass_technical_constraints_but_reject_reference_selection
+conclusion: >-
+  The v0 technical exclusion gates are reproducible and all sampled candidates are
+  bounded and recoverable on the five declared scenarios. This is a broad
+  admissible pilot ensemble, not an identified calibration. No member may be
+  selected or frozen without an additional independent constraint or a
+  preregistered downstream sensitivity rule.
+next_action: Add independent non-behavioral information or a preregistered downstream ensemble-sensitivity test; do not tighten these gates post hoc to manufacture a winner.
+

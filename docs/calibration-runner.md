@@ -108,3 +108,11 @@ accounting, finite metrics, and one-step CPU/GPU agreement. Activity, saturation
 and perturbation outcomes remain observations from which a later threshold
 proposal may be designed; they are not acceptance criteria and no probe is a
 parameter set.
+
+`fit_signed_dynamics_pilot.bat` is the first evaluator registered exclusively for
+`fit` mode. It reconstructs 32 deterministic twelve-parameter candidates and
+runs five new isolated-CNS train/validation scenarios per candidate. Its gates
+exclude numerical silence, saturation and non-recovering perturbations; they do
+not target a behavior or a preferred activity value. All 32 sampled candidates
+passed, so the compact evaluation records a non-identifying admissible ensemble
+and explicitly forbids selecting a member after visual inspection.

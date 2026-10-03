@@ -4,7 +4,8 @@ Mise à jour : 2026-10-03. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
-ses douze paramètres restent entièrement non ajustés.
+une première campagne technique a produit 32 candidats admissibles mais aucun
+paramètre de référence n'est identifié ni gelé.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -110,6 +111,23 @@ après la petite perturbation, tandis que le régime fort conserve un gain de
 perturbation de 3,988 et atteint 96,5 % de neurones numériquement actifs. Ces
 observations montrent que le banc distingue plusieurs modes, pas que l'un d'eux
 est acceptable. Aucun probe, seuil ou paramètre n'est promu.
+
+La première véritable campagne de fitting technique est maintenant exécutée et
+reproductible. `campaign.technical_neural_dynamics_pilot.v0` reconstruit 32
+candidats Sobol sur les douze paramètres partagés, puis soumet chacun à trois
+scénarios train et deux scénarios de validation locale distincts des probes
+diagnostiques. Les deux runs propres
+`20261003T132548498439Z--campaign-technical-neural-dynamics-pilot-v0` et
+`20261003T132656622969Z--campaign-technical-neural-dynamics-pilot-v0` reproduisent
+le hash sémantique
+`68b0166693c21734d0cf2c7dc195e2377e156a21c2ee96aa30ec89512289a8ff`.
+
+Les **32/32 candidats passent** : zéro saturation numérique, gain de perturbation
+maximal entre 0,633 et 0,937, résidu final maximal entre 5,85e-7 et 0,170 et
+demi-récupération stable en 2 à 11 pas. Ce résultat valide une large admissibilité
+technique sur les cinq scénarios mais révèle surtout une non-identifiabilité : les
+critères ne distinguent aucun vecteur de référence. L'ensemble reconstructible est
+conservé, sans sélection post hoc, sans gel et sans claim physiologique.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -327,7 +345,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, modèle central signé structurellement validé et caractérisé sur 7 régimes non ajustés, 0 famille ajustée et aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, modèle central signé caractérisé puis testé sur un ensemble technique de 32 candidats tous admissibles mais non identifiés, aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -393,7 +411,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **96 tests** actuels passent, y compris les
+conservées et classifiées. Les **102 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -408,10 +426,12 @@ précédents.
 
 ## Front de calibration
 
-**Ouvert.** Les campagnes sont maintenant reconstructibles et un premier modèle
-central signé minimal est exécutable. Sa caractérisation non ajustée est terminée.
-La prochaine action n'est toujours pas un fitting global : il faut d'abord
-verrouiller des seuils techniques défendables et préenregistrer la campagne.
+**Ouvert.** Les campagnes sont reconstructibles, le modèle central signé minimal
+est exécutable et sa première campagne technique est terminée. Elle n'a pas échoué
+numériquement : elle a montré que les contraintes v0 sont trop peu identifiantes
+pour choisir parmi les 32 candidats admissibles. La prochaine action doit apporter
+une information indépendante ou tester la sensibilité de tout l'ensemble en aval,
+pas resserrer les seuils après coup pour fabriquer un gagnant.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -440,9 +460,8 @@ budgets et scénarios tenus à l'écart. Le contrat central signé ajoute neuf
 efficacités de classe et trois paramètres globaux, tous non ajustés, et couvre
 exhaustivement le graphe avec un probe structurel non promouvable. Aucun parameter
 set complet n'a été promu et aucune cible comportementale n'est autorisée. Le
-prochain lot doit verrouiller les critères techniques à partir de sources ou
-justifications explicites, puis enregistrer un véritable évaluateur de fitting sans
-transformer les probes diagnostiques en sélection cachée ; les
+prochain lot doit ajouter des contraintes non comportementales indépendantes ou
+une étude de sensibilité aval préenregistrée sur l'ensemble central ; les
 scopes locaux périphériques restent un front parallèle. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
@@ -472,6 +491,7 @@ parameter_compiler_check.bat # factorisation routage/transfert, test structurel 
 calibration_runner_check.bat # runner autonome, six essais d'infrastructure non calibrants
 signed_dynamics_contract_check.bat # couverture signée exhaustive, probes non calibrants
 characterize_signed_dynamics.bat # 7 régimes centraux non ajustés, diagnostic seulement
+fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans comportement
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

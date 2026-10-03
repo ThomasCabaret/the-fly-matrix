@@ -16,6 +16,6 @@ provenance:
   assumptions: [The v1.0 superclass-based rule is a project runtime boundary and may require a versioned revision for another dataset release]
 parameter_family_ids: [parameter.central.neuron_dynamics, parameter.central.synaptic_gain]
 validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.central_graph_runtime, validation.real_connectome_execution_benchmark, validation.closed_loop, validation.signed_dynamics_contract, validation.resting_dynamics]
-next_action: Préenregistrer les seuils techniques et la première campagne de fitting sans promouvoir les valeurs des probes diagnostiques.
+next_action: Contraindre l'ensemble pilote de 32 candidats par une preuve non comportementale indépendante ou une étude de sensibilité aval préenregistrée, sans choisir arbitrairement un membre.
 blocked_by: []
 completion_criteria: [Les 211577 corps annotés sont conservés et flagués, Les 166700 neurones canoniques et 25582938 arêtes runtime sont contrôlés, Chaque terminal vise un neurone canonique, Projection creuse déterministe, Régime basal stable après calibration]

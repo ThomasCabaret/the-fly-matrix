@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.neuron_dynamics.v0
 title: Central neuron temporal dynamics
-status: baseline_characterized_unfitted
+status: technical_pilot_admissible_ensemble_unfrozen_nonidentified
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_model_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: benchmarks/profiles/malecns-benchmark-v0.yaml, supports: engineering throughput only and explicitly no parameter values}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: bounded executable candidate equation and parameter dimension only}]
 assumptions: [Execution timestep remains a scenario choice; the candidate fits a time constant in milliseconds rather than promoting the benchmark 5 ms step., Bounded tanh numerics do not establish biological validity or acceptable activity.]
-next_action: Lock evidence-backed technical acceptance metrics and preregister fitting; do not promote a diagnostic probe.
+next_action: Constrain the 32-member pilot ensemble with independent non-behavioral evidence or a preregistered downstream sensitivity test; select nothing post hoc.

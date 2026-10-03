@@ -10,8 +10,9 @@ calibration_dataset_ids: []
 held_out_behavior_ids: []
 latest_run_id: 20261003T090226460183Z--campaign-diagnostic-central-unfitted-characterization-v0
 status: smoke
-diagnostic_status: baseline_complete_thresholds_unresolved
+diagnostic_status: technical_pilot_pass_nonidentifying_no_reference_frozen
 notes:
   - Seven unfitted regimes ran on the complete signed graph and duplicate clean runs reproduced semantic hash 351e883439080618af35a1e685efcd54058e8bd1f88cf206f6210d5863f41ace.
   - Execution acceptance is not dynamics acceptance; no regime, threshold or parameter value is promoted.
   - The strong diagnostic regime sustained perturbation amplification while the weak no-input regime extinguished, demonstrating that the probe grid can distinguish failure modes.
+  - The first fitting pilot accepted 32/32 sampled candidates on five isolated-CNS scenarios; this validates broad technical admissibility but supplies no reference-selection information.

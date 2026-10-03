@@ -220,7 +220,9 @@ def main() -> int:
         "Jeux de parametres acceptes : "
         f"{inventory.index['accounting']['accepted_parameter_sets']}"
     )
-    print("Prochaine etape : scopes locaux, partage des parametres et premier evaluateur scientifique.")
+    state = _load_mapping(CALIBRATION_ROOT / "state.yaml")
+    next_action = " ".join(str(state.get("next_action", "unresolved")).split())
+    print(f"Prochaine etape : {next_action}")
     print("IMPORTANT : inventaire complet ne signifie pas calibration terminee.")
     return 0
 

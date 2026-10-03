@@ -87,3 +87,10 @@ diagnostic outcomes never select a regime or create a parameter set.
 The compact result
 `runner/central-unfitted-characterization-result-v0.yaml` points to two clean
 runs with the same semantic hash and records both permitted and forbidden claims.
+
+Run `fit_signed_dynamics_pilot.bat` for the first real technical fitting pilot.
+It reconstructs 32 Sobol candidates over the twelve shared central parameters and
+evaluates each on three train plus two local-validation scenarios. The accepted
+result is deliberately an ensemble: 32/32 candidates passed, so
+`parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml` records broad
+technical admissibility and non-identifiability, with no selected or frozen member.

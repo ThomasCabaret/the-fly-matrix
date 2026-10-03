@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_neural_dynamics.v0
 title: Bounded and recoverable MaleCNS temporal dynamics
-status: runnable
+status: evaluated
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -61,8 +61,9 @@ provenance:
     - No biological source supports exact activity fractions for this abstract rate model; the v0 thresholds are deliberately broad engineering exclusion bands.
     - The complete diagnostic grid informed failure classes, but no individual diagnostic probe is a candidate or validation case.
 
-validation: unfitted_baseline_characterized_not_fitted
+validation: local_technical_pass_nonidentifying_32_of_32
 blocked_reason: null
 next_action: >-
-  Execute campaign.technical_neural_dynamics_pilot.v0 and retain the full
-  admissible ensemble without selecting a preferred behavior or visual result.
+  Add an independent non-behavioral constraint or preregistered downstream
+  ensemble-sensitivity protocol; do not tighten v0 gates post hoc or select one
+  of the 32 passing members by appearance.
