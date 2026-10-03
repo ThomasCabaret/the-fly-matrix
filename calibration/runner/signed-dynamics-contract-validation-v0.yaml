@@ -1,0 +1,74 @@
+schema_version: 1
+id: runner_validation.signed_dynamics_contract.v0
+record_kind: runner_validation
+status: runnable
+title: Exhaustive structural validation of the minimal signed MaleCNS dynamics candidate
+claim_label: RUNNER VALIDATION / STRUCTURAL TEST VALUES / NOT CALIBRATION
+mode: validation
+primary_class: technical
+optimization_exposure: diagnostic_only
+behavior_targeted: false
+user_authorization_ref: null
+
+target_ids: [target.technical_neural_dynamics.v0]
+parameter_family_ids:
+  - parameter.central.transmitter_sign_prior.v0
+  - parameter.central.synaptic_efficacy.v0
+  - parameter.central.neuron_dynamics.v0
+parent_parameter_set_ids: [parameters.central_transmitter_sign_prior.v0]
+output_parameter_set_id: null
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.transmitter_sign_prior.v0: canonical_malecns_runtime_graph
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+  ruleset_hashes:
+    transmitter_sign_prior: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e
+  exception_table_hashes: {central_signed_dynamics: none}
+
+input_files:
+  - path: calibration/models/malecns-typed-signed-rate-v0.yaml
+    sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e
+  - path: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+    sha256: dc9f14cc12f590f05d504ff8868f250ca25c83b76ab05914a6a6d06bb785d2d5
+
+evaluator_id: malecns_typed_signed_rate_contract.v0
+repeat_each: 2
+trials:
+  - case_id: exhaustive_class_assignment
+    seed: 0
+    args: {probe_id: all_transmitter_classes_nonzero}
+    gates:
+      canonical_neurons: {operator: eq, value: 166700}
+      runtime_edges: {operator: eq, value: 25582938}
+      transmitter_classes: {operator: eq, value: 9}
+      class_mapped_edges: {operator: eq, value: 25582938}
+      typed_excitatory_edges: {operator: eq, value: 14745137}
+      typed_inhibitory_edges: {operator: eq, value: 4925557}
+      unknown_or_context_edges: {operator: eq, value: 5912244}
+      zero_probe_edges: {operator: eq, value: 0}
+      all_classes_have_neurons: {operator: eq, value: true}
+
+budget: {max_trials: 2, max_wall_seconds: 120}
+scenario_splits: {train: [], validation: [], diagnostic: [], held_out: [], behavior_held_out: []}
+acceptance:
+  criteria_locked_before_run: true
+  require_all_trials_accepted: true
+  require_repetition_determinism: true
+  maximum_errors: 0
+  reproducibility_mode: exact_semantic_metrics
+
+capacity_policy:
+  automatic_capacity_increase_allowed: false
+  fitted_degrees_of_freedom: 0
+  candidate_model_degrees_of_freedom: 12
+
+sources:
+  - calibration/models/malecns-typed-signed-rate-v0.yaml
+  - calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+  - decisions/0012-hierarchical-reconstructible-calibration.md
+assumptions:
+  - Probe efficacies are nonzero structural test values and are not candidate fitted values.
+  - Passing this job accepts edge accounting and executability, not dynamics or physiology.
+next_action: Run unfitted baseline characterization over preregistered numerical probes, then lock technical fitting thresholds.

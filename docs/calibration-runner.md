@@ -73,6 +73,14 @@ ephemeral uniform simplexes and unit transfers and is labelled `NOT CALIBRATION`
 It validates the runner and compiler boundary; it accepts no fly parameter.
 
 The accepted infrastructure result is recorded in
-`calibration/runner/validation-result-v0.yaml`. The next extension should register
-one local-interface or technical evaluator and a real campaign record. It must not
-weaken the topology, lineage, exposure or exhaustive-accounting checks.
+`calibration/runner/validation-result-v0.yaml`.
+
+`signed_dynamics_contract_check.bat` executes the separate
+`runner_validation.signed_dynamics_contract.v0` job. It exhaustively maps the
+25,582,938 runtime edges to nine presynaptic transmitter-class parameters twice,
+checks typed ACh/GABA counts and proves that the 5,912,244 context-dependent or
+unknown edges are not silently suppressed. Its nonzero probe values are labelled
+`STRUCTURAL TEST VALUES ONLY`; this job accepts the candidate representation, not
+its equation as biology and not a single fitted value. Future scientific fitting
+evaluators must not weaken the topology, lineage, exposure or exhaustive-accounting
+checks of either validation job.

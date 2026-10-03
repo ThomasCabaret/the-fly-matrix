@@ -297,11 +297,22 @@ signals must not receive a universal sign without receptor or pathway evidence.
 Per-presynapse probabilities can refine uncertainty later, but still do not by
 themselves identify the postsynaptic response.
 
-The current `benchmark.malecns.leaky_tanh.v0` runtime uses unsigned positive
+The historical `benchmark.malecns.leaky_tanh.v0` runtime uses unsigned positive
 synapse counts with incoming normalization. It remains an execution profile and
-must not be promoted as a biological initial parameter set. A future evidence
-transfer step should compile a signed or typed prior matrix with confidence and
-unknown masks before technical fitting.
+must not be promoted as a biological initial parameter set. The frozen evidence
+transfer now provides transmitter labels, typed ACh/GABA sign priors, confidence
+where available and explicit unknown masks.
+
+`model.malecns_typed_signed_rate.v0` is the first executable model candidate
+that consumes this prior. It uses one explicit efficacy for each of the nine
+effective-transmitter classes, three global temporal parameters, no per-edge
+residuals and no behavior target. ACh and GABA efficacies obey their typed sign
+priors. Glutamate, histamine, monoamines, `unclear` and `missing` remain signed
+free parameters: sign code zero must never become an implicit zero effect. The
+candidate equation and its structural test values are not accepted physiology.
+Its first gate is exhaustive edge assignment and CPU/GPU-compatible sparse
+execution; only later campaigns may characterize baselines, lock technical
+thresholds and fit values.
 
 The calibration runner should optimize shared families before individual
 connections: global parameters, then transmitter or cell classes, anatomical

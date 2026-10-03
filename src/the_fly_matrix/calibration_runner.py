@@ -19,6 +19,7 @@ import yaml
 from .calibration_parameters import validate_contract_family
 from .calibration_registry import CALIBRATION_ROOT, load_calibration_inventory
 from .ledger import ROOT
+from .signed_dynamics import validate_full_graph_contract
 
 
 DEFAULT_JOB_PATH = CALIBRATION_ROOT / "runner" / "peripheral-compiler-validation-v0.yaml"
@@ -106,14 +107,27 @@ def _peripheral_compiler_evaluator(trial: Mapping[str, Any]) -> Mapping[str, Sca
     }
 
 
+def _signed_dynamics_contract_evaluator(
+    trial: Mapping[str, Any],
+) -> Mapping[str, Scalar]:
+    if trial.get("args", {}).get("probe_id") != "all_transmitter_classes_nonzero":
+        raise CalibrationRunnerError("Unknown signed-dynamics structural probe")
+    return validate_full_graph_contract()
+
+
 DEFAULT_EVALUATORS: Mapping[str, Evaluator] = {
     "peripheral_parameter_compiler_contract.v0": _peripheral_compiler_evaluator,
+    "malecns_typed_signed_rate_contract.v0": _signed_dynamics_contract_evaluator,
 }
 DEFAULT_EVALUATOR_POLICIES: Mapping[str, Mapping[str, frozenset[str]]] = {
     "peripheral_parameter_compiler_contract.v0": {
         "allowed_modes": frozenset({"validation"}),
         "allowed_record_kinds": frozenset({"runner_validation"}),
-    }
+    },
+    "malecns_typed_signed_rate_contract.v0": {
+        "allowed_modes": frozenset({"validation"}),
+        "allowed_record_kinds": frozenset({"runner_validation"}),
+    },
 }
 
 

@@ -54,8 +54,9 @@ provenance:
 validation: not_run
 blocked_reason: >-
   Structural wiring, the family inventory, the dependency DAG and the typed
-  transmitter/sign prior are accepted. The signed dynamics model, calibration
-  runner and evidence-backed acceptance thresholds do not yet exist.
+  transmitter/sign prior are accepted. A minimal twelve-parameter signed model
+  candidate and calibration runner now exist, but no value has been fitted and
+  evidence-backed acceptance thresholds remain unresolved.
 next_action: >-
-  Build the signed dynamics compiler and autonomous runner, then characterize
-  the uncalibrated baseline without promoting the unsigned benchmark profile.
+  Validate the signed model contract exhaustively, characterize its unfitted
+  baseline across explicit probes, then lock technical thresholds before fitting.

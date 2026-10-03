@@ -1,0 +1,82 @@
+schema_version: 1
+id: model.malecns_typed_signed_rate.v0
+title: Minimal transmitter-shared signed rate dynamics for canonical MaleCNS
+status: candidate_executable_unfitted
+claim_label: MODEL CANDIDATE / UNFITTED / NOT BIOLOGICAL BEHAVIOR
+
+scope:
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+  graph_orientation: rows_are_postsynaptic_columns_are_presynaptic
+  structural_weight: published_integer_synapse_count
+  edge_partition_key: presynaptic_effective_transmitter
+
+equation:
+  recurrent_drive: >-
+    d_i = incoming_count_inverse_i * sum_j(count_ij * efficacy[class(j)] * state_j)
+  update: >-
+    alpha = 1 - exp(-dt_ms / time_constant_ms);
+    state_i_next = (1-alpha) * state_i + alpha * tanh(d_i + input_gain * input_i + bias)
+  normalization: unsigned_incoming_synapse_count_before_class_efficacy
+  activation: tanh
+  notes:
+    - Normalization is graph-derived and does not erase transmitter-class membership.
+    - The timestep is an execution argument; time_constant_ms is the fitted model parameter.
+    - This bounded rate equation is a minimal candidate, not an accepted neuron physiology model.
+
+parameterization:
+  fitted_degrees_of_freedom: 12
+  dynamics_parameters:
+    - {name: time_constant_ms, sharing: global, domain: positive, origin: unresolved}
+    - {name: input_gain, sharing: global, domain: real, origin: unresolved}
+    - {name: bias, sharing: global, domain: real, origin: unresolved}
+  synaptic_parameters:
+    sharing: one_efficacy_per_effective_transmitter
+    classes:
+      - {id: acetylcholine, sign_constraint: positive_prior, origin: typed_evidence_prior}
+      - {id: dopamine, sign_constraint: unresolved_signed, origin: context_dependent}
+      - {id: gaba, sign_constraint: negative_prior, origin: typed_evidence_prior}
+      - {id: glutamate, sign_constraint: unresolved_signed, origin: context_dependent}
+      - {id: histamine, sign_constraint: unresolved_signed, origin: context_dependent}
+      - {id: missing, sign_constraint: unresolved_signed, origin: missing_evidence}
+      - {id: octopamine, sign_constraint: unresolved_signed, origin: context_dependent}
+      - {id: serotonin, sign_constraint: unresolved_signed, origin: context_dependent}
+      - {id: unclear, sign_constraint: unresolved_signed, origin: unresolved_evidence}
+    unknown_policy: explicit_parameter_required_never_implicit_zero
+    edge_residuals: forbidden_in_v0
+
+validation_probe:
+  claim_label: STRUCTURAL TEST VALUES ONLY / NOT CALIBRATION
+  purpose: Exercise every transmitter-class path and both signs without selecting physiology.
+  class_efficacies:
+    acetylcholine: 1.0
+    dopamine: 0.75
+    gaba: -1.0
+    glutamate: -0.75
+    histamine: -0.5
+    missing: 0.25
+    octopamine: 0.5
+    serotonin: -0.25
+    unclear: 0.125
+  dynamics: {time_constant_ms: 20.0, input_gain: 1.0, bias: 0.0, dt_ms: 5.0}
+
+accepted_claims:
+  - Every runtime edge is assigned to exactly one explicit transmitter-class efficacy.
+  - Typed ACh and GABA evidence constrains the sign of their shared efficacy in this candidate.
+  - Unknown and context-dependent transmitter classes remain executable free parameters.
+  - The same sparse matrix form is compatible with CPU and GPU execution.
+forbidden_claims:
+  - The structural probe values are physiological or calibrated.
+  - Transmitter identity alone establishes every postsynaptic effect sign.
+  - The candidate reproduces neural activity or fly behavior.
+  - Stability of tanh proves biological validity.
+
+sources:
+  - calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+  - data/derived/calibration/transmitter-sign-prior-v0/summary.json
+  - data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+assumptions:
+  - One efficacy per transmitter class is the lowest useful signed capacity above one global scale.
+  - Postsynaptic receptor context is unavailable in v0 and is represented by unresolved signed class parameters.
+  - Delays, adaptation, per-class time constants and edge residuals are outside this candidate version.
+next_action: Characterize unfitted baselines and lock evidence-backed technical acceptance thresholds before fitting any value.
