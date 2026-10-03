@@ -14,6 +14,8 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
 - `parameter_families/`: 19 versioned family records plus an exhaustive index;
 - `dependency-dag.yaml`: the validated partial order between those families;
 - `evidence/`: deterministic evidence-transfer recipes;
+- `diagnostics/`: preregistered non-fitting sweeps used to characterize unknown
+  models without selecting or promoting values;
 - `compilers/`: hash-locked contracts that compile logical parameter families
   into runtime vectors without choosing or fitting their values;
 - `runner/`: immutable runner jobs plus compact accepted infrastructure results;
@@ -76,3 +78,9 @@ six-trial job validates infrastructure only: topology and input hashes, exact
 trial accounting, locked gates, repetition consistency and held-out isolation.
 Per-trial artifacts remain under ignored `runs/calibration/runner/`. See
 `docs/calibration-runner.md` for the execution and leakage contract.
+
+Run `characterize_signed_dynamics.bat` to execute the seven preregistered
+full-graph regimes of the signed MaleCNS candidate. The job records silence,
+activity, saturation, class distributions and perturbation response. Its gates
+only verify execution, finiteness, terminal accounting and CPU/GPU agreement;
+diagnostic outcomes never select a regime or create a parameter set.

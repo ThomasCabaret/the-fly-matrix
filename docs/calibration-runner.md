@@ -84,3 +84,13 @@ unknown edges are not silently suppressed. Its nonzero probe values are labelled
 its equation as biology and not a single fitted value. Future scientific fitting
 evaluators must not weaken the topology, lineage, exposure or exhaustive-accounting
 checks of either validation job.
+
+`characterize_signed_dynamics.bat` is the first registered diagnostic campaign.
+It runs seven preregistered, unfitted parameter probes on the complete signed
+graph and records every regime, including extinction and amplification. Its
+evaluator is restricted to `validation` mode and cannot be reused for fitting.
+The job's pass/fail gates cover execution integrity only: complete step and input
+accounting, finite metrics, and one-step CPU/GPU agreement. Activity, saturation
+and perturbation outcomes remain observations from which a later threshold
+proposal may be designed; they are not acceptance criteria and no probe is a
+parameter set.

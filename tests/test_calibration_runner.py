@@ -131,6 +131,23 @@ class CalibrationRunnerTests(unittest.TestCase):
             with self.assertRaisesRegex(CalibrationRunnerError, "not permitted"):
                 run_job(job_path, root / "runs")
 
+    def test_unfitted_characterizer_cannot_be_reused_for_fitting(self) -> None:
+        source = (
+            ROOT
+            / "calibration"
+            / "runner"
+            / "central-unfitted-characterization-v0.yaml"
+        )
+        job = yaml.safe_load(source.read_text(encoding="utf-8"))
+        job["mode"] = "fit"
+        job["output_parameter_set_id"] = "parameters.forbidden.diagnostic.v0"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            job_path = root / "job.yaml"
+            job_path.write_text(yaml.safe_dump(job), encoding="utf-8")
+            with self.assertRaisesRegex(CalibrationRunnerError, "not permitted"):
+                run_job(job_path, root / "runs")
+
 
 if __name__ == "__main__":
     unittest.main()

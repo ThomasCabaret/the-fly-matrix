@@ -9,6 +9,7 @@ from the_fly_matrix.signed_dynamics import (
     SignedDynamicsContract,
     SignedDynamicsError,
     compile_signed_matrix,
+    load_diagnostic_probe,
     numpy_signed_step,
 )
 
@@ -88,6 +89,19 @@ class SignedDynamicsTests(unittest.TestCase):
         self.assertTrue(np.isfinite(first).all())
         self.assertTrue(np.all(np.abs(first) <= 1.0))
         self.assertFalse(np.array_equal(first, no_input))
+
+    def test_unfitted_diagnostic_is_preregistered_and_not_calibration(self) -> None:
+        raw, probe = load_diagnostic_probe("nominal_signed_terminal_input")
+        self.assertEqual(
+            raw["claim_label"], "UNFITTED BASELINE / DIAGNOSTIC ONLY / NOT CALIBRATION"
+        )
+        self.assertFalse(raw["gate_policy"]["diagnostic_values_used_for_acceptance"])
+        self.assertEqual(len(raw["probes"]), 7)
+        self.assertEqual(set(probe["class_efficacies"]), set(self.contract.class_ids))
+
+    def test_unknown_unfitted_probe_is_rejected(self) -> None:
+        with self.assertRaisesRegex(SignedDynamicsError, "Unknown unfitted diagnostic probe"):
+            load_diagnostic_probe("not-a-probe")
 
 
 if __name__ == "__main__":

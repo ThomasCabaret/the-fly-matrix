@@ -1,0 +1,84 @@
+schema_version: 1
+id: diagnostic.central_unfitted_regimes.v0
+title: Preregistered unfitted regime sweep for the signed MaleCNS candidate
+status: runnable_diagnostic
+claim_label: UNFITTED BASELINE / DIAGNOSTIC ONLY / NOT CALIBRATION
+model_id: model.malecns_typed_signed_rate.v0
+
+scope:
+  graph: canonical_malecns_runtime_graph
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+  input_scope: all_17884_declared_cns_input_terminals
+  interface_claim: none_isolated_cns_terminal_stimulus
+
+simulation:
+  backend: cuda:0
+  dtype: float32
+  dt_ms: 5.0
+  steps: 40
+  time_constant_ms: 20.0
+  input_gain: 1.0
+  bias: 0.0
+  initial_state_std: 0.01
+  perturbation_amplitude: 0.001
+  perturbation_nodes: 1024
+  numerical_activity_threshold: 0.0001
+  numerical_saturation_threshold: 0.95
+  cpu_gpu_atol: 0.00005
+  cpu_gpu_rtol: 0.0005
+
+probes:
+  weak_signed_no_input:
+    input_amplitude: 0.0
+    class_efficacies: {acetylcholine: 0.1, dopamine: 0.075, gaba: -0.1, glutamate: -0.075, histamine: -0.05, missing: 0.025, octopamine: 0.05, serotonin: -0.025, unclear: 0.0125}
+  weak_signed_terminal_input:
+    input_amplitude: 0.05
+    class_efficacies: {acetylcholine: 0.1, dopamine: 0.075, gaba: -0.1, glutamate: -0.075, histamine: -0.05, missing: 0.025, octopamine: 0.05, serotonin: -0.025, unclear: 0.0125}
+  nominal_signed_terminal_input:
+    input_amplitude: 0.05
+    class_efficacies: {acetylcholine: 1.0, dopamine: 0.75, gaba: -1.0, glutamate: -0.75, histamine: -0.5, missing: 0.25, octopamine: 0.5, serotonin: -0.25, unclear: 0.125}
+  strong_signed_terminal_input:
+    input_amplitude: 0.05
+    class_efficacies: {acetylcholine: 3.0, dopamine: 2.25, gaba: -3.0, glutamate: -2.25, histamine: -1.5, missing: 0.75, octopamine: 1.5, serotonin: -0.75, unclear: 0.375}
+  slow_nominal_signed_terminal_input:
+    input_amplitude: 0.05
+    time_constant_ms: 50.0
+    class_efficacies: {acetylcholine: 1.0, dopamine: 0.75, gaba: -1.0, glutamate: -0.75, histamine: -0.5, missing: 0.25, octopamine: 0.5, serotonin: -0.25, unclear: 0.125}
+  context_all_positive:
+    input_amplitude: 0.05
+    class_efficacies: {acetylcholine: 1.0, dopamine: 1.0, gaba: -1.0, glutamate: 1.0, histamine: 1.0, missing: 1.0, octopamine: 1.0, serotonin: 1.0, unclear: 1.0}
+  context_all_negative:
+    input_amplitude: 0.05
+    class_efficacies: {acetylcholine: 1.0, dopamine: -1.0, gaba: -1.0, glutamate: -1.0, histamine: -1.0, missing: -1.0, octopamine: -1.0, serotonin: -1.0, unclear: -1.0}
+
+metrics:
+  - finite_state_fraction
+  - final_active_fraction
+  - persistently_quiescent_fraction
+  - persistently_saturated_fraction
+  - final_state_mean
+  - final_state_std
+  - final_max_abs
+  - perturbation_peak_gain
+  - perturbation_final_gain
+  - perturbation_stable_half_recovery_step
+  - final_rms_and_active_fraction_by_transmitter_class
+  - cpu_gpu_one_step_agreement
+  - measured_steps_per_second
+
+gate_policy:
+  purpose: execution_and_accounting_only
+  diagnostic_values_used_for_acceptance: false
+  required:
+    - every state and metric is finite
+    - the requested step count completes
+    - all declared CNS input terminals are represented
+    - one-step CPU and GPU results agree within the declared numerical tolerance
+
+forbidden_uses:
+  - selecting or promoting a parameter vector
+  - deriving final technical acceptance thresholds from one preferred-looking run
+  - claiming neural physiology, stability, behavior, or interface validity
+  - opening any held-out stimulus-response scenario
+next_action: Use the complete distribution of diagnostic regimes to design versioned technical thresholds and a separate fitting campaign.

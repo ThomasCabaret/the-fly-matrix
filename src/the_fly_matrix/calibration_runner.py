@@ -19,7 +19,7 @@ import yaml
 from .calibration_parameters import validate_contract_family
 from .calibration_registry import CALIBRATION_ROOT, load_calibration_inventory
 from .ledger import ROOT
-from .signed_dynamics import validate_full_graph_contract
+from .signed_dynamics import characterize_unfitted_regime, validate_full_graph_contract
 
 
 DEFAULT_JOB_PATH = CALIBRATION_ROOT / "runner" / "peripheral-compiler-validation-v0.yaml"
@@ -115,9 +115,19 @@ def _signed_dynamics_contract_evaluator(
     return validate_full_graph_contract()
 
 
+def _signed_dynamics_characterization_evaluator(
+    trial: Mapping[str, Any],
+) -> Mapping[str, Scalar]:
+    probe_id = str(trial.get("args", {}).get("probe_id", ""))
+    return characterize_unfitted_regime(probe_id, int(trial["seed"]))
+
+
 DEFAULT_EVALUATORS: Mapping[str, Evaluator] = {
     "peripheral_parameter_compiler_contract.v0": _peripheral_compiler_evaluator,
     "malecns_typed_signed_rate_contract.v0": _signed_dynamics_contract_evaluator,
+    "malecns_signed_unfitted_characterization.v0": (
+        _signed_dynamics_characterization_evaluator
+    ),
 }
 DEFAULT_EVALUATOR_POLICIES: Mapping[str, Mapping[str, frozenset[str]]] = {
     "peripheral_parameter_compiler_contract.v0": {
@@ -127,6 +137,10 @@ DEFAULT_EVALUATOR_POLICIES: Mapping[str, Mapping[str, frozenset[str]]] = {
     "malecns_typed_signed_rate_contract.v0": {
         "allowed_modes": frozenset({"validation"}),
         "allowed_record_kinds": frozenset({"runner_validation"}),
+    },
+    "malecns_signed_unfitted_characterization.v0": {
+        "allowed_modes": frozenset({"validation"}),
+        "allowed_record_kinds": frozenset({"calibration_campaign"}),
     },
 }
 

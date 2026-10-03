@@ -1,0 +1,103 @@
+schema_version: 1
+id: campaign.diagnostic.central_unfitted_characterization.v0
+record_kind: calibration_campaign
+status: runnable
+title: Full-graph characterization of preregistered unfitted signed MaleCNS regimes
+claim_label: UNFITTED BASELINE / DIAGNOSTIC ONLY / NOT CALIBRATION
+mode: validation
+primary_class: technical
+optimization_exposure: diagnostic_only
+behavior_targeted: false
+user_authorization_ref: null
+
+target_ids: [target.technical_neural_dynamics.v0]
+parameter_family_ids:
+  - parameter.central.transmitter_sign_prior.v0
+  - parameter.central.synaptic_efficacy.v0
+  - parameter.central.neuron_dynamics.v0
+parent_parameter_set_ids: [parameters.central_transmitter_sign_prior.v0]
+output_parameter_set_id: null
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.transmitter_sign_prior.v0: canonical_malecns_runtime_graph
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+  ruleset_hashes:
+    transmitter_sign_prior: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e
+  exception_table_hashes: {central_signed_dynamics: none}
+
+input_files:
+  - path: calibration/diagnostics/central-unfitted-regimes-v0.yaml
+    sha256: 7cbf0a601498f61084e7535a6bbe950420213f391b152725400b88dfbd15ff66
+  - path: calibration/models/malecns-typed-signed-rate-v0.yaml
+    sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e
+  - path: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+    sha256: dc9f14cc12f590f05d504ff8868f250ca25c83b76ab05914a6a6d06bb785d2d5
+
+evaluator_id: malecns_signed_unfitted_characterization.v0
+repeat_each: 1
+trials:
+  - &diagnostic_trial
+    case_id: weak_signed_no_input
+    seed: 31003
+    args: {probe_id: weak_signed_no_input}
+    gates: &execution_gates
+      steps_completed: {operator: eq, value: 40}
+      input_terminals: {operator: eq, value: 17884}
+      finite_state_fraction: {operator: eq, value: 1.0}
+      cpu_gpu_agreement: {operator: eq, value: true}
+      all_metrics_finite: {operator: eq, value: true}
+  - <<: *diagnostic_trial
+    case_id: weak_signed_terminal_input
+    args: {probe_id: weak_signed_terminal_input}
+    gates: *execution_gates
+  - <<: *diagnostic_trial
+    case_id: nominal_signed_terminal_input
+    args: {probe_id: nominal_signed_terminal_input}
+    gates: *execution_gates
+  - <<: *diagnostic_trial
+    case_id: strong_signed_terminal_input
+    args: {probe_id: strong_signed_terminal_input}
+    gates: *execution_gates
+  - <<: *diagnostic_trial
+    case_id: slow_nominal_signed_terminal_input
+    args: {probe_id: slow_nominal_signed_terminal_input}
+    gates: *execution_gates
+  - <<: *diagnostic_trial
+    case_id: context_all_positive
+    args: {probe_id: context_all_positive}
+    gates: *execution_gates
+  - <<: *diagnostic_trial
+    case_id: context_all_negative
+    args: {probe_id: context_all_negative}
+    gates: *execution_gates
+
+budget: {max_trials: 7, max_wall_seconds: 600}
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: [isolated_cns_terminal_stimulus_v0]
+  held_out: []
+  behavior_held_out: []
+acceptance:
+  criteria_locked_before_run: true
+  require_all_trials_accepted: true
+  require_repetition_determinism: false
+  maximum_errors: 0
+  reproducibility_mode: deterministic_seed_with_runtime_timing_excluded_from_scientific_claims
+
+capacity_policy:
+  automatic_capacity_increase_allowed: false
+  fitted_degrees_of_freedom: 0
+  inspected_candidate_degrees_of_freedom: 12
+
+sources:
+  - calibration/diagnostics/central-unfitted-regimes-v0.yaml
+  - calibration/models/malecns-typed-signed-rate-v0.yaml
+  - calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+assumptions:
+  - Direct terminal stimulus is an isolated CNS diagnostic and does not validate sensory boxes.
+  - Numerical activity and saturation cutoffs describe the bounded rate state only.
+  - Every regime, including silence or saturation, is retained and no regime is promoted.
+next_action: Summarize the complete regime distribution and preregister technical acceptance thresholds in a separate fitting campaign.
