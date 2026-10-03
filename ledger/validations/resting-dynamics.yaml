@@ -8,11 +8,13 @@ command: characterize_signed_dynamics.bat
 acceptance_criteria: [No explosion, No total extinction unless justified, Return after small perturbation]
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: 20261003T090226460183Z--campaign-diagnostic-central-unfitted-characterization-v0
+latest_run_id: 20261003T143423135154Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0
 status: smoke
-diagnostic_status: technical_pilot_pass_nonidentifying_no_reference_frozen
+diagnostic_status: technical_pilot_pass_nonidentifying_high_motor_output_sensitivity_no_reference_frozen
 notes:
   - Seven unfitted regimes ran on the complete signed graph and duplicate clean runs reproduced semantic hash 351e883439080618af35a1e685efcd54058e8bd1f88cf206f6210d5863f41ace.
   - Execution acceptance is not dynamics acceptance; no regime, threshold or parameter value is promoted.
   - The strong diagnostic regime sustained perturbation amplification while the weak no-input regime extinguished, demonstrating that the probe grid can distinguish failure modes.
   - The first fitting pilot accepted 32/32 sampled candidates on five isolated-CNS scenarios; this validates broad technical admissibility but supplies no reference-selection information.
+  - A preregistered three-pattern stimulus-versus-sham study measured all 32 members at all 815 raw motor terminals and reproduced semantic hash c7dc9aa65e1bc3d030b32e4e97474d3ca9f7fb523290fc2962b12308c386917e twice.
+  - Pattern cosine-distance P90 reached 1.124 and amplitude P90/P10 reached 17.596; the ensemble is downstream-sensitive, so no member is selected or frozen.

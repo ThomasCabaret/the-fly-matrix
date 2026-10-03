@@ -1,0 +1,77 @@
+schema_version: 1
+id: evaluation.central_ensemble_motor_sensitivity.v0
+title: Raw MaleCNS motor-output sensitivity of the central pilot ensemble
+status: pass_measurement_high_sensitivity_no_selection
+target_id: target.technical_neural_dynamics.v0
+parameter_set_id: parameters.central_technical_dynamics_pilot_ensemble.v0
+protocol_version: diagnostic.central_ensemble_motor_sensitivity.v0
+exposure_policy: diagnostic_only
+claim_label: CENTRAL ENSEMBLE SENSITIVITY / DIAGNOSTIC ONLY / NO SELECTION / NO BEHAVIOR
+
+scope:
+  candidate_count: 32
+  scenario_count: 3
+  paired_response_vectors: 96
+  raw_motor_terminals: 815
+  includes: stimulated-minus-sham central activity averaged over the final 80 ms
+  excludes: [motor transfer, actuator commands, MuJoCo body, world, behavior]
+
+metrics:
+  exhaustive_accounting: {scheduled_candidates: 32, observed_candidates: 32, response_vectors: 96, missing: 0, pass: true}
+  near_zero_response_count: 0
+  motor_response_rms: {min: 0.0000317174, median: 0.0002556014, max: 0.002071054}
+  pattern_a: {pairwise_cosine_distance_p90: 1.1243495, amplitude_p90_to_p10_ratio: 17.59562}
+  pattern_b: {pairwise_cosine_distance_p90: 0.9981818, amplitude_p90_to_p10_ratio: 12.33472}
+  pattern_c: {pairwise_cosine_distance_p90: 0.9266455, amplitude_p90_to_p10_ratio: 16.07367}
+  preregistered_descriptive_bands:
+    pattern: high
+    amplitude: high
+    overall: high
+  selected_candidate_id: null
+
+interpretation:
+  permitted: >-
+    The technically admissible 32-member ensemble is highly sensitive at the raw
+    MaleCNS motor terminals under all three synthetic stimulus-versus-sham probes.
+    The members cannot be treated as interchangeable for downstream calibration.
+  forbidden:
+    - Any candidate is biologically correct or preferred.
+    - Motor routing, transfer, body stability or behavior is calibrated.
+    - The synthetic probes are sensory physiology.
+  consequence: >-
+    Retain all members as uncertainty and add independent non-behavioral evidence
+    that constrains central parameters. Do not propagate one arbitrary member and
+    do not tighten the previous technical gates post hoc.
+
+reproducibility:
+  command: central_ensemble_sensitivity.bat
+  git_commit: aca991740cc8baed0ddc533cc2e61ffd5068d89b
+  git_worktree_clean: true
+  job_config_sha256: d1f4c181369cfaa54a5b436c5fa7a38719dd30f8abcfaada9c14b52042b6b96a
+  semantic_result_sha256: c7dc9aa65e1bc3d030b32e4e97474d3ca9f7fb523290fc2962b12308c386917e
+  clean_runs: 2
+  run_ids:
+    - 20261003T143327383160Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0
+    - 20261003T143423135154Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0
+  artifact_refs:
+    - runs/calibration/runner/20261003T143327383160Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0/summary.json
+    - runs/calibration/runner/20261003T143423135154Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0/summary.json
+  note: >-
+    CUDA sparse reductions create sub-resolution elementwise jitter. Semantic
+    equality compares interpreted metrics at four significant digits; the
+    quantized full-vector hash is retained as a non-semantic trace diagnostic.
+
+contamination:
+  behavior_targeted: false
+  diagnostic_probe_used_for_selection: false
+  held_out_opened: false
+  visual_selection: false
+  body_or_world_executed: false
+
+acceptance_result: measurement_reproduced_high_sensitivity_reference_selection_forbidden
+next_action: >-
+  Define a versioned independent evidence-transfer or local central constraint
+  capable of reducing the ensemble without using motor appearance, body motion or
+  a recognizable behavior. If no such evidence is available, propagate the full
+  ensemble into local peripheral sensitivity rather than selecting one member.
+

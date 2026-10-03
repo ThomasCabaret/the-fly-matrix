@@ -1,5 +1,5 @@
 schema_version: 1
-phase: central_identifiability_review_ready
+phase: central_independent_constraint_required
 updated: 2026-10-03
 
 wiring_baseline:
@@ -17,7 +17,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.technical_neural_dynamics_pilot.v0
+last_completed_campaign_id: campaign.diagnostic_central_ensemble_motor_sensitivity.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
@@ -30,7 +30,7 @@ readiness:
   temporal_cns_runtime: benchmark_only_uncalibrated_v0
   embodied_closed_loop: integration_pass_uncalibrated_one_second
   controller_independent_physical_replay: integration_pass
-  calibration_runner: minimal_runner_validated_no_scientific_fit_yet
+  calibration_runner: fit_and_diagnostic_runner_validated
   baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
   parameter_family_inventory: complete_19_families_values_unfitted
   parameter_dependency_dag: complete_acyclic_8_edges
@@ -43,6 +43,7 @@ readiness:
   signed_dynamics_dimension: 9_transmitter_efficacies_plus_3_global_dynamics
   central_unfitted_characterization: complete_7_regimes_reproduced_diagnostic_only
   central_technical_pilot: reproducible_32_of_32_admissible_nonidentifying_no_reference_selected
+  central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -52,11 +53,13 @@ behavior_exposure:
 blocked_by:
   - The first central technical campaign is reproducible and all 32 sampled vectors pass, so the twelve parameters remain nonidentified and no reference is selected or frozen.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
-  - No independent local evidence or downstream ensemble-sensitivity rule currently distinguishes the 32 technically admissible central candidates.
+  - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 32 central candidates cannot be treated as interchangeable downstream.
+  - No independent non-behavioral local evidence currently distinguishes the 32 technically admissible central candidates.
 
 next_action: >-
-  Add independent non-behavioral constraints or a preregistered downstream
-  sensitivity study for the 32-member central ensemble; do not select a reference
-  post hoc. In parallel, define evidence-backed local scopes and sharing assignments
-  for the compiler-ready peripheral families. Do not promote the unsigned benchmark
-  profile, diagnostic probes or an arbitrary pilot member.
+  Add an independent non-behavioral central constraint; the completed downstream
+  sensitivity study shows that arbitrary member selection would materially change
+  raw motor-output patterns and amplitudes. In parallel, define evidence-backed
+  local scopes and sharing assignments for the compiler-ready peripheral families.
+  Do not promote the unsigned benchmark profile, diagnostic probes or an arbitrary
+  pilot member.

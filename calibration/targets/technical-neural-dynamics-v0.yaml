@@ -57,13 +57,16 @@ provenance:
   sources:
     - calibration/diagnostics/central-unfitted-regimes-v0.yaml
     - calibration/runner/central-unfitted-characterization-result-v0.yaml
+    - calibration/evaluations/central-ensemble-motor-sensitivity-v0.yaml
   assumptions:
     - No biological source supports exact activity fractions for this abstract rate model; the v0 thresholds are deliberately broad engineering exclusion bands.
     - The complete diagnostic grid informed failure classes, but no individual diagnostic probe is a candidate or validation case.
 
-validation: local_technical_pass_nonidentifying_32_of_32
-blocked_reason: null
+validation: local_technical_pass_nonidentifying_32_of_32_high_downstream_sensitivity
+blocked_reason: >-
+  The admissible members differ strongly at raw motor terminals; no independent
+  non-behavioral evidence yet supports selecting or freezing one member.
 next_action: >-
-  Add an independent non-behavioral constraint or preregistered downstream
-  ensemble-sensitivity protocol; do not tighten v0 gates post hoc or select one
-  of the 32 passing members by appearance.
+  Add an independent non-behavioral central constraint. The preregistered
+  downstream sensitivity protocol is complete and high; do not tighten v0 gates
+  post hoc or select one of the 32 passing members by appearance.

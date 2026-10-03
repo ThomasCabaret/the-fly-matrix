@@ -116,3 +116,12 @@ exclude numerical silence, saturation and non-recovering perturbations; they do
 not target a behavior or a preferred activity value. All 32 sampled candidates
 passed, so the compact evaluation records a non-identifying admissible ensemble
 and explicitly forbids selecting a member after visual inspection.
+
+`central_ensemble_sensitivity.bat` is a `validation`-only diagnostic over that
+entire ensemble. It compares paired stimulus-minus-sham responses for three fixed
+synthetic patterns at all 815 raw central motor terminals. Execution gates verify
+complete accounting and finite metrics only: low, mixed or high dispersion is a
+result, not a rejection and never a candidate ranking. The raw quantized response
+hash is retained for trace inspection but excluded from semantic equality because
+GPU sparse reductions can cross an elementwise quantization boundary; aggregate
+metrics at four significant digits reproduced exactly across two clean runs.

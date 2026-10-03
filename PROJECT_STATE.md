@@ -5,7 +5,9 @@ runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gel�
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
 une première campagne technique a produit 32 candidats admissibles mais aucun
-paramètre de référence n'est identifié ni gelé.
+paramètre de référence n'est identifié ni gelé. Une étude aval préenregistrée
+montre désormais que ces candidats divergent fortement aux sorties motrices
+centrales : ils ne sont pas interchangeables et aucun n'est sélectionné.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -128,6 +130,25 @@ demi-récupération stable en 2 à 11 pas. Ce résultat valide une large admissi
 technique sur les cinq scénarios mais révèle surtout une non-identifiabilité : les
 critères ne distinguent aucun vecteur de référence. L'ensemble reconstructible est
 conservé, sans sélection post hoc, sans gel et sans claim physiologique.
+
+L'étude diagnostique préenregistrée
+`diagnostic.central_ensemble_motor_sensitivity.v0` a ensuite comparé les 32
+membres sur trois motifs synthétiques, chaque stimulus étant soustrait à un sham
+partant du même état initial. Elle observe exhaustivement 96 réponses aux 815
+terminaux moteurs MaleCNS bruts, sans traverser le transfert moteur, les
+actionneurs, le corps ou le monde. Les runs propres
+`20261003T143327383160Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0`
+et
+`20261003T143423135154Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0`
+reproduisent le hash sémantique
+`c7dc9aa65e1bc3d030b32e4e97474d3ca9f7fb523290fc2962b12308c386917e`.
+
+Le résultat est **hautement sensible**, pas identifiant : la distance cosinus P90
+entre motifs candidats atteint 1,124 et le rapport d'amplitudes P90/P10 atteint
+17,596 ; aucune des 96 réponses n'est numériquement nulle. Un candidat arbitraire
+changerait donc matériellement la suite. L'étude ne classe aucun membre et ne
+fournit aucune vérité biologique ; elle impose d'ajouter une contrainte centrale
+non comportementale indépendante ou de propager l'ensemble complet.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -345,7 +366,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, modèle central signé caractérisé puis testé sur un ensemble technique de 32 candidats tous admissibles mais non identifiés, aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, 32 candidats centraux techniquement admissibles mais non identifiés, sensibilité aval élevée et reproductible, aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -429,9 +450,10 @@ précédents.
 **Ouvert.** Les campagnes sont reconstructibles, le modèle central signé minimal
 est exécutable et sa première campagne technique est terminée. Elle n'a pas échoué
 numériquement : elle a montré que les contraintes v0 sont trop peu identifiantes
-pour choisir parmi les 32 candidats admissibles. La prochaine action doit apporter
-une information indépendante ou tester la sensibilité de tout l'ensemble en aval,
-pas resserrer les seuils après coup pour fabriquer un gagnant.
+pour choisir parmi les 32 candidats admissibles. La sensibilité de tout l'ensemble
+aux sorties motrices centrales est maintenant mesurée et élevée. La prochaine
+action doit apporter une information centrale indépendante, pas resserrer les
+seuils après coup ni choisir un membre dont la sortie paraît préférable.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -459,10 +481,11 @@ six essais exhaustivement comptabilisés et protège déjà frontières, lignée
 budgets et scénarios tenus à l'écart. Le contrat central signé ajoute neuf
 efficacités de classe et trois paramètres globaux, tous non ajustés, et couvre
 exhaustivement le graphe avec un probe structurel non promouvable. Aucun parameter
-set complet n'a été promu et aucune cible comportementale n'est autorisée. Le
-prochain lot doit ajouter des contraintes non comportementales indépendantes ou
-une étude de sensibilité aval préenregistrée sur l'ensemble central ; les
-scopes locaux périphériques restent un front parallèle. Les fichiers de
+set complet n'a été promu et aucune cible comportementale n'est autorisée. L'étude
+aval préenregistrée est terminée : elle classe l'ensemble comme hautement sensible
+en motif et en amplitude, sans sélectionner de candidat. Le prochain lot doit
+ajouter une contrainte centrale non comportementale indépendante ; les scopes
+locaux périphériques restent un front parallèle. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
@@ -492,6 +515,7 @@ calibration_runner_check.bat # runner autonome, six essais d'infrastructure non 
 signed_dynamics_contract_check.bat # couverture signée exhaustive, probes non calibrants
 characterize_signed_dynamics.bat # 7 régimes centraux non ajustés, diagnostic seulement
 fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans comportement
+central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties brutes
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

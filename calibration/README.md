@@ -94,3 +94,11 @@ evaluates each on three train plus two local-validation scenarios. The accepted
 result is deliberately an ensemble: 32/32 candidates passed, so
 `parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml` records broad
 technical admissibility and non-identifiability, with no selected or frozen member.
+
+Run `central_ensemble_sensitivity.bat` to measure whether those 32 admissible
+members are interchangeable at the 815 raw MaleCNS motor terminals. Three new
+synthetic terminal patterns are each paired with a sham from the same initial
+state, and only stimulated-minus-sham central activity is compared. Motor
+transfer, physics and behavior are excluded. The reproduced v0 result is high
+sensitivity in both output pattern and amplitude; it forbids arbitrary member
+selection and points to an independent non-behavioral central constraint.
