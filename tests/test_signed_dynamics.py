@@ -8,11 +8,13 @@ from scipy import sparse
 from the_fly_matrix.signed_dynamics import (
     SignedDynamicsContract,
     SignedDynamicsError,
+    compare_timestep_responses,
     compile_signed_matrix,
     generate_pilot_candidate,
     load_diagnostic_probe,
     load_fit_campaign,
     load_motor_sensitivity_protocol,
+    load_timestep_convergence_protocol,
     numpy_signed_step,
     summarize_motor_response_ensemble,
 )
@@ -194,6 +196,30 @@ class SignedDynamicsTests(unittest.TestCase):
         )
         self.assertEqual(summary["pattern_sensitivity_band"], "high")
         self.assertEqual(summary["overall_sensitivity_band"], "high")
+
+    def test_timestep_protocol_is_nonbehavioral_and_exhaustive(self) -> None:
+        protocol = load_timestep_convergence_protocol()
+        self.assertEqual(protocol["candidate_indices"], list(range(32)))
+        self.assertEqual(protocol["ranking_policy"], "none")
+        self.assertFalse(protocol["behavior_exposure"]["behavior_targeted"])
+        self.assertFalse(protocol["behavior_exposure"]["body_or_world_executed"])
+        self.assertEqual(protocol["simulation"]["timestep_ms"], [5.0, 2.5, 1.25])
+
+    def test_timestep_comparison_tracks_refinement_without_ranking(self) -> None:
+        rng = np.random.default_rng(123)
+        reference = rng.normal(0.0, 0.01, size=(2, 820))
+        summary = compare_timestep_responses(
+            {5.0: reference * 1.10, 2.5: reference * 1.02, 1.25: reference},
+            ("a", "b"),
+            motor_indices=np.arange(815, dtype=np.int64),
+            near_zero_rms=1e-8,
+        )
+        self.assertAlmostEqual(summary["coarse_reference_full_relative_l2_max"], 0.1)
+        self.assertAlmostEqual(summary["middle_reference_full_relative_l2_max"], 0.02)
+        self.assertEqual(summary["monotonic_refinement_scenario_count"], 2)
+        self.assertEqual(summary["near_zero_motor_reference_response_count"], 0)
+        self.assertTrue(summary["all_metrics_finite"])
+        self.assertNotIn("selected_candidate", summary)
 
 
 if __name__ == "__main__":

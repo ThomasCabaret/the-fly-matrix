@@ -1,0 +1,696 @@
+schema_version: 1
+id: campaign.central_timestep_convergence.v0
+record_kind: calibration_campaign
+status: runnable
+claim_label: TRAINED TECHNICAL NUMERICAL CONSISTENCY / NO PHYSIOLOGY / NO BEHAVIOR
+mode: fit
+primary_class: technical
+optimization_exposure: allowed
+behavior_targeted: false
+target_ids: [target.technical_neural_dynamics.v0]
+parameter_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+parent_parameter_set_ids: [parameters.central_technical_dynamics_pilot_ensemble.v0]
+output_parameter_set_id: parameters.central_timestep_convergent_ensemble.v0
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+
+input_files:
+  - {path: calibration/diagnostics/central-timestep-convergence-v0.yaml, sha256: fecd1dce62a2324c4e05565f67c61d8b479d47ceb7c92086f005bc600e37fea8}
+  - {path: calibration/campaigns/central-timestep-convergence-v0.yaml, sha256: 6471129d0dc174d03dd8246a24b005d2a411f849e67b52084073b948df418a93}
+  - {path: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml, sha256: ba71f366fab45616adc84666d126bd141267097f8775f714718da7299bb8b2c8}
+  - {path: calibration/models/malecns-typed-signed-rate-v0.yaml, sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e}
+  - {path: calibration/parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml, sha256: 9507bfceb7fd0965826799f33891529a164c4c9168072420543ddb88537af39e}
+
+evaluator_id: malecns_timestep_convergence_constraint.v0
+semantic_metric_exclusions: [measured_simulated_ms_per_second]
+semantic_float_significant_digits: 4
+repeat_each: 1
+trials:
+  - &candidate
+    case_id: candidate-00
+    seed: 68101
+    args: {candidate_index: 0}
+    gates: &convergence_gates
+      candidate_index: {operator: eq, value: 0}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-01
+    seed: 68101
+    args: {candidate_index: 1}
+    gates:
+      candidate_index: {operator: eq, value: 1}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-02
+    seed: 68101
+    args: {candidate_index: 2}
+    gates:
+      candidate_index: {operator: eq, value: 2}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-03
+    seed: 68101
+    args: {candidate_index: 3}
+    gates:
+      candidate_index: {operator: eq, value: 3}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-04
+    seed: 68101
+    args: {candidate_index: 4}
+    gates:
+      candidate_index: {operator: eq, value: 4}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-05
+    seed: 68101
+    args: {candidate_index: 5}
+    gates:
+      candidate_index: {operator: eq, value: 5}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-06
+    seed: 68101
+    args: {candidate_index: 6}
+    gates:
+      candidate_index: {operator: eq, value: 6}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-07
+    seed: 68101
+    args: {candidate_index: 7}
+    gates:
+      candidate_index: {operator: eq, value: 7}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-08
+    seed: 68101
+    args: {candidate_index: 8}
+    gates:
+      candidate_index: {operator: eq, value: 8}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-09
+    seed: 68101
+    args: {candidate_index: 9}
+    gates:
+      candidate_index: {operator: eq, value: 9}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-10
+    seed: 68101
+    args: {candidate_index: 10}
+    gates:
+      candidate_index: {operator: eq, value: 10}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-11
+    seed: 68101
+    args: {candidate_index: 11}
+    gates:
+      candidate_index: {operator: eq, value: 11}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-12
+    seed: 68101
+    args: {candidate_index: 12}
+    gates:
+      candidate_index: {operator: eq, value: 12}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-13
+    seed: 68101
+    args: {candidate_index: 13}
+    gates:
+      candidate_index: {operator: eq, value: 13}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-14
+    seed: 68101
+    args: {candidate_index: 14}
+    gates:
+      candidate_index: {operator: eq, value: 14}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-15
+    seed: 68101
+    args: {candidate_index: 15}
+    gates:
+      candidate_index: {operator: eq, value: 15}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-16
+    seed: 68101
+    args: {candidate_index: 16}
+    gates:
+      candidate_index: {operator: eq, value: 16}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-17
+    seed: 68101
+    args: {candidate_index: 17}
+    gates:
+      candidate_index: {operator: eq, value: 17}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-18
+    seed: 68101
+    args: {candidate_index: 18}
+    gates:
+      candidate_index: {operator: eq, value: 18}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-19
+    seed: 68101
+    args: {candidate_index: 19}
+    gates:
+      candidate_index: {operator: eq, value: 19}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-20
+    seed: 68101
+    args: {candidate_index: 20}
+    gates:
+      candidate_index: {operator: eq, value: 20}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-21
+    seed: 68101
+    args: {candidate_index: 21}
+    gates:
+      candidate_index: {operator: eq, value: 21}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-22
+    seed: 68101
+    args: {candidate_index: 22}
+    gates:
+      candidate_index: {operator: eq, value: 22}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-23
+    seed: 68101
+    args: {candidate_index: 23}
+    gates:
+      candidate_index: {operator: eq, value: 23}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-24
+    seed: 68101
+    args: {candidate_index: 24}
+    gates:
+      candidate_index: {operator: eq, value: 24}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-25
+    seed: 68101
+    args: {candidate_index: 25}
+    gates:
+      candidate_index: {operator: eq, value: 25}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-26
+    seed: 68101
+    args: {candidate_index: 26}
+    gates:
+      candidate_index: {operator: eq, value: 26}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-27
+    seed: 68101
+    args: {candidate_index: 27}
+    gates:
+      candidate_index: {operator: eq, value: 27}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-28
+    seed: 68101
+    args: {candidate_index: 28}
+    gates:
+      candidate_index: {operator: eq, value: 28}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-29
+    seed: 68101
+    args: {candidate_index: 29}
+    gates:
+      candidate_index: {operator: eq, value: 29}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-30
+    seed: 68101
+    args: {candidate_index: 30}
+    gates:
+      candidate_index: {operator: eq, value: 30}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - case_id: candidate-31
+    seed: 68101
+    args: {candidate_index: 31}
+    gates:
+      candidate_index: {operator: eq, value: 31}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+
+budget: {max_trials: 32, max_wall_seconds: 1800}
+scenario_splits:
+  train: []
+  validation:
+    - timestep_convergence_pattern_a_v0
+    - timestep_convergence_pattern_b_v0
+    - timestep_convergence_pattern_c_v0
+  diagnostic: []
+  held_out: []
+  behavior_held_out: []
+acceptance:
+  criteria_locked_before_run: true
+  require_all_trials_accepted: false
+  minimum_accepted_trials: 1
+  require_repetition_determinism: false
+  maximum_errors: 0
+  reproducibility_mode: deterministic_candidates_gpu_metrics_compared_at_4_significant_digits
+
+capacity_policy:
+  automatic_capacity_increase_allowed: false
+  automatic_bound_change_allowed: false
+  on_zero_accepted: retain_negative_result_and_review_model_or_runtime_step
+

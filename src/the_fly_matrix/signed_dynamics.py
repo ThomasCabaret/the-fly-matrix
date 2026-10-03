@@ -40,6 +40,9 @@ FIT_CAMPAIGN_PATH = (
 MOTOR_SENSITIVITY_PATH = (
     ROOT / "calibration" / "diagnostics" / "central-ensemble-motor-sensitivity-v0.yaml"
 )
+TIMESTEP_CONVERGENCE_PATH = (
+    ROOT / "calibration" / "diagnostics" / "central-timestep-convergence-v0.yaml"
+)
 MOTOR_ROUTE_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routes.parquet"
 INPUT_ROUTE_PATHS = tuple(
     ROOT / "data" / "derived" / "wiring" / name
@@ -352,6 +355,62 @@ def load_motor_sensitivity_protocol(
     return raw
 
 
+def load_timestep_convergence_protocol(
+    path: Path = TIMESTEP_CONVERGENCE_PATH,
+) -> dict[str, Any]:
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict) or raw.get("status") != "runnable_constraint":
+        raise SignedDynamicsError("Timestep-convergence protocol is not runnable")
+    if raw.get("claim_label") != (
+        "TRAINED TECHNICAL NUMERICAL CONSISTENCY / NO PHYSIOLOGY / NO BEHAVIOR"
+    ):
+        raise SignedDynamicsError("Timestep-convergence protocol lost its claim boundary")
+    if raw.get("candidate_indices") != list(range(32)):
+        raise SignedDynamicsError("Timestep convergence must account for all pilot members")
+    simulation = raw.get("simulation")
+    required = {
+        "backend",
+        "horizon_ms",
+        "response_window_ms",
+        "timestep_ms",
+        "reference_timestep_ms",
+        "initial_state_std",
+        "near_zero_response_rms",
+    }
+    if not isinstance(simulation, dict) or required - set(simulation):
+        raise SignedDynamicsError("Timestep-convergence simulation contract is incomplete")
+    timesteps = [float(item) for item in simulation["timestep_ms"]]
+    if timesteps != [5.0, 2.5, 1.25] or float(simulation["reference_timestep_ms"]) != 1.25:
+        raise SignedDynamicsError("Timestep-convergence levels drifted from the locked protocol")
+    horizon = float(simulation["horizon_ms"])
+    window = float(simulation["response_window_ms"])
+    if not 0 < window <= horizon:
+        raise SignedDynamicsError("Timestep response window must fit inside the horizon")
+    for timestep in timesteps:
+        if not math.isclose(horizon / timestep, round(horizon / timestep)):
+            raise SignedDynamicsError("Horizon must contain an integer number of steps")
+        if not math.isclose(window / timestep, round(window / timestep)):
+            raise SignedDynamicsError("Response window must contain an integer number of steps")
+    scenarios = raw.get("scenarios")
+    if not isinstance(scenarios, list) or len(scenarios) != 3:
+        raise SignedDynamicsError("Timestep convergence needs three locked scenarios")
+    scenario_ids = [item.get("id") for item in scenarios if isinstance(item, dict)]
+    if len(scenario_ids) != 3 or len(set(scenario_ids)) != 3:
+        raise SignedDynamicsError("Timestep-convergence scenario ids must be unique")
+    thresholds = raw.get("acceptance_thresholds")
+    if not isinstance(thresholds, dict) or set(thresholds) != {
+        "full_response_relative_l2",
+        "motor_response_relative_l2",
+        "motor_pattern_cosine_distance",
+        "monotonic_refinement_required_for_all_scenarios",
+        "near_zero_reference_responses_allowed",
+    }:
+        raise SignedDynamicsError("Timestep-convergence thresholds are incomplete")
+    if raw.get("ranking_policy") != "none":
+        raise SignedDynamicsError("Timestep convergence cannot rank passing candidates")
+    return raw
+
+
 def _declared_input_body_ids() -> np.ndarray:
     frames = []
     for path in INPUT_ROUTE_PATHS:
@@ -526,6 +585,212 @@ def summarize_motor_response_ensemble(
         if isinstance(value, (int, float)) and not isinstance(value, bool)
     ]
     metrics["all_metrics_finite"] = bool(np.isfinite(numeric).all())
+    return metrics
+
+
+def compare_timestep_responses(
+    responses_by_timestep: Mapping[float, np.ndarray],
+    scenario_ids: tuple[str, ...],
+    *,
+    motor_indices: np.ndarray,
+    near_zero_rms: float,
+) -> dict[str, bool | int | float | str]:
+    """Compare 5 and 2.5 ms responses with the locked 1.25 ms reference."""
+    expected = {5.0, 2.5, 1.25}
+    if set(responses_by_timestep) != expected:
+        raise SignedDynamicsError("Timestep response comparison requires 5, 2.5 and 1.25 ms")
+    reference = np.asarray(responses_by_timestep[1.25], dtype=np.float64)
+    if reference.ndim != 2 or reference.shape[0] != len(scenario_ids):
+        raise SignedDynamicsError("Timestep responses must have shape scenario x neuron")
+    indices = np.asarray(motor_indices, dtype=np.int64)
+    if len(indices) != 815 or len(np.unique(indices)) != 815:
+        raise SignedDynamicsError("Timestep comparison requires 815 unique motor indices")
+    if np.any(indices < 0) or np.any(indices >= reference.shape[1]):
+        raise SignedDynamicsError("Motor indices fall outside the central response")
+    if near_zero_rms <= 0:
+        raise SignedDynamicsError("Near-zero response threshold must be positive")
+
+    metrics: dict[str, bool | int | float | str] = {
+        "scenario_count": len(scenario_ids),
+        "motor_outputs": len(indices),
+    }
+    comparison_values: dict[tuple[str, float], np.ndarray] = {}
+    reference_rms = np.sqrt(np.mean(np.square(reference), axis=1))
+    motor_reference = reference[:, indices]
+    motor_reference_rms = np.sqrt(np.mean(np.square(motor_reference), axis=1))
+    metrics["near_zero_full_reference_response_count"] = int(
+        np.count_nonzero(reference_rms <= near_zero_rms)
+    )
+    metrics["near_zero_motor_reference_response_count"] = int(
+        np.count_nonzero(motor_reference_rms <= near_zero_rms)
+    )
+
+    for timestep, label in ((5.0, "coarse"), (2.5, "middle")):
+        observed = np.asarray(responses_by_timestep[timestep], dtype=np.float64)
+        if observed.shape != reference.shape or not np.isfinite(observed).all():
+            raise SignedDynamicsError("Timestep response shape or finiteness mismatch")
+        full_difference = observed - reference
+        full_relative = np.linalg.norm(full_difference, axis=1) / np.maximum(
+            np.linalg.norm(reference, axis=1), near_zero_rms * math.sqrt(reference.shape[1])
+        )
+        motor_observed = observed[:, indices]
+        motor_difference = motor_observed - motor_reference
+        motor_relative = np.linalg.norm(motor_difference, axis=1) / np.maximum(
+            np.linalg.norm(motor_reference, axis=1), near_zero_rms * math.sqrt(len(indices))
+        )
+        observed_norm = np.linalg.norm(motor_observed, axis=1)
+        reference_norm = np.linalg.norm(motor_reference, axis=1)
+        cosine = np.sum(motor_observed * motor_reference, axis=1) / np.maximum(
+            observed_norm * reference_norm, near_zero_rms**2 * len(indices)
+        )
+        cosine_distance = 1.0 - np.clip(cosine, -1.0, 1.0)
+        comparison_values[("full", timestep)] = full_relative
+        comparison_values[("motor", timestep)] = motor_relative
+        for scenario_index, scenario_id in enumerate(scenario_ids):
+            safe_id = scenario_id.replace("-", "_").replace(".", "_")
+            metrics[f"{safe_id}_{label}_full_relative_l2"] = float(
+                full_relative[scenario_index]
+            )
+            metrics[f"{safe_id}_{label}_motor_relative_l2"] = float(
+                motor_relative[scenario_index]
+            )
+            metrics[f"{safe_id}_{label}_motor_cosine_distance"] = float(
+                cosine_distance[scenario_index]
+            )
+        metrics[f"{label}_reference_full_relative_l2_max"] = float(
+            np.max(full_relative)
+        )
+        metrics[f"{label}_reference_motor_relative_l2_max"] = float(
+            np.max(motor_relative)
+        )
+        metrics[f"{label}_reference_motor_cosine_distance_max"] = float(
+            np.max(cosine_distance)
+        )
+
+    monotonic = (
+        (comparison_values[("full", 2.5)] <= comparison_values[("full", 5.0)])
+        & (comparison_values[("motor", 2.5)] <= comparison_values[("motor", 5.0)])
+    )
+    metrics["monotonic_refinement_scenario_count"] = int(np.count_nonzero(monotonic))
+    metrics["full_reference_response_rms_min"] = float(np.min(reference_rms))
+    metrics["motor_reference_response_rms_min"] = float(np.min(motor_reference_rms))
+    numeric = [
+        value
+        for value in metrics.values()
+        if isinstance(value, (int, float)) and not isinstance(value, bool)
+    ]
+    metrics["all_metrics_finite"] = bool(np.isfinite(numeric).all())
+    return metrics
+
+
+def evaluate_timestep_convergence_candidate(
+    candidate_index: int, seed: int
+) -> dict[str, bool | int | float | str]:
+    """Apply a locked numerical-refinement constraint to one pilot member."""
+    import torch
+
+    protocol = load_timestep_convergence_protocol()
+    if seed != int(protocol["evaluation_seed"]):
+        raise SignedDynamicsError("Trial seed differs from the timestep protocol")
+    if candidate_index not in protocol["candidate_indices"]:
+        raise SignedDynamicsError("Candidate is outside the timestep protocol")
+    candidate = generate_pilot_candidate(candidate_index)
+    simulation = protocol["simulation"]
+    scenarios = protocol["scenarios"]
+    assets = load_signed_runtime_assets()
+    node_count = len(assets.graph.body_ids)
+    initial_columns: list[np.ndarray] = []
+    input_columns: list[np.ndarray] = []
+    for scenario in scenarios:
+        rng = np.random.default_rng(int(scenario["rng_seed"]))
+        base = rng.normal(
+            0.0, float(simulation["initial_state_std"]), node_count
+        ).astype(np.float32)
+        stimulus = np.zeros(node_count, dtype=np.float32)
+        terminal_values = rng.normal(0.0, 1.0, len(assets.input_indices)).astype(
+            np.float32
+        )
+        terminal_values /= float(np.sqrt(np.mean(np.square(terminal_values))))
+        stimulus[assets.input_indices] = terminal_values * float(
+            scenario["input_amplitude"]
+        )
+        initial_columns.extend((base, base.copy()))
+        input_columns.extend((np.zeros(node_count, dtype=np.float32), stimulus))
+    initial_states = np.stack(initial_columns, axis=1)
+    input_matrix = np.stack(input_columns, axis=1)
+
+    signed = compile_signed_matrix(
+        assets.graph.matrix,
+        assets.neuron_class_indices,
+        assets.contract,
+        {class_id: candidate[class_id] for class_id in assets.contract.class_ids},
+    )
+    device = str(simulation["backend"])
+    if device.startswith("cuda") and not torch.cuda.is_available():
+        raise SignedDynamicsError("CUDA timestep constraint requested but CUDA is unavailable")
+    crow = torch.from_numpy(signed.indptr.astype(np.int32, copy=False)).to(device)
+    col = torch.from_numpy(signed.indices.astype(np.int32, copy=False)).to(device)
+    data = torch.from_numpy(signed.data.astype(np.float32, copy=False)).to(device)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message="Sparse CSR tensor support is in beta state")
+        matrix = torch.sparse_csr_tensor(
+            crow,
+            col,
+            data,
+            size=signed.shape,
+            dtype=torch.float32,
+            device=device,
+            check_invariants=False,
+        )
+    inverse = torch.from_numpy(assets.graph.incoming_inverse).to(device)
+    stimuli = torch.from_numpy(input_matrix).to(device)
+    responses: dict[float, np.ndarray] = {}
+    started = time.perf_counter()
+    with torch.inference_mode():
+        for timestep in [float(item) for item in simulation["timestep_ms"]]:
+            steps = int(round(float(simulation["horizon_ms"]) / timestep))
+            window_steps = int(round(float(simulation["response_window_ms"]) / timestep))
+            alpha = 1.0 - math.exp(-timestep / float(candidate["time_constant_ms"]))
+            states = torch.from_numpy(initial_states).to(device)
+            response_sum = torch.zeros(
+                (node_count, len(scenarios)), dtype=torch.float32, device=device
+            )
+            for step in range(steps):
+                drive = torch.sparse.mm(matrix, states) * inverse[:, None]
+                proposal = torch.tanh(
+                    drive
+                    + float(candidate["input_gain"]) * stimuli
+                    + float(candidate["bias"])
+                )
+                states = (1.0 - alpha) * states + alpha * proposal
+                if step >= steps - window_steps:
+                    response_sum += states[:, 1::2] - states[:, 0::2]
+            responses[timestep] = (response_sum / window_steps).T.cpu().numpy()
+            del states, response_sum
+    if device.startswith("cuda"):
+        torch.cuda.synchronize(device)
+    elapsed = time.perf_counter() - started
+    metrics = compare_timestep_responses(
+        responses,
+        tuple(str(item["id"]) for item in scenarios),
+        motor_indices=assets.motor_indices,
+        near_zero_rms=float(simulation["near_zero_response_rms"]),
+    )
+    metrics.update(
+        {
+            "candidate_index": int(candidate_index),
+            "timestep_count": 3,
+            "horizon_ms": float(simulation["horizon_ms"]),
+            "input_terminals": int(len(assets.input_indices)),
+            "backend": device,
+            "measured_simulated_ms_per_second": float(
+                len(scenarios) * float(simulation["horizon_ms"]) * 3 / elapsed
+            ),
+        }
+    )
+    del matrix, crow, col, data, inverse, stimuli
+    if device.startswith("cuda"):
+        torch.cuda.empty_cache()
     return metrics
 
 

@@ -184,6 +184,23 @@ class CalibrationRunnerTests(unittest.TestCase):
             with self.assertRaisesRegex(CalibrationRunnerError, "not permitted"):
                 run_job(job_path, root / "runs")
 
+    def test_timestep_constraint_evaluator_is_restricted_to_fit_mode(self) -> None:
+        source = (
+            ROOT
+            / "calibration"
+            / "runner"
+            / "central-timestep-convergence-v0.yaml"
+        )
+        job = yaml.safe_load(source.read_text(encoding="utf-8"))
+        validate_job(job, source)
+        job["mode"] = "validation"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            job_path = root / "job.yaml"
+            job_path.write_text(yaml.safe_dump(job), encoding="utf-8")
+            with self.assertRaisesRegex(CalibrationRunnerError, "not permitted"):
+                run_job(job_path, root / "runs")
+
     def test_runtime_metrics_can_be_retained_but_excluded_from_semantic_hash(self) -> None:
         counter = {"value": 0}
 
