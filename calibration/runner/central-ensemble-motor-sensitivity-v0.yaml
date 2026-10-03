@@ -18,7 +18,7 @@ topology_boundary:
     parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
 
 input_files:
-  - {path: calibration/diagnostics/central-ensemble-motor-sensitivity-v0.yaml, sha256: cbb3897377e57c6a8ff9bfb8840aef9c4c8e0d13945b02695a2cd3352738eb27}
+  - {path: calibration/diagnostics/central-ensemble-motor-sensitivity-v0.yaml, sha256: e8cce88e6c2ed64aae970072cbedc26da10fad16d051ef3ff7a104b69b81bf28}
   - {path: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml, sha256: ba71f366fab45616adc84666d126bd141267097f8775f714718da7299bb8b2c8}
   - {path: calibration/models/malecns-typed-signed-rate-v0.yaml, sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e}
   - {path: calibration/parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml, sha256: 9507bfceb7fd0965826799f33891529a164c4c9168072420543ddb88537af39e}

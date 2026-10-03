@@ -22,7 +22,7 @@ simulation:
   response_window_steps: 16
   initial_state_std: 0.01
   near_zero_response_rms: 0.00000001
-  semantic_response_quantization: 0.00001
+  semantic_response_quantization: 0.0001
 
 scenarios:
   - {id: motor_sensitivity_pattern_a_v0, rng_seed: 67311, input_amplitude: 0.05}
