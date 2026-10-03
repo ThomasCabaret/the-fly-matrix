@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 import yaml
 from scipy import sparse
+from scipy.stats import qmc
 
 from .connectome_benchmark import DynamicsProfile, build_graph_cache
 from .ledger import ROOT
@@ -32,6 +33,9 @@ PRIOR_TABLE_PATH = (
 PRIOR_SUMMARY_PATH = PRIOR_TABLE_PATH.parent / "summary.json"
 DIAGNOSTIC_PATH = (
     ROOT / "calibration" / "diagnostics" / "central-unfitted-regimes-v0.yaml"
+)
+FIT_CAMPAIGN_PATH = (
+    ROOT / "calibration" / "campaigns" / "technical-neural-dynamics-pilot-v0.yaml"
 )
 INPUT_ROUTE_PATHS = tuple(
     ROOT / "data" / "derived" / "wiring" / name
@@ -215,6 +219,87 @@ def load_diagnostic_probe(
     if missing := required - set(combined):
         raise SignedDynamicsError(f"Diagnostic probe omits fields: {sorted(missing)}")
     return raw, combined
+
+
+def load_fit_campaign(path: Path = FIT_CAMPAIGN_PATH) -> dict[str, Any]:
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict) or raw.get("status") != "runnable":
+        raise SignedDynamicsError("Technical dynamics fitting campaign is not runnable")
+    if raw.get("claim_label") != "TRAINED TECHNICAL STABILITY PILOT / NOT PHYSIOLOGY / NO BEHAVIOR":
+        raise SignedDynamicsError("Technical dynamics campaign lost its claim boundary")
+    method = raw.get("method", {})
+    order = method.get("parameter_order")
+    bounds = method.get("bounds")
+    if not isinstance(order, list) or len(order) != 12 or not isinstance(bounds, dict):
+        raise SignedDynamicsError("Technical dynamics campaign needs twelve ordered bounds")
+    if set(order) != set(bounds):
+        raise SignedDynamicsError("Technical dynamics parameter order and bounds differ")
+    splits = raw.get("scenario_splits", {})
+    if not splits.get("train") or not splits.get("validation"):
+        raise SignedDynamicsError("Technical dynamics campaign needs train and validation scenarios")
+    if splits.get("diagnostic") or splits.get("held_out"):
+        raise SignedDynamicsError("Pilot fitting cannot consume diagnostic or held-out scenarios")
+    return raw
+
+
+def _transform_unit_value(value: float, specification: Mapping[str, Any]) -> float:
+    transform = str(specification.get("transform"))
+    if transform == "linear":
+        lower = float(specification["lower"])
+        upper = float(specification["upper"])
+        return lower + value * (upper - lower)
+    if transform == "log":
+        lower = float(specification["lower"])
+        upper = float(specification["upper"])
+        return math.exp(math.log(lower) + value * (math.log(upper) - math.log(lower)))
+    if transform in {"positive_log", "negative_log"}:
+        lower = float(specification["lower_abs"])
+        upper = float(specification["upper_abs"])
+        magnitude = math.exp(
+            math.log(lower) + value * (math.log(upper) - math.log(lower))
+        )
+        return magnitude if transform == "positive_log" else -magnitude
+    if transform == "signed_log":
+        lower = float(specification["lower_abs"])
+        upper = float(specification["upper_abs"])
+        sign = -1.0 if value < 0.5 else 1.0
+        local = value * 2.0 if value < 0.5 else (value - 0.5) * 2.0
+        magnitude = math.exp(
+            math.log(lower) + local * (math.log(upper) - math.log(lower))
+        )
+        return sign * magnitude
+    raise SignedDynamicsError(f"Unsupported search transform: {transform}")
+
+
+def generate_pilot_candidate(
+    candidate_index: int, path: Path = FIT_CAMPAIGN_PATH
+) -> dict[str, float]:
+    """Reconstruct one immutable low-discrepancy candidate from the campaign recipe."""
+    raw = load_fit_campaign(path)
+    method = raw["method"]
+    count = int(method["candidate_count"])
+    if not 0 <= candidate_index < count:
+        raise SignedDynamicsError(
+            f"Candidate index {candidate_index} is outside the declared 0..{count - 1} range"
+        )
+    if count <= 0 or count & (count - 1):
+        raise SignedDynamicsError("Sobol candidate count must be a positive power of two")
+    order = tuple(str(item) for item in method["parameter_order"])
+    sampler = qmc.Sobol(d=len(order), scramble=True, seed=int(method["sobol_seed"]))
+    samples = sampler.random_base2(m=int(math.log2(count)))
+    candidate = {
+        name: _transform_unit_value(
+            float(samples[candidate_index, index]), method["bounds"][name]
+        )
+        for index, name in enumerate(order)
+    }
+    contract = SignedDynamicsContract.load()
+    _validate_efficacies(
+        contract.class_ids,
+        contract.sign_constraints,
+        {class_id: candidate[class_id] for class_id in contract.class_ids},
+    )
+    return candidate
 
 
 def _declared_input_body_ids() -> np.ndarray:
@@ -429,6 +514,271 @@ def characterize_unfitted_regime(probe_id: str, seed: int) -> dict[str, bool | i
     ]
     metrics["all_metrics_finite"] = bool(np.isfinite(finite_metrics).all())
     del matrix, crow, col, data, inverse, stimulus, states
+    if device.startswith("cuda"):
+        torch.cuda.empty_cache()
+    return metrics
+
+
+def evaluate_technical_candidate(
+    candidate_index: int, seed: int
+) -> dict[str, bool | int | float | str]:
+    """Evaluate one preregistered pilot candidate on train and validation scenarios."""
+    import torch
+
+    campaign = load_fit_campaign()
+    if seed != int(campaign["method"]["evaluation_seed"]):
+        raise SignedDynamicsError("Trial seed differs from the preregistered evaluation seed")
+    candidate = generate_pilot_candidate(candidate_index)
+    simulation = campaign["simulation"]
+    scenarios: list[tuple[str, Mapping[str, Any]]] = []
+    for split in ("train", "validation"):
+        scenarios.extend((split, item) for item in campaign["scenario_splits"][split])
+    assets = load_signed_runtime_assets()
+    efficacies = {
+        class_id: candidate[class_id] for class_id in assets.contract.class_ids
+    }
+    signed = compile_signed_matrix(
+        assets.graph.matrix,
+        assets.neuron_class_indices,
+        assets.contract,
+        efficacies,
+    )
+    node_count = len(assets.graph.body_ids)
+    perturbation_nodes = int(simulation["perturbation_nodes"])
+    state_columns: list[np.ndarray] = []
+    input_columns: list[np.ndarray] = []
+    initial_norms: list[float] = []
+    for _, scenario in scenarios:
+        rng = np.random.default_rng(int(scenario["rng_seed"]))
+        base = rng.normal(
+            0.0, float(simulation["initial_state_std"]), node_count
+        ).astype(np.float32)
+        input_vector = np.zeros(node_count, dtype=np.float32)
+        terminal_values = rng.normal(0.0, 1.0, len(assets.input_indices)).astype(
+            np.float32
+        )
+        terminal_rms = float(np.sqrt(np.mean(np.square(terminal_values))))
+        if terminal_rms <= 0:
+            raise SignedDynamicsError("Scenario terminal input has zero RMS")
+        terminal_values /= terminal_rms
+        input_vector[assets.input_indices] = terminal_values * float(
+            scenario["input_amplitude"]
+        )
+        perturbed = base.copy()
+        selected = rng.choice(node_count, size=perturbation_nodes, replace=False)
+        signs = rng.choice(
+            np.asarray([-1.0, 1.0], dtype=np.float32), perturbation_nodes
+        )
+        perturbed[selected] += signs * float(simulation["perturbation_amplitude"])
+        norm = float(np.linalg.norm(perturbed - base))
+        if norm <= 0:
+            raise SignedDynamicsError("Scenario perturbation has zero norm")
+        state_columns.extend((base, perturbed))
+        input_columns.extend((input_vector, input_vector))
+        initial_norms.append(norm)
+
+    initial_states = np.stack(state_columns, axis=1)
+    input_matrix = np.stack(input_columns, axis=1)
+    temporal = {
+        "dt_ms": float(simulation["dt_ms"]),
+        "time_constant_ms": float(candidate["time_constant_ms"]),
+        "input_gain": float(candidate["input_gain"]),
+        "bias": float(candidate["bias"]),
+    }
+    cpu_first = np.stack(
+        [
+            numpy_signed_step(
+                signed,
+                assets.graph.incoming_inverse,
+                initial_states[:, column],
+                input_matrix[:, column],
+                **temporal,
+            )
+            for column in (0, 1)
+        ],
+        axis=1,
+    )
+
+    device = str(simulation["backend"])
+    if device.startswith("cuda") and not torch.cuda.is_available():
+        raise SignedDynamicsError("CUDA fitting campaign requested but CUDA is unavailable")
+    crow = torch.from_numpy(signed.indptr.astype(np.int32, copy=False)).to(device)
+    col = torch.from_numpy(signed.indices.astype(np.int32, copy=False)).to(device)
+    data = torch.from_numpy(signed.data.astype(np.float32, copy=False)).to(device)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message="Sparse CSR tensor support is in beta state")
+        matrix = torch.sparse_csr_tensor(
+            crow,
+            col,
+            data,
+            size=signed.shape,
+            dtype=torch.float32,
+            device=device,
+            check_invariants=False,
+        )
+    inverse = torch.from_numpy(assets.graph.incoming_inverse).to(device)
+    stimulus = torch.from_numpy(input_matrix).to(device)
+    states = torch.from_numpy(initial_states).to(device)
+    initial_norm_tensor = torch.tensor(initial_norms, dtype=torch.float32, device=device)
+    alpha = 1.0 - math.exp(-temporal["dt_ms"] / temporal["time_constant_ms"])
+    active_threshold = float(simulation["numerical_activity_threshold"])
+    saturation_threshold = float(simulation["numerical_saturation_threshold"])
+    scenario_count = len(scenarios)
+    persistent_quiescent = torch.ones(
+        (node_count, scenario_count), dtype=torch.bool, device=device
+    )
+    persistent_saturated = torch.ones(
+        (node_count, scenario_count), dtype=torch.bool, device=device
+    )
+    gain_history: list[np.ndarray] = []
+    first_gpu: np.ndarray | None = None
+    if device.startswith("cuda"):
+        torch.cuda.synchronize(device)
+    started = time.perf_counter()
+    with torch.inference_mode():
+        for step in range(int(simulation["steps"])):
+            drive = torch.sparse.mm(matrix, states) * inverse[:, None]
+            proposal = torch.tanh(
+                drive + temporal["input_gain"] * stimulus + temporal["bias"]
+            )
+            states = (1.0 - alpha) * states + alpha * proposal
+            base_abs = torch.abs(states[:, 0::2])
+            persistent_quiescent &= base_abs < active_threshold
+            persistent_saturated &= base_abs > saturation_threshold
+            delta = states[:, 1::2] - states[:, 0::2]
+            gains = torch.linalg.vector_norm(delta, dim=0) / initial_norm_tensor
+            gain_history.append(gains.detach().cpu().numpy())
+            if step == 0:
+                first_gpu = states[:, :2].detach().cpu().numpy()
+    if device.startswith("cuda"):
+        torch.cuda.synchronize(device)
+    elapsed = time.perf_counter() - started
+    final = states[:, 0::2]
+    final_abs = torch.abs(final)
+    finite_fraction = (
+        torch.mean(torch.isfinite(final).to(torch.float32), dim=0).cpu().numpy()
+    )
+    active_fraction = (
+        torch.mean((final_abs >= active_threshold).to(torch.float32), dim=0)
+        .cpu()
+        .numpy()
+    )
+    saturated_fraction = (
+        torch.mean((final_abs > saturation_threshold).to(torch.float32), dim=0)
+        .cpu()
+        .numpy()
+    )
+    quiescent_fraction = (
+        torch.mean(persistent_quiescent.to(torch.float32), dim=0).cpu().numpy()
+    )
+    persistent_saturated_fraction = (
+        torch.mean(persistent_saturated.to(torch.float32), dim=0).cpu().numpy()
+    )
+    gains = np.stack(gain_history, axis=0)
+    peak_gains = np.max(gains, axis=0)
+    final_gains = gains[-1]
+    recovery_steps = np.asarray(
+        [
+            next(
+                (
+                    index + 1
+                    for index in range(len(gains))
+                    if float(np.max(gains[index:, scenario_index])) <= 0.5
+                ),
+                -1,
+            )
+            for scenario_index in range(scenario_count)
+        ],
+        dtype=np.int32,
+    )
+    split_indices = {
+        split: np.asarray(
+            [index for index, (item_split, _) in enumerate(scenarios) if item_split == split],
+            dtype=np.int32,
+        )
+        for split in ("train", "validation")
+    }
+    metrics: dict[str, bool | int | float | str] = {
+        "candidate_index": int(candidate_index),
+        "scenario_count": scenario_count,
+        "train_scenario_count": int(len(split_indices["train"])),
+        "validation_scenario_count": int(len(split_indices["validation"])),
+        "steps_completed": int(simulation["steps"]),
+        "input_terminals": int(len(assets.input_indices)),
+        "finite_state_fraction_min": float(np.min(finite_fraction)),
+        "saturated_fraction_max": float(np.max(saturated_fraction)),
+        "persistently_quiescent_fraction_max": float(np.max(quiescent_fraction)),
+        "persistently_saturated_fraction_max": float(
+            np.max(persistent_saturated_fraction)
+        ),
+        "perturbation_peak_gain_max": float(np.max(peak_gains)),
+        "perturbation_final_gain_max": float(np.max(final_gains)),
+        "perturbation_recovery_failure_count": int(np.count_nonzero(recovery_steps < 0)),
+        "perturbation_stable_half_recovery_step_max": int(
+            np.max(recovery_steps) if np.all(recovery_steps >= 0) else -1
+        ),
+        "measured_scenario_steps_per_second": float(simulation["steps"])
+        * scenario_count
+        / elapsed,
+        "simulated_to_wall_clock_ratio_per_scenario": (
+            float(simulation["steps"])
+            * float(simulation["dt_ms"])
+            / 1000.0
+            * scenario_count
+            / elapsed
+        ),
+    }
+    for split, indices in split_indices.items():
+        metrics[f"{split}_finite_state_fraction_min"] = float(
+            np.min(finite_fraction[indices])
+        )
+        metrics[f"{split}_active_fraction_min"] = float(
+            np.min(active_fraction[indices])
+        )
+        metrics[f"{split}_active_fraction_max"] = float(
+            np.max(active_fraction[indices])
+        )
+        metrics[f"{split}_saturated_fraction_max"] = float(
+            np.max(saturated_fraction[indices])
+        )
+        metrics[f"{split}_perturbation_peak_gain_max"] = float(
+            np.max(peak_gains[indices])
+        )
+        metrics[f"{split}_perturbation_final_gain_max"] = float(
+            np.max(final_gains[indices])
+        )
+    if first_gpu is None:
+        raise SignedDynamicsError("Fitting evaluator did not execute its first step")
+    difference = np.abs(cpu_first - first_gpu)
+    metrics["cpu_gpu_max_abs_error"] = float(difference.max())
+    metrics["cpu_gpu_agreement"] = bool(
+        np.allclose(
+            cpu_first,
+            first_gpu,
+            atol=float(simulation["cpu_gpu_atol"]),
+            rtol=float(simulation["cpu_gpu_rtol"]),
+        )
+    )
+    for name, value in candidate.items():
+        metrics[f"parameter_{name}"] = float(value)
+    for class_index, class_id in enumerate(assets.contract.class_ids):
+        mask = torch.from_numpy(assets.neuron_class_indices == class_index).to(device)
+        class_active = torch.mean(
+            (torch.abs(final[mask]) >= active_threshold).to(torch.float32), dim=0
+        )
+        metrics[f"class_active_fraction_min_{class_id}"] = float(
+            torch.min(class_active).item()
+        )
+        metrics[f"class_active_fraction_max_{class_id}"] = float(
+            torch.max(class_active).item()
+        )
+    finite_metrics = [
+        value
+        for value in metrics.values()
+        if isinstance(value, (int, float)) and not isinstance(value, bool)
+    ]
+    metrics["all_metrics_finite"] = bool(np.isfinite(finite_metrics).all())
+    del matrix, crow, col, data, inverse, stimulus, states, final
     if device.startswith("cuda"):
         torch.cuda.empty_cache()
     return metrics

@@ -1,0 +1,57 @@
+schema_version: 1
+id: scope.central_neural_dynamics.v0
+title: Isolated canonical MaleCNS technical-dynamics scope
+status: accepted_for_pilot_fitting
+claim_label: TECHNICAL CNS STABILITY / NO BEHAVIOR / NO INTERFACE CLAIM
+
+includes:
+  boxes: [cns.malecns]
+  graph: canonical_malecns_runtime_graph
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+  input_terminals: all_17884_declared_cns_input_terminals
+  parameter_family_ids:
+    - parameter.central.synaptic_efficacy.v0
+    - parameter.central.neuron_dynamics.v0
+  parameter_names:
+    - time_constant_ms
+    - input_gain
+    - bias
+    - efficacy.acetylcholine
+    - efficacy.dopamine
+    - efficacy.gaba
+    - efficacy.glutamate
+    - efficacy.histamine
+    - efficacy.missing
+    - efficacy.octopamine
+    - efficacy.serotonin
+    - efficacy.unclear
+
+excludes:
+  - peripheral routing and transfer values
+  - body or world dynamics
+  - motor decoding and recognizable actions
+  - structural graph edits and edge residuals
+  - all held-out stimulus-response scenarios
+
+input_policy:
+  kind: synthetic_direct_terminal_excitation
+  purpose: isolate central technical dynamics while peripheral amplitudes remain unresolved
+  interface_claim: none
+  restriction: never reuse these synthetic terminal values as calibrated interface parameters
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.transmitter_sign_prior.v0: canonical_malecns_runtime_graph
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+  ruleset_hashes:
+    transmitter_sign_prior: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e
+  exception_table_hashes: {central_signed_dynamics: none}
+
+behavior_exposure: {behavior_targeted: false, exposed_behavior_ids: []}
+assumptions:
+  - Direct synthetic terminal excitation is sufficient for a technical central-dynamics pilot but cannot validate transduction boxes.
+  - The shared twelve-parameter model is intentionally minimal and may be rejected without automatically increasing capacity.
+next_action: Execute the preregistered pilot search and retain every admissible candidate rather than selecting by appearance.
+

@@ -9,7 +9,9 @@ from the_fly_matrix.signed_dynamics import (
     SignedDynamicsContract,
     SignedDynamicsError,
     compile_signed_matrix,
+    generate_pilot_candidate,
     load_diagnostic_probe,
+    load_fit_campaign,
     numpy_signed_step,
 )
 
@@ -102,6 +104,41 @@ class SignedDynamicsTests(unittest.TestCase):
     def test_unknown_unfitted_probe_is_rejected(self) -> None:
         with self.assertRaisesRegex(SignedDynamicsError, "Unknown unfitted diagnostic probe"):
             load_diagnostic_probe("not-a-probe")
+
+    def test_pilot_candidates_are_reconstructible_bounded_and_sign_safe(self) -> None:
+        campaign = load_fit_campaign()
+        first = generate_pilot_candidate(0)
+        repeated = generate_pilot_candidate(0)
+        last = generate_pilot_candidate(31)
+        self.assertEqual(first, repeated)
+        self.assertNotEqual(first, last)
+        self.assertEqual(set(first), set(campaign["method"]["parameter_order"]))
+        self.assertGreater(first["acetylcholine"], 0)
+        self.assertLess(first["gaba"], 0)
+        for name, value in first.items():
+            bounds = campaign["method"]["bounds"][name]
+            if "lower" in bounds:
+                self.assertGreaterEqual(value, float(bounds["lower"]))
+                self.assertLessEqual(value, float(bounds["upper"]))
+            else:
+                self.assertGreaterEqual(abs(value), float(bounds["lower_abs"]))
+                self.assertLessEqual(abs(value), float(bounds["upper_abs"]))
+
+    def test_pilot_fit_does_not_reuse_diagnostic_or_held_out_scenarios(self) -> None:
+        campaign = load_fit_campaign()
+        self.assertEqual(campaign["scenario_splits"]["diagnostic"], [])
+        self.assertEqual(campaign["scenario_splits"]["held_out"], [])
+        diagnostic, _ = load_diagnostic_probe("nominal_signed_terminal_input")
+        fit_ids = {
+            item["id"]
+            for split in ("train", "validation")
+            for item in campaign["scenario_splits"][split]
+        }
+        self.assertTrue(fit_ids.isdisjoint(diagnostic["probes"]))
+
+    def test_pilot_candidate_index_is_bounded(self) -> None:
+        with self.assertRaisesRegex(SignedDynamicsError, "outside the declared"):
+            generate_pilot_candidate(32)
 
 
 if __name__ == "__main__":

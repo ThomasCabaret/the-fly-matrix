@@ -1,0 +1,106 @@
+schema_version: 1
+id: campaign.technical_neural_dynamics_pilot.v0
+record_kind: calibration_campaign
+status: runnable
+claim_label: TRAINED TECHNICAL STABILITY PILOT / NOT PHYSIOLOGY / NO BEHAVIOR
+mode: fit
+primary_class: technical
+optimization_exposure: allowed
+behavior_targeted: false
+target_ids: [target.technical_neural_dynamics.v0]
+parameter_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+parent_parameter_set_ids: [parameters.central_transmitter_sign_prior.v0]
+output_parameter_set_id: parameters.central_technical_dynamics_pilot_ensemble.v0
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.transmitter_sign_prior.v0: canonical_malecns_runtime_graph
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+  ruleset_hashes:
+    transmitter_sign_prior: dcc838f16e6069c7dc8861b01c10e5b40fd52364dd7ca75e230a09bba03fef2e
+  exception_table_hashes: {central_signed_dynamics: none}
+
+input_files:
+  - {path: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml, sha256: 13bd917025c0004b1e9dc05cd2511cda69652cd0332fbd2ccdf3e19a4c085032}
+  - {path: calibration/models/malecns-typed-signed-rate-v0.yaml, sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e}
+  - {path: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml, sha256: dc9f14cc12f590f05d504ff8868f250ca25c83b76ab05914a6a6d06bb785d2d5}
+
+evaluator_id: malecns_signed_technical_fit.v0
+semantic_metric_exclusions:
+  - measured_scenario_steps_per_second
+  - simulated_to_wall_clock_ratio_per_scenario
+  - cpu_gpu_max_abs_error
+semantic_float_significant_digits: 4
+repeat_each: 1
+trials:
+  - &candidate
+    case_id: candidate-00
+    seed: 65003
+    args: {candidate_index: 0}
+    gates: &technical_gates
+      scenario_count: {operator: eq, value: 5}
+      steps_completed: {operator: eq, value: 80}
+      input_terminals: {operator: eq, value: 17884}
+      train_finite_state_fraction_min: {operator: eq, value: 1.0}
+      validation_finite_state_fraction_min: {operator: eq, value: 1.0}
+      train_active_fraction_min: {operator: ge, value: 0.01}
+      validation_active_fraction_min: {operator: ge, value: 0.01}
+      saturated_fraction_max: {operator: le, value: 0.01}
+      perturbation_peak_gain_max: {operator: le, value: 2.0}
+      perturbation_final_gain_max: {operator: le, value: 0.25}
+      perturbation_recovery_failure_count: {operator: eq, value: 0}
+      perturbation_stable_half_recovery_step_max: {operator: le, value: 20}
+      cpu_gpu_agreement: {operator: eq, value: true}
+      all_metrics_finite: {operator: eq, value: true}
+  - {<<: *candidate, case_id: candidate-01, args: {candidate_index: 1}}
+  - {<<: *candidate, case_id: candidate-02, args: {candidate_index: 2}}
+  - {<<: *candidate, case_id: candidate-03, args: {candidate_index: 3}}
+  - {<<: *candidate, case_id: candidate-04, args: {candidate_index: 4}}
+  - {<<: *candidate, case_id: candidate-05, args: {candidate_index: 5}}
+  - {<<: *candidate, case_id: candidate-06, args: {candidate_index: 6}}
+  - {<<: *candidate, case_id: candidate-07, args: {candidate_index: 7}}
+  - {<<: *candidate, case_id: candidate-08, args: {candidate_index: 8}}
+  - {<<: *candidate, case_id: candidate-09, args: {candidate_index: 9}}
+  - {<<: *candidate, case_id: candidate-10, args: {candidate_index: 10}}
+  - {<<: *candidate, case_id: candidate-11, args: {candidate_index: 11}}
+  - {<<: *candidate, case_id: candidate-12, args: {candidate_index: 12}}
+  - {<<: *candidate, case_id: candidate-13, args: {candidate_index: 13}}
+  - {<<: *candidate, case_id: candidate-14, args: {candidate_index: 14}}
+  - {<<: *candidate, case_id: candidate-15, args: {candidate_index: 15}}
+  - {<<: *candidate, case_id: candidate-16, args: {candidate_index: 16}}
+  - {<<: *candidate, case_id: candidate-17, args: {candidate_index: 17}}
+  - {<<: *candidate, case_id: candidate-18, args: {candidate_index: 18}}
+  - {<<: *candidate, case_id: candidate-19, args: {candidate_index: 19}}
+  - {<<: *candidate, case_id: candidate-20, args: {candidate_index: 20}}
+  - {<<: *candidate, case_id: candidate-21, args: {candidate_index: 21}}
+  - {<<: *candidate, case_id: candidate-22, args: {candidate_index: 22}}
+  - {<<: *candidate, case_id: candidate-23, args: {candidate_index: 23}}
+  - {<<: *candidate, case_id: candidate-24, args: {candidate_index: 24}}
+  - {<<: *candidate, case_id: candidate-25, args: {candidate_index: 25}}
+  - {<<: *candidate, case_id: candidate-26, args: {candidate_index: 26}}
+  - {<<: *candidate, case_id: candidate-27, args: {candidate_index: 27}}
+  - {<<: *candidate, case_id: candidate-28, args: {candidate_index: 28}}
+  - {<<: *candidate, case_id: candidate-29, args: {candidate_index: 29}}
+  - {<<: *candidate, case_id: candidate-30, args: {candidate_index: 30}}
+  - {<<: *candidate, case_id: candidate-31, args: {candidate_index: 31}}
+
+budget: {max_trials: 32, max_wall_seconds: 1200}
+scenario_splits:
+  train: [central_technical_train_low_v0, central_technical_train_nominal_v0, central_technical_train_high_v0]
+  validation: [central_technical_validation_low_v0, central_technical_validation_high_v0]
+  diagnostic: []
+  held_out: []
+  behavior_held_out: []
+acceptance:
+  criteria_locked_before_run: true
+  require_all_trials_accepted: false
+  minimum_accepted_trials: 1
+  require_repetition_determinism: false
+  maximum_errors: 0
+  reproducibility_mode: deterministic_candidate_set_gpu_metrics_compared_at_4_significant_digits
+
+capacity_policy:
+  automatic_capacity_increase_allowed: false
+  on_zero_accepted: retain_negative_result_and_return_to_threshold_or_model_review
+

@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_neural_dynamics.v0
 title: Bounded and recoverable MaleCNS temporal dynamics
-status: proposed
+status: runnable
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -30,13 +30,20 @@ acceptance_policy:
     Values remain finite and bounded, the system is neither globally irreversibly
     silent nor dominated by runaway saturation, and a small perturbation has a
     measurable but recoverable effect.
-  thresholds: unresolved
-  criticality: diagnostic_only_without_additional_evidence
+  thresholds:
+    finite_state_fraction_min: 1.0
+    active_fraction: {min: 0.01, max: null, cutoff: 0.0001}
+    saturated_fraction_max: {value: 0.01, cutoff: 0.95}
+    perturbation_peak_gain_max: 2.0
+    perturbation_final_gain_max: 0.25
+    stable_half_recovery_ms_max: 100
+  threshold_class: preregistered_engineering_convention_v0_not_biological
+  criticality: not_assumed_or_targeted
 
 behavior_targets: []
 scenario_splits:
-  train: []
-  validation: []
+  train: [central_technical_train_low_v0, central_technical_train_nominal_v0, central_technical_train_high_v0]
+  validation: [central_technical_validation_low_v0, central_technical_validation_high_v0]
   diagnostic: []
   held_out: []
 
@@ -47,17 +54,15 @@ dependencies:
   - measured CPU reference and GPU sparse execution benchmark
 
 provenance:
-  sources: []
+  sources:
+    - calibration/diagnostics/central-unfitted-regimes-v0.yaml
+    - calibration/runner/central-unfitted-characterization-result-v0.yaml
   assumptions:
-    - Exact acceptable ranges are not yet known and must not be invented.
+    - No biological source supports exact activity fractions for this abstract rate model; the v0 thresholds are deliberately broad engineering exclusion bands.
+    - The complete diagnostic grid informed failure classes, but no individual diagnostic probe is a candidate or validation case.
 
 validation: unfitted_baseline_characterized_not_fitted
-blocked_reason: >-
-  Structural wiring, the family inventory, the dependency DAG and the typed
-  transmitter/sign prior are accepted. A minimal twelve-parameter signed model
-  candidate and calibration runner now exist. Seven preregistered unfitted regimes
-  have been characterized reproducibly, but no value has been fitted and
-  evidence-backed acceptance thresholds remain unresolved.
+blocked_reason: null
 next_action: >-
-  Lock evidence-backed technical thresholds and preregister the first fitting
-  campaign without selecting a diagnostic probe as an accepted parameter set.
+  Execute campaign.technical_neural_dynamics_pilot.v0 and retain the full
+  admissible ensemble without selecting a preferred behavior or visual result.
