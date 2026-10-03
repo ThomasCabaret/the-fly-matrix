@@ -1,0 +1,37 @@
+schema_version: 1
+id: runner_validation_result.signed_dynamics_contract.v0
+job_id: runner_validation.signed_dynamics_contract.v0
+status: accepted_infrastructure_validation
+claim_label: RUNNER VALIDATION / STRUCTURAL TEST VALUES / NOT CALIBRATION
+run_id: 20261003T082053529120Z--runner-validation-signed-dynamics-contract-v0
+run_summary_ref: runs/calibration/runner/20261003T082053529120Z--runner-validation-signed-dynamics-contract-v0/summary.json
+
+accounting: {scheduled: 2, accepted: 2, rejected: 0, errors: 0, unaccounted: 0}
+metrics:
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+  transmitter_classes: 9
+  class_mapped_edges: 25582938
+  typed_excitatory_edges: 14745137
+  typed_inhibitory_edges: 4925557
+  unknown_or_context_edges: 5912244
+  zero_probe_edges: 0
+  all_classes_have_neurons: true
+reproducibility:
+  repetitions: 2
+  nondeterministic_cases: []
+  semantic_result_sha256: c45acd00346e5ee4bdd1f93686dbcb286be385187dac1ce056e809bf852a6789
+  semantic_contract_sha256: 83fe8a64571c268c8298aac1b24f0aa0585811d346c42fe92e164a5732e436bd
+  job_config_sha256: b55192efc97a85a66748bcf7da230636e6df1e259dbcbdb885d6270a1fe905f9
+  git_commit: fccb28ea37ee9f706a63790db62a253ba76bf25a
+  git_worktree_clean: true
+  python: 3.12.5
+accepted_claims:
+  - Every canonical runtime edge is represented by exactly one explicit transmitter-class parameter path.
+  - Unknown and context-dependent sign classes are executable and were exercised with nonzero structural probes.
+  - Repeated exhaustive validation produced identical semantic metrics.
+forbidden_claims:
+  - Any structural probe value is calibrated or physiological.
+  - The candidate equation or any activity regime is scientifically accepted.
+  - MaleCNS behavior has been reproduced.
+next_action: Characterize unfitted response regimes and preregister technical acceptance thresholds before fitting.

@@ -1,0 +1,26 @@
+schema_version: 1
+id: validation.signed_dynamics_contract
+name: Exhaustive signed MaleCNS model contract
+owner_ids: [cns.malecns]
+level: integration
+protocol_path: calibration/runner/signed-dynamics-contract-validation-v0.yaml
+command: signed_dynamics_contract_check.bat
+acceptance_criteria:
+  - All 166700 canonical neurons retain one frozen effective-transmitter class
+  - All 25582938 runtime edges map to exactly one presynaptic class parameter
+  - Typed ACh and GABA edge counts reproduce the frozen evidence prior
+  - All 5912244 unknown or context-dependent edges remain explicit and executable
+  - The nonzero structural probe exercises every class without selecting a parameter value
+  - Repeated execution has identical semantic metrics and exhaustive trial accounting
+calibration_dataset_ids: []
+held_out_behavior_ids: []
+latest_run_id: 20261003T082053529120Z--runner-validation-signed-dynamics-contract-v0
+status: integration_pass
+notes:
+  - This accepts the sparse representation and parameter accounting only.
+  - The twelve candidate degrees of freedom are entirely unfitted.
+  - No activity, stability, physiology or behavior claim follows from this validation.
+source_references:
+  - calibration/models/malecns-typed-signed-rate-v0.yaml
+  - calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+  - calibration/runner/signed-dynamics-validation-result-v0.yaml

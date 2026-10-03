@@ -1,9 +1,9 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-02. L'inventaire/DAG, le compilateur périphérique et le
-runner autonome minimal sont validés. Le premier transfert de preuve, le prior
-neurotransmetteur/signe, reste compilé, validé et gelé ; aucune famille n'a encore
-été ajustée.
+Mise à jour : 2026-10-03. L'inventaire/DAG, le compilateur périphérique et le
+runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
+et un modèle central signé minimal est désormais exécutable et structurellement
+validé ; ses douze paramètres restent entièrement non ajustés.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -81,6 +81,23 @@ prior inhibiteur et **5 912 244 restent inconnues ou dépendantes du contexte**.
 Le code numérique zéro encode cette absence d'affirmation ; il ne supprime jamais
 une synapse. Deux exécutions propres ont reproduit le hash sémantique
 `fb3777b99eb913b41a86962cae33b8bf41a96bc0c26c25ca68ce34229a7a44da`.
+
+Le candidat [`model.malecns_typed_signed_rate.v0`](calibration/models/malecns-typed-signed-rate-v0.yaml)
+rend maintenant ce prior exécutable sans créer 25,6 millions de poids libres. Il
+expose neuf efficacités partagées par classe de neurotransmetteur et trois
+paramètres globaux de dynamique. Les signes acétylcholine/GABA sont contraints par
+le prior gelé ; les sept classes contextuelles, `unclear` ou `missing` conservent
+chacune un paramètre signé explicite. Aucun résidu par arête n'est autorisé en v0.
+
+Le run propre
+`20261003T082053529120Z--runner-validation-signed-dynamics-contract-v0` a parcouru
+deux fois les **25 582 938 arêtes** : 25 582 938/25 582 938 sont assignées, les
+5 912 244 arêtes inconnues/contextuelles sont exercées avec un probe non nul,
+zéro arête est supprimée et le hash sémantique répété est
+`c45acd00346e5ee4bdd1f93686dbcb286be385187dac1ce056e809bf852a6789`.
+Cette preuve accepte la représentation sparse et la comptabilité seulement. Les
+valeurs du probe, l'équation comme modèle biologique, la stabilité et tout
+comportement restent explicitement non acceptés.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -298,7 +315,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner minimal validés ; 1 famille de preuve gelée, 0 famille ajustée et aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, modèle central signé structurellement validé, 0 famille ajustée et aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -364,7 +381,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **86 tests** actuels passent, y compris les
+conservées et classifiées. Les **90 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -379,8 +396,10 @@ précédents.
 
 ## Front de calibration
 
-**Ouvert.** La prochaine action n'est pas encore de lancer un fitting global, mais
-de rendre les campagnes reconstructibles et auditables.
+**Ouvert.** Les campagnes sont maintenant reconstructibles et un premier modèle
+central signé minimal est exécutable. La prochaine action n'est toujours pas un
+fitting global : il faut d'abord caractériser honnêtement ses régimes non ajustés
+et verrouiller des seuils techniques défendables.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -405,10 +424,13 @@ coefficients proprioceptifs, 2 108 mécanorécepteurs et 7 849 moteurs à partir
 routes et transferts séparés. Son test uniforme/unitaire est synthétique, en
 mémoire et explicitement non calibré. Le runner autonome reproduit ce contrôle en
 six essais exhaustivement comptabilisés et protège déjà frontières, lignée,
-budgets et scénarios tenus à l'écart. Aucun parameter set complet n'a été promu et
-aucune cible comportementale n'est autorisée. Le prochain lot doit définir les
-premiers scopes locaux, règles de partage et données autorisées, puis enregistrer
-un véritable évaluateur scientifique dans ce runner. Les fichiers de
+budgets et scénarios tenus à l'écart. Le contrat central signé ajoute neuf
+efficacités de classe et trois paramètres globaux, tous non ajustés, et couvre
+exhaustivement le graphe avec un probe structurel non promouvable. Aucun parameter
+set complet n'a été promu et aucune cible comportementale n'est autorisée. Le
+prochain lot doit construire la caractérisation non ajustée et verrouiller ses
+critères techniques avant d'enregistrer un véritable évaluateur de fitting ; les
+scopes locaux périphériques restent un front parallèle. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
@@ -435,6 +457,7 @@ calibration_status.bat     # inventaire des familles + cohérence/acyclicité du
 compile_calibration_evidence.bat # prior neurotransmetteur/signe reproductible
 parameter_compiler_check.bat # factorisation routage/transfert, test structurel seulement
 calibration_runner_check.bat # runner autonome, six essais d'infrastructure non calibrants
+signed_dynamics_contract_check.bat # couverture signée exhaustive, probes non calibrants
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

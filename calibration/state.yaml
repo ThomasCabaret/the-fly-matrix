@@ -1,6 +1,6 @@
 schema_version: 1
-phase: calibration_infrastructure_ready
-updated: 2026-10-02
+phase: central_model_characterization_ready
+updated: 2026-10-03
 
 wiring_baseline:
   terminal_coverage: complete
@@ -38,7 +38,9 @@ readiness:
   peripheral_parameter_compiler: structure_validated_three_families_values_unfitted
   scientific_wiring_revalidation: independently_validated_zero_blocked_families
   neurotransmitter_prior_inventory: compiled_frozen_166700_neurons
-  synaptic_sign_matrix: typed_prior_compiled_not_applied_to_runtime_5912244_edges_unknown_or_contextual
+  synaptic_sign_matrix: typed_prior_consumed_by_candidate_not_yet_embodied_runtime_5912244_edges_contextual
+  signed_dynamics_model: executable_candidate_validated_all_25582938_edges_values_unfitted
+  signed_dynamics_dimension: 9_transmitter_efficacies_plus_3_global_dynamics
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -46,13 +48,13 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - The biological dynamics model has not been selected; the frozen typed prior leaves 5912244 runtime edges explicitly unknown or context-dependent.
+  - The minimal signed dynamics candidate is executable but its 12 values, unfitted baseline regimes and evidence-backed technical acceptance thresholds remain unresolved.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - No scientific fitting evaluator or runnable scientific campaign exists yet; the validated runner job accepts infrastructure only, and the benchmark-only profile cannot be promoted.
 
 next_action: >-
-  Define evidence-backed local scopes and sharing assignments for the
-  compiler-ready peripheral families, then register the first scientific evaluator
-  and runnable campaign in the validated runner. In parallel, select an explicit
-  signed dynamics model before integrating the frozen sign prior; do not promote
-  the unsigned benchmark profile.
+  Characterize unfitted regimes of the validated twelve-parameter signed central
+  model, then preregister evidence-backed technical thresholds and a fitting
+  evaluator. In parallel, define evidence-backed local scopes and sharing
+  assignments for the compiler-ready peripheral families. Do not promote the
+  unsigned benchmark profile or the signed structural probe values.
