@@ -1,0 +1,69 @@
+schema_version: 1
+id: campaign.diagnostic_central_ensemble_motor_sensitivity.v0
+record_kind: calibration_campaign
+status: runnable
+claim_label: CENTRAL ENSEMBLE SENSITIVITY / DIAGNOSTIC ONLY / NO SELECTION / NO BEHAVIOR
+mode: validation
+primary_class: technical
+optimization_exposure: diagnostic_only
+behavior_targeted: false
+target_ids: [target.technical_neural_dynamics.v0]
+parameter_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+parent_parameter_set_ids: [parameters.central_technical_dynamics_pilot_ensemble.v0]
+output_parameter_set_id: null
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+
+input_files:
+  - {path: calibration/diagnostics/central-ensemble-motor-sensitivity-v0.yaml, sha256: cbb3897377e57c6a8ff9bfb8840aef9c4c8e0d13945b02695a2cd3352738eb27}
+  - {path: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml, sha256: ba71f366fab45616adc84666d126bd141267097f8775f714718da7299bb8b2c8}
+  - {path: calibration/models/malecns-typed-signed-rate-v0.yaml, sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e}
+  - {path: calibration/parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml, sha256: 9507bfceb7fd0965826799f33891529a164c4c9168072420543ddb88537af39e}
+
+evaluator_id: malecns_central_ensemble_motor_sensitivity.v0
+semantic_metric_exclusions: [measured_candidate_scenarios_per_second]
+semantic_float_significant_digits: 4
+repeat_each: 1
+trials:
+  - case_id: complete_32_member_motor_sensitivity
+    seed: 67301
+    args: {protocol_id: diagnostic.central_ensemble_motor_sensitivity.v0}
+    gates:
+      candidate_count: {operator: eq, value: 32}
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      response_vectors_accounted: {operator: eq, value: 96}
+      steps_completed: {operator: eq, value: 80}
+      input_terminals: {operator: eq, value: 17884}
+      candidate_selection_performed: {operator: eq, value: false}
+      all_metrics_finite: {operator: eq, value: true}
+
+budget: {max_trials: 1, max_wall_seconds: 1200}
+scenario_splits:
+  train: []
+  validation:
+    - motor_sensitivity_pattern_a_v0
+    - motor_sensitivity_pattern_b_v0
+    - motor_sensitivity_pattern_c_v0
+  diagnostic: []
+  held_out: []
+  behavior_held_out: []
+acceptance:
+  criteria_locked_before_run: true
+  require_all_trials_accepted: true
+  minimum_accepted_trials: 1
+  require_repetition_determinism: false
+  maximum_errors: 0
+  interpretation: >-
+    Passing means exhaustive, finite execution of the sensitivity measurement.
+    Low, mixed or high dispersion is a result, never a trial rejection and never
+    authorization to select a candidate.
+
+capacity_policy:
+  automatic_capacity_increase_allowed: false
+  candidate_selection_allowed: false
+  on_high_sensitivity: retain_full_ensemble_and_seek_independent_constraint
+

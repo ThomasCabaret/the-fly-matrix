@@ -21,6 +21,7 @@ from .calibration_registry import CALIBRATION_ROOT, load_calibration_inventory
 from .ledger import ROOT
 from .signed_dynamics import (
     characterize_unfitted_regime,
+    evaluate_motor_ensemble_sensitivity,
     evaluate_technical_candidate,
     validate_full_graph_contract,
 )
@@ -162,6 +163,16 @@ def _signed_dynamics_technical_fit_evaluator(
     return evaluate_technical_candidate(candidate_index, int(trial["seed"]))
 
 
+def _motor_ensemble_sensitivity_evaluator(
+    trial: Mapping[str, Any],
+) -> Mapping[str, Scalar]:
+    if trial.get("args", {}).get("protocol_id") != (
+        "diagnostic.central_ensemble_motor_sensitivity.v0"
+    ):
+        raise CalibrationRunnerError("Unknown central ensemble sensitivity protocol")
+    return evaluate_motor_ensemble_sensitivity(int(trial["seed"]))
+
+
 DEFAULT_EVALUATORS: Mapping[str, Evaluator] = {
     "peripheral_parameter_compiler_contract.v0": _peripheral_compiler_evaluator,
     "malecns_typed_signed_rate_contract.v0": _signed_dynamics_contract_evaluator,
@@ -169,6 +180,9 @@ DEFAULT_EVALUATORS: Mapping[str, Evaluator] = {
         _signed_dynamics_characterization_evaluator
     ),
     "malecns_signed_technical_fit.v0": _signed_dynamics_technical_fit_evaluator,
+    "malecns_central_ensemble_motor_sensitivity.v0": (
+        _motor_ensemble_sensitivity_evaluator
+    ),
 }
 DEFAULT_EVALUATOR_POLICIES: Mapping[str, Mapping[str, frozenset[str]]] = {
     "peripheral_parameter_compiler_contract.v0": {
@@ -185,6 +199,10 @@ DEFAULT_EVALUATOR_POLICIES: Mapping[str, Mapping[str, frozenset[str]]] = {
     },
     "malecns_signed_technical_fit.v0": {
         "allowed_modes": frozenset({"fit"}),
+        "allowed_record_kinds": frozenset({"calibration_campaign"}),
+    },
+    "malecns_central_ensemble_motor_sensitivity.v0": {
+        "allowed_modes": frozenset({"validation"}),
         "allowed_record_kinds": frozenset({"calibration_campaign"}),
     },
 }

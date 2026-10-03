@@ -37,6 +37,10 @@ DIAGNOSTIC_PATH = (
 FIT_CAMPAIGN_PATH = (
     ROOT / "calibration" / "campaigns" / "technical-neural-dynamics-pilot-v0.yaml"
 )
+MOTOR_SENSITIVITY_PATH = (
+    ROOT / "calibration" / "diagnostics" / "central-ensemble-motor-sensitivity-v0.yaml"
+)
+MOTOR_ROUTE_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routes.parquet"
 INPUT_ROUTE_PATHS = tuple(
     ROOT / "data" / "derived" / "wiring" / name
     for name in (
@@ -91,6 +95,7 @@ class SignedRuntimeAssets:
     contract: SignedDynamicsContract
     neuron_class_indices: np.ndarray
     input_indices: np.ndarray
+    motor_indices: np.ndarray
 
 
 def _validate_efficacies(
@@ -302,6 +307,51 @@ def generate_pilot_candidate(
     return candidate
 
 
+def load_motor_sensitivity_protocol(
+    path: Path = MOTOR_SENSITIVITY_PATH,
+) -> dict[str, Any]:
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict) or raw.get("status") != "runnable_diagnostic":
+        raise SignedDynamicsError("Motor-sensitivity protocol is not runnable")
+    if raw.get("claim_label") != (
+        "CENTRAL ENSEMBLE SENSITIVITY / DIAGNOSTIC ONLY / "
+        "NO SELECTION / NO BEHAVIOR"
+    ):
+        raise SignedDynamicsError("Motor-sensitivity protocol lost its claim boundary")
+    candidates = raw.get("candidate_indices")
+    if candidates != list(range(32)):
+        raise SignedDynamicsError("Motor sensitivity must account for all 32 pilot members")
+    scenarios = raw.get("scenarios")
+    if not isinstance(scenarios, list) or len(scenarios) < 2:
+        raise SignedDynamicsError("Motor sensitivity needs at least two scenarios")
+    scenario_ids = [item.get("id") for item in scenarios if isinstance(item, dict)]
+    if len(scenario_ids) != len(scenarios) or len(set(scenario_ids)) != len(scenarios):
+        raise SignedDynamicsError("Motor-sensitivity scenario ids must be unique")
+    simulation = raw.get("simulation")
+    required = {
+        "backend",
+        "dt_ms",
+        "steps",
+        "response_window_steps",
+        "initial_state_std",
+        "near_zero_response_rms",
+        "semantic_response_quantization",
+    }
+    if not isinstance(simulation, dict) or required - set(simulation):
+        raise SignedDynamicsError("Motor-sensitivity simulation contract is incomplete")
+    if int(simulation["response_window_steps"]) > int(simulation["steps"]):
+        raise SignedDynamicsError("Response window cannot exceed the simulated horizon")
+    bands = raw.get("descriptive_bands")
+    if not isinstance(bands, dict) or set(bands) != {
+        "pattern_cosine_distance_p90",
+        "amplitude_p90_to_p10_ratio",
+    }:
+        raise SignedDynamicsError("Motor-sensitivity descriptive bands are incomplete")
+    if raw.get("selection_policy") != "forbidden":
+        raise SignedDynamicsError("Motor sensitivity must forbid candidate selection")
+    return raw
+
+
 def _declared_input_body_ids() -> np.ndarray:
     frames = []
     for path in INPUT_ROUTE_PATHS:
@@ -318,6 +368,22 @@ def _declared_input_body_ids() -> np.ndarray:
     return body_ids
 
 
+def _declared_motor_indices(body_ids: np.ndarray) -> np.ndarray:
+    if not MOTOR_ROUTE_PATH.is_file():
+        raise FileNotFoundError(f"Declared motor routes are absent: {MOTOR_ROUTE_PATH}")
+    frame = pd.read_parquet(MOTOR_ROUTE_PATH, columns=["source_body_id"])
+    motor_body_ids = np.sort(frame["source_body_id"].drop_duplicates().to_numpy(dtype=np.int64))
+    if len(frame) != 815 or len(motor_body_ids) != 815:
+        raise SignedDynamicsError(
+            f"Expected 815 unique declared motor outputs, got {len(frame)} rows and "
+            f"{len(motor_body_ids)} unique ids"
+        )
+    indices = np.searchsorted(body_ids, motor_body_ids)
+    if np.any(indices >= len(body_ids)) or not np.array_equal(body_ids[indices], motor_body_ids):
+        raise SignedDynamicsError("Declared motor outputs do not all belong to the runtime graph")
+    return indices.astype(np.int64, copy=False)
+
+
 @lru_cache(maxsize=1)
 def load_signed_runtime_assets() -> SignedRuntimeAssets:
     contract = SignedDynamicsContract.load()
@@ -329,7 +395,262 @@ def load_signed_runtime_assets() -> SignedRuntimeAssets:
     input_indices = np.searchsorted(graph.body_ids, input_body_ids)
     if not np.array_equal(graph.body_ids[input_indices], input_body_ids):
         raise SignedDynamicsError("Declared CNS inputs do not all belong to the runtime graph")
-    return SignedRuntimeAssets(graph, contract, class_indices, input_indices)
+    motor_indices = _declared_motor_indices(graph.body_ids)
+    return SignedRuntimeAssets(
+        graph, contract, class_indices, input_indices, motor_indices
+    )
+
+
+def _descriptive_band(value: float, thresholds: Mapping[str, Any]) -> str:
+    low_max = float(thresholds["low_max"])
+    mixed_max = float(thresholds["mixed_max"])
+    if not 0 <= low_max < mixed_max:
+        raise SignedDynamicsError("Descriptive sensitivity bands must be ordered")
+    if value <= low_max:
+        return "low"
+    if value <= mixed_max:
+        return "mixed"
+    return "high"
+
+
+def summarize_motor_response_ensemble(
+    responses: np.ndarray,
+    scenario_ids: tuple[str, ...],
+    *,
+    near_zero_rms: float,
+    descriptive_bands: Mapping[str, Mapping[str, Any]],
+    semantic_quantization: float,
+) -> dict[str, bool | int | float | str]:
+    """Summarize candidate dispersion without ranking or selecting a member."""
+    values = np.asarray(responses, dtype=np.float64)
+    if values.ndim != 3 or values.shape[1] != len(scenario_ids):
+        raise SignedDynamicsError(
+            "Motor responses must have shape candidate x scenario x motor-output"
+        )
+    if values.shape[0] < 2 or values.shape[2] < 1:
+        raise SignedDynamicsError("Motor sensitivity needs multiple candidates and outputs")
+    if len(set(scenario_ids)) != len(scenario_ids):
+        raise SignedDynamicsError("Motor-sensitivity scenario ids must be unique")
+    if not np.isfinite(values).all():
+        raise SignedDynamicsError("Motor-response ensemble contains non-finite values")
+    if near_zero_rms <= 0 or semantic_quantization <= 0:
+        raise SignedDynamicsError("Sensitivity numerical resolutions must be positive")
+
+    rms = np.sqrt(np.mean(np.square(values), axis=2))
+    metrics: dict[str, bool | int | float | str] = {
+        "candidate_count": int(values.shape[0]),
+        "scenario_count": int(values.shape[1]),
+        "motor_outputs": int(values.shape[2]),
+        "response_vectors_accounted": int(values.shape[0] * values.shape[1]),
+        "near_zero_response_count": int(np.count_nonzero(rms <= near_zero_rms)),
+        "motor_response_rms_min": float(np.min(rms)),
+        "motor_response_rms_median": float(np.median(rms)),
+        "motor_response_rms_max": float(np.max(rms)),
+        "candidate_selection_performed": False,
+    }
+    pattern_p90_values: list[float] = []
+    amplitude_ratio_values: list[float] = []
+    upper = np.triu_indices(values.shape[0], k=1)
+    for scenario_index, scenario_id in enumerate(scenario_ids):
+        safe_id = scenario_id.replace("-", "_").replace(".", "_")
+        scenario_vectors = values[:, scenario_index, :]
+        scenario_rms = rms[:, scenario_index]
+        norms = np.linalg.norm(scenario_vectors, axis=1)
+        usable = norms > near_zero_rms * math.sqrt(values.shape[2])
+        normalized = np.zeros_like(scenario_vectors)
+        normalized[usable] = scenario_vectors[usable] / norms[usable, None]
+        cosine_distance = 1.0 - np.clip(normalized @ normalized.T, -1.0, 1.0)
+        pairwise = cosine_distance[upper]
+        valid_pairs = usable[upper[0]] & usable[upper[1]]
+        pairwise = pairwise[valid_pairs]
+        if len(pairwise):
+            cosine_median = float(np.median(pairwise))
+            cosine_p90 = float(np.quantile(pairwise, 0.9))
+            cosine_max = float(np.max(pairwise))
+        else:
+            cosine_median = cosine_p90 = cosine_max = 2.0
+        p10 = float(np.quantile(scenario_rms, 0.1))
+        p90 = float(np.quantile(scenario_rms, 0.9))
+        amplitude_ratio = p90 / max(p10, near_zero_rms)
+        centroid = np.mean(scenario_vectors, axis=0)
+        centroid_norm = max(float(np.linalg.norm(centroid)), near_zero_rms)
+        centroid_distance = np.linalg.norm(scenario_vectors - centroid, axis=1) / centroid_norm
+        metrics.update(
+            {
+                f"{safe_id}_usable_response_count": int(np.count_nonzero(usable)),
+                f"{safe_id}_response_rms_p10": p10,
+                f"{safe_id}_response_rms_p90": p90,
+                f"{safe_id}_amplitude_p90_to_p10_ratio": float(amplitude_ratio),
+                f"{safe_id}_pairwise_cosine_distance_median": cosine_median,
+                f"{safe_id}_pairwise_cosine_distance_p90": cosine_p90,
+                f"{safe_id}_pairwise_cosine_distance_max": cosine_max,
+                f"{safe_id}_centroid_relative_distance_median": float(
+                    np.median(centroid_distance)
+                ),
+                f"{safe_id}_centroid_relative_distance_p90": float(
+                    np.quantile(centroid_distance, 0.9)
+                ),
+            }
+        )
+        for candidate_index, candidate_rms in enumerate(scenario_rms):
+            metrics[f"{safe_id}_candidate_{candidate_index:02d}_response_rms"] = float(
+                candidate_rms
+            )
+        pattern_p90_values.append(cosine_p90)
+        amplitude_ratio_values.append(float(amplitude_ratio))
+
+    pattern_max = max(pattern_p90_values)
+    amplitude_max = max(amplitude_ratio_values)
+    pattern_band = _descriptive_band(
+        pattern_max, descriptive_bands["pattern_cosine_distance_p90"]
+    )
+    amplitude_band = _descriptive_band(
+        amplitude_max, descriptive_bands["amplitude_p90_to_p10_ratio"]
+    )
+    severity = {"low": 0, "mixed": 1, "high": 2}
+    overall_band = max((pattern_band, amplitude_band), key=severity.__getitem__)
+    quantized = np.rint(values / semantic_quantization).astype("<i8", copy=False)
+    metrics.update(
+        {
+            "pattern_cosine_distance_p90_max": float(pattern_max),
+            "amplitude_p90_to_p10_ratio_max": float(amplitude_max),
+            "pattern_sensitivity_band": pattern_band,
+            "amplitude_sensitivity_band": amplitude_band,
+            "overall_sensitivity_band": overall_band,
+            "semantic_response_sha256": hashlib.sha256(quantized.tobytes()).hexdigest(),
+        }
+    )
+    numeric = [
+        value
+        for value in metrics.values()
+        if isinstance(value, (int, float)) and not isinstance(value, bool)
+    ]
+    metrics["all_metrics_finite"] = bool(np.isfinite(numeric).all())
+    return metrics
+
+
+def evaluate_motor_ensemble_sensitivity(
+    seed: int,
+) -> dict[str, bool | int | float | str]:
+    """Measure raw central motor-output dispersion for every pilot member."""
+    import torch
+
+    protocol = load_motor_sensitivity_protocol()
+    if seed != int(protocol["seed"]):
+        raise SignedDynamicsError("Trial seed differs from the sensitivity protocol")
+    simulation = protocol["simulation"]
+    assets = load_signed_runtime_assets()
+    node_count = len(assets.graph.body_ids)
+    scenarios = protocol["scenarios"]
+    state_columns: list[np.ndarray] = []
+    input_columns: list[np.ndarray] = []
+    for scenario in scenarios:
+        rng = np.random.default_rng(int(scenario["rng_seed"]))
+        base = rng.normal(
+            0.0, float(simulation["initial_state_std"]), node_count
+        ).astype(np.float32)
+        stimulus = np.zeros(node_count, dtype=np.float32)
+        terminal_values = rng.normal(0.0, 1.0, len(assets.input_indices)).astype(
+            np.float32
+        )
+        terminal_rms = float(np.sqrt(np.mean(np.square(terminal_values))))
+        if terminal_rms <= 0:
+            raise SignedDynamicsError("Sensitivity terminal stimulus has zero RMS")
+        terminal_values /= terminal_rms
+        stimulus[assets.input_indices] = terminal_values * float(
+            scenario["input_amplitude"]
+        )
+        state_columns.extend((base, base.copy()))
+        input_columns.extend((np.zeros(node_count, dtype=np.float32), stimulus))
+
+    initial_states = np.stack(state_columns, axis=1)
+    input_matrix = np.stack(input_columns, axis=1)
+    device = str(simulation["backend"])
+    if device.startswith("cuda") and not torch.cuda.is_available():
+        raise SignedDynamicsError("CUDA sensitivity study requested but CUDA is unavailable")
+    inverse = torch.from_numpy(assets.graph.incoming_inverse).to(device)
+    stimuli = torch.from_numpy(input_matrix).to(device)
+    motor_indices = torch.from_numpy(assets.motor_indices).to(device)
+    response_window = int(simulation["response_window_steps"])
+    steps = int(simulation["steps"])
+    responses: list[np.ndarray] = []
+    started = time.perf_counter()
+    with torch.inference_mode():
+        for candidate_index in protocol["candidate_indices"]:
+            candidate = generate_pilot_candidate(int(candidate_index))
+            signed = compile_signed_matrix(
+                assets.graph.matrix,
+                assets.neuron_class_indices,
+                assets.contract,
+                {
+                    class_id: candidate[class_id]
+                    for class_id in assets.contract.class_ids
+                },
+            )
+            crow = torch.from_numpy(signed.indptr.astype(np.int32, copy=False)).to(device)
+            col = torch.from_numpy(signed.indices.astype(np.int32, copy=False)).to(device)
+            data = torch.from_numpy(signed.data.astype(np.float32, copy=False)).to(device)
+            with warnings.catch_warnings():
+                warnings.filterwarnings(
+                    "ignore", message="Sparse CSR tensor support is in beta state"
+                )
+                matrix = torch.sparse_csr_tensor(
+                    crow,
+                    col,
+                    data,
+                    size=signed.shape,
+                    dtype=torch.float32,
+                    device=device,
+                    check_invariants=False,
+                )
+            states = torch.from_numpy(initial_states).to(device)
+            alpha = 1.0 - math.exp(
+                -float(simulation["dt_ms"]) / float(candidate["time_constant_ms"])
+            )
+            motor_sum = torch.zeros(
+                (len(assets.motor_indices), len(scenarios)),
+                dtype=torch.float32,
+                device=device,
+            )
+            for step in range(steps):
+                drive = torch.sparse.mm(matrix, states) * inverse[:, None]
+                proposal = torch.tanh(
+                    drive
+                    + float(candidate["input_gain"]) * stimuli
+                    + float(candidate["bias"])
+                )
+                states = (1.0 - alpha) * states + alpha * proposal
+                if step >= steps - response_window:
+                    motor_states = states[motor_indices]
+                    motor_sum += motor_states[:, 1::2] - motor_states[:, 0::2]
+            candidate_response = (motor_sum / response_window).T.cpu().numpy()
+            responses.append(candidate_response)
+            del matrix, crow, col, data, states, motor_sum
+
+    if device.startswith("cuda"):
+        torch.cuda.synchronize(device)
+    elapsed = time.perf_counter() - started
+    metrics = summarize_motor_response_ensemble(
+        np.stack(responses, axis=0),
+        tuple(str(item["id"]) for item in scenarios),
+        near_zero_rms=float(simulation["near_zero_response_rms"]),
+        descriptive_bands=protocol["descriptive_bands"],
+        semantic_quantization=float(simulation["semantic_response_quantization"]),
+    )
+    metrics.update(
+        {
+            "backend": device,
+            "steps_completed": steps,
+            "input_terminals": int(len(assets.input_indices)),
+            "measured_candidate_scenarios_per_second": float(
+                len(protocol["candidate_indices"]) * len(scenarios) / elapsed
+            ),
+        }
+    )
+    del inverse, stimuli, motor_indices
+    if device.startswith("cuda"):
+        torch.cuda.empty_cache()
+    return metrics
 
 
 def characterize_unfitted_regime(probe_id: str, seed: int) -> dict[str, bool | int | float | str]:

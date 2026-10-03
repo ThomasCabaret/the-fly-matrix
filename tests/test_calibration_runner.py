@@ -165,6 +165,25 @@ class CalibrationRunnerTests(unittest.TestCase):
             with self.assertRaisesRegex(CalibrationRunnerError, "not permitted"):
                 run_job(job_path, root / "runs")
 
+    def test_ensemble_sensitivity_evaluator_cannot_be_reused_for_fitting(self) -> None:
+        source = (
+            ROOT
+            / "calibration"
+            / "runner"
+            / "central-ensemble-motor-sensitivity-v0.yaml"
+        )
+        if not source.is_file():
+            self.skipTest("Sensitivity runner job is added after protocol preregistration")
+        job = yaml.safe_load(source.read_text(encoding="utf-8"))
+        job["mode"] = "fit"
+        job["output_parameter_set_id"] = "parameters.forbidden.sensitivity.v0"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            job_path = root / "job.yaml"
+            job_path.write_text(yaml.safe_dump(job), encoding="utf-8")
+            with self.assertRaisesRegex(CalibrationRunnerError, "not permitted"):
+                run_job(job_path, root / "runs")
+
     def test_runtime_metrics_can_be_retained_but_excluded_from_semantic_hash(self) -> None:
         counter = {"value": 0}
 

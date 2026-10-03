@@ -12,7 +12,9 @@ from the_fly_matrix.signed_dynamics import (
     generate_pilot_candidate,
     load_diagnostic_probe,
     load_fit_campaign,
+    load_motor_sensitivity_protocol,
     numpy_signed_step,
+    summarize_motor_response_ensemble,
 )
 
 
@@ -139,6 +141,59 @@ class SignedDynamicsTests(unittest.TestCase):
     def test_pilot_candidate_index_is_bounded(self) -> None:
         with self.assertRaisesRegex(SignedDynamicsError, "outside the declared"):
             generate_pilot_candidate(32)
+
+    def test_motor_sensitivity_protocol_accounts_for_ensemble_without_selection(self) -> None:
+        protocol = load_motor_sensitivity_protocol()
+        self.assertEqual(protocol["candidate_indices"], list(range(32)))
+        self.assertEqual(protocol["selection_policy"], "forbidden")
+        self.assertFalse(protocol["behavior_exposure"]["behavior_targeted"])
+        self.assertFalse(protocol["behavior_exposure"]["body_or_world_executed"])
+        self.assertEqual(len(protocol["scenarios"]), 3)
+
+    def test_motor_sensitivity_summary_describes_but_does_not_rank(self) -> None:
+        protocol = load_motor_sensitivity_protocol()
+        base = np.asarray([1.0, -0.5, 0.25, 0.75], dtype=np.float64)
+        responses = np.stack(
+            [
+                np.stack((base * scale, base * scale), axis=0)
+                for scale in (1.0, 1.1, 0.9, 1.05)
+            ],
+            axis=0,
+        )
+        summary = summarize_motor_response_ensemble(
+            responses,
+            ("a", "b"),
+            near_zero_rms=1e-8,
+            descriptive_bands=protocol["descriptive_bands"],
+            semantic_quantization=1e-5,
+        )
+        self.assertEqual(summary["candidate_count"], 4)
+        self.assertEqual(summary["response_vectors_accounted"], 8)
+        self.assertEqual(summary["overall_sensitivity_band"], "low")
+        self.assertFalse(summary["candidate_selection_performed"])
+        self.assertNotIn("selected_candidate", summary)
+        self.assertTrue(summary["all_metrics_finite"])
+
+    def test_motor_sensitivity_marks_opposed_patterns_high(self) -> None:
+        protocol = load_motor_sensitivity_protocol()
+        responses = np.asarray(
+            [
+                [[1.0, 0.0]],
+                [[-1.0, 0.0]],
+                [[0.0, 1.0]],
+                [[0.0, -1.0]],
+            ],
+            dtype=np.float64,
+        )
+        summary = summarize_motor_response_ensemble(
+            responses,
+            ("opposed",),
+            near_zero_rms=1e-8,
+            descriptive_bands=protocol["descriptive_bands"],
+            semantic_quantization=1e-5,
+        )
+        self.assertEqual(summary["pattern_sensitivity_band"], "high")
+        self.assertEqual(summary["overall_sensitivity_band"], "high")
 
 
 if __name__ == "__main__":
