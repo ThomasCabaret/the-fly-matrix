@@ -51,12 +51,13 @@ provenance:
   assumptions:
     - Exact acceptable ranges are not yet known and must not be invented.
 
-validation: not_run
+validation: unfitted_baseline_characterized_not_fitted
 blocked_reason: >-
   Structural wiring, the family inventory, the dependency DAG and the typed
   transmitter/sign prior are accepted. A minimal twelve-parameter signed model
-  candidate and calibration runner now exist, but no value has been fitted and
+  candidate and calibration runner now exist. Seven preregistered unfitted regimes
+  have been characterized reproducibly, but no value has been fitted and
   evidence-backed acceptance thresholds remain unresolved.
 next_action: >-
-  Validate the signed model contract exhaustively, characterize its unfitted
-  baseline across explicit probes, then lock technical thresholds before fitting.
+  Lock evidence-backed technical thresholds and preregister the first fitting
+  campaign without selecting a diagnostic probe as an accepted parameter set.

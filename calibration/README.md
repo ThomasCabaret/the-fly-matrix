@@ -84,3 +84,6 @@ full-graph regimes of the signed MaleCNS candidate. The job records silence,
 activity, saturation, class distributions and perturbation response. Its gates
 only verify execution, finiteness, terminal accounting and CPU/GPU agreement;
 diagnostic outcomes never select a regime or create a parameter set.
+The compact result
+`runner/central-unfitted-characterization-result-v0.yaml` points to two clean
+runs with the same semantic hash and records both permitted and forbidden claims.

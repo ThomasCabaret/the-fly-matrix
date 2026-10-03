@@ -15,7 +15,7 @@ provenance:
   used_claims: [The annotation table contains bodies of mixed scope rather than neurons only, Published superclass presence identifies the 166700 canonical-neuron scope, Every retained body remains individually flagged and auditable]
   assumptions: [The v1.0 superclass-based rule is a project runtime boundary and may require a versioned revision for another dataset release]
 parameter_family_ids: [parameter.central.neuron_dynamics, parameter.central.synaptic_gain]
-validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.central_graph_runtime, validation.real_connectome_execution_benchmark, validation.closed_loop, validation.resting_dynamics]
-next_action: Profiler la boucle fermée et préparer l'injection de paramètres versionnés sans promouvoir la règle temporelle de benchmark en dynamique calibrée.
+validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.central_graph_runtime, validation.real_connectome_execution_benchmark, validation.closed_loop, validation.signed_dynamics_contract, validation.resting_dynamics]
+next_action: Préenregistrer les seuils techniques et la première campagne de fitting sans promouvoir les valeurs des probes diagnostiques.
 blocked_by: []
 completion_criteria: [Les 211577 corps annotés sont conservés et flagués, Les 166700 neurones canoniques et 25582938 arêtes runtime sont contrôlés, Chaque terminal vise un neurone canonique, Projection creuse déterministe, Régime basal stable après calibration]

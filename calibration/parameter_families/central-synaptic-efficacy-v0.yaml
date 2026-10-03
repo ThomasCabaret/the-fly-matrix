@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.synaptic_efficacy.v0
 title: Central signed synaptic efficacy
-status: model_candidate_executable_unfitted
+status: baseline_characterized_unfitted
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather, supports: structural synapse counts only}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: explicit minimal signed executable candidate but no values}]
 assumptions: [The unsigned incoming-L1 benchmark normalization is not an accepted model., The nine-class candidate is provisional and must not gain local or edge residuals without a versioned capacity decision.]
-next_action: Characterize the nine-class unfitted baseline and preregister technical response thresholds before fitting.
+next_action: Preregister evidence-backed technical response thresholds and fitting; keep all nine diagnostic efficacy vectors unpromoted.

@@ -1,0 +1,58 @@
+schema_version: 1
+id: diagnostic_result.central_unfitted_characterization.v0
+job_id: campaign.diagnostic.central_unfitted_characterization.v0
+status: complete_diagnostic_not_calibration
+claim_label: UNFITTED BASELINE / DIAGNOSTIC ONLY / NOT CALIBRATION
+
+clean_runs:
+  - 20261003T090212046606Z--campaign-diagnostic-central-unfitted-characterization-v0
+  - 20261003T090226460183Z--campaign-diagnostic-central-unfitted-characterization-v0
+run_summary_refs:
+  - runs/calibration/runner/20261003T090212046606Z--campaign-diagnostic-central-unfitted-characterization-v0/summary.json
+  - runs/calibration/runner/20261003T090226460183Z--campaign-diagnostic-central-unfitted-characterization-v0/summary.json
+
+accounting: {scheduled_per_run: 7, accepted_per_run: 7, rejected_per_run: 0, errors_per_run: 0, unaccounted_per_run: 0}
+reproducibility:
+  semantic_result_sha256: 351e883439080618af35a1e685efcd54058e8bd1f88cf206f6210d5863f41ace
+  semantic_float_significant_digits: 4
+  semantic_metric_exclusions: [measured_steps_per_second, simulated_to_wall_clock_ratio, cpu_gpu_max_abs_error]
+  job_config_sha256: afb551de414bde20df6bf71b32ccdecf1a6db8dfc35dc90891abc9db4e20d38a
+  diagnostic_profile_sha256: 7cbf0a601498f61084e7535a6bbe950420213f391b152725400b88dfbd15ff66
+  model_sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e
+  sign_prior_parameter_set_sha256: dc9f14cc12f590f05d504ff8868f250ca25c83b76ab05914a6a6d06bb785d2d5
+  git_commit: cd936af0edfd388546d58c711a5748c08c06d42b
+  git_worktree_clean: true
+  python: 3.12.5
+
+scope:
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+  declared_input_terminals: 17884
+  simulated_ms_per_probe: 200
+  probes: 7
+  seed: 31003
+  direct_input_note: Isolated CNS diagnostic stimulus; it does not validate body-to-CNS transfer boxes.
+
+# Rounded observations are a compact index into the immutable full-precision run
+# reports. No value below is an acceptance threshold or promoted parameter.
+observations:
+  weak_signed_no_input: {final_active_fraction: 0.0, final_saturated_fraction: 0.0, final_state_std: 4.672e-7, perturbation_final_gain: 4.707e-5, stable_half_recovery_step: 3}
+  weak_signed_terminal_input: {final_active_fraction: 0.1935, final_saturated_fraction: 0.0, final_state_std: 0.01634, perturbation_final_gain: 4.721e-5, stable_half_recovery_step: 3}
+  nominal_signed_terminal_input: {final_active_fraction: 0.5117, final_saturated_fraction: 0.0, final_state_std: 0.01682, perturbation_final_gain: 0.001149, stable_half_recovery_step: 3}
+  strong_signed_terminal_input: {final_active_fraction: 0.9652, final_saturated_fraction: 0.000216, final_state_std: 0.1412, final_max_abs: 0.9869, perturbation_final_gain: 3.988, stable_half_recovery_step: null}
+  slow_nominal_signed_terminal_input: {final_active_fraction: 0.7782, final_saturated_fraction: 0.0, final_state_std: 0.01639, perturbation_final_gain: 0.02895, stable_half_recovery_step: 8}
+  context_all_positive: {final_active_fraction: 0.6956, final_saturated_fraction: 0.0, final_state_std: 0.01775, perturbation_final_gain: 0.009637, stable_half_recovery_step: 3}
+  context_all_negative: {final_active_fraction: 0.5944, final_saturated_fraction: 0.0, final_state_std: 0.01728, perturbation_final_gain: 0.004057, stable_half_recovery_step: 3}
+  cpu_gpu_max_abs_error_upper_bound: 7.451e-9
+  measured_steps_per_second_range: [79.1, 103.3]
+
+accepted_claims:
+  - The full signed graph can execute all seven preregistered unfitted regimes with finite metrics and exhaustive trial accounting.
+  - The clean duplicate runs have the same declared semantic result at four significant digits.
+  - The probe grid discriminates signal extinction, recoverable response and sustained perturbation amplification.
+forbidden_claims:
+  - Any probe value is calibrated, physiological, admissible or selected for later use.
+  - Seven accepted trials mean seven acceptable dynamical regimes; acceptance only means successful diagnostic execution.
+  - The direct terminal stimulus validates peripheral transfer boxes, embodiment or behavior.
+  - The strong regime's sustained amplification is a biological or technical success.
+next_action: Preregister evidence-backed technical thresholds and a fitting campaign without using this diagnostic grid as a hidden selection set.

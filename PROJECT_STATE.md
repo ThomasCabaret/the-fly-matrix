@@ -3,7 +3,8 @@
 Mise à jour : 2026-10-03. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
-validé ; ses douze paramètres restent entièrement non ajustés.
+validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
+ses douze paramètres restent entièrement non ajustés.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -98,6 +99,17 @@ zéro arête est supprimée et le hash sémantique répété est
 Cette preuve accepte la représentation sparse et la comptabilité seulement. Les
 valeurs du probe, l'équation comme modèle biologique, la stabilité et tout
 comportement restent explicitement non acceptés.
+
+Le run diagnostique propre
+`20261003T090226460183Z--campaign-diagnostic-central-unfitted-characterization-v0`
+a ensuite exécuté sept régimes non ajustés pendant 200 ms chacun sur le graphe
+complet. Une seconde exécution propre reproduit le hash sémantique
+`351e883439080618af35a1e685efcd54058e8bd1f88cf206f6210d5863f41ace`.
+Le régime faible sans entrée s'éteint, les régimes intermédiaires récupèrent
+après la petite perturbation, tandis que le régime fort conserve un gain de
+perturbation de 3,988 et atteint 96,5 % de neurones numériquement actifs. Ces
+observations montrent que le banc distingue plusieurs modes, pas que l'un d'eux
+est acceptable. Aucun probe, seuil ou paramètre n'est promu.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -315,7 +327,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, modèle central signé structurellement validé, 0 famille ajustée et aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, modèle central signé structurellement validé et caractérisé sur 7 régimes non ajustés, 0 famille ajustée et aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -381,7 +393,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **90 tests** actuels passent, y compris les
+conservées et classifiées. Les **96 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -397,9 +409,9 @@ précédents.
 ## Front de calibration
 
 **Ouvert.** Les campagnes sont maintenant reconstructibles et un premier modèle
-central signé minimal est exécutable. La prochaine action n'est toujours pas un
-fitting global : il faut d'abord caractériser honnêtement ses régimes non ajustés
-et verrouiller des seuils techniques défendables.
+central signé minimal est exécutable. Sa caractérisation non ajustée est terminée.
+La prochaine action n'est toujours pas un fitting global : il faut d'abord
+verrouiller des seuils techniques défendables et préenregistrer la campagne.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -428,8 +440,9 @@ budgets et scénarios tenus à l'écart. Le contrat central signé ajoute neuf
 efficacités de classe et trois paramètres globaux, tous non ajustés, et couvre
 exhaustivement le graphe avec un probe structurel non promouvable. Aucun parameter
 set complet n'a été promu et aucune cible comportementale n'est autorisée. Le
-prochain lot doit construire la caractérisation non ajustée et verrouiller ses
-critères techniques avant d'enregistrer un véritable évaluateur de fitting ; les
+prochain lot doit verrouiller les critères techniques à partir de sources ou
+justifications explicites, puis enregistrer un véritable évaluateur de fitting sans
+transformer les probes diagnostiques en sélection cachée ; les
 scopes locaux périphériques restent un front parallèle. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
@@ -458,6 +471,7 @@ compile_calibration_evidence.bat # prior neurotransmetteur/signe reproductible
 parameter_compiler_check.bat # factorisation routage/transfert, test structurel seulement
 calibration_runner_check.bat # runner autonome, six essais d'infrastructure non calibrants
 signed_dynamics_contract_check.bat # couverture signée exhaustive, probes non calibrants
+characterize_signed_dynamics.bat # 7 régimes centraux non ajustés, diagnostic seulement
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les
