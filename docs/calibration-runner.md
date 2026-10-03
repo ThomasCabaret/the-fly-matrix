@@ -34,7 +34,9 @@ minimum admissible count, a maximum error count and exact repetition consistency
 The semantic result hash excludes timestamps and any metrics named explicitly in
 `semantic_metric_exclusions`, so independent runs can retain throughput timings
 without treating clock jitter as scientific drift. An excluded metric cannot be
-used by an acceptance gate.
+used by an acceptance gate. GPU campaigns may additionally declare
+`semantic_float_significant_digits`; full-precision values remain in each trial,
+while only the preregistered significant precision enters reproducibility hashes.
 
 ## Leakage and topology guards
 

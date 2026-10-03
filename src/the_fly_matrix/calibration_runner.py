@@ -48,9 +48,23 @@ def _canonical_hash(value: Any) -> str:
 
 
 def _semantic_metrics(
-    metrics: Mapping[str, Scalar], exclusions: frozenset[str]
+    metrics: Mapping[str, Scalar],
+    exclusions: frozenset[str],
+    float_significant_digits: int | None,
 ) -> dict[str, Scalar]:
-    return {key: value for key, value in metrics.items() if key not in exclusions}
+    result: dict[str, Scalar] = {}
+    for key, value in metrics.items():
+        if key in exclusions:
+            continue
+        if (
+            float_significant_digits is not None
+            and isinstance(value, float)
+            and np.isfinite(value)
+            and value != 0.0
+        ):
+            value = float(f"{value:.{float_significant_digits}g}")
+        result[key] = value
+    return result
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
@@ -305,6 +319,13 @@ def validate_job(job: Mapping[str, Any], job_path: Path) -> dict[str, str]:
         raise CalibrationRunnerError(
             f"Gated metrics cannot be excluded from semantic results: {sorted(overlap)}"
         )
+    significant_digits = job.get("semantic_float_significant_digits")
+    if significant_digits is not None and (
+        not isinstance(significant_digits, int) or not 1 <= significant_digits <= 15
+    ):
+        raise CalibrationRunnerError(
+            "semantic_float_significant_digits must be an integer from 1 to 15"
+        )
     repetitions = job.get("repeat_each", 1)
     if not isinstance(repetitions, int) or repetitions < 1:
         raise CalibrationRunnerError("repeat_each must be a positive integer")
@@ -440,11 +461,16 @@ def run_job(
 
     counts = Counter(item["status"] for item in trial_results)
     metric_exclusions = frozenset(job.get("semantic_metric_exclusions", []))
+    semantic_digits = job.get("semantic_float_significant_digits")
     repeated_metrics: dict[str, list[str]] = {}
     for result in trial_results:
         if result["status"] in {"accepted", "rejected"}:
             repeated_metrics.setdefault(result["case_id"], []).append(
-                _canonical_hash(_semantic_metrics(result["metrics"], metric_exclusions))
+                _canonical_hash(
+                    _semantic_metrics(
+                        result["metrics"], metric_exclusions, semantic_digits
+                    )
+                )
             )
     nondeterministic_cases = sorted(
         case_id for case_id, hashes in repeated_metrics.items() if len(set(hashes)) > 1
@@ -487,7 +513,9 @@ def run_job(
     semantic_trials = [
         {
             **item,
-            "metrics": _semantic_metrics(item["metrics"], metric_exclusions),
+            "metrics": _semantic_metrics(
+                item["metrics"], metric_exclusions, semantic_digits
+            ),
         }
         for item in recorded_trials
     ]
@@ -520,6 +548,7 @@ def run_job(
         },
         "semantic_result_sha256": _canonical_hash(semantic_trials),
         "semantic_metric_exclusions": sorted(metric_exclusions),
+        "semantic_float_significant_digits": semantic_digits,
         "reproducibility": {
             "job_config_sha256": config_sha256,
             "input_hashes": input_hashes,

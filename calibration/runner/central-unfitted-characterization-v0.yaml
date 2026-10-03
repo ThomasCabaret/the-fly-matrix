@@ -37,6 +37,7 @@ input_files:
 
 evaluator_id: malecns_signed_unfitted_characterization.v0
 semantic_metric_exclusions: [measured_steps_per_second, simulated_to_wall_clock_ratio]
+semantic_float_significant_digits: 4
 repeat_each: 1
 trials:
   - &diagnostic_trial
@@ -86,7 +87,7 @@ acceptance:
   require_all_trials_accepted: true
   require_repetition_determinism: false
   maximum_errors: 0
-  reproducibility_mode: deterministic_seed_with_runtime_timing_excluded_from_scientific_claims
+  reproducibility_mode: deterministic_seed_gpu_metrics_compared_at_4_significant_digits
 
 capacity_policy:
   automatic_capacity_increase_allowed: false

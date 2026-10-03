@@ -181,6 +181,34 @@ class CalibrationRunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(CalibrationRunnerError, "Gated metrics cannot"):
             validate_job(job, Path("test-job.yaml"))
 
+    def test_float_semantics_can_use_declared_significant_digits(self) -> None:
+        counter = {"value": 0}
+
+        def evaluator(trial: dict) -> dict:
+            counter["value"] += 1
+            jitter = 0.0000002 * counter["value"]
+            return {"score": 1, "diagnostic": 1.2344 + jitter}
+
+        job = self._base_job()
+        job["trials"] = [job["trials"][0]]
+        job["budget"]["max_trials"] = 1
+        job["semantic_float_significant_digits"] = 4
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            job_path = root / "job.yaml"
+            job_path.write_text(yaml.safe_dump(job), encoding="utf-8")
+            first = run_job(
+                job_path, root / "first", evaluators={"test.evaluator": evaluator}
+            )
+            second = run_job(
+                job_path, root / "second", evaluators={"test.evaluator": evaluator}
+            )
+            self.assertEqual(first["semantic_result_sha256"], second["semantic_result_sha256"])
+            self.assertNotEqual(
+                first["trials"][0]["metrics"]["diagnostic"],
+                second["trials"][0]["metrics"]["diagnostic"],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
