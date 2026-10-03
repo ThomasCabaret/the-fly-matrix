@@ -36,7 +36,10 @@ input_files:
     sha256: dc9f14cc12f590f05d504ff8868f250ca25c83b76ab05914a6a6d06bb785d2d5
 
 evaluator_id: malecns_signed_unfitted_characterization.v0
-semantic_metric_exclusions: [measured_steps_per_second, simulated_to_wall_clock_ratio]
+semantic_metric_exclusions:
+  - measured_steps_per_second
+  - simulated_to_wall_clock_ratio
+  - cpu_gpu_max_abs_error
 semantic_float_significant_digits: 4
 repeat_each: 1
 trials:

@@ -38,6 +38,12 @@ used by an acceptance gate. GPU campaigns may additionally declare
 `semantic_float_significant_digits`; full-precision values remain in each trial,
 while only the preregistered significant precision enters reproducibility hashes.
 
+The unfitted full-graph characterization excludes measured throughput and the
+raw CPU/GPU maximum-error magnitude from its semantic hash. Its binary CPU/GPU
+agreement decision remains semantic and gated. Thus harmless reduction-order
+jitter is retained at full precision for audit without masquerading as a changed
+scientific result.
+
 ## Leakage and topology guards
 
 Jobs in `fit` or `validation` mode cannot name a `held_out` or
