@@ -24,7 +24,9 @@ input_files:
   - {path: calibration/parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml, sha256: 9507bfceb7fd0965826799f33891529a164c4c9168072420543ddb88537af39e}
 
 evaluator_id: malecns_central_ensemble_motor_sensitivity.v0
-semantic_metric_exclusions: [measured_candidate_scenarios_per_second]
+semantic_metric_exclusions:
+  - measured_candidate_scenarios_per_second
+  - semantic_response_sha256
 semantic_float_significant_digits: 4
 repeat_each: 1
 trials:
@@ -57,6 +59,11 @@ acceptance:
   minimum_accepted_trials: 1
   require_repetition_determinism: false
   maximum_errors: 0
+  reproducibility_mode: >-
+    Compare all interpreted scalar metrics at four significant digits. Preserve
+    the quantized full-response hash as a trace diagnostic, but exclude it from
+    semantic equality because CUDA sparse reduction order can move individual
+    values across quantization boundaries without changing aggregate results.
   interpretation: >-
     Passing means exhaustive, finite execution of the sensitivity measurement.
     Low, mixed or high dispersion is a result, never a trial rejection and never
