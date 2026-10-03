@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.synaptic_efficacy.v0
 title: Central signed synaptic efficacy
-status: technical_pilot_admissible_ensemble_unfrozen_nonidentified
+status: technical_timestep_filtered_31_member_ensemble_unfrozen_nonidentified
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -16,7 +16,7 @@ origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, loc
 identifiability: {status: model_selected_values_unidentified, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.neuron_dynamics.v0], joint_calibration_reason: class efficacies and global temporal response compensate without activity constraints}
 dependencies: {upstream_family_ids: [parameter.central.transmitter_sign_prior.v0], downstream_family_ids: [parameter.central.neuron_dynamics.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [no_runaway_activity, no_absorbing_silence], reference_selection_rule: unresolved}
-freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather, supports: structural synapse counts only}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: explicit minimal signed executable candidate but no values}]
 assumptions: [The unsigned incoming-L1 benchmark normalization is not an accepted model., The nine-class candidate is provisional and must not gain local or edge residuals without a versioned capacity decision.]
-next_action: Constrain the 32-member pilot ensemble with independent non-behavioral evidence or a preregistered downstream sensitivity test; keep every member unfrozen.
+next_action: Constrain the 31-member timestep-convergent ensemble with independent biological evidence transfer or another non-behavioral constraint; keep every member unfrozen.

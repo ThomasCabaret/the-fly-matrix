@@ -4,10 +4,10 @@ Mise à jour : 2026-10-03. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
-une première campagne technique a produit 32 candidats admissibles mais aucun
-paramètre de référence n'est identifié ni gelé. Une étude aval préenregistrée
-montre désormais que ces candidats divergent fortement aux sorties motrices
-centrales : ils ne sont pas interchangeables et aucun n'est sélectionné.
+une première campagne technique a produit 32 candidats admissibles. Une étude
+aval préenregistrée montre qu'ils divergent fortement aux sorties motrices. Une
+contrainte indépendante de raffinement temporel exclut maintenant un candidat et
+conserve 31 survivants, mais aucun paramètre de référence n'est identifié ni gelé.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -149,6 +149,25 @@ entre motifs candidats atteint 1,124 et le rapport d'amplitudes P90/P10 atteint
 changerait donc matériellement la suite. L'étude ne classe aucun membre et ne
 fournit aucune vérité biologique ; elle impose d'ajouter une contrainte centrale
 non comportementale indépendante ou de propager l'ensemble complet.
+
+La première contrainte indépendante est désormais exécutée. Le protocole
+`constraint.central_timestep_convergence.v1` compare, pendant la même durée de
+400 ms, les réponses stimulus-moins-sham du CNS complet intégrées à 5,0, 2,5 et
+1,25 ms. Il contrôle séparément les 166 700 neurones canoniques et les 815 sorties
+motrices brutes, sans transfert moteur, corps, monde, rendu ni comportement. Les
+deux runs propres
+`20261003T185726564390Z--campaign-central-timestep-convergence-v1` et
+`20261003T190037078175Z--campaign-central-timestep-convergence-v1` reproduisent le
+hash sémantique
+`12667c186699cdb3cbdbbd4f275a2522f4c0ebd8fe3675e872dc214057db6062`.
+
+Les **31/32 candidats passent**. Le candidat 30 est rejeté car son erreur relative
+L2 sur l'état central complet atteint 0,286 à 5 ms (limite 0,15) et 0,116 à
+2,5 ms (limite 0,075). Aucun survivant n'est classé ou choisi. La v0, conservée
+comme résultat méthodologique supersédé, avait aussi révélé neuf inversions
+d'ordre sous 1e-4 dues aux réductions sparse CUDA ; la v1 a préenregistré ce
+plancher numérique sans modifier les seuils matériels. Le nouvel ensemble est
+donc plus portable numériquement, pas plus physiologique ni comportemental.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -366,7 +385,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, 32 candidats centraux techniquement admissibles mais non identifiés, sensibilité aval élevée et reproductible, aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, 31/32 candidats centraux passent le filtre de raffinement temporel mais restent non identifiés, sensibilité aval élevée et reproductible, aucun jeu complet promu**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -432,7 +451,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **102 tests** actuels passent, y compris les
+conservées et classifiées. Les **110 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -448,12 +467,12 @@ précédents.
 ## Front de calibration
 
 **Ouvert.** Les campagnes sont reconstructibles, le modèle central signé minimal
-est exécutable et sa première campagne technique est terminée. Elle n'a pas échoué
-numériquement : elle a montré que les contraintes v0 sont trop peu identifiantes
-pour choisir parmi les 32 candidats admissibles. La sensibilité de tout l'ensemble
-aux sorties motrices centrales est maintenant mesurée et élevée. La prochaine
-action doit apporter une information centrale indépendante, pas resserrer les
-seuils après coup ni choisir un membre dont la sortie paraît préférable.
+est exécutable et sa première campagne technique est terminée. Le filtre de
+raffinement temporel retire un candidat matériellement dépendant du pas de temps,
+mais laisse 31 survivants non identifiés. Leur sensibilité aux sorties motrices
+centrales reste élevée. La prochaine action doit apporter une preuve biologique
+transférée ou une nouvelle information indépendante, pas resserrer les seuils
+après coup ni choisir un membre dont la sortie paraît préférable.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -483,8 +502,10 @@ efficacités de classe et trois paramètres globaux, tous non ajustés, et couvr
 exhaustivement le graphe avec un probe structurel non promouvable. Aucun parameter
 set complet n'a été promu et aucune cible comportementale n'est autorisée. L'étude
 aval préenregistrée est terminée : elle classe l'ensemble comme hautement sensible
-en motif et en amplitude, sans sélectionner de candidat. Le prochain lot doit
-ajouter une contrainte centrale non comportementale indépendante ; les scopes
+en motif et en amplitude, sans sélectionner de candidat. La première contrainte
+de portabilité numérique retire le candidat 30 et conserve 31 survivants sans les
+classer. Le prochain lot doit apporter une preuve biologique transférée ou une
+autre contrainte centrale non comportementale indépendante ; les scopes
 locaux périphériques restent un front parallèle. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
@@ -516,6 +537,7 @@ signed_dynamics_contract_check.bat # couverture signée exhaustive, probes non c
 characterize_signed_dynamics.bat # 7 régimes centraux non ajustés, diagnostic seulement
 fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans comportement
 central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties brutes
+constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

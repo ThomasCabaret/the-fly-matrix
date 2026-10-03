@@ -1,5 +1,5 @@
 schema_version: 1
-phase: central_independent_constraint_required
+phase: central_biological_or_independent_constraint_required
 updated: 2026-10-03
 
 wiring_baseline:
@@ -17,7 +17,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.diagnostic_central_ensemble_motor_sensitivity.v0
+last_completed_campaign_id: campaign.central_timestep_convergence.v1
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
@@ -44,6 +44,7 @@ readiness:
   central_unfitted_characterization: complete_7_regimes_reproduced_diagnostic_only
   central_technical_pilot: reproducible_32_of_32_admissible_nonidentifying_no_reference_selected
   central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
+  central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -51,15 +52,16 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - The first central technical campaign is reproducible and all 32 sampled vectors pass, so the twelve parameters remain nonidentified and no reference is selected or frozen.
+  - The first central technical campaign accepted 32 sampled vectors; the independent timestep-refinement constraint removes candidate 30 but leaves 31 nonidentified survivors and no reference is selected or frozen.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 32 central candidates cannot be treated as interchangeable downstream.
-  - No independent non-behavioral local evidence currently distinguishes the 32 technically admissible central candidates.
+  - Numerical portability does not distinguish the 31 survivors biologically, and no independent biological or local evidence currently ranks them.
 
 next_action: >-
-  Add an independent non-behavioral central constraint; the completed downstream
-  sensitivity study shows that arbitrary member selection would materially change
-  raw motor-output patterns and amplitudes. In parallel, define evidence-backed
+  Add independent biological evidence transfer or another genuinely independent
+  non-behavioral central constraint for the 31-member timestep-convergent ensemble;
+  arbitrary member selection would still materially change raw motor-output
+  patterns and amplitudes. In parallel, define evidence-backed
   local scopes and sharing assignments for the compiler-ready peripheral families.
   Do not promote the unsigned benchmark profile, diagnostic probes or an arbitrary
   pilot member.

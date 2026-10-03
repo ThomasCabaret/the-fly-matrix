@@ -3,14 +3,14 @@ id: validation.resting_dynamics
 name: Régime central basal stable
 owner_ids: [cns.malecns]
 level: integration
-protocol_path: calibration/diagnostics/central-unfitted-regimes-v0.yaml
-command: characterize_signed_dynamics.bat
+protocol_path: calibration/diagnostics/central-timestep-convergence-v1.yaml
+command: constrain_central_timestep_v1.bat
 acceptance_criteria: [No explosion, No total extinction unless justified, Return after small perturbation]
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: 20261003T143423135154Z--campaign-diagnostic-central-ensemble-motor-sensitivity-v0
+latest_run_id: 20261003T190037078175Z--campaign-central-timestep-convergence-v1
 status: smoke
-diagnostic_status: technical_pilot_pass_nonidentifying_high_motor_output_sensitivity_no_reference_frozen
+diagnostic_status: timestep_filter_reproduced_31_of_32_nonidentifying_high_motor_output_sensitivity_no_reference_frozen
 notes:
   - Seven unfitted regimes ran on the complete signed graph and duplicate clean runs reproduced semantic hash 351e883439080618af35a1e685efcd54058e8bd1f88cf206f6210d5863f41ace.
   - Execution acceptance is not dynamics acceptance; no regime, threshold or parameter value is promoted.
@@ -18,3 +18,5 @@ notes:
   - The first fitting pilot accepted 32/32 sampled candidates on five isolated-CNS scenarios; this validates broad technical admissibility but supplies no reference-selection information.
   - A preregistered three-pattern stimulus-versus-sham study measured all 32 members at all 815 raw motor terminals and reproduced semantic hash c7dc9aa65e1bc3d030b32e4e97474d3ca9f7fb523290fc2962b12308c386917e twice.
   - Pattern cosine-distance P90 reached 1.124 and amplitude P90/P10 reached 17.596; the ensemble is downstream-sensitive, so no member is selected or frozen.
+  - A preregistered 5.0/2.5/1.25 ms refinement constraint ran twice with identical semantic hash 12667c186699cdb3cbdbbd4f275a2522f4c0ebd8fe3675e872dc214057db6062; 31/32 candidates passed and candidate 30 failed both full-state relative-L2 gates.
+  - The filtered 31-member ensemble is numerically portable on these probes but remains biologically nonidentified, unfrozen and behavior-free.

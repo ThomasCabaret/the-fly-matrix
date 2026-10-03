@@ -1,0 +1,76 @@
+schema_version: 1
+id: evaluation.central_timestep_convergence.v1
+title: Reproduced central timestep-refinement constraint
+status: pass_filter_31_of_32_no_reference_selected
+target_id: target.technical_neural_dynamics.v0
+parameter_set_id: parameters.central_timestep_convergent_ensemble.v1
+parent_parameter_set_id: parameters.central_technical_dynamics_pilot_ensemble.v0
+protocol_version: constraint.central_timestep_convergence.v1
+exposure_policy: allowed_technical_constraint
+claim_label: TRAINED TECHNICAL NUMERICAL CONSISTENCY / NO PHYSIOLOGY / NO BEHAVIOR
+
+scope:
+  candidate_count: 32
+  scenario_count: 3
+  timestep_ms: [5.0, 2.5, 1.25]
+  reference_timestep_ms: 1.25
+  horizon_ms: 400.0
+  full_canonical_neurons: 166700
+  raw_motor_terminals: 815
+  paired_stimulus_sham: true
+  excludes: [motor transfer, actuator commands, MuJoCo body, world, behavior]
+
+metrics:
+  exhaustive_accounting: {scheduled_candidates: 32, observed_candidates: 32, accepted: 31, rejected: 1, errors: 0, pass: true}
+  accepted_candidate_indices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31]
+  rejected_candidate_indices: [30]
+  selected_candidate_id: null
+  candidate_30_rejection:
+    failed_gates: [coarse_reference_full_relative_l2_max, middle_reference_full_relative_l2_max]
+    coarse_reference_full_relative_l2_max: 0.2857
+    coarse_limit: 0.15
+    middle_reference_full_relative_l2_max: 0.1157
+    middle_limit: 0.075
+    motor_gates_passed: true
+    monotonic_refinement_scenarios_passed: 3
+
+interpretation:
+  permitted: >-
+    Candidate 30 is excluded because its full central stimulus-minus-sham response
+    changes materially when the timestep is refined. The remaining 31 members are
+    numerically portable only within the declared probes and engineering bounds.
+  forbidden:
+    - Any surviving candidate is biologically correct or preferred.
+    - Neural physiology, motor transfer, body stability or behavior is calibrated.
+    - Numerical convergence resolves the high downstream sensitivity of the survivors.
+  consequence: >-
+    Retain the complete 31-member filtered ensemble without ranking or freezing a
+    reference. Add independent biological evidence transfer or another genuinely
+    independent non-behavioral constraint before selecting central parameters.
+
+reproducibility:
+  command: constrain_central_timestep_v1.bat
+  git_commit: bc4c90972de99f7abe0b46af30f8d5de09534091
+  git_worktree_clean: true
+  semantic_result_sha256: 12667c186699cdb3cbdbbd4f275a2522f4c0ebd8fe3675e872dc214057db6062
+  clean_runs: 2
+  run_ids:
+    - 20261003T185726564390Z--campaign-central-timestep-convergence-v1
+    - 20261003T190037078175Z--campaign-central-timestep-convergence-v1
+  artifact_refs:
+    - runs/calibration/runner/20261003T185726564390Z--campaign-central-timestep-convergence-v1/summary.json
+    - runs/calibration/runner/20261003T190037078175Z--campaign-central-timestep-convergence-v1/summary.json
+  note: >-
+    Decisions and aggregate metrics reproduce semantically. Per-scenario CUDA
+    floats remain recorded in run artifacts but are excluded from semantic hashing
+    below the preregistered numerical resolution.
+
+contamination:
+  behavior_targeted: false
+  held_out_opened: false
+  visual_selection: false
+  body_or_world_executed: false
+
+acceptance_result: numerical_filter_reproduced_31_member_ensemble_unfrozen
+next_action: Constrain or identify the 31 survivors with independent non-behavioral evidence; do not choose by motor-output appearance.
+

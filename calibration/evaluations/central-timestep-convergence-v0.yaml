@@ -1,0 +1,63 @@
+schema_version: 1
+id: evaluation.central_timestep_convergence.v0
+title: Superseded first numerical timestep-refinement constraint
+status: superseded_methodological_result_not_promoted
+target_id: target.technical_neural_dynamics.v0
+parameter_set_id: parameters.central_technical_dynamics_pilot_ensemble.v0
+protocol_version: constraint.central_timestep_convergence.v0
+exposure_policy: allowed_technical_constraint
+claim_label: SUPERSEDED TECHNICAL NUMERICAL CONSTRAINT / NO PHYSIOLOGY / NO BEHAVIOR
+
+scope:
+  candidate_count: 32
+  scenario_count: 3
+  timestep_ms: [5.0, 2.5, 1.25]
+  reference_timestep_ms: 1.25
+  full_canonical_neurons: 166700
+  raw_motor_terminals: 815
+  excludes: [motor transfer, actuator commands, MuJoCo body, world, behavior]
+
+observed_result:
+  accepted_candidates: 22
+  rejected_candidates: 10
+  errors: 0
+  materially_nonconvergent_candidate_ids: [candidate-30]
+  numerical_floor_artifact_candidate_count: 9
+  interpretation: >-
+    Both runs made the same 22/10 decisions. Nine rejections were caused only by
+    an ordering reversal between errors already below 1e-4 under nondeterministic
+    CUDA sparse reductions. Candidate 30 independently exceeded both locked
+    full-state relative-L2 tolerances and remains a material rejection.
+
+supersession:
+  superseded_by: constraint.central_timestep_convergence.v1
+  reason: >-
+    V0 had no declared numerical floor for monotonic ordering. V1 preregistered
+    a 1e-4 floor while leaving every material full-state, motor-amplitude and
+    motor-pattern threshold unchanged. V0 is retained as evidence of the observed
+    failure class and is not used to define an accepted parameter set.
+
+reproducibility:
+  git_commit: 1973a9d
+  clean_runs: 2
+  deterministic_decisions: true
+  semantic_hash_equal: false
+  run_ids:
+    - 20261003T183511345050Z--campaign-central-timestep-convergence-v0
+    - 20261003T183809172127Z--campaign-central-timestep-convergence-v0
+  semantic_result_sha256:
+    - 613e6f7a25060c2c4befdfa83e22665a9fb8d4b56971060f103770bdf7764785
+    - cd5f087b4df072ca78829745e9ef4264ecb4b29452f4fcb0f3869e9c9328fea8
+  artifact_refs:
+    - runs/calibration/runner/20261003T183511345050Z--campaign-central-timestep-convergence-v0/summary.json
+    - runs/calibration/runner/20261003T183809172127Z--campaign-central-timestep-convergence-v0/summary.json
+
+contamination:
+  behavior_targeted: false
+  held_out_opened: false
+  visual_selection: false
+  body_or_world_executed: false
+
+acceptance_result: superseded_no_parameter_set_materialized
+next_action: Use the preregistered v1 result; never reinterpret the nine sub-resolution v0 failures as biological evidence.
+

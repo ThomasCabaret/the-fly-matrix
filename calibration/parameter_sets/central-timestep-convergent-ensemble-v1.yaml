@@ -1,0 +1,76 @@
+schema_version: 1
+id: parameters.central_timestep_convergent_ensemble.v1
+title: Reconstructible 31-member timestep-convergent MaleCNS ensemble
+status: evaluated_numerically_filtered_ensemble_not_frozen
+created: 2026-10-03
+parent_ids: [parameters.central_technical_dynamics_pilot_ensemble.v0]
+campaign_id: campaign.central_timestep_convergence.v1
+
+claim_label: TRAINED TECHNICAL NUMERICAL CONSISTENCY / NONIDENTIFIED / NOT PHYSIOLOGY / NO BEHAVIOR
+behavior_exposure: {behavior_targeted: false, inherited_from: [], exposed_behavior_ids: []}
+
+parameter_families:
+  - family_id: parameter.central.synaptic_efficacy.v0
+    scope_id: scope.central_neural_dynamics.v0
+    origin: fitted_technical_filter
+    units: normalized_efficacy
+    values_recipe_ref: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml
+    admissible_candidate_indices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31]
+    uncertainty: complete finite filtered ensemble; continuous domain outside sampled points unvalidated
+    frozen: false
+  - family_id: parameter.central.neuron_dynamics.v0
+    scope_id: scope.central_neural_dynamics.v0
+    origin: fitted_technical_filter
+    units: mixed
+    values_recipe_ref: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml
+    admissible_candidate_indices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31]
+    uncertainty: complete finite filtered ensemble; continuous domain outside sampled points unvalidated
+    frozen: false
+
+solution_set:
+  representation: deterministic_finite_ensemble_reconstructed_by_parent_recipe_and_v1_filter
+  selected_reference_id: null
+  admissible_member_ids: [candidate-00, candidate-01, candidate-02, candidate-03, candidate-04, candidate-05, candidate-06, candidate-07, candidate-08, candidate-09, candidate-10, candidate-11, candidate-12, candidate-13, candidate-14, candidate-15, candidate-16, candidate-17, candidate-18, candidate-19, candidate-20, candidate-21, candidate-22, candidate-23, candidate-24, candidate-25, candidate-26, candidate-27, candidate-28, candidate-29, candidate-31]
+  rejected_member_ids: [candidate-30]
+  uncertainty_artifact_refs:
+    - runs/calibration/runner/20261003T185726564390Z--campaign-central-timestep-convergence-v1/summary.json
+    - runs/calibration/runner/20261003T190037078175Z--campaign-central-timestep-convergence-v1/summary.json
+  selection_rule: retain_every_candidate_passing_every_locked_numerical_gate
+  ranking_rule: none
+
+freeze:
+  frozen_family_ids: []
+  stale_family_ids: []
+  topology_boundary_hashes:
+    parameter.central.transmitter_sign_prior.v0: canonical_malecns_runtime_graph
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+  reopen_history: []
+
+reproducibility:
+  git_commit: bc4c90972de99f7abe0b46af30f8d5de09534091
+  parent_candidate_recipe_sha256: ba71f366fab45616adc84666d126bd141267097f8775f714718da7299bb8b2c8
+  semantic_result_sha256: 12667c186699cdb3cbdbbd4f275a2522f4c0ebd8fe3675e872dc214057db6062
+  artifact_refs:
+    - calibration/evaluations/central-timestep-convergence-v1.yaml
+    - runs/calibration/runner/20261003T185726564390Z--campaign-central-timestep-convergence-v1/summary.json
+    - runs/calibration/runner/20261003T190037078175Z--campaign-central-timestep-convergence-v1/summary.json
+
+validation:
+  level: local_technical
+  evaluation_ids: [evaluation.technical_neural_dynamics_pilot.v0, evaluation.central_timestep_convergence.v1]
+  known_failures:
+    - Thirty-one members remain, so the numerical constraint supplies no reference-selection rule among the survivors.
+    - The surviving ensemble retains previously measured high raw-motor pattern and amplitude sensitivity.
+promotion:
+  status: not_promoted_nonidentified
+  decision_reason: Numerical portability removes candidate 30 but provides no biological ranking among the 31 survivors.
+  previous_reference_id: null
+sources:
+  - calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml
+  - calibration/diagnostics/central-timestep-convergence-v1.yaml
+  - calibration/evaluations/central-timestep-convergence-v1.yaml
+assumptions:
+  - Each survivor is acceptable only on the declared technical stability and timestep-refinement probes.
+  - Filtered means retained by a technical numerical criterion, not biologically estimated or frozen.
+next_action: Apply independent biological evidence transfer or another non-behavioral constraint to the full 31-member ensemble before selecting or freezing a reference.

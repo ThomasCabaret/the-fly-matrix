@@ -125,3 +125,13 @@ result, not a rejection and never a candidate ranking. The raw quantized respons
 hash is retained for trace inspection but excluded from semantic equality because
 GPU sparse reductions can cross an elementwise quantization boundary; aggregate
 metrics at four significant digits reproduced exactly across two clean runs.
+
+`constrain_central_timestep_v1.bat` is a `fit`-mode deterministic filter over all
+32 pilot members. Each fixed-duration stimulus/sham response is integrated at
+5.0, 2.5 and 1.25 ms. Locked gates compare the full 166,700-neuron state and the
+815 raw motor terminals to the finest-step reference. The v1 protocol explicitly
+waives monotonic ordering only when both errors are below 1e-4; this is a numerical
+resolution rule, not a relaxed material tolerance. Two independent runs produced
+31 accepted candidates, one rejected candidate and the same semantic hash. The
+filter changes no parameter value, ranks no survivor and uses no body, behavior,
+held-out protocol or visual inspection.

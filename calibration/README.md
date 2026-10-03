@@ -102,3 +102,13 @@ state, and only stimulated-minus-sham central activity is compared. Motor
 transfer, physics and behavior are excluded. The reproduced v0 result is high
 sensitivity in both output pattern and amplitude; it forbids arbitrary member
 selection and points to an independent non-behavioral central constraint.
+
+Run `constrain_central_timestep_v1.bat` to apply the first such constraint. It
+compares the same 400 ms full-CNS response at 5.0, 2.5 and 1.25 ms, including the
+815-neuron motor subset, without executing transfer, body, world or behavior. V0
+is retained as a superseded methodological result: it exposed harmless ordering
+jitter below 1e-4. V1 declared that numerical floor before execution and changed
+none of the material tolerances. Two clean v1 runs reproduce the same semantic
+hash and retain 31/32 candidates; candidate 30 fails both full-state convergence
+limits. The output is an unfrozen filtered ensemble, not physiology and not a
+reference selection.
