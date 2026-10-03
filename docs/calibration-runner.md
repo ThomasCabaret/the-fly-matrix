@@ -31,8 +31,10 @@ four states:
 The summary must account for every scheduled trial. Rejected and error trials are
 retained rather than discarded. Acceptance may require all trials or a declared
 minimum admissible count, a maximum error count and exact repetition consistency.
-The semantic result hash excludes timestamps and timings so independent runs can
-be compared.
+The semantic result hash excludes timestamps and any metrics named explicitly in
+`semantic_metric_exclusions`, so independent runs can retain throughput timings
+without treating clock jitter as scientific drift. An excluded metric cannot be
+used by an acceptance gate.
 
 ## Leakage and topology guards
 

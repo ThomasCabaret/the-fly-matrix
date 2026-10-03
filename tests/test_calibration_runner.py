@@ -148,6 +148,39 @@ class CalibrationRunnerTests(unittest.TestCase):
             with self.assertRaisesRegex(CalibrationRunnerError, "not permitted"):
                 run_job(job_path, root / "runs")
 
+    def test_runtime_metrics_can_be_retained_but_excluded_from_semantic_hash(self) -> None:
+        counter = {"value": 0}
+
+        def evaluator(trial: dict) -> dict:
+            counter["value"] += 1
+            return {"score": 1, "runtime_seconds": float(counter["value"])}
+
+        job = self._base_job()
+        job["trials"] = [job["trials"][0]]
+        job["budget"]["max_trials"] = 1
+        job["semantic_metric_exclusions"] = ["runtime_seconds"]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            job_path = root / "job.yaml"
+            job_path.write_text(yaml.safe_dump(job), encoding="utf-8")
+            first = run_job(
+                job_path, root / "first", evaluators={"test.evaluator": evaluator}
+            )
+            second = run_job(
+                job_path, root / "second", evaluators={"test.evaluator": evaluator}
+            )
+            self.assertEqual(first["semantic_result_sha256"], second["semantic_result_sha256"])
+            self.assertNotEqual(
+                first["trials"][0]["metrics"]["runtime_seconds"],
+                second["trials"][0]["metrics"]["runtime_seconds"],
+            )
+
+    def test_gated_metric_cannot_be_semantically_excluded(self) -> None:
+        job = self._base_job()
+        job["semantic_metric_exclusions"] = ["score"]
+        with self.assertRaisesRegex(CalibrationRunnerError, "Gated metrics cannot"):
+            validate_job(job, Path("test-job.yaml"))
+
 
 if __name__ == "__main__":
     unittest.main()

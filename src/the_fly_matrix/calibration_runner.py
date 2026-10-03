@@ -47,6 +47,12 @@ def _canonical_hash(value: Any) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def _semantic_metrics(
+    metrics: Mapping[str, Scalar], exclusions: frozenset[str]
+) -> dict[str, Scalar]:
+    return {key: value for key, value in metrics.items() if key not in exclusions}
+
+
 def _load_yaml(path: Path) -> dict[str, Any]:
     value = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -285,6 +291,20 @@ def validate_job(job: Mapping[str, Any], job_path: Path) -> dict[str, str]:
         gates = trial.get("gates")
         if not isinstance(gates, dict) or not gates:
             raise CalibrationRunnerError(f"Trial {trial['case_id']} needs locked gates")
+    exclusions = job.get("semantic_metric_exclusions", [])
+    if not isinstance(exclusions, list) or not all(
+        isinstance(item, str) and item for item in exclusions
+    ):
+        raise CalibrationRunnerError("semantic_metric_exclusions must be a string list")
+    if len(exclusions) != len(set(exclusions)):
+        raise CalibrationRunnerError("semantic_metric_exclusions must be unique")
+    gated_metrics = {
+        metric_name for trial in trials for metric_name in trial["gates"]
+    }
+    if overlap := set(exclusions) & gated_metrics:
+        raise CalibrationRunnerError(
+            f"Gated metrics cannot be excluded from semantic results: {sorted(overlap)}"
+        )
     repetitions = job.get("repeat_each", 1)
     if not isinstance(repetitions, int) or repetitions < 1:
         raise CalibrationRunnerError("repeat_each must be a positive integer")
@@ -419,11 +439,12 @@ def run_job(
         print(f"      -> {result['status']}", flush=True)
 
     counts = Counter(item["status"] for item in trial_results)
+    metric_exclusions = frozenset(job.get("semantic_metric_exclusions", []))
     repeated_metrics: dict[str, list[str]] = {}
     for result in trial_results:
         if result["status"] in {"accepted", "rejected"}:
             repeated_metrics.setdefault(result["case_id"], []).append(
-                _canonical_hash(result["metrics"])
+                _canonical_hash(_semantic_metrics(result["metrics"], metric_exclusions))
             )
     nondeterministic_cases = sorted(
         case_id for case_id, hashes in repeated_metrics.items() if len(set(hashes)) > 1
@@ -450,7 +471,7 @@ def run_job(
         and budget_pass
         else "failed"
     )
-    semantic_trials = [
+    recorded_trials = [
         {
             "trial_id": item["trial_id"],
             "case_id": item["case_id"],
@@ -462,6 +483,13 @@ def run_job(
             "error": item["error"],
         }
         for item in trial_results
+    ]
+    semantic_trials = [
+        {
+            **item,
+            "metrics": _semantic_metrics(item["metrics"], metric_exclusions),
+        }
+        for item in recorded_trials
     ]
     git_state = _git_state()
     summary = {
@@ -491,6 +519,7 @@ def run_job(
             "wall_time_budget_pass": budget_pass,
         },
         "semantic_result_sha256": _canonical_hash(semantic_trials),
+        "semantic_metric_exclusions": sorted(metric_exclusions),
         "reproducibility": {
             "job_config_sha256": config_sha256,
             "input_hashes": input_hashes,
@@ -504,7 +533,7 @@ def run_job(
             "behavior_targeted": bool(job.get("behavior_targeted", False)),
             "scenario_splits": job["scenario_splits"],
         },
-        "trials": semantic_trials,
+        "trials": recorded_trials,
     }
     summary_path = run_root / "summary.json"
     summary_path.write_text(
