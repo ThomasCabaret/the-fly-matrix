@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 import numpy as np
 from scipy import sparse
@@ -205,6 +206,12 @@ class SignedDynamicsTests(unittest.TestCase):
         self.assertFalse(protocol["behavior_exposure"]["body_or_world_executed"])
         self.assertEqual(protocol["simulation"]["timestep_ms"], [5.0, 2.5, 1.25])
 
+        revised = load_timestep_convergence_protocol(
+            Path("calibration/diagnostics/central-timestep-convergence-v1.yaml")
+        )
+        self.assertEqual(revised["supersedes"], "constraint.central_timestep_convergence.v0")
+        self.assertEqual(revised["simulation"]["monotonic_relative_l2_floor"], 1e-4)
+
     def test_timestep_comparison_tracks_refinement_without_ranking(self) -> None:
         rng = np.random.default_rng(123)
         reference = rng.normal(0.0, 0.01, size=(2, 820))
@@ -220,6 +227,17 @@ class SignedDynamicsTests(unittest.TestCase):
         self.assertEqual(summary["near_zero_motor_reference_response_count"], 0)
         self.assertTrue(summary["all_metrics_finite"])
         self.assertNotIn("selected_candidate", summary)
+
+    def test_timestep_monotonicity_ignores_subfloor_ordering(self) -> None:
+        reference = np.ones((1, 815), dtype=np.float64)
+        summary = compare_timestep_responses(
+            {5.0: reference * 1.00001, 2.5: reference * 1.00002, 1.25: reference},
+            ("floor",),
+            motor_indices=np.arange(815, dtype=np.int64),
+            near_zero_rms=1e-8,
+            monotonic_relative_l2_floor=1e-4,
+        )
+        self.assertEqual(summary["monotonic_refinement_scenario_count"], 1)
 
 
 if __name__ == "__main__":

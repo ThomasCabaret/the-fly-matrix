@@ -1,0 +1,94 @@
+schema_version: 1
+id: constraint.central_timestep_convergence.v1
+title: Timestep-refinement consistency with an explicit numerical floor
+status: runnable_constraint
+claim_label: TRAINED TECHNICAL NUMERICAL CONSISTENCY / NO PHYSIOLOGY / NO BEHAVIOR
+target_id: target.technical_neural_dynamics.v0
+parent_parameter_set_id: parameters.central_technical_dynamics_pilot_ensemble.v0
+supersedes: constraint.central_timestep_convergence.v0
+
+revision_reason: >-
+  The two v0 runs produced identical pass/reject decisions but different raw
+  semantic hashes. Nine candidates failed only because middle-versus-coarse errors
+  below 1e-4 swapped order under CUDA sparse reduction jitter. V1 declares that
+  pre-acceptance numerical floor explicitly. It does not change any full-state,
+  motor-amplitude or motor-pattern tolerance.
+
+purpose: >-
+  Reject technically stable candidates whose central stimulus-minus-sham response
+  materially depends on the arbitrary 5 ms runtime discretization. Compare the
+  same continuous-duration probe at 5.0, 2.5 and 1.25 ms without using a body,
+  motor transfer, visual inspection or behavior.
+
+candidate_indices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+evaluation_seed: 68101
+
+simulation:
+  backend: cuda:0
+  horizon_ms: 400.0
+  response_window_ms: 80.0
+  timestep_ms: [5.0, 2.5, 1.25]
+  reference_timestep_ms: 1.25
+  initial_state_std: 0.01
+  near_zero_response_rms: 0.00000001
+  monotonic_relative_l2_floor: 0.0001
+
+scenarios:
+  - {id: timestep_convergence_pattern_a_v0, rng_seed: 68111, input_amplitude: 0.05}
+  - {id: timestep_convergence_pattern_b_v0, rng_seed: 68112, input_amplitude: 0.05}
+  - {id: timestep_convergence_pattern_c_v0, rng_seed: 68113, input_amplitude: 0.05}
+
+response_definition: >-
+  At every timestep, run a fixed terminal stimulus and a zero-input sham from the
+  same initial state. Average stimulated-minus-sham activity over the final 80 ms.
+  Compare both the full 166,700-neuron response and its exact 815-neuron motor
+  subset against the 1.25 ms reference.
+
+acceptance_thresholds:
+  full_response_relative_l2:
+    coarse_5ms_max: 0.15
+    middle_2_5ms_max: 0.075
+  motor_response_relative_l2:
+    coarse_5ms_max: 0.25
+    middle_2_5ms_max: 0.125
+  motor_pattern_cosine_distance:
+    coarse_5ms_max: 0.10
+    middle_2_5ms_max: 0.05
+  monotonic_refinement_required_for_all_scenarios: true
+  monotonic_relative_l2_floor: 0.0001
+  near_zero_reference_responses_allowed: 0
+threshold_class: preregistered_engineering_discretization_tolerance_v1_not_biological
+threshold_rationale: >-
+  The full-state bounds require the deployed 5 ms response to remain within 15%
+  of the finer reference and the intermediate step within half that budget. The
+  motor subset receives a wider amplitude allowance but a separate pattern gate.
+  Monotonic ordering is waived only when both compared errors are at or below
+  1e-4, a numerical-resolution rule below every material acceptance tolerance.
+
+selection_policy: retain_every_candidate_passing_all_scenarios_and_all_numerical_gates
+ranking_policy: none
+capacity_policy:
+  automatic_bound_change_allowed: false
+  automatic_model_change_allowed: false
+  on_zero_accepted: retain_negative_result_and_review_model_or_runtime_step
+
+behavior_exposure:
+  behavior_targeted: false
+  named_actions: []
+  visual_selection: false
+  held_out_opened: false
+  body_or_world_executed: false
+
+sources:
+  - calibration/models/malecns-typed-signed-rate-v0.yaml
+  - calibration/parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml
+  - calibration/evaluations/central-ensemble-motor-sensitivity-v0.yaml
+assumptions:
+  - The leaky-rate equation is interpreted as a continuous-time candidate integrated by exponential Euler.
+  - Constant synthetic terminal probes test numerical consistency, not sensory physiology.
+  - Passing does not make the equation or its parameters biologically correct.
+next_action: >-
+  Execute every member twice through the immutable v1 runner job. Materialize the
+  complete passing subset without ranking; retain a zero-pass result without
+  relaxing material thresholds post hoc.
+

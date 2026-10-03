@@ -43,6 +43,9 @@ MOTOR_SENSITIVITY_PATH = (
 TIMESTEP_CONVERGENCE_PATH = (
     ROOT / "calibration" / "diagnostics" / "central-timestep-convergence-v0.yaml"
 )
+TIMESTEP_CONVERGENCE_V1_PATH = (
+    ROOT / "calibration" / "diagnostics" / "central-timestep-convergence-v1.yaml"
+)
 MOTOR_ROUTE_PATH = ROOT / "data" / "derived" / "wiring" / "motor-routes.parquet"
 INPUT_ROUTE_PATHS = tuple(
     ROOT / "data" / "derived" / "wiring" / name
@@ -398,16 +401,25 @@ def load_timestep_convergence_protocol(
     if len(scenario_ids) != 3 or len(set(scenario_ids)) != 3:
         raise SignedDynamicsError("Timestep-convergence scenario ids must be unique")
     thresholds = raw.get("acceptance_thresholds")
-    if not isinstance(thresholds, dict) or set(thresholds) != {
+    required_thresholds = {
         "full_response_relative_l2",
         "motor_response_relative_l2",
         "motor_pattern_cosine_distance",
         "monotonic_refinement_required_for_all_scenarios",
         "near_zero_reference_responses_allowed",
-    }:
+    }
+    allowed_thresholds = required_thresholds | {"monotonic_relative_l2_floor"}
+    if (
+        not isinstance(thresholds, dict)
+        or required_thresholds - set(thresholds)
+        or set(thresholds) - allowed_thresholds
+    ):
         raise SignedDynamicsError("Timestep-convergence thresholds are incomplete")
     if raw.get("ranking_policy") != "none":
         raise SignedDynamicsError("Timestep convergence cannot rank passing candidates")
+    floor = float(simulation.get("monotonic_relative_l2_floor", 0.0))
+    if floor < 0:
+        raise SignedDynamicsError("Monotonic numerical floor cannot be negative")
     return raw
 
 
@@ -594,6 +606,7 @@ def compare_timestep_responses(
     *,
     motor_indices: np.ndarray,
     near_zero_rms: float,
+    monotonic_relative_l2_floor: float = 0.0,
 ) -> dict[str, bool | int | float | str]:
     """Compare 5 and 2.5 ms responses with the locked 1.25 ms reference."""
     expected = {5.0, 2.5, 1.25}
@@ -607,8 +620,8 @@ def compare_timestep_responses(
         raise SignedDynamicsError("Timestep comparison requires 815 unique motor indices")
     if np.any(indices < 0) or np.any(indices >= reference.shape[1]):
         raise SignedDynamicsError("Motor indices fall outside the central response")
-    if near_zero_rms <= 0:
-        raise SignedDynamicsError("Near-zero response threshold must be positive")
+    if near_zero_rms <= 0 or monotonic_relative_l2_floor < 0:
+        raise SignedDynamicsError("Response thresholds must be non-negative with positive RMS")
 
     metrics: dict[str, bool | int | float | str] = {
         "scenario_count": len(scenario_ids),
@@ -667,10 +680,19 @@ def compare_timestep_responses(
             np.max(cosine_distance)
         )
 
-    monotonic = (
-        (comparison_values[("full", 2.5)] <= comparison_values[("full", 5.0)])
-        & (comparison_values[("motor", 2.5)] <= comparison_values[("motor", 5.0)])
+    full_coarse = comparison_values[("full", 5.0)]
+    full_middle = comparison_values[("full", 2.5)]
+    motor_coarse = comparison_values[("motor", 5.0)]
+    motor_middle = comparison_values[("motor", 2.5)]
+    full_monotonic = (full_middle <= full_coarse) | (
+        (full_middle <= monotonic_relative_l2_floor)
+        & (full_coarse <= monotonic_relative_l2_floor)
     )
+    motor_monotonic = (motor_middle <= motor_coarse) | (
+        (motor_middle <= monotonic_relative_l2_floor)
+        & (motor_coarse <= monotonic_relative_l2_floor)
+    )
+    monotonic = full_monotonic & motor_monotonic
     metrics["monotonic_refinement_scenario_count"] = int(np.count_nonzero(monotonic))
     metrics["full_reference_response_rms_min"] = float(np.min(reference_rms))
     metrics["motor_reference_response_rms_min"] = float(np.min(motor_reference_rms))
@@ -684,12 +706,14 @@ def compare_timestep_responses(
 
 
 def evaluate_timestep_convergence_candidate(
-    candidate_index: int, seed: int
+    candidate_index: int,
+    seed: int,
+    protocol_path: Path = TIMESTEP_CONVERGENCE_PATH,
 ) -> dict[str, bool | int | float | str]:
     """Apply a locked numerical-refinement constraint to one pilot member."""
     import torch
 
-    protocol = load_timestep_convergence_protocol()
+    protocol = load_timestep_convergence_protocol(protocol_path)
     if seed != int(protocol["evaluation_seed"]):
         raise SignedDynamicsError("Trial seed differs from the timestep protocol")
     if candidate_index not in protocol["candidate_indices"]:
@@ -775,6 +799,9 @@ def evaluate_timestep_convergence_candidate(
         tuple(str(item["id"]) for item in scenarios),
         motor_indices=assets.motor_indices,
         near_zero_rms=float(simulation["near_zero_response_rms"]),
+        monotonic_relative_l2_floor=float(
+            simulation.get("monotonic_relative_l2_floor", 0.0)
+        ),
     )
     metrics.update(
         {

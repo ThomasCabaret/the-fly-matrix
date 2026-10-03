@@ -178,7 +178,17 @@ def _timestep_convergence_evaluator(
     trial: Mapping[str, Any],
 ) -> Mapping[str, Scalar]:
     candidate_index = int(trial.get("args", {}).get("candidate_index", -1))
-    return evaluate_timestep_convergence_candidate(candidate_index, int(trial["seed"]))
+    version = str(trial.get("args", {}).get("protocol_version", "v0"))
+    if version not in {"v0", "v1"}:
+        raise CalibrationRunnerError("Unknown timestep-convergence protocol version")
+    protocol_path = (
+        CALIBRATION_ROOT
+        / "diagnostics"
+        / f"central-timestep-convergence-{version}.yaml"
+    )
+    return evaluate_timestep_convergence_candidate(
+        candidate_index, int(trial["seed"]), protocol_path
+    )
 
 
 DEFAULT_EVALUATORS: Mapping[str, Evaluator] = {

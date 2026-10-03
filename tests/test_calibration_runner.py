@@ -189,7 +189,7 @@ class CalibrationRunnerTests(unittest.TestCase):
             ROOT
             / "calibration"
             / "runner"
-            / "central-timestep-convergence-v0.yaml"
+            / "central-timestep-convergence-v1.yaml"
         )
         job = yaml.safe_load(source.read_text(encoding="utf-8"))
         validate_job(job, source)

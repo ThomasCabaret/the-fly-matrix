@@ -1,0 +1,47 @@
+schema_version: 1
+id: campaign.central_timestep_convergence.v1
+title: Numerical-refinement filter with explicit sub-resolution handling
+status: runnable
+target_ids: [target.technical_neural_dynamics.v0]
+scope_ids: [scope.central_neural_dynamics.v0]
+parameter_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+dependency_campaign_ids: [campaign.technical_neural_dynamics_pilot.v0]
+parent_parameter_set_ids: [parameters.central_technical_dynamics_pilot_ensemble.v0]
+output_parameter_set_id: parameters.central_timestep_convergent_ensemble.v1
+claim_label: TRAINED TECHNICAL NUMERICAL CONSISTENCY / NO PHYSIOLOGY / NO BEHAVIOR
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+  exception_table_hashes: {central_signed_dynamics: none}
+
+method:
+  kind: deterministic_constraint_filter_no_optimization
+  implementation: src/the_fly_matrix/signed_dynamics.py
+  input_candidate_count: 32
+  candidate_recipe: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml
+  protocol: calibration/diagnostics/central-timestep-convergence-v1.yaml
+  selection_rule: retain_every_candidate_passing_every_locked_numerical_gate
+  ranking_rule: none
+  parameter_updates: none
+  compute_budget: 32 candidates times 3 scenarios times paired sham/stimulus at 80 plus 160 plus 320 steps
+
+scenario_splits:
+  train: []
+  validation: [timestep_convergence_pattern_a_v0, timestep_convergence_pattern_b_v0, timestep_convergence_pattern_c_v0]
+  diagnostic: []
+  held_out: []
+acceptance_thresholds_ref: calibration/diagnostics/central-timestep-convergence-v1.yaml
+capacity_policy: {model_family: model.malecns_typed_signed_rate.v0, degrees_of_freedom: 12, automatic_capacity_increase_allowed: false, automatic_bound_change_allowed: false}
+behavior_exposure: {behavior_targeted: false, exposed_behavior_ids: [], contamination_notes: []}
+reproducibility: {command: constrain_central_timestep_v1.bat, git_commit: resolved_by_runner, environment: Python 3.12 plus NumPy SciPy PyTorch CUDA, input_hashes: resolved_by_runner_job}
+result: {status: not_run, metrics: {}, artifact_refs: [], failures: [], decision: pending, admissible_solution_count: 0}
+acceptance: {criteria_locked_before_run: true, reproducibility_mode: deterministic_decisions_and_quantized_aggregate_metrics, zero_pass_is_retained_negative_result: true}
+reopening: {reopened_family_ids: [], reasons: [], stale_descendant_ids: []}
+sources: [calibration/diagnostics/central-timestep-convergence-v1.yaml, calibration/parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml, calibration/evaluations/central-ensemble-motor-sensitivity-v0.yaml]
+assumptions:
+  - Numerical refinement is independent of the prior stability gates and body behavior.
+  - V1 changes only sub-resolution monotonic accounting after the v0 failure class was observed.
+  - A passing subset is numerically portable at declared tolerances, not physiologically identified.
+next_action: Execute twice, materialize the complete passing subset, and preserve every rejection without ranking survivors.

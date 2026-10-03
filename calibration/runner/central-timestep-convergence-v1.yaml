@@ -1,0 +1,130 @@
+schema_version: 1
+id: campaign.central_timestep_convergence.v1
+record_kind: calibration_campaign
+status: runnable
+claim_label: TRAINED TECHNICAL NUMERICAL CONSISTENCY / NO PHYSIOLOGY / NO BEHAVIOR
+mode: fit
+primary_class: technical
+optimization_exposure: allowed
+behavior_targeted: false
+target_ids: [target.technical_neural_dynamics.v0]
+parameter_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+parent_parameter_set_ids: [parameters.central_technical_dynamics_pilot_ensemble.v0]
+output_parameter_set_id: parameters.central_timestep_convergent_ensemble.v1
+
+topology_boundary:
+  semantic_topology_hashes:
+    parameter.central.synaptic_efficacy.v0: canonical_malecns_runtime_graph
+    parameter.central.neuron_dynamics.v0: canonical_malecns_runtime_graph
+
+input_files:
+  - {path: calibration/diagnostics/central-timestep-convergence-v1.yaml, sha256: a0f8cc6517409c82f49b2e39a66bf4ab9fbabd505f36d373787ddccdc3eb0257}
+  - {path: calibration/campaigns/central-timestep-convergence-v1.yaml, sha256: 86ca09384c09d6af6dcb98776d4203850d526383e06ec776d0b5f9fce88e7c59}
+  - {path: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml, sha256: ba71f366fab45616adc84666d126bd141267097f8775f714718da7299bb8b2c8}
+  - {path: calibration/models/malecns-typed-signed-rate-v0.yaml, sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e}
+  - {path: calibration/parameter_sets/central-technical-dynamics-pilot-ensemble-v0.yaml, sha256: 9507bfceb7fd0965826799f33891529a164c4c9168072420543ddb88537af39e}
+
+evaluator_id: malecns_timestep_convergence_constraint.v0
+semantic_metric_exclusions:
+  - measured_simulated_ms_per_second
+  - timestep_convergence_pattern_a_v0_coarse_full_relative_l2
+  - timestep_convergence_pattern_a_v0_coarse_motor_relative_l2
+  - timestep_convergence_pattern_a_v0_coarse_motor_cosine_distance
+  - timestep_convergence_pattern_a_v0_middle_full_relative_l2
+  - timestep_convergence_pattern_a_v0_middle_motor_relative_l2
+  - timestep_convergence_pattern_a_v0_middle_motor_cosine_distance
+  - timestep_convergence_pattern_b_v0_coarse_full_relative_l2
+  - timestep_convergence_pattern_b_v0_coarse_motor_relative_l2
+  - timestep_convergence_pattern_b_v0_coarse_motor_cosine_distance
+  - timestep_convergence_pattern_b_v0_middle_full_relative_l2
+  - timestep_convergence_pattern_b_v0_middle_motor_relative_l2
+  - timestep_convergence_pattern_b_v0_middle_motor_cosine_distance
+  - timestep_convergence_pattern_c_v0_coarse_full_relative_l2
+  - timestep_convergence_pattern_c_v0_coarse_motor_relative_l2
+  - timestep_convergence_pattern_c_v0_coarse_motor_cosine_distance
+  - timestep_convergence_pattern_c_v0_middle_full_relative_l2
+  - timestep_convergence_pattern_c_v0_middle_motor_relative_l2
+  - timestep_convergence_pattern_c_v0_middle_motor_cosine_distance
+semantic_float_significant_digits: 4
+semantic_metric_quantization:
+  coarse_reference_full_relative_l2_max: 0.0001
+  middle_reference_full_relative_l2_max: 0.0001
+  coarse_reference_motor_relative_l2_max: 0.0001
+  middle_reference_motor_relative_l2_max: 0.0001
+  coarse_reference_motor_cosine_distance_max: 0.0001
+  middle_reference_motor_cosine_distance_max: 0.0001
+  full_reference_response_rms_min: 0.00000001
+  motor_reference_response_rms_min: 0.00000001
+repeat_each: 1
+trials:
+  - &candidate
+    case_id: candidate-00
+    seed: 68101
+    args: {candidate_index: 0, protocol_version: v1}
+    gates: &convergence_gates
+      scenario_count: {operator: eq, value: 3}
+      motor_outputs: {operator: eq, value: 815}
+      timestep_count: {operator: eq, value: 3}
+      horizon_ms: {operator: eq, value: 400.0}
+      input_terminals: {operator: eq, value: 17884}
+      near_zero_full_reference_response_count: {operator: eq, value: 0}
+      near_zero_motor_reference_response_count: {operator: eq, value: 0}
+      monotonic_refinement_scenario_count: {operator: eq, value: 3}
+      coarse_reference_full_relative_l2_max: {operator: le, value: 0.15}
+      middle_reference_full_relative_l2_max: {operator: le, value: 0.075}
+      coarse_reference_motor_relative_l2_max: {operator: le, value: 0.25}
+      middle_reference_motor_relative_l2_max: {operator: le, value: 0.125}
+      coarse_reference_motor_cosine_distance_max: {operator: le, value: 0.10}
+      middle_reference_motor_cosine_distance_max: {operator: le, value: 0.05}
+      all_metrics_finite: {operator: eq, value: true}
+  - {<<: *candidate, case_id: candidate-01, args: {candidate_index: 1, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-02, args: {candidate_index: 2, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-03, args: {candidate_index: 3, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-04, args: {candidate_index: 4, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-05, args: {candidate_index: 5, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-06, args: {candidate_index: 6, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-07, args: {candidate_index: 7, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-08, args: {candidate_index: 8, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-09, args: {candidate_index: 9, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-10, args: {candidate_index: 10, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-11, args: {candidate_index: 11, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-12, args: {candidate_index: 12, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-13, args: {candidate_index: 13, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-14, args: {candidate_index: 14, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-15, args: {candidate_index: 15, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-16, args: {candidate_index: 16, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-17, args: {candidate_index: 17, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-18, args: {candidate_index: 18, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-19, args: {candidate_index: 19, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-20, args: {candidate_index: 20, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-21, args: {candidate_index: 21, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-22, args: {candidate_index: 22, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-23, args: {candidate_index: 23, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-24, args: {candidate_index: 24, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-25, args: {candidate_index: 25, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-26, args: {candidate_index: 26, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-27, args: {candidate_index: 27, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-28, args: {candidate_index: 28, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-29, args: {candidate_index: 29, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-30, args: {candidate_index: 30, protocol_version: v1}}
+  - {<<: *candidate, case_id: candidate-31, args: {candidate_index: 31, protocol_version: v1}}
+
+budget: {max_trials: 32, max_wall_seconds: 1800}
+scenario_splits:
+  train: []
+  validation: [timestep_convergence_pattern_a_v0, timestep_convergence_pattern_b_v0, timestep_convergence_pattern_c_v0]
+  diagnostic: []
+  held_out: []
+  behavior_held_out: []
+acceptance:
+  criteria_locked_before_run: true
+  require_all_trials_accepted: false
+  minimum_accepted_trials: 1
+  require_repetition_determinism: false
+  maximum_errors: 0
+  reproducibility_mode: deterministic_decisions_and_aggregate_metrics_quantized_below_material_gates
+capacity_policy:
+  automatic_capacity_increase_allowed: false
+  automatic_bound_change_allowed: false
+  on_zero_accepted: retain_negative_result_and_review_model_or_runtime_step
+
