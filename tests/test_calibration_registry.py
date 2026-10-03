@@ -87,6 +87,31 @@ class CalibrationRegistryTests(unittest.TestCase):
             },
         )
 
+    def test_prospective_behavior_catalog_is_not_a_locked_protocol(self) -> None:
+        catalog = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluation_candidates"
+            / "emergent-behavior-catalog-v0.yaml"
+        )
+        held_out_target = self.targets["target.held_out_stimulus_response.v0"]
+        behavior_index = load_yaml(ROOT / "ledger" / "behaviors.yaml")
+
+        self.assertEqual(catalog["status"], "prospective_only_not_locked_not_run")
+        self.assertEqual(catalog["optimization_exposure"], "forbidden")
+        self.assertEqual(len(catalog["candidates"]), 7)
+        self.assertFalse(
+            catalog["catalog_exposure_policy"][
+                "catalog_registration_is_protocol_lock"
+            ]
+        )
+        self.assertEqual(held_out_target["protocol_lock_status"], "not_locked")
+        self.assertEqual(behavior_index["held_out_behaviors"], [])
+        self.assertEqual(
+            behavior_index["prospective_evaluation_candidates"]["status"],
+            "catalog_only_not_locked_not_run",
+        )
+        self.assertFalse(self.state["readiness"]["held_out_protocol_locked"])
+
     def test_parameter_family_inventory_is_exhaustive_and_acyclic(self) -> None:
         self.assertEqual(len(self.inventory.families), 19)
         self.assertEqual(len(self.inventory.topological_order), 19)

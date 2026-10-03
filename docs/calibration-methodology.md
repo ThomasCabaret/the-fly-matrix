@@ -82,6 +82,28 @@ parameter choice, or acceptance of intermediate parameter sets. Inspecting the
 result and then changing parameters contaminates the protocol version; a new
 held-out protocol must be registered before another claim.
 
+### Prospective evaluation catalogs are not locked protocols
+
+A prospective catalog may name behaviors worth observing later without defining
+their scenes, seeds, thresholds or analysis. It is planning metadata, not an
+executed evaluation and not proof that a clean held-out protocol exists. The
+current catalog is in
+[`prospective-emergent-behavior-evaluations.md`](prospective-emergent-behavior-evaluations.md).
+
+Catalog registration alone does not expose an outcome. However, if a named item
+influences parameter fitting, topology, model capacity, early stopping or manual
+selection, that item is behavior exposure for the affected lineage. Before any
+run, one candidate must become a separately versioned immutable protocol with
+sourced biological expectations, fixed stimulus and sham generators, scenes,
+seeds, metrics, thresholds, analysis code and parameter hashes.
+
+Each eventual behavior-naive evaluation should compare sham, frozen MaleCNS and
+an ensemble of topology controls under identical interfaces and observation. Use
+both frozen-parameter rewires and, when affordable, rewired graphs recalibrated by
+the same non-behavioral recipe and budget. Neither control may see the evaluated
+behavior during calibration. Multiple rewires and topology-preserving nuisance
+constraints are required to avoid a convenient single null graph.
+
 ## Exposure and claim policy
 
 Each target declares `optimization_exposure` as `allowed`, `diagnostic_only`, or
@@ -494,6 +516,12 @@ stimulus specificity, repeatability, boundedness, and recovery. The protocol doe
 not prescribe a jump, grooming sequence, exact trajectory, or other named action.
 A positive result is evidence of a causal, specific response, not automatically of
 naturalistic behavior.
+
+Candidate observations currently include localized and hierarchical grooming,
+looming escape, tactile or visual lateralization, optomotor directionality and
+temporal dynamics, and structured spontaneous motor motifs. These remain
+prospective and unlocked. Start by locking one tractable protocol rather than
+opening the entire catalog, and retain negative or ambiguous outcomes.
 
 Behavior-targeted fitting, if later desired, is a separate explicitly authorized
 stage and uses separate parameter lineages and reports.

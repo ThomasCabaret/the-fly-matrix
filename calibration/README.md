@@ -15,6 +15,8 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
 - `dependency-dag.yaml`: the validated partial order between those families;
 - `model-risks.yaml`: explicit high-impact capacity hypotheses, evidence,
   escalation triggers and next review points;
+- `evaluation_candidates/`: prospective observation catalogs that are neither
+  locked held-out protocols nor runnable evaluations;
 - `evidence/`: deterministic evidence-transfer recipes;
 - `diagnostics/`: preregistered non-fitting sweeps used to characterize unknown
   models without selecting or promoting values;
@@ -122,3 +124,11 @@ local calibration. Further central-only narrowing pauses unless new independent
 evidence is available. Local, basal and hybrid campaigns should propagate the
 ensemble explicitly and report whether interface parameters are shared,
 ensemble-robust, member-conditioned or jointly identified.
+
+The first prospective behavior catalog is
+`evaluation_candidates/emergent-behavior-catalog-v0.yaml`. It records localized
+and hierarchical grooming, looming, lateralization, optomotor responses and
+structured spontaneous activity, plus sham and topology-control requirements.
+Nothing in that catalog has been run or locked, and it must not influence fitting
+or model selection. A selected item becomes `evaluation_only` only through a new
+immutable protocol with sources, seeds, metrics and thresholds.

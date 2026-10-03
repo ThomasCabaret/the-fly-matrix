@@ -5,6 +5,8 @@ status: proposed
 primary_class: evaluation_only
 optimization_exposure: evaluation_only
 claim_label: held_out_system_evaluation
+candidate_catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
+protocol_lock_status: not_locked
 
 scope:
   includes:
@@ -17,13 +19,20 @@ scope:
 
 candidate_stimulus_families:
   - localized_contact
-  - simple_visual_change
+  - simultaneous_multi_region_contact
+  - looming_visual_object
+  - mirrored_tactile_or_visual_stimuli
+  - directional_visual_field_motion
+  - prolonged_visual_motion
+  - nominal_no_stimulus
 
 metrics:
   - response_latency
   - response_magnitude_relative_to_sham
   - trial_repeatability
   - mirrored_stimulus_sensitivity
+  - anatomical_or_directional_specificity
+  - topology_control_gap
   - post_stimulus_boundedness
   - recovery_to_non_runaway_state
 
@@ -50,10 +59,17 @@ dependencies:
   - locked scenario generator and seeds
 
 provenance:
-  sources: []
+  sources:
+    - docs/prospective-emergent-behavior-evaluations.md
+    - calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
   assumptions:
     - Stimulus family, intensity, duration, and thresholds remain to be fixed.
+    - Candidate behavior names are project suggestions and do not yet have attached biological numerical expectations.
 
 validation: not_run
 blocked_reason: Protocol cannot be locked before a runnable calibrated system exists.
-next_action: Keep evaluation unexposed until technical calibration is complete.
+next_action: >-
+  Keep every catalog outcome unavailable during calibration. After a runnable
+  parameter lineage is frozen, select one candidate, attach biological sources,
+  preregister its generator, controls, seeds, metrics and thresholds, and only
+  then create a locked evaluation protocol.

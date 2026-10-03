@@ -6,7 +6,19 @@ technical_targets:
 evaluation_only_targets:
   - target.held_out_stimulus_response.v0
 held_out_behaviors: []
+prospective_evaluation_candidates:
+  catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
+  status: catalog_only_not_locked_not_run
+  ids:
+    - evaluation_candidate.localized_grooming.v0
+    - evaluation_candidate.grooming_hierarchy.v0
+    - evaluation_candidate.looming_escape.v0
+    - evaluation_candidate.sensorimotor_lateralization.v0
+    - evaluation_candidate.optomotor_response.v0
+    - evaluation_candidate.optomotor_temporal_dynamics.v0
+    - evaluation_candidate.structured_spontaneous_motor_activity.v0
 notes:
   - Technical stability targets are not fly behaviors and cannot support an emergence claim.
   - No named behavior is assigned until a locked protocol fixes the calibration/evaluation split.
   - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.
+  - Prospective names are not locked held-out protocols; any behavior-specific design or tuning decision contaminates that candidate for the affected lineage.

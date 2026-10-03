@@ -1,0 +1,93 @@
+schema_version: 1
+id: catalog.prospective_emergent_behavior_evaluations.v0
+title: Prospective behavior-naive observation catalog
+status: prospective_only_not_locked_not_run
+created: 2026-10-03
+primary_class: evaluation_only_candidate_catalog
+optimization_exposure: forbidden
+claim_label: PROSPECTIVE HELD-OUT CANDIDATES / NOT A PROTOCOL / NOT RUN
+
+purpose: >-
+  Preserve candidate observations that may test whether insect-like or fly-like
+  structure emerges after calibration without using those observations to choose
+  parameters, topology, model capacity or trials.
+
+catalog_exposure_policy:
+  catalog_registration_is_protocol_lock: false
+  catalog_registration_is_outcome_exposure: false
+  use_for_loss_or_selection: forbidden
+  behavior_specific_design_change_contaminates_lineage: true
+  future_protocol_requirements:
+    - immutable scene and body contract
+    - stimulus generator, timing, intensity and seeds
+    - metrics, thresholds and exclusions
+    - analysis and topology-control hashes
+    - frozen parameter-set lineage
+
+candidates:
+  - id: evaluation_candidate.localized_grooming.v0
+    stimulus_family: localized_mechanical_contact
+    observation: region-appropriate limb recruitment with left/right specificity
+    status: prospective_not_locked
+    suggested_metrics: [limb_region_specificity, mirrored_side_preference, latency, repeatability, sham_effect_size]
+  - id: evaluation_candidate.grooming_hierarchy.v0
+    stimulus_family: simultaneous_multi_region_mechanical_contact
+    observation: reproducible ordering of cleaning-like responses across regions
+    status: prospective_not_locked
+    suggested_metrics: [response_order, priority_consistency, region_specificity, sham_effect_size]
+  - id: evaluation_candidate.looming_escape.v0
+    stimulus_family: expanding_visual_object
+    observation: bounded directionally coherent escape-like or takeoff-preparation response
+    status: prospective_not_locked
+    suggested_metrics: [direction_relative_to_stimulus, latency, repeatability, sham_effect_size]
+  - id: evaluation_candidate.sensorimotor_lateralization.v0
+    stimulus_family: mirrored_tactile_or_visual_stimuli
+    observation: mirror-equivariant and anatomically coherent motor-response distributions
+    status: prospective_not_locked
+    suggested_metrics: [mirrored_output_equivariance, ipsilateral_contralateral_specificity, paired_effect_size]
+  - id: evaluation_candidate.optomotor_response.v0
+    stimulus_family: directional_visual_field_motion
+    observation: coherent yaw or turning tendency related to motion direction
+    status: prospective_not_locked
+    suggested_metrics: [directional_turning_index, mirrored_equivariance, latency, sham_effect_size]
+  - id: evaluation_candidate.optomotor_temporal_dynamics.v0
+    stimulus_family: prolonged_directional_visual_motion
+    observation: preregistered adaptation, delayed modification or reversal beyond instantaneous gain
+    status: prospective_requires_biological_source_and_locked_time_metric
+    suggested_metrics: [time_resolved_directional_index, adaptation_constant, delayed_sign_change, recovery]
+  - id: evaluation_candidate.structured_spontaneous_motor_activity.v0
+    stimulus_family: nominal_no_stimulus
+    observation: occasional repeatable motor motifs defined independently before trajectory inspection
+    status: prospective_exploratory_requires_locked_independent_motif_detector
+    suggested_metrics: [motif_rate, motif_repeatability, boundedness, topology_control_gap]
+
+required_control_families:
+  - sham_or_no_stimulus
+  - behavior_naive_calibrated_malecns
+  - frozen_parameter_topology_control_ensemble
+  - recipe_matched_recalibrated_topology_control_ensemble
+
+topology_control_policy:
+  same_interfaces_body_stimulus_and_analysis: true
+  multiple_rewire_seeds_required: true
+  preserve_where_relevant: [directed_degree, weight_distribution, sign_or_transmitter_class_counts, interface_cardinalities]
+  optional_targeted_controls: [pathway_scramble, module_scramble]
+  behavior_used_during_control_calibration: forbidden
+
+cross_protocol_metrics:
+  - effect_size_relative_to_sham
+  - repeatability
+  - latency
+  - boundedness_and_recovery
+  - directional_or_anatomical_specificity
+  - uncertainty_across_seeds_and_central_ensemble
+  - gap_from_topology_controls
+
+provenance:
+  source_kind: user_proposed_project_catalog
+  registered_date: 2026-10-03
+  biological_sources_attached: false
+  note: Numerical expectations and thresholds require sourced preregistration before any protocol is locked.
+
+validation: not_run
+next_action: Select and source only the first protocol after a runnable parameter lineage is frozen; keep all catalog outcomes unavailable during calibration.

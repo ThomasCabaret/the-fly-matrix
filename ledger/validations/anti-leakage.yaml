@@ -8,6 +8,10 @@ command: null
 acceptance_criteria: [Every calibration dataset declares behaviors, Held-out behaviors absent from fitting, No adapter sees global task state]
 calibration_dataset_ids: []
 held_out_behavior_ids: []
+prospective_catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
 latest_run_id: null
 status: not_run
-notes: [Must pass before interpreting emergent behavior]
+notes:
+  - Must pass before interpreting emergent behavior.
+  - The prospective catalog is not a locked protocol and none of its outcomes may be inspected during calibration.
+  - If a named candidate shapes parameters, topology, model capacity or manual selection, record behavior exposure and retire it as a clean held-out claim for that lineage.

@@ -187,6 +187,22 @@ lignée ne peut ensuite présenter la station immobile comme spontanément émer
 Ne jamais cacher une tonicité dans un gain ni prescrire pose, allure ou action sous
 une étiquette de simple stabilité.
 
+## Catalogue prospectif d'évaluations comportementales
+
+`calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml` et
+`docs/prospective-emergent-behavior-evaluations.md` recensent des observations
+possibles après calibration. Ce catalogue n'est ni un protocole verrouillé, ni une
+campagne, ni une autorisation de s'en servir pour choisir les paramètres.
+
+Toute modification de paramètres, routage, capacité ou sélection manuelle visant
+un comportement nommé contamine ce comportement pour la lignée concernée. Après
+gel d'une lignée exécutable, transformer au plus un candidat à la fois en protocole
+`evaluation_only` distinct, sourcé et immuable : scène, stimulus/sham, seeds,
+métriques, seuils, analyse et hashes. Comparer idéalement MaleCNS à plusieurs
+rewires avec paramètres gelés et à des rewires recalibrés par exactement la même
+recette non comportementale ; aucun contrôle ne voit le comportement pendant sa
+calibration.
+
 ## Initiative et cas non prévus
 
 Ces règles définissent des invariants, pas une recette rigide. Adapter la méthode à

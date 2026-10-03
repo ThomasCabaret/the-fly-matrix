@@ -46,6 +46,7 @@ readiness:
   central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
+  prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
   held_out_protocol_locked: false
 
 behavior_exposure:

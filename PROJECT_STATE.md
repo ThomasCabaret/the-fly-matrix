@@ -183,6 +183,18 @@ d'incertitude, avec des paramètres aval déclarés communs, robustes, condition
 ou conjointement identifiés. Les résidus locaux et par classe/région serviront de
 test de capacité avant toute nouvelle version centrale plus expressive.
 
+Un catalogue prospectif de sept observations comportementales est maintenant
+consigné dans
+[`docs/prospective-emergent-behavior-evaluations.md`](docs/prospective-emergent-behavior-evaluations.md)
+et dans son
+[`registre YAML`](calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml) :
+grooming localisé et hiérarchique, looming, latéralisation, réponse optomotrice
+simple et temporelle, et motifs spontanés structurés. Ce ne sont ni des cibles
+d'entraînement, ni des protocoles verrouillés, ni des résultats. Aucun scénario,
+seed ou seuil n'est ouvert. Chaque futur protocole devra comparer sham, MaleCNS
+gelé et plusieurs contrôles topologiques, dont des rewires à paramètres gelés et
+des rewires soumis à la même calibration non comportementale.
+
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
 [`validation.scientific_wiring_reaudit`](ledger/validations/scientific-wiring-reaudit.yaml).
@@ -400,6 +412,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
 - Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, 31/32 candidats centraux passent le filtre de raffinement temporel mais restent non identifiés, sensibilité aval élevée et reproductible, aucun jeu complet promu**.
+- Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 
 Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -465,7 +478,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **110 tests** actuels passent, y compris les
+conservées et classifiées. Les **111 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
