@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_model_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: benchmarks/profiles/malecns-benchmark-v0.yaml, supports: engineering throughput only and explicitly no parameter values}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: bounded executable candidate equation and parameter dimension only}]
 assumptions: [Execution timestep remains a scenario choice; the candidate fits a time constant in milliseconds rather than promoting the benchmark 5 ms step., Bounded tanh numerics do not establish biological validity or acceptable activity.]
-next_action: Constrain the 31-member timestep-convergent ensemble with independent biological evidence transfer or another non-behavioral constraint; select nothing post hoc.
+next_action: Propagate the 31-member ensemble through local or hybrid campaigns and use preregistered class/region residuals to test the twelve-parameter capacity hypothesis; select nothing post hoc.

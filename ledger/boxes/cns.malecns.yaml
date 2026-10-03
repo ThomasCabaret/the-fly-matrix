@@ -16,6 +16,6 @@ provenance:
   assumptions: [The v1.0 superclass-based rule is a project runtime boundary and may require a versioned revision for another dataset release]
 parameter_family_ids: [parameter.central.neuron_dynamics, parameter.central.synaptic_gain]
 validation_ids: [validation.data_loading, validation.neuprint_access, validation.basal_clamp_runtime, validation.central_graph_runtime, validation.real_connectome_execution_benchmark, validation.closed_loop, validation.signed_dynamics_contract, validation.resting_dynamics]
-next_action: Contraindre les 31 survivants numériquement convergents par une preuve biologique transférée ou une autre contrainte non comportementale indépendante ; la forte sensibilité des 815 sorties interdit toujours un choix arbitraire.
+next_action: Propager les 31 survivants dans les campagnes locales ou hybrides et mesurer les résidus par classe/région ; ne reprendre un filtrage CNS isolé qu'avec une preuve indépendante capable de tester le modèle partagé à 12 paramètres.
 blocked_by: []
 completion_criteria: [Les 211577 corps annotés sont conservés et flagués, Les 166700 neurones canoniques et 25582938 arêtes runtime sont contrôlés, Chaque terminal vise un neurone canonique, Projection creuse déterministe, Régime basal stable après calibration]

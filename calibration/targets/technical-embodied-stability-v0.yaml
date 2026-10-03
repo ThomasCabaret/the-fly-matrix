@@ -8,7 +8,7 @@ claim_label: trained_technical_stability
 
 scope:
   includes:
-    - accepted MaleCNS runtime parameters
+    - declared MaleCNS runtime ensemble or accepted central parameters
     - declared sensory and motor interface parameters
     - basal-source parameters
     - simulator parameters explicitly admitted by a campaign
@@ -46,7 +46,7 @@ scenario_splits:
   held_out: []
 
 dependencies:
-  - target.technical_neural_dynamics.v0 accepted parameter set
+  - target.technical_neural_dynamics.v0 bounded admissible ensemble or accepted parameter set
   - executable body-world-connectome closed loop
   - fixed simple 3D scene protocol
 
@@ -56,5 +56,10 @@ provenance:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
 validation: not_run
-blocked_reason: Neural runtime and closed-loop calibration runner not implemented.
-next_action: Define the flat-ground protocol after the temporal runtime is runnable.
+blocked_reason: >-
+  Runtime integration exists, but basal-source values, local motor transfer scope,
+  ensemble-accounting policy and technical thresholds are not yet registered.
+next_action: >-
+  Define a short flat-ground technical pilot that propagates the central ensemble,
+  exposes any tonic-output family explicitly, and forbids exact pose, gait or
+  named-action targets.

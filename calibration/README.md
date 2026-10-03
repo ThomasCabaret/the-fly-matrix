@@ -13,6 +13,8 @@ canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
   parameter sets, and evaluations;
 - `parameter_families/`: 19 versioned family records plus an exhaustive index;
 - `dependency-dag.yaml`: the validated partial order between those families;
+- `model-risks.yaml`: explicit high-impact capacity hypotheses, evidence,
+  escalation triggers and next review points;
 - `evidence/`: deterministic evidence-transfer recipes;
 - `diagnostics/`: preregistered non-fitting sweeps used to characterize unknown
   models without selecting or promoting values;
@@ -112,3 +114,11 @@ none of the material tolerances. Two clean v1 runs reproduce the same semantic
 hash and retain 31/32 candidates; candidate 30 fails both full-state convergence
 limits. The output is an unfrozen filtered ensemble, not physiology and not a
 reference selection.
+
+The twelve-parameter central model and its 31-member surviving ensemble are now
+governed by ADR 0013. They are a minimum-capacity hypothesis and a finite pilot
+representation, not an accepted biological dimensionality or a prerequisite to
+local calibration. Further central-only narrowing pauses unless new independent
+evidence is available. Local, basal and hybrid campaigns should propagate the
+ensemble explicitly and report whether interface parameters are shared,
+ensemble-robust, member-conditioned or jointly identified.

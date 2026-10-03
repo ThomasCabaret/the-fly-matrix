@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather, supports: structural synapse counts only}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: explicit minimal signed executable candidate but no values}]
 assumptions: [The unsigned incoming-L1 benchmark normalization is not an accepted model., The nine-class candidate is provisional and must not gain local or edge residuals without a versioned capacity decision.]
-next_action: Constrain the 31-member timestep-convergent ensemble with independent biological evidence transfer or another non-behavioral constraint; keep every member unfrozen.
+next_action: Propagate the 31-member ensemble through local or hybrid campaigns and use preregistered class/region residuals to test the transmitter-shared capacity hypothesis; keep every member unfrozen.

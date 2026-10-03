@@ -1,5 +1,5 @@
 schema_version: 1
-phase: central_biological_or_independent_constraint_required
+phase: ensemble_propagation_and_local_interface_calibration
 updated: 2026-10-03
 
 wiring_baseline:
@@ -45,6 +45,7 @@ readiness:
   central_technical_pilot: reproducible_32_of_32_admissible_nonidentifying_no_reference_selected
   central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
+  central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -52,16 +53,14 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - The first central technical campaign accepted 32 sampled vectors; the independent timestep-refinement constraint removes candidate 30 but leaves 31 nonidentified survivors and no reference is selected or frozen.
+  - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
-  - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 32 central candidates cannot be treated as interchangeable downstream.
-  - Numerical portability does not distinguish the 31 survivors biologically, and no independent biological or local evidence currently ranks them.
+  - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 31 surviving central candidates cannot be treated as interchangeable downstream.
+  - Numerical portability does not distinguish the 31 survivors biologically; the finite ensemble must be propagated into local or hybrid campaigns rather than collapsed arbitrarily.
 
 next_action: >-
-  Add independent biological evidence transfer or another genuinely independent
-  non-behavioral central constraint for the 31-member timestep-convergent ensemble;
-  arbitrary member selection would still materially change raw motor-output
-  patterns and amplitudes. In parallel, define evidence-backed
-  local scopes and sharing assignments for the compiler-ready peripheral families.
-  Do not promote the unsigned benchmark profile, diagnostic probes or an arbitrary
-  pilot member.
+  Define the first ensemble-aware local campaign: prefer basal-source evidence or
+  a bounded motor-interface scope, run it across all 31 central members when
+  affordable, and report shared versus member-conditioned solutions and central
+  model-capacity residuals. Do not spend another isolated-CNS narrowing campaign
+  without new independent evidence, and do not promote an arbitrary pilot member.

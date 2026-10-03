@@ -8,6 +8,10 @@ une première campagne technique a produit 32 candidats admissibles. Une étude
 aval préenregistrée montre qu'ils divergent fortement aux sorties motrices. Une
 contrainte indépendante de raffinement temporel exclut maintenant un candidat et
 conserve 31 survivants, mais aucun paramètre de référence n'est identifié ni gelé.
+Le modèle à douze paramètres partagés est désormais enregistré comme une hypothèse
+de capacité à haut risque, pas comme la dimensionalité admise de MaleCNS. Le front
+se déplace vers la propagation de cet ensemble dans les calibrations locales et
+hybrides plutôt que vers une élimination centrale prolongée.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -168,6 +172,16 @@ comme résultat méthodologique supersédé, avait aussi révélé neuf inversio
 d'ordre sous 1e-4 dues aux réductions sparse CUDA ; la v1 a préenregistré ce
 plancher numérique sans modifier les seuils matériels. Le nouvel ensemble est
 donc plus portable numériquement, pas plus physiologique ni comportemental.
+
+L'[`ADR 0013`](decisions/0013-ensemble-propagation-and-model-adequacy.md)
+formalise la correction de trajectoire. Les neuf efficacités par classe de
+neurotransmetteur et les trois paramètres globaux constituent le plus petit modèle
+signé actuellement exécutable ; ils ne sont pas une hypothèse biologique validée.
+Il n'est pas nécessaire d'obtenir un candidat central unique avant de calibrer les
+sources basales et les interfaces. Les 31 membres seront propagés comme ensemble
+d'incertitude, avec des paramètres aval déclarés communs, robustes, conditionnés
+ou conjointement identifiés. Les résidus locaux et par classe/région serviront de
+test de capacité avant toute nouvelle version centrale plus expressive.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -470,9 +484,10 @@ précédents.
 est exécutable et sa première campagne technique est terminée. Le filtre de
 raffinement temporel retire un candidat matériellement dépendant du pas de temps,
 mais laisse 31 survivants non identifiés. Leur sensibilité aux sorties motrices
-centrales reste élevée. La prochaine action doit apporter une preuve biologique
-transférée ou une nouvelle information indépendante, pas resserrer les seuils
-après coup ni choisir un membre dont la sortie paraît préférable.
+centrales reste élevée et la suffisance des douze paramètres partagés est un
+risque ouvert. Le prochain front est une campagne locale ou hybride consciente de
+l'ensemble, pas une semaine de filtres CNS internes ni le choix d'un membre dont
+la sortie paraît préférable.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -504,9 +519,9 @@ set complet n'a été promu et aucune cible comportementale n'est autorisée. L'
 aval préenregistrée est terminée : elle classe l'ensemble comme hautement sensible
 en motif et en amplitude, sans sélectionner de candidat. La première contrainte
 de portabilité numérique retire le candidat 30 et conserve 31 survivants sans les
-classer. Le prochain lot doit apporter une preuve biologique transférée ou une
-autre contrainte centrale non comportementale indépendante ; les scopes
-locaux périphériques restent un front parallèle. Les fichiers de
+classer. Le prochain lot doit définir une campagne locale, basale ou hybride qui
+propage l'ensemble et mesure les résidus révélateurs de capacité ; les scopes
+locaux périphériques deviennent le front principal. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du

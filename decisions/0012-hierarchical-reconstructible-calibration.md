@@ -50,6 +50,12 @@ non-identifiable, but it must declare why the split fails, which parameters can
 compensate for one another, how capacity is controlled, and which ablations or
 local checks preserve interpretability.
 
+An unresolved upstream ensemble may be propagated rather than collapsed to one
+arbitrary reference. Downstream campaigns declare whether their parameters are
+shared, ensemble-robust, member-conditioned or jointly identified. A singleton
+central parameter set is not a prerequisite for local interface work. ADR 0013
+defines the model-adequacy and ensemble-accounting rules for this case.
+
 The ordinary loop is **calibrate locally, validate, then freeze**. A downstream
 failure does not automatically reopen accepted ancestors.
 
@@ -132,3 +138,7 @@ This ADR fixes invariants, not optimizer choices or one permanent campaign order
 A different factorization is permitted when the data require it, provided the DAG,
 capacity, exposure, lineage, uncertainty and reopening consequences remain
 explicit.
+
+ADR 0013 refines how provisional low-capacity models and finite ensembles move
+through this DAG; it does not weaken the freeze, exposure or capacity controls
+defined here.

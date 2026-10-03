@@ -124,6 +124,8 @@ configuration, checksums or content identifiers, and promoted parameter sets.
 
 The durable dependency, sharing, uncertainty and reopening rules are fixed by
 [`ADR 0012`](../decisions/0012-hierarchical-reconstructible-calibration.md).
+Early model-adequacy checks and propagation of unresolved ensembles are fixed by
+[`ADR 0013`](../decisions/0013-ensemble-propagation-and-model-adequacy.md).
 
 ## Parameter-family inventory and dependency DAG
 
@@ -198,6 +200,45 @@ exactly. For stochastic or multi-modal problems, reconstruction succeeds when th
 declared metrics, acceptance rate and admissible domain are reproduced within
 predeclared tolerances. Exact equality of one optimum is neither expected nor
 scientifically meaningful in that case.
+
+## Model adequacy and ensemble propagation
+
+A low-dimensional shared model is a capacity hypothesis, not a fact established
+by its convenience or executability. In particular, the current MaleCNS v0 model
+uses nine transmitter-class efficacies and three global dynamics parameters. Its
+twelve degrees of freedom are intentionally minimal; technical stability and
+numerical convergence do not prove that this sharing level captures biological
+heterogeneity.
+
+Isolated calibration should therefore stop at inexpensive pathology, execution
+and numerical-portability gates unless independent evidence directly constrains
+the isolated family. A large surviving set or strong downstream dispersion is a
+signal to propagate uncertainty into local or hybrid campaigns, not to spend an
+open-ended sequence of campaigns inventing further internal filters.
+
+A unique central reference is not required before interface calibration. A
+campaign may consume a finite ensemble, sample set or distribution and must state
+whether downstream parameters are common to all members, robust over the ensemble,
+conditioned on member or cluster, or jointly fitted because separation is not
+identifiable. Account for every scheduled member. If a preregistered stratified
+subset is used to reduce compute, confirm promoted conclusions over the full
+relevant ensemble. Never select representatives using visual appeal, named
+behavior or held-out outcomes.
+
+Every model class with a consequential sharing assumption has an explicit risk
+record. Local and hybrid campaigns report systematic residuals by available
+biological class, region and interface sector. Model capacity increases only in a
+new version after those residuals contradict the simpler form; it proceeds from
+shared class or region parameters toward local parameters, not directly to hidden
+per-neuron or per-edge freedom. See `calibration/model-risks.yaml`.
+
+Basal afferent sources and persistent efferent tone are explicit parameter
+families, never anonymous offsets inserted for convenience. Basal inputs should
+prefer measured or transferable neutral-condition statistics. If maintaining a
+body on flat ground requires tonic output, assign it explicitly to central bias,
+motor-transfer offset or a newly declared family. Fitting it against neutral body
+stability is allowed as `technical`, but contaminates any later claim that quiet
+standing emerged without such training.
 
 ## Freeze and reopen
 
@@ -378,7 +419,9 @@ the scientific parameters exercised by a synthetic probe.
 These stages are milestones over the dependency DAG, not an obligation to finish
 every item in one stage before any independent work in another. Evidence transfers
 and local interface branches should usually be resolved before global fitting;
-documented identifiability may justify a joint campaign.
+documented identifiability may justify a joint campaign. A bounded central
+ensemble may be propagated through those branches: reducing it to a singleton is
+not a stage gate.
 
 ### Stage -1 — Establish execution readiness
 
@@ -419,11 +462,21 @@ where possible. Use local physiological or physical measurements and local held-
 out splits. Keep physical feedback through MuJoCo unless a documented biological
 pathway or validated surrogate justifies a shortcut.
 
+Run local campaigns across the declared central ensemble when their outputs depend
+on central state. Report whether one shared interface parameterization works, the
+result must be member-conditioned, or the residuals challenge central model
+capacity. Basal-source fitting belongs here and does not wait for a unique CNS.
+
 ### Stage 2 — Technical neural dynamics
 
 Establish finite, bounded and recoverable temporal activity under basal input and
 small perturbations. Measure both pathological extremes: irreversible quiescence
 and self-amplifying or saturating echoes. Do not prescribe a fly action.
+
+Once cheap isolated gates pass, do not require complete identification of central
+parameters before Stage 1 or 3. Return to isolated central fitting only when new
+evidence or ensemble-aware residuals can actually distinguish the model or its
+sharing level.
 
 ### Stage 3 — Neutral embodied stability
 

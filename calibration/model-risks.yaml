@@ -1,0 +1,43 @@
+schema_version: 1
+id: calibration.model_risks.v0
+updated: 2026-10-03
+status: active
+
+risks:
+  - id: risk.central_twelve_parameter_capacity.v0
+    title: Twelve shared central parameters may underfit biological heterogeneity
+    status: open_high_impact
+    affected_model_id: model.malecns_typed_signed_rate.v0
+    affected_parameter_family_ids:
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+    hypothesis_under_test: >-
+      Nine transmitter-class efficacies plus one global time constant, input gain
+      and bias may be sufficient for the first technically and locally coherent
+      embodied model.
+    evidence_supporting:
+      - The representation executes every canonical edge without per-edge residuals.
+      - Thirty-one sampled members pass broad stability and timestep-refinement gates.
+    evidence_against_or_unresolved:
+      - Transmitter class alone does not establish identical synaptic efficacy.
+      - Global neuron dynamics ignore cell-class, regional and receptor-dependent heterogeneity.
+      - The surviving ensemble has high raw-motor pattern and amplitude dispersion.
+      - No local interface or embodied result currently validates this sharing level.
+    consequence_if_true: A compact shared central model can remain the first embodied baseline.
+    consequence_if_false: Create a versioned higher-capacity central model and revalidate affected descendants.
+    current_mitigation: >-
+      Stop repeated central-only narrowing after cheap pathology and numerical
+      gates. Propagate all 31 survivors through local or hybrid campaigns and use
+      preregistered residuals to decide whether capacity must increase.
+    escalation_triggers:
+      - systematic residuals by neuron class or anatomical region
+      - mutually incompatible local interface parameters across central members
+      - no ensemble member satisfies independent local and neutral embodied constraints
+    forbidden_shortcuts:
+      - selecting a member by visually pleasing motion
+      - adding per-neuron or per-edge parameters without a versioned residual diagnosis
+      - claiming that technical stability validates biological dimensionality
+    decision_ref: decisions/0013-ensemble-propagation-and-model-adequacy.md
+    next_review: after_first_ensemble_aware_local_or_hybrid_campaign
+
+next_action: Register the first ensemble-aware local interface or basal-source campaign and report its implication for the open capacity risk.

@@ -160,6 +160,33 @@ tailles d'ensembles candidats et les degrés de liberté, pas seulement leur nom
 - Les sorties lourdes vont sous `runs/calibration/`; Git conserve les configs,
   lignées, hashes, résumés, échecs, décisions et prochaines actions.
 
+## Capacité du modèle central et propagation d'ensemble
+
+Le modèle central v0 à neuf efficacités de neurotransmetteur et trois paramètres
+globaux est une hypothèse minimale exécutable, pas une dimension biologique
+acceptée. Sa stabilité technique ou sa convergence numérique ne valident pas son
+niveau de partage. Conserver ce risque dans `calibration/model-risks.yaml` et
+suivre l'ADR 0013.
+
+Ne pas exiger une solution centrale unique avant les calibrations locales. Un
+ensemble admissible peut être propagé vers les sources basales, les interfaces
+sensorielles/motrices et les campagnes hybrides. Déclarer si les paramètres aval
+sont communs, robustes sur l'ensemble, conditionnés par membre/cluster ou ajustés
+conjointement. Comptabiliser tous les membres ; toute réduction de coût par
+échantillonnage doit être préenregistrée puis confirmée sur l'ensemble pertinent.
+
+Après les contrôles centraux peu coûteux de pathologie et de portabilité
+numérique, suspendre l'élimination CNS isolée sauf nouvelle preuve indépendante.
+Utiliser les résidus locaux, par classe et par région pour décider si un modèle
+central plus capacitaire est nécessaire. Toute augmentation de capacité crée une
+nouvelle version et compare explicitement le modèle plus simple.
+
+Les entrées basales et toute tonicité motrice sont des familles explicites. Une
+stabilité corporelle neutre peut être entraînée comme cible `technical`, mais la
+lignée ne peut ensuite présenter la station immobile comme spontanément émergente.
+Ne jamais cacher une tonicité dans un gain ni prescrire pose, allure ou action sous
+une étiquette de simple stabilité.
+
 ## Initiative et cas non prévus
 
 Ces règles définissent des invariants, pas une recette rigide. Adapter la méthode à

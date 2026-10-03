@@ -66,9 +66,9 @@ provenance:
 validation: local_technical_pass_timestep_filtered_31_of_32_high_downstream_sensitivity
 blocked_reason: >-
   Timestep refinement excludes candidate 30, but the 31 survivors remain
-  nonidentified and differ strongly at raw motor terminals; no independent
-  biological or local evidence supports selecting or freezing one member.
+  nonidentified and differ strongly at raw motor terminals. The twelve-parameter
+  sharing model itself remains an open high-impact capacity risk.
 next_action: >-
-  Add independent biological evidence transfer or another non-behavioral central
-  constraint. Do not tighten accepted gates post hoc or select one of the 31
-  surviving members by appearance.
+  Propagate all 31 survivors into local or hybrid calibration and inspect
+  preregistered residuals for model-adequacy evidence. Resume isolated central
+  fitting only if new independent evidence can distinguish parameters or sharing.
