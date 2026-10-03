@@ -226,6 +226,39 @@ class CalibrationRunnerTests(unittest.TestCase):
                 second["trials"][0]["metrics"]["diagnostic"],
             )
 
+    def test_metric_semantics_can_use_declared_absolute_quantization(self) -> None:
+        counter = {"value": 0}
+
+        def evaluator(trial: dict) -> dict:
+            counter["value"] += 1
+            return {"score": 1, "tiny_residual": 0.000001 + counter["value"] * 0.00000001}
+
+        job = self._base_job()
+        job["trials"] = [job["trials"][0]]
+        job["budget"]["max_trials"] = 1
+        job["semantic_metric_quantization"] = {"tiny_residual": 0.0001}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            job_path = root / "job.yaml"
+            job_path.write_text(yaml.safe_dump(job), encoding="utf-8")
+            first = run_job(
+                job_path, root / "first", evaluators={"test.evaluator": evaluator}
+            )
+            second = run_job(
+                job_path, root / "second", evaluators={"test.evaluator": evaluator}
+            )
+            self.assertEqual(first["semantic_result_sha256"], second["semantic_result_sha256"])
+            self.assertNotEqual(
+                first["trials"][0]["metrics"]["tiny_residual"],
+                second["trials"][0]["metrics"]["tiny_residual"],
+            )
+
+    def test_semantic_quantization_resolution_must_be_positive(self) -> None:
+        job = self._base_job()
+        job["semantic_metric_quantization"] = {"score": 0.0}
+        with self.assertRaisesRegex(CalibrationRunnerError, "positive finite"):
+            validate_job(job, Path("test-job.yaml"))
+
 
 if __name__ == "__main__":
     unittest.main()

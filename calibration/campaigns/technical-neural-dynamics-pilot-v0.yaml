@@ -117,7 +117,10 @@ acceptance:
   criteria_locked_before_run: true
   local_held_out_dataset_ids: []
   reproducibility_mode: deterministic_candidates_gpu_metrics_compared_at_4_significant_digits
-  reproducibility_tolerances: {gpu_metrics: 4_significant_digits, cpu_gpu_one_step: [atol_5e-5, rtol_5e-4]}
+  reproducibility_tolerances:
+    gpu_metrics: 4_significant_digits
+    near_zero_perturbation_final_gain_absolute_resolution: 0.0001
+    cpu_gpu_one_step: [atol_5e-5, rtol_5e-4]
 reopening: {reopened_family_ids: [], reasons: [], stale_descendant_ids: []}
 sources:
   - calibration/diagnostics/central-unfitted-regimes-v0.yaml

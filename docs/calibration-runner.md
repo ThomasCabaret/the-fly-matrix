@@ -37,6 +37,10 @@ without treating clock jitter as scientific drift. An excluded metric cannot be
 used by an acceptance gate. GPU campaigns may additionally declare
 `semantic_float_significant_digits`; full-precision values remain in each trial,
 while only the preregistered significant precision enters reproducibility hashes.
+Individual metrics may instead declare an absolute
+`semantic_metric_quantization` when a physically irrelevant near-zero GPU residue
+would be poorly represented by relative significant digits. The raw value remains
+in the trial report and the resolution is recorded in the summary.
 
 The unfitted full-graph characterization excludes measured throughput and the
 raw CPU/GPU maximum-error magnitude from its semantic hash. Its binary CPU/GPU

@@ -22,7 +22,7 @@ topology_boundary:
   exception_table_hashes: {central_signed_dynamics: none}
 
 input_files:
-  - {path: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml, sha256: 13bd917025c0004b1e9dc05cd2511cda69652cd0332fbd2ccdf3e19a4c085032}
+  - {path: calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml, sha256: ba71f366fab45616adc84666d126bd141267097f8775f714718da7299bb8b2c8}
   - {path: calibration/models/malecns-typed-signed-rate-v0.yaml, sha256: 30bd1b9618a8f3bd8d5df464d1eba02cf21ca3bf27a89a27894fa03d8ca3342e}
   - {path: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml, sha256: dc9f14cc12f590f05d504ff8868f250ca25c83b76ab05914a6a6d06bb785d2d5}
 
@@ -32,6 +32,10 @@ semantic_metric_exclusions:
   - simulated_to_wall_clock_ratio_per_scenario
   - cpu_gpu_max_abs_error
 semantic_float_significant_digits: 4
+semantic_metric_quantization:
+  perturbation_final_gain_max: 0.0001
+  train_perturbation_final_gain_max: 0.0001
+  validation_perturbation_final_gain_max: 0.0001
 repeat_each: 1
 trials:
   - &candidate

@@ -55,11 +55,20 @@ def _semantic_metrics(
     metrics: Mapping[str, Scalar],
     exclusions: frozenset[str],
     float_significant_digits: int | None,
+    metric_quantization: Mapping[str, float] | None = None,
 ) -> dict[str, Scalar]:
     result: dict[str, Scalar] = {}
     for key, value in metrics.items():
         if key in exclusions:
             continue
+        if (
+            metric_quantization
+            and key in metric_quantization
+            and isinstance(value, float)
+            and np.isfinite(value)
+        ):
+            resolution = float(metric_quantization[key])
+            value = round(value / resolution) * resolution
         if (
             float_significant_digits is not None
             and isinstance(value, float)
@@ -342,6 +351,23 @@ def validate_job(job: Mapping[str, Any], job_path: Path) -> dict[str, str]:
         raise CalibrationRunnerError(
             "semantic_float_significant_digits must be an integer from 1 to 15"
         )
+    quantization = job.get("semantic_metric_quantization", {})
+    if not isinstance(quantization, dict) or any(
+        not isinstance(key, str)
+        or not key
+        or not isinstance(value, (int, float))
+        or isinstance(value, bool)
+        or not np.isfinite(float(value))
+        or float(value) <= 0
+        for key, value in quantization.items()
+    ):
+        raise CalibrationRunnerError(
+            "semantic_metric_quantization must map metric names to positive finite resolutions"
+        )
+    if overlap := set(exclusions) & set(quantization):
+        raise CalibrationRunnerError(
+            f"Excluded metrics cannot also be quantized: {sorted(overlap)}"
+        )
     repetitions = job.get("repeat_each", 1)
     if not isinstance(repetitions, int) or repetitions < 1:
         raise CalibrationRunnerError("repeat_each must be a positive integer")
@@ -478,13 +504,20 @@ def run_job(
     counts = Counter(item["status"] for item in trial_results)
     metric_exclusions = frozenset(job.get("semantic_metric_exclusions", []))
     semantic_digits = job.get("semantic_float_significant_digits")
+    semantic_quantization = {
+        str(key): float(value)
+        for key, value in job.get("semantic_metric_quantization", {}).items()
+    }
     repeated_metrics: dict[str, list[str]] = {}
     for result in trial_results:
         if result["status"] in {"accepted", "rejected"}:
             repeated_metrics.setdefault(result["case_id"], []).append(
                 _canonical_hash(
                     _semantic_metrics(
-                        result["metrics"], metric_exclusions, semantic_digits
+                        result["metrics"],
+                        metric_exclusions,
+                        semantic_digits,
+                        semantic_quantization,
                     )
                 )
             )
@@ -530,7 +563,10 @@ def run_job(
         {
             **item,
             "metrics": _semantic_metrics(
-                item["metrics"], metric_exclusions, semantic_digits
+                item["metrics"],
+                metric_exclusions,
+                semantic_digits,
+                semantic_quantization,
             ),
         }
         for item in recorded_trials
@@ -565,6 +601,7 @@ def run_job(
         "semantic_result_sha256": _canonical_hash(semantic_trials),
         "semantic_metric_exclusions": sorted(metric_exclusions),
         "semantic_float_significant_digits": semantic_digits,
+        "semantic_metric_quantization": semantic_quantization,
         "reproducibility": {
             "job_config_sha256": config_sha256,
             "input_hashes": input_hashes,
