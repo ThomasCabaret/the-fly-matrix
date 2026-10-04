@@ -24,6 +24,27 @@ catalog_exposure_policy:
     - analysis and topology-control hashes
     - frozen parameter-set lineage
 
+planning_priority:
+  status: advisory_not_protocol_lock
+  preferred_first_candidate: evaluation_candidate.sensorimotor_lateralization.v0
+  preferred_variant: mirrored_localized_leg_contact
+  prerequisites:
+    - adequate localized tactile stimulus and readout resolution
+    - accepted actuator semantics gate
+    - mechanism-coverage statement
+    - independent biological source and immutable protocol
+  rationale: >-
+    Tests spatially specific left/right sensorimotor organization with fewer
+    simultaneous uncertain subsystems than full grooming, optomotor behavior or
+    looming/takeoff.
+  deferred_confounders:
+    localized_grooming: current tactile resolution and full action-sequence interpretation
+    optomotor: unresolved visual registration
+    looming_takeoff: visual, flight-mechanics and missing electrical-coupling ambiguity
+  lineage_warning: >-
+    Antennal grooming is not cleanly held out for a lineage whose neural-model
+    choice used the antennal grooming circuit reference.
+
 candidates:
   - id: evaluation_candidate.localized_grooming.v0
     stimulus_family: localized_mechanical_contact
@@ -39,11 +60,14 @@ candidates:
     stimulus_family: expanding_visual_object
     observation: bounded directionally coherent escape-like or takeoff-preparation response
     status: prospective_not_locked
+    mechanism_coverage: electrical_coupling_and_flight_mechanics_require_audit
     suggested_metrics: [direction_relative_to_stimulus, latency, repeatability, sham_effect_size]
   - id: evaluation_candidate.sensorimotor_lateralization.v0
     stimulus_family: mirrored_tactile_or_visual_stimuli
     observation: mirror-equivariant and anatomically coherent motor-response distributions
     status: prospective_not_locked
+    planning_priority: preferred_first_if_prerequisites_pass
+    preferred_variant: mirrored_localized_leg_contact
     suggested_metrics: [mirrored_output_equivariance, ipsilateral_contralateral_specificity, paired_effect_size]
   - id: evaluation_candidate.optomotor_response.v0
     stimulus_family: directional_visual_field_motion
@@ -90,4 +114,4 @@ provenance:
   note: Numerical expectations and thresholds require sourced preregistration before any protocol is locked.
 
 validation: not_run
-next_action: Select and source only the first protocol after a runnable parameter lineage is frozen; keep all catalog outcomes unavailable during calibration.
+next_action: Audit localized leg-contact stimulus resolution and mechanism coverage after a runnable lineage is frozen; keep all catalog outcomes unavailable during calibration.

@@ -19,6 +19,24 @@ metrics, thresholds, exclusions, analysis code, topology-control recipe and
 parameter-set hashes. Protocols should be locked only when the runnable system is
 ready; this catalog must not be mistaken for that lock.
 
+## Current planning priority and confounds
+
+The current preferred first candidate is a **mirrored localized tactile response
+of one leg**, a constrained variant of sensorimotor lateralization. It can test
+whether stimulus side and location organize motor output rather than merely raise
+global activity, while requiring fewer uncertain components than a full grooming
+sequence or takeoff. This priority is advisory: it is not a protocol lock and may
+be rejected by the required audit of tactile stimulus/readout resolution,
+actuator semantics, biological sources and represented mechanisms.
+
+The alternatives remain valuable but currently carry larger confounds. Grooming
+requires finer tactile resolution and a sequence interpretation; antennal grooming
+is also exposed for any lineage that uses the antennal circuit reference to select
+a neural model. Optomotor evaluation depends on defensible visual registration.
+Looming/takeoff combines vision, flight mechanics and potentially absent
+electrical coupling, so a negative result would not cleanly identify a calibration
+failure. Every eventual protocol must include a mechanism-coverage statement.
+
 ## Candidate observations
 
 ### Localized grooming

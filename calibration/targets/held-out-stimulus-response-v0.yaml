@@ -56,6 +56,7 @@ contamination_policy: >-
 dependencies:
   - promoted reference parameter set
   - accepted technical neural and embodied stability targets
+  - accepted actuator semantics and mechanism-coverage statements
   - locked scenario generator and seeds
 
 provenance:
@@ -70,6 +71,7 @@ validation: not_run
 blocked_reason: Protocol cannot be locked before a runnable calibrated system exists.
 next_action: >-
   Keep every catalog outcome unavailable during calibration. After a runnable
-  parameter lineage is frozen, select one candidate, attach biological sources,
-  preregister its generator, controls, seeds, metrics and thresholds, and only
-  then create a locked evaluation protocol.
+  parameter lineage is frozen, audit whether mirrored localized leg contact has
+  adequate stimulus and readout resolution. If so, source and preregister that
+  candidate first; otherwise record the failure and choose the next lowest-confound
+  candidate before creating a locked evaluation protocol.

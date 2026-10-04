@@ -33,6 +33,12 @@ class CalibrationInventory:
         )
 
 
+@dataclass(frozen=True)
+class CalibrationRiskRegistry:
+    risks: Mapping[str, Mapping[str, Any]]
+    model_references: Mapping[str, tuple[str, ...]]
+
+
 def _load_mapping(path: Path) -> dict[str, Any]:
     if not path.is_file():
         raise CalibrationRegistryError(f"Missing calibration registry file: {path}")
@@ -205,13 +211,70 @@ def load_calibration_inventory(root: Path = CALIBRATION_ROOT) -> CalibrationInve
     )
 
 
+def validate_model_risk_references(
+    root: Path = CALIBRATION_ROOT,
+) -> CalibrationRiskRegistry:
+    risk_path = root / "model-risks.yaml"
+    risk_record = _load_mapping(risk_path)
+    risk_rows = risk_record.get("risks")
+    if not isinstance(risk_rows, list) or not all(
+        isinstance(row, dict) for row in risk_rows
+    ):
+        raise CalibrationRegistryError(f"{risk_path}: risks must be a mapping list")
+
+    risks: dict[str, Mapping[str, Any]] = {}
+    for row in risk_rows:
+        risk_id = row.get("id")
+        if not isinstance(risk_id, str) or not risk_id:
+            raise CalibrationRegistryError(f"{risk_path}: every risk needs a stable id")
+        if risk_id in risks:
+            raise CalibrationRegistryError(f"{risk_path}: duplicate risk id {risk_id}")
+        decision_ref = row.get("decision_ref")
+        if not isinstance(decision_ref, str) or not decision_ref:
+            raise CalibrationRegistryError(f"{risk_path}: {risk_id} needs decision_ref")
+        decision_path = ROOT / decision_ref
+        if not decision_path.is_file():
+            raise CalibrationRegistryError(
+                f"{risk_path}: {risk_id} references missing decision {decision_ref}"
+            )
+        risks[risk_id] = row
+
+    model_references: dict[str, tuple[str, ...]] = {}
+    model_root = root / "models"
+    for path in sorted(model_root.glob("*.yaml")):
+        model = _load_mapping(path)
+        model_id = model.get("id")
+        if not isinstance(model_id, str) or not model_id:
+            raise CalibrationRegistryError(f"{path}: missing stable model id")
+        refs = model.get("critical_risk_refs", [])
+        if not isinstance(refs, list) or not all(isinstance(ref, str) for ref in refs):
+            raise CalibrationRegistryError(f"{path}: critical_risk_refs must be a string list")
+        if len(refs) != len(set(refs)):
+            raise CalibrationRegistryError(f"{path}: duplicate critical_risk_refs")
+        missing = sorted(set(refs) - set(risks))
+        if missing:
+            raise CalibrationRegistryError(
+                f"{path}: unknown critical risk references {missing}"
+            )
+        model_references[model_id] = tuple(refs)
+
+    return CalibrationRiskRegistry(risks=risks, model_references=model_references)
+
+
 def main() -> int:
-    print("[1/3] Chargement de l'inventaire versionne...")
+    print("[1/4] Chargement de l'inventaire versionne...")
     inventory = load_calibration_inventory()
     print(f"[OK] {len(inventory.families)} familles, index exhaustif")
-    print("[2/3] Validation du DAG et des declarations reciproques...")
+    print("[2/4] Validation du DAG et des declarations reciproques...")
     print(f"[OK] DAG acyclique, {len(inventory.dag['edges'])} dependances")
-    print("[3/3] Resume de maturite...")
+    print("[3/4] Validation des risques et references de modeles...")
+    risk_registry = validate_model_risk_references()
+    reference_count = sum(len(refs) for refs in risk_registry.model_references.values())
+    print(
+        f"[OK] {len(risk_registry.risks)} risques, "
+        f"{reference_count} references de modeles resolues"
+    )
+    print("[4/4] Resume de maturite...")
     status_counts = Counter(record["status"] for record in inventory.families.values())
     for status, count in sorted(status_counts.items()):
         print(f"  {status:38} {count:2}")

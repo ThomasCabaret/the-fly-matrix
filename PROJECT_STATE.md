@@ -32,6 +32,21 @@ présentes. La correspondance aBN2 reste toutefois partielle : `CB1740` et
 tandis que `CB3129` n'a pas de correspondant résolu. Le protocole scientifique
 reste donc non verrouillé et aucun seuil de réponse n'a été choisi.
 
+Un second gate causal est maintenant enregistré avant toute calibration incarnée
+globale. Le chemin courant utilise explicitement 102 actionneurs MuJoCo
+`ActuatorType.MOTOR`, et non des servos de position ou de vitesse ; le risque
+signalé n'est donc pas copié littéralement. L'abstraction directe articulation/
+couple peut néanmoins fournir une part non quantifiée du contrôle en remplaçant
+muscles, compliance et réflexes locaux. `target.actuator_semantics_gate.v0` doit
+mesurer ce rôle par classes d'actionneurs, charges et rejeux en boucle ouverte.
+
+L'ADR 0015 ajoute les risques de compensation par interfaces périphériques,
+d'afférences inconnues, de mécanismes absents et d'homogénéité point-neuron. Il
+autorise explicitement un modèle neuronal typé ou hybride. La préférence
+prospective pour le premier test devient une réponse tactile localisée et
+latéralisée d'une patte, sous réserve de résolution physique et de sources ; ce
+n'est toujours ni un protocole verrouillé ni une cible d'entraînement.
+
 Le premier gate local de sources basales est maintenant exécuté. Il comptabilise
 les 2 212 canaux couvrant 6 041 afférences, dérive 211 partitions d'audit et
 n'émet volontairement aucune valeur. Les mesures publiées sont en spikes/s alors
@@ -94,6 +109,14 @@ endogène n'apparaît dans cette charge volontairement faible ; la récurrence e
 testée sur le petit graphe, pas présentée comme une activité MaleCNS calibrée.
 Le détail et la décision de ne pas télécharger prématurément la morphologie sont
 dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
+
+Le front indépendant suivant est
+[`target.actuator_semantics_gate.v0`](calibration/targets/actuator-semantics-gate-v0.yaml).
+Il ne choisit aucun comportement ni gain moteur. Il fige et inventorie le contrat
+bas niveau, puis doit quantifier les réponses commande→force/état, saturation,
+relâchement, charge, symétrie et écart boucle ouverte/boucle fermée. Tant qu'il est
+ouvert, l'intégration physique reste valide mais un mouvement ne peut pas être
+attribué proprement à MaleCNS et à ses boîtes locales.
 
 L'audit reproductible de transfert du circuit antennaire est enregistré dans
 [`evidence.antennal_grooming_circuit_transferability.v0`](calibration/evidence/antennal-grooming-circuit-transferability-v0.yaml)
@@ -496,6 +519,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
 - Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF passe correction, comptabilité et faisabilité pleine échelle ; la première référence circuitaire est structurellement présente mais son mapping aBN2 reste partiel ; le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
+- Attribution incarnée : **102 actionneurs directs `MOTOR` confirmés, zéro servo de position/vitesse dans le chemin courant ; contribution mécanique/actuateur non quantifiée et gate ADR 0015 non exécuté**.
 
 Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -561,7 +585,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **121 tests** actuels passent, y compris les
+conservées et classifiées. Les **123 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -639,6 +663,12 @@ encore transférable. Le prochain lot ne doit ni répéter cet inventaire ni inv
 le pont d'unités : il doit comparer le runtime rate au baseline LIF événementiel
 sur les probes verrouillés restants, puis seulement définir l'interface d'entrée
 native du modèle retenu.
+
+En parallèle, le prochain lot indépendant peut préenregistrer et exécuter le gate
+d'actionneurs sans attendre le choix rate/LIF, car ses probes sont physiques et
+comportement-naïfs. Aucune campagne de stabilité incarnée ne doit libérer en même
+temps les familles centrales, sensorielles, motrices et mécaniques avant ce gate
+et une analyse d'identifiabilité des interfaces.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.

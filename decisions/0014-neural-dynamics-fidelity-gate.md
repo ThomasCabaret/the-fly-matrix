@@ -40,6 +40,13 @@ trained controllers rather than an untrained whole-connectome controller. These
 works do not justify applying one global rate abstraction to all canonical
 MaleCNS neurons.
 
+The same caution applies to the event comparator. Some fly populations use graded
+or otherwise non-standard transmission, and morphology or synapse location can
+matter in selected circuits. One successful point-neuron LIF circuit therefore
+does not authorize a homogeneous event model across MaleCNS. A typed or hybrid
+result is a valid outcome of this gate, not a failure to choose between two global
+models.
+
 Primary references:
 
 - Shiu et al., *A Drosophila computational brain model reveals sensorimotor
@@ -91,6 +98,11 @@ The purpose is not to prove that LIF is the final biology. It is to reject obvio
 dead ends cheaply and establish the least simplified model class for which the
 project has affirmative evidence.
 
+Acceptance is scope-aware. The gate may accept different representations for
+different annotated populations when the evidence supports that split. A single
+circuit reference can reject or support a local candidate, but cannot by itself
+close the global point-neuron or homogeneous-class risk.
+
 ### Delay fidelity is a separate explicit hypothesis
 
 The published whole-brain LIF precedent uses one fixed 1.8 ms delay; it does not
@@ -137,3 +149,5 @@ The gate may accept a rate, event, hybrid, or compartmental model if the bounded
 comparison supports it. It does not require maximal biophysical detail. Any
 accepted simplification must state its scope; for example, a graded visual model
 does not automatically authorize the same dynamics for motor or central neurons.
+Embodied attribution and actuator semantics remain a separate downstream gate
+under ADR 0015.

@@ -150,6 +150,9 @@ Early model-adequacy checks and propagation of unresolved ensembles are fixed by
 [`ADR 0013`](../decisions/0013-ensemble-propagation-and-model-adequacy.md).
 Neural-representation fidelity and the critical-assumption work-at-risk gate are
 fixed by [`ADR 0014`](../decisions/0014-neural-dynamics-fidelity-gate.md).
+Embodied causal attribution, actuator semantics and the gate sequence toward the
+first held-out observation are fixed by
+[`ADR 0015`](../decisions/0015-embodied-causal-attribution-gates.md).
 
 ## Parameter-family inventory and dependency DAG
 
@@ -286,6 +289,15 @@ new version after those residuals contradict the simpler form; it proceeds from
 shared class or region parameters toward local parameters, not directly to hidden
 per-neuron or per-edge freedom. See `calibration/model-risks.yaml`.
 
+A model-class decision may be population-typed. Rate, event, graded and
+compartmental dynamics are not mutually exclusive project-wide choices. Evidence
+from one circuit accepts a representation only for its declared scope; it cannot
+promote one homogeneous point-neuron class over all MaleCNS. Repeated residuals
+localized by cell class or region trigger a typed or hybrid comparison before a
+global capacity increase. The point-neuron approximation becomes an active gate
+only after cheaper sign, delay, unit and local-interface explanations have been
+tested on multiple independent circuits.
+
 Basal afferent sources and persistent efferent tone are explicit parameter
 families, never anonymous offsets inserted for convenience. Basal inputs should
 prefer measured or transferable neutral-condition statistics. If maintaining a
@@ -321,6 +333,39 @@ are transformed; how visual, proprioceptive and mechanosensory signals share the
 same input domain; and how the result behaves across the complete central
 ensemble. A hidden normalization constant or a convenient per-run rescaling is
 not evidence transfer.
+
+### Embodied causal attribution and actuator semantics
+
+The current embodied path instantiates all 102 FlyBody channels as classical
+MuJoCo `MOTOR` actuators. It does not currently use position or velocity servos.
+That fact is an executable invariant, not a claim that direct joint actuation is
+biologically faithful. Muscle activation, compliance, local reflexes, joint
+damping and contact dynamics can still move causal work from MaleCNS into the
+body/interface surrogate.
+
+Every embodied campaign therefore freezes the resolved actuator mode, gain/bias/
+dynamics settings, limits, joint targets and body-model hash. Before neutral
+embodied fitting or held-out interpretation, a technical actuator audit measures
+command-to-force and command-to-state responses under load, impulses and release,
+and compares open-loop replay with closed-loop control. A new position or velocity
+servo is a model-version change and must never enter through a default.
+
+Peripheral flexibility is subject to the same attribution rule. Sensory, basal,
+motor and mechanical families should be locally constrained and frozen before a
+global objective. A joint campaign must publish its compensation graph, sharing
+capacity, family-wise residuals and ablations with each flexible block held fixed.
+If many different interface/central combinations explain the same observation,
+retain that non-identifiability rather than select the most visually plausible
+trajectory. A transfer layer that learns a coordinated action is an external
+controller even when it is differentiable and local in software.
+
+Unknown afferents are tested with a small preregistered sensitivity grid of poor,
+behavior-naive basal hypotheses. The grid may promote the uncertainty to a gate or
+show it is weak over a declared range; it may not choose the hypothesis that helps
+a named behavior. Candidate behaviors also carry a mechanism-coverage statement
+for electrical coupling, morphology, muscles, flight mechanics and other absent
+causal machinery, so that a negative result is not misreported as a calibration
+failure when the relevant mechanism was never represented.
 
 ## Freeze and reopen
 
@@ -582,6 +627,8 @@ Run local campaigns across the declared central ensemble when their outputs depe
 on central state. Report whether one shared interface parameterization works, the
 result must be member-conditioned, or the residuals challenge central model
 capacity. Basal-source fitting belongs here and does not wait for a unique CNS.
+Use the residual unknown-afferent family for the bounded sensitivity grid above;
+do not silently merge it into a fitted global offset.
 
 ### Stage 2 — Technical neural dynamics
 
@@ -602,6 +649,11 @@ not falling immediately, limited actuator energy, and bounded CNS activity. A
 particular stance, gait, step sequence, or recognizable action is not prescribed.
 This remains trained technical stability and must be labelled as such.
 
+The actuator-semantics gate and the relevant local sensory/motor scopes must be
+closed or explicitly frozen before this stage frees global parameters. Central,
+sensory, motor and mechanical families cannot all vary simultaneously unless a
+versioned identifiability analysis demonstrates why local factorization fails.
+
 ### Stage 4 — Held-out stimulus response
 
 With parameters frozen, compare stimulus, sham, and when appropriate mirrored
@@ -616,6 +668,14 @@ looming escape, tactile or visual lateralization, optomotor directionality and
 temporal dynamics, and structured spontaneous motor motifs. These remain
 prospective and unlocked. Start by locking one tractable protocol rather than
 opening the entire catalog, and retain negative or ambiguous outcomes.
+
+The current planning preference is a mirrored localized tactile response of one
+leg, conditional on a stimulus-resolution audit and biological sourcing. It asks
+for spatial specificity without requiring a complete grooming sequence or flight.
+Optomotor tests remain downstream of visual registration. Looming/takeoff is a
+later integration target because absent electrical coupling and flight mechanics
+can make failure ambiguous. Antennal grooming is not cleanly held out for a model
+lineage that used the antennal circuit reference during model selection.
 
 Behavior-targeted fitting, if later desired, is a separate explicitly authorized
 stage and uses separate parameter lineages and reports.

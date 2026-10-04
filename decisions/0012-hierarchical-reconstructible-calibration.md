@@ -119,6 +119,15 @@ allowed only for a documented biological pathway or as an explicitly labelled
 surrogate validated against the physical path. It cannot conceal a behavioral
 controller.
 
+The physical actuator is itself part of this causal boundary. Each embodied
+campaign freezes its resolved actuator type, low-level dynamics, limits and body
+contract. Local motor calibration targets the declared command semantics; it may
+not assume that a simulator servo or direct-joint abstraction is biologically
+neutral. Before a global embodied objective, actuator contribution and interface
+compensation are bounded according to ADR 0015. Simultaneously freeing central,
+sensory, motor and mechanical families requires an explicit identifiability and
+ablation plan rather than convenience.
+
 ## Consequences
 
 - The first calibration implementation milestone is the parameter-family
@@ -142,3 +151,6 @@ explicit.
 ADR 0013 refines how provisional low-capacity models and finite ensembles move
 through this DAG; it does not weaken the freeze, exposure or capacity controls
 defined here.
+
+ADR 0015 adds embodied causal-attribution and actuator-semantics gates; it does
+not require one permanent actuator model.

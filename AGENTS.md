@@ -40,7 +40,9 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
    tout paramètre, cible, campagne ou protocole d'évaluation.
    Lire aussi l'ADR 0012 pour le DAG, le partage, le gel et la réouverture des
    familles de paramètres, l'ADR 0013 pour capacité/ensembles et l'ADR 0014 pour
-   la fidélité de la dynamique neuronale et les hypothèses critiques.
+   la fidélité de la dynamique neuronale et les hypothèses critiques. Lire l'ADR
+   0015 avant toute calibration incarnée ou interprétation d'un mouvement : il
+   fixe l'attribution causale aux interfaces et actionneurs.
 7. `docs/rules-first-automation.md` lorsqu'un lot répète une décision sur de
    nombreux objets, construit un pipeline ou lance une campagne hors ligne.
 
@@ -116,6 +118,30 @@ unités jusqu'à comparaison bornée avec un modèle événementiel LIF traçabl
 règle n'empêche pas les inventaires de preuves et travaux locaux indépendants du
 choix de modèle.
 
+Le choix rate/LIF n'est pas obligatoirement global : un modèle typé ou hybride est
+une issue valide. Un succès sur un circuit n'autorise pas une classe homogène sur
+tout MaleCNS. L'approximation point-neuron devient prioritaire seulement si
+plusieurs circuits indépendants échouent après exclusion des erreurs plus simples.
+
+## Attribution causale incarnée
+
+Le runtime courant instancie 102 actionneurs MuJoCo `MOTOR`, pas des servos de
+position ou de vitesse. Ne pas recopier l'affirmation générique « FlyBody pilote
+la position » sur ce chemin. En revanche, l'actionnement direct aux articulations
+reste un surrogate : muscles, compliance et réflexes locaux peuvent manquer.
+
+Avant une calibration incarnée globale ou un claim comportemental, appliquer
+l'ADR 0015 et `target.actuator_semantics_gate.v0` : figer et hasher le type et les
+paramètres bas niveau, mesurer les réponses commande→force/état et séparer boucle
+ouverte, mécanique passive et feedback MaleCNS. Une dérive vers un servo ou un
+modèle musculaire est une nouvelle version explicite.
+
+Ne pas laisser les interfaces périphériques compenser silencieusement une erreur
+centrale ou mécanique. Préférer les preuves locales, le partage justifié, le gel
+par famille et les ablations où un bloc flexible est maintenu fixe. Une campagne
+globale ne peut libérer simultanément les paramètres centraux, sensoriels, moteurs
+et physiques sans analyse d'identifiabilité versionnée.
+
 ## Automatisation proportionnée et sensible aux exceptions
 
 Privilégier les petites procédures reproductibles lorsque la même règle doit être
@@ -178,6 +204,12 @@ tailles d'ensembles candidats et les degrés de liberté, pas seulement leur nom
   évaluation scientifique ou un claim comportemental.
 - Les sorties lourdes vont sous `runs/calibration/`; Git conserve les configs,
   lignées, hashes, résumés, échecs, décisions et prochaines actions.
+- Chaque protocole incarné garde une fiche de couverture des mécanismes absents
+  (couplage électrique, muscles, vol, morphologie). Un échec qui dépend peut-être
+  d'un mécanisme absent reste ambigu, pas une réfutation de la calibration.
+- Les afférences de modalité inconnue sont soumises à une petite analyse de
+  sensibilité basale préenregistrée ; ne jamais choisir leur hypothèse en fonction
+  d'un comportement nommé.
 
 ## Capacité du modèle central et propagation d'ensemble
 
@@ -221,6 +253,14 @@ métriques, seuils, analyse et hashes. Comparer idéalement MaleCNS à plusieurs
 rewires avec paramètres gelés et à des rewires recalibrés par exactement la même
 recette non comportementale ; aucun contrôle ne voit le comportement pendant sa
 calibration.
+
+La préférence prospective actuelle est une réponse tactile localisée et
+latéralisée d'une patte, sous réserve d'un audit de résolution du stimulus, du gate
+d'actionneurs et d'une source biologique. Ce choix n'est pas un protocole verrouillé.
+L'optomoteur attend l'enregistrement visuel ; le looming/décollage reste plus tardif
+car les mécanismes électriques et la mécanique de vol pourraient rendre un échec
+ininterprétable. Le grooming antennaire n'est pas held-out pour une lignée qui a
+utilisé ce circuit afin de choisir sa dynamique neuronale.
 
 ## Initiative et cas non prévus
 

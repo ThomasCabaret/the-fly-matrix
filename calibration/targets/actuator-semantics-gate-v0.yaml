@@ -1,0 +1,71 @@
+schema_version: 1
+id: target.actuator_semantics_gate.v0
+title: Bound the causal contribution of the FlyBody actuator abstraction
+status: proposed_current_runtime_confirmed_direct_motor_audit_not_run
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: actuator_attribution_gate_no_behavior_claim
+
+scope:
+  includes:
+    - all 102 resolved FlyBody actuator channels
+    - MuJoCo actuator type, gain, bias, dynamics, force and control limits
+    - command-to-force and command-to-joint-state response under representative loads
+    - open-loop replay versus physically closed feedback
+  excludes:
+    - fitting a pose, gait, grooming, escape, jump or task outcome
+    - changing MaleCNS topology or motor candidate envelopes
+    - claiming direct joint actuation is biological muscle physiology
+
+metrics:
+  - actuator_type_accounting
+  - command_to_force_impulse_response_by_class
+  - command_to_joint_state_step_response_by_class
+  - passive_and_zero_command_decay
+  - saturation_and_force_limit_incidence
+  - open_loop_closed_loop_response_gap
+  - homologous_left_right_response_difference
+
+acceptance_policy:
+  summary: >-
+    Freeze and report the exact low-level actuator contract, quantify how much
+    dynamics and stabilization the physical abstraction supplies, and decide
+    whether direct MuJoCo motor actuation is an admissible surrogate for the first
+    embodied claim or requires a muscle/activation model first.
+  required_outcomes:
+    - every actuator type and low-level parameter is accounted for
+    - the current runtime remains classical motor only unless a new version is declared
+    - response probes are behavior-naive and stratified by actuator class and side
+    - the decision records which motor effects belong to MaleCNS, the transfer box and FlyBody
+  threshold_class: preregister_before_execution
+
+behavior_targets: []
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: [actuator_inventory, passive_response, impulse_response, step_response, open_loop_replay]
+  held_out: []
+
+dependencies:
+  - frozen FlyBody model version and assets
+  - exact 102-channel actuator addressing
+  - independently validated motor candidate topology
+  - deterministic physical replay
+
+provenance:
+  sources:
+    - decisions/0015-embodied-causal-attribution-gates.md
+    - src/the_fly_matrix/inventory.py
+    - src/the_fly_matrix/runtime.py
+    - ledger/validations/flybody-actuator-runtime.yaml
+    - flygym==2.1.0
+  assumptions:
+    - The present code instantiates ActuatorType.MOTOR for all 102 channels; it does not instantiate position or velocity servos.
+    - Direct motor actuation may still hide missing muscle, compliance or local-reflex dynamics.
+
+validation: not_run
+blocked_reason: null
+next_action: >-
+  Register a compact behavior-naive impulse/step/load probe, hash the resolved
+  actuator contract, and compare open-loop replay with physically closed feedback
+  before opening neutral embodied fitting.

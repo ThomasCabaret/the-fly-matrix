@@ -53,6 +53,11 @@ with a path plus checksum or stable content identifier when the result matters.
   identifiable.
 - Deterministic recipes reproduce semantic values exactly; stochastic recipes
   reproduce predeclared acceptance statistics and admissible domains.
+- Model risk identifiers, their ADR references and every model
+  `critical_risk_refs` entry resolve during `calibration_status.bat`; a dangling
+  scientific-risk reference is a registry error.
+- Embodied campaigns freeze actuator semantics and cannot use flexible peripheral
+  layers to hide central or mechanical error without an identifiability plan.
 
 Start from a template, assign a stable identifier, and link the new record from
 `state.yaml` or its parent object. Unknown cases should be represented honestly
@@ -60,7 +65,8 @@ and may justify a new ADR rather than being forced into an existing category.
 The dependency and reopening contract is in ADR 0012.
 
 Run `calibration_status.bat` to validate that the family files, inventory counts,
-reciprocal dependency declarations, and acyclic DAG agree. A successful result
+reciprocal dependency declarations, acyclic DAG, risk identifiers, decision
+references and model-risk references agree. A successful result
 means that the unknowns are accounted for; it does **not** mean any value has been
 fitted or accepted.
 
@@ -157,6 +163,13 @@ No response threshold or model-class decision is emitted. If this reference is
 eventually used for model selection, antennal grooming is exposed for that lineage
 and cannot be reused as a held-out emergent behavior claim.
 
+`target.actuator_semantics_gate.v0` is the next independent embodied gate. The
+present runtime is verified to use 102 classical MuJoCo `MOTOR` channels, not
+position or velocity servos, but direct joint actuation still replaces unmodelled
+muscle and local-reflex dynamics. The future gate uses behavior-naive command,
+force, load and open-loop replay probes; it must close before broad neutral
+embodied fitting or movement interpretation.
+
 The first prospective behavior catalog is
 `evaluation_candidates/emergent-behavior-catalog-v0.yaml`. It records localized
 and hierarchical grooming, looming, lateralization, optomotor responses and
@@ -164,3 +177,6 @@ structured spontaneous activity, plus sham and topology-control requirements.
 Nothing in that catalog has been run or locked, and it must not influence fitting
 or model selection. A selected item becomes `evaluation_only` only through a new
 immutable protocol with sources, seeds, metrics and thresholds.
+The current advisory preference is mirrored localized leg contact, conditional on
+tactile resolution, actuator attribution and mechanism coverage; this is not a
+protocol lock.

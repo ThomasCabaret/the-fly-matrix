@@ -251,6 +251,7 @@ class RuntimeTests(unittest.TestCase):
             np.linspace(-1e-4, 1e-4, len(interface.actuator_names), dtype=np.float64)
         )
         with FlyBodyPhysicsLoop.from_generated_wiring() as loop:
+            self.assertEqual(loop.actuator_type.value, "motor")
             result = loop.step(commands, substeps=2)
         self.assertEqual(result.actuator_names, interface.actuator_names)
         self.assertEqual(len(result.joint_state.joint_names), 102)

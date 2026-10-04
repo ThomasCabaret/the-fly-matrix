@@ -2,6 +2,7 @@ schema_version: 2
 behavior_targeted_calibrations: []
 technical_targets:
   - target.neural_model_class_gate.v0
+  - target.actuator_semantics_gate.v0
   - target.technical_neural_dynamics.v0
   - target.technical_embodied_stability.v0
 evaluation_only_targets:
@@ -23,3 +24,4 @@ notes:
   - No named behavior is assigned until a locked protocol fixes the calibration/evaluation split.
   - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.
   - Prospective names are not locked held-out protocols; any behavior-specific design or tuning decision contaminates that candidate for the affected lineage.
+  - The preferred first candidate is mirrored localized leg contact only after stimulus-resolution, actuator-attribution and mechanism-coverage gates pass; this priority is not a protocol lock.

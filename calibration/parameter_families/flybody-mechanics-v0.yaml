@@ -1,11 +1,11 @@
 schema_version: 1
 id: parameter.body.flybody_mechanics.v0
 title: FlyBody mechanical and actuator constants
-status: inventoried_external_frozen
+status: inventoried_external_frozen_actuator_semantics_gate_open
 primary_class: evidence_transfer
 parameter_kind: mechanical
 claim_role: surrogate
-meaning: {biological_or_technical_role: Upstream FlyBody and MuJoCo body model constants consumed by local motor and sensor calibration, units: mixed, applicability_limits: [External model fidelity limits propagate downstream]}
+meaning: {biological_or_technical_role: Upstream FlyBody and MuJoCo body model constants consumed by local motor and sensor calibration, units: mixed, applicability_limits: [External model fidelity limits propagate downstream, Current runtime uses 102 direct MuJoCo motor actuators and no position or velocity servo]}
 scope:
   owner_ids: [body.flybody, world.mujoco]
   parameter_names: [external_model_constants]
@@ -13,10 +13,10 @@ scope:
   topology_snapshot: {semantic_topology_sha256: flybody_2.1.0_model_contract, candidate_envelope_sha256: not_applicable, ruleset_sha256: not_applicable, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [external_model_fixed], selected_level: external_model_fixed, justification: keep physics fixed during initial identifiability work, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer], current_origin: borrowed_external_model, prior_or_bounds: upstream_model, fallback: no_silent_override}
-identifiability: {status: frozen_for_initial_campaigns, allowed_dataset_ids: [flybody-2.1.0], local_held_out_dataset_ids: [], forbidden_behavior_ids: [], jointly_identified_with: [], joint_calibration_reason: null}
+identifiability: {status: frozen_for_initial_campaigns_actuator_contribution_unquantified, allowed_dataset_ids: [flybody-2.1.0], local_held_out_dataset_ids: [], forbidden_behavior_ids: [], jointly_identified_with: [], joint_calibration_reason: null}
 dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.motor.transfer.v0]}
 uncertainty: {representation: documented_model_limitations, admissible_set_criteria: [], reference_selection_rule: upstream_version}
 freeze: {status: externally_frozen, parameter_set_id: null, acceptance_evaluation_ids: [validation.flybody_inventory, validation.flybody_actuator_runtime], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: flygym==2.1.0, supports: executable body mechanics and actuator contract}]
-assumptions: [Mechanical constants are held fixed initially; this does not claim they are exact fly physiology.]
-next_action: Hash the resolved model assets in each campaign boundary and revisit only after interface residual diagnostics.
+assumptions: [Mechanical constants are held fixed initially; this does not claim they are exact fly physiology., Direct motor actuation avoids a hidden position-servo loop but may still replace muscle activation, compliance or local reflex dynamics.]
+next_action: Hash the resolved model and actuator assets, run target.actuator_semantics_gate.v0, and revisit mechanics only after local interface residual diagnostics.

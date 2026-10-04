@@ -136,4 +136,175 @@ risks:
     decision_ref: decisions/0013-ensemble-propagation-and-model-adequacy.md
     next_review: after_first_ensemble_aware_local_or_hybrid_campaign
 
-next_action: Resolve the ADR 0014 neural model-class gate before resuming model-dependent basal or ensemble propagation campaigns.
+  - id: risk.central_event_model_fidelity.v0
+    title: Homogeneous point-neuron LIF may misrepresent graded or compartment-sensitive populations
+    status: open_critical_scope_gate
+    affected_model_id: model.malecns_lif_fixed_delay.v0
+    affected_parameter_family_ids:
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+    hypothesis_under_test: >-
+      One fixed-delay point-neuron LIF abstraction is adequate across every
+      canonical MaleCNS population needed by the first embodied claim.
+    evidence_supporting:
+      - A source-traceable whole-brain LIF precedent produced experimentally tested circuit predictions.
+      - The local implementation passes an independent deterministic recurrent-graph reference and full-graph event accounting.
+    evidence_against_or_unresolved:
+      - Some fly circuits use graded or non-spiking dynamics, and one local circuit cannot validate a homogeneous whole-CNS class.
+      - Morphology and synapse location are absent from the point-neuron representation.
+      - No shared rate-versus-event circuit comparison has yet produced a scoped go, revise or stop decision.
+    consequence_if_true: The LIF lineage may proceed for the populations and claims that pass the gate.
+    consequence_if_false: Use a population-typed, hybrid or compartment-aware model and revalidate model-dependent descendants.
+    current_mitigation: >-
+      Treat LIF as a comparator, report residuals by class and region, and permit a
+      typed/hybrid conclusion. Escalate morphology only after cheaper sign, delay,
+      input-unit and interface explanations fail on multiple independent circuits.
+    cheapest_discriminating_experiment: >-
+      Run the preregistered circuit and technical probes across rate, LIF and any
+      independently justified graded population; limit acceptance to tested scopes.
+    work_at_risk:
+      scientific_blast_radius: central dynamics and all model-dependent interface units
+      reusable_if_rejected: event engine, sparse graph, runner, circuit mapping, evidence inventory, physical loop and replay
+      budget_policy: one_scoped_comparison_before_homogeneous_global_promotion
+    escalation_triggers:
+      - systematic class-localized residuals across independent circuits
+      - failure persists after sign, delay and interface uncertainty are bounded
+      - morphology-sensitive reference data become available
+    forbidden_shortcuts:
+      - promoting homogeneous LIF because one circuit passes
+      - treating every annotated neuron as obligatorily spiking
+      - adding compartments without a discriminating residual
+    decision_ref: decisions/0014-neural-dynamics-fidelity-gate.md
+    next_review: during_neural_model_class_gate_v0
+
+  - id: risk.flybody_actuator_abstraction.v0
+    title: Direct FlyBody joint actuation may supply or hide part of motor control
+    status: open_critical_pre_embodied_claim_gate
+    affected_model_id: body.flybody
+    affected_parameter_family_ids:
+      - parameter.body.flybody_mechanics.v0
+      - parameter.motor.transfer.v0
+      - parameter.technical.motor_command_envelope.v0
+    hypothesis_under_test: >-
+      The current direct MuJoCo motor-actuator surrogate is sufficiently bounded
+      and understood that a stimulus-specific response can be attributed to
+      MaleCNS plus declared local transfer rather than hidden actuator control.
+    evidence_supporting:
+      - Current code explicitly instantiates ActuatorType.MOTOR on all 102 channels rather than position or velocity servos.
+      - Exact addressing, deterministic replay and passive-control difference pass integration tests.
+    evidence_against_or_unresolved:
+      - Direct joint motor commands omit explicit muscle activation, compliance and local reflex dynamics.
+      - Command-to-force/state behavior by actuator class and load has not been characterized.
+      - The external FlyBody mechanical constants remain borrowed surrogate values.
+    consequence_if_true: Direct motor actuation may support the first bounded embodied claim with an explicit applicability limit.
+    consequence_if_false: Introduce a versioned muscle/activation or lower-level actuation model before behavioral interpretation.
+    current_mitigation: Freeze actuator semantics and block neutral embodied fitting and held-out interpretation on a bounded behavior-naive actuator audit.
+    cheapest_discriminating_experiment: Run class-stratified passive, impulse, step, load and open-loop replay probes with no named action target.
+    work_at_risk:
+      scientific_blast_radius: motor transfer, neutral embodied stability and every movement-based claim
+      reusable_if_rejected: exact addressing, motor topology, physical replay and probe harness
+      budget_policy: one_bounded_actuator_semantics_lot_before_global_embodied_fitting
+    escalation_triggers:
+      - substantial stabilization arises from actuator or mechanical defaults
+      - response is highly sensitive to undocumented low-level parameters
+      - direct motor and muscle-aware surrogates yield incompatible local responses
+    forbidden_shortcuts:
+      - calling direct motor actuation biological muscle physiology
+      - introducing a position or velocity servo through a default
+      - selecting actuator semantics using a named behavior
+    decision_ref: decisions/0015-embodied-causal-attribution-gates.md
+    next_review: target_actuator_semantics_gate_v0
+
+  - id: risk.peripheral_interface_compensation.v0
+    title: Flexible peripheral interfaces may compensate for central or mechanical error
+    status: open_high_impact
+    affected_model_id: calibration.parameter_dependency_dag.v0
+    affected_parameter_family_ids:
+      - parameter.vision.transfer.v0
+      - parameter.proprioception.transfer.v0
+      - parameter.mechanosensation.transfer.v0
+      - parameter.motor.transfer.v0
+    hypothesis_under_test: >-
+      Local evidence and sharing constraints identify peripheral transfers well
+      enough that they cannot become implicit whole-body controllers.
+    evidence_supporting:
+      - Candidate envelopes are independently validated, local and finite.
+      - Routing and transfer families are compiled separately with explicit sharing.
+    evidence_against_or_unresolved:
+      - Transfer-sharing levels and local datasets remain unresolved.
+      - A global stability loss could admit compensating central, sensory, motor and physical parameter blocks.
+    consequence_if_true: Locally frozen interfaces can support interpretable central and embodied calibration.
+    consequence_if_false: Retain an ensemble or redesign local measurements; do not resolve ambiguity with more global capacity.
+    current_mitigation: Require local freeze, family-wise residuals, hold-one-block-fixed ablations and explicit joint-identifiability arguments.
+    cheapest_discriminating_experiment: Fit one minimal sensory and motor chain under alternative frozen central members and measure parameter incompatibility and residual structure.
+    escalation_triggers:
+      - multiple interface/central combinations yield indistinguishable local observations
+      - a transfer layer learns coordinated whole-body action
+      - global fitting materially changes locally accepted families
+    forbidden_shortcuts:
+      - freeing all layers in the first neutral stability campaign
+      - hiding tonic output or behavior policy in a gain
+      - selecting compensation by trajectory appearance
+    decision_ref: decisions/0015-embodied-causal-attribution-gates.md
+    next_review: before_first_joint_or_embodied_campaign
+
+  - id: risk.unknown_afferent_sensitivity.v0
+    title: Unresolved afferent basal policy may dominate central dynamics
+    status: open_bounded_sensitivity_required
+    affected_model_id: model.malecns_lif_fixed_delay.v0
+    affected_parameter_family_ids:
+      - parameter.residual_sensory.unknown_nominal.v0
+      - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+      - parameter.residual_sensory.chemosensory_nominal.v0
+    hypothesis_under_test: >-
+      Central and local conclusions are robust over a small plausible range of
+      poor, behavior-naive policies for unresolved afferents.
+    evidence_supporting:
+      - Every residual source remains explicit, counted and parameterized rather than dropped.
+    evidence_against_or_unresolved:
+      - 1815 channels retain unknown modality and no accepted biological values.
+      - Their effect under zero, low tonic and stochastic hypotheses has not been measured.
+    consequence_if_true: Propagate the tested basal uncertainty without blocking unrelated local work.
+    consequence_if_false: Promote annotation or measurement of these afferents to a priority gate.
+    current_mitigation: Pre-register a small hypothesis grid and report sensitivity without using behavior to choose a member.
+    cheapest_discriminating_experiment: Compare technical central and local metrics under zero, bounded tonic and matched stochastic source families.
+    escalation_triggers:
+      - material changes in selected model class or local transfer residuals
+      - instability occurs only under one arbitrary residual policy
+    forbidden_shortcuts:
+      - choosing the basal policy that improves a named behavior
+      - relabelling unknown sources as measured physiology
+    decision_ref: decisions/0015-embodied-causal-attribution-gates.md
+    next_review: after_central_model_class_units_are_selected
+
+  - id: risk.missing_mechanism_coverage.v0
+    title: Absent electrical, muscular or compartmental mechanisms can confound behavior failures
+    status: open_applicability_risk
+    affected_model_id: model.malecns_lif_fixed_delay.v0
+    affected_parameter_family_ids:
+      - parameter.central.neuron_dynamics.v0
+      - parameter.body.flybody_mechanics.v0
+      - parameter.motor.transfer.v0
+    hypothesis_under_test: >-
+      The first selected held-out behavior does not materially require a causal
+      mechanism absent from the represented chemical connectome and body model.
+    evidence_supporting:
+      - The catalog can prioritize short local tactile responses with fewer simultaneous dependencies.
+    evidence_against_or_unresolved:
+      - Accepted electrical-coupling edges are not currently part of the runtime graph.
+      - Detailed muscles, flight control and compartmental integration are not represented.
+      - Looming/takeoff and other candidate circuits may depend on such mechanisms.
+    consequence_if_true: A negative result is more interpretable as a model/calibration test.
+    consequence_if_false: Add the missing mechanism or label the behavior result mechanistically ambiguous.
+    current_mitigation: Require a mechanism-coverage statement before protocol lock and defer high-confound evaluations.
+    cheapest_discriminating_experiment: Literature-backed circuit mechanism inventory for the one candidate being considered, not the whole brain.
+    escalation_triggers:
+      - the candidate circuit has known essential electrical coupling
+      - the readout requires unrepresented flight or muscle dynamics
+    forbidden_shortcuts:
+      - treating an absent mechanism as a failed calibration
+      - adding an unsourced surrogate only to rescue the evaluated behavior
+    decision_ref: decisions/0015-embodied-causal-attribution-gates.md
+    next_review: before_locking_each_evaluation_only_protocol
+
+next_action: Resolve the ADR 0014 neural model-class gate and preregister the ADR 0015 actuator audit before model-dependent basal, broad joint or neutral embodied campaigns.

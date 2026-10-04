@@ -5,7 +5,10 @@ import unittest
 
 import yaml
 
-from the_fly_matrix.calibration_registry import load_calibration_inventory
+from the_fly_matrix.calibration_registry import (
+    load_calibration_inventory,
+    validate_model_risk_references,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -213,6 +216,29 @@ class CalibrationRegistryTests(unittest.TestCase):
             "blocked_engineering_lif_stages_passed_scientific_rate_vs_event_comparison_open",
         )
         self.assertFalse(gate["acceptance_policy"].get("scientific_gate_closed", False))
+
+    def test_model_risk_references_and_decisions_are_resolved(self) -> None:
+        registry = validate_model_risk_references(CALIBRATION_ROOT)
+        self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)
+        self.assertIn("risk.flybody_actuator_abstraction.v0", registry.risks)
+        self.assertEqual(
+            set(registry.model_references["model.malecns_lif_fixed_delay.v0"]),
+            {
+                "risk.central_delay_fidelity.v0",
+                "risk.central_event_model_fidelity.v0",
+            },
+        )
+
+    def test_actuator_gate_records_current_direct_motor_boundary(self) -> None:
+        gate = self.targets["target.actuator_semantics_gate.v0"]
+        self.assertEqual(gate["primary_class"], "technical")
+        self.assertEqual(gate["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(gate["behavior_targets"], [])
+        self.assertIn(gate["id"], self.state["active_target_ids"])
+        self.assertIn(
+            "direct_mujoco_motor_not_position_or_velocity_servo",
+            self.state["readiness"]["actuator_semantics"],
+        )
 
 
 if __name__ == "__main__":

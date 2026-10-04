@@ -13,6 +13,7 @@ level: integration
 protocol_path: src/the_fly_matrix/wiring_smoke.py
 command: run_wiring_smoke.bat
 acceptance_criteria:
+  - The resolved runtime actuator type is classical MuJoCo motor for all 102 channels; no position or velocity servo is admitted silently
   - All 102 compiled FlyBody actuators have one unique control address
   - Each actuator targets one unique compiled joint
   - Arbitrary pre-transduced commands are placed deterministically in the ctrl vector
@@ -26,8 +27,10 @@ held_out_behavior_ids: []
 latest_run_id: flybody-physical-feedback-2026-09-22
 status: integration_pass
 notes:
+  - The current runtime explicitly requests ActuatorType.MOTOR; this avoids an implicit position target but does not validate biological muscle semantics
   - 102 actuator channels target 102 unique joints
   - 100 channels have a FlyBody actuator configuration group and 2 haltere channels do not
   - The smoke-only tanh envelope protects numerical execution and is not a scientific gain
   - The commanded state is read back through the exact 102-channel proprioception interface
   - Candidate mapping and parameter calibration remain separate from exact physical execution
+  - The causal contribution of direct joint actuation remains open under target.actuator_semantics_gate.v0

@@ -21,6 +21,13 @@ It is not calibrated. All temporal and interface values use the versioned
 `BENCHMARK ONLY / UNCALIBRATED` profile, and the command envelope is an engineering
 safety guard.
 
+The current body path explicitly creates all 102 channels as classical MuJoCo
+`MOTOR` actuators. It does not use position or velocity servos. This prevents a
+hidden position controller in the present configuration, but direct joint
+actuation is still a surrogate for muscle activation, compliance and local reflex
+dynamics. Its causal contribution is an open gate under ADR 0015, not accepted
+motor physiology.
+
 ## Three user modes
 
 `closed_loop_record.bat` calculates one second headlessly and writes a physical
@@ -82,6 +89,9 @@ normal path until profiling and optimization close that gap.
 - The run demonstrates execution, not plausible behavior.
 - The 5 ms neural step has not been biologically accepted.
 - Input and motor parameters are seeded placeholders and cannot be promoted.
+- Actuator addressing is validated, but command-to-force/state semantics and the
+  stabilization contributed by FlyBody/MuJoCo have not yet passed the actuator
+  attribution gate.
 - Scientific interface revalidation remains independently blocking.
 - Optimize only after profiling; likely targets are retinal rendering, repeated
   box assembly and GPU/CPU synchronization.
