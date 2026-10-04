@@ -1,0 +1,65 @@
+schema_version: 1
+id: model.malecns_lif_fixed_delay.v0
+title: Source-traceable fixed-delay event LIF reference for canonical MaleCNS
+status: engineering_reference_unfitted
+claim_label: EVENT MODEL GATE / UNFITTED / NOT BIOLOGICAL BEHAVIOR
+scientific_role: bounded_model_class_comparator
+
+scope:
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+  structural_weight: published_integer_synapse_count
+  edge_partition_key: presynaptic_effective_transmitter
+
+equations:
+  synaptic_state: g_next = g * exp(-dt_ms / tau_syn_ms) + arriving_weight_mV
+  membrane_state: v_next = v + dt_ms / tau_membrane_ms * (v_rest_mV - v + g)
+  spike: eligible and v_next >= threshold_mV
+  reset: v = reset_mV and refractory_steps = ceil(refractory_ms / dt_ms)
+  transmission: every emitted spike is delivered after fixed_delay_ms
+  numerical_scheme: event_arrival_then_exact_synaptic_decay_then_forward_euler_membrane
+
+reference_constants:
+  v_rest_mV: {value: -52.0, origin: published_reference_implementation}
+  reset_mV: {value: -52.0, origin: published_reference_implementation}
+  threshold_mV: {value: -45.0, origin: published_reference_implementation}
+  tau_membrane_ms: {value: 20.0, origin: published_reference_implementation}
+  tau_syn_ms: {value: 5.0, origin: published_reference_implementation}
+  refractory_ms: {value: 2.2, origin: published_reference_implementation}
+  fixed_delay_ms: {value: 1.8, origin: published_reference_implementation}
+  unitary_synaptic_weight_mV:
+    value: 0.275
+    origin: published_behavior_exposed_fit
+    restriction: comparison_only_not_promotable_without_independent_evidence
+
+engineering_choices:
+  dt_ms:
+    value: 0.1
+    reason: resolves the 1.8 ms delay and 2.2 ms refractory period exactly
+    status: numerical_choice_to_test_not_physiology
+  unknown_transmitter_signs:
+    policy: reuse_explicit_nonzero_structural_probe_signs
+    restriction: throughput_and_software_validation_only
+  full_graph_load:
+    policy: deterministic_forced_spike_schedule
+    restriction: not_a_neural_activity_or_behavior_claim
+
+accepted_claims:
+  - The implementation exposes spike, membrane, synaptic, refractory and delay state.
+  - The fixed delay and point-neuron constants are traceable to the published comparator.
+  - Every forced or endogenous event can be accounted against the canonical outgoing graph.
+forbidden_claims:
+  - The constants are accepted MaleCNS physiology.
+  - The unitary weight is behavior-independent.
+  - A throughput pass validates neural computation or fly behavior.
+  - A fixed delay establishes that morphology-dependent delays are unnecessary.
+
+sources:
+  - https://doi.org/10.1038/s41586-024-07763-9
+  - https://github.com/philshiu/Drosophila_brain_model
+  - calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+  - data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+critical_risk_refs:
+  - risk.central_delay_fidelity.v0
+  - risk.central_event_model_fidelity.v0
+next_action: Run the bounded deterministic and full-graph feasibility protocol before any promotion.

@@ -48,9 +48,9 @@ readiness:
   central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
-  central_model_class: blocked_pending_bounded_rate_vs_event_fidelity_gate
-  spike_event_runtime: not_implemented
-  transmission_delay_policy: unresolved_rate_v0_has_none_lif_reference_candidate_fixed_1_8_ms
+  central_model_class: blocked_engineering_lif_stages_passed_scientific_rate_vs_event_comparison_open
+  spike_event_runtime: fixed_delay_lif_reference_exact_on_small_recurrent_graph_full_graph_load_validated
+  transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_unit_bridge_missing
   held_out_protocol_locked: false
@@ -70,8 +70,8 @@ blocked_by:
   - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
 
 next_action: >-
-  Specify and execute target.neural_model_class_gate.v0: retain the signed rate
-  runtime as an engineering comparator, implement a source-traceable event-based
-  LIF reference with explicit delay semantics, validate it on a deterministic
-  small graph, benchmark full MaleCNS, and compare both on preregistered
-  model-independent probes before resuming model-dependent basal calibration.
+  Continue target.neural_model_class_gate.v0 from its accepted engineering
+  milestone: preregister model-independent rate-versus-event probes and one
+  independent circuit reference, then issue a go, revise, or stop decision. Do
+  not resume model-dependent basal calibration merely because the event engine
+  fits in GPU memory or executes successfully.

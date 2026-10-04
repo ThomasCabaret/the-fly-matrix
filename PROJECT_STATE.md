@@ -15,6 +15,15 @@ un runtime rate continu sans spikes, réfractarité, noyau synaptique événemen
 ni délai de transmission. Rien ne montre encore que cette représentation préserve
 les calculs nécessaires à une mouche incarnée.
 
+Le premier jalon du gate de classe neuronale est maintenant mesuré. Une référence
+LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
+indépendante sur un petit graphe récurrent, puis comptabilise les 25 582 938
+arêtes du MaleCNS canonique. Le benchmark CPU/GPU complet livre chaque événement
+attendu sous trois charges synthétiques et tient largement dans les 8 Go du GPU,
+mais l'implémentation Torch générique n'atteint encore qu'environ 0,03 à 0,05 fois
+le temps réel à 0,1 ms. C'est un passage d'ingénierie, pas l'acceptation du modèle :
+les probes comparatifs et la référence circuit indépendante restent à faire.
+
 Le premier gate local de sources basales est maintenant exécuté. Il comptabilise
 les 2 212 canaux couvrant 6 041 afférences, dérive 211 partitions d'audit et
 n'émet volontairement aucune valeur. Les mesures publiées sont en spikes/s alors
@@ -61,6 +70,22 @@ référence sur petit graphe, mesurer le graphe MaleCNS complet et comparer les 
 classes sur des probes préenregistrés avant toute calibration dépendante des
 unités centrales. La politique et le précédent scientifique sont consignés dans
 [`ADR 0014`](decisions/0014-neural-dynamics-fidelity-gate.md).
+
+Le protocole exécutable et son résultat compact sont désormais disponibles dans
+[`campaign.neural_model_class_lif_feasibility.v0`](calibration/campaigns/neural-model-class-lif-feasibility-v0.yaml)
+et
+[`runner_result.neural_model_class_lif_feasibility.v0`](calibration/runner/neural-model-class-lif-feasibility-v0.yaml).
+La double référence NumPy/Torch concorde exactement sur les états et les spikes
+du graphe de test. Le balayage sortant visite 166 700 lignes, 25 582 938 arêtes et
+124 177 617 contacts ; son CSR additionnel occupe 205 330 308 octets. Sur le GPU
+RTX 4060 Laptop, les charges forcées de 1, 10 et 50 spikes/s/neuron réservent
+environ 0,34 Go et mesurent 0,039 à 0,044 fois le temps réel. Le CPU est comparable
+à faible charge et descend à 0,030 fois le temps réel à 50 spikes/s/neuron : le GPU
+n'est donc pas encore exploité efficacement par ce noyau générique. Aucun spike
+endogène n'apparaît dans cette charge volontairement faible ; la récurrence est
+testée sur le petit graphe, pas présentée comme une activité MaleCNS calibrée.
+Le détail et la décision de ne pas télécharger prématurément la morphologie sont
+dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
@@ -451,7 +476,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; les 31 candidats rate restent des comparateurs techniques non promouvables ; le gate basal couvre 2 212 canaux mais tout transfert dépendant est suspendu jusqu'au gate critique de classe neuronale rate-versus-spikes ; aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF passe correction, comptabilité et faisabilité pleine échelle mais le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 
 Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
@@ -518,7 +543,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **113 tests** actuels passent, y compris les
+conservées et classifiées. Les **119 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -546,9 +571,10 @@ sur l'apparence de sa sortie.
 Le premier audit local est terminé sans choisir de valeur : les partitions de
 preuve basales sont exhaustives et les limites des publications sont enregistrées.
 Le transfert numérique est suspendu parce que le choix entre activité rate et
-spikes change la nature même du pont. Le prochain lot doit fermer le gate de classe
-neuronale, pas propager les 31 membres rate ni transformer les sources résiduelles
-inconnues en pseudo-physiologie.
+spikes change la nature même du pont. Le jalon d'ingénierie LIF est franchi ; le
+prochain lot doit préenregistrer les probes rate-versus-événements et la référence
+circuit indépendante, pas propager les 31 membres rate ni transformer les sources
+résiduelles inconnues en pseudo-physiologie.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -580,15 +606,18 @@ set complet n'a été promu et aucune cible comportementale n'est autorisée. L'
 aval préenregistrée est terminée : elle classe l'ensemble comme hautement sensible
 en motif et en amplitude, sans sélectionner de candidat. La première contrainte
 de portabilité numérique retire le candidat 30 et conserve 31 survivants sans les
-classer. Le prochain lot doit définir et exécuter le gate borné de classe
-neuronale ; les scopes locaux indépendants du modèle peuvent continuer, mais aucun
+classer. Le premier tiers du gate borné de classe neuronale est maintenant exécuté :
+référence déterministe, comptabilité exhaustive et faisabilité CPU/GPU passent.
+Le prochain lot doit construire la comparaison scientifique commune ; les scopes
+locaux indépendants du modèle peuvent continuer, mais aucun
 paramètre dont les unités dépendent du runtime central ne doit être promu. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Le gate d'évidence basal ferme l'inventaire mais conclut qu'aucune valeur n'est
 encore transférable. Le prochain lot ne doit ni répéter cet inventaire ni inventer
-le pont d'unités : il doit comparer le runtime rate au baseline LIF événementiel,
-puis seulement définir l'interface d'entrée native du modèle retenu.
+le pont d'unités : il doit comparer le runtime rate au baseline LIF événementiel
+sur les probes verrouillés restants, puis seulement définir l'interface d'entrée
+native du modèle retenu.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -620,6 +649,7 @@ fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans co
 central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties brutes
 constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
 compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le gate de classe reste ouvert
+neural_model_gate.bat # correction + comptabilité + benchmark CPU/GPU du LIF événementiel, aucune calibration
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.neural_model_class_gate.v0
 title: Select the minimum defensible temporal MaleCNS model class
-status: proposed
+status: active_engineering_stages_passed_scientific_comparison_open
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: model_selection_gate_no_behavior_claim
@@ -68,8 +68,10 @@ provenance:
     - A fixed 1.8 ms delay is literature-backed for the reference baseline but is not morphology-derived.
     - The circuit reference and thresholds must be locked before candidate outputs are inspected.
 
-validation: not_run
+validation: partial_engineering_pass
 blocked_reason: null
 next_action: >-
-  Specify the bounded comparison protocol and implement the deterministic
-  event-based LIF reference without changing wiring or fitting behavior.
+  Preregister model-independent rate-versus-event probes and one independent
+  circuit reference, then issue an explicit go, revise, or stop decision. The
+  deterministic reference, canonical edge sweep and CPU/GPU feasibility stages
+  have passed but do not close the scientific model-class gate.

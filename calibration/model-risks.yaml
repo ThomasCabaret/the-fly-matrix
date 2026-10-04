@@ -1,6 +1,6 @@
 schema_version: 1
 id: calibration.model_risks.v0
-updated: 2026-10-03
+updated: 2026-10-04
 status: active
 
 risks:
@@ -22,12 +22,15 @@ risks:
       - The representation executes the complete canonical graph efficiently on the available GPU.
       - It is useful as a deterministic engineering comparator and exposes numerical pathologies.
       - Non-spiking graded models have succeeded in the biologically non-spiking early fly visual system, but that evidence is scope-specific.
+      - The bounded fixed-delay LIF reference now passes an independent deterministic recurrent small-graph comparison and exhaustive full-graph event accounting.
+      - The complete outgoing event graph and LIF state fit comfortably in available CPU and GPU memory.
     evidence_against_or_unresolved:
       - The candidate emits no spikes and has no refractory state, synaptic event kernel, or transmission delay.
       - No source or held-out circuit result validates this abstraction across MaleCNS.
       - Shiu et al. obtained experimentally tested whole-brain circuit predictions with an event-based leaky integrate-and-fire model.
       - The current normalized input destroys absolute spikes-per-second units and couples every modality through instantaneous whole-vector normalization.
       - The biological importance of path-dependent conduction timing has not been tested and cannot be assumed negligible.
+      - The first generic 0.1 ms event implementation reaches only about 0.03 to 0.05 times real time and has not yet been compared on an independent circuit reference.
     consequence_if_true: >-
       The rate runtime may remain a scientifically useful low-cost model for the
       scopes that pass the comparison gate.
@@ -36,8 +39,10 @@ risks:
       runtime only for engineering comparison and rebase all model-dependent
       calibration on the chosen native units.
     current_mitigation: >-
-      Pause the basal unit bridge and propagation of the 31 rate candidates.
-      Run the bounded ADR 0014 model-class gate before further dependent fitting.
+      Pause the basal unit bridge and propagation of the 31 rate candidates. The
+      small-graph, edge-accounting and CPU/GPU feasibility stages have passed;
+      run the preregistered shared probes and independent circuit reference before
+      further dependent fitting.
     cheapest_discriminating_experiment: >-
       Implement a source-traceable LIF event baseline, validate it against a
       deterministic small-graph reference, benchmark full MaleCNS, then compare
@@ -71,6 +76,7 @@ risks:
       preregistered metrics at that stage.
     evidence_supporting:
       - Shiu et al. used a fixed 1.8 ms delay in a successful whole-brain circuit-prediction model.
+      - The implemented baseline resolves 1.8 ms exactly at a declared 0.1 ms numerical step.
     evidence_against_or_unresolved:
       - The current rate candidate uses no transmission delay.
       - The flat MaleCNS weight table does not itself provide accepted edge-specific conduction delays.
@@ -80,7 +86,8 @@ risks:
     current_mitigation: >-
       Make delay policy explicit in the event baseline and retain morphology-aware
       delay extraction as a separate, testable model version rather than assuming
-      either zero delay or exact cable timing.
+      either zero delay or exact cable timing. Do not download the full morphology
+      bundle until a bounded temporal sensitivity probe justifies the path-length work.
     escalation_triggers:
       - path-length data and conduction evidence become available
       - temporal probes are sensitive to plausible delay variation

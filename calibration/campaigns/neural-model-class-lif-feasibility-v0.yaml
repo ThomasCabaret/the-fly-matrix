@@ -1,0 +1,57 @@
+schema_version: 1
+id: campaign.neural_model_class_lif_feasibility.v0
+title: Bounded fixed-delay event LIF correctness and feasibility gate
+status: runnable_diagnostic
+target_id: target.neural_model_class_gate.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: MODEL CLASS GATE / ENGINEERING AND CORRECTNESS ONLY / NO BEHAVIOR
+
+frozen_inputs:
+  model: calibration/models/malecns-lif-fixed-delay-v0.yaml
+  graph_profile: benchmarks/profiles/malecns-benchmark-v0.yaml
+  sign_prior: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+
+stages:
+  - id: deterministic_small_graph
+    purpose: compare independent NumPy and Torch event semantics including recurrent spikes
+    acceptance:
+      state_atol: 0.000001
+      identical_spike_raster: true
+      exact_event_count: true
+  - id: canonical_edge_sweep
+    purpose: visit every outgoing row in bounded chunks and account for every runtime edge
+    acceptance:
+      expected_nodes: 166700
+      expected_edges: 25582938
+      zero_missing_or_duplicate_rows: true
+  - id: full_graph_forced_load
+    purpose: measure state-update and event-delivery cost under controlled firing loads
+    acceptance:
+      finite_state_fraction: 1.0
+      no_silent_event_loss: true
+    non_acceptance_note: speed alone cannot pass the scientific model-class gate
+
+budgets:
+  agent_scope: one_implementation_and_benchmark_batch
+  morphology_download_bytes: 0
+  full_graph_duration_ms_per_load: 50.0
+  forced_mean_rates_hz: [1.0, 10.0, 50.0]
+  maximum_measured_steps_per_load: 500
+  cpu_measured_steps_per_load: 50
+  edge_sweep_chunk_sources: 4096
+
+stop_conditions:
+  - non_deterministic_small_graph_semantics
+  - incomplete_canonical_edge_accounting
+  - non_finite_state
+  - device_out_of_memory
+  - implementation_requires_morphology_before_fixed_delay_baseline_is_measured
+
+outputs:
+  heavy_run_root: runs/calibration/neural-model-class-lif-feasibility-v0
+  compact_result: calibration/runner/neural-model-class-lif-feasibility-v0.yaml
+  promotion_policy: forbidden_until_circuit_reference_and_model_independent_probes_are_complete
+
+behavior_targets: []
+next_action: Execute the three engineering stages, then specify the independent circuit reference.

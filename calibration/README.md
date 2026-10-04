@@ -138,6 +138,15 @@ Model-dependent basal and interface promotion pauses until
 LIF reference. Evidence inventories and reusable runner infrastructure remain
 valid while this gate is open.
 
+Run `neural_model_gate.bat` for the completed engineering portion of that gate.
+It compares independent NumPy/Torch event semantics on a recurrent small graph,
+accounts for every canonical outgoing edge, and measures bounded CPU/GPU loads at
+1, 10 and 50 forced spikes/s/neuron. The compact result is
+`runner/neural-model-class-lif-feasibility-v0.yaml`; heavy traces remain under
+`runs/calibration/`. Passing this command proves correctness and execution
+feasibility only. The gate remains open until shared model-independent probes and
+an independent circuit reference produce a versioned go, revise or stop decision.
+
 The first prospective behavior catalog is
 `evaluation_candidates/emergent-behavior-catalog-v0.yaml`. It records localized
 and hierarchical grooming, looming, lateralization, optomotor responses and

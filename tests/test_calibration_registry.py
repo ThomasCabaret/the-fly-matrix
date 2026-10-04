@@ -200,22 +200,19 @@ class CalibrationRegistryTests(unittest.TestCase):
 
         self.assertEqual(rate_risk["status"], "open_critical_stop_gate")
         self.assertEqual(delay_risk["status"], "open_high_impact")
-        self.assertEqual(gate["status"], "proposed")
+        self.assertEqual(
+            gate["status"],
+            "active_engineering_stages_passed_scientific_comparison_open",
+        )
         self.assertEqual(gate["optimization_exposure"], "diagnostic_only")
         self.assertEqual(gate["behavior_targets"], [])
+        self.assertIn(gate["id"], self.state["active_target_ids"])
+        self.assertNotIn("scientific_role", model)
         self.assertEqual(
             self.state["readiness"]["central_model_class"],
-            "blocked_pending_bounded_rate_vs_event_fidelity_gate",
+            "blocked_engineering_lif_stages_passed_scientific_rate_vs_event_comparison_open",
         )
-        self.assertIn(gate["id"], self.state["active_target_ids"])
-        self.assertEqual(
-            model["scientific_role"],
-            "retained_engineering_comparator_pending_model_class_gate",
-        )
-        self.assertIn(
-            "promotion as the central biological reference before the model-class gate",
-            model["forbidden_uses"],
-        )
+        self.assertFalse(gate["acceptance_policy"].get("scientific_gate_closed", False))
 
 
 if __name__ == "__main__":
