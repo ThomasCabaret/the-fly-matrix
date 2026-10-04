@@ -1,0 +1,89 @@
+schema_version: 1
+id: campaign.evidence_basal_source_readiness.v0
+title: Deterministic basal-source evidence and unit-readiness compilation
+status: evaluated
+target_ids: [target.evidence_basal_source_readiness.v0]
+scope_ids: [scope.basal_source_readiness.v0]
+parameter_family_ids:
+  - parameter.baseline.olfaction.v0
+  - parameter.baseline.gustation.v0
+  - parameter.baseline.thermohygro.v0
+  - parameter.residual_sensory.chemosensory_nominal.v0
+  - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  - parameter.residual_sensory.unknown_nominal.v0
+dependency_campaign_ids: []
+parent_parameter_set_ids: []
+output_parameter_set_id: null
+claim_label: EVIDENCE COVERAGE ONLY / ZERO PARAMETER VALUES / NO BEHAVIOR
+
+topology_boundary:
+  semantic_topology_hashes:
+    basal_clamp_channels: 0141b8621f360a0949f99fc3579cae82371acce4e26574db2983fd269dca0254
+    basal_clamp_routes: c60a71b41c7a878cc6149a4c9c4e6d79b6e3e5a03c5354d7c4eb587344d8a5ea
+    residual_channels: d8e33df842992cee14919977a0220ff91da3453f59d79776b387ff45cac1e108
+    residual_routes: 2454f0b9a4c0b6c1a304c87e9f3a986969636e12fbbffffd1cc4ee2b000f61a6
+  ruleset_hashes: {basal_evidence_recipe: d9f9eaddf3ed27107abf1dc40c6a35a5b61490ea35c63c0e47636dad2d958d48}
+  exception_table_hashes: {basal_evidence: none}
+
+method:
+  kind: deterministic_evidence_coverage_compilation
+  implementation: src/the_fly_matrix/basal_evidence.py
+  objective_terms:
+    - exhaustive channel accounting
+    - source claim and applicability accounting
+    - explicit refusal of unsafe numerical transfer
+  bounds: {}
+  sharing_rules:
+    olfaction: annotated_type_candidate_partition
+    gustation: annotated_subclass_and_type_candidate_partition
+    thermohygro: annotated_class_and_type_candidate_partition
+    residual_sources: audit_partitions_only_no_biological_sharing_claim
+  frozen_parameters: []
+  seeds: []
+  compute_budget: one deterministic local table pass
+
+capacity_policy:
+  model_family: no_numeric_model
+  degrees_of_freedom: 0
+  automatic_capacity_increase_allowed: false
+  joint_calibration_reason: null
+scenario_splits: {train: [], validation: [], diagnostic: [], held_out: []}
+reproducibility:
+  command: compile_basal_evidence.bat
+  git_commit: pending_batch_commit
+  environment: Python 3.12 plus pandas and PyYAML
+  input_hashes:
+    basal_clamp_channels: 0141b8621f360a0949f99fc3579cae82371acce4e26574db2983fd269dca0254
+    basal_clamp_routes: c60a71b41c7a878cc6149a4c9c4e6d79b6e3e5a03c5354d7c4eb587344d8a5ea
+    residual_channels: d8e33df842992cee14919977a0220ff91da3453f59d79776b387ff45cac1e108
+    residual_routes: 2454f0b9a4c0b6c1a304c87e9f3a986969636e12fbbffffd1cc4ee2b000f61a6
+behavior_exposure: {behavior_targeted: false, exposed_behavior_ids: [], contamination_notes: []}
+result:
+  status: accepted_evidence_accounting_numeric_transfer_blocked
+  metrics:
+    families: 6
+    channels: 2212
+    terminals: 6041
+    evidence_partitions: 211
+    numeric_transfer_ready_channels: 0
+    numeric_parameter_values_emitted: 0
+  artifact_refs:
+    - data/derived/calibration/basal-source-readiness-v0/summary.json
+    - data/derived/calibration/basal-source-readiness-v0/channel-evidence-coverage.csv
+  failures: []
+  decision: Accept exhaustive evidence accounting; block numerical transfer until the unit bridge and exact mappings exist.
+  admissible_solution_count: 0
+  uncertainty_artifact_refs: []
+acceptance:
+  criteria_locked_before_run: true
+  local_held_out_dataset_ids: []
+  reproducibility_mode: exact_semantic_hash
+  reproducibility_tolerances: {}
+reopening: {reopened_family_ids: [], reasons: [], stale_descendant_ids: []}
+sources:
+  - calibration/evidence/basal-source-readiness-v0.yaml
+  - data/derived/calibration/basal-source-readiness-v0/summary.json
+assumptions:
+  - Evidence partitions are capacity candidates, not fitted or frozen values.
+  - Zero emitted values is the intended accepted result at this gate.
+next_action: Implement the explicit unit bridge and a bounded basal candidate-ensemble campaign over all 31 central members.

@@ -1,0 +1,177 @@
+schema_version: 1
+id: evidence.basal_source_readiness.v0
+title: Basal-source evidence coverage and unit-readiness audit
+status: runnable
+claim_label: EVIDENCE COVERAGE ONLY / ZERO PARAMETER VALUES / NO BEHAVIOR
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+
+purpose: >-
+  Account for every basal source channel, derive the smallest annotation partition
+  supported by current evidence, and refuse numerical transfer until both an
+  exact source-to-channel mapping and a spikes-per-second to model-activity unit
+  bridge exist.
+
+input_files:
+  - path: data/derived/wiring/basal-clamp-channels.csv
+    sha256: 0141b8621f360a0949f99fc3579cae82371acce4e26574db2983fd269dca0254
+  - path: data/derived/wiring/basal-clamp-routes.parquet
+    sha256: c60a71b41c7a878cc6149a4c9c4e6d79b6e3e5a03c5354d7c4eb587344d8a5ea
+  - path: data/derived/wiring/unclassified-sensory-channels.csv
+    sha256: d8e33df842992cee14919977a0220ff91da3453f59d79776b387ff45cac1e108
+  - path: data/derived/wiring/unclassified-sensory-routes.parquet
+    sha256: 2454f0b9a4c0b6c1a304c87e9f3a986969636e12fbbffffd1cc4ee2b000f61a6
+
+runtime_unit_contract:
+  biological_source_unit: spikes_per_second
+  current_central_input_unit: normalized_model_activity
+  current_runtime_operation: >-
+    The embodied v0 input runtime divides the complete dense input vector by its
+    instantaneous maximum absolute value before applying a fitted global input gain.
+  bridge_status: missing
+  consequence: >-
+    Published firing rates may constrain partitions and future priors, but no
+    absolute rate is executable as physiology in the current central model.
+  required_next_contract:
+    - Define a versioned rate-to-model-activity transform or a rate-native central input model.
+    - State how that transform interacts with visual, proprioceptive and mechanosensory units.
+    - Validate the transform across all 31 central ensemble members before promotion.
+
+sources:
+  - id: dweck_carlson_2023_taste_baseline
+    citation: Dweck HKM and Carlson JR (2023), Diverse mechanisms of taste coding in Drosophila
+    doi: 10.1126/sciadv.adj7032
+    url: https://doi.org/10.1126/sciadv.adj7032
+    evidence_kind: primary_electrophysiology
+    used_claims:
+      - Adult labellar bitter GRNs have low, class-dependent spontaneous firing.
+      - Reported means are 1.6, 0.7 and 1.0 spikes/s for I-a, S-a and S-b bitter neurons.
+      - Identifiable sugar and water GRNs were below 3 spikes/s in the reported preparation.
+      - Thirty-two adult ORN classes have heterogeneous spontaneous activity and most exceed the sampled GRNs.
+    applicability_limits:
+      - MaleCNS LB labels do not currently identify bitter, sugar and water functional cells one-to-one.
+      - Leg, wing, taste-peg and pharyngeal afferents are not numerically covered by these labellar measurements.
+      - Figure-level ORN values are not yet mapped to every MaleCNS ORN type.
+  - id: de_bruyne_clyne_carlson_1999_olfaction
+    citation: de Bruyne M, Clyne PJ and Carlson JR (1999), Odor coding in a model olfactory organ
+    doi: 10.1523/JNEUROSCI.19-11-04520.1999
+    url: https://doi.org/10.1523/JNEUROSCI.19-11-04520.1999
+    evidence_kind: primary_electrophysiology
+    used_claims:
+      - Adult maxillary-palp ORNs form distinct functional classes with different spontaneous firing rates.
+      - Baseline activity is class-specific rather than one universal olfactory rate.
+    applicability_limits:
+      - The six palp classes do not cover every antennal or ionotropic-receptor ORN in MaleCNS.
+      - No complete class-to-MaleCNS numerical table is transferred in this recipe.
+  - id: liu_mazor_wilson_2015_thermosensation
+    citation: Liu WW, Mazor O and Wilson RI (2015), Thermosensory processing in the Drosophila brain
+    doi: 10.1038/nature14170
+    url: https://doi.org/10.1038/nature14170
+    evidence_kind: primary_electrophysiology
+    used_claims:
+      - Warming and cooling are represented by opponent pathways.
+      - Cool-pathway tonic activity contributes to warming-evoked disinhibition.
+      - Baseline firing adapts after temperature changes.
+    applicability_limits:
+      - Projection-neuron measurements do not directly supply first-order MaleCNS TRN rates.
+      - The study supports class separation and dynamics, not a neutral scalar baseline.
+  - id: knecht_et_al_2017_hygrosensation
+    citation: Knecht ZA et al. (2017), Ionotropic Receptor-dependent moist and dry cells control hygrosensation in Drosophila
+    doi: 10.7554/eLife.26654
+    url: https://doi.org/10.7554/eLife.26654
+    evidence_kind: primary_calcium_imaging_and_genetics
+    used_claims:
+      - Moist and dry sensing are distinct IR-dependent pathways.
+      - IR68a-dependent moist cells and IR40a-dependent dry cells must not be collapsed into one humidity baseline class.
+    applicability_limits:
+      - Calcium responses and behavior do not provide a transferable neutral firing rate.
+      - Hydration state changes interpretation and remains outside this basal v0 recipe.
+  - id: marin_et_al_2020_thermohygro_connectomics
+    citation: Marin EC et al. (2020), Connectomics Analysis Reveals First-, Second-, and Third-Order Thermosensory and Hygrosensory Neurons
+    doi: 10.1016/j.cub.2020.06.028
+    url: https://doi.org/10.1016/j.cub.2020.06.028
+    evidence_kind: primary_connectomics
+    used_claims:
+      - Thermosensory and hygrosensory first-order classes are distinct anatomical populations.
+    applicability_limits:
+      - Connectomic identity supplies no neutral firing-rate value.
+
+family_rules:
+  - family_id: parameter.baseline.olfaction.v0
+    table_id: basal_clamp
+    selector: {field: clamp_id, value: clamp.olfaction}
+    partition_fields: [type]
+    expected: {channels: 147, terminals: 2639, partitions: 54}
+    base_evidence_status: qualitative_partition_supported
+    unknown_key_status: unresolved_annotation_key
+    source_ids: [dweck_carlson_2023_taste_baseline, de_bruyne_clyne_carlson_1999_olfaction]
+    numeric_transfer_status: blocked_incomplete_type_value_table_and_missing_unit_bridge
+  - family_id: parameter.baseline.gustation.v0
+    table_id: basal_clamp
+    selector: {field: clamp_id, value: clamp.gustation}
+    partition_fields: [subclass, type]
+    expected: {channels: 166, terminals: 1428, partitions: 66}
+    base_evidence_status: qualitative_partition_supported
+    unknown_key_status: unresolved_annotation_key
+    partial_numeric_condition: {field: subclass, value: labellar bristle}
+    partial_numeric_status: partial_numeric_evidence_unmapped_to_functional_cell
+    source_ids: [dweck_carlson_2023_taste_baseline]
+    numeric_transfer_status: blocked_missing_functional_cell_mapping_and_unit_bridge
+  - family_id: parameter.baseline.thermohygro.v0
+    table_id: basal_clamp
+    selector: {field: clamp_id, value: clamp.thermohygro}
+    partition_fields: [class, type]
+    expected: {channels: 16, terminals: 91, partitions: 8}
+    base_evidence_status: qualitative_partition_supported
+    unknown_key_status: unresolved_annotation_key
+    source_ids: [liu_mazor_wilson_2015_thermosensation, knecht_et_al_2017_hygrosensation, marin_et_al_2020_thermohygro_connectomics]
+    numeric_transfer_status: blocked_no_neutral_first_order_rate_table_and_missing_unit_bridge
+  - family_id: parameter.residual_sensory.chemosensory_nominal.v0
+    table_id: residual
+    selector: {field: source_model_box_id, value: source.sensory.residual.chemosensory}
+    partition_fields: [class, subclass, type]
+    expected: {channels: 57, terminals: 57, partitions: 4}
+    base_evidence_status: unresolved_no_receptor_identity
+    unknown_key_status: unresolved_annotation_key
+    source_ids: []
+    numeric_transfer_status: blocked_no_channel_identity_or_local_measurement
+  - family_id: parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+    table_id: residual
+    selector: {field: source_model_box_id, value: source.sensory.residual.mechanosensory_tbc}
+    partition_fields: [class, subclass, type]
+    expected: {channels: 11, terminals: 11, partitions: 2}
+    base_evidence_status: unresolved_no_receptor_location
+    unknown_key_status: unresolved_annotation_key
+    source_ids: []
+    numeric_transfer_status: blocked_no_supported_physical_observable_or_rate
+  - family_id: parameter.residual_sensory.unknown_nominal.v0
+    table_id: residual
+    selector: {field: source_model_box_id, value: source.sensory.residual.unknown}
+    partition_fields: [class, superclass, subclass, type]
+    expected: {channels: 1815, terminals: 1815, partitions: 77}
+    base_evidence_status: unresolved_unknown_modality
+    unknown_key_status: unresolved_annotation_key
+    source_ids: []
+    numeric_transfer_status: blocked_unknown_modality
+
+acceptance:
+  criteria_locked_before_run: true
+  expected_families: 6
+  expected_channels: 2212
+  expected_terminals: 6041
+  expected_parameter_values_emitted: 0
+  expected_numeric_transfer_ready_channels: 0
+  require_every_channel_accounted: true
+  require_input_hash_match: true
+
+behavior_exposure:
+  behavior_targeted: false
+  exposed_behavior_ids: []
+  forbidden_uses:
+    - Selecting central ensemble members from named-behavior output
+    - Treating literature behavior assays as fitting targets
+
+next_action: >-
+  Define and validate the explicit biological-rate to model-activity bridge, then
+  create bounded class-level basal candidate ensembles and propagate them through
+  all 31 central members without selecting a named behavior.

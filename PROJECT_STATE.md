@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-03. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-04. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -12,6 +12,13 @@ Le modèle à douze paramètres partagés est désormais enregistré comme une h
 de capacité à haut risque, pas comme la dimensionalité admise de MaleCNS. Le front
 se déplace vers la propagation de cet ensemble dans les calibrations locales et
 hybrides plutôt que vers une élimination centrale prolongée.
+
+Le premier gate local de sources basales est maintenant exécuté. Il comptabilise
+les 2 212 canaux couvrant 6 041 afférences, dérive 211 partitions d'audit et
+n'émet volontairement aucune valeur. Les mesures publiées sont en spikes/s alors
+que l'entrée centrale courante est une activité normalisée sur le vecteur sensoriel
+complet : l'absence de pont d'unités explicite bloque honnêtement le transfert
+numérique avant toute campagne basale sur l'ensemble central.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -194,6 +201,26 @@ d'entraînement, ni des protocoles verrouillés, ni des résultats. Aucun scéna
 seed ou seuil n'est ouvert. Chaque futur protocole devra comparer sham, MaleCNS
 gelé et plusieurs contrôles topologiques, dont des rewires à paramètres gelés et
 des rewires soumis à la même calibration non comportementale.
+
+Le compilateur
+[`evidence.basal_source_readiness.v0`](calibration/evidence/basal-source-readiness-v0.yaml)
+ouvre le premier front local sans comportement. Il vérifie les hashes des quatre
+tables structurelles et attribue exactement une disposition de preuve aux 329
+canaux basaux connus et aux 1 883 sources résiduelles. Les annotations produisent
+54 partitions olfactives, 66 gustatives, 8 thermo-hygrosensorielles et 83
+partitions résiduelles d'audit. Sur les canaux connus, 286 ont un support
+qualitatif de partition et 31 canaux labellaires disposent de mesures numériques
+partielles qui ne sont pas encore reliées à leur identité fonctionnelle MaleCNS.
+
+Deux compilations déterministes reproduisent le hash sémantique
+`c2db66b99ad9d8d93dca343c10e4ae389d5df995d9125dd4c4fb2eb17d548f96`.
+Elles acceptent l'exhaustivité et la provenance, mais **zéro valeur** : aucune des
+six familles n'est ajustée ou gelée. Le blocage principal est un contrat d'unités :
+les sources biologiques donnent des spikes/s, tandis que le runtime v0 divise le
+vecteur sensoriel complet par son maximum absolu avant le gain central. Le prochain
+lot doit versionner et tester ce pont, puis propager des ensembles basaux bornés
+sur les 31 candidats centraux. Les 1 883 sources résiduelles restent explicitement
+sans valeur biologique transférable.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -411,10 +438,10 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, 31/32 candidats centraux passent le filtre de raffinement temporel mais restent non identifiés, sensibilité aval élevée et reproductible, aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, 31/32 candidats centraux passent le filtre de raffinement temporel mais restent non identifiés ; le gate basal couvre 2 212 canaux et bloque honnêtement tout transfert numérique faute de pont d'unités ; aucun jeu complet promu**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 
-Le présent lot supprime la dernière injection directe d'entrée. Les 1 883
+Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
 désormais possédées par trois sources nominales type A disjointes : 57 canaux
 `chemosensory`, 11 `mechanosensory_tbc` et 1 815 canaux de modalité inconnue. Chaque
@@ -478,7 +505,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **111 tests** actuels passent, y compris les
+conservées et classifiées. Les **113 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -501,6 +528,13 @@ centrales reste élevée et la suffisance des douze paramètres partagés est un
 risque ouvert. Le prochain front est une campagne locale ou hybride consciente de
 l'ensemble, pas une semaine de filtres CNS internes ni le choix d'un membre dont
 la sortie paraît préférable.
+
+Le premier audit local est terminé sans choisir de valeur : les partitions de
+preuve basales sont exhaustives, les limites de portée des publications sont
+enregistrées et le transfert numérique est bloqué par l'absence de pont entre
+spikes/s et activité normalisée. La prochaine campagne doit résoudre ce contrat
+d'unités puis propager un ensemble de baselines sur les 31 membres centraux ; elle
+ne doit pas transformer les sources résiduelles inconnues en pseudo-physiologie.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -537,6 +571,11 @@ propage l'ensemble et mesure les résidus révélateurs de capacité ; les scope
 locaux périphériques deviennent le front principal. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
+Le gate d'évidence basal est maintenant cette première campagne locale : il ferme
+l'inventaire mais conclut qu'aucune valeur n'est encore transférable. Le prochain
+lot ne doit donc pas répéter l'inventaire ; il doit définir le pont d'unités puis
+la première enveloppe numérique basale propagée sur l'ensemble central.
+
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
 
@@ -566,6 +605,7 @@ characterize_signed_dynamics.bat # 7 régimes centraux non ajustés, diagnostic 
 fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans comportement
 central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties brutes
 constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
+compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le pont d'unités manque
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

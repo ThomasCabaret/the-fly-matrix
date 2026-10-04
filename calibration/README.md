@@ -117,6 +117,17 @@ hash and retain 31/32 candidates; candidate 30 fails both full-state convergence
 limits. The output is an unfrozen filtered ensemble, not physiology and not a
 reference selection.
 
+Run `compile_basal_evidence.bat` for the first local evidence gate. It accounts
+for all 2,212 declared basal source channels covering 6,041 terminals, verifies
+the four frozen wiring-input hashes and derives 211 annotation partitions. The
+result accepts evidence coverage only: 286 channels have qualitative partition
+support, 31 labellar channels have partial numerical evidence that cannot yet be
+mapped to functional MaleCNS cells, and every residual source remains unresolved.
+It emits exactly zero parameter values. Published baselines are in spikes per
+second, whereas the current runtime consumes a whole-input normalized activity;
+the missing explicit unit bridge is therefore a blocking result, not a reason to
+copy rates into the model.
+
 The twelve-parameter central model and its 31-member surviving ensemble are now
 governed by ADR 0013. They are a minimum-capacity hypothesis and a finite pilot
 representation, not an accepted biological dimensionality or a prerequisite to

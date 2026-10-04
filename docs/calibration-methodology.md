@@ -262,6 +262,31 @@ motor-transfer offset or a newly declared family. Fitting it against neutral bod
 stability is allowed as `technical`, but contaminates any later claim that quiet
 standing emerged without such training.
 
+### Basal evidence and executable input units
+
+A published spontaneous firing rate is not automatically an executable input
+parameter. The evidence layer first records biological units, neutral-condition
+protocol, measured population, uncertainty and a source-to-channel mapping. A
+separate versioned bridge then converts that quantity into the input unit consumed
+by the declared central model. If the central model instead becomes rate-native,
+that model version must state the conversion explicitly.
+
+The current embodied v0 runtime normalizes the complete dense sensory vector by
+its instantaneous maximum absolute value and then applies a global central input
+gain. Its input therefore has units of normalized model activity, not spikes per
+second. Copying literature rates into that vector would destroy their absolute
+meaning and entangle one modality with every other modality present at the same
+instant. Until a rate-to-model-activity bridge is versioned and validated, basal
+publications may support class partitions and bounds but cannot supply promoted
+runtime values.
+
+The bridge is itself calibration capacity. It must declare whether scaling is
+global, modality-specific or class-specific; how noise and temporal statistics
+are transformed; how visual, proprioceptive and mechanosensory signals share the
+same input domain; and how the result behaves across the complete central
+ensemble. A hidden normalization constant or a convenient per-run rescaling is
+not evidence transfer.
+
 ## Freeze and reopen
 
 The normal unit of progress is **calibrate locally, validate, then freeze**. A

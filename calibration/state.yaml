@@ -1,6 +1,6 @@
 schema_version: 1
 phase: ensemble_propagation_and_local_interface_calibration
-updated: 2026-10-03
+updated: 2026-10-04
 
 wiring_baseline:
   terminal_coverage: complete
@@ -14,10 +14,11 @@ evaluation_target_ids:
   - target.held_out_stimulus_response.v0
 completed_target_ids:
   - target.evidence_transmitter_sign_prior.v0
+  - target.evidence_basal_source_readiness.v0
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.central_timestep_convergence.v1
+last_completed_campaign_id: campaign.evidence_basal_source_readiness.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
@@ -47,6 +48,7 @@ readiness:
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
   prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
+  basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_unit_bridge_missing
   held_out_protocol_locked: false
 
 behavior_exposure:
@@ -58,10 +60,12 @@ blocked_by:
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 31 surviving central candidates cannot be treated as interchangeable downstream.
   - Numerical portability does not distinguish the 31 survivors biologically; the finite ensemble must be propagated into local or hybrid campaigns rather than collapsed arbitrarily.
+  - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; a versioned unit bridge is required before numerical evidence transfer.
+  - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
 
 next_action: >-
-  Define the first ensemble-aware local campaign: prefer basal-source evidence or
-  a bounded motor-interface scope, run it across all 31 central members when
-  affordable, and report shared versus member-conditioned solutions and central
-  model-capacity residuals. Do not spend another isolated-CNS narrowing campaign
-  without new independent evidence, and do not promote an arbitrary pilot member.
+  Define and validate the explicit biological-rate to model-activity bridge, then
+  build bounded class-level basal candidate ensembles and run them across all 31
+  central members. Report shared versus member-conditioned admissibility and
+  model-capacity residuals; do not promote an arbitrary central member or an
+  unsupported residual-channel value.

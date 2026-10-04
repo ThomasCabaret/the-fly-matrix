@@ -1,0 +1,51 @@
+schema_version: 1
+id: scope.basal_source_readiness.v0
+title: Evidence-only scope for all declared basal sensory sources
+status: evaluated
+includes:
+  boxes:
+    - clamp.olfaction
+    - clamp.gustation
+    - clamp.thermohygro
+    - source.sensory.residual.chemosensory
+    - source.sensory.residual.mechanosensory_tbc
+    - source.sensory.residual.unknown
+  channel_groups:
+    - sensory.olfactory
+    - sensory.gustatory
+    - sensory.thermohygro
+    - sensory.unclassified_residual
+  neuron_populations: [6041 exact MaleCNS afferent bodyIds]
+  body_degrees_of_freedom: []
+  parameter_families:
+    - parameter.baseline.olfaction.v0
+    - parameter.baseline.gustation.v0
+    - parameter.baseline.thermohygro.v0
+    - parameter.residual_sensory.chemosensory_nominal.v0
+    - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+    - parameter.residual_sensory.unknown_nominal.v0
+excludes:
+  - central dynamics values
+  - sensory transfer values outside the six basal families
+  - motor interfaces, body, world and behavior
+allowed_parameter_names: []
+frozen_parameter_names: []
+structural_changes_allowed: false
+topology_boundary:
+  semantic_topology_hashes:
+    basal_clamp_channels: 0141b8621f360a0949f99fc3579cae82371acce4e26574db2983fd269dca0254
+    basal_clamp_routes: c60a71b41c7a878cc6149a4c9c4e6d79b6e3e5a03c5354d7c4eb587344d8a5ea
+    residual_channels: d8e33df842992cee14919977a0220ff91da3453f59d79776b387ff45cac1e108
+    residual_routes: 2454f0b9a4c0b6c1a304c87e9f3a986969636e12fbbffffd1cc4ee2b000f61a6
+  candidate_envelope_hashes: {}
+  ruleset_hashes: {recipe: calibration/evidence/basal-source-readiness-v0.yaml}
+  exception_table_hashes: {basal_evidence: none}
+identifiability:
+  status: qualitative_partitions_only_numeric_transfer_blocked
+  jointly_identified_family_ids: []
+  reason: Absolute source rates cannot be interpreted in normalized model-activity units without a versioned bridge.
+assumptions:
+  - No parameter value is necessary to audit evidence coverage.
+sources:
+  - calibration/evidence/basal-source-readiness-v0.yaml
+next_action: Define a separate executable-unit bridge scope before admitting any numerical basal values.

@@ -1,0 +1,47 @@
+schema_version: 1
+id: evaluation.evidence_basal_source_readiness.v0
+title: Basal-source evidence accounting result
+status: accepted_accounting_only
+target_id: target.evidence_basal_source_readiness.v0
+parameter_set_id: null
+protocol_version: v0
+exposure_policy: diagnostic_only
+scenario_ids: []
+dataset_split_ids: {fitting: [], local_validation: [], local_held_out: [], behavior_held_out: []}
+seeds: []
+metrics:
+  families: 6
+  channels: 2212
+  terminals: 6041
+  evidence_partitions: 211
+  qualitative_partition_supported_channels: 286
+  partial_numeric_evidence_unmapped_channels: 31
+  unresolved_channels: 1895
+  numeric_transfer_ready_channels: 0
+  numeric_parameter_values_emitted: 0
+acceptance_result: accepted_evidence_accounting_numeric_transfer_blocked
+admissible_set_evaluation:
+  member_count: 0
+  acceptance_rate: null
+  metric_distribution: {}
+reproducibility:
+  command: compile_basal_evidence.bat
+  git_commit: pending_batch_commit
+  environment: Python 3.12 plus pandas and PyYAML
+  input_hashes:
+    recipe: d9f9eaddf3ed27107abf1dc40c6a35a5b61490ea35c63c0e47636dad2d958d48
+  artifact_refs:
+    - data/derived/calibration/basal-source-readiness-v0/summary.json
+    - data/derived/calibration/basal-source-readiness-v0/channel-evidence-coverage.csv
+  semantic_result_sha256: c2db66b99ad9d8d93dca343c10e4ae389d5df995d9125dd4c4fb2eb17d548f96
+contamination:
+  inspected_before_parameter_freeze: false
+  used_for_model_selection: false
+  used_for_manual_tuning: false
+  notes: [No central output, body trajectory or named behavior was executed or inspected.]
+failures: []
+conclusion: >-
+  Coverage and provenance pass. Known modalities support heterogeneous candidate
+  partitions, but no absolute value can be transferred into the current normalized
+  runtime. Residual sources remain explicitly unresolved.
+next_action: Version and validate the unit bridge before constructing numerical basal ensembles.

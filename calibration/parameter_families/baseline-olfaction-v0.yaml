@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.baseline.olfaction.v0
 title: Olfactory basal activity
-status: inventoried_unfitted
+status: evidence_partition_audited_numeric_transfer_blocked
 primary_class: local_interface
 parameter_kind: basal
 claim_role: surrogate
@@ -9,14 +9,14 @@ meaning: {biological_or_technical_role: Ambient-air activity supplied in place o
 scope:
   owner_ids: [clamp.olfaction]
   parameter_names: [channel_baseline_rate, optional_channel_noise]
-  dimension: {terminal_neurons: 2639, runtime_channels: 147, selected_free_parameters: unresolved}
+  dimension: {terminal_neurons: 2639, runtime_channels: 147, evidence_partitions: 54, selected_free_parameters: unresolved}
   topology_snapshot: {semantic_topology_sha256: fixed_exact_routes, candidate_envelope_sha256: not_applicable, ruleset_sha256: wiring-revalidation.rules.v1, exception_table_sha256: none}
-sharing: {candidate_hierarchy: [one_global_rate, receptor_class, terminal_channel], selected_level: unresolved, justification: must_be_selected_from_evidence, individual_parameters_require_evidence: true}
-origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
-identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [locomotion, odor_approach, odor_avoidance], jointly_identified_with: [], joint_calibration_reason: null}
+sharing: {candidate_hierarchy: [one_global_rate, annotated_orn_type, receptor_class, terminal_channel], selected_level: unresolved, evidence_partition_candidate: annotated_orn_type_54_partitions, justification: adult ORN spontaneous activity is class-dependent but the complete value mapping is absent, individual_parameters_require_evidence: true}
+origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: evidence_audited_no_value, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
+identifiability: {status: blocked_missing_complete_type_value_table_and_unit_bridge, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [locomotion, odor_approach, odor_avoidance], jointly_identified_with: [], joint_calibration_reason: null}
 dependencies: {upstream_family_ids: [], downstream_family_ids: []}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: data/derived/wiring/basal-clamp-routing.json, supports: 147 exact fan-out channels covering 2639 terminals}]
-assumptions: [A neutral olfactory scene is represented by a basal source rather than physical odor transport in v0.]
-next_action: Compile class labels and evidence before selecting a sharing level or any rate.
+sources: [{ref: data/derived/wiring/basal-clamp-routing.json, supports: 147 exact fan-out channels covering 2639 terminals}, {ref: calibration/evidence/basal-source-readiness-v0.yaml, supports: adult ORN class heterogeneity and exhaustive transfer-readiness accounting; no value transferred}]
+assumptions: [A neutral olfactory scene is represented by a basal source rather than physical odor transport in v0., Spikes per second cannot be copied into normalized model activity without an explicit unit bridge.]
+next_action: Complete the ORN type-to-measurement map and validate the rate-to-model-activity bridge before constructing a bounded 54-partition candidate ensemble.

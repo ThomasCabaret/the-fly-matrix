@@ -1,0 +1,60 @@
+schema_version: 1
+id: target.evidence_basal_source_readiness.v0
+title: Exhaustive evidence and unit readiness for basal sensory sources
+status: evaluated
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+claim_label: EVIDENCE COVERAGE ONLY / ZERO PARAMETER VALUES / NO BEHAVIOR
+
+scope:
+  includes:
+    - 329 known-modality basal channels covering 4158 terminals
+    - 1883 residual nominal channels and terminals
+    - primary evidence supporting modality-specific sharing partitions
+    - the runtime unit boundary between firing rates and normalized model activity
+  excludes:
+    - numerical parameter fitting or promotion
+    - structural rewiring
+    - named behavior, body motion, motor output and central-member ranking
+
+metrics:
+  - accounted_family_count
+  - accounted_channel_count
+  - accounted_terminal_count
+  - evidence_partition_count
+  - numeric_transfer_ready_channel_count
+  - numeric_parameter_value_count
+
+acceptance_policy:
+  summary: >-
+    Every basal channel is accounted exactly once, each evidence claim is tied to
+    a primary source and applicability limit, and no value is emitted when an
+    exact biological mapping or executable unit bridge is absent.
+  thresholds:
+    accounted_family_count: 6
+    accounted_channel_count: 2212
+    accounted_terminal_count: 6041
+    numeric_transfer_ready_channel_count: 0
+    numeric_parameter_value_count: 0
+
+behavior_targets: []
+scenario_splits: {train: [], validation: [], diagnostic: [], held_out: []}
+dependencies:
+  - accepted structural basal and residual source routing
+  - primary electrophysiology and connectomics evidence inventory
+  - current embodied input normalization contract
+provenance:
+  sources:
+    - calibration/evidence/basal-source-readiness-v0.yaml
+    - data/derived/calibration/basal-source-readiness-v0/summary.json
+  assumptions:
+    - Annotation partitions are candidate sharing keys, not accepted numerical equality claims.
+    - A blocked numerical transfer is a valid evidence-audit result and not a failed runtime.
+validation: accepted_evidence_accounting_numeric_transfer_blocked
+blocked_reason: >-
+  Biological sources report firing rates or qualitative response classes, while
+  the current central input consumes normalized model activity. Exact source-to-
+  channel value tables are also incomplete, so no parameter value is transferable.
+next_action: >-
+  Version and test a rate-to-model-activity bridge, then construct bounded basal
+  candidate ensembles and propagate them through all 31 central members.
