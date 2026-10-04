@@ -10,6 +10,7 @@ runs/**
 !runs/README.md
 reports/generated/**
 !reports/generated/.gitkeep
+audit-packs/
 .env
 .env.*
 !.env.example
