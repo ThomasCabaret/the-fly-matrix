@@ -51,6 +51,7 @@ readiness:
   central_model_class: blocked_engineering_lif_stages_passed_scientific_rate_vs_event_comparison_open
   spike_event_runtime: fixed_delay_lif_reference_exact_on_small_recurrent_graph_full_graph_load_validated
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
+  independent_circuit_reference_mapping: partial_abn1_adn_exact_abn2_two_of_three_types_structural_paths_present
   prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_unit_bridge_missing
   held_out_protocol_locked: false
@@ -67,11 +68,12 @@ blocked_by:
   - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 31 surviving central candidates cannot be treated as interchangeable downstream.
   - Numerical portability does not distinguish the 31 rate survivors biologically; they remain an engineering ensemble and may only be propagated scientifically if their model class passes the ADR 0014 gate.
   - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; the correct bridge depends on the unresolved central model class and must not be invented first.
+  - The antennal circuit reference maps exactly for aBN1, aDN1 and aDN2 and has nonzero MaleCNS structural paths, but one of three pinned aBN2 FlyWire types (CB3129) has no resolved MaleCNS match; the scientific protocol remains unlocked.
   - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
 
 next_action: >-
-  Continue target.neural_model_class_gate.v0 from its accepted engineering
-  milestone: preregister model-independent rate-versus-event probes and one
-  independent circuit reference, then issue a go, revise, or stop decision. Do
-  not resume model-dependent basal calibration merely because the event engine
-  fits in GPU memory or executes successfully.
+  Continue target.neural_model_class_gate.v0 by resolving or explicitly excluding
+  the missing CB3129-equivalent MaleCNS aBN2 cell, then lock the qualitative
+  JO-CE versus JO-F neural-response reference and shared rate-versus-event probes.
+  Do not resume model-dependent basal calibration merely because the event engine
+  executes or the partial circuit has structural paths.

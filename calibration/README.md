@@ -147,6 +147,16 @@ accounts for every canonical outgoing edge, and measures bounded CPU/GPU loads a
 feasibility only. The gate remains open until shared model-independent probes and
 an independent circuit reference produce a versioned go, revise or stop decision.
 
+Run `audit_circuit_reference.bat` to audit the first independent circuit candidate
+without fitting it. The procedure pins the Shiu supplement and FlyWire annotation
+commit, transfers systematic cell types to MaleCNS, and scans the complete edge
+table. aBN1/aDN1/aDN2 map exactly and the required structural paths are present;
+the result remains partial because one of three aBN2 FlyWire types (`CB3129`) has
+no resolved MaleCNS match and the other two collapse to a four-cell candidate set.
+No response threshold or model-class decision is emitted. If this reference is
+eventually used for model selection, antennal grooming is exposed for that lineage
+and cannot be reused as a held-out emergent behavior claim.
+
 The first prospective behavior catalog is
 `evaluation_candidates/emergent-behavior-catalog-v0.yaml`. It records localized
 and hierarchical grooming, looming, lateralization, optomotor responses and

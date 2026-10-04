@@ -55,6 +55,38 @@ tracked result and pauses before closing. `-Quick` is available for a short
 integration check. `-Backend cpu`, `cuda`, `auto` or `both` may be passed through
 to the PowerShell launcher.
 
+## Independent circuit-reference transfer audit
+
+The first circuit candidate is the antennal mechanosensory pathway evaluated by
+Shiu et al. independently of their sugar-to-MN9 unit-weight fit. Its useful
+reference is neural and qualitative: JO-CE robustly activated aBN1 experimentally,
+whereas JO-F did not despite direct structural input from both populations. It is
+not a request to train grooming or reproduce the paper's firing-rate table.
+
+`audit_circuit_reference.bat` reconstructs the identity transfer from pinned
+primary supplements and systematic FlyWire annotations, then scans the full
+MaleCNS edge table. The current result is deliberately **partial**:
+
+- aBN1 maps to two MaleCNS `SAD093` neurons;
+- aDN1 and aDN2 map to bilateral `DNg62` and `DNge078` pairs;
+- two of three pinned aBN2 FlyWire types (`CB1740`, `CB1779`) map to one ambiguous
+  four-cell MaleCNS candidate set, while `CB3129` has no resolved match;
+- all four required structural relation classes are non-empty: JON→aBN1 has 197
+  edges / 1,038 contacts, JON→resolved-aBN2 has 38 / 103, aBN1→aDN has 6 / 712,
+  and resolved-aBN2→aDN has 14 / 294.
+
+The source workbook also contains 146 named JON rows while the article declares
+147 activated JONs. The audit preserves this one-cell discrepancy; it does not
+invent the missing identity. The compact tracked result is
+`calibration/runner/antennal-grooming-circuit-transferability-result-v0.yaml`.
+Until the aBN2 mapping is resolved or explicitly excluded using independent
+morphology/annotation evidence, no response threshold is locked and the circuit
+cannot close the scientific gate.
+
+Using this circuit to select a model exposes antennal grooming for that lineage.
+It therefore cannot later support a held-out emergence claim; looming, optomotor
+and unrelated lateralized responses remain available for final evaluation.
+
 ## Geometry and delay data decision
 
 The current flat connectome weight table contains `body_pre`, `body_post` and
@@ -83,8 +115,9 @@ The scientific model-class gate remains open. The next bounded work is:
 
 1. preregister model-independent technical probes shared by the rate comparator
    and event candidate, including explicit information-loss metrics;
-2. lock one source-backed circuit-level reference that is not used to choose the
-   compared parameters;
+2. resolve or explicitly exclude the missing `CB3129`-equivalent aBN2 cell, then
+   lock the source-backed JO-CE versus JO-F neural-response reference without
+   using it to choose the compared parameters;
 3. decide whether the current generic event kernel needs optimization before the
    scientific comparison, keeping kernel performance separate from model class;
 4. issue a recorded `go`, `revise` or `stop` decision; only then resume basal and

@@ -202,7 +202,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(delay_risk["status"], "open_high_impact")
         self.assertEqual(
             gate["status"],
-            "active_engineering_stages_passed_scientific_comparison_open",
+            "active_engineering_stages_passed_circuit_mapping_partial_scientific_comparison_open",
         )
         self.assertEqual(gate["optimization_exposure"], "diagnostic_only")
         self.assertEqual(gate["behavior_targets"], [])

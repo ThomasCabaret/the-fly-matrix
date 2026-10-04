@@ -24,6 +24,14 @@ mais l'implémentation Torch générique n'atteint encore qu'environ 0,03 à 0,0
 le temps réel à 0,1 ms. C'est un passage d'ingénierie, pas l'acceptation du modèle :
 les probes comparatifs et la référence circuit indépendante restent à faire.
 
+La transférabilité de la première référence circuitaire indépendante est désormais
+auditée plutôt que supposée. aBN1, aDN1 et aDN2 ont des correspondances de type
+exactes dans MaleCNS et les quatre classes de chemins JON→aBN et aBN→aDN sont
+présentes. La correspondance aBN2 reste toutefois partielle : `CB1740` et
+`CB1779` se replient sur un ensemble candidat MaleCNS ambigu de quatre cellules,
+tandis que `CB3129` n'a pas de correspondant résolu. Le protocole scientifique
+reste donc non verrouillé et aucun seuil de réponse n'a été choisi.
+
 Le premier gate local de sources basales est maintenant exécuté. Il comptabilise
 les 2 212 canaux couvrant 6 041 afférences, dérive 211 partitions d'audit et
 n'émet volontairement aucune valeur. Les mesures publiées sont en spikes/s alors
@@ -86,6 +94,16 @@ endogène n'apparaît dans cette charge volontairement faible ; la récurrence e
 testée sur le petit graphe, pas présentée comme une activité MaleCNS calibrée.
 Le détail et la décision de ne pas télécharger prématurément la morphologie sont
 dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
+
+L'audit reproductible de transfert du circuit antennaire est enregistré dans
+[`evidence.antennal_grooming_circuit_transferability.v0`](calibration/evidence/antennal-grooming-circuit-transferability-v0.yaml)
+et son résultat compact dans
+[`runner_result.antennal_grooming_circuit_transferability.v0`](calibration/runner/antennal-grooming-circuit-transferability-result-v0.yaml).
+Il vérifie les hashes des sources, 146 JON nommés pour 147 annoncés, les types
+croisés et le graphe MaleCNS complet. Il conclut `partial_mapping_abn2_unresolved`,
+pas « référence acceptée ». Son utilisation future pour sélectionner un modèle
+contaminerait le grooming antennaire ; les évaluations finales looming/optomotrice
+et autres réponses latéralisées restent distinctes.
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
@@ -476,7 +494,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF passe correction, comptabilité et faisabilité pleine échelle mais le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF passe correction, comptabilité et faisabilité pleine échelle ; la première référence circuitaire est structurellement présente mais son mapping aBN2 reste partiel ; le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 
 Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
@@ -543,7 +561,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **119 tests** actuels passent, y compris les
+conservées et classifiées. Les **121 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -572,9 +590,10 @@ Le premier audit local est terminé sans choisir de valeur : les partitions de
 preuve basales sont exhaustives et les limites des publications sont enregistrées.
 Le transfert numérique est suspendu parce que le choix entre activité rate et
 spikes change la nature même du pont. Le jalon d'ingénierie LIF est franchi ; le
-prochain lot doit préenregistrer les probes rate-versus-événements et la référence
-circuit indépendante, pas propager les 31 membres rate ni transformer les sources
-résiduelles inconnues en pseudo-physiologie.
+prochain lot doit résoudre ou exclure proprement le type aBN2 `CB3129`, puis
+verrouiller les probes rate-versus-événements et la référence neurale JO-CE/JO-F ;
+il ne doit pas propager les 31 membres rate ni transformer les sources résiduelles
+inconnues en pseudo-physiologie.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -608,8 +627,10 @@ en motif et en amplitude, sans sélectionner de candidat. La première contraint
 de portabilité numérique retire le candidat 30 et conserve 31 survivants sans les
 classer. Le premier tiers du gate borné de classe neuronale est maintenant exécuté :
 référence déterministe, comptabilité exhaustive et faisabilité CPU/GPU passent.
-Le prochain lot doit construire la comparaison scientifique commune ; les scopes
-locaux indépendants du modèle peuvent continuer, mais aucun
+Le transfert circuitaire est maintenant établi comme partiel, avec des chemins
+structuraux non nuls mais un type aBN2 non résolu. Le prochain lot doit fermer ce
+mapping ou consigner son exclusion avant de construire la comparaison scientifique
+commune ; les scopes locaux indépendants du modèle peuvent continuer, mais aucun
 paramètre dont les unités dépendent du runtime central ne doit être promu. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
@@ -650,6 +671,7 @@ central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties
 constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
 compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le gate de classe reste ouvert
 neural_model_gate.bat # correction + comptabilité + benchmark CPU/GPU du LIF événementiel, aucune calibration
+audit_circuit_reference.bat # transfert FlyWire→MaleCNS + chemins structuraux ; résultat partiel, zéro fitting
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

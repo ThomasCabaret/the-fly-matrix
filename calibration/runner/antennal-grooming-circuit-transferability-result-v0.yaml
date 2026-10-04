@@ -1,0 +1,65 @@
+schema_version: 1
+id: runner_result.antennal_grooming_circuit_transferability.v0
+status: partial_mapping_abn2_unresolved
+claim_label: CIRCUIT REFERENCE MAPPING ONLY / NO FITTING / NO BEHAVIOR CLAIM
+semantic_result_sha256: 24ef41dfe8590f44e248bfc9dbe283556231767d638250bff2855d636d389f4e
+workbook_identity:
+  named_jon_rows: 146
+  paper_declared_jon_count: 147
+  declared_minus_named_rows: 1
+  named_cells:
+    aBN1: 720575940630907434
+    aDN1_l: 720575940616185531
+    aDN2_l: 720575940629806974
+malecns_mapping:
+  canonical_neuron_count: 166700
+  jon_prefixes:
+  - JO-C
+  - JO-D
+  - JO-E
+  - JO-F
+  - JO-mz
+  type_match_counts:
+    SAD093: 2
+    CB1740: 4
+    CB3129: 0
+    CB1779: 4
+    DNg62: 2
+    DNge078: 2
+  group_counts:
+    jon: 432
+    aBN1: 2
+    aBN2_resolved_subset: 4
+    aDN1: 2
+    aDN2: 2
+  missing_abn2_types:
+  - CB3129
+  abn2_source_type_coverage:
+    resolved: 2
+    total: 3
+structural_relations:
+  jon_to_abn1:
+    edges: 197
+    synaptic_contacts: 1038
+  jon_to_abn2_resolved_subset:
+    edges: 38
+    synaptic_contacts: 103
+  abn1_to_adn:
+    edges: 6
+    synaptic_contacts: 712
+  abn2_resolved_subset_to_adn:
+    edges: 14
+    synaptic_contacts: 294
+scientific_circuit_protocol_locked: false
+behavior_exposure:
+  behavior_targeted: false
+  currently_contaminated: false
+  potentially_exposed_behavior_ids:
+  - antennal_grooming
+  consequence_if_used_for_model_selection: Antennal grooming and this circuit response
+    become exposed for the selected lineage and cannot later be claimed as held-out
+    emergent behavior. Preserve looming, optomotor and unrelated lateralized responses
+    for final evaluation.
+next_action: Resolve or explicitly exclude the missing CB3129-equivalent MaleCNS aBN2
+  cell with independent cross-connectome morphology/annotation evidence. Only then
+  lock qualitative JO-CE versus JO-F neural-response metrics and thresholds.

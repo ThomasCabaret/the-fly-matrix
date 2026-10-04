@@ -36,3 +36,21 @@ datasets:
     url: https://raw.githubusercontent.com/flyconnectome/2025malecns/main/supplemental_data/optic-column-type-assignments-v1.0.xlsx
     roles: [anatomy, wiring]
     behaviors_present: []
+  - id: shiu-2024-supplementary-tables
+    version: article_supplement_2024
+    license: CC-BY-4.0
+    path: data/raw/literature/shiu-2024-supplementary-tables.xlsx
+    expected_bytes: 2539037
+    sha256: 6922e16825aa0c92a28e2a634b073dcad7641e9c9283c4b9d8ee1e34e6d9b8d9
+    url: https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-024-07763-9/MediaObjects/41586_2024_7763_MOESM2_ESM.xlsx
+    roles: [neural_model_class_evidence, circuit_reference_identity]
+    behaviors_present: [feeding, antennal_grooming]
+  - id: flywire-neuron-annotations-a83b277
+    version: a83b2776d60d5764cef36b927f5f9679c16c47a2
+    license: not_stated_in_pinned_repository
+    path: data/raw/literature/flywire-neuron-annotations-a83b277.tsv
+    expected_bytes: 31720298
+    sha256: b214970b55d2fbe0853bba536fdcb9e28730f4eb7ab06f600491df795da683cd
+    url: https://raw.githubusercontent.com/flyconnectome/flywire_annotations/a83b2776d60d5764cef36b927f5f9679c16c47a2/supplemental_files/Supplemental_file1_neuron_annotations.tsv
+    roles: [cross_connectome_annotation, circuit_reference_identity]
+    behaviors_present: []

@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.neural_model_class_gate.v0
 title: Select the minimum defensible temporal MaleCNS model class
-status: active_engineering_stages_passed_scientific_comparison_open
+status: active_engineering_stages_passed_circuit_mapping_partial_scientific_comparison_open
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: model_selection_gate_no_behavior_claim
@@ -71,7 +71,7 @@ provenance:
 validation: partial_engineering_pass
 blocked_reason: null
 next_action: >-
-  Preregister model-independent rate-versus-event probes and one independent
-  circuit reference, then issue an explicit go, revise, or stop decision. The
-  deterministic reference, canonical edge sweep and CPU/GPU feasibility stages
-  have passed but do not close the scientific model-class gate.
+  Resolve or explicitly exclude the missing CB3129-equivalent MaleCNS aBN2 cell,
+  then lock qualitative JO-CE versus JO-F neural-response metrics and the shared
+  model-independent probes before issuing an explicit go, revise, or stop
+  decision. Engineering stages pass and the circuit mapping is only partial.

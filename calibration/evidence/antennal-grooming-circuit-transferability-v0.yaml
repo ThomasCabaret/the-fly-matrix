@@ -1,0 +1,115 @@
+schema_version: 1
+id: evidence.antennal_grooming_circuit_transferability.v0
+title: Cross-connectome transferability audit for an independent antennal circuit reference
+status: runnable_mapping_audit
+claim_label: CIRCUIT REFERENCE MAPPING ONLY / NO FITTING / NO BEHAVIOR CLAIM
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+
+purpose: >-
+  Test whether the independently evaluated FlyWire antennal mechanosensory
+  circuit can be identified in MaleCNS before locking it as a neural-model-class
+  reference. This recipe may establish identities and structural paths only; it
+  must not choose neural parameters or score visible grooming behavior.
+
+input_files:
+  - path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+    sha256: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2
+    source_url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  - path: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+    sha256: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+    source_url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+  - path: data/raw/literature/shiu-2024-supplementary-tables.xlsx
+    sha256: 6922e16825aa0c92a28e2a634b073dcad7641e9c9283c4b9d8ee1e34e6d9b8d9
+    source_url: https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-024-07763-9/MediaObjects/41586_2024_7763_MOESM2_ESM.xlsx
+  - path: data/raw/literature/flywire-neuron-annotations-a83b277.tsv
+    sha256: b214970b55d2fbe0853bba536fdcb9e28730f4eb7ab06f600491df795da683cd
+    source_url: https://raw.githubusercontent.com/flyconnectome/flywire_annotations/a83b2776d60d5764cef36b927f5f9679c16c47a2/supplemental_files/Supplemental_file1_neuron_annotations.tsv
+
+sources:
+  - id: shiu_et_al_2024
+    citation: Shiu PK et al. (2024), A Drosophila computational brain model reveals sensorimotor processing
+    doi: 10.1038/s41586-024-07763-9
+    used_claims:
+      - The antennal circuit was evaluated independently of the sugar-to-MN9 unit-weight fit.
+      - JO-CE robustly activated aBN1 experimentally whereas JO-F did not, despite direct structural input from both classes.
+      - The circuit includes JON inputs, aBN1/aBN2 interneurons and aDN1/aDN2 descending neurons.
+    applicability_limits:
+      - The source connectome is female FlyWire, whereas the target runtime is MaleCNS.
+      - Source response values cannot be copied as MaleCNS physiology.
+  - id: calle_schuler_et_al_2026
+    citation: Calle-Schuler SA et al. (2026), A comprehensive mechanosensory connectome reveals a somatotopically organized neural circuit architecture controlling stimulus-aimed grooming of the Drosophila head
+    doi: 10.7554/eLife.108044.3
+    used_claims:
+      - Three published aBN2 FlyWire cells have types CB1740, CB3129 and CB1779 in the pinned annotation dump.
+      - aBN2 is a subset of the LB23 hemilineage, not the whole LB23 population.
+    applicability_limits:
+      - Developmental lineage alone is insufficient to identify MaleCNS aBN2 cells.
+  - id: flywire_annotations_a83b277
+    citation: FlyConnectome systematic FlyWire annotations, commit a83b2776d60d5764cef36b927f5f9679c16c47a2
+    url: https://github.com/flyconnectome/flywire_annotations/tree/a83b2776d60d5764cef36b927f5f9679c16c47a2
+    used_claims:
+      - Pinned FlyWire root IDs map to systematic cell-type names used for cross-connectome matching.
+
+source_reference:
+  workbook_sheet: "Supplemental Table 7A Grooming "
+  paper_declared_jon_count: 147
+  expected_named_jon_rows_in_workbook: 146
+  expected_named_cells:
+    aBN1: 720575940630907434
+    aDN1_l: 720575940616185531
+    aDN2_l: 720575940629806974
+  pinned_flywire_cells:
+    aBN1:
+      root_ids: [720575940630907434]
+      expected_types: [SAD093]
+    aBN2:
+      root_ids: [720575940634683237, 720575940618961857, 720575940621355759]
+      expected_types: [CB1740, CB3129, CB1779]
+    aDN1:
+      root_ids: [720575940616185531]
+      expected_types: [DNg62]
+    aDN2:
+      root_ids: [720575940629806974]
+      expected_types: [DNge078]
+
+malecns_selection:
+  jon_type_prefixes: [JO-C, JO-D, JO-E, JO-F, JO-mz]
+  expected_jon_count: 432
+  expected_type_match_counts:
+    SAD093: 2
+    CB1740: 4
+    CB3129: 0
+    CB1779: 4
+    DNg62: 2
+    DNge078: 2
+  expected_unique_group_counts:
+    aBN1: 2
+    aBN2_resolved_subset: 4
+    aDN1: 2
+    aDN2: 2
+
+acceptance:
+  require_input_hash_match: true
+  require_source_identity_match: true
+  require_all_selected_malecns_bodies_canonical: true
+  require_nonzero_structural_relations:
+    - jon_to_abn1
+    - jon_to_abn2_resolved_subset
+    - abn1_to_adn
+    - abn2_resolved_subset_to_adn
+  expected_transfer_status: partial_mapping_abn2_unresolved
+
+behavior_exposure:
+  behavior_targeted: false
+  currently_contaminated: false
+  potentially_exposed_behavior_ids: [antennal_grooming]
+  consequence_if_used_for_model_selection: >-
+    Antennal grooming and this circuit response become exposed for the selected
+    lineage and cannot later be claimed as held-out emergent behavior. Preserve
+    looming, optomotor and unrelated lateralized responses for final evaluation.
+
+next_action: >-
+  Resolve or explicitly exclude the missing CB3129-equivalent MaleCNS aBN2 cell
+  with independent cross-connectome morphology/annotation evidence. Only then
+  lock qualitative JO-CE versus JO-F neural-response metrics and thresholds.

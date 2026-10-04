@@ -24,6 +24,7 @@ risks:
       - Non-spiking graded models have succeeded in the biologically non-spiking early fly visual system, but that evidence is scope-specific.
       - The bounded fixed-delay LIF reference now passes an independent deterministic recurrent small-graph comparison and exhaustive full-graph event accounting.
       - The complete outgoing event graph and LIF state fit comfortably in available CPU and GPU memory.
+      - An independent antennal circuit candidate maps exactly to MaleCNS aBN1/aDN1/aDN2 and preserves nonzero JON-to-aBN and aBN-to-aDN structural paths.
     evidence_against_or_unresolved:
       - The candidate emits no spikes and has no refractory state, synaptic event kernel, or transmission delay.
       - No source or held-out circuit result validates this abstraction across MaleCNS.
@@ -31,6 +32,7 @@ risks:
       - The current normalized input destroys absolute spikes-per-second units and couples every modality through instantaneous whole-vector normalization.
       - The biological importance of path-dependent conduction timing has not been tested and cannot be assumed negligible.
       - The first generic 0.1 ms event implementation reaches only about 0.03 to 0.05 times real time and has not yet been compared on an independent circuit reference.
+      - The circuit mapping is not yet complete: FlyWire aBN2 type CB3129 has no resolved MaleCNS counterpart, and the two retained aBN2 types collapse to one four-cell candidate set.
     consequence_if_true: >-
       The rate runtime may remain a scientifically useful low-cost model for the
       scopes that pass the comparison gate.
@@ -41,8 +43,8 @@ risks:
     current_mitigation: >-
       Pause the basal unit bridge and propagation of the 31 rate candidates. The
       small-graph, edge-accounting and CPU/GPU feasibility stages have passed;
-      run the preregistered shared probes and independent circuit reference before
-      further dependent fitting.
+      resolve the partial aBN2 transfer, then lock and run the shared probes and
+      circuit reference before further dependent fitting.
     cheapest_discriminating_experiment: >-
       Implement a source-traceable LIF event baseline, validate it against a
       deterministic small-graph reference, benchmark full MaleCNS, then compare
