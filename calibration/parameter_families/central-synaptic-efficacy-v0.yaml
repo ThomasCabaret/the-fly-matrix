@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.synaptic_efficacy.v0
 title: Central signed synaptic efficacy
-status: technical_timestep_filtered_31_member_ensemble_unfrozen_nonidentified
+status: model_class_gate_open_rate_ensemble_engineering_only
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -9,14 +9,14 @@ meaning: {biological_or_technical_role: Convert structural synapse counts and si
 scope:
   owner_ids: [cns.malecns]
   parameter_names: [class_gain, connection_family_gain, optional_edge_residual]
-  dimension: {runtime_edges_max: 25582938, transmitter_classes: 9, selected_free_parameters: 9, edge_residuals: 0}
+  dimension: {runtime_edges_max: 25582938, transmitter_classes: 9, selected_model: null, comparator_model: model.malecns_typed_signed_rate.v0, comparator_free_parameters: 9, edge_residuals: 0}
   topology_snapshot: {semantic_topology_sha256: canonical_malecns_runtime_graph, candidate_envelope_sha256: fixed_runtime_edges, ruleset_sha256: not_applicable, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [one_global_scale, transmitter_class, connection_family, local_vector, individual_edge], selected_level: transmitter_class_candidate_v0, justification: the minimal signed candidate uses one explicit efficacy for each frozen effective-transmitter class and forbids edge residuals, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
-identifiability: {status: model_selected_values_unidentified, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.neuron_dynamics.v0], joint_calibration_reason: class efficacies and global temporal response compensate without activity constraints}
+identifiability: {status: blocked_pending_model_class_gate, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.neuron_dynamics.v0], joint_calibration_reason: class efficacies and global temporal response compensate without activity constraints}
 dependencies: {upstream_family_ids: [parameter.central.transmitter_sign_prior.v0], downstream_family_ids: [parameter.central.neuron_dynamics.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [no_runaway_activity, no_absorbing_silence], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather, supports: structural synapse counts only}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: explicit minimal signed executable candidate but no values}]
 assumptions: [The unsigned incoming-L1 benchmark normalization is not an accepted model., The nine-class candidate is provisional and must not gain local or edge residuals without a versioned capacity decision.]
-next_action: Propagate the 31-member ensemble through local or hybrid campaigns and use preregistered class/region residuals to test the transmitter-shared capacity hypothesis; keep every member unfrozen.
+next_action: Execute target.neural_model_class_gate.v0 and define efficacy units for the selected lineage; keep every rate member unfrozen and engineering-only.

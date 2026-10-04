@@ -1,5 +1,5 @@
 schema_version: 1
-phase: ensemble_propagation_and_local_interface_calibration
+phase: critical_neural_model_class_validation
 updated: 2026-10-04
 
 wiring_baseline:
@@ -8,6 +8,7 @@ wiring_baseline:
   calibration_boundary: freeze_semantic_topology_ruleset_and_exception_hashes_per_campaign
 
 active_target_ids:
+  - target.neural_model_class_gate.v0
   - target.technical_neural_dynamics.v0
   - target.technical_embodied_stability.v0
 evaluation_target_ids:
@@ -47,6 +48,9 @@ readiness:
   central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
+  central_model_class: blocked_pending_bounded_rate_vs_event_fidelity_gate
+  spike_event_runtime: not_implemented
+  transmission_delay_policy: unresolved_rate_v0_has_none_lif_reference_candidate_fixed_1_8_ms
   prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_unit_bridge_missing
   held_out_protocol_locked: false
@@ -56,16 +60,18 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
+  - The current central runtime is a continuous rate comparator with no spike events, refractory state, synaptic event kernel, or transmission delay; no evidence validates that abstraction across MaleCNS.
+  - Model-dependent calibration is paused until the bounded ADR 0014 rate-versus-event gate produces an explicit go, revise, or stop decision.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 31 surviving central candidates cannot be treated as interchangeable downstream.
-  - Numerical portability does not distinguish the 31 survivors biologically; the finite ensemble must be propagated into local or hybrid campaigns rather than collapsed arbitrarily.
-  - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; a versioned unit bridge is required before numerical evidence transfer.
+  - Numerical portability does not distinguish the 31 rate survivors biologically; they remain an engineering ensemble and may only be propagated scientifically if their model class passes the ADR 0014 gate.
+  - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; the correct bridge depends on the unresolved central model class and must not be invented first.
   - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
 
 next_action: >-
-  Define and validate the explicit biological-rate to model-activity bridge, then
-  build bounded class-level basal candidate ensembles and run them across all 31
-  central members. Report shared versus member-conditioned admissibility and
-  model-capacity residuals; do not promote an arbitrary central member or an
-  unsupported residual-channel value.
+  Specify and execute target.neural_model_class_gate.v0: retain the signed rate
+  runtime as an engineering comparator, implement a source-traceable event-based
+  LIF reference with explicit delay semantics, validate it on a deterministic
+  small graph, benchmark full MaleCNS, and compare both on preregistered
+  model-independent probes before resuming model-dependent basal calibration.

@@ -3,6 +3,7 @@ id: model.malecns_typed_signed_rate.v0
 title: Minimal transmitter-shared signed rate dynamics for canonical MaleCNS
 status: candidate_executable_unfitted
 claim_label: MODEL CANDIDATE / UNFITTED / NOT BIOLOGICAL BEHAVIOR
+scientific_role: retained_engineering_comparator_pending_model_class_gate
 
 scope:
   canonical_neurons: 166700
@@ -79,4 +80,16 @@ assumptions:
   - One efficacy per transmitter class is the lowest useful signed capacity above one global scale.
   - Postsynaptic receptor context is unavailable in v0 and is represented by unresolved signed class parameters.
   - Delays, adaptation, per-class time constants and edge residuals are outside this candidate version.
-next_action: Characterize unfitted baselines and lock evidence-backed technical acceptance thresholds before fitting any value.
+critical_risk_refs:
+  - risk.central_rate_representation_fidelity.v0
+  - risk.central_delay_fidelity.v0
+  - risk.central_twelve_parameter_capacity.v0
+permitted_uses:
+  - throughput and memory benchmarking
+  - calibration-runner and sparse-kernel validation
+  - explicit comparison inside target.neural_model_class_gate.v0
+forbidden_uses:
+  - promotion as the central biological reference before the model-class gate
+  - model-dependent basal or interface parameter promotion
+  - claims that spike timing or transmission delay is negligible
+next_action: Compare this retained rate baseline with a source-traceable event-based LIF candidate under the ADR 0014 gate.

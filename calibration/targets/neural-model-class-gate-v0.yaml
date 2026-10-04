@@ -1,0 +1,75 @@
+schema_version: 1
+id: target.neural_model_class_gate.v0
+title: Select the minimum defensible temporal MaleCNS model class
+status: proposed
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: model_selection_gate_no_behavior_claim
+
+scope:
+  includes:
+    - current signed continuous-rate engineering comparator
+    - event-based leaky integrate-and-fire reference candidate
+    - spike, membrane, synaptic, refractory, and transmission-delay semantics
+    - full canonical MaleCNS execution feasibility
+  excludes:
+    - named behavior fitting or visual motion preference
+    - peripheral topology changes
+    - promotion of physiological parameter values
+    - automatic morphology-derived delay claims
+
+metrics:
+  - deterministic_small_graph_reference_error
+  - complete_edge_event_accounting
+  - full_graph_simulated_time_per_wall_time
+  - peak_cpu_and_gpu_memory
+  - spike_and_state_reproducibility
+  - model_independent_pathology_metrics
+  - preregistered_circuit_reference_agreement
+  - information_destroyed_by_representation
+
+acceptance_policy:
+  summary: >-
+    Produce an explicit go, revise, or stop decision for each candidate after a
+    bounded comparison. The selected lineage must be executable on full MaleCNS,
+    source-traceable, and supported by more than numerical stability. No candidate
+    is accepted because it looks behaviorally pleasing.
+  required_outcomes:
+    - deterministic event semantics pass on a fixed reference graph
+    - all canonical edges and neurons are accounted for
+    - source-derived constants and free assumptions are separated
+    - delay policy and missing morphology evidence are explicit
+    - at least one circuit reference is not used to choose compared parameters
+    - full-graph cost and any offline-only limitation are measured
+  threshold_class: preregister_before_execution
+
+behavior_targets: []
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: [small_graph_reference, full_graph_throughput, fixed_technical_probes]
+  held_out: [circuit_reference_not_used_for_parameter_choice]
+
+dependencies:
+  - accepted canonical-neuron scope
+  - frozen transmitter evidence prior
+  - signed sparse graph loader
+  - source-traceable Drosophila neuron and synapse constants
+  - deterministic CPU reference and GPU execution path
+
+provenance:
+  sources:
+    - decisions/0014-neural-dynamics-fidelity-gate.md
+    - calibration/models/malecns-typed-signed-rate-v0.yaml
+    - https://doi.org/10.1038/s41586-024-07763-9
+    - https://github.com/philshiu/Drosophila_brain_model
+  assumptions:
+    - A point-neuron LIF model is a comparison baseline, not accepted final physiology.
+    - A fixed 1.8 ms delay is literature-backed for the reference baseline but is not morphology-derived.
+    - The circuit reference and thresholds must be locked before candidate outputs are inspected.
+
+validation: not_run
+blocked_reason: null
+next_action: >-
+  Specify the bounded comparison protocol and implement the deterministic
+  event-based LIF reference without changing wiring or fitting behavior.

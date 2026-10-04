@@ -4,6 +4,93 @@ updated: 2026-10-03
 status: active
 
 risks:
+  - id: risk.central_rate_representation_fidelity.v0
+    title: Continuous rate state may erase behaviorally necessary spike timing and delays
+    status: open_critical_stop_gate
+    affected_model_id: model.malecns_typed_signed_rate.v0
+    affected_parameter_family_ids:
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+      - parameter.baseline.olfaction.v0
+      - parameter.baseline.gustation.v0
+      - parameter.baseline.thermohygro.v0
+    hypothesis_under_test: >-
+      A globally shared bounded continuous rate state with instantaneous
+      step-to-step propagation preserves enough MaleCNS computation for the
+      intended embodied claims.
+    evidence_supporting:
+      - The representation executes the complete canonical graph efficiently on the available GPU.
+      - It is useful as a deterministic engineering comparator and exposes numerical pathologies.
+      - Non-spiking graded models have succeeded in the biologically non-spiking early fly visual system, but that evidence is scope-specific.
+    evidence_against_or_unresolved:
+      - The candidate emits no spikes and has no refractory state, synaptic event kernel, or transmission delay.
+      - No source or held-out circuit result validates this abstraction across MaleCNS.
+      - Shiu et al. obtained experimentally tested whole-brain circuit predictions with an event-based leaky integrate-and-fire model.
+      - The current normalized input destroys absolute spikes-per-second units and couples every modality through instantaneous whole-vector normalization.
+      - The biological importance of path-dependent conduction timing has not been tested and cannot be assumed negligible.
+    consequence_if_true: >-
+      The rate runtime may remain a scientifically useful low-cost model for the
+      scopes that pass the comparison gate.
+    consequence_if_false: >-
+      Promote an event-based or hybrid central model version; retain the rate
+      runtime only for engineering comparison and rebase all model-dependent
+      calibration on the chosen native units.
+    current_mitigation: >-
+      Pause the basal unit bridge and propagation of the 31 rate candidates.
+      Run the bounded ADR 0014 model-class gate before further dependent fitting.
+    cheapest_discriminating_experiment: >-
+      Implement a source-traceable LIF event baseline, validate it against a
+      deterministic small-graph reference, benchmark full MaleCNS, then compare
+      event and rate candidates on fixed technical probes and one circuit-level
+      reference not used for parameter choice.
+    work_at_risk:
+      scientific_blast_radius: all central dynamics, basal input units, local interface campaigns, embodied calibration, and behavior claims
+      reusable_if_rejected: wiring, signed edge inventory, sparse graph loaders, runner, physical loop, replay, evidence inventories, and rate benchmark
+      budget_policy: one_bounded_implementation_and_comparison_lot_before_resuming_dependent_calibration
+    escalation_triggers:
+      - event baseline is computationally infeasible on the full graph
+      - rate and event candidates disagree materially on preregistered circuit probes
+      - available data cannot define a defensible event or delay policy
+    forbidden_shortcuts:
+      - treating GPU throughput as biological validation
+      - continuing model-dependent basal fitting merely because the rate bridge is easy to implement
+      - claiming delay or spike timing is negligible without a sensitivity result
+      - selecting a model because its embodied motion looks preferable
+    decision_ref: decisions/0014-neural-dynamics-fidelity-gate.md
+    next_review: after_neural_model_class_gate_v0
+
+  - id: risk.central_delay_fidelity.v0
+    title: Uniform or zero transmission delay may miss morphology-dependent timing
+    status: open_high_impact
+    affected_model_id: model.malecns_typed_signed_rate.v0
+    affected_parameter_family_ids:
+      - parameter.central.neuron_dynamics.v0
+    hypothesis_under_test: >-
+      A fixed transmission delay is sufficient for the first event-based MaleCNS
+      baseline, and path-dependent delays do not materially change the selected
+      preregistered metrics at that stage.
+    evidence_supporting:
+      - Shiu et al. used a fixed 1.8 ms delay in a successful whole-brain circuit-prediction model.
+    evidence_against_or_unresolved:
+      - The current rate candidate uses no transmission delay.
+      - The flat MaleCNS weight table does not itself provide accepted edge-specific conduction delays.
+      - Geometry, conduction velocity, synapse location and compartmental integration may affect relative arrival time.
+    consequence_if_true: A fixed-delay LIF baseline can precede morphology-aware refinement.
+    consequence_if_false: Add a versioned morphology-derived delay family and revalidate temporal descendants.
+    current_mitigation: >-
+      Make delay policy explicit in the event baseline and retain morphology-aware
+      delay extraction as a separate, testable model version rather than assuming
+      either zero delay or exact cable timing.
+    escalation_triggers:
+      - path-length data and conduction evidence become available
+      - temporal probes are sensitive to plausible delay variation
+      - a fixed delay cannot reproduce a held-out circuit timing reference
+    forbidden_shortcuts:
+      - inferring delays from Euclidean soma distance without validation
+      - calling absent delay data evidence for zero delay
+    decision_ref: decisions/0014-neural-dynamics-fidelity-gate.md
+    next_review: during_neural_model_class_gate_v0
+
   - id: risk.central_twelve_parameter_capacity.v0
     title: Twelve shared central parameters may underfit biological heterogeneity
     status: open_high_impact
@@ -40,4 +127,4 @@ risks:
     decision_ref: decisions/0013-ensemble-propagation-and-model-adequacy.md
     next_review: after_first_ensemble_aware_local_or_hybrid_campaign
 
-next_action: Register the first ensemble-aware local interface or basal-source campaign and report its implication for the open capacity risk.
+next_action: Resolve the ADR 0014 neural model-class gate before resuming model-dependent basal or ensemble propagation campaigns.

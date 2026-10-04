@@ -188,6 +188,35 @@ class CalibrationRegistryTests(unittest.TestCase):
             self.state["parameter_dependency_dag_id"], self.inventory.dag["id"]
         )
 
+    def test_critical_neural_model_class_gate_blocks_rate_promotion(self) -> None:
+        risks = load_yaml(CALIBRATION_ROOT / "model-risks.yaml")
+        risk_by_id = {risk["id"]: risk for risk in risks["risks"]}
+        rate_risk = risk_by_id["risk.central_rate_representation_fidelity.v0"]
+        delay_risk = risk_by_id["risk.central_delay_fidelity.v0"]
+        model = load_yaml(
+            CALIBRATION_ROOT / "models" / "malecns-typed-signed-rate-v0.yaml"
+        )
+        gate = self.targets["target.neural_model_class_gate.v0"]
+
+        self.assertEqual(rate_risk["status"], "open_critical_stop_gate")
+        self.assertEqual(delay_risk["status"], "open_high_impact")
+        self.assertEqual(gate["status"], "proposed")
+        self.assertEqual(gate["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(gate["behavior_targets"], [])
+        self.assertEqual(
+            self.state["readiness"]["central_model_class"],
+            "blocked_pending_bounded_rate_vs_event_fidelity_gate",
+        )
+        self.assertIn(gate["id"], self.state["active_target_ids"])
+        self.assertEqual(
+            model["scientific_role"],
+            "retained_engineering_comparator_pending_model_class_gate",
+        )
+        self.assertIn(
+            "promotion as the central biological reference before the model-class gate",
+            model["forbidden_uses"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

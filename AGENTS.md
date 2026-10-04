@@ -39,7 +39,8 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
 6. `docs/calibration-methodology.md`, l'ADR 0005 et `calibration/state.yaml` pour
    tout paramètre, cible, campagne ou protocole d'évaluation.
    Lire aussi l'ADR 0012 pour le DAG, le partage, le gel et la réouverture des
-   familles de paramètres.
+   familles de paramètres, l'ADR 0013 pour capacité/ensembles et l'ADR 0014 pour
+   la fidélité de la dynamique neuronale et les hypothèses critiques.
 7. `docs/rules-first-automation.md` lorsqu'un lot répète une décision sur de
    nombreux objets, construit un pipeline ou lance une campagne hors ligne.
 
@@ -96,6 +97,24 @@ Toute décision substantielle doit permettre de retrouver :
 
 Une absence de source doit être déclarée. Ne jamais transformer une intuition en
 fait pour améliorer un pourcentage.
+
+## Hypothèses critiques et travail à risque
+
+Une hypothèse qui choisit la classe du modèle, les unités natives, la sémantique
+temporelle ou une abstraction dont l'échec invaliderait plusieurs lots est un
+**gate**, pas un détail provisoire. Avant d'accumuler du travail dépendant,
+enregistrer son rayon d'impact, les preuves favorables et contraires, le plus petit
+test discriminant, un budget borné, les critères d'arrêt et ce qui restera
+réutilisable en cas d'échec. Exécuter ce test tôt. Un smoke test, une forte vitesse,
+une convergence numérique ou un rendu plausible ne valident pas l'hypothèse
+scientifique.
+
+Le modèle rate central v0 est désormais un comparateur d'ingénierie. Il ne simule
+ni spikes, ni réfractarité, ni noyau synaptique événementiel, ni délais de
+transmission. L'ADR 0014 bloque sa promotion et les calibrations dépendantes de ses
+unités jusqu'à comparaison bornée avec un modèle événementiel LIF traçable. Cette
+règle n'empêche pas les inventaires de preuves et travaux locaux indépendants du
+choix de modèle.
 
 ## Automatisation proportionnée et sensible aux exceptions
 

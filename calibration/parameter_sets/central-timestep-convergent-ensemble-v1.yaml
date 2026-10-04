@@ -1,12 +1,13 @@
 schema_version: 1
 id: parameters.central_timestep_convergent_ensemble.v1
 title: Reconstructible 31-member timestep-convergent MaleCNS ensemble
-status: evaluated_numerically_filtered_ensemble_not_frozen
+status: retained_rate_engineering_ensemble_model_class_gate_open
 created: 2026-10-03
 parent_ids: [parameters.central_technical_dynamics_pilot_ensemble.v0]
 campaign_id: campaign.central_timestep_convergence.v1
 
 claim_label: TRAINED TECHNICAL NUMERICAL CONSISTENCY / NONIDENTIFIED / NOT PHYSIOLOGY / NO BEHAVIOR
+scientific_role: engineering_comparator_only_pending_target.neural_model_class_gate.v0
 behavior_exposure: {behavior_targeted: false, inherited_from: [], exposed_behavior_ids: []}
 
 parameter_families:
@@ -63,8 +64,8 @@ validation:
     - Thirty-one members remain, so the numerical constraint supplies no reference-selection rule among the survivors.
     - The surviving ensemble retains previously measured high raw-motor pattern and amplitude sensitivity.
 promotion:
-  status: not_promoted_nonidentified
-  decision_reason: Numerical portability removes candidate 30 but provides no biological ranking among the 31 survivors.
+  status: blocked_by_critical_model_class_gate
+  decision_reason: Numerical portability removes candidate 30 but neither ranks the survivors nor validates continuous-rate dynamics as a MaleCNS biological model.
   previous_reference_id: null
 sources:
   - calibration/campaigns/technical-neural-dynamics-pilot-v0.yaml
@@ -73,4 +74,4 @@ sources:
 assumptions:
   - Each survivor is acceptable only on the declared technical stability and timestep-refinement probes.
   - Filtered means retained by a technical numerical criterion, not biologically estimated or frozen.
-next_action: Apply independent biological evidence transfer or another non-behavioral constraint to the full 31-member ensemble before selecting or freezing a reference.
+next_action: Retain every survivor as an engineering comparator and resolve target.neural_model_class_gate.v0 before scientific propagation, selection, or freezing.

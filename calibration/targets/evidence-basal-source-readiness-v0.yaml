@@ -54,7 +54,9 @@ validation: accepted_evidence_accounting_numeric_transfer_blocked
 blocked_reason: >-
   Biological sources report firing rates or qualitative response classes, while
   the current central input consumes normalized model activity. Exact source-to-
-  channel value tables are also incomplete, so no parameter value is transferable.
+  channel value tables are also incomplete, and the central model class is now an
+  upstream critical gate, so no parameter value is transferable.
 next_action: >-
-  Version and test a rate-to-model-activity bridge, then construct bounded basal
-  candidate ensembles and propagate them through all 31 central members.
+  Preserve the accepted evidence inventory, resolve
+  target.neural_model_class_gate.v0, then define the native rate or spike-event
+  input contract before constructing any numerical basal ensemble.

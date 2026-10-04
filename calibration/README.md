@@ -128,13 +128,15 @@ second, whereas the current runtime consumes a whole-input normalized activity;
 the missing explicit unit bridge is therefore a blocking result, not a reason to
 copy rates into the model.
 
-The twelve-parameter central model and its 31-member surviving ensemble are now
-governed by ADR 0013. They are a minimum-capacity hypothesis and a finite pilot
-representation, not an accepted biological dimensionality or a prerequisite to
-local calibration. Further central-only narrowing pauses unless new independent
-evidence is available. Local, basal and hybrid campaigns should propagate the
-ensemble explicitly and report whether interface parameters are shared,
-ensemble-robust, member-conditioned or jointly identified.
+The twelve-parameter central model and its 31-member surviving ensemble remain a
+reproducible engineering result under ADR 0013, but ADR 0014 now places a more
+fundamental gate before their scientific propagation. The rate model has no spike
+events, refractory state, synaptic event kernel, or transmission delay. It is
+retained as an engineering comparator, not the default biological model.
+Model-dependent basal and interface promotion pauses until
+`target.neural_model_class_gate.v0` compares it with a source-traceable event-based
+LIF reference. Evidence inventories and reusable runner infrastructure remain
+valid while this gate is open.
 
 The first prospective behavior catalog is
 `evaluation_candidates/emergent-behavior-catalog-v0.yaml`. It records localized

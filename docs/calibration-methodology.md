@@ -148,6 +148,8 @@ The durable dependency, sharing, uncertainty and reopening rules are fixed by
 [`ADR 0012`](../decisions/0012-hierarchical-reconstructible-calibration.md).
 Early model-adequacy checks and propagation of unresolved ensembles are fixed by
 [`ADR 0013`](../decisions/0013-ensemble-propagation-and-model-adequacy.md).
+Neural-representation fidelity and the critical-assumption work-at-risk gate are
+fixed by [`ADR 0014`](../decisions/0014-neural-dynamics-fidelity-gate.md).
 
 ## Parameter-family inventory and dependency DAG
 
@@ -225,6 +227,31 @@ scientifically meaningful in that case.
 
 ## Model adequacy and ensemble propagation
 
+### Critical assumptions and work at risk
+
+Model class is upstream of parameter calibration. A choice between continuous
+rate state, explicit spike events, graded transmission, compartmental dynamics,
+and delayed propagation changes both what can be represented and what every
+parameter means. It is not an ordinary implementation detail.
+
+For any assumption whose failure could invalidate several dependent lots, record
+before scaling work:
+
+- the claim being assumed and its alternatives;
+- the scientific and software blast radius;
+- evidence for, evidence against, and what remains unknown;
+- the cheapest experiment capable of changing the decision;
+- a bounded compute and implementation budget, stop criteria, and the decision
+  expected from each outcome;
+- which artifacts remain reusable if the assumption fails.
+
+Run that discriminating experiment before accumulating downstream calibration.
+This rule is proportional: it does not block reversible local scaffolding or
+model-independent evidence inventories. It does block bulk work whose units,
+targets, or scientific meaning depend on an unvalidated critical model class.
+Convergence, throughput, bounded state, and visual plausibility are not evidence
+that a neural representation preserves the relevant biology.
+
 A low-dimensional shared model is a capacity hypothesis, not a fact established
 by its convenience or executability. In particular, the current MaleCNS v0 model
 uses nine transmitter-class efficacies and three global dynamics parameters. Its
@@ -237,6 +264,11 @@ and numerical-portability gates unless independent evidence directly constrains
 the isolated family. A large surviving set or strong downstream dispersion is a
 signal to propagate uncertainty into local or hybrid campaigns, not to spend an
 open-ended sequence of campaigns inventing further internal filters.
+
+That propagation rule assumes the model class itself has passed its upstream
+fidelity gate. The current 31 survivors all share the same unresolved continuous
+rate abstraction; ADR 0014 therefore retains them as an engineering ensemble but
+pauses their scientific propagation until rate-versus-event comparison is closed.
 
 A unique central reference is not required before interface calibration. A
 campaign may consume a finite ensemble, sample set or distribution and must state
@@ -276,9 +308,12 @@ its instantaneous maximum absolute value and then applies a global central input
 gain. Its input therefore has units of normalized model activity, not spikes per
 second. Copying literature rates into that vector would destroy their absolute
 meaning and entangle one modality with every other modality present at the same
-instant. Until a rate-to-model-activity bridge is versioned and validated, basal
-publications may support class partitions and bounds but cannot supply promoted
-runtime values.
+instant. This is now a recorded limitation of the rate comparator, not a request
+to immediately invent a rate-to-activity bridge. Until the central model-class
+gate is resolved, basal publications may support class partitions and bounds but
+cannot supply promoted runtime values. In a spike-native candidate, measured
+rates may instead parameterize a declared stochastic event process; its point
+process, variability and applicability still require explicit evidence.
 
 The bridge is itself calibration capacity. It must declare whether scaling is
 global, modality-specific or class-specific; how noise and temporal statistics
@@ -398,9 +433,27 @@ residuals and no behavior target. ACh and GABA efficacies obey their typed sign
 priors. Glutamate, histamine, monoamines, `unclear` and `missing` remain signed
 free parameters: sign code zero must never become an implicit zero effect. The
 candidate equation and its structural test values are not accepted physiology.
-Its first gate is exhaustive edge assignment and CPU/GPU-compatible sparse
-execution; only later campaigns may characterize baselines, lock technical
-thresholds and fit values.
+Its completed gates establish exhaustive edge assignment, CPU/GPU-compatible
+sparse execution, numerical pathology detection, and timestep portability for
+that equation only. It does not emit spikes, represent refractory state, apply a
+synaptic event kernel, or transmit effects with a delay. It is now retained as an
+engineering comparator and cannot be promoted or propagated as the default
+scientific central model until the ADR 0014 model-class gate is resolved.
+
+The closest whole-brain published precedent is the Shiu et al. leaky
+integrate-and-fire model. It represents explicit spike events, membrane and
+synaptic integration, a refractory period, and a fixed transmission delay, and it
+made experimentally tested feeding and grooming circuit predictions. This
+supports an event-based baseline, not the stronger claim that one LIF point-neuron
+model or one fixed delay is sufficient for every MaleCNS cell. A successful
+graded, non-spiking model in early vision is likewise scope-specific because many
+neurons in that circuit are biologically non-spiking.
+
+Transmission delay is an independent model family. A uniform literature-derived
+delay is distinct from a morphology-derived edge delay. The latter requires
+versioned paths or lengths, a conduction-velocity rule, units, uncertainty and a
+sensitivity test. The flat connectivity weights alone do not establish those
+values, and missing delay evidence must not become implicit zero delay.
 
 The calibration runner should optimize shared families before individual
 connections: global parameters, then transmitter or cell classes, anatomical
@@ -486,6 +539,22 @@ contract is in `docs/runtime-execution-benchmark.md`.
 
 This engineering stage may proceed while scientific wiring is revalidated. It
 does not authorize fitting any parameter family whose review remains open.
+
+### Stage -0.5 — Resolve critical model-class assumptions
+
+Before model-dependent evidence transfer or broad calibration, compare the
+minimum plausible neural representations with a bounded, preregistered gate. For
+the current project this means retaining the signed rate runtime as an engineering
+comparator while implementing an event-based LIF reference with spike times,
+membrane and synaptic integration, refractory state, and an explicit delay policy.
+
+The gate checks reference correctness on a small graph, full-MaleCNS feasibility,
+model-independent technical probes, and at least one circuit-level reference not
+used to choose the compared parameters. It records destroyed information,
+unsupported assumptions, runtime cost and the decision to proceed, revise or
+stop. It does not fit a named fly behavior and it does not require the ultimate
+biophysical model. Dependent campaigns remain paused until this gate chooses an
+honest model lineage.
 
 ### Stage 0 — Characterize the uncalibrated system
 

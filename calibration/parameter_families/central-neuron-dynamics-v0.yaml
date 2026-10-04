@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.neuron_dynamics.v0
 title: Central neuron temporal dynamics
-status: technical_timestep_filtered_31_member_ensemble_unfrozen_nonidentified
+status: model_class_gate_open_rate_ensemble_engineering_only
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -9,14 +9,14 @@ meaning: {biological_or_technical_role: Time constants thresholds biases nonline
 scope:
   owner_ids: [cns.malecns]
   parameter_names: [time_constant_ms, input_gain, bias]
-  dimension: {canonical_neurons: 166700, selected_model: model.malecns_typed_signed_rate.v0, selected_free_parameters: 3, fixed_activation: tanh}
+  dimension: {canonical_neurons: 166700, selected_model: null, comparator_model: model.malecns_typed_signed_rate.v0, comparator_free_parameters: 3, comparator_activation: tanh}
   topology_snapshot: {semantic_topology_sha256: canonical_malecns_runtime_graph, candidate_envelope_sha256: fixed_runtime_edges, ruleset_sha256: not_applicable, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [one_global_profile, neurotransmitter_or_neuron_class, anatomical_class, local_vector, individual_neuron], selected_level: one_global_profile_candidate_v0, justification: start with three global dynamics parameters and add capacity only after a documented residual failure, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
-identifiability: {status: model_selected_values_unidentified, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.synaptic_efficacy.v0], joint_calibration_reason: time constant input gain bias and class efficacies require technical response constraints}
+identifiability: {status: blocked_pending_model_class_gate, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.synaptic_efficacy.v0], joint_calibration_reason: time constant input gain bias and class efficacies require technical response constraints}
 dependencies: {upstream_family_ids: [parameter.central.synaptic_efficacy.v0], downstream_family_ids: []}
 uncertainty: {representation: interval_or_model_ensemble, admissible_set_criteria: [bounded_activity, recoverable_perturbations, nonzero_responsiveness], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: benchmarks/profiles/malecns-benchmark-v0.yaml, supports: engineering throughput only and explicitly no parameter values}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: bounded executable candidate equation and parameter dimension only}]
 assumptions: [Execution timestep remains a scenario choice; the candidate fits a time constant in milliseconds rather than promoting the benchmark 5 ms step., Bounded tanh numerics do not establish biological validity or acceptable activity.]
-next_action: Propagate the 31-member ensemble through local or hybrid campaigns and use preregistered class/region residuals to test the twelve-parameter capacity hypothesis; select nothing post hoc.
+next_action: Execute target.neural_model_class_gate.v0; retain the 31 rate members as engineering comparators and select or propagate none before the model-class decision.

@@ -9,16 +9,19 @@ aval préenregistrée montre qu'ils divergent fortement aux sorties motrices. Un
 contrainte indépendante de raffinement temporel exclut maintenant un candidat et
 conserve 31 survivants, mais aucun paramètre de référence n'est identifié ni gelé.
 Le modèle à douze paramètres partagés est désormais enregistré comme une hypothèse
-de capacité à haut risque, pas comme la dimensionalité admise de MaleCNS. Le front
-se déplace vers la propagation de cet ensemble dans les calibrations locales et
-hybrides plutôt que vers une élimination centrale prolongée.
+de capacité à haut risque, pas comme la dimensionalité admise de MaleCNS. Une
+hypothèse plus amont est maintenant reconnue comme gate critique : ce modèle est
+un runtime rate continu sans spikes, réfractarité, noyau synaptique événementiel
+ni délai de transmission. Rien ne montre encore que cette représentation préserve
+les calculs nécessaires à une mouche incarnée.
 
 Le premier gate local de sources basales est maintenant exécuté. Il comptabilise
 les 2 212 canaux couvrant 6 041 afférences, dérive 211 partitions d'audit et
 n'émet volontairement aucune valeur. Les mesures publiées sont en spikes/s alors
 que l'entrée centrale courante est une activité normalisée sur le vecteur sensoriel
-complet : l'absence de pont d'unités explicite bloque honnêtement le transfert
-numérique avant toute campagne basale sur l'ensemble central.
+complet. Ce conflit d'unités révèle désormais un choix de modèle, pas seulement un
+convertisseur manquant : le pont numérique et la propagation de l'ensemble sont
+suspendus jusqu'au gate rate-versus-spikes de l'ADR 0014.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -48,6 +51,16 @@ données autorisés, représentation de l'incertitude, protocoles de gel/réouve
 et runner autonome minimal. La politique est définie par
 [`ADR 0012`](decisions/0012-hierarchical-reconstructible-calibration.md) et
 [`docs/calibration-methodology.md`](docs/calibration-methodology.md).
+
+Le front prioritaire est désormais
+[`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml).
+Le runtime rate reste un benchmark d'ingénierie réutilisable. Le gate doit
+implémenter un modèle LIF événementiel traçable, avec spikes, intégration
+membranaire et synaptique, réfractarité et politique de délai explicite, valider sa
+référence sur petit graphe, mesurer le graphe MaleCNS complet et comparer les deux
+classes sur des probes préenregistrés avant toute calibration dépendante des
+unités centrales. La politique et le précédent scientifique sont consignés dans
+[`ADR 0014`](decisions/0014-neural-dynamics-fidelity-gate.md).
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
@@ -181,14 +194,13 @@ plancher numérique sans modifier les seuils matériels. Le nouvel ensemble est
 donc plus portable numériquement, pas plus physiologique ni comportemental.
 
 L'[`ADR 0013`](decisions/0013-ensemble-propagation-and-model-adequacy.md)
-formalise la correction de trajectoire. Les neuf efficacités par classe de
-neurotransmetteur et les trois paramètres globaux constituent le plus petit modèle
-signé actuellement exécutable ; ils ne sont pas une hypothèse biologique validée.
-Il n'est pas nécessaire d'obtenir un candidat central unique avant de calibrer les
-sources basales et les interfaces. Les 31 membres seront propagés comme ensemble
-d'incertitude, avec des paramètres aval déclarés communs, robustes, conditionnés
-ou conjointement identifiés. Les résidus locaux et par classe/région serviront de
-test de capacité avant toute nouvelle version centrale plus expressive.
+formalise la conservation de l'incertitude et interdit de choisir arbitrairement
+un des 31 membres. L'[`ADR 0014`](decisions/0014-neural-dynamics-fidelity-gate.md)
+ajoute un gate plus amont : ces membres appartiennent tous à la même classe rate
+non validée et ne seront donc pas propagés scientifiquement avant la comparaison
+rate-versus-événements. Ils restent disponibles comme ensemble d'ingénierie. Si
+la classe rate franchit le gate dans un scope déclaré, les règles de propagation
+d'ensemble de l'ADR 0013 s'appliqueront alors sans exiger de singleton.
 
 Un catalogue prospectif de sept observations comportementales est maintenant
 consigné dans
@@ -215,12 +227,13 @@ partielles qui ne sont pas encore reliées à leur identité fonctionnelle MaleC
 Deux compilations déterministes reproduisent le hash sémantique
 `c2db66b99ad9d8d93dca343c10e4ae389d5df995d9125dd4c4fb2eb17d548f96`.
 Elles acceptent l'exhaustivité et la provenance, mais **zéro valeur** : aucune des
-six familles n'est ajustée ou gelée. Le blocage principal est un contrat d'unités :
+six familles n'est ajustée ou gelée. Le blocage visible est un contrat d'unités :
 les sources biologiques donnent des spikes/s, tandis que le runtime v0 divise le
-vecteur sensoriel complet par son maximum absolu avant le gain central. Le prochain
-lot doit versionner et tester ce pont, puis propager des ensembles basaux bornés
-sur les 31 candidats centraux. Les 1 883 sources résiduelles restent explicitement
-sans valeur biologique transférable.
+vecteur sensoriel complet par son maximum absolu avant le gain central. Le gate
+ADR 0014 interdit désormais de construire ce pont avant d'avoir choisi la classe
+de dynamique ; un modèle à spikes pourrait consommer ces taux comme intensités
+d'un processus événementiel déclaré. Les 1 883 sources résiduelles restent
+explicitement sans valeur biologique transférable.
 
 La méthode de revue est fixée par
 [`ADR 0008`](decisions/0008-independent-scientific-wiring-reaudit.md) et
@@ -438,7 +451,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée, 31/32 candidats centraux passent le filtre de raffinement temporel mais restent non identifiés ; le gate basal couvre 2 212 canaux et bloque honnêtement tout transfert numérique faute de pont d'unités ; aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; les 31 candidats rate restent des comparateurs techniques non promouvables ; le gate basal couvre 2 212 canaux mais tout transfert dépendant est suspendu jusqu'au gate critique de classe neuronale rate-versus-spikes ; aucun jeu complet promu**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 
 Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
@@ -525,16 +538,17 @@ est exécutable et sa première campagne technique est terminée. Le filtre de
 raffinement temporel retire un candidat matériellement dépendant du pas de temps,
 mais laisse 31 survivants non identifiés. Leur sensibilité aux sorties motrices
 centrales reste élevée et la suffisance des douze paramètres partagés est un
-risque ouvert. Le prochain front est une campagne locale ou hybride consciente de
-l'ensemble, pas une semaine de filtres CNS internes ni le choix d'un membre dont
-la sortie paraît préférable.
+risque ouvert. Le nouveau risque de classe est plus amont : avant une campagne
+locale dépendante du runtime, le prochain front compare ce modèle rate à un
+baseline LIF événementiel borné et traçable. Il ne choisit toujours aucun membre
+sur l'apparence de sa sortie.
 
 Le premier audit local est terminé sans choisir de valeur : les partitions de
-preuve basales sont exhaustives, les limites de portée des publications sont
-enregistrées et le transfert numérique est bloqué par l'absence de pont entre
-spikes/s et activité normalisée. La prochaine campagne doit résoudre ce contrat
-d'unités puis propager un ensemble de baselines sur les 31 membres centraux ; elle
-ne doit pas transformer les sources résiduelles inconnues en pseudo-physiologie.
+preuve basales sont exhaustives et les limites des publications sont enregistrées.
+Le transfert numérique est suspendu parce que le choix entre activité rate et
+spikes change la nature même du pont. Le prochain lot doit fermer le gate de classe
+neuronale, pas propager les 31 membres rate ni transformer les sources résiduelles
+inconnues en pseudo-physiologie.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -566,15 +580,15 @@ set complet n'a été promu et aucune cible comportementale n'est autorisée. L'
 aval préenregistrée est terminée : elle classe l'ensemble comme hautement sensible
 en motif et en amplitude, sans sélectionner de candidat. La première contrainte
 de portabilité numérique retire le candidat 30 et conserve 31 survivants sans les
-classer. Le prochain lot doit définir une campagne locale, basale ou hybride qui
-propage l'ensemble et mesure les résidus révélateurs de capacité ; les scopes
-locaux périphériques deviennent le front principal. Les fichiers de
+classer. Le prochain lot doit définir et exécuter le gate borné de classe
+neuronale ; les scopes locaux indépendants du modèle peuvent continuer, mais aucun
+paramètre dont les unités dépendent du runtime central ne doit être promu. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
-Le gate d'évidence basal est maintenant cette première campagne locale : il ferme
-l'inventaire mais conclut qu'aucune valeur n'est encore transférable. Le prochain
-lot ne doit donc pas répéter l'inventaire ; il doit définir le pont d'unités puis
-la première enveloppe numérique basale propagée sur l'ensemble central.
+Le gate d'évidence basal ferme l'inventaire mais conclut qu'aucune valeur n'est
+encore transférable. Le prochain lot ne doit ni répéter cet inventaire ni inventer
+le pont d'unités : il doit comparer le runtime rate au baseline LIF événementiel,
+puis seulement définir l'interface d'entrée native du modèle retenu.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -605,7 +619,7 @@ characterize_signed_dynamics.bat # 7 régimes centraux non ajustés, diagnostic 
 fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans comportement
 central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties brutes
 constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
-compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le pont d'unités manque
+compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le gate de classe reste ouvert
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

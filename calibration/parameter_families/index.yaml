@@ -64,6 +64,7 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  Validate a biological-rate to normalized-model-activity bridge, then construct
-  bounded basal candidate ensembles over the evidence-supported partitions while
-  leaving residual sources explicitly unresolved or surrogate-labelled.
+  Resolve target.neural_model_class_gate.v0 before defining any model-dependent
+  biological-rate bridge. Evidence mapping may continue, but the 31 rate members
+  remain engineering comparators and residual sources remain explicitly
+  unresolved or surrogate-labelled.

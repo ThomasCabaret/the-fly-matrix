@@ -172,6 +172,6 @@ behavior_exposure:
     - Treating literature behavior assays as fitting targets
 
 next_action: >-
-  Define and validate the explicit biological-rate to model-activity bridge, then
-  create bounded class-level basal candidate ensembles and propagate them through
-  all 31 central members without selecting a named behavior.
+  Preserve this evidence accounting, resolve target.neural_model_class_gate.v0,
+  then define the selected model's native biological-rate or spike-event input
+  contract before creating numerical basal ensembles.
