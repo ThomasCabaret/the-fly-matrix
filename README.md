@@ -78,6 +78,10 @@ Pour reprendre le projet sans le contexte des conversations :
   puis produit les profondeurs BFS, les composantes fortement connexes et deux
   profils de récurrence complémentaires. Voir
   [`docs/connectome-cycle-topology.md`](docs/connectome-cycle-topology.md).
+- `run_abn1_gate_pilot.bat` rejoue le pilote borné JO-CE/JO-F→aBN1 sur le
+  graphe complet pour le LIF source-aligné et trois sentinelles rate sous trois
+  ponts d'unité. Il écrit les sorties lourdes dans `runs/calibration/`, mais ne
+  sélectionne aucun modèle et ne constitue pas le protocole complet à 30 essais.
 
 The exhaustive interactive wiring map is now available as a first read-only
 inspection surface. It exposes connected and blocked terminals, real box

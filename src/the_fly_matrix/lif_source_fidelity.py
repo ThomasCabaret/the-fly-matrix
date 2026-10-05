@@ -39,6 +39,14 @@ class LifSourceFidelityError(RuntimeError):
     """Raised when the source lock or source-aligned comparator loses an invariant."""
 
 
+def scaled_torch_weights(values: np.ndarray, scale: float, device: str) -> Any:
+    """Scale an immutable NumPy edge buffer without aliasing it on CPU."""
+    import torch
+
+    base = torch.from_numpy(np.asarray(values, dtype=np.float32)).to(device)
+    return base * float(scale)
+
+
 @dataclass(frozen=True)
 class SourceAlignedProfile:
     raw: Mapping[str, Any]
@@ -382,8 +390,7 @@ def benchmark_full_graph(
     node_count = outgoing.shape[0]
     indptr = torch.from_numpy(outgoing.indptr.astype(np.int64, copy=False)).to(device)
     indices = torch.from_numpy(outgoing.indices.astype(np.int64, copy=False)).to(device)
-    weights = torch.from_numpy(outgoing.data.astype(np.float32, copy=False)).to(device)
-    weights *= profile.forced_weight_mV
+    weights = scaled_torch_weights(outgoing.data, profile.forced_weight_mV, device)
     signs = torch.from_numpy(signs_np.astype(np.float32, copy=False)).to(device)
     v = torch.full((node_count,), c.v_rest_mV, dtype=torch.float32, device=device)
     g = torch.zeros(node_count, dtype=torch.float32, device=device)

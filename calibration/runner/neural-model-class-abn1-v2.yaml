@@ -1,0 +1,109 @@
+schema_version: 1
+id: runner_result.neural_model_class_abn1.v2
+status: pilot_complete_non_decisional_full_campaign_cost_gate_open
+claim_label: NEURAL MODEL CLASS REFERENCE / BEHAVIOR EXPOSED FOR THIS LINEAGE / NO
+  FITTING
+run_id: 20261005T183313308052Z--abn1-model-class-v2-pilot
+run_summary_ref: runs/calibration/neural-model-class-abn1-v2/20261005T183313308052Z--abn1-model-class-v2-pilot/summary.json
+completed_rows: 70
+all_states_finite: true
+cost_estimate:
+  method: linear_from_pilot_unit_means_no_batching_assumed
+  event_full_units: 690
+  rate_full_units: 64170
+  event_full_wall_hours: 8.49247077727258
+  rate_full_wall_hours: 7.761653999714292
+  warning: cost estimate is diagnostic; full campaign requires batching or a reviewed
+    reduction rule
+directional_description:
+  scope: pilot_descriptive_only_not_a_decision
+  frequencies_hz:
+  - 20
+  - 120
+  - 220
+  series:
+  - model: event_lif_source_aligned_v1
+    parameter_member: published_point_comparator
+    bridge_scale: null
+    JO_CE_minus_JO_F:
+    - 28.0
+    - 167.5
+    - 230.0
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-00
+    bridge_scale: 0.25
+    JO_CE_minus_JO_F:
+    - 0.00046042662812396896
+    - 0.002626751852221787
+    - 0.004769320079358295
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-00
+    bridge_scale: 1.0
+    JO_CE_minus_JO_F:
+    - 0.001800991441123188
+    - 0.009935216784942896
+    - 0.01739032468525693
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-00
+    bridge_scale: 4.0
+    JO_CE_minus_JO_F:
+    - 0.005520244601648301
+    - 0.025546553886306354
+    - 0.03900854817125947
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-15
+    bridge_scale: 0.25
+    JO_CE_minus_JO_F:
+    - 0.006906145773828032
+    - 0.03742163348942995
+    - 0.06337829127907754
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-15
+    bridge_scale: 1.0
+    JO_CE_minus_JO_F:
+    - 0.018926576599478717
+    - 0.08206110078841448
+    - 0.1187442195415497
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-15
+    bridge_scale: 4.0
+    JO_CE_minus_JO_F:
+    - 0.022505291439592838
+    - 0.09172343309968711
+    - 0.128368965536356
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-31
+    bridge_scale: 0.25
+    JO_CE_minus_JO_F:
+    - 0.0005897440202534202
+    - 0.003266781540587545
+    - 0.005797627447173
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-31
+    bridge_scale: 1.0
+    JO_CE_minus_JO_F:
+    - 0.0019254531059414142
+    - 0.009248715648427604
+    - 0.014627614431083203
+    positive_frequency_fraction: 1.0
+  - model: typed_signed_rate_v0
+    parameter_member: candidate-31
+    bridge_scale: 4.0
+    JO_CE_minus_JO_F:
+    - 0.0028161460347473615
+    - 0.012301737843081355
+    - 0.018284406056627636
+    positive_frequency_fraction: 1.0
+  all_series_positive_at_all_pilot_frequencies: true
+semantic_result_sha256: 416920094de7eeaded147147faf329f03a56812ad59c69cbf8db638c35d1a4b9
+scientific_model_class_decision: forbidden_from_pilot
+next_action: Review measured cost and implement a verified batched/resumable full
+  executor before model-class interpretation.

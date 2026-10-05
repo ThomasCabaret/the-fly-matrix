@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.neural_model_class_gate.v0
 title: Select the minimum defensible temporal MaleCNS model class
-status: active_brian2_conformance_and_temporal_probes_passed_abn1_execution_open
+status: active_abn1_pilot_complete_non_discriminating_full_cost_gate_open
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: model_selection_gate_no_behavior_claim
@@ -68,15 +68,19 @@ provenance:
     - https://github.com/philshiu/Drosophila_brain_model
     - calibration/models/malecns-lif-source-aligned-v1.yaml
     - calibration/evidence/antennal-abn1-model-class-reference-v1.yaml
+    - calibration/evidence/antennal-abn1-model-class-reference-v2.yaml
+    - calibration/runner/neural-model-class-abn1-v2.yaml
   assumptions:
     - A point-neuron LIF model is a comparison baseline, not accepted final physiology.
     - A local circuit success cannot promote one homogeneous model class over all MaleCNS.
     - A fixed 1.8 ms delay is literature-backed for the reference baseline but is not morphology-derived.
     - The circuit reference and thresholds must be locked before candidate outputs are inspected.
 
-validation: brian2_conformance_and_information_loss_probes_passed_scientific_reference_open
+validation: brian2_conformance_and_information_loss_probes_passed_abn1_pilot_both_representations_directionally_positive_non_decisional
 blocked_reason: null
 next_action: >-
-  Execute the locked JO-CE versus JO-F aBN1 reference under identical conditions
-  for rate and event candidates, then issue a population-scoped go, revise or
-  typed/hybrid decision. CB3129/aBN2 remains outside this narrow reference.
+  Review the aBN1 pilot's low discriminating power and measured full cost. Either
+  implement a verified batched/resumable full executor to establish population-
+  scoped capability, or preregister an independent timing-sensitive circuit
+  reference before attempting a rate, event, or typed/hybrid decision. The pilot
+  alone cannot select a model. CB3129/aBN2 remains outside this narrow reference.

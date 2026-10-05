@@ -174,14 +174,32 @@ pas « référence acceptée ». Son utilisation future pour sélectionner un mo
 contaminerait le grooming antennaire ; les évaluations finales looming/optomotrice
 et autres réponses latéralisées restent distinctes.
 
-Le protocole étroit
-[`evidence.antennal_abn1_model_class_reference.v1`](calibration/evidence/antennal-abn1-model-class-reference-v1.yaml)
-est désormais verrouillé indépendamment : il mesure directement aBN1 sous JO-CE
+Le protocole étroit v1 reste l'historique du verrou anatomique, mais sa métrique
+`spikes/s` n'était pas définie pour le candidat rate. Le protocole corrigé
+[`evidence.antennal_abn1_model_class_reference.v2`](calibration/evidence/antennal-abn1-model-class-reference-v2.yaml)
+compare donc uniquement les contrastes dans l'unité native de chaque candidat.
+Il mesure directement aBN1 sous JO-CE
 et JO-F et exclut explicitement aBN2, aDN, moteurs, corps et grooming. Le manque
 `CB3129` ne bloque donc pas ce probe aBN1, mais continue de bloquer tout claim sur
 le circuit de grooming complet. Fréquences, durée, répétitions, métriques et sens
 qualitatif JO-CE > JO-F sont figés avant exécution ; aucun seuil numérique n'a été
-inventé depuis une formulation qualitative.
+inventé depuis une formulation qualitative. L'archive primaire des sorties est
+un ZIP monolithique de 4 499 610 373 octets et n'a pas été téléchargée pour
+fabriquer un seuil d'amplitude.
+
+Le pilote v2 non décisionnel a maintenant exécuté le graphe complet : une graine,
+20/120/220 Hz, le LIF source-aligné et trois membres sentinelles rate sous trois
+ponts d'unité. L'événementiel donne respectivement 28, 167,5 et 230 spikes/s par
+neurone aBN1 pour JO-CE, contre zéro pour JO-F. Les neuf séries rate ont également
+JO-CE > JO-F aux trois fréquences. Ce résultat valide le chemin expérimental et
+suggère que la référence aBN1 teste la capacité mais départage peu les classes ;
+il ne sélectionne aucun modèle. L'extrapolation sans batching est d'environ
+8,5 h GPU pour l'événementiel et 7,8 h pour les 31 membres rate × trois ponts,
+soit 64 860 unités. Le résultat compact est
+[`runner_result.neural_model_class_abn1.v2`](calibration/runner/neural-model-class-abn1-v2.yaml).
+La campagne complète attend donc un exécuteur batché/reprenable et une décision
+explicite sur sa valeur d'information, ou une seconde référence plus sensible au
+temps.
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
@@ -765,6 +783,7 @@ setup_brian2_reference.bat # environnement historique isolé Python 3.10 / Brian
 brian2_conformance.bat # frontières scheduler Brian2: intégration, délai, reset et réfractarité
 temporal_model_probes.bat # collisions rate/event et pathologies techniques, aucun comportement
 audit_circuit_reference.bat # transfert FlyWire→MaleCNS + chemins structuraux ; résultat partiel, zéro fitting
+run_abn1_gate_pilot.bat # répétition bornée v2 sur graphe complet ; descriptif seulement, aucune sélection
 lock_abn1_reference.bat # reconstruit/verrouille le probe aBN1 JO-CE/JO-F avant toute sortie candidate
 actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et saturation
 actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tethered, zéro fitting/comportement

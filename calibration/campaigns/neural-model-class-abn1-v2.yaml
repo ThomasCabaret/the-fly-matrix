@@ -1,0 +1,54 @@
+schema_version: 1
+id: campaign.neural_model_class_abn1.v2
+title: Reproducible aBN1 model-class reference campaign
+status: pilot_complete_full_pending_cost_and_information_value_gate
+primary_class: evidence_transfer
+claim_label: MODEL CLASS REFERENCE / NO FITTING / NO BEHAVIOR CLAIM
+
+target_id: target.neural_model_class_gate.v0
+evidence_id: evidence.antennal_abn1_model_class_reference.v2
+behavior_targets: []
+optimization:
+  enabled: false
+  parameter_updates_forbidden: true
+  manual_selection_from_pilot_forbidden: true
+
+frozen_inputs:
+  topology: canonical MaleCNS runtime graph
+  annotations: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  source_checkout: runs/reference-source/Drosophila_brain_model
+  rate_ensemble: calibration/parameter_sets/central-timestep-convergent-ensemble-v1.yaml
+  event_model: calibration/models/malecns-lif-source-aligned-v1.yaml
+  protocol: calibration/evidence/antennal-abn1-model-class-reference-v2.yaml
+
+stages:
+  lock:
+    output_inspection: false
+    checks: [source_hashes, group_identity, structural_relations, candidate_accounting]
+  pilot:
+    output_inspection: allowed_but_non_decisional
+    resumable: true
+    purpose: measure_real_cost_and_validate_artifacts
+  full:
+    output_inspection: evaluation_only_for_model_class_choice
+    start_gate: explicit_review_of_pilot_cost_and_known_confounders
+    resumable: true
+
+artifact_policy:
+  heavy_outputs: runs/calibration/neural-model-class-abn1-v2/
+  git_outputs: compact_summary_and_protocol_only
+  one_row_per_completed_unit: true
+  completed_unit_key: [model, parameter_member, bridge_scale, condition, frequency_hz, trial_index]
+
+stop_conditions:
+  - non_finite_state
+  - topology_or_source_hash_drift
+  - event_accounting_failure
+  - unregistered_candidate_or_bridge
+  - observed_cost_exceeds_recorded_budget_without_review
+
+next_action: >-
+  The pilot is complete and all tested series have JO-CE above JO-F. Review
+  whether a roughly 16-hour unbatched full run can add enough information; do
+  not launch it before a resumability/batching implementation or an explicit
+  decision that population-scoped capability is worth that cost.

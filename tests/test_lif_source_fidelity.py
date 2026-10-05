@@ -12,6 +12,7 @@ from the_fly_matrix.lif_source_fidelity import (
     audit_pinned_source,
     run_numpy_source_aligned,
     run_torch_source_aligned,
+    scaled_torch_weights,
     validate_small_graph,
 )
 
@@ -46,6 +47,13 @@ class LifSourceFidelityTests(unittest.TestCase):
         self.assertTrue(result["accepted"])
         self.assertTrue(result["recurrent_spike_observed"])
         self.assertTrue(result["reset_g_observed"])
+
+    def test_weight_scaling_does_not_mutate_shared_numpy_buffer(self) -> None:
+        values = np.asarray([1.0, 2.0], dtype=np.float32)
+        before = values.copy()
+        scaled = scaled_torch_weights(values, 0.275, "cpu")
+        np.testing.assert_array_equal(values, before)
+        np.testing.assert_allclose(scaled.numpy(), before * 0.275)
 
 
 if __name__ == "__main__":

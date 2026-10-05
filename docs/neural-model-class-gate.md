@@ -120,17 +120,22 @@ The source workbook also contains 146 named JON rows while the article declares
 147 activated JONs. The audit preserves this one-cell discrepancy; it does not
 invent the missing identity. The compact tracked result is
 `calibration/runner/antennal-grooming-circuit-transferability-result-v0.yaml`.
-The narrow model-class reference is now locked separately in
-`calibration/evidence/antennal-abn1-model-class-reference-v1.yaml`. Figure 5g
+The narrow anatomical lock remains in v1. Its common `spikes/s` metric was not
+defined for a continuous-rate candidate, so no candidate was executed under it.
+The corrected representation-neutral protocol is
+`calibration/evidence/antennal-abn1-model-class-reference-v2.yaml`. Figure 5g
 measures aBN1 directly, so aBN2, aDNs, motor output, body physics and grooming are
 explicitly outside that protocol. This is a scientifically valid exclusion, not
 an invented aBN2 identity: the unresolved `CB3129` mapping still blocks a whole
 grooming-circuit claim. The lock records 20--220 Hz in 20 Hz increments, 1-second
 trials, 30 trials per condition, the exact source commit, the two MaleCNS `SAD093`
 aBN1 cells and the separate JO-CE/JO-F structural counts. The qualitative
-direction JO-CE > JO-F is fixed; a numerical tolerance is intentionally not
-invented from prose and must be sourced or justified before candidate outputs are
-inspected.
+direction JO-CE > JO-F is fixed. Event spikes/s and rate activity are never
+compared numerically; only JO-CE versus JO-F contrasts within a representation
+are common. The same seeded master schedules feed event spikes and 5 ms rate-bin
+counts, with three preregistered rate bridge scales. The primary output archive
+is available only as a 4.2 GB ZIP, so it was not downloaded to invent a numerical
+MaleCNS amplitude threshold.
 
 `lock_abn1_reference.bat` reconstructs this pre-output lock from the pinned data
 and writes `calibration/runner/antennal-abn1-reference-lock-v1.yaml`. It verifies
@@ -141,6 +146,24 @@ candidate and cannot be used as a fit.
 Using this circuit to select a model exposes antennal grooming for that lineage.
 It therefore cannot later support a held-out emergence claim; looming, optomotor
 and unrelated lateralized responses remain available for final evaluation.
+
+`run_abn1_gate_pilot.bat` executes the bounded v2 rehearsal. The accepted pilot
+contains 70 rows on the complete canonical graph: sham plus 20/120/220 Hz, one
+seed, the event comparator, and three retained rate members under three input
+bridges. Event aBN1 responses were 28, 167.5 and 230 spikes/s/neuron for JO-CE and
+zero for JO-F. Every one of the nine rate member/bridge series also had a positive
+JO-CE-minus-JO-F contrast at all three frequencies. These are descriptive pilot
+results, not the locked 30-trial decision and not cross-model amplitude evidence.
+
+The pilot also caught two implementation hazards before a long run: a benchmark
+load weight (`0.0001 mV`) was initially wired where the source model's unitary
+weight (`0.275 mV`) belonged, and a CPU Torch tensor could scale its shared NumPy
+CSR buffer in place. Both now have regression coverage; the source-fidelity
+throughput benchmark was rerun after the buffer fix. The current unbatched full
+extrapolation is about 8.5 GPU-hours for event LIF plus 7.8 GPU-hours for the rate
+ensemble (64,860 units total). Full execution is therefore gated on a verified
+batched/resumable executor and an information-value review: the pilot suggests
+aBN1 may confirm capability for both classes without distinguishing them.
 
 ## Geometry and delay data decision
 
@@ -168,10 +191,10 @@ question cheaply.
 
 The scientific model-class gate remains open. The next bounded work is:
 
-1. execute the already locked aBN1-only JO-CE versus JO-F neural-response
-   reference with identical conditions for both candidates;
-2. decide whether the current generic event kernel needs optimization before the
-   scientific comparison, keeping kernel performance separate from model class;
+1. review whether completing aBN1 is worth its measured cost given that all ten
+   pilot series share the expected direction;
+2. either implement a verified batched/resumable full executor or preregister a
+   second independent circuit whose observation depends on temporal structure;
 3. issue a recorded population-scoped `go`, `revise`, typed/hybrid or `stop`
    decision; only then resume basal and
    interface calibrations whose native units depend on the central model.

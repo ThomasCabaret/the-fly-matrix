@@ -205,7 +205,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(delay_risk["status"], "open_high_impact")
         self.assertEqual(
             gate["status"],
-            "active_brian2_conformance_and_temporal_probes_passed_abn1_execution_open",
+            "active_abn1_pilot_complete_non_discriminating_full_cost_gate_open",
         )
         self.assertEqual(gate["optimization_exposure"], "diagnostic_only")
         self.assertEqual(gate["behavior_targets"], [])
@@ -213,7 +213,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertNotIn("scientific_role", model)
         self.assertEqual(
             self.state["readiness"]["central_model_class"],
-            "blocked_brian2_conformance_and_temporal_information_loss_probes_passed_abn1_execution_open",
+            "blocked_brian2_conformance_and_temporal_information_loss_probes_passed_abn1_pilot_positive_for_both_classes_full_cost_and_information_gate_open",
         )
         self.assertFalse(gate["acceptance_policy"].get("scientific_gate_closed", False))
 

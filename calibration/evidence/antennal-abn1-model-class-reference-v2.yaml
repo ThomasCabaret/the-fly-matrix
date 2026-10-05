@@ -1,0 +1,131 @@
+schema_version: 1
+id: evidence.antennal_abn1_model_class_reference.v2
+title: Representation-neutral JO-CE versus JO-F response reference on aBN1
+status: protocol_locked_pilot_complete_full_pending_review
+claim_label: NEURAL MODEL CLASS REFERENCE / BEHAVIOR EXPOSED FOR THIS LINEAGE / NO FITTING
+primary_class: evidence_transfer
+optimization_exposure: evaluation_only_for_model_class_choice
+
+supersedes: evidence.antennal_abn1_model_class_reference.v1
+supersession_reason: >-
+  V1 requested spikes per second from both candidates even though the rate
+  candidate has no spikes. V2 keeps the locked circuit and source protocol but
+  compares only within-candidate response contrasts in each model's native unit.
+  No candidate output had been produced when this correction was locked.
+
+purpose: >-
+  Test whether each temporal model class can reproduce the independently
+  published qualitative aBN1 ordering under JO-CE versus JO-F stimulation.
+  This is a population-scoped capability test, not a numerical amplitude
+  transfer, parameter fit, grooming score, or global model-class verdict.
+
+scope:
+  source_groups:
+    JO_CE: {malecns_type_prefixes: [JO-C, JO-E], expected_malecns_count: 335}
+    JO_F: {malecns_type_prefixes: [JO-F], expected_malecns_count: 78}
+  target_group:
+    name: aBN1
+    systematic_type: SAD093
+    expected_malecns_count: 2
+    body_ids: [11718, 521358]
+  explicitly_excluded: [aBN2, aDN1, aDN2, motor_output, body_physics, visible_antennal_grooming]
+
+source_protocol_lock:
+  repository: https://github.com/philshiu/Drosophila_brain_model
+  commit: 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960
+  notebook: figures.ipynb
+  figure: 5g
+  frequencies_hz: [20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220]
+  trial_duration_ms: 1000
+  trials_per_condition: 30
+  source_claim: JO-CE robustly activates aBN1 whereas JO-F does not
+  published_output_archive:
+    doi: https://doi.org/10.17617/3.CZODIW
+    version: 3.0
+    file: results.zip
+    file_id: 223847
+    size_bytes: 4499610373
+    md5: f6f2e314821fa6a4196214e3b2b14bc4
+    access_note: >-
+      Edmond exposes all spike outputs only as one 4.2 GB archive. It was not
+      downloaded merely to invent an amplitude-transfer threshold.
+
+malecns_structural_lock:
+  JO_CE_to_aBN1: {edges: 150, synaptic_contacts: 899}
+  JO_F_to_aBN1: {edges: 40, synaptic_contacts: 131}
+  neurotransmitter_annotation: acetylcholine_for_both_sources_and_target
+
+stimulus_contract:
+  master_timestep_ms: 0.1
+  generator: seeded_independent_poisson_per_source
+  event_candidate: >-
+    A source event induces at most one source spike in a master timestep, with
+    source reset and zero refractory, matching the large published PoissonInput
+    impulse at the declared temporal resolution.
+  rate_candidate: >-
+    The identical master schedules are counted in each 5 ms rate bin and divided
+    by (220 Hz * 5 ms). No clipping is applied.
+  rate_bridge_scale_sensitivity: [0.25, 1.0, 4.0]
+  bridge_status: nuisance_sensitivity_not_physiology
+  sham_frequency_hz: 0
+  seeds:
+    rule: 51000 + trial_index
+    paired_across_conditions_and_candidates: true
+
+native_metrics_locked_before_candidate_execution:
+  event_candidate:
+    response_unit: aBN1_spikes_per_second
+    response_window_ms: [0, 1000]
+  rate_candidate:
+    response_unit: mean_aBN1_model_activity_minus_paired_sham
+    response_window_ms: [500, 1000]
+  common_within_candidate_metrics:
+    - response_by_condition_frequency_trial
+    - median_response_curve_by_condition
+    - JO_CE_minus_JO_F_area_under_native_response_curve
+    - fraction_of_frequencies_with_paired_JO_CE_above_JO_F
+  forbidden_metric: cross_model_native_amplitude_difference
+
+decision_boundary:
+  engineering_directional_convention:
+    minimum_positive_frequency_fraction: 0.8
+    auc_contrast_must_be_positive: true
+    full_protocol_only: true
+  interpretation: >-
+    Passing supports only aBN1-population capability. Failure triggers revise or
+    stop; it must not be fitted away with this reference. A difference between
+    candidates cannot by itself identify temporal model class because their
+    inherited parameterizations and unknown-transmitter policies are unmatched.
+  no_global_promotion_from_single_circuit: true
+
+candidate_accounting:
+  rate: all 31 members of parameters.central_timestep_convergent_ensemble.v1
+  event: model.malecns_lif_source_aligned.v1 as a comparison-only point estimate
+  event_weight_caveat: published unitary weight is behavior-exposed
+  unknown_transmitter_caveat: structural probe signs are engineering values, not accepted physiology
+
+pilot_policy:
+  purpose: runtime, memory, schedule and artifact rehearsal only
+  frequencies_hz: [20, 120, 220]
+  trial_indices: [0]
+  rate_candidate_indices: [0, 15, 31]
+  may_select_or_reject_model: false
+
+behavior_exposure:
+  behavior_targeted: false
+  neural_reference_exposed: true
+  exposed_behavior_ids: [antennal_grooming]
+  consequence: antennal_grooming_is_not_held_out_for_any_lineage_selected_or_revised_with_this_reference
+
+forbidden_claims:
+  - Native event and rate amplitudes are directly comparable.
+  - The published FlyWire response amplitude transfers numerically to MaleCNS.
+  - A pilot run selects or rejects a model.
+  - Directional agreement validates one homogeneous class for all MaleCNS.
+  - Antennal grooming has been reproduced.
+
+next_action: >-
+  Review the non-decisional pilot and measured cost. All ten event/rate sentinel
+  series show JO-CE above JO-F at 20, 120 and 220 Hz, so this reference may test
+  capability without discriminating model class. Full execution requires a
+  batched/resumable runner and an explicit information-value decision.
