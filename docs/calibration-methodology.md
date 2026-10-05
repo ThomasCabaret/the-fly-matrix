@@ -494,6 +494,25 @@ model or one fixed delay is sufficient for every MaleCNS cell. A successful
 graded, non-spiking model in early vision is likewise scope-specific because many
 neurons in that circuit are biologically non-spiking.
 
+Source traceability is not the same as implementation fidelity. The retained LIF
+v0 copied the published constants but omitted the source reset of synaptic state,
+the refractory freeze of membrane/synaptic state and the declared linear
+integrator. It remains a historical benchmark, while v1 pins source hashes and
+implements those semantics. Even v1 is called `source-aligned` until direct
+Brian2 boundary tests establish scheduler conformance. A campaign must therefore
+distinguish constants copied from a source, equations aligned with a source, and
+outputs reproduced against the source runtime.
+When the pinned source runtime differs from the project runtime, conformance runs
+use an isolated, version-locked environment and record its hash. Dependency drift
+must not be hidden by installing a convenient newer simulator into the main venv.
+
+Circuit references may be narrowed only along the observable actually measured.
+The locked JO-CE/JO-F reference observes aBN1 directly, so it may explicitly
+exclude unresolved aBN2 and all downstream motor/body components. That exclusion
+does not solve aBN2 and cannot authorize a whole grooming-circuit claim. Narrow
+scopes, exclusions and contaminated behavior lineages remain versioned alongside
+the metrics before any candidate output is inspected.
+
 Transmission delay is an independent model family. A uniform literature-derived
 delay is distinct from a morphology-derived edge delay. The latter requires
 versioned paths or lengths, a conduction-velocity rule, units, uncertainty and a

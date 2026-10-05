@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.neural_model_class_gate.v0
 title: Select the minimum defensible temporal MaleCNS model class
-status: active_engineering_stages_passed_circuit_mapping_partial_scientific_comparison_open
+status: active_source_aligned_engineering_stages_passed_abn1_protocol_locked_scientific_comparison_open
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: model_selection_gate_no_behavior_claim
@@ -66,6 +66,8 @@ provenance:
     - calibration/models/malecns-typed-signed-rate-v0.yaml
     - https://doi.org/10.1038/s41586-024-07763-9
     - https://github.com/philshiu/Drosophila_brain_model
+    - calibration/models/malecns-lif-source-aligned-v1.yaml
+    - calibration/evidence/antennal-abn1-model-class-reference-v1.yaml
   assumptions:
     - A point-neuron LIF model is a comparison baseline, not accepted final physiology.
     - A local circuit success cannot promote one homogeneous model class over all MaleCNS.
@@ -75,7 +77,7 @@ provenance:
 validation: partial_engineering_pass
 blocked_reason: null
 next_action: >-
-  Resolve or explicitly exclude the missing CB3129-equivalent MaleCNS aBN2 cell,
-  then lock qualitative JO-CE versus JO-F neural-response metrics and the shared
-  model-independent probes before issuing an explicit go, revise, or stop
-  decision. Engineering stages pass and the circuit mapping is only partial.
+  Run a direct Brian2 scheduler-boundary conformance check for the source-aligned
+  v1 comparator, preregister shared information-loss/pathology probes, and execute
+  the locked JO-CE versus JO-F aBN1 reference. CB3129/aBN2 is explicitly outside
+  this narrow reference and remains unresolved for whole grooming-circuit claims.

@@ -151,3 +151,20 @@ accepted simplification must state its scope; for example, a graded visual model
 does not automatically authorize the same dynamics for motor or central neurons.
 Embodied attribution and actuator semantics remain a separate downstream gate
 under ADR 0015.
+
+### 2026-10-05 implementation-fidelity amendment
+
+The first LIF implementation (`model.malecns_lif_fixed_delay.v0`) remains a
+historical throughput comparator only. Review of the pinned upstream source found
+that v0 omitted the source reset `g = 0`, did not freeze `v` and `g` during the
+refractory interval, and used a split Euler membrane update instead of the
+declared linear method. No prior scientific acceptance depended on it, so no
+parameter set is invalidated.
+
+`model.malecns_lif_source_aligned.v1` corrects those semantics and pins the exact
+source revision and file hashes. Its independent NumPy/Torch and full-graph
+engineering stages pass, but exact Brian2 scheduler conformance remains a gate.
+The aBN1 JO-CE versus JO-F reference is now scoped independently of aBN2: because
+the published observable is aBN1 itself, unresolved CB3129 does not block this
+narrow comparison. It still blocks claims about the complete antennal-grooming
+circuit. This scope reduction is explicit and cannot be generalized silently.

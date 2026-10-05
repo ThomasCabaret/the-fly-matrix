@@ -4,6 +4,11 @@ title: Source-traceable fixed-delay event LIF reference for canonical MaleCNS
 status: engineering_reference_unfitted
 claim_label: EVENT MODEL GATE / UNFITTED / NOT BIOLOGICAL BEHAVIOR
 scientific_role: bounded_model_class_comparator
+superseded_for_future_gate_runs_by: model.malecns_lif_source_aligned.v1
+known_fidelity_gap: >-
+  This retained v0 throughput comparator does not reproduce the pinned source's
+  reset of g, refractory freeze of v and g, or linear integration method. Its
+  historical benchmark is valid only for the implementation it actually ran.
 
 scope:
   canonical_neurons: 166700

@@ -1,6 +1,6 @@
 schema_version: 1
 id: calibration.model_risks.v0
-updated: 2026-10-04
+updated: 2026-10-05
 status: active
 
 risks:
@@ -22,7 +22,7 @@ risks:
       - The representation executes the complete canonical graph efficiently on the available GPU.
       - It is useful as a deterministic engineering comparator and exposes numerical pathologies.
       - Non-spiking graded models have succeeded in the biologically non-spiking early fly visual system, but that evidence is scope-specific.
-      - The bounded fixed-delay LIF reference now passes an independent deterministic recurrent small-graph comparison and exhaustive full-graph event accounting.
+      - The corrected fixed-delay LIF v1 pins the exact upstream source, resets g, freezes v/g while refractory, uses the exact coupled linear step, and passes independent deterministic recurrent small-graph comparison plus exhaustive full-graph event accounting.
       - The complete outgoing event graph and LIF state fit comfortably in available CPU and GPU memory.
       - An independent antennal circuit candidate maps exactly to MaleCNS aBN1/aDN1/aDN2 and preserves nonzero JON-to-aBN and aBN-to-aDN structural paths.
     evidence_against_or_unresolved:
@@ -31,8 +31,9 @@ risks:
       - Shiu et al. obtained experimentally tested whole-brain circuit predictions with an event-based leaky integrate-and-fire model.
       - The current normalized input destroys absolute spikes-per-second units and couples every modality through instantaneous whole-vector normalization.
       - The biological importance of path-dependent conduction timing has not been tested and cannot be assumed negligible.
-      - The first generic 0.1 ms event implementation reaches only about 0.03 to 0.05 times real time and has not yet been compared on an independent circuit reference.
-      - The circuit mapping is not yet complete: FlyWire aBN2 type CB3129 has no resolved MaleCNS counterpart, and the two retained aBN2 types collapse to one four-cell candidate set.
+      - The corrected generic 0.1 ms event implementation reaches only about 0.04 to 0.06 times real time and has not yet been compared on the independent aBN1 reference.
+      - Exact Brian2 scheduler-boundary conformance remains untested even though the pinned reset, refractory and equation semantics now match.
+      - The whole grooming-circuit mapping is not complete: FlyWire aBN2 type CB3129 has no resolved MaleCNS counterpart. This does not block the narrower aBN1-only JO-CE versus JO-F protocol.
     consequence_if_true: >-
       The rate runtime may remain a scientifically useful low-cost model for the
       scopes that pass the comparison gate.
@@ -42,9 +43,9 @@ risks:
       calibration on the chosen native units.
     current_mitigation: >-
       Pause the basal unit bridge and propagation of the 31 rate candidates. The
-      small-graph, edge-accounting and CPU/GPU feasibility stages have passed;
-      resolve the partial aBN2 transfer, then lock and run the shared probes and
-      circuit reference before further dependent fitting.
+      source lock, corrected small-graph, edge-accounting and CPU/GPU feasibility
+      stages have passed. Run Brian2 conformance, shared technical probes and the
+      locked aBN1-only circuit reference before further dependent fitting.
     cheapest_discriminating_experiment: >-
       Implement a source-traceable LIF event baseline, validate it against a
       deterministic small-graph reference, benchmark full MaleCNS, then compare
@@ -139,7 +140,7 @@ risks:
   - id: risk.central_event_model_fidelity.v0
     title: Homogeneous point-neuron LIF may misrepresent graded or compartment-sensitive populations
     status: open_critical_scope_gate
-    affected_model_id: model.malecns_lif_fixed_delay.v0
+    affected_model_id: model.malecns_lif_source_aligned.v1
     affected_parameter_family_ids:
       - parameter.central.synaptic_efficacy.v0
       - parameter.central.neuron_dynamics.v0
@@ -148,11 +149,12 @@ risks:
       canonical MaleCNS population needed by the first embodied claim.
     evidence_supporting:
       - A source-traceable whole-brain LIF precedent produced experimentally tested circuit predictions.
-      - The local implementation passes an independent deterministic recurrent-graph reference and full-graph event accounting.
+      - The v1 implementation pins the reviewed source revision and hashes, reproduces its reset/refractory/equation semantics, and passes an independent deterministic recurrent-graph reference plus full-graph event accounting.
     evidence_against_or_unresolved:
       - Some fly circuits use graded or non-spiking dynamics, and one local circuit cannot validate a homogeneous whole-CNS class.
       - Morphology and synapse location are absent from the point-neuron representation.
       - No shared rate-versus-event circuit comparison has yet produced a scoped go, revise or stop decision.
+      - Exact agreement with Brian2 event scheduling at threshold, reset, refractory and delivery boundaries is not yet established.
     consequence_if_true: The LIF lineage may proceed for the populations and claims that pass the gate.
     consequence_if_false: Use a population-typed, hybrid or compartment-aware model and revalidate model-dependent descendants.
     current_mitigation: >-

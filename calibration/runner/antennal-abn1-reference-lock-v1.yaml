@@ -1,0 +1,43 @@
+schema_version: 1
+generated_at: '2026-10-05T11:58:13.311988+00:00'
+status: protocol_locked_execution_pending
+claim_label: NEURAL MODEL CLASS REFERENCE / BEHAVIOR EXPOSED FOR THIS LINEAGE / NO
+  FITTING
+semantic_result_sha256: 90ffd422220bc61c06e5939dd012bf49a3e8e9fe47b37212541488c0675df3f1
+protocol_id: evidence.antennal_abn1_model_class_reference.v1
+source_commit: 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960
+mapping:
+  canonical_neurons: 166700
+  group_counts:
+    JO_CE: 335
+    JO_F: 78
+    aBN1: 2
+  aBN1_body_ids:
+  - 11718
+  - 521358
+relations:
+  JO_CE_to_aBN1:
+    edges: 150
+    synaptic_contacts: 899
+  JO_F_to_aBN1:
+    edges: 40
+    synaptic_contacts: 131
+metrics:
+- aBN1_spikes_per_second_by_condition_frequency_trial
+- median_aBN1_rate_curve_by_condition
+- area_under_rate_curve_by_condition
+- paired_direction_JO_CE_minus_JO_F
+- fraction_of_frequencies_with_JO_CE_above_JO_F
+direction: JO_CE_above_JO_F
+excluded:
+- aBN2
+- aDN1
+- aDN2
+- motor output
+- body physics
+- visible antennal grooming
+scientific_model_class_gate_closed: false
+next_action: Define the quantitative tolerance without inspecting candidate outputs,
+  run Brian2 boundary conformance, then execute rate and source-aligned event candidates
+  with identical conditions.
+id: runner_result.antennal_abn1_reference_lock.v1

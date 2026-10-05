@@ -1,0 +1,65 @@
+schema_version: 1
+id: campaign.neural_model_class_source_fidelity.v1
+title: Pinned-source audit and source-aligned LIF feasibility gate
+status: runnable_diagnostic
+target_id: target.neural_model_class_gate.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: MODEL CLASS GATE / SOURCE FIDELITY AND ENGINEERING ONLY / NO BEHAVIOR
+
+frozen_inputs:
+  model: calibration/models/malecns-lif-source-aligned-v1.yaml
+  graph_profile: benchmarks/profiles/malecns-lif-gate-v1.yaml
+  sign_prior: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+  source_checkout: runs/reference-source/Drosophila_brain_model
+  source_commit: 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960
+  source_environment: Python_3.10_Brian2_2.5.1_in_isolated_reproduction_environment
+
+stages:
+  - id: pinned_source_audit
+    purpose: prove that equations, constants, reset and protocol facts are read from the exact reviewed source revision
+    acceptance:
+      exact_commit_and_file_hashes: true
+      required_semantics_present: true
+  - id: deterministic_small_graph
+    purpose: compare independent NumPy and Torch implementations with reset-g and refractory-freeze semantics
+    acceptance:
+      state_atol: 0.000001
+      identical_spike_raster: true
+      exact_event_count: true
+      reset_g_observed: true
+      refractory_freeze_observed: true
+  - id: canonical_edge_sweep
+    purpose: account for the complete canonical MaleCNS graph
+    acceptance:
+      expected_nodes: 166700
+      expected_edges: 25582938
+  - id: full_graph_forced_load
+    purpose: measure source-aligned state-update and event-delivery cost under controlled synthetic loads
+    acceptance:
+      finite_state_fraction: 1.0
+      no_silent_event_loss: true
+    non_acceptance_note: speed and source alignment do not close the scientific model-class gate
+
+budgets:
+  morphology_download_bytes: 0
+  full_graph_duration_ms_per_load: 50.0
+  forced_mean_rates_hz: [1.0, 10.0, 50.0]
+  maximum_measured_steps_per_load: 500
+  cpu_measured_steps_per_load: 50
+
+stop_conditions:
+  - source_revision_or_file_hash_drift
+  - missing_reset_or_refractory_semantics
+  - non_deterministic_small_graph_semantics
+  - incomplete_canonical_edge_accounting
+  - non_finite_state
+  - device_out_of_memory
+
+outputs:
+  heavy_run_root: runs/calibration/neural-model-class-source-fidelity-v1
+  compact_result: calibration/runner/neural-model-class-source-fidelity-v1.yaml
+  promotion_policy: forbidden_until_brian2_conformance_and_locked_circuit_comparison_are_complete
+
+behavior_targets: []
+next_action: Execute this bounded correction, then run a direct Brian2 conformance check and the locked aBN1 JO-CE versus JO-F comparison.

@@ -100,19 +100,31 @@ classes sur des probes préenregistrés avant toute calibration dépendante des
 unités centrales. La politique et le précédent scientifique sont consignés dans
 [`ADR 0014`](decisions/0014-neural-dynamics-fidelity-gate.md).
 
-Le protocole exécutable et son résultat compact sont désormais disponibles dans
+Le protocole v0 et son résultat compact sont conservés dans
 [`campaign.neural_model_class_lif_feasibility.v0`](calibration/campaigns/neural-model-class-lif-feasibility-v0.yaml)
 et
 [`runner_result.neural_model_class_lif_feasibility.v0`](calibration/runner/neural-model-class-lif-feasibility-v0.yaml).
-La double référence NumPy/Torch concorde exactement sur les états et les spikes
+Un audit de fidélité a toutefois montré que v0 copiait les constantes mais pas le
+reset de `g`, le gel réfractaire de `v/g` ni l'intégrateur linéaire du code source
+épinglé. Il reste un benchmark historique de ses propres sémantiques.
+
+Le remplacement
+[`campaign.neural_model_class_source_fidelity.v1`](calibration/campaigns/neural-model-class-source-fidelity-v1.yaml)
+et son
+[`résultat compact`](calibration/runner/neural-model-class-source-fidelity-v1.yaml)
+épinglent le commit source `91bdd1e7dcf1`, ses hashes, le reset, le gel
+réfractaire et la mise à jour linéaire couplée. La double référence NumPy/Torch
+concorde exactement sur les états et les spikes
 du graphe de test. Le balayage sortant visite 166 700 lignes, 25 582 938 arêtes et
 124 177 617 contacts ; son CSR additionnel occupe 205 330 308 octets. Sur le GPU
 RTX 4060 Laptop, les charges forcées de 1, 10 et 50 spikes/s/neuron réservent
-environ 0,34 Go et mesurent 0,039 à 0,044 fois le temps réel. Le CPU est comparable
-à faible charge et descend à 0,030 fois le temps réel à 50 spikes/s/neuron : le GPU
+environ 0,34 Go et mesurent environ 0,039 à 0,043 fois le temps réel. Le CPU mesure
+environ 0,038 à 0,058 selon charge et répétition : le GPU
 n'est donc pas encore exploité efficacement par ce noyau générique. Aucun spike
 endogène n'apparaît dans cette charge volontairement faible ; la récurrence est
 testée sur le petit graphe, pas présentée comme une activité MaleCNS calibrée.
+La conformité exacte aux frontières de scheduling Brian2 reste à tester : v1 est
+`source-aligned`, pas encore déclarée reproduction Brian2 bit à bit.
 Le détail et la décision de ne pas télécharger prématurément la morphologie sont
 dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
 
@@ -147,6 +159,15 @@ croisés et le graphe MaleCNS complet. Il conclut `partial_mapping_abn2_unresolv
 pas « référence acceptée ». Son utilisation future pour sélectionner un modèle
 contaminerait le grooming antennaire ; les évaluations finales looming/optomotrice
 et autres réponses latéralisées restent distinctes.
+
+Le protocole étroit
+[`evidence.antennal_abn1_model_class_reference.v1`](calibration/evidence/antennal-abn1-model-class-reference-v1.yaml)
+est désormais verrouillé indépendamment : il mesure directement aBN1 sous JO-CE
+et JO-F et exclut explicitement aBN2, aDN, moteurs, corps et grooming. Le manque
+`CB3129` ne bloque donc pas ce probe aBN1, mais continue de bloquer tout claim sur
+le circuit de grooming complet. Fréquences, durée, répétitions, métriques et sens
+qualitatif JO-CE > JO-F sont figés avant exécution ; aucun seuil numérique n'a été
+inventé depuis une formulation qualitative.
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
@@ -537,7 +558,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF passe correction, comptabilité et faisabilité pleine échelle ; la première référence circuitaire est structurellement présente mais son mapping aBN2 reste partiel ; le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF v1 source-alignée passe audit, correction, comptabilité et faisabilité pleine échelle ; le protocole aBN1 JO-CE/JO-F est verrouillé, tandis que le mapping aBN2 du circuit complet reste partiel ; le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 
@@ -605,7 +626,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **129 tests** actuels passent, y compris les
+conservées et classifiées. Les **134 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -633,9 +654,11 @@ sur l'apparence de sa sortie.
 Le premier audit local est terminé sans choisir de valeur : les partitions de
 preuve basales sont exhaustives et les limites des publications sont enregistrées.
 Le transfert numérique est suspendu parce que le choix entre activité rate et
-spikes change la nature même du pont. Le jalon d'ingénierie LIF est franchi ; le
-prochain lot doit résoudre ou exclure proprement le type aBN2 `CB3129`, puis
-verrouiller les probes rate-versus-événements et la référence neurale JO-CE/JO-F ;
+spikes change la nature même du pont. Le jalon d'ingénierie LIF source-aligné est
+franchi et le protocole neurale aBN1 JO-CE/JO-F est verrouillé en excluant
+explicitement aBN2. Le prochain lot doit vérifier les frontières de scheduling
+contre Brian2, verrouiller les probes rate-versus-événements, puis exécuter la
+comparaison aBN1 ;
 il ne doit pas propager les 31 membres rate ni transformer les sources résiduelles
 inconnues en pseudo-physiologie.
 
@@ -722,8 +745,10 @@ fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans co
 central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties brutes
 constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
 compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le gate de classe reste ouvert
-neural_model_gate.bat # correction + comptabilité + benchmark CPU/GPU du LIF événementiel, aucune calibration
+neural_model_gate.bat # benchmark v0 historique, supersédé pour le gate scientifique
+neural_model_source_fidelity.bat # audit source + sémantiques LIF v1 + benchmark CPU/GPU, aucune calibration
 audit_circuit_reference.bat # transfert FlyWire→MaleCNS + chemins structuraux ; résultat partiel, zéro fitting
+lock_abn1_reference.bat # reconstruit/verrouille le probe aBN1 JO-CE/JO-F avant toute sortie candidate
 actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et saturation
 actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tethered, zéro fitting/comportement
 ```

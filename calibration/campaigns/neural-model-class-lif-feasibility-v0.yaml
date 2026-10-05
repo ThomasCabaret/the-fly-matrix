@@ -6,6 +6,8 @@ target_id: target.neural_model_class_gate.v0
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: MODEL CLASS GATE / ENGINEERING AND CORRECTNESS ONLY / NO BEHAVIOR
+superseded_for_future_gate_runs_by: campaign.neural_model_class_source_fidelity.v1
+historical_result_only: true
 
 frozen_inputs:
   model: calibration/models/malecns-lif-fixed-delay-v0.yaml

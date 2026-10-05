@@ -1,0 +1,30 @@
+schema_version: 1
+id: benchmark.malecns.event_lif_gate.v1
+claim_label: MODEL CLASS GATE / SOURCE-ALIGNED / UNCALIBRATED / NO BEHAVIOR
+model_path: calibration/models/malecns-lif-source-aligned-v1.yaml
+campaign_path: calibration/campaigns/neural-model-class-source-fidelity-v1.yaml
+
+execution:
+  backend: auto
+  dtype: float32
+  dt_ms: 0.1
+  measured_steps: 500
+  cpu_measured_steps: 50
+  warmup_steps: 20
+  forced_mean_rates_hz: [1.0, 10.0, 50.0]
+  edge_sweep_chunk_sources: 4096
+  seed: 261005
+  recurrent_spikes_enabled: true
+  forced_spikes_are_neural_load_not_stimulus: true
+  forced_load_unitary_weight_mV: 0.0001
+  forced_load_weight_origin: engineering_only_chosen_to_avoid_activity_explosion
+
+numerical_acceptance:
+  state_atol: 0.000001
+  finite_state_fraction: 1.0
+  expected_nodes: 166700
+  expected_edges: 25582938
+
+output:
+  run_root: runs/calibration/neural-model-class-source-fidelity-v1
+  compact_result: calibration/runner/neural-model-class-source-fidelity-v1.yaml

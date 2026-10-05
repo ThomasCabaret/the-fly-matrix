@@ -1,0 +1,84 @@
+schema_version: 1
+id: evidence.antennal_abn1_model_class_reference.v1
+title: Locked JO-CE versus JO-F response reference on aBN1
+status: protocol_locked_execution_pending
+claim_label: NEURAL MODEL CLASS REFERENCE / BEHAVIOR EXPOSED FOR THIS LINEAGE / NO FITTING
+primary_class: evidence_transfer
+optimization_exposure: evaluation_only_for_model_class_choice
+
+purpose: >-
+  Compare candidate temporal model classes on the independently published
+  qualitative aBN1 response contrast. This is a neural response reference, not a
+  grooming score and not a source of fitted parameters.
+
+scope:
+  source_groups:
+    JO_CE:
+      source_reference_count: 70
+      malecns_type_prefixes: [JO-C, JO-E]
+      expected_malecns_count: 335
+    JO_F:
+      source_reference_count: 60
+      malecns_type_prefixes: [JO-F]
+      expected_malecns_count: 78
+  target_group:
+    name: aBN1
+    flywire_root_id: 720575940630907434
+    systematic_type: SAD093
+    expected_malecns_count: 2
+  explicitly_excluded:
+    - aBN2
+    - aDN1
+    - aDN2
+    - motor output
+    - body physics
+    - visible antennal grooming
+  exclusion_reason: >-
+    Figure 5g scores aBN1 directly. Therefore the unresolved CB3129-equivalent
+    aBN2 mapping does not block this deliberately narrow reference. It remains a
+    blocker for any whole grooming-circuit claim.
+
+source_protocol_lock:
+  repository: https://github.com/philshiu/Drosophila_brain_model
+  commit: 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960
+  notebook: figures.ipynb
+  figure: 5g
+  frequencies_hz: [20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220]
+  trial_duration_ms: 1000
+  trials_per_condition: 30
+  source_claim: JO-CE robustly activates aBN1 whereas JO-F does not despite direct structural input from both classes
+
+malecns_structural_lock:
+  JO_CE_to_aBN1: {edges: 150, synaptic_contacts: 899}
+  JO_F_to_aBN1: {edges: 40, synaptic_contacts: 131}
+  aBN1_body_ids: [11718, 521358]
+  neurotransmitter_annotation: acetylcholine_for_both_sources_and_target
+
+metrics_locked_before_candidate_execution:
+  - aBN1_spikes_per_second_by_condition_frequency_trial
+  - median_aBN1_rate_curve_by_condition
+  - area_under_rate_curve_by_condition
+  - paired_direction_JO_CE_minus_JO_F
+  - fraction_of_frequencies_with_JO_CE_above_JO_F
+
+decision_boundary:
+  qualitative_required_direction: JO_CE_above_JO_F
+  numerical_threshold_status: intentionally_not_invented_from_prose
+  consequence: >-
+    Directional agreement is necessary but not sufficient. A quantitative pass
+    threshold requires extracting the published observations or a separately
+    justified tolerance before outputs are inspected.
+
+behavior_exposure:
+  behavior_targeted: false
+  neural_reference_exposed: true
+  exposed_behavior_ids: [antennal_grooming]
+  consequence: antennal_grooming_cannot_be_claimed_held_out_for_a_lineage_selected_with_this_reference
+
+forbidden_claims:
+  - The missing aBN2 mapping has been solved.
+  - Antennal grooming has been reproduced.
+  - Directional agreement alone validates a global homogeneous model class.
+  - The FlyWire response amplitude transfers numerically to MaleCNS.
+
+next_action: Define the quantitative tolerance without inspecting candidate outputs, run Brian2 boundary conformance, then execute rate and source-aligned event candidates with identical conditions.

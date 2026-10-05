@@ -144,14 +144,16 @@ Model-dependent basal and interface promotion pauses until
 LIF reference. Evidence inventories and reusable runner infrastructure remain
 valid while this gate is open.
 
-Run `neural_model_gate.bat` for the completed engineering portion of that gate.
-It compares independent NumPy/Torch event semantics on a recurrent small graph,
-accounts for every canonical outgoing edge, and measures bounded CPU/GPU loads at
-1, 10 and 50 forced spikes/s/neuron. The compact result is
-`runner/neural-model-class-lif-feasibility-v0.yaml`; heavy traces remain under
-`runs/calibration/`. Passing this command proves correctness and execution
-feasibility only. The gate remains open until shared model-independent probes and
-an independent circuit reference produce a versioned go, revise or stop decision.
+The initial `neural_model_gate.bat` result is retained as a v0 throughput record,
+but a pinned-source review found mismatched reset, refractory and integration
+semantics. Run `neural_model_source_fidelity.bat` for the current v1 engineering
+gate. It verifies the exact source commit and hashes, compares independent
+NumPy/Torch source-aligned semantics on a recurrent small graph, accounts for
+every canonical outgoing edge, and measures bounded CPU/GPU loads at 1, 10 and 50
+forced spikes/s/neuron. The compact result is
+`runner/neural-model-class-source-fidelity-v1.yaml`; heavy traces remain under
+`runs/calibration/`. Passing it proves source alignment and execution feasibility,
+not exact Brian2 scheduling, physiology or behavior.
 
 Run `audit_circuit_reference.bat` to audit the first independent circuit candidate
 without fitting it. The procedure pins the Shiu supplement and FlyWire annotation
@@ -159,9 +161,20 @@ commit, transfers systematic cell types to MaleCNS, and scans the complete edge
 table. aBN1/aDN1/aDN2 map exactly and the required structural paths are present;
 the result remains partial because one of three aBN2 FlyWire types (`CB3129`) has
 no resolved MaleCNS match and the other two collapse to a four-cell candidate set.
-No response threshold or model-class decision is emitted. If this reference is
-eventually used for model selection, antennal grooming is exposed for that lineage
-and cannot be reused as a held-out emergent behavior claim.
+The complete grooming mapping remains partial. The narrower aBN1-only model-class
+reference is nevertheless locked in
+`evidence/antennal-abn1-model-class-reference-v1.yaml`: aBN2/aDN/motor/body scopes
+are explicitly excluded because the source figure scores aBN1 directly. The
+20--220 Hz, 1-second, 30-trial protocol and JO-CE > JO-F direction are fixed before
+candidate execution. No unsupported numerical tolerance or model-class decision
+is emitted. Using it for model selection exposes antennal grooming for that
+lineage and prevents a later held-out emergence claim.
+
+Run `lock_abn1_reference.bat` to reconstruct that lock from the pinned raw
+annotations, complete MaleCNS edge table and source checkout. It must reproduce
+335 JO-C/E, 78 JO-F, two `SAD093` aBN1 cells, then 150 edges / 899 contacts and
+40 edges / 131 contacts respectively. The command does not simulate either
+candidate and therefore cannot inspect or select an output.
 
 `target.actuator_semantics_gate.v0` is complete as a bounded surrogate gate. Run
 `actuator_attribution_gate.bat` reproduces its behavior-naive passive, frozen

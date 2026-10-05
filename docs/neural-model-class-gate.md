@@ -8,15 +8,28 @@ calibration is scaled. It is deliberately smaller than a calibration campaign.
 It does not fit physiology, optimize a behavior, select a member of the earlier
 rate ensemble, or accept the LIF reference as the final biological model.
 
-The fixed-delay LIF candidate is defined in
-`calibration/models/malecns-lif-fixed-delay-v0.yaml`. Source-derived constants,
-the behavior-exposed published unitary weight, numerical choices and
-engineering-only load values are separated there. The executable protocol is
-`calibration/campaigns/neural-model-class-lif-feasibility-v0.yaml`.
+The retained first fixed-delay implementation is defined in
+`calibration/models/malecns-lif-fixed-delay-v0.yaml`. A pinned-source audit found
+that it copied the published constants but not three execution semantics: the
+published reset clears `g`, the refractory clause freezes both `v` and `g`, and
+the source requests Brian2's `linear` integrator. The v0 benchmark remains a valid
+measurement of the code that ran, but it is no longer the comparator for future
+scientific gate work.
 
-## First bounded result
+The corrected comparator is
+`calibration/models/malecns-lif-source-aligned-v1.yaml`, with executable protocol
+`calibration/campaigns/neural-model-class-source-fidelity-v1.yaml`. It pins source
+commit `91bdd1e7dcf193f3e7ca5a8933497fcef63b7960`, verifies source file hashes,
+implements the coupled linear state update, clears `g` on a generated spike and
+freezes the differential state while refractory. It deliberately calls itself
+**source-aligned**, not Brian2-conformant: exact scheduler-boundary agreement is
+the next independent check. The pinned source environment is Python 3.10 with
+Brian2 2.5.1; that check belongs in a dedicated reproduction environment rather
+than silently changing the project's Python 3.12 environment.
 
-The accepted engineering result is
+## Retained v0 result and corrected v1 result
+
+The historical v0 engineering result is
 `calibration/runner/neural-model-class-lif-feasibility-v0.yaml`. It establishes:
 
 - independent NumPy and Torch implementations agree exactly on a fixed four-node
@@ -43,14 +56,23 @@ uses forced spikes and deliberately tiny engineering-only event weights; the
 engine supports recurrent spikes, and that path is exercised by the small graph,
 but the full-graph load generated no endogenous spikes.
 
-Run the reproducible diagnostic with:
+The replacement result is
+`calibration/runner/neural-model-class-source-fidelity-v1.yaml`. It repeats the
+source lock, independent NumPy/Torch recurrent graph, exhaustive edge sweep and
+CPU/GPU forced-load benchmark under the corrected reset/refractory/integration
+semantics. On the same machine it remains in the same engineering regime: roughly
+0.04--0.06 times real time for the measured CPU loads and about 0.04 times real
+time on CUDA. Thus the correction changes semantic fidelity, not the conclusion
+that the generic kernel requires optimization for near-real-time use.
+
+Run the current reproducible diagnostic with:
 
 ```text
-neural_model_gate.bat
+neural_model_source_fidelity.bat
 ```
 
 The launcher reports progress, writes heavy provenance under
-`runs/calibration/neural-model-class-lif-feasibility-v0/`, refreshes the compact
+`runs/calibration/neural-model-class-source-fidelity-v1/`, refreshes the compact
 tracked result and pauses before closing. `-Quick` is available for a short
 integration check. `-Backend cpu`, `cuda`, `auto` or `both` may be passed through
 to the PowerShell launcher.
@@ -79,9 +101,23 @@ The source workbook also contains 146 named JON rows while the article declares
 147 activated JONs. The audit preserves this one-cell discrepancy; it does not
 invent the missing identity. The compact tracked result is
 `calibration/runner/antennal-grooming-circuit-transferability-result-v0.yaml`.
-Until the aBN2 mapping is resolved or explicitly excluded using independent
-morphology/annotation evidence, no response threshold is locked and the circuit
-cannot close the scientific gate.
+The narrow model-class reference is now locked separately in
+`calibration/evidence/antennal-abn1-model-class-reference-v1.yaml`. Figure 5g
+measures aBN1 directly, so aBN2, aDNs, motor output, body physics and grooming are
+explicitly outside that protocol. This is a scientifically valid exclusion, not
+an invented aBN2 identity: the unresolved `CB3129` mapping still blocks a whole
+grooming-circuit claim. The lock records 20--220 Hz in 20 Hz increments, 1-second
+trials, 30 trials per condition, the exact source commit, the two MaleCNS `SAD093`
+aBN1 cells and the separate JO-CE/JO-F structural counts. The qualitative
+direction JO-CE > JO-F is fixed; a numerical tolerance is intentionally not
+invented from prose and must be sourced or justified before candidate outputs are
+inspected.
+
+`lock_abn1_reference.bat` reconstructs this pre-output lock from the pinned data
+and writes `calibration/runner/antennal-abn1-reference-lock-v1.yaml`. It verifies
+335 JO-C/E sources, 78 JO-F sources, two `SAD093` aBN1 targets, then 150 edges /
+899 contacts and 40 edges / 131 contacts respectively. It executes no neural
+candidate and cannot be used as a fit.
 
 Using this circuit to select a model exposes antennal grooming for that lineage.
 It therefore cannot later support a held-out emergence claim; looming, optomotor
@@ -113,14 +149,15 @@ question cheaply.
 
 The scientific model-class gate remains open. The next bounded work is:
 
-1. preregister model-independent technical probes shared by the rate comparator
+1. run a direct Brian2 conformance test at event, refractory and scheduler
+   boundaries for the corrected v1 implementation;
+2. preregister model-independent technical probes shared by the rate comparator
    and event candidate, including explicit information-loss metrics;
-2. resolve or explicitly exclude the missing `CB3129`-equivalent aBN2 cell, then
-   lock the source-backed JO-CE versus JO-F neural-response reference without
-   using it to choose the compared parameters;
-3. decide whether the current generic event kernel needs optimization before the
+3. execute the already locked aBN1-only JO-CE versus JO-F neural-response
+   reference with identical conditions for both candidates;
+4. decide whether the current generic event kernel needs optimization before the
    scientific comparison, keeping kernel performance separate from model class;
-4. issue a recorded `go`, `revise` or `stop` decision; only then resume basal and
+5. issue a recorded `go`, `revise` or `stop` decision; only then resume basal and
    interface calibrations whose native units depend on the central model.
 
 Morphology-aware delays, compartmental models and optimized custom GPU kernels are
