@@ -1,0 +1,45 @@
+schema_version: 1
+id: campaign.neural_model_class_temporal_probes.v1
+title: Shared temporal information-loss and pathology probes
+status: runnable_diagnostic
+target_id: target.neural_model_class_gate.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: MODEL CLASS GATE / REPRESENTATION PROBES / NO BEHAVIOR
+
+frozen_inputs:
+  rate_bin_ms: 5.0
+  event_resolution_ms: 0.1
+  event_model: calibration/models/malecns-lif-source-aligned-v1.yaml
+  rate_model: calibration/models/malecns-signed-rate-v0.yaml
+
+probes:
+  - id: within_bin_phase_collision
+    question: can two distinct event timings map to the same rate-bin vector
+  - id: cross_channel_order_collision
+    question: can opposite channel order map to the same per-channel rate-bin matrix
+  - id: fixed_delay_aliasing
+    question: can distinct sub-bin arrival delays map to the same rate-bin vector
+  - id: shared_quiescence_and_finiteness
+    question: do both minimal comparators preserve quiescence and finite bounded impulse state
+  - id: event_refractory_invariant
+    question: does the event comparator enforce its declared minimum inter-spike interval
+
+acceptance:
+  rate_collision_max_abs_error: 0.0
+  event_trace_min_l1_distance: 0.000001
+  distinct_delay_samples_required: true
+  all_shared_pathology_states_finite: true
+  quiescent_response_max_abs: 0.000000000001
+  event_minimum_inter_spike_interval_ms: 2.2
+
+interpretation_policy:
+  - A demonstrated rate collision is an information-capacity fact at this bin size, not proof that biology uses the lost feature.
+  - Passing pathology probes is necessary engineering evidence, never a model-class selection.
+  - The gate remains open until a locked biological circuit comparison is executed.
+
+behavior_targets: []
+outputs:
+  heavy_run_root: runs/calibration/neural-model-class-temporal-probes-v1
+  compact_result: calibration/runner/neural-model-class-temporal-probes-v1.yaml
+next_action: Execute these probes before the locked aBN1 JO-CE versus JO-F comparison.

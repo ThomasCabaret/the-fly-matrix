@@ -20,7 +20,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.neural_model_class_source_fidelity.v1
+last_completed_campaign_id: campaign.neural_model_class_temporal_probes.v1
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
@@ -30,7 +30,7 @@ readiness:
   governance_and_registry: hierarchical_reconstructible_policy_documented
   diagnostic_physical_viewer: implemented_isolated_bypass
   real_connectome_execution_benchmark: integration_pass_full_graph_cuda
-  temporal_cns_runtime: source_aligned_event_comparator_v1_engineering_pass_unfitted
+  temporal_cns_runtime: brian2_2_5_1_scheduler_conformant_event_comparator_v1_unfitted
   embodied_closed_loop: integration_pass_uncalibrated_one_second
   controller_independent_physical_replay: integration_pass
   calibration_runner: fit_and_diagnostic_runner_validated
@@ -49,8 +49,8 @@ readiness:
   central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
-  central_model_class: blocked_source_aligned_lif_v1_engineering_pass_abn1_protocol_locked_scientific_rate_vs_event_comparison_open
-  spike_event_runtime: fixed_delay_lif_v1_source_commit_hashed_reset_refractory_linear_semantics_exact_numpy_torch_full_graph_load_validated_brian_scheduler_conformance_open
+  central_model_class: blocked_brian2_conformance_and_temporal_information_loss_probes_passed_abn1_execution_open
+  spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_scientific_gate_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_JO_CE_vs_JO_F_protocol_locked_abn2_explicitly_out_of_scope_whole_grooming_mapping_partial
   actuator_semantics: accepted_bounded_direct_motor_surrogate_initial_short_horizon_passive_open_closed_attribution_complete_102_of_102_hashed
@@ -75,7 +75,8 @@ blocked_by:
   - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; the correct bridge depends on the unresolved central model class and must not be invented first.
   - The full antennal-grooming circuit maps exactly for aBN1, aDN1 and aDN2 but one of three pinned aBN2 FlyWire types (CB3129) has no resolved MaleCNS match; complete-circuit use remains blocked.
   - The narrow aBN1 JO-CE versus JO-F model-class protocol is locked and explicitly excludes aBN2; CB3129 remains unresolved for any complete grooming-circuit claim.
-  - The corrected LIF v1 matches the pinned reset, refractory-freeze and linear-equation semantics, but direct Brian2 scheduler-boundary conformance has not yet been run.
+  - The corrected LIF v1 matches Brian2 2.5.1 on the preregistered scheduler boundaries, but this engineering conformance does not validate the point-neuron class or constants biologically.
+  - At 5 ms bins the rate comparator provably aliases the tested phase, inter-channel order and sub-bin delay distinctions; whether those distinctions matter for each MaleCNS population remains open until locked biological comparisons.
   - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
   - The direct-motor actuator gate is closed only as a bounded short-horizon surrogate: unloaded homolog responses are symmetric and passive/open/closed effects are separated, but muscle, tendon, compliance and local-reflex fidelity remain outside the accepted model.
   - The uncalibrated live MaleCNS feedback changes motor commands after both generic perturbations but changes the final physical deviation by only about two parts per million relative to frozen open-loop commands; it is not currently evidence of stabilization or biological feedback control.
@@ -83,9 +84,8 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Continue target.neural_model_class_gate.v0 with a direct Brian2
-  scheduler-boundary conformance check, lock shared information-loss and pathology
-  probes, then execute the already locked aBN1 JO-CE versus JO-F reference.
+  Continue target.neural_model_class_gate.v0 by executing the already locked aBN1
+  JO-CE versus JO-F reference identically for rate and event candidates.
   CB3129/aBN2 is explicitly outside that narrow probe and remains unresolved for
   any whole grooming-circuit claim.
   In parallel, define one minimal local sensory chain and one minimal motor chain

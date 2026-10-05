@@ -2,8 +2,8 @@ schema_version: 1
 id: runner_result.neural_model_class_source_fidelity.v1
 status: source_aligned_engineering_stages_passed_scientific_gate_open
 claim_label: MODEL CLASS GATE / SOURCE-ALIGNED / UNCALIBRATED / NO BEHAVIOR
-run_id: 20261005T120400936485Z--lif-source-fidelity-v1
-run_summary_ref: runs/calibration/neural-model-class-source-fidelity-v1/20261005T120400936485Z--lif-source-fidelity-v1/summary.json
+run_id: 20261005T160900562053Z--lif-source-fidelity-v1
+run_summary_ref: runs/calibration/neural-model-class-source-fidelity-v1/20261005T160900562053Z--lif-source-fidelity-v1/summary.json
 source_audit:
   checkout: runs/reference-source/Drosophila_brain_model
   commit: 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960
@@ -31,15 +31,14 @@ small_graph:
   numpy_torch_cpu_max_abs_error: 0.0
   numpy_torch_cpu_states_match: true
   numpy_torch_cpu_spikes_match: true
-  numpy_delivered_edge_events: 5
-  torch_cpu_delivered_edge_events: 5
+  numpy_delivered_edge_events: 4
+  torch_cpu_delivered_edge_events: 4
   recurrent_spike_observed: true
   reset_g_observed: true
   spike_steps:
-  - 2
-  - 4
+  - 3
   - 6
-  - 8
+  - 9
   numpy_torch_gpu_max_abs_error: 0.0
   numpy_torch_gpu_states_match: true
   numpy_torch_gpu_spikes_match: true
@@ -52,31 +51,31 @@ canonical_edge_sweep:
   published_synaptic_contacts: 124177617
   source_rows_visited: 166700
   chunks: 41
-  elapsed_seconds: 0.035298800095915794
+  elapsed_seconds: 0.025961400009691715
   accepted: true
 full_graph_loads:
 - backend: cpu
   forced_mean_rate_hz: 1.0
   steps: 50
   simulated_ms: 5.0
-  wall_seconds: 0.1085332001093775
-  steps_per_second: 460.6885261801093
-  simulated_to_wall_clock_ratio: 0.046068852618010935
+  wall_seconds: 0.0975260001141578
+  steps_per_second: 512.6837965411597
+  simulated_to_wall_clock_ratio: 0.05126837965411598
   forced_spikes_emitted: 850
   endogenous_spikes_emitted: 0
   delivered_edge_events: 219405
   expected_edge_events: 219405
   finite_state_fraction: 1.0
-  process_rss_sampled_delta_bytes: 3026944
+  process_rss_sampled_delta_bytes: 4456448
   event_accounting_exact: true
   accepted: true
 - backend: cpu
   forced_mean_rate_hz: 10.0
   steps: 50
   simulated_ms: 5.0
-  wall_seconds: 0.11245650006458163
-  steps_per_second: 444.61636251604796
-  simulated_to_wall_clock_ratio: 0.0444616362516048
+  wall_seconds: 0.1171531998552382
+  steps_per_second: 426.79158624589957
+  simulated_to_wall_clock_ratio: 0.04267915862458996
   forced_spikes_emitted: 8350
   endogenous_spikes_emitted: 0
   delivered_edge_events: 1346618
@@ -89,24 +88,24 @@ full_graph_loads:
   forced_mean_rate_hz: 50.0
   steps: 50
   simulated_ms: 5.0
-  wall_seconds: 0.13266279990784824
-  steps_per_second: 376.89540726361554
-  simulated_to_wall_clock_ratio: 0.037689540726361555
+  wall_seconds: 0.1370491001289338
+  steps_per_second: 364.8327493793154
+  simulated_to_wall_clock_ratio: 0.03648327493793154
   forced_spikes_emitted: 41700
   endogenous_spikes_emitted: 0
   delivered_edge_events: 6461826
   expected_edge_events: 6461826
   finite_state_fraction: 1.0
-  process_rss_sampled_delta_bytes: 1880064
+  process_rss_sampled_delta_bytes: 1785856
   event_accounting_exact: true
   accepted: true
 - backend: cuda
   forced_mean_rate_hz: 1.0
   steps: 500
   simulated_ms: 50.0
-  wall_seconds: 1.2210156999062747
-  steps_per_second: 409.49514411516583
-  simulated_to_wall_clock_ratio: 0.040949514411516584
+  wall_seconds: 1.2422086000442505
+  steps_per_second: 402.508886174342
+  simulated_to_wall_clock_ratio: 0.040250888617434206
   forced_spikes_emitted: 8500
   endogenous_spikes_emitted: 0
   delivered_edge_events: 1836344
@@ -122,9 +121,9 @@ full_graph_loads:
   forced_mean_rate_hz: 10.0
   steps: 500
   simulated_ms: 50.0
-  wall_seconds: 1.2700992000754923
-  steps_per_second: 393.67003771853484
-  simulated_to_wall_clock_ratio: 0.03936700377185349
+  wall_seconds: 1.1379392000380903
+  steps_per_second: 439.39078641746715
+  simulated_to_wall_clock_ratio: 0.04393907864174672
   forced_spikes_emitted: 83500
   endogenous_spikes_emitted: 0
   delivered_edge_events: 13030449
@@ -140,9 +139,9 @@ full_graph_loads:
   forced_mean_rate_hz: 50.0
   steps: 500
   simulated_ms: 50.0
-  wall_seconds: 1.2004864001646638
-  steps_per_second: 416.49784614920907
-  simulated_to_wall_clock_ratio: 0.04164978461492091
+  wall_seconds: 1.2537167998962104
+  steps_per_second: 398.81415008668046
+  simulated_to_wall_clock_ratio: 0.03988141500866805
   forced_spikes_emitted: 416780
   endogenous_spikes_emitted: 0
   delivered_edge_events: 64055528
@@ -156,9 +155,6 @@ full_graph_loads:
   accepted: true
 scientific_gate_closed: false
 remaining_gate_work:
-- run a direct Brian2 scheduler-boundary conformance test
 - execute the locked JO-CE versus JO-F aBN1 reference on rate and event candidates
-- run shared information-loss and pathology probes
 - issue a population-scoped go, revise, or stop decision
-next_action: Run Brian2 conformance and the locked aBN1 comparison; do not resume
-  model-dependent calibration.
+next_action: Execute the locked aBN1 comparison; do not resume model-dependent calibration.

@@ -1,0 +1,40 @@
+schema_version: 1
+id: runner_result.neural_model_class_temporal_probes.v1
+status: information_loss_demonstrated_pathology_probes_passed_scientific_gate_open
+claim_label: MODEL CLASS GATE / REPRESENTATION PROBES / NO BEHAVIOR
+run_id: 20261005T150726856077Z--temporal-probes-v1
+run_summary_ref: runs/calibration/neural-model-class-temporal-probes-v1/20261005T150726856077Z--temporal-probes-v1/summary.json
+campaign_hash: 86c5f0ec9e57eec9e4bf0806fd8b683994696d73ae31ad0549a6f7879f3451c2
+collisions:
+  within_bin_phase:
+    rate_max_abs_error: 0.0
+    event_trace_l1_distance: 2.519463799719505
+    rate_representation_collision: true
+    event_representation_distinguishes: true
+  cross_channel_order:
+    rate_max_abs_error: 0.0
+    event_trace_l1_distance: 7.741717673723546
+    rate_representation_collision: true
+    event_representation_distinguishes: true
+  fixed_delay_aliasing:
+    rate_max_abs_error: 0.0
+    event_trace_l1_distance: 2.629066717399482
+    rate_representation_collision: true
+    event_representation_distinguishes: true
+pathologies:
+  lif_quiescent_max_abs_deviation: 0.0
+  rate_quiescent_max_abs_deviation: 0.0
+  rate_bounded_impulse_peak: 1.0
+  rate_bounded_impulse_final: 0.008651695203120634
+  event_endogenous_spike_count: 3
+  event_minimum_inter_spike_interval_ms: 7.0
+  all_states_finite: true
+checks:
+  all_rate_collisions_exact: true
+  all_event_traces_distinct: true
+  shared_states_finite: true
+  both_quiescent: true
+  event_refractory_respected: true
+scientific_gate_closed: false
+next_action: Execute the locked aBN1 comparison; select rate, event or typed/hybrid
+  scope only from combined evidence.

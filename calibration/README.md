@@ -153,7 +153,15 @@ every canonical outgoing edge, and measures bounded CPU/GPU loads at 1, 10 and 5
 forced spikes/s/neuron. The compact result is
 `runner/neural-model-class-source-fidelity-v1.yaml`; heavy traces remain under
 `runs/calibration/`. Passing it proves source alignment and execution feasibility,
-not exact Brian2 scheduling, physiology or behavior.
+not physiology or behavior. The later direct scheduler campaign found and fixed
+two one-step boundary errors, then established Brian2 2.5.1 agreement on the
+preregistered fixtures. Reconstruct its isolated runtime with
+`setup_brian2_reference.bat` and run `brian2_conformance.bat`.
+
+Run `temporal_model_probes.bat` for the frozen representation-capacity probes.
+At 5 ms resolution the rate representation aliases the tested intra-bin phase,
+cross-channel order and sub-bin delay pairs; the event trace distinguishes them.
+This does not select a model class. The aBN1 biological comparison remains open.
 
 Run `audit_circuit_reference.bat` to audit the first independent circuit candidate
 without fitting it. The procedure pins the Shiu supplement and FlyWire annotation

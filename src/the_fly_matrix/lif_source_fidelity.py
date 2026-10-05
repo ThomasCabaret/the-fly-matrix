@@ -197,6 +197,9 @@ def run_numpy_source_aligned(
     constants: LifConstants,
     dt_ms: float,
     steps: int,
+    *,
+    initial_v_mV: np.ndarray | None = None,
+    initial_g_mV: np.ndarray | None = None,
 ) -> dict[str, Any]:
     node_count = outgoing.shape[0]
     delay_steps = int(round(constants.fixed_delay_ms / dt_ms))
@@ -204,18 +207,20 @@ def run_numpy_source_aligned(
     queue: list[list[int]] = [[] for _ in range(steps + delay_steps + 1)]
     v = np.full(node_count, constants.v_rest_mV, dtype=np.float64)
     g = np.zeros(node_count, dtype=np.float64)
+    if initial_v_mV is not None:
+        v[:] = np.asarray(initial_v_mV, dtype=np.float64)
+    if initial_g_mV is not None:
+        g[:] = np.asarray(initial_g_mV, dtype=np.float64)
     refractory = np.zeros(node_count, dtype=np.int32)
     states: list[np.ndarray] = []
     raster: list[list[int]] = []
     delivered = 0
     membrane_decay, synaptic_decay, coupling = _linear_factors(constants, dt_ms)
     for step in range(steps):
-        arriving = np.zeros(node_count, dtype=np.float64)
-        for source in np.asarray(queue[step], dtype=np.int64):
-            start, end = outgoing.indptr[source : source + 2]
-            np.add.at(arriving, outgoing.indices[start:end], outgoing.data[start:end])
-            delivered += int(end - start)
-        g += arriving
+        # Brian2's default schedule is state update -> threshold -> synapses ->
+        # reset.  Countdown happens before the state update so a spike at t=0
+        # with 2.2 ms refractory is eligible again at t=2.2 ms.
+        refractory[refractory > 0] -= 1
         active = refractory == 0
         v_active = v[active]
         g_active = g[active]
@@ -223,8 +228,13 @@ def run_numpy_source_aligned(
             (v_active - constants.v_rest_mV) * membrane_decay + g_active * coupling
         )
         g[active] = g_active * synaptic_decay
-        refractory[~active] -= 1
         generated = np.flatnonzero(active & (v > constants.threshold_mV)).astype(np.int64)
+        arriving = np.zeros(node_count, dtype=np.float64)
+        for source in np.asarray(queue[step], dtype=np.int64):
+            start, end = outgoing.indptr[source : source + 2]
+            np.add.at(arriving, outgoing.indices[start:end], outgoing.data[start:end])
+            delivered += int(end - start)
+        g += arriving
         if len(generated):
             v[generated] = constants.reset_mV
             g[generated] = 0.0
@@ -246,6 +256,9 @@ def run_torch_source_aligned(
     dt_ms: float,
     steps: int,
     device: str,
+    *,
+    initial_v_mV: np.ndarray | None = None,
+    initial_g_mV: np.ndarray | None = None,
 ) -> dict[str, Any]:
     import torch
 
@@ -258,6 +271,10 @@ def run_torch_source_aligned(
     queue: list[list[int]] = [[] for _ in range(steps + delay_steps + 1)]
     v = torch.full((node_count,), constants.v_rest_mV, dtype=torch.float64, device=device)
     g = torch.zeros(node_count, dtype=torch.float64, device=device)
+    if initial_v_mV is not None:
+        v[:] = torch.as_tensor(initial_v_mV, dtype=torch.float64, device=device)
+    if initial_g_mV is not None:
+        g[:] = torch.as_tensor(initial_g_mV, dtype=torch.float64, device=device)
     refractory = torch.zeros(node_count, dtype=torch.int32, device=device)
     states: list[np.ndarray] = []
     raster: list[list[int]] = []
@@ -265,17 +282,17 @@ def run_torch_source_aligned(
     membrane_decay, synaptic_decay, coupling = _linear_factors(constants, dt_ms)
     with torch.inference_mode():
         for step in range(steps):
-            sources = torch.tensor(queue[step], dtype=torch.int64, device=device)
-            arriving, count = _expand_torch_events(indptr, indices, weights, sources, node_count)
-            delivered += count
-            g += arriving
+            refractory[refractory > 0] -= 1
             active = refractory == 0
             v[active] = constants.v_rest_mV + (
                 (v[active] - constants.v_rest_mV) * membrane_decay + g[active] * coupling
             )
             g[active] = g[active] * synaptic_decay
-            refractory[~active] -= 1
             generated = torch.nonzero(active & (v > constants.threshold_mV)).flatten()
+            sources = torch.tensor(queue[step], dtype=torch.int64, device=device)
+            arriving, count = _expand_torch_events(indptr, indices, weights, sources, node_count)
+            delivered += count
+            g += arriving
             if generated.numel():
                 v[generated] = constants.reset_mV
                 g[generated] = 0.0
@@ -395,6 +412,13 @@ def benchmark_full_graph(
             slot = step % len(queue)
             sources = queue[slot]
             queue[slot] = torch.empty(0, dtype=torch.int64, device=device)
+            refractory[refractory > 0] -= 1
+            active = refractory == 0
+            v[active] = c.v_rest_mV + (
+                (v[active] - c.v_rest_mV) * membrane_decay + g[active] * coupling
+            )
+            g[active] = g[active] * synaptic_decay
+            generated = torch.nonzero(active & (v > c.threshold_mV)).flatten()
             arriving, count = _expand_torch_events(
                 indptr, indices, weights, sources, node_count, signs
             )
@@ -403,13 +427,6 @@ def benchmark_full_graph(
                 if sources.numel():
                     expected += int((indptr[sources + 1] - indptr[sources]).sum().item())
             g += arriving
-            active = refractory == 0
-            v[active] = c.v_rest_mV + (
-                (v[active] - c.v_rest_mV) * membrane_decay + g[active] * coupling
-            )
-            g[active] = g[active] * synaptic_decay
-            refractory[~active] -= 1
-            generated = torch.nonzero(active & (v > c.threshold_mV)).flatten()
             if generated.numel():
                 v[generated] = c.reset_mV
                 g[generated] = 0.0
@@ -528,14 +545,11 @@ def run_gate(backend: str = "auto", quick: bool = False) -> dict[str, Any]:
             "Every canonical graph row and edge remains accounted for under the corrected comparator.",
         ],
         "forbidden_claims": [
-            "Exact Brian2 scheduler conformance has been established.",
             "The model class or physiological constants are scientifically accepted.",
             "The synthetic full-graph loads represent neural activity or behavior.",
         ],
         "remaining_gate_work": [
-            "run a direct Brian2 scheduler-boundary conformance test",
             "execute the locked JO-CE versus JO-F aBN1 reference on rate and event candidates",
-            "run shared information-loss and pathology probes",
             "issue a population-scoped go, revise, or stop decision",
         ],
     }
@@ -553,7 +567,7 @@ def run_gate(backend: str = "auto", quick: bool = False) -> dict[str, Any]:
         "full_graph_loads": loads,
         "scientific_gate_closed": False,
         "remaining_gate_work": summary["remaining_gate_work"],
-        "next_action": "Run Brian2 conformance and the locked aBN1 comparison; do not resume model-dependent calibration.",
+        "next_action": "Execute the locked aBN1 comparison; do not resume model-dependent calibration.",
     }
     RESULT_PATH.write_text(yaml.safe_dump(compact, sort_keys=False), encoding="utf-8")
     print(f"[TRACE] {run_dir / 'summary.json'}", flush=True)

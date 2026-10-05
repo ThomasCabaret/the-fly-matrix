@@ -1,0 +1,52 @@
+schema_version: 1
+id: campaign.neural_model_class_brian2_conformance.v1
+title: Direct Brian2 2.5.1 scheduler-boundary conformance
+status: runnable_diagnostic
+target_id: target.neural_model_class_gate.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: MODEL CLASS GATE / BRIAN2 CONFORMANCE / NO BEHAVIOR
+
+frozen_inputs:
+  candidate_model: calibration/models/malecns-lif-source-aligned-v1.yaml
+  reference_fixture: scripts/brian2_reference_fixture.py
+  source_checkout: runs/reference-source/Drosophila_brain_model
+  source_commit: 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960
+  reference_runtime:
+    python: 3.10.22
+    brian2: 2.5.1
+    numpy: 1.22.3
+    scipy: 1.8.1
+    sympy: '1.12'
+    cython: 0.29.33
+    setuptools: 67.8.0
+  timestep_ms: 0.1
+
+probes:
+  - id: exact_source_reset_compilation
+    purpose: verify that the upstream reset string including w = 0 executes in the pinned runtime
+  - id: exact_linear_subthreshold
+    purpose: compare the coupled linear v/g trajectory at every scheduler boundary
+  - id: reset_and_refractory_boundary
+    purpose: compare spike time, reset-g and the exact first eligible timestep after refractory
+  - id: fixed_delay_delivery_boundary
+    purpose: compare the timestep on which a 1.8 ms event becomes visible to target state
+
+acceptance:
+  maximum_state_error_mV: 0.000000001
+  identical_spike_raster: true
+  identical_refractory_eligibility: true
+  identical_first_delivery_sample: true
+  exact_source_reset_compiles: true
+
+budgets:
+  graph_nodes: 2
+  maximum_simulated_ms_per_probe: 2.6
+  network_download_bytes: 0
+
+behavior_targets: []
+outputs:
+  heavy_run_root: runs/calibration/neural-model-class-brian2-conformance-v1
+  compact_result: calibration/runner/neural-model-class-brian2-conformance-v1.yaml
+promotion_policy: conformance_only_does_not_close_scientific_model_class_gate
+next_action: Run the isolated reference and candidate probes; stop on any scheduler mismatch.

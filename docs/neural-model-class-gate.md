@@ -21,11 +21,13 @@ The corrected comparator is
 `calibration/campaigns/neural-model-class-source-fidelity-v1.yaml`. It pins source
 commit `91bdd1e7dcf193f3e7ca5a8933497fcef63b7960`, verifies source file hashes,
 implements the coupled linear state update, clears `g` on a generated spike and
-freezes the differential state while refractory. It deliberately calls itself
-**source-aligned**, not Brian2-conformant: exact scheduler-boundary agreement is
-the next independent check. The pinned source environment is Python 3.10 with
-Brian2 2.5.1; that check belongs in a dedicated reproduction environment rather
-than silently changing the project's Python 3.12 environment.
+freezes the differential state while refractory. A dedicated Python 3.10 / Brian2
+2.5.1 environment now checks scheduler boundaries without changing the project's
+Python 3.12 environment. The check exposed two one-step defects: delivery was
+integrated too early and refractory release occurred too late. After correction,
+the tracked result matches Brian2 on integration, reset, refractory eligibility
+and delayed delivery with a maximum state error of `1.42e-14` mV. This closes
+scheduler conformance only, not LIF physiology or the constants.
 
 ## Retained v0 result and corrected v1 result
 
@@ -76,6 +78,23 @@ The launcher reports progress, writes heavy provenance under
 tracked result and pauses before closing. `-Quick` is available for a short
 integration check. `-Backend cpu`, `cuda`, `auto` or `both` may be passed through
 to the PowerShell launcher.
+
+Run `setup_brian2_reference.bat` once to reconstruct the isolated historical
+runtime, then `brian2_conformance.bat` to reproduce the scheduler comparison.
+The environment and heavy traces remain under ignored `runs/`.
+
+## Temporal information-loss probes
+
+`campaign.neural_model_class_temporal_probes.v1` freezes a 5 ms rate bin and a
+0.1 ms event resolution before execution. Three pairs have identical rate
+vectors but different event traces: phase within one bin, opposite ordering of
+two channels, and 1.8 versus 3.6 ms arrival delay. Minimal quiescence, finiteness
+and refractory checks also pass.
+
+This is a representational capacity result, not evidence that every MaleCNS
+population needs the destroyed information. Run `temporal_model_probes.bat` to
+reproduce it. The locked aBN1 comparison remains necessary to connect model class
+to an independent biological observation.
 
 ## Independent circuit-reference transfer audit
 
@@ -149,15 +168,12 @@ question cheaply.
 
 The scientific model-class gate remains open. The next bounded work is:
 
-1. run a direct Brian2 conformance test at event, refractory and scheduler
-   boundaries for the corrected v1 implementation;
-2. preregister model-independent technical probes shared by the rate comparator
-   and event candidate, including explicit information-loss metrics;
-3. execute the already locked aBN1-only JO-CE versus JO-F neural-response
+1. execute the already locked aBN1-only JO-CE versus JO-F neural-response
    reference with identical conditions for both candidates;
-4. decide whether the current generic event kernel needs optimization before the
+2. decide whether the current generic event kernel needs optimization before the
    scientific comparison, keeping kernel performance separate from model class;
-5. issue a recorded `go`, `revise` or `stop` decision; only then resume basal and
+3. issue a recorded population-scoped `go`, `revise`, typed/hybrid or `stop`
+   decision; only then resume basal and
    interface calibrations whose native units depend on the central model.
 
 Morphology-aware delays, compartmental models and optimized custom GPU kernels are

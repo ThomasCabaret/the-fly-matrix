@@ -27,11 +27,11 @@ equations:
   spike: eligible and v > threshold_mV
   reset: v = reset_mV; g = 0; refractory = refractory_ms
   transmission: every emitted spike is delivered after fixed_delay_ms
-  numerical_scheme: exact_linear_step_for_coupled_v_g_then_threshold_and_reset
-  source_alignment_limit: >-
-    This is an explicit implementation of the pinned equations, not a byte-for-byte
-    Brian2 scheduler reproduction. Scheduler boundary semantics still require a
-    direct Brian2 conformance test before scientific promotion.
+  numerical_scheme: brian2_default_schedule_state_update_threshold_synapses_reset
+  scheduler_conformance: >-
+    Direct Python 3.10 / Brian2 2.5.1 probes agree at 1e-9 mV tolerance for
+    coupled linear integration, threshold/reset, refractory release and delayed
+    event visibility. See runner_result.neural_model_class_brian2_conformance.v1.
 
 reference_constants:
   v_rest_mV: {value: -52.0, origin: pinned_published_source}
@@ -74,8 +74,8 @@ accepted_claims:
   - The implementation exposes spike, membrane, synaptic, refractory and delay state.
   - Its equations, reset, refractory freeze and constants are traceable to the pinned source.
   - Every forced or endogenous event can be accounted against the canonical outgoing graph.
+  - The implementation conforms to Brian2 2.5.1 on the preregistered scheduler-boundary fixtures.
 forbidden_claims:
-  - The implementation is already Brian2-conformant at scheduler boundaries.
   - The constants are accepted MaleCNS physiology.
   - The unitary weight is behavior-independent.
   - A throughput pass validates neural computation or fly behavior.
@@ -84,4 +84,4 @@ forbidden_claims:
 critical_risk_refs:
   - risk.central_delay_fidelity.v0
   - risk.central_event_model_fidelity.v0
-next_action: Run source audit, deterministic conformance probes and bounded full-graph feasibility before the locked aBN1 circuit comparison.
+next_action: Execute the locked aBN1 circuit comparison before any population-scoped model-class decision.

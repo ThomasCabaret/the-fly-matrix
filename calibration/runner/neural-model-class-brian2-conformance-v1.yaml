@@ -1,0 +1,38 @@
+schema_version: 1
+id: runner_result.neural_model_class_brian2_conformance.v1
+status: brian2_scheduler_conformant_engineering_gate_passed_scientific_gate_open
+claim_label: MODEL CLASS GATE / BRIAN2 CONFORMANCE / NO BEHAVIOR
+run_id: 20261005T150348968989Z--brian2-conformance-v1
+run_summary_ref: runs/calibration/neural-model-class-brian2-conformance-v1/20261005T150348968989Z--brian2-conformance-v1/summary.json
+campaign_hash: 1339aeb7bc3a82ce0116defbba4607e3cd57184094ab1486fa5e7ddf5d69d152
+reference_fixture_hash: 184fc3d8da94cf2a084a58f6ee50685fcc9f62bc5d1cff63868521586060f320
+reference_runtime:
+  python: 3.10.22
+  brian2: 2.5.1
+  numpy: 1.22.3
+comparison:
+  checks:
+    reference_versions_match: true
+    exact_source_reset_compiles: true
+    continuous_state_matches: true
+    reset_state_matches: true
+    spike_raster_matches: true
+    refractory_eligibility_matches: true
+    delay_state_matches: true
+    first_delivery_sample_matches: true
+  maximum_state_error_mV: 1.4210854715202004e-14
+  continuous_max_abs_error_mV: 1.4210854715202004e-14
+  reset_max_abs_error_mV: 0.0
+  delay_max_abs_error_mV: 7.105427357601002e-15
+  candidate_spike_steps:
+  - 0
+  reference_spike_steps:
+  - 0
+  candidate_first_delivery_sample: 18
+  reference_first_delivery_sample: 18
+  first_delivery_time_ms: 1.8
+  first_eligible_after_refractory_ms: 2.2
+  accepted: true
+scientific_gate_closed: false
+next_action: Run shared information-loss/pathology probes, then execute the locked
+  aBN1 comparison.

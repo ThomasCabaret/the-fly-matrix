@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.neural_model_class_gate.v0
 title: Select the minimum defensible temporal MaleCNS model class
-status: active_source_aligned_engineering_stages_passed_abn1_protocol_locked_scientific_comparison_open
+status: active_brian2_conformance_and_temporal_probes_passed_abn1_execution_open
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: model_selection_gate_no_behavior_claim
@@ -74,10 +74,9 @@ provenance:
     - A fixed 1.8 ms delay is literature-backed for the reference baseline but is not morphology-derived.
     - The circuit reference and thresholds must be locked before candidate outputs are inspected.
 
-validation: partial_engineering_pass
+validation: brian2_conformance_and_information_loss_probes_passed_scientific_reference_open
 blocked_reason: null
 next_action: >-
-  Run a direct Brian2 scheduler-boundary conformance check for the source-aligned
-  v1 comparator, preregister shared information-loss/pathology probes, and execute
-  the locked JO-CE versus JO-F aBN1 reference. CB3129/aBN2 is explicitly outside
-  this narrow reference and remains unresolved for whole grooming-circuit claims.
+  Execute the locked JO-CE versus JO-F aBN1 reference under identical conditions
+  for rate and event candidates, then issue a population-scoped go, revise or
+  typed/hybrid decision. CB3129/aBN2 remains outside this narrow reference.

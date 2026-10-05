@@ -123,8 +123,22 @@ environ 0,038 à 0,058 selon charge et répétition : le GPU
 n'est donc pas encore exploité efficacement par ce noyau générique. Aucun spike
 endogène n'apparaît dans cette charge volontairement faible ; la récurrence est
 testée sur le petit graphe, pas présentée comme une activité MaleCNS calibrée.
-La conformité exacte aux frontières de scheduling Brian2 reste à tester : v1 est
-`source-aligned`, pas encore déclarée reproduction Brian2 bit à bit.
+La campagne directe
+[`campaign.neural_model_class_brian2_conformance.v1`](calibration/campaigns/neural-model-class-brian2-conformance-v1.yaml)
+a reproduit l'environnement historique Python 3.10 / Brian2 2.5.1 sans modifier
+le venv principal. Elle a détecté puis corrigé deux erreurs d'ordonnancement :
+livraison synaptique intégrée un pas trop tôt et fin de réfractarité un pas trop
+tard. Le résultat concorde ensuite à `1.42e-14` mV près sur l'intégration, le
+reset, la réfractarité et le délai de 1,8 ms. C'est une preuve d'implémentation,
+pas une validation physiologique.
+
+La campagne
+[`campaign.neural_model_class_temporal_probes.v1`](calibration/campaigns/neural-model-class-temporal-probes-v1.yaml)
+montre qu'à 5 ms le rate confond exactement des trains distincts par phase
+intra-bin, ordre inter-canaux et délai sous-bin, alors que la trace événementielle
+à 0,1 ms les distingue. Les deux comparateurs passent les contrôles bornés de
+silence et finitude. Ce résultat établit une perte d'information, pas sa nécessité
+biologique générale. Le gate reste ouvert jusqu'à l'exécution aBN1 verrouillée.
 Le détail et la décision de ne pas télécharger prématurément la morphologie sont
 dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
 
@@ -747,6 +761,9 @@ constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
 compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le gate de classe reste ouvert
 neural_model_gate.bat # benchmark v0 historique, supersédé pour le gate scientifique
 neural_model_source_fidelity.bat # audit source + sémantiques LIF v1 + benchmark CPU/GPU, aucune calibration
+setup_brian2_reference.bat # environnement historique isolé Python 3.10 / Brian2 2.5.1 sous runs/
+brian2_conformance.bat # frontières scheduler Brian2: intégration, délai, reset et réfractarité
+temporal_model_probes.bat # collisions rate/event et pathologies techniques, aucun comportement
 audit_circuit_reference.bat # transfert FlyWire→MaleCNS + chemins structuraux ; résultat partiel, zéro fitting
 lock_abn1_reference.bat # reconstruit/verrouille le probe aBN1 JO-CE/JO-F avant toute sortie candidate
 actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et saturation
