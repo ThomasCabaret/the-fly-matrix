@@ -24,7 +24,7 @@ acceptance_criteria:
   - Candidate motor-neuron inputs and scientific command values remain separate from exact ctrl addressing
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: actuator-semantics-20261005T055452Z
+latest_run_id: actuator-attribution-20261005T105731Z
 status: integration_pass
 notes:
   - The current runtime explicitly requests ActuatorType.MOTOR; this avoids an implicit position target but does not validate biological muscle semantics
@@ -35,4 +35,7 @@ notes:
   - Candidate mapping and parameter calibration remain separate from exact physical execution
   - The hashed local audit probes all 102 channels against matched passive trajectories; command-force identity, force clipping and nonzero local response pass on every channel
   - The standard scene has four of six legs initially contacting ground and some homologous leg pairs have large response asymmetry, so it is not a symmetric load reference
-  - The causal contribution of direct joint actuation remains open until frozen-trace open-loop versus closed-feedback attribution under target.actuator_semantics_gate.v0
+  - Frozen-command open-loop replay reproduces the unperturbed closed-loop physical state exactly, separating the physical player from its producer
+  - Both generic perturbations reach live MaleCNS commands, but closed feedback changes final physical deviation by only about two parts per million relative to frozen commands in the uncalibrated runtime
+  - The tethered no-ground fixture gives nonzero response on all 102 motors and a maximum homolog relative difference below 4.88e-5 across 41 pairs
+  - Direct motor actuation is accepted only as a bounded short-horizon surrogate; muscle, tendon, compliance, local reflexes, stability and behavior remain unvalidated

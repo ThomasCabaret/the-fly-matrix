@@ -234,9 +234,14 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(gate["primary_class"], "technical")
         self.assertEqual(gate["optimization_exposure"], "diagnostic_only")
         self.assertEqual(gate["behavior_targets"], [])
-        self.assertIn(gate["id"], self.state["active_target_ids"])
+        self.assertIn(gate["id"], self.state["completed_target_ids"])
+        self.assertEqual(
+            gate["status"],
+            "accepted_bounded_direct_motor_surrogate_initial_short_horizon",
+        )
+        self.assertIsNone(gate["blocked_reason"])
         self.assertIn(
-            "direct_mujoco_motor_not_position_or_velocity_servo",
+            "accepted_bounded_direct_motor_surrogate_initial_short_horizon",
             self.state["readiness"]["actuator_semantics"],
         )
 

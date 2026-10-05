@@ -25,8 +25,8 @@ The current body path explicitly creates all 102 channels as classical MuJoCo
 `MOTOR` actuators. It does not use position or velocity servos. This prevents a
 hidden position controller in the present configuration, but direct joint
 actuation is still a surrogate for muscle activation, compliance and local reflex
-dynamics. Its causal contribution is an open gate under ADR 0015, not accepted
-motor physiology.
+dynamics. ADR 0015 now accepts its measured causal boundary as a bounded
+short-horizon surrogate, never as accepted motor physiology.
 
 ## Three user modes
 
@@ -89,12 +89,13 @@ normal path until profiling and optimization close that gap.
 - The run demonstrates execution, not plausible behavior.
 - The 5 ms neural step has not been biologically accepted.
 - Input and motor parameters are seeded placeholders and cannot be promoted.
-- Actuator addressing is validated, but command-to-force/state semantics and the
-  stabilization contributed by FlyBody/MuJoCo have only passed the local
-  open-loop stage of the actuator attribution gate. All 102 direct motors have a
-  hashed low-level contract and matched-passive impulse/step/release result; the
-  frozen-trace open-loop versus closed-feedback comparison remains open. See
-  `docs/actuator-semantics-gate.md`.
+- Actuator addressing and causal separation pass. All 102 direct motors have a
+  hashed low-level contract, matched-passive response, exact frozen-trace replay
+  and unloaded homolog comparison. In the present uncalibrated runtime, live
+  feedback changes commands but alters generic short-horizon physical deviations
+  by only about two parts per million relative to frozen commands. This is an
+  accepted surrogate boundary, not evidence of stabilization or muscle fidelity.
+  See `docs/actuator-semantics-gate.md`.
 - Scientific interface revalidation remains independently blocking.
 - Optimize only after profiling; likely targets are retinal rendering, repeated
   box assembly and GPU/CPU synchronization.

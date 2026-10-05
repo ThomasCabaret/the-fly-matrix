@@ -179,7 +179,7 @@ risks:
 
   - id: risk.flybody_actuator_abstraction.v0
     title: Direct FlyBody joint actuation may supply or hide part of motor control
-    status: open_critical_pre_embodied_claim_gate
+    status: bounded_accepted_surrogate_reopen_on_semantics_change
     affected_model_id: body.flybody
     affected_parameter_family_ids:
       - parameter.body.flybody_mechanics.v0
@@ -192,14 +192,25 @@ risks:
     evidence_supporting:
       - Current code explicitly instantiates ActuatorType.MOTOR on all 102 channels rather than position or velocity servos.
       - Exact addressing, deterministic replay and passive-control difference pass integration tests.
+      - Frozen-command open-loop replay reproduces the unperturbed closed-loop physical state exactly.
+      - Generic lateral and angular perturbations reach live MaleCNS motor commands while passive, frozen-command and live-feedback responses remain separately measurable.
+      - A tethered no-ground fixture yields nonzero local responses on 102 of 102 motors and a maximum homolog relative difference below 4.88e-5 across 41 pairs.
     evidence_against_or_unresolved:
       - Direct joint motor commands omit explicit muscle activation, compliance and local reflex dynamics.
-      - Command-to-force/state behavior by actuator class and load has not been characterized.
       - The external FlyBody mechanical constants remain borrowed surrogate values.
+      - In the current uncalibrated runtime, live feedback changes final generic-perturbation deviation by only about two parts per million relative to frozen commands; it supplies no demonstrated stabilization.
+      - Loaded response remains contact- and configuration-dependent even though the unloaded actuator contract is symmetric.
     consequence_if_true: Direct motor actuation may support the first bounded embodied claim with an explicit applicability limit.
     consequence_if_false: Introduce a versioned muscle/activation or lower-level actuation model before behavioral interpretation.
-    current_mitigation: Freeze actuator semantics and block neutral embodied fitting and held-out interpretation on a bounded behavior-naive actuator audit.
-    cheapest_discriminating_experiment: Run class-stratified passive, impulse, step, load and open-loop replay probes with no named action target.
+    current_mitigation: >-
+      Freeze the measured 102-channel direct-motor contract as a bounded
+      short-horizon surrogate, exclude muscle fidelity from claims, and reopen the
+      gate on any actuator-model change. Keep motor transfer local and independently
+      identifiable before neutral embodied fitting.
+    cheapest_discriminating_experiment: >-
+      Completed by campaign.actuator_causal_attribution.v1; future escalation is a
+      versioned direct-motor versus muscle-aware local response comparison only if
+      the intended claim requires that fidelity.
     work_at_risk:
       scientific_blast_radius: motor transfer, neutral embodied stability and every movement-based claim
       reusable_if_rejected: exact addressing, motor topology, physical replay and probe harness
@@ -213,7 +224,7 @@ risks:
       - introducing a position or velocity servo through a default
       - selecting actuator semantics using a named behavior
     decision_ref: decisions/0015-embodied-causal-attribution-gates.md
-    next_review: target_actuator_semantics_gate_v0
+    next_review: on_actuator_semantics_change_or_before_muscle_dependent_claim
 
   - id: risk.peripheral_interface_compensation.v0
     title: Flexible peripheral interfaces may compensate for central or mechanical error
@@ -307,4 +318,4 @@ risks:
     decision_ref: decisions/0015-embodied-causal-attribution-gates.md
     next_review: before_locking_each_evaluation_only_protocol
 
-next_action: Resolve the ADR 0014 neural model-class gate and preregister the ADR 0015 actuator audit before model-dependent basal, broad joint or neutral embodied campaigns.
+next_action: Resolve the ADR 0014 neural model-class gate, then freeze one minimal local sensory chain and one minimal motor chain before model-dependent basal, broad joint or neutral embodied campaigns.

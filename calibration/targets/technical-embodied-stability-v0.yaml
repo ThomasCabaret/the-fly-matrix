@@ -60,10 +60,11 @@ validation: not_run
 blocked_reason: >-
   Runtime integration exists, but basal-source values, local motor transfer scope,
   ensemble-accounting policy and technical thresholds are not yet registered. The
-  actuator semantics audit is also open, and central, sensory, motor and mechanical
-  families may not all remain free without an explicit identifiability analysis.
+  direct-motor actuator semantics are accepted only as a bounded short-horizon
+  surrogate; central, sensory, motor and mechanical families may not all remain
+  free without an explicit identifiability analysis.
 next_action: >-
-  Close the actuator semantics gate, freeze the local interface scopes, then
-  define a short flat-ground technical pilot that propagates the central ensemble,
-  exposes any tonic-output family explicitly, and forbids exact pose, gait or
-  named-action targets.
+  Freeze one minimal local sensory scope and one minimal motor scope, resolve the
+  neural model-class gate, then define a short flat-ground technical pilot that
+  propagates the accepted central uncertainty, exposes tonic output explicitly,
+  and forbids exact pose, gait or named-action targets.

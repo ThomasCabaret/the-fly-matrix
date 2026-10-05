@@ -26,7 +26,7 @@ class ActuatorSemanticsTests(unittest.TestCase):
         self.assertEqual(midline, "c_thorax-c_head-yaw-motor")
         self.assertIsNone(side)
 
-    def test_compact_result_keeps_global_gate_open(self) -> None:
+    def test_v0_local_result_does_not_close_gate_by_itself(self) -> None:
         path = Path("calibration/runner/actuator-semantics-gate-v0.yaml")
         result = yaml.safe_load(path.read_text(encoding="utf-8"))
         self.assertEqual(result["behavior_targets"], [])

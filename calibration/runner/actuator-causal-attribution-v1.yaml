@@ -1,0 +1,195 @@
+schema_version: 1
+id: runner_result.actuator_causal_attribution.v1
+campaign_id: campaign.actuator_causal_attribution.v1
+target_id: target.actuator_semantics_gate.v0
+run_id: actuator-attribution-20261005T105731Z
+status: accepted_bounded_direct_motor_surrogate_initial_short_horizon
+claim_label: ACTUATOR CAUSAL ATTRIBUTION / UNCALIBRATED / NO BEHAVIOR
+behavior_targets: []
+optimized_parameters: 0
+frozen_inputs:
+  campaign_sha256: ab7e12fd54ea08dd20b4da577ae26a82ee9c7cf51e5081f867d76cdf9b7814a1
+  profile_sha256: ccbfa2ea153874d9babb05fc3325fbef91919225fab00d43c6b37f53e270ea42
+  actuator_contract_sha256: b1b11acc2b6d82dbfa6e8a4170c4b53475fb7d627ecb5a9de892efd87081abc2
+  graph_body_id_sha256: 6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5
+  graph_dataset_sha256: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+reproducibility:
+  command_repeat_max_abs_error: 2.3282970603583086e-13
+  state_repeat_max_abs_error: 1.978417429882029e-12
+  open_replay_state_max_abs_error: 0.0
+  frozen_baseline_trace_semantic_sha256: 0e0379921450c5f8f7d3b259988fcc5be78c7ee3ab513bb3cac79d35cda83cc2
+perturbations:
+- perturbation:
+    id: lateral_y_velocity
+    qvel_address: 1
+    delta: 1.0
+    units: mm_per_s
+  passive_mechanics:
+    qpos_l2_peak: 0.0020952853617495094
+    qpos_l2_final: 0.0017383066210235928
+    qpos_recovery_fraction: 0.1703723737313988
+    root_translation_l2_peak: 0.0012252943773042192
+    root_translation_l2_final: 0.000904668885018535
+    root_orientation_l2_peak: 0.00047108233833083676
+    root_orientation_l2_final: 0.00047108233833083676
+    joint_l2_peak: 0.001645791115868646
+    joint_l2_final: 0.0014076098705559483
+    qvel_l2_peak: 3.613348706448714
+    qvel_l2_final: 0.5996352994928336
+  frozen_commands_open_loop:
+    qpos_l2_peak: 0.0020952924830228174
+    qpos_l2_final: 0.0017383139348053445
+    qpos_recovery_fraction: 0.17037170280994396
+    root_translation_l2_peak: 0.0012253026360324597
+    root_translation_l2_final: 0.0009046763774707266
+    root_orientation_l2_peak: 0.00047108108092358027
+    root_orientation_l2_final: 0.00047108108092358027
+    joint_l2_peak: 0.0016457944190671476
+    joint_l2_final: 0.001407614508017289
+    qvel_l2_peak: 3.6133491225745136
+    qvel_l2_final: 0.5996352385341671
+  live_malecns_closed_feedback:
+    qpos_l2_peak: 0.0020952924873814892
+    qpos_l2_final: 0.0017383169496766628
+    qpos_recovery_fraction: 0.170370265657251
+    root_translation_l2_peak: 0.001225302638819507
+    root_translation_l2_final: 0.000904678384774109
+    root_orientation_l2_peak: 0.0004710812268488604
+    root_orientation_l2_final: 0.0004710812268488604
+    joint_l2_peak: 0.001645794422585864
+    joint_l2_final: 0.0014076168922566464
+    qvel_l2_peak: 3.613349128430382
+    qvel_l2_final: 0.5996352273619938
+  closed_feedback_command_adaptation:
+    l2_peak: 3.4833351318754885e-07
+    l2_final: 3.4833351318754885e-07
+    nonzero_steps: 14
+  closed_open_state_gap:
+    qpos_l2_peak: 1.973014002745986e-08
+    qpos_l2_final: 1.973014002745986e-08
+  attribution_ratios:
+    closed_final_over_open_final: 1.0000017343652707
+    passive_final_over_open_final: 0.9999957926001712
+- perturbation:
+    id: angular_x_velocity
+    qvel_address: 3
+    delta: 1.0
+    units: rad_per_s
+  passive_mechanics:
+    qpos_l2_peak: 0.000767495225893749
+    qpos_l2_final: 0.0006299830755022468
+    qpos_recovery_fraction: 0.17917004008900406
+    root_translation_l2_peak: 0.00023538717460932978
+    root_translation_l2_final: 0.00012052657599844836
+    root_orientation_l2_peak: 0.0001780679218305502
+    root_orientation_l2_final: 0.0001695937064990714
+    joint_l2_peak: 0.000709560347850307
+    joint_l2_final: 0.0005946343368939156
+    qvel_l2_peak: 2.846639486906527
+    qvel_l2_final: 0.38879401075572745
+  frozen_commands_open_loop:
+    qpos_l2_peak: 0.000767497438919287
+    qpos_l2_final: 0.0006299842180005238
+    qpos_recovery_fraction: 0.17917091829308973
+    root_translation_l2_peak: 0.00023538830851759787
+    root_translation_l2_final: 0.00012052604284305281
+    root_orientation_l2_peak: 0.00017806776474564527
+    root_orientation_l2_final: 0.00016959349432495283
+    joint_l2_peak: 0.0007095623123574769
+    joint_l2_final: 0.0005946357158874484
+    qvel_l2_peak: 2.8466398520884444
+    qvel_l2_final: 0.38879368449546836
+  live_malecns_closed_feedback:
+    qpos_l2_peak: 0.0007674974366935289
+    qpos_l2_final: 0.0006299855859190644
+    qpos_recovery_fraction: 0.1791691336024288
+    root_translation_l2_peak: 0.0002353883085176451
+    root_translation_l2_final: 0.00012052708568877076
+    root_orientation_l2_peak: 0.0001780677647765264
+    root_orientation_l2_final: 0.0001695933875864456
+    joint_l2_peak: 0.0007095623102709772
+    joint_l2_final: 0.0005946369841912897
+    qvel_l2_peak: 2.8466398548683367
+    qvel_l2_final: 0.38879367824152367
+  closed_feedback_command_adaptation:
+    l2_peak: 2.7184979758748103e-07
+    l2_final: 2.7184979758748103e-07
+    nonzero_steps: 14
+  closed_open_state_gap:
+    qpos_l2_peak: 1.4196755857308267e-08
+    qpos_l2_final: 1.4196755857308267e-08
+  attribution_ratios:
+    closed_final_over_open_final: 1.0000021713536649
+    passive_final_over_open_final: 0.999998186465241
+unloaded_symmetry:
+  scene: tethered_no_ground
+  actuators_probed: 102
+  nonzero_local_responses: 102
+  homolog_pairs_accounted: 41
+  homolog_relative_difference:
+    median: 2.786586550248181e-06
+    p90: 2.09986182294059e-05
+    maximum: 4.870242434157811e-05
+  largest_homolog_differences:
+  - homolog_key: '{side}h_trochanterfemur-{side}h_tibia-pitch-motor'
+    left: lh_trochanterfemur-lh_tibia-pitch-motor
+    right: rh_trochanterfemur-rh_tibia-pitch-motor
+    left_abs_response: 0.00012012988273135878
+    right_abs_response: 0.0001201240321148339
+    relative_difference: 4.870242434157811e-05
+  - homolog_key: c_thorax-{side}h_coxa-roll-motor
+    left: c_thorax-lh_coxa-roll-motor
+    right: c_thorax-rh_coxa-roll-motor
+    left_abs_response: 4.9197950521211284e-05
+    right_abs_response: 4.919556023063492e-05
+    relative_difference: 4.8585165663235974e-05
+  - homolog_key: c_thorax-{side}f_coxa-pitch-motor
+    left: c_thorax-lf_coxa-pitch-motor
+    right: c_thorax-rf_coxa-pitch-motor
+    left_abs_response: 4.9206523272734485e-05
+    right_abs_response: 4.9204653755128603e-05
+    relative_difference: 3.7993287912660476e-05
+  - homolog_key: c_thorax-{side}h_coxa-yaw-motor
+    left: c_thorax-lh_coxa-yaw-motor
+    right: c_thorax-rh_coxa-yaw-motor
+    left_abs_response: 4.9178029188852164e-05
+    right_abs_response: 4.91798727788918e-05
+    relative_difference: 3.748667768874316e-05
+  - homolog_key: '{side}h_coxa-{side}h_trochanterfemur-roll-motor'
+    left: lh_coxa-lh_trochanterfemur-roll-motor
+    right: rh_coxa-rh_trochanterfemur-roll-motor
+    left_abs_response: 4.920270351244248e-05
+    right_abs_response: 4.920167032365557e-05
+    relative_difference: 2.09986182294059e-05
+checks:
+  actuator_contract_hash_match: true
+  repeated_closed_baseline_commands: true
+  repeated_closed_baseline_state: true
+  frozen_open_loop_replay_state: true
+  finite_fraction: true
+  perturbations_accounted: true
+  closed_feedback_command_adaptation: true
+  unloaded_homolog_pairs_accounted: true
+passed: true
+artifacts:
+  trace:
+    path: runs\calibration\actuator-causal-attribution-v1\actuator-attribution-20261005T105731Z\frozen-trace-and-attribution.npz
+    sha256: 00ff64c18f31273244b3b2cc0fd12b66b65d1705f884d97e12b49fca840f9d48
+  symmetry:
+    path: runs\calibration\actuator-causal-attribution-v1\actuator-attribution-20261005T105731Z\tethered-symmetry.json
+    sha256: 049cf1ec5afd9f018af4ef186eddaff84e585eb2899550354b8b3908dd73f6d4
+decision:
+  status: accepted_bounded_direct_motor_surrogate_initial_short_horizon
+  supports:
+  - passive mechanics, frozen-command physics and live feedback are separately measured
+  - the direct motor contains no hidden servo or internal activation controller
+  - the direct motor may be used as an explicit surrogate for initial short-horizon
+    claims when muscle fidelity is excluded
+  does_not_support:
+  - biological muscle or tendon fidelity
+  - validity of the uncalibrated rate comparator
+  - validity of random peripheral transfer values
+  - neutral stability or any behavior claim
+  next_action: Freeze one minimal local sensory chain and one minimal motor chain;
+    retain muscle fidelity as an applicability limit and reopen this gate if actuator
+    semantics change.

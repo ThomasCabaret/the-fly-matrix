@@ -1,0 +1,98 @@
+schema_version: 1
+id: campaign.actuator_causal_attribution.v1
+title: Frozen-trace passive, open-loop and closed-feedback actuator attribution
+status: runnable_diagnostic
+target_id: target.actuator_semantics_gate.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: ACTUATOR CAUSAL ATTRIBUTION / UNCALIBRATED / NO BEHAVIOR
+
+frozen_inputs:
+  body_model: flygym==2.1.0
+  actuator_contract_result: calibration/runner/actuator-semantics-gate-v0.yaml
+  central_profile: benchmarks/profiles/malecns-benchmark-v0.yaml
+  central_runtime: benchmark.malecns.leaky_tanh.v0
+  interface_parameter_origin: deterministic_random_benchmark_only
+  motor_command_envelope: tanh_raw_command_times_0.001
+  topology_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+
+closed_loop_probe:
+  duration_ms: 100.0
+  neural_dt_ms: 5.0
+  perturbation_step: 5
+  perturbation_time_ms: 25.0
+  command_scale: 0.001
+  vision_stride: 1
+  perturbations:
+    - id: lateral_y_velocity
+      qvel_address: 1
+      delta: 1.0
+      units: mm_per_s
+    - id: angular_x_velocity
+      qvel_address: 3
+      delta: 1.0
+      units: rad_per_s
+  branches:
+    - passive_zero_command
+    - frozen_baseline_commands_open_loop
+    - live_malecns_closed_feedback
+
+unloaded_symmetry_probe:
+  scene: tethered_no_ground
+  actuator_scope: all_102_channels_individually
+  settle_ms: 20.0
+  step_ms: 10.0
+  release_ms: 30.0
+  command: 0.005
+  homolog_pair_count: 41
+
+acceptance:
+  optimized_parameters: 0
+  behavior_targets: 0
+  exact_actuator_contract_hash_match: true
+  repeated_closed_baseline_command_max_abs_error: 0.00000001
+  repeated_closed_baseline_state_max_abs_error: 0.00000001
+  frozen_open_loop_replay_state_max_abs_error: 0.00000001
+  finite_fraction: 1.0
+  perturbations_accounted: 2
+  branches_accounted_per_perturbation: 3
+  closed_feedback_command_adaptation_l2_min: 0.0000000001
+  unloaded_homolog_pairs_accounted: 41
+  feedback_may_help_or_hurt: true
+  no_recovery_direction_used_for_selection: true
+
+decision_policy: >-
+  Passing attributes passive mechanics, frozen-command response and live feedback
+  separately. Because the resolved actuator contains no servo, bias or internal
+  activation dynamics, it may then be accepted as a bounded direct-motor surrogate
+  for initial short-horizon claims that explicitly exclude muscle fidelity. The
+  result cannot validate the current neural or interface parameters and cannot
+  support a behavior claim. Failure opens a new actuator or muscle-model version;
+  it never authorizes tuning against a named movement.
+
+budgets:
+  behavior_observations: 0
+  optimized_parameters: 0
+  closed_feedback_episodes: 4
+  open_loop_episodes: 3
+  passive_episodes: 3
+  tethered_actuator_trials: 102
+
+stop_conditions:
+  - actuator_contract_hash_drift
+  - non_deterministic_unperturbed_baseline
+  - frozen_command_replay_does_not_reproduce_unperturbed_physics
+  - non_finite_state
+  - perturbation_does_not_reach_the_live_motor_command
+
+outputs:
+  heavy_run_root: runs/calibration/actuator-causal-attribution-v1
+  compact_result: calibration/runner/actuator-causal-attribution-v1.yaml
+  promotion_policy: technical_gate_only_no_parameter_set
+
+behavior_targets: []
+next_action: >-
+  If all attribution invariants pass, freeze the direct-motor surrogate boundary
+  for the first short-horizon lineage and continue with one local sensory and one
+  local motor calibration scope. Preserve muscle fidelity as an applicability
+  limit rather than a silently solved problem.

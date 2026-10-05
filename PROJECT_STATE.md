@@ -32,15 +32,19 @@ présentes. La correspondance aBN2 reste toutefois partielle : `CB1740` et
 tandis que `CB3129` n'a pas de correspondant résolu. Le protocole scientifique
 reste donc non verrouillé et aucun seuil de réponse n'a été choisi.
 
-Un second gate causal est maintenant enregistré avant toute calibration incarnée
-globale. Le chemin courant utilise explicitement 102 actionneurs MuJoCo
+Un second gate causal est maintenant fermé, dans un périmètre borné, avant toute
+calibration incarnée globale. Le chemin courant utilise explicitement 102 actionneurs MuJoCo
 `ActuatorType.MOTOR`, et non des servos de position ou de vitesse ; le risque
 signalé n'est donc pas copié littéralement. L'abstraction directe articulation/
 couple peut néanmoins remplacer muscles, compliance et réflexes locaux. La
-première passe de `target.actuator_semantics_gate.v0` a maintenant hashé le contrat
-bas niveau et mesuré impulsion, échelon, relâchement et saturation sur les 102
-canaux contre un rejeu passif apparié. Ce jalon local passe ; l'attribution boucle
-ouverte/boucle fermée et une charge symétrique restent ouvertes.
+première passe a hashé le contrat bas niveau et mesuré impulsion, échelon,
+relâchement et saturation sur les 102 canaux. La seconde passe sépare maintenant
+mécanique passive, commandes gelées en boucle ouverte et feedback MaleCNS. Le
+rejeu gelé reproduit exactement l'état non perturbé ; le feedback réagit mais ne
+change la déviation physique finale que d'environ deux parties par million. Une
+fixture tethered sans sol confirme 102/102 réponses et une symétrie intrinsèque
+des 41 paires homologues. Le direct-motor est donc accepté comme surrogate court
+terme explicite, jamais comme physiologie musculaire ou preuve de stabilisation.
 
 L'ADR 0015 ajoute les risques de compensation par interfaces périphériques,
 d'afférences inconnues, de mécanismes absents et d'homogénéité point-neuron. Il
@@ -112,7 +116,7 @@ testée sur le petit graphe, pas présentée comme une activité MaleCNS calibr�
 Le détail et la décision de ne pas télécharger prématurément la morphologie sont
 dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
 
-Le front indépendant suivant est
+Le front indépendant d'actionnement est désormais fermé dans son scope borné :
 [`target.actuator_semantics_gate.v0`](calibration/targets/actuator-semantics-gate-v0.yaml).
 Il ne choisit aucun comportement ni gain moteur. Il fige et inventorie le contrat
 bas niveau. La campagne
@@ -120,15 +124,19 @@ bas niveau. La campagne
 a vérifié les 102 transmissions articulaires à gain unitaire, sans biais ni
 dynamique interne, avec limite de force ±0,01. Chaque canal transmet exactement
 la commande 0,005, sature comme déclaré et produit une réponse articulaire locale
-non nulle. Le reset standard ne constitue toutefois pas une charge symétrique :
+non nulle. Le reset standard ne constitue pas une charge symétrique :
 quatre pattes sur six sont en contact et quelques paires homologues montrent de
-forts écarts. Le résultat compact est dans
+forts écarts. Une seconde campagne préenregistrée a montré, dans une fixture
+tethered sans sol, un écart relatif maximal inférieur à `4.88e-5` sur 41 paires ;
+les forts écarts au sol provenaient donc du contact ou de la configuration. Le
+résultat local initial est dans
 [`runner_result.actuator_semantics_gate.v0`](calibration/runner/actuator-semantics-gate-v0.yaml)
-et son interprétation dans
-[`docs/actuator-semantics-gate.md`](docs/actuator-semantics-gate.md). Tant que le
-rejeu d'une trace gelée n'a pas comparé boucle ouverte et boucle physique fermée,
-l'intégration reste valide mais un mouvement ne peut pas être attribué proprement
-à MaleCNS et à ses boîtes locales.
+et le résultat causal final dans
+[`runner_result.actuator_causal_attribution.v1`](calibration/runner/actuator-causal-attribution-v1.yaml).
+Son interprétation est dans
+[`docs/actuator-semantics-gate.md`](docs/actuator-semantics-gate.md). Ce gate
+autorise le surrogate direct-motor gelé pour les premiers horizons courts ; il ne
+valide ni transfert moteur, ni feedback MaleCNS, ni stabilité, ni comportement.
 
 L'audit reproductible de transfert du circuit antennaire est enregistré dans
 [`evidence.antennal_grooming_circuit_transferability.v0`](calibration/evidence/antennal-grooming-circuit-transferability-v0.yaml)
@@ -531,7 +539,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
 - Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF passe correction, comptabilité et faisabilité pleine échelle ; la première référence circuitaire est structurellement présente mais son mapping aBN2 reste partiel ; le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
-- Attribution incarnée : **102 actionneurs directs `MOTOR` confirmés, zéro servo de position/vitesse dans le chemin courant ; contribution mécanique/actuateur non quantifiée et gate ADR 0015 non exécuté**.
+- Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 
 Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -597,7 +605,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **123 tests** actuels passent, y compris les
+conservées et classifiées. Les **129 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -676,11 +684,13 @@ le pont d'unités : il doit comparer le runtime rate au baseline LIF événement
 sur les probes verrouillés restants, puis seulement définir l'interface d'entrée
 native du modèle retenu.
 
-En parallèle, le prochain lot indépendant peut préenregistrer et exécuter le gate
-d'actionneurs sans attendre le choix rate/LIF, car ses probes sont physiques et
-comportement-naïfs. Aucune campagne de stabilité incarnée ne doit libérer en même
-temps les familles centrales, sensorielles, motrices et mécaniques avant ce gate
-et une analyse d'identifiabilité des interfaces.
+En parallèle, le gate d'actionneurs est maintenant terminé sans attendre le choix
+rate/LIF, car ses probes sont physiques et comportement-naïfs. Le prochain front
+indépendant doit figer une chaîne sensorielle locale minimale et une chaîne motrice
+locale minimale. Aucune campagne de stabilité incarnée ne doit libérer en même
+temps les familles centrales, sensorielles, motrices et mécaniques ; la mécanique
+et le contrat direct-motor restent gelés et l'identifiabilité des interfaces doit
+être explicitement testée.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -714,6 +724,8 @@ constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
 compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le gate de classe reste ouvert
 neural_model_gate.bat # correction + comptabilité + benchmark CPU/GPU du LIF événementiel, aucune calibration
 audit_circuit_reference.bat # transfert FlyWire→MaleCNS + chemins structuraux ; résultat partiel, zéro fitting
+actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et saturation
+actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tethered, zéro fitting/comportement
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

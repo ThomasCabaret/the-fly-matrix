@@ -163,12 +163,15 @@ No response threshold or model-class decision is emitted. If this reference is
 eventually used for model selection, antennal grooming is exposed for that lineage
 and cannot be reused as a held-out emergent behavior claim.
 
-`target.actuator_semantics_gate.v0` is the next independent embodied gate. The
-present runtime is verified to use 102 classical MuJoCo `MOTOR` channels, not
-position or velocity servos, but direct joint actuation still replaces unmodelled
-muscle and local-reflex dynamics. The future gate uses behavior-naive command,
-force, load and open-loop replay probes; it must close before broad neutral
-embodied fitting or movement interpretation.
+`target.actuator_semantics_gate.v0` is complete as a bounded surrogate gate. Run
+`actuator_attribution_gate.bat` reproduces its behavior-naive passive, frozen
+open-loop and live-feedback comparison plus a tethered 102-channel symmetry
+fixture. The command trace reproduces unperturbed physics exactly; live feedback
+reacts to both generic perturbations but changes final physical deviation by only
+about two parts per million. The direct `MOTOR` contract may therefore remain
+frozen for initial short-horizon work, while muscle, tendon, compliance and local
+reflex fidelity remain explicit exclusions. The result fits no parameters and
+supports no behavior or stability claim.
 
 The first prospective behavior catalog is
 `evaluation_candidates/emergent-behavior-catalog-v0.yaml`. It records localized

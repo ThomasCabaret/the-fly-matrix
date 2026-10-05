@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.actuator_semantics_gate.v0
 title: Bound the causal contribution of the FlyBody actuator abstraction
-status: partial_local_open_loop_pass_closed_feedback_pending
+status: accepted_bounded_direct_motor_surrogate_initial_short_horizon
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: actuator_attribution_gate_no_behavior_claim
@@ -43,7 +43,7 @@ behavior_targets: []
 scenario_splits:
   train: []
   validation: []
-  diagnostic: [actuator_inventory, passive_response, impulse_response, step_response, open_loop_replay]
+  diagnostic: [actuator_inventory, passive_response, impulse_response, step_response, open_loop_replay, frozen_trace_causal_attribution, tethered_unloaded_symmetry]
   held_out: []
 
 dependencies:
@@ -57,26 +57,24 @@ provenance:
     - decisions/0015-embodied-causal-attribution-gates.md
     - calibration/campaigns/actuator-semantics-gate-v0.yaml
     - calibration/runner/actuator-semantics-gate-v0.yaml
+    - calibration/campaigns/actuator-causal-attribution-v1.yaml
+    - calibration/runner/actuator-causal-attribution-v1.yaml
     - src/the_fly_matrix/inventory.py
     - src/the_fly_matrix/runtime.py
     - src/the_fly_matrix/actuator_semantics.py
+    - src/the_fly_matrix/actuator_attribution.py
     - ledger/validations/flybody-actuator-runtime.yaml
     - flygym==2.1.0
   assumptions:
     - The present code instantiates ActuatorType.MOTOR for all 102 channels; it does not instantiate position or velocity servos.
     - Direct motor actuation may still hide missing muscle, compliance or local-reflex dynamics.
 
-validation: local_open_loop_mechanics_pass
-latest_run_id: actuator-semantics-20261005T055452Z
-result_id: runner_result.actuator_semantics_gate.v0
-blocked_reason: >-
-  The all-channel inventory and matched-passive local probes pass, but a frozen
-  command trace has not yet been compared between open-loop replay and the
-  accepted physically closed MaleCNS/body loop. The standard initial condition
-  also contacts only four legs and exposes large outlier asymmetry in a few
-  homologous leg responses, so load-controlled attribution remains necessary.
+validation: technical_causal_attribution_pass
+latest_run_id: actuator-attribution-20261005T105731Z
+result_id: runner_result.actuator_causal_attribution.v1
+blocked_reason: null
 next_action: >-
-  Freeze one behavior-naive command trace, replay it open-loop and through the
-  accepted closed MaleCNS/body loop with motor and mechanics parameters fixed,
-  and add a symmetric load-controlled pose before deciding whether the direct
-  motor surrogate is adequate for the first embodied claim.
+  Keep the 102-channel direct-motor contract and mechanics frozen while defining
+  one minimal local sensory chain and one minimal local motor chain. Reopen this
+  gate if actuator semantics change. Muscle, tendon, compliance and local-reflex
+  fidelity remain explicit applicability limits.

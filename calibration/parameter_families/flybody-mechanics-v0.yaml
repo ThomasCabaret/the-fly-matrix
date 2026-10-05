@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.body.flybody_mechanics.v0
 title: FlyBody mechanical and actuator constants
-status: inventoried_external_frozen_local_actuator_probe_pass_global_gate_open
+status: externally_frozen_actuator_attribution_accepted_bounded_surrogate
 primary_class: evidence_transfer
 parameter_kind: mechanical
 claim_role: surrogate
@@ -13,10 +13,10 @@ scope:
   topology_snapshot: {semantic_topology_sha256: flybody_2.1.0_model_contract, candidate_envelope_sha256: not_applicable, ruleset_sha256: not_applicable, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [external_model_fixed], selected_level: external_model_fixed, justification: keep physics fixed during initial identifiability work, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer], current_origin: borrowed_external_model, prior_or_bounds: upstream_model, fallback: no_silent_override}
-identifiability: {status: frozen_local_open_loop_response_quantified_closed_feedback_gap_pending, allowed_dataset_ids: [flybody-2.1.0], local_held_out_dataset_ids: [], forbidden_behavior_ids: [], jointly_identified_with: [], joint_calibration_reason: null}
+identifiability: {status: frozen_causal_attribution_pass_initial_short_horizon_surrogate_only, allowed_dataset_ids: [flybody-2.1.0], local_held_out_dataset_ids: [], forbidden_behavior_ids: [], jointly_identified_with: [], joint_calibration_reason: null}
 dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.motor.transfer.v0]}
 uncertainty: {representation: documented_model_limitations, admissible_set_criteria: [], reference_selection_rule: upstream_version}
 freeze: {status: externally_frozen, parameter_set_id: null, acceptance_evaluation_ids: [validation.flybody_inventory, validation.flybody_actuator_runtime], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: flygym==2.1.0, supports: executable body mechanics and actuator contract}, {ref: calibration/runner/actuator-semantics-gate-v0.yaml, supports: hashed 102-channel direct-motor contract plus matched-passive impulse step release and saturation results}]
+sources: [{ref: flygym==2.1.0, supports: executable body mechanics and actuator contract}, {ref: calibration/runner/actuator-semantics-gate-v0.yaml, supports: hashed 102-channel direct-motor contract plus matched-passive impulse step release and saturation results}, {ref: calibration/runner/actuator-causal-attribution-v1.yaml, supports: exact frozen-trace replay passive/open/closed attribution and unloaded homolog symmetry}]
 assumptions: [Mechanical constants are held fixed initially; this does not claim they are exact fly physiology., Direct motor actuation avoids a hidden position-servo loop but may still replace muscle activation, compliance or local reflex dynamics.]
-next_action: Keep mechanics frozen; complete the open-loop versus closed-feedback attribution and repeat homolog comparisons in a symmetric load-controlled pose before embodied fitting.
+next_action: Keep mechanics and actuator semantics frozen for minimal local sensory and motor chains; reopen the gate if the actuator model changes and keep muscle fidelity outside the accepted claim scope.
