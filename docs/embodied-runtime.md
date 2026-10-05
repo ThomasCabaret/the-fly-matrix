@@ -90,8 +90,11 @@ normal path until profiling and optimization close that gap.
 - The 5 ms neural step has not been biologically accepted.
 - Input and motor parameters are seeded placeholders and cannot be promoted.
 - Actuator addressing is validated, but command-to-force/state semantics and the
-  stabilization contributed by FlyBody/MuJoCo have not yet passed the actuator
-  attribution gate.
+  stabilization contributed by FlyBody/MuJoCo have only passed the local
+  open-loop stage of the actuator attribution gate. All 102 direct motors have a
+  hashed low-level contract and matched-passive impulse/step/release result; the
+  frozen-trace open-loop versus closed-feedback comparison remains open. See
+  `docs/actuator-semantics-gate.md`.
 - Scientific interface revalidation remains independently blocking.
 - Optimize only after profiling; likely targets are retinal rendering, repeated
   box assembly and GPU/CPU synchronization.

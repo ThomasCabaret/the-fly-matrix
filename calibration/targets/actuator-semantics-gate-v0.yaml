@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.actuator_semantics_gate.v0
 title: Bound the causal contribution of the FlyBody actuator abstraction
-status: proposed_current_runtime_confirmed_direct_motor_audit_not_run
+status: partial_local_open_loop_pass_closed_feedback_pending
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: actuator_attribution_gate_no_behavior_claim
@@ -55,17 +55,28 @@ dependencies:
 provenance:
   sources:
     - decisions/0015-embodied-causal-attribution-gates.md
+    - calibration/campaigns/actuator-semantics-gate-v0.yaml
+    - calibration/runner/actuator-semantics-gate-v0.yaml
     - src/the_fly_matrix/inventory.py
     - src/the_fly_matrix/runtime.py
+    - src/the_fly_matrix/actuator_semantics.py
     - ledger/validations/flybody-actuator-runtime.yaml
     - flygym==2.1.0
   assumptions:
     - The present code instantiates ActuatorType.MOTOR for all 102 channels; it does not instantiate position or velocity servos.
     - Direct motor actuation may still hide missing muscle, compliance or local-reflex dynamics.
 
-validation: not_run
-blocked_reason: null
+validation: local_open_loop_mechanics_pass
+latest_run_id: actuator-semantics-20261005T055452Z
+result_id: runner_result.actuator_semantics_gate.v0
+blocked_reason: >-
+  The all-channel inventory and matched-passive local probes pass, but a frozen
+  command trace has not yet been compared between open-loop replay and the
+  accepted physically closed MaleCNS/body loop. The standard initial condition
+  also contacts only four legs and exposes large outlier asymmetry in a few
+  homologous leg responses, so load-controlled attribution remains necessary.
 next_action: >-
-  Register a compact behavior-naive impulse/step/load probe, hash the resolved
-  actuator contract, and compare open-loop replay with physically closed feedback
-  before opening neutral embodied fitting.
+  Freeze one behavior-naive command trace, replay it open-loop and through the
+  accepted closed MaleCNS/body loop with motor and mechanics parameters fixed,
+  and add a symmetric load-controlled pose before deciding whether the direct
+  motor surrogate is adequate for the first embodied claim.

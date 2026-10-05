@@ -28,7 +28,7 @@ metrics:
   - model_independent_pathology_metrics
   - preregistered_circuit_reference_agreement
   - information_destroyed_by_representation
-    - residuals_by_neuron_class_and_region
+  - residuals_by_neuron_class_and_region
 
 acceptance_policy:
   summary: >-

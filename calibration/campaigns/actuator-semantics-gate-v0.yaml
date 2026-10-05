@@ -1,0 +1,73 @@
+schema_version: 1
+id: campaign.actuator_semantics_gate.v0
+title: FlyBody direct-motor inventory and local mechanical attribution probe
+status: runnable_diagnostic
+target_id: target.actuator_semantics_gate.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: ACTUATOR ATTRIBUTION GATE / NO CALIBRATION / NO BEHAVIOR
+
+frozen_inputs:
+  body_model: flygym==2.1.0
+  actuator_manifest: data/derived/wiring/flybody-actuator-channels.csv
+  actuator_address_validation: ledger/validations/flybody-actuator-runtime.yaml
+  motor_topology_validation: ledger/validations/motor-transduction-candidates.yaml
+
+probe:
+  scene: fixed_standard_flat_ground
+  actuator_scope: all_102_channels_individually
+  settle_ms: 20.0
+  impulse_ms: 1.0
+  step_ms: 10.0
+  release_ms: 30.0
+  command: 0.005
+  saturation_command: 0.02
+  command_units: MuJoCo_model_input
+  comparison: matched_zero_command_trajectory_from_identical_reset
+
+acceptance:
+  actuator_count: 102
+  transmission_type: mjTRN_JOINT
+  gain_type: mjGAIN_FIXED
+  bias_type: mjBIAS_NONE
+  dynamics_type: mjDYN_NONE
+  all_channels_force_limited: true
+  force_range: [-0.01, 0.01]
+  command_force_identity_on_all_channels: true
+  saturation_limit_effective_on_all_channels: true
+  nonzero_local_step_response_on_all_channels: true
+  local_pass_does_not_close_global_gate: true
+
+stages:
+  - id: resolved_contract
+    purpose: hash every low-level actuator parameter and resolved address
+  - id: passive_reference
+    purpose: measure the fixed body's zero-command motion and contact state
+  - id: all_channel_local_response
+    purpose: measure impulse, step, release and force clipping against matched passive trajectories
+  - id: closed_feedback_attribution
+    purpose: compare one frozen open-loop command trace with the accepted closed MaleCNS/body loop
+    status: intentionally_not_run_in_this_campaign_version
+
+budgets:
+  behavior_observations: 0
+  optimized_parameters: 0
+  actuator_trials: 204
+  saturation_checks: 102
+
+stop_conditions:
+  - resolved_actuator_contract_differs_from_declared_direct_motor_runtime
+  - non_finite_physics_state
+  - channel_address_or_force_limit_mismatch
+
+outputs:
+  heavy_run_root: runs/calibration/actuator-semantics-gate-v0
+  compact_result: calibration/runner/actuator-semantics-gate-v0.yaml
+  promotion_policy: diagnostic_only_no_parameter_set
+
+behavior_targets: []
+next_action: >-
+  After the local probe passes, freeze one command trace produced without a named
+  behavior objective and compare its open-loop replay with the same trace's
+  accepted physically closed MaleCNS/body execution. Do not free motor transfer,
+  actuator or mechanics parameters during that attribution comparison.

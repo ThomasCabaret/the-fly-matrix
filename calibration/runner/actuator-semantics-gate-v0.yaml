@@ -1,0 +1,113 @@
+schema_version: 1
+id: runner_result.actuator_semantics_gate.v0
+campaign_id: campaign.actuator_semantics_gate.v0
+target_id: target.actuator_semantics_gate.v0
+run_id: actuator-semantics-20261005T055452Z
+status: partial_local_mechanical_attribution_pass_closed_feedback_pending
+claim_label: ACTUATOR ATTRIBUTION GATE / NO CALIBRATION / NO BEHAVIOR
+behavior_targets: []
+actuator_contract_sha256: b1b11acc2b6d82dbfa6e8a4170c4b53475fb7d627ecb5a9de892efd87081abc2
+model_contract_sha256: 458720dff93d3db79196621232cd42ded42f55269d17c163aee59bfd041a439e
+inventory_summary:
+  actuator_count: 102
+  transmission_types:
+    mjTRN_JOINT: 102
+  gain_types:
+    mjGAIN_FIXED: 102
+  bias_types:
+    mjBIAS_NONE: 102
+  dynamics_types:
+    mjDYN_NONE: 102
+  force_limited_count: 102
+  control_limited_count: 0
+  missing_configuration_count: 2
+passive_summary:
+  contacting_legs: 4
+  joint_position_drift_l2: 0.22337889614524875
+response_summary:
+  actuators_probed: 102
+  class_count: 11
+  class_summary:
+    abdomen:abdomen:
+      actuator_count: 14
+      step_target_delta_abs_median: 4.7824254358560874e-05
+      step_release_residual_abs_median: 4.1400576390334885e-05
+      impulse_target_delta_abs_median: 4.329673751145067e-06
+    antennae:antenna-labrum:
+      actuator_count: 6
+      step_target_delta_abs_median: 0.0009361879459182206
+      step_release_residual_abs_median: 5.576923638137899e-06
+      impulse_target_delta_abs_median: 2.4425035441762356e-05
+    halteres:unconfigured:
+      actuator_count: 2
+      step_target_delta_abs_median: 1.1390617335174936e-05
+      step_release_residual_abs_median: 2.649664047392009e-08
+      impulse_target_delta_abs_median: 1.6524728835841783e-05
+    head:head:
+      actuator_count: 3
+      step_target_delta_abs_median: 0.000397998882611074
+      step_release_residual_abs_median: 0.00017806888953103897
+      impulse_target_delta_abs_median: 1.7821083099405633e-05
+    legs:coxa-femur:
+      actuator_count: 30
+      step_target_delta_abs_median: 4.59106942295737e-05
+      step_release_residual_abs_median: 4.5159721460012736e-05
+      impulse_target_delta_abs_median: 4.460748377453291e-06
+    legs:tarsus-tibia:
+      actuator_count: 36
+      step_target_delta_abs_median: 0.0001894348987052754
+      step_release_residual_abs_median: 4.886941625333822e-05
+      impulse_target_delta_abs_median: 1.4128647058368662e-05
+    proboscis:antenna-labrum:
+      actuator_count: 2
+      step_target_delta_abs_median: 0.0004037256353966376
+      step_release_residual_abs_median: 0.00018099600844015136
+      impulse_target_delta_abs_median: 1.9227632048701714e-05
+    proboscis:head:
+      actuator_count: 3
+      step_target_delta_abs_median: 0.0004032533283372591
+      step_release_residual_abs_median: 0.00018047855485843413
+      impulse_target_delta_abs_median: 1.9176134228239723e-05
+    wings:pitch:
+      actuator_count: 2
+      step_target_delta_abs_median: 0.0007429597254832582
+      step_release_residual_abs_median: 0.0005233714470712983
+      impulse_target_delta_abs_median: 2.2404771239027677e-05
+    wings:roll:
+      actuator_count: 2
+      step_target_delta_abs_median: 0.000558998020847426
+      step_release_residual_abs_median: 0.0004382179847013806
+      impulse_target_delta_abs_median: 1.843073190034572e-05
+    wings:yaw:
+      actuator_count: 2
+      step_target_delta_abs_median: 0.000526595255364859
+      step_release_residual_abs_median: 0.00042058104454177625
+      impulse_target_delta_abs_median: 1.808282421493501e-05
+  nonzero_step_local_responses: 102
+  force_matches_command: 102
+  force_limit_clipped_count: 102
+  complete_homolog_pairs: 41
+  homolog_step_abs_relative_difference:
+    median: 0.002936171276494086
+    maximum: 0.8735698086044048
+accepted_local_open_loop_mechanics: true
+scientific_gate_closed: false
+unrun_required_metric: open_loop_closed_loop_response_gap
+artifact:
+  path: runs\calibration\actuator-semantics-gate-v0\actuator-semantics-20261005T055452Z\result.json
+  sha256: cea229ed11f7b81692a5ec70f5f2c82fdadc43ce090a54bf29f16fcb26192f5f
+decision:
+  status: partial_local_mechanical_attribution_pass_closed_feedback_pending
+  supports:
+  - The resolved runtime uses force-limited direct joint motors with no internal actuator
+    bias or activation dynamics.
+  - Every channel produces a measurable local joint response in the fixed standard-ground
+    scene.
+  does_not_support:
+  - biological muscle fidelity
+  - adequacy of the motor transfer box
+  - closed-loop MaleCNS causal attribution
+  - any behavior claim
+  next_action: Replay one frozen command trace open-loop and through the accepted
+    closed MaleCNS/body loop, then attribute the response gap without freeing motor
+    or mechanics parameters.

@@ -1,6 +1,6 @@
 schema_version: 1
 phase: critical_neural_model_class_validation
-updated: 2026-10-04
+updated: 2026-10-05
 
 wiring_baseline:
   terminal_coverage: complete
@@ -53,7 +53,7 @@ readiness:
   spike_event_runtime: fixed_delay_lif_reference_exact_on_small_recurrent_graph_full_graph_load_validated
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: partial_abn1_adn_exact_abn2_two_of_three_types_structural_paths_present
-  actuator_semantics: current_102_channels_are_direct_mujoco_motor_not_position_or_velocity_servo_attribution_audit_open
+  actuator_semantics: direct_mujoco_motor_not_position_or_velocity_servo_local_open_loop_pass_102_of_102_hashed_and_probed_closed_feedback_gap_open
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: not_run_1815_unknown_channels_require_behavior_naive_hypothesis_grid
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
@@ -75,7 +75,8 @@ blocked_by:
   - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; the correct bridge depends on the unresolved central model class and must not be invented first.
   - The antennal circuit reference maps exactly for aBN1, aDN1 and aDN2 and has nonzero MaleCNS structural paths, but one of three pinned aBN2 FlyWire types (CB3129) has no resolved MaleCNS match; the scientific protocol remains unlocked.
   - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
-  - The embodied runtime currently uses direct MuJoCo motor actuators rather than position servos, but their mechanical and control contribution has not been quantified; neutral embodied fitting and behavioral interpretation remain gated by target.actuator_semantics_gate.v0.
+  - The all-channel actuator audit confirms direct unit-gain MuJoCo joint motors with no bias or internal activation dynamics and quantifies matched-passive local responses, but the open-loop versus closed-feedback response gap is still unmeasured; neutral embodied fitting and behavioral interpretation remain gated by target.actuator_semantics_gate.v0.
+  - The standard actuator probe begins with only four of six legs in ground contact and has large response-asymmetry outliers in a few homologous leg pairs; a symmetric load-controlled attribution scene is required before interpreting side differences.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
@@ -83,6 +84,8 @@ next_action: >-
   Continue target.neural_model_class_gate.v0 by resolving or explicitly excluding
   the missing CB3129-equivalent MaleCNS aBN2 cell, then lock the qualitative
   JO-CE versus JO-F neural-response reference and shared rate-versus-event probes.
-  In parallel, preregister the bounded target.actuator_semantics_gate.v0 probe;
-  do not resume model-dependent basal calibration or neutral embodied fitting
-  merely because the event engine or the current direct-motor path executes.
+  In parallel, complete target.actuator_semantics_gate.v0 with one frozen
+  behavior-naive command trace compared in open-loop replay and accepted closed
+  MaleCNS/body execution, plus a symmetric load-controlled pose; do not resume
+  model-dependent basal calibration or neutral embodied fitting merely because
+  the event engine or the local direct-motor probe executes.

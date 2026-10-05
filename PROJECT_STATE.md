@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-04. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-05. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -36,9 +36,11 @@ Un second gate causal est maintenant enregistré avant toute calibration incarn�
 globale. Le chemin courant utilise explicitement 102 actionneurs MuJoCo
 `ActuatorType.MOTOR`, et non des servos de position ou de vitesse ; le risque
 signalé n'est donc pas copié littéralement. L'abstraction directe articulation/
-couple peut néanmoins fournir une part non quantifiée du contrôle en remplaçant
-muscles, compliance et réflexes locaux. `target.actuator_semantics_gate.v0` doit
-mesurer ce rôle par classes d'actionneurs, charges et rejeux en boucle ouverte.
+couple peut néanmoins remplacer muscles, compliance et réflexes locaux. La
+première passe de `target.actuator_semantics_gate.v0` a maintenant hashé le contrat
+bas niveau et mesuré impulsion, échelon, relâchement et saturation sur les 102
+canaux contre un rejeu passif apparié. Ce jalon local passe ; l'attribution boucle
+ouverte/boucle fermée et une charge symétrique restent ouvertes.
 
 L'ADR 0015 ajoute les risques de compensation par interfaces périphériques,
 d'afférences inconnues, de mécanismes absents et d'homogénéité point-neuron. Il
@@ -113,10 +115,20 @@ dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
 Le front indépendant suivant est
 [`target.actuator_semantics_gate.v0`](calibration/targets/actuator-semantics-gate-v0.yaml).
 Il ne choisit aucun comportement ni gain moteur. Il fige et inventorie le contrat
-bas niveau, puis doit quantifier les réponses commande→force/état, saturation,
-relâchement, charge, symétrie et écart boucle ouverte/boucle fermée. Tant qu'il est
-ouvert, l'intégration physique reste valide mais un mouvement ne peut pas être
-attribué proprement à MaleCNS et à ses boîtes locales.
+bas niveau. La campagne
+[`campaign.actuator_semantics_gate.v0`](calibration/campaigns/actuator-semantics-gate-v0.yaml)
+a vérifié les 102 transmissions articulaires à gain unitaire, sans biais ni
+dynamique interne, avec limite de force ±0,01. Chaque canal transmet exactement
+la commande 0,005, sature comme déclaré et produit une réponse articulaire locale
+non nulle. Le reset standard ne constitue toutefois pas une charge symétrique :
+quatre pattes sur six sont en contact et quelques paires homologues montrent de
+forts écarts. Le résultat compact est dans
+[`runner_result.actuator_semantics_gate.v0`](calibration/runner/actuator-semantics-gate-v0.yaml)
+et son interprétation dans
+[`docs/actuator-semantics-gate.md`](docs/actuator-semantics-gate.md). Tant que le
+rejeu d'une trace gelée n'a pas comparé boucle ouverte et boucle physique fermée,
+l'intégration reste valide mais un mouvement ne peut pas être attribué proprement
+à MaleCNS et à ses boîtes locales.
 
 L'audit reproductible de transfert du circuit antennaire est enregistré dans
 [`evidence.antennal_grooming_circuit_transferability.v0`](calibration/evidence/antennal-grooming-circuit-transferability-v0.yaml)

@@ -24,7 +24,7 @@ acceptance_criteria:
   - Candidate motor-neuron inputs and scientific command values remain separate from exact ctrl addressing
 calibration_dataset_ids: []
 held_out_behavior_ids: []
-latest_run_id: flybody-physical-feedback-2026-09-22
+latest_run_id: actuator-semantics-20261005T055452Z
 status: integration_pass
 notes:
   - The current runtime explicitly requests ActuatorType.MOTOR; this avoids an implicit position target but does not validate biological muscle semantics
@@ -33,4 +33,6 @@ notes:
   - The smoke-only tanh envelope protects numerical execution and is not a scientific gain
   - The commanded state is read back through the exact 102-channel proprioception interface
   - Candidate mapping and parameter calibration remain separate from exact physical execution
-  - The causal contribution of direct joint actuation remains open under target.actuator_semantics_gate.v0
+  - The hashed local audit probes all 102 channels against matched passive trajectories; command-force identity, force clipping and nonzero local response pass on every channel
+  - The standard scene has four of six legs initially contacting ground and some homologous leg pairs have large response asymmetry, so it is not a symmetric load reference
+  - The causal contribution of direct joint actuation remains open until frozen-trace open-loop versus closed-feedback attribution under target.actuator_semantics_gate.v0
