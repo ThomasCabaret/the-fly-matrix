@@ -201,6 +201,15 @@ La campagne complète attend donc un exécuteur batché/reprenable et une décis
 explicite sur sa valeur d'information, ou une seconde référence plus sensible au
 temps.
 
+Une prévalidation microscopique dédiée couvre désormais le chemin avant toute
+nouvelle exécution longue. `neural_model_micro_tests.bat` regroupe 27 oracles sur
+petits graphes : poids scientifique et provenance, multiplicité et signe,
+chronologie délai/intégration, reset/réfractaire, événements consécutifs, état
+frais et indépendance d'ordre, absence de mutation du CSR, parité CPU/GPU,
+agrégation rate, liaison configuration réelle→graphe minimal, conformité Brian2
+et pertes temporelles rate/event. Ce jalon ferme une faiblesse de vérification du
+code ; il ne ferme pas le gate scientifique de classe de modèle.
+
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
 19 familles : six sources basales, quatre routages, quatre transferts, trois
@@ -784,6 +793,7 @@ brian2_conformance.bat # frontières scheduler Brian2: intégration, délai, res
 temporal_model_probes.bat # collisions rate/event et pathologies techniques, aucun comportement
 audit_circuit_reference.bat # transfert FlyWire→MaleCNS + chemins structuraux ; résultat partiel, zéro fitting
 run_abn1_gate_pilot.bat # répétition bornée v2 sur graphe complet ; descriptif seulement, aucune sélection
+neural_model_micro_tests.bat # 27 oracles rapides de mécanique neuronale ; aucune validation biologique
 lock_abn1_reference.bat # reconstruit/verrouille le probe aBN1 JO-CE/JO-F avant toute sortie candidate
 actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et saturation
 actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tethered, zéro fitting/comportement

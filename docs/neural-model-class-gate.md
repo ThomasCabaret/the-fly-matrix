@@ -165,6 +165,24 @@ ensemble (64,860 units total). Full execution is therefore gated on a verified
 batched/resumable executor and an information-value review: the pilot suggests
 aBN1 may confirm capability for both classes without distinguishing them.
 
+### Microscopic regression boundary
+
+`neural_model_micro_tests.bat` is the fast preflight for code that can affect the
+neural-model gate. Its deterministic tiny graphs check the scientific unitary
+weight and its provenance rather than the synthetic benchmark load, exact
+contact multiplicity and presynaptic sign, fixed-delay arrival, integration order,
+reset of both state variables, refractory state, consecutive source events,
+fresh state and order independence across trials, non-mutation of the canonical
+CSR, CPU/GPU agreement, rate-bin accounting, and one real-config-to-tiny-graph
+path. It also runs the existing NumPy/Torch, Brian2 scheduler, and temporal-loss
+oracles. A CUDA assertion is skipped only when CUDA is unavailable.
+
+These tests protect microscopic execution semantics. Passing them cannot validate
+the LIF constants, decide rate versus event dynamics, establish biological
+fidelity, or replace a preregistered circuit reference. Conversely, a failure
+blocks interpretation of dependent long runs until it is explained: numerical
+throughput and plausible output are not substitutes for these invariants.
+
 ## Geometry and delay data decision
 
 The current flat connectome weight table contains `body_pre`, `body_post` and

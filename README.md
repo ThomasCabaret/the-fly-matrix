@@ -82,6 +82,10 @@ Pour reprendre le projet sans le contexte des conversations :
   graphe complet pour le LIF source-aligné et trois sentinelles rate sous trois
   ponts d'unité. Il écrit les sorties lourdes dans `runs/calibration/`, mais ne
   sélectionne aucun modèle et ne constitue pas le protocole complet à 30 essais.
+- `neural_model_micro_tests.bat` exécute la prévalidation rapide des sémantiques
+  neuronales élémentaires (unités, signe, multiplicité, délai, ordre d'intégration,
+  reset/réfractaire, isolation des essais et parité CPU/GPU). Un succès valide le
+  code microscopique, jamais la fidélité biologique ni le choix rate/LIF.
 
 The exhaustive interactive wiring map is now available as a first read-only
 inspection surface. It exposes connected and blocked terminals, real box

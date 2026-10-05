@@ -151,6 +151,25 @@ def aggregate_rate_input(
     return counts.astype(np.float32) / float(normalization_hz * rate_dt_ms / 1000.0)
 
 
+def event_unitary_weight_mV(profile: SourceAlignedProfile) -> tuple[float, str]:
+    """Read the scientific comparator weight, never the synthetic load weight."""
+    try:
+        specification = profile.model["reference_constants"]["unitary_synaptic_weight_mV"]
+        value = float(specification["value"])
+        origin = str(specification["origin"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise Abn1ModelClassError(
+            "The event comparator lacks a sourced unitary synaptic weight"
+        ) from exc
+    if not math.isfinite(value) or value <= 0:
+        raise Abn1ModelClassError("The event unitary synaptic weight must be finite and positive")
+    if origin != "published_behavior_exposed_fit":
+        raise Abn1ModelClassError(
+            f"Unexpected event unitary-weight provenance: {origin}"
+        )
+    return value, origin
+
+
 def _event_trial(
     outgoing: Any,
     neuron_signs: np.ndarray,
@@ -159,6 +178,8 @@ def _event_trial(
     events: np.ndarray,
     device: str,
     profile: SourceAlignedProfile,
+    *,
+    trace_indices: np.ndarray | None = None,
 ) -> dict[str, Any]:
     c = profile.constants
     steps = len(events)
@@ -167,9 +188,7 @@ def _event_trial(
     node_count = outgoing.shape[0]
     indptr = torch.from_numpy(outgoing.indptr.astype(np.int64, copy=False)).to(device)
     indices = torch.from_numpy(outgoing.indices.astype(np.int64, copy=False)).to(device)
-    unitary_weight_mV = float(
-        profile.model["reference_constants"]["unitary_synaptic_weight_mV"]["value"]
-    )
+    unitary_weight_mV, unitary_weight_origin = event_unitary_weight_mV(profile)
     weights = scaled_torch_weights(outgoing.data, unitary_weight_mV, device)
     signs = torch.from_numpy(neuron_signs.astype(np.float32, copy=False)).to(device)
     source_tensor = torch.from_numpy(source_indices).to(device)
@@ -183,6 +202,18 @@ def _event_trial(
     source_endogenous_spikes = 0
     target_v_peak = -math.inf
     target_g_peak = -math.inf
+    trace_tensor = None
+    trace_v: list[np.ndarray] = []
+    trace_g: list[np.ndarray] = []
+    trace_refractory: list[np.ndarray] = []
+    trace_emitted: list[list[int]] = []
+    if trace_indices is not None:
+        traced = np.asarray(trace_indices, dtype=np.int64)
+        if traced.ndim != 1 or len(traced) == 0:
+            raise ValueError("trace_indices must be a non-empty one-dimensional array")
+        if np.any(traced < 0) or np.any(traced >= node_count):
+            raise ValueError("trace_indices contains a node outside the graph")
+        trace_tensor = torch.from_numpy(traced).to(device)
     started = time.perf_counter()
     with torch.inference_mode():
         for step in range(steps):
@@ -230,11 +261,18 @@ def _event_trial(
             target_spikes += int(torch.isin(emitted, target_tensor).sum().item())
             forced_spikes += int(forced.numel())
             endogenous_spikes += int(generated.numel())
+            if trace_tensor is not None:
+                trace_v.append(v[trace_tensor].detach().cpu().numpy().copy())
+                trace_g.append(g[trace_tensor].detach().cpu().numpy().copy())
+                trace_refractory.append(
+                    refractory[trace_tensor].detach().cpu().numpy().copy()
+                )
+                trace_emitted.append([int(item) for item in emitted.detach().cpu().tolist()])
     if device.startswith("cuda"):
         torch.cuda.synchronize(device)
     elapsed = time.perf_counter() - started
     finite = bool(torch.isfinite(v).all().item() and torch.isfinite(g).all().item())
-    return {
+    result: dict[str, Any] = {
         "response": target_spikes / (steps * profile.dt_ms / 1000.0) / len(target_indices),
         "response_unit": "aBN1_spikes_per_second_per_neuron",
         "target_spikes": target_spikes,
@@ -245,9 +283,18 @@ def _event_trial(
         "source_endogenous_spikes": source_endogenous_spikes,
         "delivered_edge_events": delivered,
         "unitary_synaptic_weight_mV": unitary_weight_mV,
+        "unitary_synaptic_weight_origin": unitary_weight_origin,
         "wall_seconds": elapsed,
         "finite_state": finite,
     }
+    if trace_tensor is not None:
+        result["trace"] = {
+            "v_mV": np.stack(trace_v),
+            "g_mV": np.stack(trace_g),
+            "refractory_steps": np.stack(trace_refractory),
+            "emitted_indices": trace_emitted,
+        }
+    return result
 
 
 def _torch_rate_matrix(candidate: Mapping[str, float], device: str) -> tuple[Any, Any]:
