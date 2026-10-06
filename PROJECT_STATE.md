@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-05. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-06. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -9,20 +9,25 @@ aval préenregistrée montre qu'ils divergent fortement aux sorties motrices. Un
 contrainte indépendante de raffinement temporel exclut maintenant un candidat et
 conserve 31 survivants, mais aucun paramètre de référence n'est identifié ni gelé.
 Le modèle à douze paramètres partagés est désormais enregistré comme une hypothèse
-de capacité à haut risque, pas comme la dimensionalité admise de MaleCNS. Une
-hypothèse plus amont est maintenant reconnue comme gate critique : ce modèle est
-un runtime rate continu sans spikes, réfractarité, noyau synaptique événementiel
-ni délai de transmission. Rien ne montre encore que cette représentation préserve
-les calculs nécessaires à une mouche incarnée.
+de capacité à haut risque, pas comme la dimensionalité admise de MaleCNS. Le gate
+plus amont est maintenant fermé globalement : ni ce runtime rate continu, ni un
+LIF point-neuron homogène ne sont promus sur tout MaleCNS. L'ADR 0016 accepte une
+architecture event-capable typée/hybride, sans promouvoir encore une affectation
+de population ni une valeur.
 
-Le premier jalon du gate de classe neuronale est maintenant mesuré. Une référence
+Le gate global de classe neuronale est maintenant fermé avec la décision
+`revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
 indépendante sur un petit graphe récurrent, puis comptabilise les 25 582 938
 arêtes du MaleCNS canonique. Le benchmark CPU/GPU complet livre chaque événement
 attendu sous trois charges synthétiques et tient largement dans les 8 Go du GPU,
-mais l'implémentation Torch générique n'atteint encore qu'environ 0,03 à 0,05 fois
-le temps réel à 0,1 ms. C'est un passage d'ingénierie, pas l'acceptation du modèle :
-les probes comparatifs et la référence circuit indépendante restent à faire.
+mais l'implémentation Torch générique n'atteint encore qu'environ 0,04 fois le
+temps réel à 0,1 ms. Les probes temporels établissent trois pertes d'information
+du rate à 5 ms. Le pilote aBN1 est directionnellement positif pour LIF et les neuf
+séries rate/bridge : il ne justifie pas les quelque seize GPU-heures du run complet
+pour forcer un vainqueur global. L'architecture retenue exige les événements et
+délais là où ils sont nécessaires, permet les populations graduées sourcées et
+laisse l'inconnu `dual_unresolved`.
 
 La transférabilité de la première référence circuitaire indépendante est désormais
 auditée plutôt que supposée. aBN1, aDN1 et aDN2 ont des correspondances de type
@@ -57,9 +62,9 @@ Le premier gate local de sources basales est maintenant exécuté. Il comptabili
 les 2 212 canaux couvrant 6 041 afférences, dérive 211 partitions d'audit et
 n'émet volontairement aucune valeur. Les mesures publiées sont en spikes/s alors
 que l'entrée centrale courante est une activité normalisée sur le vecteur sensoriel
-complet. Ce conflit d'unités révèle désormais un choix de modèle, pas seulement un
-convertisseur manquant : le pont numérique et la propagation de l'ensemble sont
-suspendus jusqu'au gate rate-versus-spikes de l'ADR 0014.
+complet. Ce conflit d'unités ne sera pas résolu par un convertisseur universel :
+chaque pont doit viser une population événementielle, graduée, ou une frontière
+de conversion typée dont les unités et l'incertitude sont explicites.
 
 Cette fiche doit être actualisée après tout commit qui modifie le score de câblage
 ou les fronts structurels. En cas d'écart, le registre et le tableau de bord
@@ -82,23 +87,21 @@ Leurs implémentations et `integration_pass` restent des preuves d'exécution et
 cardinalité ; l'acceptation scientifique supplémentaire porte sur les enveloppes
 topologiques bornées, jamais sur les valeurs physiologiques ou de transfert.
 
-L'objectif courant est de construire l'**infrastructure de calibration** avant de
-chercher un comportement convaincant : inventaire versionné des familles de
-paramètres, DAG de dépendances, règles de partage et d'identifiabilité, jeux de
-données autorisés, représentation de l'incertitude, protocoles de gel/réouverture
-et runner autonome minimal. La politique est définie par
-[`ADR 0012`](decisions/0012-hierarchical-reconstructible-calibration.md) et
-[`docs/calibration-methodology.md`](docs/calibration-methodology.md).
+L'objectif courant est d'exécuter
+[`target.population_dynamics_assignment.v0`](calibration/targets/population-dynamics-assignment-v0.yaml) :
+préréférencer une chaîne sensorielle locale et une chaîne motrice locale, affecter
+leurs populations à une dynamique événementielle, graduée ou
+`dual_unresolved`, et déclarer chaque frontière de conversion. L'infrastructure
+d'inventaire, DAG, runner, partage, gel et réouverture existe déjà ; elle doit
+maintenant porter des calibrations locales traçables.
 
-Le front prioritaire est désormais
-[`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml).
-Le runtime rate reste un benchmark d'ingénierie réutilisable. Le gate doit
-implémenter un modèle LIF événementiel traçable, avec spikes, intégration
-membranaire et synaptique, réfractarité et politique de délai explicite, valider sa
-référence sur petit graphe, mesurer le graphe MaleCNS complet et comparer les deux
-classes sur des probes préenregistrés avant toute calibration dépendante des
-unités centrales. La politique et le précédent scientifique sont consignés dans
-[`ADR 0014`](decisions/0014-neural-dynamics-fidelity-gate.md).
+Le précédent front
+[`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
+est terminé. Son évaluation conclut `revise`, et
+[`ADR 0016`](decisions/0016-event-capable-typed-hybrid-neural-runtime.md)
+fixe le contrat `model.malecns_event_capable_typed_hybrid.v0`. Le runtime rate et
+le LIF source-aligné restent deux comparateurs exécutables ; ni leurs paramètres,
+ni une classe homogène ne sont promus.
 
 Le protocole v0 et son résultat compact sont conservés dans
 [`campaign.neural_model_class_lif_feasibility.v0`](calibration/campaigns/neural-model-class-lif-feasibility-v0.yaml)
@@ -138,7 +141,9 @@ montre qu'à 5 ms le rate confond exactement des trains distincts par phase
 intra-bin, ordre inter-canaux et délai sous-bin, alors que la trace événementielle
 à 0,1 ms les distingue. Les deux comparateurs passent les contrôles bornés de
 silence et finitude. Ce résultat établit une perte d'information, pas sa nécessité
-biologique générale. Le gate reste ouvert jusqu'à l'exécution aBN1 verrouillée.
+biologique générale. Le pilote aBN1 complet-graph étant non discriminant entre
+les représentations, le gate global se ferme par révision vers une architecture
+typée plutôt que par un choix binaire artificiel.
 Le détail et la décision de ne pas télécharger prématurément la morphologie sont
 dans [`docs/neural-model-class-gate.md`](docs/neural-model-class-gate.md).
 
@@ -599,7 +604,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; 1 famille de preuve gelée ; la référence LIF v1 source-alignée passe audit, correction, comptabilité et faisabilité pleine échelle ; le protocole aBN1 JO-CE/JO-F est verrouillé, tandis que le mapping aBN2 du circuit complet reste partiel ; le gate scientifique rate-versus-spikes reste ouvert ; les 31 candidats rate demeurent non promouvables ; aucun jeu complet promu**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; zéro affectation de population et zéro jeu complet sont promus ; les 31 candidats rate et les constantes LIF restent des comparateurs**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 
@@ -682,26 +687,21 @@ précédents.
 
 ## Front de calibration
 
-**Ouvert.** Les campagnes sont reconstructibles, le modèle central signé minimal
-est exécutable et sa première campagne technique est terminée. Le filtre de
-raffinement temporel retire un candidat matériellement dépendant du pas de temps,
-mais laisse 31 survivants non identifiés. Leur sensibilité aux sorties motrices
-centrales reste élevée et la suffisance des douze paramètres partagés est un
-risque ouvert. Le nouveau risque de classe est plus amont : avant une campagne
-locale dépendante du runtime, le prochain front compare ce modèle rate à un
-baseline LIF événementiel borné et traçable. Il ne choisit toujours aucun membre
-sur l'apparence de sa sortie.
+**Ouvert.** Le gate global de classe neuronale est fermé avec `revise`. Il interdit
+un défaut homogène rate ou LIF et accepte le contrat event-capable typé/hybride de
+l'ADR 0016. Le front actif affecte maintenant les dynamiques à des populations
+bornées dans une chaîne sensorielle et une chaîne motrice locales. Zéro
+affectation et zéro constante ne sont encore promus. Les 31 survivants rate et le
+LIF source-aligné restent des comparateurs, et la suffisance des douze paramètres
+partagés demeure un risque ouvert.
 
 Le premier audit local est terminé sans choisir de valeur : les partitions de
 preuve basales sont exhaustives et les limites des publications sont enregistrées.
-Le transfert numérique est suspendu parce que le choix entre activité rate et
-spikes change la nature même du pont. Le jalon d'ingénierie LIF source-aligné est
-franchi et le protocole neurale aBN1 JO-CE/JO-F est verrouillé en excluant
-explicitement aBN2. Le prochain lot doit vérifier les frontières de scheduling
-contre Brian2, verrouiller les probes rate-versus-événements, puis exécuter la
-comparaison aBN1 ;
-il ne doit pas propager les 31 membres rate ni transformer les sources résiduelles
-inconnues en pseudo-physiologie.
+Le transfert numérique doit maintenant viser une population événementielle,
+graduée ou une frontière typée explicite ; aucun pont global n'est inventé. Les
+frontières Brian2, les probes temporels et le pilote aBN1 ont été exécutés. Le
+prochain lot préréférence les deux chaînes locales et propage les alternatives
+quand l'observation n'identifie pas une classe.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -733,20 +733,18 @@ set complet n'a été promu et aucune cible comportementale n'est autorisée. L'
 aval préenregistrée est terminée : elle classe l'ensemble comme hautement sensible
 en motif et en amplitude, sans sélectionner de candidat. La première contrainte
 de portabilité numérique retire le candidat 30 et conserve 31 survivants sans les
-classer. Le premier tiers du gate borné de classe neuronale est maintenant exécuté :
-référence déterministe, comptabilité exhaustive et faisabilité CPU/GPU passent.
-Le transfert circuitaire est maintenant établi comme partiel, avec des chemins
-structuraux non nuls mais un type aBN2 non résolu. Le prochain lot doit fermer ce
-mapping ou consigner son exclusion avant de construire la comparaison scientifique
-commune ; les scopes locaux indépendants du modèle peuvent continuer, mais aucun
-paramètre dont les unités dépendent du runtime central ne doit être promu. Les fichiers de
+classer. Le gate borné de classe neuronale est maintenant terminé avec `revise` :
+référence déterministe, comptabilité exhaustive, Brian2, pertes temporelles et
+pilote aBN1 sont enregistrés. Le transfert circuitaire complet reste partiel avec
+un type aBN2 non résolu, mais cette lacune ne bloque pas les chaînes locales qui
+l'excluent explicitement. Aucun paramètre dont les unités dépendent d'une
+population non affectée ne doit être promu. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Le gate d'évidence basal ferme l'inventaire mais conclut qu'aucune valeur n'est
 encore transférable. Le prochain lot ne doit ni répéter cet inventaire ni inventer
-le pont d'unités : il doit comparer le runtime rate au baseline LIF événementiel
-sur les probes verrouillés restants, puis seulement définir l'interface d'entrée
-native du modèle retenu.
+le pont d'unités : il doit définir l'interface native des seules populations
+locales affectées et conserver ailleurs l'incertitude `dual_unresolved`.
 
 En parallèle, le gate d'actionneurs est maintenant terminé sans attendre le choix
 rate/LIF, car ses probes sont physiques et comportement-naïfs. Le prochain front
@@ -785,7 +783,7 @@ characterize_signed_dynamics.bat # 7 régimes centraux non ajustés, diagnostic 
 fit_signed_dynamics_pilot.bat # 32 candidats centraux, fitting technique sans comportement
 central_ensemble_sensitivity.bat # sensibilité des 32 candidats sur 815 sorties brutes
 constrain_central_timestep_v1.bat # filtre 5/2,5/1,25 ms, aucun comportement
-compile_basal_evidence.bat # couverture/preuves basales, zéro valeur tant que le gate de classe reste ouvert
+compile_basal_evidence.bat # couverture/preuves basales, zéro valeur sans affectation locale et unités natives
 neural_model_gate.bat # benchmark v0 historique, supersédé pour le gate scientifique
 neural_model_source_fidelity.bat # audit source + sémantiques LIF v1 + benchmark CPU/GPU, aucune calibration
 setup_brian2_reference.bat # environnement historique isolé Python 3.10 / Brian2 2.5.1 sous runs/

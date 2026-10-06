@@ -57,6 +57,7 @@ blocked_reason: >-
   channel value tables are also incomplete, and the central model class is now an
   upstream critical gate, so no parameter value is transferable.
 next_action: >-
-  Preserve the accepted evidence inventory, resolve
-  target.neural_model_class_gate.v0, then define the native rate or spike-event
-  input contract before constructing any numerical basal ensemble.
+  Preserve the accepted evidence inventory, then resolve
+  target.population_dynamics_assignment.v0 for each consumed population and
+  define its event, graded, or explicit conversion input contract before any
+  numerical basal ensemble.

@@ -1,0 +1,81 @@
+schema_version: 1
+id: model.malecns_event_capable_typed_hybrid.v0
+title: Event-capable population-typed MaleCNS architecture contract
+status: accepted_architecture_contract_population_assignments_and_values_unresolved
+claim_label: ARCHITECTURE CONTRACT / UNFITTED / POPULATION ASSIGNMENTS UNRESOLVED
+scientific_role: minimum_defensible_runtime_lineage
+
+scope:
+  canonical_neurons: 166700
+  runtime_edges: 25582938
+  population_assignment_coverage: zero_promoted_assignments
+  parameter_values_promoted: 0
+
+dynamics_classes:
+  event_lif_source_aligned:
+    comparator_model_id: model.malecns_lif_source_aligned.v1
+    preserves: [spike_events, membrane_state, synaptic_state, refractory_state, declared_delays]
+    status: executable_comparator_not_population_promoted
+  graded_rate:
+    comparator_model_id: model.malecns_typed_signed_rate.v0
+    preserves: [continuous_state, declared_rate_timestep]
+    status: executable_comparator_not_population_promoted
+  dual_unresolved:
+    meaning: >-
+      No class is silently selected. A bounded local campaign must either propagate
+      both admissible representations or explicitly exclude the population.
+    status: default_until_evidence
+
+assignment_contract:
+  default_class: dual_unresolved
+  required_fields:
+    - population_identity_and_scope
+    - accepted_evidence_or_discriminating_protocol
+    - native_input_and_output_units
+    - temporal_resolution_and_delay_policy
+    - uncertainty_or_admissible_alternatives
+    - applicability_limits
+  forbidden_defaults:
+    - classify_every_neuron_as_spiking
+    - classify_every_neuron_as_continuous_rate
+    - choose_a_class_from_visual_motion_or_named_behavior
+    - hide_event_to_rate_or_rate_to_event_conversion_in_a_gain
+
+conversion_boundary_contract:
+  required: true
+  semantics:
+    event_to_graded: explicit_kernel_window_units_and_uncertainty
+    graded_to_event: explicit_intensity_or_event_generation_rule_units_and_uncertainty
+  hidden_binning: forbidden
+  behavior_policy_capacity: forbidden
+
+execution_contract:
+  master_time: monotonic_simulation_time
+  event_scheduler_required: true
+  delay_policy_required_per_event_scope: true
+  graded_substep_policy_required_per_graded_scope: true
+  deterministic_seed_accounting_required: true
+  offline_replay_compatible: true
+  near_real_time_required_for_scientific_acceptance: false
+
+accepted_claims:
+  - A universal rate-only MaleCNS lineage is not promoted.
+  - A universal homogeneous point-neuron LIF lineage is not promoted.
+  - Future population-scoped evidence can change one assignment without redefining every central parameter unit.
+  - The existing event scheduler and rate comparator are reusable implementation references.
+forbidden_claims:
+  - The full hybrid runtime is implemented.
+  - Any canonical population has already been assigned a promoted dynamics class.
+  - Existing LIF constants or rate-ensemble values are accepted physiology.
+  - A typed architecture by itself predicts a fly behavior.
+
+critical_risk_refs:
+  - risk.central_delay_fidelity.v0
+  - risk.central_twelve_parameter_capacity.v0
+  - risk.central_event_model_fidelity.v0
+
+decision_ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+next_action: >-
+  Execute target.population_dynamics_assignment.v0 on one minimal sensory chain
+  and one minimal motor chain. Leave all other populations dual_unresolved and
+  propagate that uncertainty explicitly; do not invent a global unit bridge.

@@ -84,4 +84,4 @@ forbidden_claims:
 critical_risk_refs:
   - risk.central_delay_fidelity.v0
   - risk.central_event_model_fidelity.v0
-next_action: Execute the locked aBN1 circuit comparison before any population-scoped model-class decision.
+next_action: Use only inside target.population_dynamics_assignment.v0 or an explicit dual-unresolved comparison; do not promote it globally or reuse the behavior-exposed unitary weight as physiology.

@@ -1,6 +1,6 @@
 schema_version: 1
-phase: critical_neural_model_class_validation
-updated: 2026-10-05
+phase: population_typed_dynamics_assignment_and_local_chain_calibration
+updated: 2026-10-06
 
 wiring_baseline:
   terminal_coverage: complete
@@ -8,12 +8,13 @@ wiring_baseline:
   calibration_boundary: freeze_semantic_topology_ruleset_and_exception_hashes_per_campaign
 
 active_target_ids:
-  - target.neural_model_class_gate.v0
+  - target.population_dynamics_assignment.v0
   - target.technical_neural_dynamics.v0
   - target.technical_embodied_stability.v0
 evaluation_target_ids:
   - target.held_out_stimulus_response.v0
 completed_target_ids:
+  - target.neural_model_class_gate.v0
   - target.evidence_transmitter_sign_prior.v0
   - target.evidence_basal_source_readiness.v0
   - target.actuator_semantics_gate.v0
@@ -21,6 +22,7 @@ completed_target_ids:
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
 last_completed_campaign_id: campaign.neural_model_class_temporal_probes.v1
+last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
@@ -49,8 +51,8 @@ readiness:
   central_motor_output_sensitivity: reproducible_high_pattern_and_amplitude_dispersion_no_reference_selected
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
-  central_model_class: blocked_brian2_conformance_and_temporal_information_loss_probes_passed_abn1_pilot_positive_for_both_classes_full_cost_and_information_gate_open
-  spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_scientific_gate_open
+  central_model_class: global_gate_resolved_revise_event_capable_typed_hybrid_architecture_population_assignments_open
+  spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
   actuator_semantics: accepted_bounded_direct_motor_surrogate_initial_short_horizon_passive_open_closed_attribution_complete_102_of_102_hashed
@@ -66,17 +68,17 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - The current central runtime is a continuous rate comparator with no spike events, refractory state, synaptic event kernel, or transmission delay; no evidence validates that abstraction across MaleCNS.
-  - Model-dependent calibration is paused until the bounded ADR 0014 rate-versus-event gate produces an explicit go, revise, or stop decision.
+  - The global homogeneous rate-versus-LIF choice is closed as revise; no canonical population yet has a promoted dynamics assignment under the typed/hybrid contract.
+  - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 31 surviving central candidates cannot be treated as interchangeable downstream.
-  - Numerical portability does not distinguish the 31 rate survivors biologically; they remain an engineering ensemble and may only be propagated scientifically if their model class passes the ADR 0014 gate.
-  - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; the correct bridge depends on the unresolved central model class and must not be invented first.
+  - Numerical portability does not distinguish the 31 rate survivors biologically; they remain an engineering ensemble and may be propagated only inside an explicit graded population assignment or unresolved local comparison.
+  - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; bridges must now target a declared event, graded, or typed conversion contract rather than one global model unit.
   - The full antennal-grooming circuit maps exactly for aBN1, aDN1 and aDN2 but one of three pinned aBN2 FlyWire types (CB3129) has no resolved MaleCNS match; complete-circuit use remains blocked.
   - The narrow aBN1 JO-CE versus JO-F model-class protocol is locked and explicitly excludes aBN2; CB3129 remains unresolved for any complete grooming-circuit claim.
-  - The aBN1 v2 pilot ran on the complete graph with shared schedule semantics: event LIF and all nine tested rate member/bridge series had JO-CE above JO-F at 20, 120 and 220 Hz. This is non-decisional and suggests the reference may have low power to distinguish temporal model class.
-  - The unbatched extrapolation for the full aBN1 protocol is about 8.5 GPU-hours event plus 7.8 GPU-hours rate across 64,860 units; full execution is gated on batching/resumability and an explicit information-value review.
+  - The aBN1 v2 pilot ran on the complete graph with shared schedule semantics: event LIF and all nine tested rate member/bridge series had JO-CE above JO-F at 20, 120 and 220 Hz. It supports neither homogeneous global class and remains exposed evidence for descendants.
+  - The unbatched full aBN1 protocol would cost about 8.5 GPU-hours event plus 7.8 GPU-hours rate across 64,860 units; it is not run for the global decision because the expected discriminating value is insufficient.
   - The corrected LIF v1 matches Brian2 2.5.1 on the preregistered scheduler boundaries, but this engineering conformance does not validate the point-neuron class or constants biologically.
   - At 5 ms bins the rate comparator provably aliases the tested phase, inter-channel order and sub-bin delay distinctions; whether those distinctions matter for each MaleCNS population remains open until locked biological comparisons.
   - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
@@ -86,14 +88,10 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Continue target.neural_model_class_gate.v0 by reviewing the completed aBN1 v2
-  pilot. Implement a verified batched/resumable full executor only if its
-  population-capability evidence justifies roughly sixteen unbatched GPU-hours;
-  otherwise preregister a second independent timing-sensitive circuit reference.
-  The pilot cannot select rate versus event because both are directionally positive.
-  CB3129/aBN2 is explicitly outside that narrow probe and remains unresolved for
-  any whole grooming-circuit claim.
-  In parallel, define one minimal local sensory chain and one minimal motor chain
-  with the accepted direct-motor surrogate and FlyBody mechanics frozen. Do not
-  resume model-dependent basal calibration or neutral embodied fitting merely
-  because the event engine or actuator attribution executes.
+  Execute target.population_dynamics_assignment.v0 under the accepted event-capable
+  typed/hybrid contract. Preregister one minimal source-backed sensory population
+  chain and one minimal motor population chain; declare event, graded, or
+  dual-unresolved dynamics and every conversion boundary. Keep the accepted
+  direct-motor surrogate and FlyBody mechanics frozen. Do not begin broad embodied
+  fitting until all populations it exercises have an assignment or a bounded
+  unresolved-ensemble policy.

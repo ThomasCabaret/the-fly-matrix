@@ -139,10 +139,10 @@ reproducible engineering result under ADR 0013, but ADR 0014 now places a more
 fundamental gate before their scientific propagation. The rate model has no spike
 events, refractory state, synaptic event kernel, or transmission delay. It is
 retained as an engineering comparator, not the default biological model.
-Model-dependent basal and interface promotion pauses until
-`target.neural_model_class_gate.v0` compares it with a source-traceable event-based
-LIF reference. Evidence inventories and reusable runner infrastructure remain
-valid while this gate is open.
+The comparison is now closed by ADR 0016 with `revise`: neither homogeneous
+candidate is promoted, and model-dependent basal/interface work proceeds only for
+populations handled by `target.population_dynamics_assignment.v0`. Evidence
+inventories and reusable runner infrastructure remain valid.
 
 The initial `neural_model_gate.bat` result is retained as a v0 throughput record,
 but a pinned-source review found mismatched reset, refractory and integration
@@ -161,7 +161,10 @@ preregistered fixtures. Reconstruct its isolated runtime with
 Run `temporal_model_probes.bat` for the frozen representation-capacity probes.
 At 5 ms resolution the rate representation aliases the tested intra-bin phase,
 cross-channel order and sub-bin delay pairs; the event trace distinguishes them.
-This does not select a model class. The aBN1 biological comparison remains open.
+These probes alone do not select a model class. The global gate is now closed by
+ADR 0016 as a `revise` decision: an event-capable typed/hybrid architecture is
+accepted, but zero population assignments and zero physiological values are
+promoted. The downstream target is `target.population_dynamics_assignment.v0`.
 
 Run `audit_circuit_reference.bat` to audit the first independent circuit candidate
 without fitting it. The procedure pins the Shiu supplement and FlyWire annotation

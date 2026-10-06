@@ -2,6 +2,7 @@
 
 - Status: accepted
 - Date: 2026-10-04
+- Outcome: closed with `revise` by ADR 0016 on 2026-10-06
 
 ## Context
 
@@ -168,3 +169,13 @@ The aBN1 JO-CE versus JO-F reference is now scoped independently of aBN2: becaus
 the published observable is aBN1 itself, unresolved CB3129 does not block this
 narrow comparison. It still blocks claims about the complete antennal-grooming
 circuit. This scope reduction is explicit and cannot be generalized silently.
+
+### 2026-10-06 gate outcome
+
+ADR 0016 records the final global decision. Temporal-loss probes rule out a
+rate-only scientific default, while graded/non-spiking evidence rules out a
+homogeneous point-neuron LIF default. The aBN1 pilot is positive under both
+representations and therefore does not justify its approximately sixteen-hour
+full execution for a forced global winner. The accepted architecture is
+event-capable and population-typed/hybrid; assignment and units remain local
+open work under `target.population_dynamics_assignment.v0`.

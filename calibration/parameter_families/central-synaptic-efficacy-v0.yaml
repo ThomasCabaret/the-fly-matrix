@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.synaptic_efficacy.v0
 title: Central signed synaptic efficacy
-status: model_class_gate_open_rate_ensemble_engineering_only
+status: typed_hybrid_architecture_accepted_units_and_population_assignments_unresolved
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -13,10 +13,10 @@ scope:
   topology_snapshot: {semantic_topology_sha256: canonical_malecns_runtime_graph, candidate_envelope_sha256: fixed_runtime_edges, ruleset_sha256: not_applicable, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [one_global_scale, transmitter_class, connection_family, local_vector, individual_edge], selected_level: transmitter_class_candidate_v0, justification: the minimal signed candidate uses one explicit efficacy for each frozen effective-transmitter class and forbids edge residuals, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
-identifiability: {status: blocked_pending_model_class_gate, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.neuron_dynamics.v0], joint_calibration_reason: class efficacies and global temporal response compensate without activity constraints}
+identifiability: {status: blocked_pending_population_assignment_and_native_units, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.neuron_dynamics.v0], joint_calibration_reason: event or graded efficacy units and temporal response compensate without local activity constraints}
 dependencies: {upstream_family_ids: [parameter.central.transmitter_sign_prior.v0], downstream_family_ids: [parameter.central.neuron_dynamics.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [no_runaway_activity, no_absorbing_silence], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather, supports: structural synapse counts only}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: explicit minimal signed executable candidate but no values}]
 assumptions: [The unsigned incoming-L1 benchmark normalization is not an accepted model., The nine-class candidate is provisional and must not gain local or edge residuals without a versioned capacity decision.]
-next_action: Execute target.neural_model_class_gate.v0 and define efficacy units for the selected lineage; keep every rate member unfrozen and engineering-only.
+next_action: Execute target.population_dynamics_assignment.v0 and define efficacy units per selected local lineage; keep every comparator value unfrozen and engineering-only.

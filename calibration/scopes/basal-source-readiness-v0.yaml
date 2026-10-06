@@ -48,4 +48,4 @@ assumptions:
   - No parameter value is necessary to audit evidence coverage.
 sources:
   - calibration/evidence/basal-source-readiness-v0.yaml
-next_action: Resolve target.neural_model_class_gate.v0 before defining the executable input-unit scope or admitting numerical basal values.
+next_action: Resolve target.population_dynamics_assignment.v0 for each consumed population before defining executable input units or admitting numerical basal values.

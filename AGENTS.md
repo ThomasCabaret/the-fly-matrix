@@ -9,10 +9,12 @@ mais produit par un contrôleur comportemental externe n'est pas un succès du
 projet.
 
 La couverture terminale et la revalidation scientifique du **câblage structurel
-v0 sont complètes**. La phase courante construit l'inventaire des familles de
-paramètres, leur DAG de dépendances et les campagnes reproductibles de
-calibration. Ne choisissez pas de valeurs physiologiques, gains, signes, seuils
-ou comportements cibles hors d'une cible et d'une campagne versionnées.
+v0 sont complètes**. L'inventaire des familles de paramètres et leur DAG sont
+complets. La phase courante affecte des dynamiques neuronales à des populations
+locales sous le contrat event-capable typé/hybride de l'ADR 0016, puis construit
+les premières chaînes sensorielles et motrices calibrables. Ne choisissez pas de
+valeurs physiologiques, gains, signes, seuils ou comportements cibles hors d'une
+cible et d'une campagne versionnées.
 
 Tout objet possédé par une validation `scientific_wiring_revalidation` ouverte
 bloque la calibration de sa famille. Ni un smoke test vert, ni une cardinalité
@@ -113,15 +115,17 @@ scientifique.
 
 Le modèle rate central v0 est désormais un comparateur d'ingénierie. Il ne simule
 ni spikes, ni réfractarité, ni noyau synaptique événementiel, ni délais de
-transmission. L'ADR 0014 bloque sa promotion et les calibrations dépendantes de ses
-unités jusqu'à comparaison bornée avec un modèle événementiel LIF traçable. Cette
-règle n'empêche pas les inventaires de preuves et travaux locaux indépendants du
-choix de modèle.
+transmission. Le gate ADR 0014 est fermé avec `revise` par l'ADR 0016 : ni le rate
+global ni le LIF point-neuron homogène ne sont promus. L'architecture doit être
+event-capable et typée/hybride ; une population sans preuve reste
+`dual_unresolved`, avec conversions et unités explicites. Cette règle n'empêche
+pas les inventaires de preuves et travaux locaux indépendants d'une affectation.
 
-Le choix rate/LIF n'est pas obligatoirement global : un modèle typé ou hybride est
-une issue valide. Un succès sur un circuit n'autorise pas une classe homogène sur
-tout MaleCNS. L'approximation point-neuron devient prioritaire seulement si
-plusieurs circuits indépendants échouent après exclusion des erreurs plus simples.
+Le choix rate/LIF n'est pas global : le modèle typé/hybride est maintenant le
+contrat accepté, mais aucune affectation de population ni valeur n'est promue par
+ce seul choix. Un succès sur un circuit n'autorise pas une classe homogène sur tout
+MaleCNS. L'approximation point-neuron devient prioritaire seulement si plusieurs
+circuits indépendants échouent après exclusion des erreurs plus simples.
 
 ## Attribution causale incarnée
 

@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter_family_inventory.v0
 status: complete_inventory_values_unfitted
-updated: 2026-10-04
+updated: 2026-10-06
 scope_statement: >-
   Exhaustive inventory of parameter families currently exposed or required by
   the accepted wiring-v0 embodied runtime. Completeness means every known family
@@ -64,7 +64,7 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  Resolve target.neural_model_class_gate.v0 before defining any model-dependent
-  biological-rate bridge. Evidence mapping may continue, but the 31 rate members
-  remain engineering comparators and residual sources remain explicitly
-  unresolved or surrogate-labelled.
+  Execute target.population_dynamics_assignment.v0 before defining any local
+  model-dependent biological-rate bridge. The global gate is closed as a typed/
+  hybrid revise decision, but zero population assignments or parameter values are
+  promoted; the 31 rate members and LIF constants remain comparators.

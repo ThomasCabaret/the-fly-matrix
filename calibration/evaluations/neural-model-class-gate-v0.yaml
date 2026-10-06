@@ -1,0 +1,67 @@
+schema_version: 1
+id: evaluation.neural_model_class_gate.v0
+title: Global neural model-class gate decision
+status: accepted_revise_to_event_capable_typed_hybrid_architecture
+target_id: target.neural_model_class_gate.v0
+parameter_set_id: null
+protocol_version: v0
+exposure_policy: diagnostic_only
+scenario_ids:
+  - deterministic_small_graph
+  - full_graph_forced_event_accounting
+  - brian2_scheduler_boundaries
+  - temporal_information_loss_pairs
+  - abn1_complete_graph_pilot
+dataset_split_ids: {fitting: [], local_validation: [], local_held_out: [abn1_qualitative_direction], behavior_held_out: []}
+seeds: [0]
+metrics:
+  canonical_neurons_accounted: 166700
+  runtime_edges_accounted: 25582938
+  brian2_max_state_error_mV: 1.42e-14
+  rate_temporal_alias_pairs: 3
+  abn1_event_series_with_expected_direction: 1
+  abn1_rate_member_bridge_series_with_expected_direction: 9
+  promoted_population_assignments: 0
+  promoted_parameter_values: 0
+decision:
+  outcome: revise
+  rejected_global_defaults:
+    - homogeneous_continuous_rate
+    - homogeneous_point_neuron_lif
+  accepted_architecture_contract: model.malecns_event_capable_typed_hybrid.v0
+  rationale: >-
+    Rate-only execution demonstrably erases temporal distinctions, while a
+    homogeneous LIF promotion is contradicted by scope-specific graded/non-spiking
+    evidence. The aBN1 pilot supports capability for both comparators and has low
+    expected global discriminating value, so its roughly sixteen-hour unbatched
+    full run is not justified for a forced binary choice.
+acceptance_result: pass_global_gate_revised_local_assignment_gate_open
+admissible_set_evaluation:
+  member_count: 2
+  acceptance_rate: null
+  metric_distribution:
+    architecture_classes: [event_capable, graded_capable]
+reproducibility:
+  command: >-
+    neural_model_micro_tests.bat, brian2_conformance.bat,
+    temporal_model_probes.bat, run_abn1_gate_pilot.bat
+  git_commit: pending_batch_commit
+  environment: project Python 3.12 plus isolated Python 3.10 Brian2 2.5.1 reference
+  artifact_refs:
+    - calibration/runner/neural-model-class-source-fidelity-v1.yaml
+    - calibration/runner/neural-model-class-brian2-conformance-v1.yaml
+    - calibration/runner/neural-model-class-temporal-probes-v1.yaml
+    - calibration/runner/neural-model-class-abn1-v2.yaml
+contamination:
+  inspected_before_parameter_freeze: true
+  used_for_model_selection: true
+  used_for_manual_tuning: false
+  exposed_behavior_family: antennal_grooming_related_abn1_circuit
+  notes:
+    - Antennal grooming is unavailable as a held-out emergence claim for descendants that use this decision.
+    - No parameter value, motor trajectory or body behavior was selected.
+failures: []
+conclusion: >-
+  The dangerous project-wide homogeneous choice is closed as revise. Population
+  dynamics assignments and conversion units remain open, local and explicit.
+next_action: Execute target.population_dynamics_assignment.v0 without reopening a universal rate-versus-LIF contest.

@@ -8,6 +8,14 @@ calibration is scaled. It is deliberately smaller than a calibration campaign.
 It does not fit physiology, optimize a behavior, select a member of the earlier
 rate ensemble, or accept the LIF reference as the final biological model.
 
+The gate is now **closed with `revise`**, as recorded by ADR 0016 and
+`calibration/evaluations/neural-model-class-gate-v0.yaml`. Neither a global
+rate-only model nor a homogeneous point-neuron LIF model is promoted. The accepted
+minimum architecture is event-capable and population-typed: graded/rate dynamics
+remain possible where supported, while unknown populations remain explicitly
+`dual_unresolved`. This decision closes the project-wide assumption; it does not
+claim that population assignments, conversions or physiological values are done.
+
 The retained first fixed-delay implementation is defined in
 `calibration/models/malecns-lif-fixed-delay-v0.yaml`. A pinned-source audit found
 that it copied the published constants but not three execution semantics: the
@@ -205,18 +213,22 @@ only if a preregistered temporal probe is sensitive to plausible fixed-delay
 variation. Downloading the complete bundle first would not answer the critical
 question cheaply.
 
-## What remains before the gate closes
+## Gate decision and downstream work
 
-The scientific model-class gate remains open. The next bounded work is:
+The scientific global model-class gate is closed with **revise**. Completing the
+full aBN1 grid solely to force a global binary winner is rejected: its pilot is
+positive for both representations and its unbatched cost is about sixteen
+GPU-hours. The decision instead establishes
+`model.malecns_event_capable_typed_hybrid.v0` and opens
+`target.population_dynamics_assignment.v0`.
 
-1. review whether completing aBN1 is worth its measured cost given that all ten
-   pilot series share the expected direction;
-2. either implement a verified batched/resumable full executor or preregister a
-   second independent circuit whose observation depends on temporal structure;
-3. issue a recorded population-scoped `go`, `revise`, typed/hybrid or `stop`
-   decision; only then resume basal and
-   interface calibrations whose native units depend on the central model.
+The next bounded work is to preregister one minimal sensory population chain and
+one minimal motor population chain, then assign event, graded/rate or
+`dual_unresolved` dynamics locally. Every conversion boundary must state units,
+temporal semantics and uncertainty. A local success remains local. Broad embodied
+fitting stays blocked while an exercised population has neither an accepted
+assignment nor an explicit unresolved-ensemble policy.
 
-Morphology-aware delays, compartmental models and optimized custom GPU kernels are
-possible revisions, not silently assumed requirements. Each is opened only by a
-measured failure or sensitivity result.
+Morphology-aware delays, compartmental models and optimized custom GPU kernels
+remain possible scoped revisions, not silently assumed requirements. Each is
+opened only by a measured sensitivity or repeated local residual.

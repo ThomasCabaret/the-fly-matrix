@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/derived/wiring/basal-clamp-routing.json, supports: 166 exact fan-out channels covering 1428 terminals}, {ref: calibration/evidence/basal-source-readiness-v0.yaml, supports: labellar GRN spontaneous-rate measurements and their explicit mapping limits; no value transferred}]
 assumptions: [A neutral gustatory condition is represented by a basal source in v0., Labellar measurements do not justify values for leg wing taste-peg or pharyngeal channels., Spikes per second cannot be copied into normalized model activity without an explicit unit bridge.]
-next_action: Map MaleCNS labellar types to supported functional GRN classes, wait for the neural model-class gate before defining executable inputs, and leave unsupported organs explicitly unresolved.
+next_action: Map MaleCNS labellar types to supported functional GRN classes, define executable inputs only for assigned populations, and leave unsupported organs explicitly unresolved.

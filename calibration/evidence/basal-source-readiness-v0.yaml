@@ -172,6 +172,7 @@ behavior_exposure:
     - Treating literature behavior assays as fitting targets
 
 next_action: >-
-  Preserve this evidence accounting, resolve target.neural_model_class_gate.v0,
-  then define the selected model's native biological-rate or spike-event input
-  contract before creating numerical basal ensembles.
+  Preserve this evidence accounting, resolve
+  target.population_dynamics_assignment.v0 for each consumed population, then
+  define its event, graded, or explicit conversion input contract before creating
+  numerical basal ensembles.

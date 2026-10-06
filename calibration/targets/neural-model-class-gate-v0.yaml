@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.neural_model_class_gate.v0
 title: Select the minimum defensible temporal MaleCNS model class
-status: active_abn1_pilot_complete_non_discriminating_full_cost_gate_open
+status: completed_revise_to_event_capable_typed_hybrid_architecture
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: model_selection_gate_no_behavior_claim
@@ -45,6 +45,9 @@ acceptance_policy:
     - full-graph cost and any offline-only limitation are measured
     - any acceptance is limited to the biological populations actually tested
   threshold_class: preregister_before_execution
+  scientific_gate_closed: true
+  decision: revise
+  accepted_architecture_contract: model.malecns_event_capable_typed_hybrid.v0
 
 behavior_targets: []
 scenario_splits:
@@ -70,17 +73,18 @@ provenance:
     - calibration/evidence/antennal-abn1-model-class-reference-v1.yaml
     - calibration/evidence/antennal-abn1-model-class-reference-v2.yaml
     - calibration/runner/neural-model-class-abn1-v2.yaml
+    - calibration/evaluations/neural-model-class-gate-v0.yaml
+    - decisions/0016-event-capable-typed-hybrid-neural-runtime.md
   assumptions:
     - A point-neuron LIF model is a comparison baseline, not accepted final physiology.
     - A local circuit success cannot promote one homogeneous model class over all MaleCNS.
     - A fixed 1.8 ms delay is literature-backed for the reference baseline but is not morphology-derived.
     - The circuit reference and thresholds must be locked before candidate outputs are inspected.
 
-validation: brian2_conformance_and_information_loss_probes_passed_abn1_pilot_both_representations_directionally_positive_non_decisional
+validation: global_homogeneous_choice_closed_revise_population_assignment_gate_open
 blocked_reason: null
 next_action: >-
-  Review the aBN1 pilot's low discriminating power and measured full cost. Either
-  implement a verified batched/resumable full executor to establish population-
-  scoped capability, or preregister an independent timing-sensitive circuit
-  reference before attempting a rate, event, or typed/hybrid decision. The pilot
-  alone cannot select a model. CB3129/aBN2 remains outside this narrow reference.
+  Execute target.population_dynamics_assignment.v0. Assign dynamics only to
+  bounded source-backed populations, retain dual-unresolved alternatives when
+  evidence is non-identifying, and keep conversion boundaries explicit. The
+  aBN1 full run is not required for this global revise decision.

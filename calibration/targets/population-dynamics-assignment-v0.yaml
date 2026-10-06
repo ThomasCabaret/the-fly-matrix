@@ -1,0 +1,73 @@
+schema_version: 1
+id: target.population_dynamics_assignment.v0
+title: Assign defensible dynamics classes to bounded MaleCNS populations
+status: active_no_population_assignments_promoted
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: population_model_assignment_no_behavior_claim
+
+scope:
+  includes:
+    - one minimal sensory chain
+    - one minimal motor chain
+    - event, graded/rate, or dual-unresolved assignment per declared population
+    - explicit event-to-graded and graded-to-event conversion boundaries
+    - local residuals, units, delay policy and applicability limits
+  excludes:
+    - a universal homogeneous model-class claim
+    - named behavior fitting or selection
+    - global embodied stability fitting
+    - arbitrary population classification from annotation names alone
+    - promotion of comparator constants without independent evidence
+
+metrics:
+  - population_scope_accounting
+  - evidence_coverage_by_assignment
+  - local_reference_residual_by_candidate_class
+  - conversion_boundary_unit_completeness
+  - delay_policy_completeness
+  - unresolved_assignment_ensemble_size
+
+acceptance_policy:
+  summary: >-
+    Every population exercised by the selected local chain has an evidence-backed
+    class, an explicit unresolved ensemble, or an exclusion. A local success may
+    accept only that scope. No unclassified population receives a silent default.
+  required_outcomes:
+    - all scoped populations are accounted for
+    - native input/output units and temporal semantics are explicit
+    - conversion boundaries are named and tested
+    - alternatives remain propagated where evidence is non-identifying
+    - residuals are reported by population and candidate class
+    - no named behavior or body trajectory selects an assignment
+  threshold_class: preregister_before_execution
+
+behavior_targets: []
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: [local_sensory_chain, local_motor_chain]
+  held_out: [population_local_reference_not_used_for_parameter_choice]
+
+dependencies:
+  - model.malecns_event_capable_typed_hybrid.v0
+  - frozen transmitter evidence prior
+  - accepted canonical-neuron scope
+  - local source mapping with explicit units
+
+provenance:
+  sources:
+    - decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+    - calibration/evaluations/neural-model-class-gate-v0.yaml
+  assumptions:
+    - A population can remain dual-unresolved without blocking unrelated populations.
+    - One circuit cannot promote its model class over all MaleCNS.
+    - A conversion rule can carry calibration freedom but may not carry behavior policy.
+
+validation: not_run
+blocked_reason: null
+next_action: >-
+  Select and preregister the smallest source-backed sensory and motor population
+  scopes whose observations can distinguish or bound native dynamics without a
+  named behavior; then run both admissible representations where evidence is not
+  already decisive.

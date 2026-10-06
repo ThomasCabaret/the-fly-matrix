@@ -70,6 +70,6 @@ blocked_reason: >-
   sharing model and the upstream continuous-rate representation itself remain open
   high-impact risks.
 next_action: >-
-  Retain all 31 survivors as engineering comparators and resolve
-  target.neural_model_class_gate.v0 before any scientific propagation. Resume
-  parameter fitting only in the model lineage selected by that gate.
+  Retain all 31 survivors as engineering comparators. Resume fitting only inside
+  population scopes accepted by target.population_dynamics_assignment.v0, and
+  propagate both representations when an assignment remains dual-unresolved.

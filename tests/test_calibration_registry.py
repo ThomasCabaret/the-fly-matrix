@@ -191,31 +191,67 @@ class CalibrationRegistryTests(unittest.TestCase):
             self.state["parameter_dependency_dag_id"], self.inventory.dag["id"]
         )
 
-    def test_critical_neural_model_class_gate_blocks_rate_promotion(self) -> None:
+    def test_neural_model_class_gate_closes_as_typed_hybrid_revision(self) -> None:
         risks = load_yaml(CALIBRATION_ROOT / "model-risks.yaml")
         risk_by_id = {risk["id"]: risk for risk in risks["risks"]}
         rate_risk = risk_by_id["risk.central_rate_representation_fidelity.v0"]
         delay_risk = risk_by_id["risk.central_delay_fidelity.v0"]
-        model = load_yaml(
+        rate_model = load_yaml(
             CALIBRATION_ROOT / "models" / "malecns-typed-signed-rate-v0.yaml"
         )
+        architecture = load_yaml(
+            CALIBRATION_ROOT
+            / "models"
+            / "malecns-event-capable-typed-hybrid-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "neural-model-class-gate-v0.yaml"
+        )
         gate = self.targets["target.neural_model_class_gate.v0"]
+        assignment = self.targets["target.population_dynamics_assignment.v0"]
 
-        self.assertEqual(rate_risk["status"], "open_critical_stop_gate")
+        self.assertEqual(
+            rate_risk["status"],
+            "resolved_reject_global_default_retained_scoped_comparator",
+        )
         self.assertEqual(delay_risk["status"], "open_high_impact")
         self.assertEqual(
             gate["status"],
-            "active_abn1_pilot_complete_non_discriminating_full_cost_gate_open",
+            "completed_revise_to_event_capable_typed_hybrid_architecture",
         )
         self.assertEqual(gate["optimization_exposure"], "diagnostic_only")
         self.assertEqual(gate["behavior_targets"], [])
-        self.assertIn(gate["id"], self.state["active_target_ids"])
-        self.assertNotIn("scientific_role", model)
+        self.assertIn(gate["id"], self.state["completed_target_ids"])
+        self.assertNotIn(gate["id"], self.state["active_target_ids"])
+        self.assertIn(assignment["id"], self.state["active_target_ids"])
+        self.assertNotIn("scientific_role", rate_model)
         self.assertEqual(
             self.state["readiness"]["central_model_class"],
-            "blocked_brian2_conformance_and_temporal_information_loss_probes_passed_abn1_pilot_positive_for_both_classes_full_cost_and_information_gate_open",
+            "global_gate_resolved_revise_event_capable_typed_hybrid_architecture_population_assignments_open",
         )
-        self.assertFalse(gate["acceptance_policy"].get("scientific_gate_closed", False))
+        self.assertTrue(gate["acceptance_policy"]["scientific_gate_closed"])
+        self.assertEqual(gate["acceptance_policy"]["decision"], "revise")
+        self.assertEqual(evaluation["decision"]["outcome"], "revise")
+        self.assertEqual(
+            architecture["assignment_contract"]["default_class"],
+            "dual_unresolved",
+        )
+        self.assertEqual(
+            architecture["scope"]["population_assignment_coverage"],
+            "zero_promoted_assignments",
+        )
+        self.assertEqual(architecture["scope"]["parameter_values_promoted"], 0)
+        self.assertIn(
+            "homogeneous_continuous_rate",
+            evaluation["decision"]["rejected_global_defaults"],
+        )
+        self.assertIn(
+            "homogeneous_point_neuron_lif",
+            evaluation["decision"]["rejected_global_defaults"],
+        )
+        for artifact_ref in evaluation["reproducibility"]["artifact_refs"]:
+            with self.subTest(artifact_ref=artifact_ref):
+                self.assertTrue((ROOT / artifact_ref).is_file())
 
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)

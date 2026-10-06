@@ -1,12 +1,12 @@
 schema_version: 1
 id: calibration.model_risks.v0
-updated: 2026-10-05
+updated: 2026-10-06
 status: active
 
 risks:
   - id: risk.central_rate_representation_fidelity.v0
     title: Continuous rate state may erase behaviorally necessary spike timing and delays
-    status: open_critical_stop_gate
+    status: resolved_reject_global_default_retained_scoped_comparator
     affected_model_id: model.malecns_typed_signed_rate.v0
     affected_parameter_family_ids:
       - parameter.central.synaptic_efficacy.v0
@@ -34,6 +34,7 @@ risks:
       - The corrected generic 0.1 ms event implementation reaches only about 0.04 to 0.06 times real time and has not yet been compared on the independent aBN1 reference.
       - Exact Brian2 scheduler-boundary conformance remains untested even though the pinned reset, refractory and equation semantics now match.
       - The whole grooming-circuit mapping is not complete: FlyWire aBN2 type CB3129 has no resolved MaleCNS counterpart. This does not block the narrower aBN1-only JO-CE versus JO-F protocol.
+      - The aBN1 complete-graph pilot is directionally positive for both the event comparator and all nine sampled rate-member/bridge series, so it does not identify a global class.
     consequence_if_true: >-
       The rate runtime may remain a scientifically useful low-cost model for the
       scopes that pass the comparison gate.
@@ -42,10 +43,10 @@ risks:
       runtime only for engineering comparison and rebase all model-dependent
       calibration on the chosen native units.
     current_mitigation: >-
-      Pause the basal unit bridge and propagation of the 31 rate candidates. The
-      source lock, corrected small-graph, edge-accounting and CPU/GPU feasibility
-      stages have passed. Run Brian2 conformance, shared technical probes and the
-      locked aBN1-only circuit reference before further dependent fitting.
+      ADR 0016 rejects rate-only execution as the project-wide scientific default.
+      Retain the implementation and 31 candidates as engineering or explicitly
+      graded-population comparators only. Unclassified populations default to a
+      dual-unresolved typed assignment, never to rate.
     cheapest_discriminating_experiment: >-
       Implement a source-traceable LIF event baseline, validate it against a
       deterministic small-graph reference, benchmark full MaleCNS, then compare
@@ -64,8 +65,8 @@ risks:
       - continuing model-dependent basal fitting merely because the rate bridge is easy to implement
       - claiming delay or spike timing is negligible without a sensitivity result
       - selecting a model because its embodied motion looks preferable
-    decision_ref: decisions/0014-neural-dynamics-fidelity-gate.md
-    next_review: after_neural_model_class_gate_v0
+    decision_ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+    next_review: if_a_population_scoped_campaign_proposes_rate_promotion
 
   - id: risk.central_delay_fidelity.v0
     title: Uniform or zero transmission delay may miss morphology-dependent timing
@@ -99,7 +100,7 @@ risks:
       - inferring delays from Euclidean soma distance without validation
       - calling absent delay data evidence for zero delay
     decision_ref: decisions/0014-neural-dynamics-fidelity-gate.md
-    next_review: during_neural_model_class_gate_v0
+    next_review: during_first_event_population_assignment_or_delay_sensitive_residual
 
   - id: risk.central_twelve_parameter_capacity.v0
     title: Twelve shared central parameters may underfit biological heterogeneity
@@ -139,7 +140,7 @@ risks:
 
   - id: risk.central_event_model_fidelity.v0
     title: Homogeneous point-neuron LIF may misrepresent graded or compartment-sensitive populations
-    status: open_critical_scope_gate
+    status: resolved_reject_homogeneous_default_local_point_neuron_scope_risk_open
     affected_model_id: model.malecns_lif_source_aligned.v1
     affected_parameter_family_ids:
       - parameter.central.synaptic_efficacy.v0
@@ -153,14 +154,16 @@ risks:
     evidence_against_or_unresolved:
       - Some fly circuits use graded or non-spiking dynamics, and one local circuit cannot validate a homogeneous whole-CNS class.
       - Morphology and synapse location are absent from the point-neuron representation.
-      - No shared rate-versus-event circuit comparison has yet produced a scoped go, revise or stop decision.
-      - Exact agreement with Brian2 event scheduling at threshold, reset, refractory and delivery boundaries is not yet established.
+      - The shared aBN1 pilot produced no class separation; the global decision is revise, while every population-scoped promotion remains open.
+      - Brian2 scheduler agreement is now established, but that removes an implementation ambiguity rather than validating homogeneous LIF physiology.
     consequence_if_true: The LIF lineage may proceed for the populations and claims that pass the gate.
     consequence_if_false: Use a population-typed, hybrid or compartment-aware model and revalidate model-dependent descendants.
     current_mitigation: >-
-      Treat LIF as a comparator, report residuals by class and region, and permit a
-      typed/hybrid conclusion. Escalate morphology only after cheaper sign, delay,
-      input-unit and interface explanations fail on multiple independent circuits.
+      ADR 0016 rejects homogeneous LIF as the project-wide default and accepts an
+      event-capable typed/hybrid architecture. Treat LIF as a population-scoped
+      comparator, report residuals by class and region, and leave assignments
+      dual-unresolved when evidence is non-identifying. Escalate morphology only
+      after cheaper sign, delay, unit and interface explanations fail repeatedly.
     cheapest_discriminating_experiment: >-
       Run the preregistered circuit and technical probes across rate, LIF and any
       independently justified graded population; limit acceptance to tested scopes.
@@ -176,8 +179,8 @@ risks:
       - promoting homogeneous LIF because one circuit passes
       - treating every annotated neuron as obligatorily spiking
       - adding compartments without a discriminating residual
-    decision_ref: decisions/0014-neural-dynamics-fidelity-gate.md
-    next_review: during_neural_model_class_gate_v0
+    decision_ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+    next_review: during_population_dynamics_assignment_v0_or_repeated_local_failure
 
   - id: risk.flybody_actuator_abstraction.v0
     title: Direct FlyBody joint actuation may supply or hide part of motor control
@@ -320,4 +323,4 @@ risks:
     decision_ref: decisions/0015-embodied-causal-attribution-gates.md
     next_review: before_locking_each_evaluation_only_protocol
 
-next_action: Resolve the ADR 0014 neural model-class gate, then freeze one minimal local sensory chain and one minimal motor chain before model-dependent basal, broad joint or neutral embodied campaigns.
+next_action: Execute target.population_dynamics_assignment.v0 on one minimal local sensory chain and one minimal motor chain before model-dependent basal, broad joint or neutral embodied campaigns.

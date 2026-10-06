@@ -2,6 +2,7 @@ schema_version: 2
 behavior_targeted_calibrations: []
 technical_targets:
   - target.neural_model_class_gate.v0
+  - target.population_dynamics_assignment.v0
   - target.actuator_semantics_gate.v0
   - target.technical_neural_dynamics.v0
   - target.technical_embodied_stability.v0

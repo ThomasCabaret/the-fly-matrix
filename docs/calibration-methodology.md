@@ -268,10 +268,11 @@ the isolated family. A large surviving set or strong downstream dispersion is a
 signal to propagate uncertainty into local or hybrid campaigns, not to spend an
 open-ended sequence of campaigns inventing further internal filters.
 
-That propagation rule assumes the model class itself has passed its upstream
-fidelity gate. The current 31 survivors all share the same unresolved continuous
-rate abstraction; ADR 0014 therefore retains them as an engineering ensemble but
-pauses their scientific propagation until rate-versus-event comparison is closed.
+That propagation rule assumes a population has passed its upstream assignment
+gate. The current 31 survivors all share the same continuous-rate abstraction;
+ADR 0016 retains them as an engineering or explicitly graded-scope ensemble. They
+cannot propagate into an untyped population merely because the global gate is
+closed. A `dual_unresolved` scope propagates both admissible representations.
 
 A unique central reference is not required before interface calibration. A
 campaign may consume a finite ensemble, sample set or distribution and must state
@@ -290,13 +291,19 @@ shared class or region parameters toward local parameters, not directly to hidde
 per-neuron or per-edge freedom. See `calibration/model-risks.yaml`.
 
 A model-class decision may be population-typed. Rate, event, graded and
-compartmental dynamics are not mutually exclusive project-wide choices. Evidence
-from one circuit accepts a representation only for its declared scope; it cannot
-promote one homogeneous point-neuron class over all MaleCNS. Repeated residuals
-localized by cell class or region trigger a typed or hybrid comparison before a
-global capacity increase. The point-neuron approximation becomes an active gate
-only after cheaper sign, delay, unit and local-interface explanations have been
-tested on multiple independent circuits.
+compartmental dynamics are not mutually exclusive project-wide choices. ADR 0016
+now closes the first global gate as `revise`: the accepted architecture must be
+event-capable and typed/hybrid, while neither the global rate comparator nor
+homogeneous LIF is promoted. Evidence from one circuit accepts a representation
+only for its declared scope; it cannot promote one point-neuron class over all
+MaleCNS. An unclassified population is `dual_unresolved`, and a bounded local
+campaign must propagate its alternatives or exclude it explicitly. Event↔graded
+conversion boundaries declare units, temporal kernel and uncertainty and may not
+hide a behavior policy. Repeated residuals localized by cell class or region
+trigger a typed or hybrid comparison before a global capacity increase. The
+point-neuron approximation becomes an active gate only after cheaper sign, delay,
+unit and local-interface explanations have been tested on multiple independent
+circuits.
 
 Basal afferent sources and persistent efferent tone are explicit parameter
 families, never anonymous offsets inserted for convenience. Basal inputs should
@@ -321,11 +328,12 @@ gain. Its input therefore has units of normalized model activity, not spikes per
 second. Copying literature rates into that vector would destroy their absolute
 meaning and entangle one modality with every other modality present at the same
 instant. This is now a recorded limitation of the rate comparator, not a request
-to immediately invent a rate-to-activity bridge. Until the central model-class
-gate is resolved, basal publications may support class partitions and bounds but
-cannot supply promoted runtime values. In a spike-native candidate, measured
-rates may instead parameterize a declared stochastic event process; its point
-process, variability and applicability still require explicit evidence.
+to immediately invent a rate-to-activity bridge. The global class gate is closed,
+but basal publications still cannot supply promoted runtime values until the
+consuming population has an assignment and native-unit contract. In an event
+scope, measured rates may parameterize a declared stochastic event process; in a
+graded scope they require a sourced continuous conversion. Point process,
+variability and applicability remain explicit in either case.
 
 The bridge is itself calibration capacity. It must declare whether scaling is
 global, modality-specific or class-specific; how noise and temporal statistics
@@ -481,9 +489,9 @@ candidate equation and its structural test values are not accepted physiology.
 Its completed gates establish exhaustive edge assignment, CPU/GPU-compatible
 sparse execution, numerical pathology detection, and timestep portability for
 that equation only. It does not emit spikes, represent refractory state, apply a
-synaptic event kernel, or transmit effects with a delay. It is now retained as an
-engineering comparator and cannot be promoted or propagated as the default
-scientific central model until the ADR 0014 model-class gate is resolved.
+synaptic event kernel, or transmit effects with a delay. ADR 0016 retains it as an
+engineering or explicitly graded-population comparator and forbids its promotion
+as the project-wide scientific default.
 
 The closest whole-brain published precedent is the Shiu et al. leaky
 integrate-and-fire model. It represents explicit spike events, membrane and

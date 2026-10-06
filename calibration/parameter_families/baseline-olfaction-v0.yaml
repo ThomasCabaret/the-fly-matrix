@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/derived/wiring/basal-clamp-routing.json, supports: 147 exact fan-out channels covering 2639 terminals}, {ref: calibration/evidence/basal-source-readiness-v0.yaml, supports: adult ORN class heterogeneity and exhaustive transfer-readiness accounting; no value transferred}]
 assumptions: [A neutral olfactory scene is represented by a basal source rather than physical odor transport in v0., Spikes per second cannot be copied into normalized model activity without an explicit unit bridge.]
-next_action: Complete the ORN type-to-measurement map independently, then wait for the neural model-class gate before defining the executable rate or spike-event interface.
+next_action: Complete the ORN type-to-measurement map independently, then define executable inputs only for populations assigned by target.population_dynamics_assignment.v0.
