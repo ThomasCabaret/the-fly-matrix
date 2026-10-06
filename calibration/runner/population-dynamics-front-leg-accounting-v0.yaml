@@ -1,0 +1,27 @@
+schema_version: 1
+id: runner_result.population_dynamics_front_leg_accounting.v0
+status: accepted_partial_assignment_zero_values
+claim_label: POPULATION CLASS ACCOUNTING / ZERO VALUES / NO BEHAVIOR
+run_date: 2026-10-06
+command: population_dynamics_assignment.bat
+recipe_id: evidence.population_dynamics.front_leg.v0
+recipe_sha256: 3a9153c79ebded89641987025026fb0b33a0cb03ec57d683323072d2bcc7deb7
+semantic_result_sha256: 788654096c94e1557ce1e43b147e0139ef77c2a8b23ccfb1d669627e93816743
+accounting:
+  populations: 2
+  neurons: 46
+  event_required_neurons: 10
+  dual_unresolved_neurons: 36
+  unmatched_neurons: 0
+  parameter_values_emitted: 0
+  behavior_targets_exposed: 0
+artifacts:
+  - data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+  - data/derived/calibration/population-dynamics-front-leg-v0/summary.json
+accepted_claims:
+  - The scoped T1 tibia-flexor motor population requires event capability.
+  - The scoped FeCO population remains dual-unresolved.
+forbidden_claims:
+  - Any physiological value or behavior has been calibrated.
+  - The assignment generalizes outside the declared scope.
+next_action: Execute only the two local conversion probes named by the evaluation.

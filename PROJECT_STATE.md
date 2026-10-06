@@ -12,8 +12,10 @@ Le modèle à douze paramètres partagés est désormais enregistré comme une h
 de capacité à haut risque, pas comme la dimensionalité admise de MaleCNS. Le gate
 plus amont est maintenant fermé globalement : ni ce runtime rate continu, ni un
 LIF point-neuron homogène ne sont promus sur tout MaleCNS. L'ADR 0016 accepte une
-architecture event-capable typée/hybride, sans promouvoir encore une affectation
-de population ni une valeur.
+architecture event-capable typée/hybride. Une première passe locale affecte maintenant les dix
+motoneurones T1 fléchisseurs du tibia à une exigence événementielle ; les 36
+afférences FeCO restent explicitement `dual_unresolved`. Ce résultat ne choisit
+aucune constante et ne généralise pas hors de ce périmètre.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -89,11 +91,12 @@ topologiques bornées, jamais sur les valeurs physiologiques ou de transfert.
 
 L'objectif courant est d'exécuter
 [`target.population_dynamics_assignment.v0`](calibration/targets/population-dynamics-assignment-v0.yaml) :
-préréférencer une chaîne sensorielle locale et une chaîne motrice locale, affecter
-leurs populations à une dynamique événementielle, graduée ou
-`dual_unresolved`, et déclarer chaque frontière de conversion. L'infrastructure
-d'inventaire, DAG, runner, partage, gel et réouverture existe déjà ; elle doit
-maintenant porter des calibrations locales traçables.
+la première chaîne locale est préréférencée et comptabilisée. Ses 46 neurones
+canoniques sont tous couverts : 10 motoneurones T1 fléchisseurs du tibia exigent
+une représentation événementielle sur preuve de type, tandis que 36 afférences
+FeCO conservent les deux représentations admissibles. Le front suivant construit
+séparément le pont FeCO cinématique→activité et le transfert événements moteurs→
+force, sans valeur implicite ni observation d'un comportement nommé.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
@@ -604,7 +607,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; zéro affectation de population et zéro jeu complet sont promus ; les 31 candidats rate et les constantes LIF restent des comparateurs**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 
@@ -672,7 +675,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **134 tests** actuels passent, y compris les
+conservées et classifiées. Les **145 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -691,17 +694,20 @@ précédents.
 un défaut homogène rate ou LIF et accepte le contrat event-capable typé/hybride de
 l'ADR 0016. Le front actif affecte maintenant les dynamiques à des populations
 bornées dans une chaîne sensorielle et une chaîne motrice locales. Zéro
-affectation et zéro constante ne sont encore promus. Les 31 survivants rate et le
-LIF source-aligné restent des comparateurs, et la suffisance des douze paramètres
-partagés demeure un risque ouvert.
+constante n'est encore promue. La première portée locale couvre exactement 46
+neurones : l'exigence événementielle des 10 motoneurones T1 fléchisseurs est
+acceptée, tandis que les 36 afférences FeCO restent `dual_unresolved`. Les 31
+survivants rate et le LIF source-aligné restent des comparateurs, et la suffisance
+des douze paramètres partagés demeure un risque ouvert.
 
 Le premier audit local est terminé sans choisir de valeur : les partitions de
 preuve basales sont exhaustives et les limites des publications sont enregistrées.
 Le transfert numérique doit maintenant viser une population événementielle,
 graduée ou une frontière typée explicite ; aucun pont global n'est inventé. Les
 frontières Brian2, les probes temporels et le pilote aBN1 ont été exécutés. Le
-prochain lot préréférence les deux chaînes locales et propage les alternatives
-quand l'observation n'identifie pas une classe.
+prochain lot construit les deux probes de conversion locales sans mélanger leurs
+paramètres : FeCO cinématique/calcium en double représentation, puis événements
+des motoneurones vers transfert de force avec le surrogate mécanique gelé.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.

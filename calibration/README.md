@@ -207,3 +207,13 @@ immutable protocol with sources, seeds, metrics and thresholds.
 The current advisory preference is mirrored localized leg contact, conditional on
 tactile resolution, actuator attribution and mechanism coverage; this is not a
 protocol lock.
+
+Run `population_dynamics_assignment.bat` to rebuild the first local typed/hybrid
+assignment. The hash-locked recipe accounts for 36 front-leg FeCO afferents and
+10 T1 tibia-flexor motor neurons plus their accepted terminal routes. Type-level
+intracellular/EMG evidence makes event capability mandatory for the motor pool;
+the available FeCO calcium/kinematic evidence does not identify native event
+versus graded dynamics, so that population remains `dual_unresolved`. The pass
+emits zero values and inspects no body trajectory or named behavior. Its accepted
+partial result is recorded in
+`evaluations/population-dynamics-front-leg-accounting-v0.yaml`.

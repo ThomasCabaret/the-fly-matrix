@@ -1,21 +1,25 @@
 schema_version: 1
 id: model.malecns_event_capable_typed_hybrid.v0
 title: Event-capable population-typed MaleCNS architecture contract
-status: accepted_architecture_contract_population_assignments_and_values_unresolved
-claim_label: ARCHITECTURE CONTRACT / UNFITTED / POPULATION ASSIGNMENTS UNRESOLVED
+status: accepted_architecture_contract_first_local_assignment_values_unresolved
+claim_label: ARCHITECTURE CONTRACT / PARTIAL LOCAL ASSIGNMENT / UNFITTED
 scientific_role: minimum_defensible_runtime_lineage
 
 scope:
   canonical_neurons: 166700
   runtime_edges: 25582938
-  population_assignment_coverage: zero_promoted_assignments
+  population_assignment_coverage:
+    event_required_neurons: 10
+    dual_unresolved_scoped_neurons: 36
+    all_other_canonical_neurons: dual_unresolved_by_default
+    evidence_ref: calibration/evidence/front-leg-population-dynamics-v0.yaml
   parameter_values_promoted: 0
 
 dynamics_classes:
   event_lif_source_aligned:
     comparator_model_id: model.malecns_lif_source_aligned.v1
     preserves: [spike_events, membrane_state, synaptic_state, refractory_state, declared_delays]
-    status: executable_comparator_not_population_promoted
+    status: executable_comparator_event_requirement_promoted_for_t1_tibia_flexor_pool_constants_unresolved
   graded_rate:
     comparator_model_id: model.malecns_typed_signed_rate.v0
     preserves: [continuous_state, declared_rate_timestep]
@@ -63,9 +67,11 @@ accepted_claims:
   - A universal homogeneous point-neuron LIF lineage is not promoted.
   - Future population-scoped evidence can change one assignment without redefining every central parameter unit.
   - The existing event scheduler and rate comparator are reusable implementation references.
+  - The ten scoped T1 tibia-flexor motor neurons require an event-capable representation at type-transfer confidence.
+  - The 36 scoped FeCO neurons remain dual-unresolved rather than receiving a silent default.
 forbidden_claims:
   - The full hybrid runtime is implemented.
-  - Any canonical population has already been assigned a promoted dynamics class.
+  - Every canonical motor or sensory population shares the scoped front-leg assignment.
   - Existing LIF constants or rate-ensemble values are accepted physiology.
   - A typed architecture by itself predicts a fly behavior.
 
@@ -76,6 +82,6 @@ critical_risk_refs:
 
 decision_ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
 next_action: >-
-  Execute target.population_dynamics_assignment.v0 on one minimal sensory chain
-  and one minimal motor chain. Leave all other populations dual_unresolved and
-  propagate that uncertainty explicitly; do not invent a global unit bridge.
+  Implement bounded FeCO dual-representation and tibia-flexor event-to-force
+  probes. Leave all populations outside this scope dual_unresolved and do not
+  invent a global unit bridge or physiological constants.

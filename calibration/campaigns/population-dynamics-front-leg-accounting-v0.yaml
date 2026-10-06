@@ -1,0 +1,64 @@
+schema_version: 1
+id: campaign.population_dynamics_front_leg_accounting.v0
+title: Deterministic front-leg population dynamics assignment accounting
+status: completed_partial_assignment
+target_ids: [target.population_dynamics_assignment.v0]
+scope_ids: [scope.population_dynamics.front_leg.v0]
+parameter_family_ids:
+  - parameter.central.neuron_dynamics.v0
+  - parameter.proprioception.transfer.v0
+  - parameter.motor.transfer.v0
+dependency_campaign_ids: []
+parent_parameter_set_ids: []
+output_parameter_set_id: null
+claim_label: POPULATION CLASS ACCOUNTING / ZERO VALUES / NO BEHAVIOR
+
+method:
+  kind: deterministic_rules_first_evidence_accounting
+  implementation: src/the_fly_matrix/population_dynamics_assignment.py
+  objective_terms:
+    - exact population and accepted-route accounting
+    - evidence-backed assignment or explicit unresolved status
+    - native-unit and conversion-boundary completeness
+  bounds: {}
+  frozen_parameters:
+    - all central, proprioceptive, motor and physical parameter values
+  seeds: []
+  compute_budget: one deterministic local table pass
+
+capacity_policy:
+  model_family: assignment_only_no_numeric_model
+  degrees_of_freedom: 0
+  automatic_capacity_increase_allowed: false
+scenario_splits: {train: [], validation: [], diagnostic: [front_leg_population_accounting], held_out: []}
+reproducibility:
+  command: population_dynamics_assignment.bat
+  git_commit: pending_batch_commit
+  environment: Python 3.12 plus pandas and PyYAML
+behavior_exposure: {behavior_targeted: false, exposed_behavior_ids: [], contamination_notes: []}
+result:
+  status: accepted_partial_assignment_motor_event_sensory_dual_unresolved
+  semantic_result_sha256: 788654096c94e1557ce1e43b147e0139ef77c2a8b23ccfb1d669627e93816743
+  population_counts:
+    total: 2
+    event_required: 1
+    graded_required: 0
+    dual_unresolved: 1
+  neuron_counts:
+    total: 46
+    event_required: 10
+    dual_unresolved: 36
+  parameter_values_emitted: 0
+  artifact_refs:
+    - data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    - data/derived/calibration/population-dynamics-front-leg-v0/summary.json
+  failures: []
+acceptance:
+  criteria_locked_before_run: true
+  reproducibility_mode: exact_semantic_hash
+reopening: {reopened_family_ids: [], reasons: [], stale_descendant_ids: []}
+sources:
+  - calibration/evidence/front-leg-population-dynamics-v0.yaml
+next_action: >-
+  Keep the accepted motor event assignment, propagate the FeCO dual ensemble,
+  and preregister separate local transfer probes before emitting any value.

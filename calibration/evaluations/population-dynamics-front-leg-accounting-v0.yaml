@@ -1,0 +1,51 @@
+schema_version: 1
+id: evaluation.population_dynamics_front_leg_accounting.v0
+title: Front-leg population dynamics assignment accounting result
+status: accepted_partial_assignment
+target_id: target.population_dynamics_assignment.v0
+parameter_set_id: null
+protocol_version: v0
+exposure_policy: diagnostic_only
+scenario_ids: [front_leg_population_accounting]
+dataset_split_ids: {fitting: [], local_validation: [], local_held_out: [], behavior_held_out: []}
+seeds: []
+metrics:
+  populations_accounted: 2
+  neurons_accounted: 46
+  event_required_neurons: 10
+  dual_unresolved_neurons: 36
+  unmatched_neurons: 0
+  parameter_values_emitted: 0
+  behavior_targets_exposed: 0
+acceptance_result: partial_pass_motor_event_requirement_feco_dual_unresolved
+admissible_set_evaluation:
+  member_count: 0
+  acceptance_rate: null
+  metric_distribution: {}
+reproducibility:
+  command: population_dynamics_assignment.bat
+  git_commit: pending_batch_commit
+  environment: Python 3.12 plus pandas and PyYAML
+  input_hashes:
+    recipe: 3a9153c79ebded89641987025026fb0b33a0cb03ec57d683323072d2bcc7deb7
+  artifact_refs:
+    - data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    - data/derived/calibration/population-dynamics-front-leg-v0/summary.json
+  semantic_result_sha256: 788654096c94e1557ce1e43b147e0139ef77c2a8b23ccfb1d669627e93816743
+contamination:
+  inspected_before_parameter_freeze: false
+  used_for_model_selection: false
+  used_for_manual_tuning: false
+  notes:
+    - No body trajectory, movement direction, standing, walking or grooming result was executed or inspected.
+failures: []
+conclusion: >-
+  The selected scope is exhaustively accounted. Direct type-level recordings make
+  event capability mandatory for the ten T1 tibia-flexor motor neurons, without
+  transferring constants. The available FeCO calcium/kinematic evidence does not
+  identify native event versus graded dynamics, so all 36 cells remain explicitly
+  dual-unresolved. The target remains open for local conversion probes.
+next_action: >-
+  Preregister the FeCO dual-representation transduction comparison and the
+  tibia-flexor event-to-force transfer separately, with frozen topology and no
+  named behavior selection.

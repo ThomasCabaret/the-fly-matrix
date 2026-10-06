@@ -21,7 +21,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.neural_model_class_temporal_probes.v1
+last_completed_campaign_id: campaign.population_dynamics_front_leg_accounting.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -52,6 +52,7 @@ readiness:
   central_timestep_convergence: reproducible_31_of_32_numerically_portable_nonidentifying_no_reference_selected
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
   central_model_class: global_gate_resolved_revise_event_capable_typed_hybrid_architecture_population_assignments_open
+  population_dynamics_assignment: front_leg_scope_46_of_46_accounted_10_motor_event_required_36_feco_dual_unresolved_zero_values
   spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
@@ -68,7 +69,7 @@ behavior_exposure:
   contaminated_parameter_sets: []
 
 blocked_by:
-  - The global homogeneous rate-versus-LIF choice is closed as revise; no canonical population yet has a promoted dynamics assignment under the typed/hybrid contract.
+  - The global homogeneous rate-versus-LIF choice is closed as revise; only the ten-neuron T1 tibia-flexor motor pool has a promoted event requirement, while its constants, the 36-neuron FeCO class choice and every population outside the scope remain unresolved.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
@@ -88,10 +89,9 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Execute target.population_dynamics_assignment.v0 under the accepted event-capable
-  typed/hybrid contract. Preregister one minimal source-backed sensory population
-  chain and one minimal motor population chain; declare event, graded, or
-  dual-unresolved dynamics and every conversion boundary. Keep the accepted
-  direct-motor surrogate and FlyBody mechanics frozen. Do not begin broad embodied
-  fitting until all populations it exercises have an assignment or a bounded
-  unresolved-ensemble policy.
+  Under target.population_dynamics_assignment.v0, implement a bounded FeCO
+  dual-representation transduction probe and a separate tibia-flexor
+  event-to-force transfer campaign. Keep all numerical constants, the direct-motor
+  surrogate and FlyBody mechanics frozen until their local targets and source
+  transformations are preregistered. Do not inspect named body behavior to select
+  either representation.

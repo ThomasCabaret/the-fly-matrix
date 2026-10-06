@@ -1,0 +1,46 @@
+schema_version: 1
+id: scope.population_dynamics.front_leg.v0
+title: Bilateral front-leg FeCO and tibia-flexor terminal populations
+status: accounted_assignments_partial_values_unfitted
+target_id: target.population_dynamics_assignment.v0
+
+population_ids:
+  - population.front_leg_feco.v0
+  - population.front_leg_tibia_flexor_motor.v0
+owner_ids:
+  - adapter.proprioception.transduction
+  - adapter.proprioception.routing
+  - cns.malecns
+  - adapter.motor.routing
+  - adapter.motor.transduction
+
+topology_boundary:
+  semantic_topology_hashes:
+    proprioception: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    motor_output: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  topology_changes_allowed: false
+
+accounting:
+  populations: 2
+  canonical_neurons: 46
+  sensory_neurons: 36
+  motor_neurons: 10
+  parameter_values: 0
+  behavior_targets: 0
+
+allowed_changes:
+  - population dynamics assignment status
+  - explicit native-unit and conversion-boundary contracts
+  - uncertainty representation
+forbidden_changes:
+  - terminal membership
+  - candidate topology or cardinality
+  - central graph edges
+  - FlyBody actuator semantics
+  - any parameter selected from a named behavior
+
+sources:
+  - calibration/evidence/front-leg-population-dynamics-v0.yaml
+  - wiring/revalidation/proprioception-v1.yaml
+  - wiring/revalidation/motor-output-v1.yaml
+next_action: Preserve this frozen scope while the FeCO and tibia-flexor conversion probes are preregistered separately.

@@ -236,10 +236,9 @@ class CalibrationRegistryTests(unittest.TestCase):
             architecture["assignment_contract"]["default_class"],
             "dual_unresolved",
         )
-        self.assertEqual(
-            architecture["scope"]["population_assignment_coverage"],
-            "zero_promoted_assignments",
-        )
+        assignment_coverage = architecture["scope"]["population_assignment_coverage"]
+        self.assertEqual(assignment_coverage["event_required_neurons"], 10)
+        self.assertEqual(assignment_coverage["dual_unresolved_scoped_neurons"], 36)
         self.assertEqual(architecture["scope"]["parameter_values_promoted"], 0)
         self.assertIn(
             "homogeneous_continuous_rate",
@@ -252,6 +251,34 @@ class CalibrationRegistryTests(unittest.TestCase):
         for artifact_ref in evaluation["reproducibility"]["artifact_refs"]:
             with self.subTest(artifact_ref=artifact_ref):
                 self.assertTrue((ROOT / artifact_ref).is_file())
+
+    def test_first_local_population_assignment_is_partial_and_value_free(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT
+            / "campaigns"
+            / "population-dynamics-front-leg-accounting-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluations"
+            / "population-dynamics-front-leg-accounting-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT
+            / "runner"
+            / "population-dynamics-front-leg-accounting-v0.yaml"
+        )
+        assignment = self.targets["target.population_dynamics_assignment.v0"]
+
+        self.assertEqual(campaign["capacity_policy"]["degrees_of_freedom"], 0)
+        self.assertEqual(campaign["result"]["parameter_values_emitted"], 0)
+        self.assertEqual(evaluation["metrics"]["neurons_accounted"], 46)
+        self.assertEqual(evaluation["metrics"]["event_required_neurons"], 10)
+        self.assertEqual(evaluation["metrics"]["dual_unresolved_neurons"], 36)
+        self.assertEqual(evaluation["metrics"]["behavior_targets_exposed"], 0)
+        self.assertEqual(runner["semantic_result_sha256"], campaign["result"]["semantic_result_sha256"])
+        self.assertIn("active_front_leg", assignment["status"])
+        self.assertIn(assignment["id"], self.state["active_target_ids"])
 
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)

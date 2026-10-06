@@ -1,0 +1,149 @@
+schema_version: 1
+id: evidence.population_dynamics.front_leg.v0
+title: Front-leg local population dynamics evidence and accounting rules
+status: runnable
+claim_label: POPULATION CLASS ACCOUNTING / ZERO VALUES / NO BEHAVIOR
+
+input_files:
+  - path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+    sha256: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2
+  - path: data/derived/analysis/cycle-topology/node-classification.parquet
+    sha256: 9b534eefdd93860f7c40455da787284a646d0dd8970468f565230256c03d7f69
+  - path: data/derived/wiring/proprioception-routes.parquet
+    sha256: c367c130cb43ba0a912dc7d7d74233e8e6924ea768f25065731234c9825558d6
+  - path: data/derived/wiring/proprioception-input-candidates.parquet
+    sha256: 17384b5924ac0879237a1466af46b18270381a4fed3adae33693af656005f7f1
+  - path: data/derived/wiring/proprioception-proxy-candidates.parquet
+    sha256: 85edb225017ef999c7196b33b0d33ab828392cec590557ef8fe79cead5385d18
+  - path: data/derived/wiring/motor-routes.parquet
+    sha256: 26e55ba6401443734adfd5dbe6505f7ca5ffc6a0293090ff38a1f72f4d5e80bd
+  - path: data/derived/wiring/motor-actuator-candidates.parquet
+    sha256: a4ebad77da9ce2176d63824195eb017f0543090bdeeb1151ebb3f11d5e163352
+
+sources:
+  - id: source.malecns_systematic_annotations.v1
+    ref: https://doi.org/10.1038/s41467-025-59302-3
+    supports:
+      - MaleCNS class, nerve, side and named type identify bounded front-leg FeCO and motor populations.
+      - FeCO claw, hook and club are functionally distinct proprioceptor categories.
+    does_not_support:
+      - A native membrane model or parameter value for every selected FeCO body.
+  - id: source.front_leg_feco_function.v0
+    ref: https://doi.org/10.1016/j.neuron.2018.09.009
+    supports:
+      - Front-leg FeCO populations encode position, movement direction and vibration in calcium recordings.
+    does_not_support:
+      - Direct discrimination between event-spiking and graded dynamics in the selected MaleCNS bodies.
+  - id: source.tibia_flexor_motor_spikes.v0
+    ref: https://doi.org/10.7554/eLife.56754
+    supports:
+      - Fast, intermediate and slow adult T1 tibia-flexor motor neurons emit measured spikes.
+      - Spike count and rate are causally related to force in the studied motor pool.
+    does_not_support:
+      - Exact parameter values for every MaleCNS `Ti flexor MN` body.
+      - A direct bodyId crosswalk from each experimental driver-defined neuron.
+
+population_rules:
+  - id: population.front_leg_feco.v0
+    role: local_sensory_terminal_population
+    selector:
+      all:
+        - {field: class, op: equals, value: mechanosensory_proprioceptive}
+        - {field: entryNerve, op: equals, value: ProLN}
+        - {field: subclass, op: equals, value: chordotonal organ}
+    route_table: proprioception
+    assignment: dual_unresolved
+    assignment_confidence: high_for_unresolved_status
+    rationale: >-
+      Functional calcium imaging establishes kinematic coding but does not identify
+      native event versus graded membrane dynamics for these exact MaleCNS bodies.
+      Neither comparator may therefore be silently promoted.
+    source_ids:
+      - source.malecns_systematic_annotations.v1
+      - source.front_leg_feco_function.v0
+    native_input_contract:
+      kind: physical_joint_state
+      represented_observables: [femur_tibia_position, femur_tibia_velocity]
+      units: [radian, radian_per_second]
+    native_output_contract:
+      kind: unresolved_event_train_or_graded_activity
+      conversion_boundary: required_before_numerical_transfer
+    delay_policy: unresolved_compare_declared_event_delay_and_graded_timestep
+    expected:
+      neurons: 36
+      canonical_runtime_neurons: 36
+      route_rows: 36
+      terminal_channels: 17
+      named_types: 11
+      left_neurons: 23
+      right_neurons: 13
+      direct_candidate_edges: 34
+      proxy_candidate_edges: 0
+  - id: population.front_leg_tibia_flexor_motor.v0
+    role: local_motor_terminal_population
+    selector:
+      all:
+        - {field: superclass, op: equals, value: vnc_motor}
+        - {field: subclass, op: equals, value: fl}
+        - {field: type, op: equals, value: Ti flexor MN}
+        - {field: somaNeuromere, op: equals, value: T1}
+    route_table: motor
+    assignment: event_required
+    assignment_confidence: medium_type_level_transfer
+    rationale: >-
+      Direct whole-cell and EMG recordings demonstrate spikes across fast,
+      intermediate and slow T1 tibia-flexor motor-neuron classes. The assignment
+      transfers at the annotated pool level; it does not transfer constants.
+    source_ids:
+      - source.malecns_systematic_annotations.v1
+      - source.tibia_flexor_motor_spikes.v0
+    native_input_contract:
+      kind: synaptic_event_and_membrane_state
+      units: explicit_events_and_millivolts_after_local_parameter_calibration
+    native_output_contract:
+      kind: spike_events
+      conversion_boundary: explicit_event_to_motor_transfer_kernel_required
+    delay_policy: explicit_event_delay_required_values_unresolved
+    expected:
+      neurons: 10
+      canonical_runtime_neurons: 10
+      route_rows: 10
+      motor_groups: 2
+      left_neurons: 5
+      right_neurons: 5
+      actuator_candidate_edges: 110
+      unique_actuators: 22
+
+acceptance:
+  expected_populations: 2
+  expected_neurons: 46
+  expected_event_required_neurons: 10
+  expected_dual_unresolved_neurons: 36
+  expected_graded_required_neurons: 0
+  expected_excluded_neurons: 0
+  expected_parameter_values_emitted: 0
+  expected_unmatched_neurons: 0
+  require_all_canonical_runtime_neurons: true
+  require_disjoint_populations: true
+  require_source_for_each_assignment: true
+  require_conversion_boundary_for_each_population: true
+
+behavior_exposure:
+  behavior_targeted: false
+  exposed_behavior_ids: []
+  forbidden_selection_signals:
+    - leg movement direction
+    - standing stability
+    - walking or grooming success
+    - actuator trajectory appearance
+
+assumptions:
+  - Experimental physiology transfers from adult T1 tibia-flexor type classes to the corresponding MaleCNS type-level population, not to individual parameter values.
+  - Calcium tuning alone cannot decide whether a selected FeCO population is event-spiking, graded, or mixed.
+  - The accepted wiring envelope is consumed unchanged; no route or candidate edge is added by this pass.
+
+next_action: >-
+  Implement a bounded dual-representation FeCO transduction probe using only
+  local calcium/kinematic observations, and define a source-backed event-to-force
+  transfer campaign for the tibia-flexor pool with the direct-motor surrogate
+  frozen. Do not inspect a named body behavior to choose either result.
