@@ -1,0 +1,91 @@
+schema_version: 1
+id: evidence.front_leg_local_conversion_sources.v0
+title: Source locks and unresolved mappings for the first front-leg conversions
+status: source_inventory_complete_numeric_promotion_blocked
+updated: 2026-10-07
+
+scope:
+  populations:
+    - population.front_leg_feco.v0
+    - population.front_leg_tibia_flexor_motor.v0
+  topology_changes_allowed: false
+  behavior_targets: []
+
+feco_source:
+  article:
+    ref: https://doi.org/10.1016/j.neuron.2018.09.009
+    supports:
+      - FeCO subpopulations encode position, movement direction and vibration.
+      - Local kinematic-to-neural comparisons are scientifically relevant.
+    does_not_support:
+      - Native event versus graded dynamics for every selected MaleCNS body.
+      - A complete numerical transfer table for the 36 selected bodies.
+  analysis_repository:
+    ref: https://github.com/MamiyaA/NeuralCodingOfLegProprioception_CalciumImagingAnalyses
+    pinned_commit: f8db1b3654d6870d2e9bfae03aeb8c04f37c472c
+    local_inspection: scripts_present_measurement_arrays_absent
+    consequence: >-
+      The public repository locks the analysis logic but cannot alone reproduce
+      or fit the local transfer values. No value is promoted from it.
+  male_cns_mapping:
+    selected_bodies: 36
+    selected_named_types: 11
+    crosswalk_status: selected_by_anatomical_annotation_not_individually_crosswalked_to_recorded_cells
+
+motor_source:
+  article:
+    ref: https://doi.org/10.7554/eLife.56754
+    supports:
+      - Adult T1 tibia-flexor fast, intermediate and slow motor units spike.
+      - Spike count and firing rate are causally related to measured force.
+      - Force production and temporal response differ strongly by motor-unit class.
+    reported_text_level_observations_not_parameters:
+      fast_force_per_spike: approximately_10_uN
+      intermediate_force_per_spike: approximately_1_uN
+      slow_force_per_spike: less_than_0_1_uN
+      fast_and_intermediate_half_maximum: approximately_8_5_ms
+      slow_peak: not_reached_within_500_ms
+      slow_resting_firing: approximately_30_Hz
+    promotion_policy: >-
+      Approximate prose values have no complete uncertainty or body-level
+      crosswalk and are evidence constraints only, never runtime defaults.
+  raw_data:
+    ref: https://doi.org/10.5061/dryad.76hdr7stb
+    reported_repository_size: 48.76_GB
+    acquisition_policy: selective_files_only_after_preregistered_manifest
+    reason_not_vendored: raw_repository_is_large_and_contains_per_cell_MATLAB_archives
+  code_snapshot:
+    ref: https://doi.org/10.5281/zenodo.4527659
+    inspected_files:
+      - {name: README.txt, md5: 8bdb59e4e038d5dbb64fdf9fae4775c1}
+      - {name: Dataset3_SlowInterFast_ForcePerSpike.m, md5: a809aec32a089d17cd2798d6a61e605c}
+      - {name: Script_forcePerSpike.m, md5: 592b556600ecb81bd1ba0f1deeb1e6e7}
+      - {name: Script_forcePerSpikeAndFiringRate.m, md5: 8f7f07809be4f96cc64f889c28eec321}
+    observed_cohorts:
+      fast_driver: 81A07
+      intermediate_driver: 22A08
+      slow_driver: 35C09
+    exact_script_constant:
+      force_probe_spring_constant_N_per_m: 0.2234
+    limitation: scripts_reference_raw_trials_that_are_not_contained_in_the_small_code_snapshot
+  male_cns_mapping:
+    selected_bodies: 10
+    annotation_type: Ti_flexor_MN
+    sides: {left: 5, right: 5}
+    fast_intermediate_slow_crosswalk: unresolved
+    consequence: >-
+      Class-specific values cannot be assigned to individual body IDs until a
+      source-backed crosswalk or an explicitly propagated assignment ensemble exists.
+
+accepted_claims:
+  - The first local conversion boundaries can be implemented and tested without choosing values.
+  - Motor event-to-force must retain motor-unit-class uncertainty.
+  - FeCO graded and event candidates must coexist until local evidence discriminates them.
+forbidden_claims:
+  - The public script repositories alone reproduce the numerical experiments.
+  - Approximate article values are calibrated defaults.
+  - MaleCNS body IDs are individually mapped to the experimental driver lines.
+next_action: >-
+  Preregister the smallest raw-file manifest needed for each local residual,
+  download only those files, then fit class-level candidates while retaining an
+  unresolved body-to-class ensemble.

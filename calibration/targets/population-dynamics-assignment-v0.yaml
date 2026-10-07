@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_motor_event_assigned_feco_dual_unresolved
+status: active_front_leg_conversion_contracts_executable_values_and_feco_class_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,10 +64,11 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_first_local_scope_46_of_46_accounted
+validation: partial_pass_46_of_46_accounted_conversion_boundaries_executable_zero_values
 blocked_reason: null
 next_action: >-
-  Preserve the T1 tibia-flexor motor event assignment and implement two bounded
-  local probes: a dual-representation FeCO transduction comparison using only
-  local kinematic/calcium evidence, and an event-to-force motor transfer using
-  source-backed local measurements. Do not inspect body behavior to select them.
+  Preserve the executable boundaries and frozen topology while acquiring only
+  preregistered local source subsets. Compare FeCO event and graded candidates on
+  local kinematic/calcium residuals, and fit class-level motor twitch candidates
+  while propagating the unresolved body-to-class crosswalk. Do not inspect body
+  behavior to select them.

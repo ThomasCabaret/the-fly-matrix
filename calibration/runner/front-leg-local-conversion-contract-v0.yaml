@@ -1,0 +1,44 @@
+schema_version: 1
+id: runner_result.front_leg_local_conversion_contract.v0
+campaign_id: campaign.front_leg_local_conversion_contract.v0
+target_id: target.population_dynamics_assignment.v0
+status: pass_contract_only_values_unresolved
+claim_label: LOCAL CONVERSION CONTRACT / SYNTHETIC STRUCTURE TEST / NO CALIBRATION
+command: local_conversion_contract.bat
+campaign_sha256: 07a69d62a632924c05f2bb7e56cf75c28e3ff1053221c8242c101b0e26281d59
+semantic_result_sha256: c3af9f660055520071e1301805903acd8bffc54deb648aede362347ddba443b3
+topology_hashes:
+  parameter.proprioception.transfer.v0: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+  parameter.motor.transfer.v0: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+accounting:
+  scoped_feco_neurons: 36
+  scoped_motor_neurons: 10
+  promoted_parameter_values: 0
+  optimized_parameters: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+behavior_targets: []
+artifact_ref: data/derived/calibration/front-leg-local-conversion-v0/summary.json
+accepted_claims:
+- FeCO graded activity and event intensity have separate executable output contracts.
+- Seeded intensity-to-event conversion is reproducible and unit-explicit.
+- Motor events convert causally to biological force before a separate force-to-actuator
+  surrogate bridge.
+- The accepted proprioception and motor topology hashes remain unchanged.
+forbidden_claims:
+- FeCO event or graded representation has been selected scientifically.
+- Any FeCO, motor-twitch or force-to-actuator value has been calibrated.
+- The selected MaleCNS motor body IDs have been mapped to fast, intermediate or slow
+  experimental cells.
+- A movement or named behavior has been fitted, inspected or reproduced.
+open_blockers:
+- FeCO numerical measurement arrays are absent from the inspected public analysis
+  repository.
+- No source-backed fast/intermediate/slow crosswalk exists for the ten selected MaleCNS
+  body IDs.
+- The minimal raw Dryad motor-file subset has not been preregistered or downloaded.
+- The force-to-direct-MuJoCo-motor bridge is a separate unresolved surrogate calibration.
+next_action: 'Build two source-data manifests: a minimal FeCO kinematic/calcium subset
+  for dual-representation residuals and a minimal motor spike/force subset for class-level
+  twitch kernels. Keep body-to-class alternatives explicit and do not inspect a body
+  trajectory or named behavior.'

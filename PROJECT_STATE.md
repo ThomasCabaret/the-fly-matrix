@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-06. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-07. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -14,7 +14,10 @@ plus amont est maintenant fermé globalement : ni ce runtime rate continu, ni un
 LIF point-neuron homogène ne sont promus sur tout MaleCNS. L'ADR 0016 accepte une
 architecture event-capable typée/hybride. Une première passe locale affecte maintenant les dix
 motoneurones T1 fléchisseurs du tibia à une exigence événementielle ; les 36
-afférences FeCO restent explicitement `dual_unresolved`. Ce résultat ne choisit
+afférences FeCO restent explicitement `dual_unresolved`. Les quatre frontières
+locales sont maintenant exécutables et testées : cinématique→activité graduée,
+cinématique→intensité événementielle, événements moteurs→force biologique, puis
+force→commande directe MuJoCo comme pont surrogate séparé. Ce résultat ne choisit
 aucune constante et ne généralise pas hors de ce périmètre.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
@@ -94,9 +97,11 @@ L'objectif courant est d'exécuter
 la première chaîne locale est préréférencée et comptabilisée. Ses 46 neurones
 canoniques sont tous couverts : 10 motoneurones T1 fléchisseurs du tibia exigent
 une représentation événementielle sur preuve de type, tandis que 36 afférences
-FeCO conservent les deux représentations admissibles. Le front suivant construit
-séparément le pont FeCO cinématique→activité et le transfert événements moteurs→
-force, sans valeur implicite ni observation d'un comportement nommé.
+FeCO conservent les deux représentations admissibles. Leurs contrats de conversion
+sont maintenant exécutables sans valeur implicite ni observation d'un comportement
+nommé. Le front suivant verrouille les plus petits sous-ensembles de données brutes
+permettant de comparer localement ces deux représentations et d'ajuster des noyaux
+moteurs par classe sans inventer la correspondance individuelle des body IDs.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
@@ -607,7 +612,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; zéro valeur et zéro jeu complet sont promus**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables, mais zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 
@@ -675,7 +680,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **145 tests** actuels passent, y compris les
+conservées et classifiées. Les **152 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -702,12 +707,15 @@ des douze paramètres partagés demeure un risque ouvert.
 
 Le premier audit local est terminé sans choisir de valeur : les partitions de
 preuve basales sont exhaustives et les limites des publications sont enregistrées.
-Le transfert numérique doit maintenant viser une population événementielle,
-graduée ou une frontière typée explicite ; aucun pont global n'est inventé. Les
-frontières Brian2, les probes temporels et le pilote aBN1 ont été exécutés. Le
-prochain lot construit les deux probes de conversion locales sans mélanger leurs
-paramètres : FeCO cinématique/calcium en double représentation, puis événements
-des motoneurones vers transfert de force avec le surrogate mécanique gelé.
+Le transfert numérique vise maintenant des frontières typées explicites ; aucun
+pont global n'est inventé. `local_conversion_contract.bat` exerce les sorties FeCO
+graduée et événementielle sans en choisir une, puis conserve deux étapes motrices
+distinctes : événements→force biologique et force→commande MuJoCo. Les tests
+contrôlent unités, formes, causalité, superposition, symétrie de fixture, seed et
+hashes topologiques. Le dépôt FeCO inspecté ne contient que les scripts d'analyse,
+et les données motrices brutes représentent environ 48,76 Go ; la prochaine étape
+est donc un manifeste minimal préenregistré, pas un téléchargement aveugle. La
+correspondance fast/intermediate/slow des 10 body IDs reste un ensemble non résolu.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.

@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.motor.transfer.v0
 title: Motor activation to actuator transfer
-status: compiler_ready_unfitted
+status: compiler_and_event_force_contract_ready_unfitted
 primary_class: local_interface
 parameter_kind: transfer
 claim_role: biological
@@ -17,6 +17,6 @@ identifiability: {status: unresolved_runtime_factorization_available_upstream_ac
 dependencies: {upstream_family_ids: [parameter.motor.routing.v0, parameter.body.flybody_mechanics.v0], downstream_family_ids: [parameter.technical.motor_command_envelope.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: src/the_fly_matrix/runtime.py, supports: 7849 executable terminal-actuator coefficient slots}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: accepted topology boundary}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: 3746 logical routes expanded with explicit transfer assignments into 7849 runtime slots}, {ref: calibration/runner/actuator-causal-attribution-v1.yaml, supports: fixed upstream direct-motor surrogate boundary and measured causal separation}]
-assumptions: [compiler.peripheral_routing_transfer.v0 expands 3746 group-to-actuator route decisions into 7849 runtime coefficients and combines them with an explicit transfer-sharing assignment; it chooses neither values nor sharing., The current 102 physical channels use ActuatorType.MOTOR; direct joint actuation remains a surrogate whose contribution is gated by target.actuator_semantics_gate.v0.]
-next_action: Define one minimal local motor response dataset and an evidence-backed transfer-sharing assignment with FlyBody mechanics frozen before fitting any motor gain.
+sources: [{ref: src/the_fly_matrix/runtime.py, supports: 7849 executable terminal-actuator coefficient slots}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: accepted topology boundary}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: 3746 logical routes expanded with explicit transfer assignments into 7849 runtime slots}, {ref: calibration/runner/actuator-causal-attribution-v1.yaml, supports: fixed upstream direct-motor surrogate boundary and measured causal separation}, {ref: calibration/evidence/front-leg-local-conversion-sources-v0.yaml, supports: motor spike-force source lock plus unresolved body-to-class crosswalk}, {ref: src/the_fly_matrix/local_conversion.py, supports: separate event-to-force and force-to-direct-motor executable stages}]
+assumptions: [compiler.peripheral_routing_transfer.v0 expands 3746 group-to-actuator route decisions into 7849 runtime coefficients and combines them with an explicit transfer-sharing assignment; it chooses neither values nor sharing., The current 102 physical channels use ActuatorType.MOTOR; direct joint actuation remains a surrogate whose contribution is gated by target.actuator_semantics_gate.v0., The peak-normalized bi-exponential twitch is an executable candidate kernel rather than an accepted universal motor-unit model., Biological-force and direct-MuJoCo-command parameters may not be collapsed into one fitted gain.]
+next_action: Preregister a minimal spike-force raw-file subset and a motor-unit-class ensemble; fit candidate twitch kernels with FlyBody mechanics frozen, then calibrate the separate force-to-direct-motor surrogate bridge locally.

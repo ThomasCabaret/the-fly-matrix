@@ -217,3 +217,20 @@ versus graded dynamics, so that population remains `dual_unresolved`. The pass
 emits zero values and inspects no body trajectory or named behavior. Its accepted
 partial result is recorded in
 `evaluations/population-dynamics-front-leg-accounting-v0.yaml`.
+
+Run `local_conversion_contract.bat` to validate the executable boundaries of
+that first local scope. The command exercises both admissible FeCO outputs
+(`graded_activity` and `event_intensity_hz`), seeded intensity-to-event sampling,
+a causal event-to-force motor kernel, and a separate biological-force to MuJoCo
+direct-motor bridge. Its constants are synthetic software fixtures: the command
+fits and promotes zero values, changes no topology, and sees no body trajectory
+or named behavior. Source availability, exact limitations and file locks are in
+`evidence/front-leg-local-conversion-sources-v0.yaml`; the accepted contract-only
+result is in `evaluations/front-leg-local-conversion-contract-v0.yaml`.
+
+The motor source repository is about 48.76 GB and the FeCO analysis repository
+inspected here contains scripts rather than its numerical measurement arrays.
+Do not bulk-download or infer defaults from article prose. Preregister a minimal
+raw-file manifest first. The ten selected MaleCNS tibia-flexor motor body IDs also
+lack a source-backed fast/intermediate/slow crosswalk, so class assignments must
+remain an explicit ensemble rather than a silent per-neuron label.

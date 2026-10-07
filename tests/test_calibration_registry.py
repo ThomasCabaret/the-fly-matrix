@@ -280,6 +280,31 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertIn("active_front_leg", assignment["status"])
         self.assertIn(assignment["id"], self.state["active_target_ids"])
 
+    def test_first_local_conversion_contract_is_executable_and_value_free(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "front-leg-local-conversion-contract-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "front-leg-local-conversion-contract-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "front-leg-local-conversion-contract-v0.yaml"
+        )
+        assignment = self.targets["target.population_dynamics_assignment.v0"]
+
+        self.assertEqual(campaign["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertEqual(campaign["capacity_policy"]["optimized_parameters"], 0)
+        self.assertFalse(campaign["capacity_policy"]["representation_selected"])
+        self.assertEqual(evaluation["metrics"]["parameter_values_promoted"], 0)
+        self.assertEqual(evaluation["metrics"]["behavior_targets_exposed"], 0)
+        self.assertEqual(runner["accounting"]["topology_changes"], 0)
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+        self.assertIn("conversion_contracts_executable", assignment["status"])
+
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)

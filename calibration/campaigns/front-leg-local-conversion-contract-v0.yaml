@@ -1,0 +1,75 @@
+schema_version: 1
+id: campaign.front_leg_local_conversion_contract.v0
+title: Executable typed local-conversion boundaries for the first front-leg scope
+status: completed_contract_probe_values_unresolved
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+claim_label: LOCAL CONVERSION CONTRACT / SYNTHETIC STRUCTURE TEST / NO CALIBRATION
+behavior_targets: []
+
+topology_boundary:
+  parameter.proprioception.transfer.v0:
+    parameter_family_record: calibration/parameter_families/proprioception-transfer-v0.yaml
+    semantic_topology_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+  parameter.motor.transfer.v0:
+    parameter_family_record: calibration/parameter_families/motor-transfer-v0.yaml
+    semantic_topology_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  topology_changes_allowed: false
+
+conversion_contracts:
+  feco_kinematics_to_native_output:
+    input_units: [radian, radian_per_second]
+    admissible_native_outputs:
+      - {id: graded_activity, units: declared_model_activity, status: unresolved_candidate}
+      - {id: event_intensity_hz, units: events_per_second, status: unresolved_candidate}
+    hidden_normalization_allowed: false
+    silent_default_representation_allowed: false
+  event_intensity_to_event_counts:
+    input_units: events_per_second
+    output_units: integer_events_per_timestep
+    required_metadata: [timestep_s, seed]
+  motor_events_to_force:
+    input_units: integer_spike_events
+    output_units: micronewton
+    candidate_kernel: causal_peak_normalized_biexponential
+    kernel_status: executable_candidate_not_biologically_promoted
+  biological_force_to_actuator_command:
+    input_units: micronewton
+    output_units: mujoco_direct_motor_command
+    status: separate_unresolved_surrogate_bridge
+
+structural_probe:
+  purpose: test_shape_units_causality_reproducibility_and_stage_separation_only
+  timestep_s: 0.001
+  samples: 100
+  seed: 1729
+  fixture_values: explicit_synthetic_nonbiological_not_persisted_as_parameters
+
+capacity_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  fitted_datasets: []
+  representation_selected: false
+  motor_body_class_assignments_selected: false
+
+acceptance:
+  - both FeCO output representations execute without a silent default
+  - seeded event sampling is reproducible
+  - motor force is causal and homolog-symmetric under identical fixtures
+  - biological-force and actuator-command stages remain separate
+  - frozen topology hashes are unchanged
+  - no value, behavior target or body trajectory is used
+
+source_lock: calibration/evidence/front-leg-local-conversion-sources-v0.yaml
+open_blockers:
+  - FeCO numerical measurement arrays are absent from the inspected public analysis repository.
+  - No source-backed fast/intermediate/slow crosswalk exists for the ten selected MaleCNS body IDs.
+  - The minimal raw Dryad motor-file subset has not been preregistered or downloaded.
+  - The force-to-direct-MuJoCo-motor bridge is a separate unresolved surrogate calibration.
+next_action: >-
+  Build two source-data manifests: a minimal FeCO kinematic/calcium subset for
+  dual-representation residuals and a minimal motor spike/force subset for
+  class-level twitch kernels. Keep body-to-class alternatives explicit and do
+  not inspect a body trajectory or named behavior.

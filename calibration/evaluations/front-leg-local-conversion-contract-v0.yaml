@@ -1,0 +1,58 @@
+schema_version: 1
+id: evaluation.front_leg_local_conversion_contract.v0
+title: Typed local-conversion structural contract result
+status: accepted_contract_only_values_unresolved
+target_id: target.population_dynamics_assignment.v0
+campaign_id: campaign.front_leg_local_conversion_contract.v0
+parameter_set_id: null
+protocol_version: v0
+exposure_policy: diagnostic_only
+scenario_ids: [synthetic_local_conversion_structure]
+dataset_split_ids: {fitting: [], local_validation: [], local_held_out: [], behavior_held_out: []}
+seeds: [1729]
+metrics:
+  feco_native_output_modes_exercised: 2
+  motor_conversion_stages_exercised: 2
+  scoped_neurons_accounted: 46
+  topology_changes: 0
+  parameter_values_promoted: 0
+  optimized_parameters: 0
+  behavior_targets_exposed: 0
+acceptance_result: pass_executable_boundaries_no_scientific_representation_or_value_selected
+admissible_set_evaluation:
+  member_count: 0
+  acceptance_rate: null
+  metric_distribution: {}
+reproducibility:
+  command: local_conversion_contract.bat
+  git_commit: pending_batch_commit
+  environment: Python 3.12 plus NumPy and PyYAML
+  source_lock: calibration/evidence/front-leg-local-conversion-sources-v0.yaml
+  artifact_refs:
+    - data/derived/calibration/front-leg-local-conversion-v0/summary.json
+    - calibration/runner/front-leg-local-conversion-contract-v0.yaml
+  semantic_result_sha256: c3af9f660055520071e1301805903acd8bffc54deb648aede362347ddba443b3
+contamination:
+  inspected_before_parameter_freeze: false
+  used_for_model_selection: false
+  used_for_manual_tuning: false
+  notes:
+    - Synthetic fixtures test software invariants only and are not candidate parameters.
+    - No body simulation, trajectory or named behavior was executed or inspected.
+failures:
+  - id: feco_numeric_source_payload_missing
+    disposition: blocks_numeric_fit_not_contract
+  - id: motor_body_to_experimental_class_crosswalk_missing
+    disposition: blocks_body_level_assignment_not_event_capability
+  - id: biological_force_to_direct_motor_bridge_unresolved
+    disposition: blocks_end_to_end_motor_value_promotion
+conclusion: >-
+  The first local chain now has executable, unit-explicit conversion boundaries.
+  FeCO graded activity and event intensity remain coequal unresolved candidates.
+  Motor events feed a causal biological-force stage, and only then a distinct
+  MuJoCo direct-motor surrogate bridge. No scientific value or representation is
+  selected by this result.
+next_action: >-
+  Preregister and acquire minimal local source subsets, then compare FeCO
+  representations and fit motor-unit-class twitch candidates without selecting
+  from body behavior.
