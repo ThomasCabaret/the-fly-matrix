@@ -4,6 +4,12 @@ __pycache__/
 *.py[cod]
 data/raw/**
 !data/raw/README.md
+# Three tiny, commit-pinned MATLAB files are evidence source snapshots, not
+# experimental raw data. Their exact bytes are required by the source contract.
+!data/raw/calibration/
+!data/raw/calibration/front-leg-local-v0/
+!data/raw/calibration/front-leg-local-v0/feco/
+!data/raw/calibration/front-leg-local-v0/feco/*.m
 data/derived/**
 !data/derived/README.md
 runs/**

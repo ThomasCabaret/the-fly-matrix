@@ -1,0 +1,43 @@
+schema_version: 1
+id: evaluation.feco_calcium_observation_source.v0
+title: Evaluation of the pinned FeCO calcium observation source contract
+status: accepted_source_contract_data_fit_blocked
+campaign_id: campaign.feco_calcium_observation_source.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_with_external_data_blocker
+
+metrics:
+  source_files_verified: 3
+  source_hash_mismatches: 0
+  observation_kernel_sum: 1.0
+  observation_kernel_first_sample: 0.0
+  source_path_discrepancy_detected: true
+  source_path_discrepancy_silently_reconciled: false
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  native_representation_selected: false
+  behavior_targets_exposed: 0
+  topology_changes: 0
+
+interpretation:
+  accepted_claims:
+    - The pinned Dallmann 2025 source code defines reproducible FeCO activation-to-calcium observation candidates.
+    - The GCaMP observation kernel is causal and normalized under the source discretization.
+    - Source paths disagree on claw centering and hook/club thresholds, so the disagreement is an explicit local fitting question.
+  rejected_claims:
+    - Calcium identifies native spikes or membrane voltage.
+    - The exact source constants are promoted MaleCNS runtime parameters.
+    - The observation source contract resolves graded versus event dynamics.
+    - Experimental driver lines are individually crosswalked to MaleCNS body IDs.
+
+reproducibility:
+  command: feco_observation_contract.bat
+  runner_result: calibration/runner/feco-calcium-observation-source-v0.yaml
+  semantic_result_sha256: 33a326e9e6b48d366980fb8607b4e6c683f39bd920b6aaed212b53704fa40fec
+  derived_artifact: data/derived/calibration/feco-calcium-observation-source-v0/summary.json
+next_action: >-
+  Obtain a local Dryad Bearer token, acquire the three checksum-locked Parquet
+  tables, then run animal/trial-held-out comparison without using behavior labels.

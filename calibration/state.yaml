@@ -21,7 +21,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.front_leg_local_conversion_contract.v0
+last_completed_campaign_id: campaign.feco_calcium_observation_source.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -54,6 +54,8 @@ readiness:
   central_model_class: global_gate_resolved_revise_event_capable_typed_hybrid_architecture_population_assignments_open
   population_dynamics_assignment: front_leg_scope_46_of_46_accounted_10_motor_event_required_36_feco_dual_unresolved_conversion_boundaries_executable_zero_values
   local_conversion_contract: feco_graded_and_event_candidates_executable_motor_event_to_force_to_direct_motor_stages_separate_zero_values
+  local_source_subsets: feco_2MB_checksum_locked_motor_860MB_pilot_preregistered_dryad_bytes_require_local_bearer_token
+  feco_calcium_observation: source_fidelity_contract_pass_discrepancies_explicit_zero_values_native_representation_unresolved_data_fit_blocked
   spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
@@ -87,15 +89,16 @@ blocked_by:
   - The direct-motor actuator gate is closed only as a bounded short-horizon surrogate: unloaded homolog responses are symmetric and passive/open/closed effects are separated, but muscle, tendon, compliance and local-reflex fidelity remain outside the accepted model.
   - The uncalibrated live MaleCNS feedback changes motor commands after both generic perturbations but changes the final physical deviation by only about two parts per million relative to frozen open-loop commands; it is not currently evidence of stabilization or biological feedback control.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
-  - The inspected FeCO analysis repository contains scripts but not the numerical measurement arrays needed for local fitting; a minimal source payload must be located and locked before comparing representations.
+  - The 2 MB processed FeCO calcium payload is now located and checksum-locked, but Dryad file bytes require a local Bearer token. The pinned public source code is reproduced and exposes unresolved 80/90-degree and 5/50-degree source-path discrepancies.
+  - Calcium constrains a kinematics-to-observation proxy but does not by itself identify native spikes, membrane voltage, CNS model units or the graded-versus-event assignment.
   - The motor publication and code distinguish fast, intermediate and slow tibia-flexor units, but no source-backed crosswalk assigns those classes to the ten selected MaleCNS body IDs. Class membership must remain an ensemble until resolved.
-  - The motor raw-data repository is about 48.76 GB; only a preregistered minimal file subset may be acquired, and article-level approximate values are not runtime defaults.
+  - The motor raw-data repository is about 48.76 GB; a one-cell-per-class 860 MB pilot is preregistered but deliberately opt-in and is insufficient for population-level promotion. Article-level approximate values are not runtime defaults.
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Under target.population_dynamics_assignment.v0, preregister the smallest FeCO
-  kinematic/calcium and motor spike/force source subsets needed for local
-  residuals. Then compare both FeCO representations and fit motor-unit-class
-  twitch candidates while propagating the unresolved body-to-class ensemble.
-  Keep the force-to-direct-motor surrogate separate and do not inspect named body
-  behavior to select any representation or value.
+  Under target.population_dynamics_assignment.v0, add DRYAD_BEARER_TOKEN locally
+  and run prepare_local_source_data.bat to acquire and verify the 2 MB FeCO tables.
+  Compare the explicit observation paths on animal/trial-held-out residuals without
+  treating calcium as native spikes. Then explicitly acquire the 860 MB motor pilot
+  and fit class-level twitch candidates while retaining the unresolved body-to-class
+  ensemble and the separate force-to-direct-motor surrogate.

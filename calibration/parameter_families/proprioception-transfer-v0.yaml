@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.proprioception.transfer.v0
 title: Proprioception local transfer
-status: compiler_and_typed_conversion_contract_ready_unfitted
+status: compiler_typed_conversion_and_calcium_observation_source_contract_ready_unfitted
 primary_class: local_interface
 parameter_kind: transfer
 claim_role: biological
@@ -17,6 +17,6 @@ identifiability: {status: unresolved_runtime_factorization_available, allowed_da
 dependencies: {upstream_family_ids: [parameter.proprioception.routing.v0], downstream_family_ids: []}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: src/the_fly_matrix/runtime.py, supports: current 1992-coefficient compiled execution}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: expanded relation upper bound}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: explicit routing-transfer factorization and exact expansion}, {ref: calibration/evidence/front-leg-local-conversion-sources-v0.yaml, supports: locked first-scope sources and explicit absence of promotable numerical arrays}, {ref: src/the_fly_matrix/local_conversion.py, supports: separate executable graded-activity and event-intensity native output contracts}]
+sources: [{ref: src/the_fly_matrix/runtime.py, supports: current 1992-coefficient compiled execution}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: expanded relation upper bound}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: explicit routing-transfer factorization and exact expansion}, {ref: calibration/evidence/front-leg-local-conversion-sources-v0.yaml, supports: locked first-scope sources and checksum-locked processed tables with explicit limitations}, {ref: src/the_fly_matrix/local_conversion.py, supports: separate executable graded-activity and event-intensity native output contracts}, {ref: calibration/evaluations/feco-calcium-observation-source-v0.yaml, supports: pinned source-faithful calcium observation contract and unresolved source-path discrepancies}]
 assumptions: [compiler.peripheral_routing_transfer.v0 can multiply explicit routing weights by an explicit transfer-sharing assignment while preserving runtime shape; it does not choose either one., The affine local conversion is an executable candidate family and not a promoted FeCO biological model., Event intensity requires an explicit stochastic event boundary with timestep and seed; it is never silently binned into graded activity.]
-next_action: Preregister the minimal FeCO kinematic/calcium source payload, then compare the two native-output candidates with evidence-backed sharing while preserving the unresolved representation ensemble.
+next_action: Acquire the checksum-locked FeCO tables with a local Dryad token, compare source observation candidates on animal/trial-held-out residuals, and preserve the unresolved native representation ensemble because calcium alone is non-identifying.

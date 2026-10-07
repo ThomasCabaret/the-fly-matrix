@@ -1,0 +1,52 @@
+schema_version: 1
+id: model.feco_calcium_observation_source.v0
+title: Source-faithful FeCO kinematics-to-calcium observation candidates
+status: source_locked_candidate_not_promoted_data_validation_blocked
+scientific_role: observation_proxy_only
+native_neural_representation_selected: false
+behavior_targets: []
+
+source_lock:
+  repository: https://github.com/chrisjdallmann/feco-inhibition
+  commit: e1233f4a987c532c9f1ab42273af21a0a6a50393
+  files:
+    - {path: code/utils/imaging_predict_gcamp.m, sha256: 8ac8c133195570d44311437c46e6e10a939404b1258f5df45e307bd7ffaa742b}
+    - {path: code/imaging_fit_activation_function.m, sha256: 28236008995ebc5e0beaaf69c8b9baffea0e9b7fd97566482289e3d770279a12}
+    - {path: code/utils/imaging_poly_fun.m, sha256: b0673966b3f938bae9346665d27c69cbf00e3e1004148293c8a01bc37f343cee}
+
+published_candidate_structure:
+  calcium_kernel:
+    form: normalized_difference_of_exponentials
+    tau_on_s: 0.03
+    tau_off_s: 0.30
+    interpretation: exact_source_code_constant_for_observation_proxy_not_neural_dynamics
+  claw:
+    predictor_center_degrees: 80
+    polynomial_coefficients_descending_degree:
+      [-4.28350195279596e-09, -3.08701145496934e-07, 0.000123726627502515, 0.000474757347677466, -0.0357758464550021]
+    fit_recipe_center_degrees: 90
+    fit_recipe_padding_frames: 1000
+    fit_recipe_sampling_hz: 8.01
+    discrepancy_status: unresolved_source_path_difference
+  hook_flexion:
+    activation: one_when_velocity_below_threshold
+    fit_recipe_threshold_degrees_per_second: -5
+    documented_application_threshold_degrees_per_second: -50
+    discrepancy_status: unresolved_source_path_difference
+  club:
+    activation: one_when_absolute_velocity_above_threshold
+    fit_recipe_threshold_degrees_per_second: 5
+    documented_application_threshold_degrees_per_second: 50
+    discrepancy_status: unresolved_source_path_difference
+
+interpretation_limits:
+  - The calcium kernel is an observation model, not a synaptic or membrane kernel.
+  - Calcium cannot discriminate native graded activity from event generation by itself.
+  - Exact source constants are evidence candidates, not promoted runtime values.
+  - The 80-versus-90 degree and 5-versus-50 degree discrepancies must be resolved by the locked tables and local held-out residuals.
+  - No mapping from experimental ROI or driver line to individual MaleCNS body IDs is implied.
+
+next_action: >-
+  With authenticated Dryad bytes, reproduce both source paths on animal/trial-held-out
+  splits, report the discrepancies and retain every statistically admissible local
+  observation candidate. Do not infer spikes or CNS units from calcium alone.

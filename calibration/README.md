@@ -229,8 +229,22 @@ or named behavior. Source availability, exact limitations and file locks are in
 result is in `evaluations/front-leg-local-conversion-contract-v0.yaml`.
 
 The motor source repository is about 48.76 GB and the FeCO analysis repository
-inspected here contains scripts rather than its numerical measurement arrays.
-Do not bulk-download or infer defaults from article prose. Preregister a minimal
-raw-file manifest first. The ten selected MaleCNS tibia-flexor motor body IDs also
-lack a source-backed fast/intermediate/slow crosswalk, so class assignments must
-remain an explicit ensemble rather than a silent per-neuron label.
+contains scripts rather than its numerical measurement arrays. The missing FeCO
+tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed
+subset; a one-cell-per-class motor pilot is preregistered at about 860 MB. Run
+`prepare_local_source_data.bat` after setting `DRYAD_BEARER_TOKEN` locally. The
+script removes that credential before Dryad redirects to object storage, reports
+every blocked/deferred file and never downloads the large motor archives unless
+`--include-large-motor-pilot` is passed explicitly.
+
+Run `feco_observation_contract.bat` without any Dryad token to reproduce the pinned
+public activation/GCaMP source paths. It detects rather than reconciles the source's
+80/90-degree claw centering and 5/50-degree-per-second hook/club threshold
+differences. It fits zero values and cannot distinguish native spikes from graded
+activity: calcium remains a separate observation proxy. The accepted result is
+`evaluations/feco-calcium-observation-source-v0.yaml`.
+
+Do not bulk-download the 48.76 GB motor repository or infer defaults from article
+prose. The ten selected MaleCNS tibia-flexor motor body IDs still lack a
+source-backed fast/intermediate/slow crosswalk, so class assignments remain an
+explicit ensemble rather than a silent per-neuron label.

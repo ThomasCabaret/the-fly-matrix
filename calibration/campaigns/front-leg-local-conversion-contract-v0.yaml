@@ -64,12 +64,11 @@ acceptance:
 
 source_lock: calibration/evidence/front-leg-local-conversion-sources-v0.yaml
 open_blockers:
-  - FeCO numerical measurement arrays are absent from the inspected public analysis repository.
+  - FeCO processed measurement tables are checksum-locked but their bytes require a local Dryad Bearer token.
   - No source-backed fast/intermediate/slow crosswalk exists for the ten selected MaleCNS body IDs.
-  - The minimal raw Dryad motor-file subset has not been preregistered or downloaded.
+  - The 860 MB one-cell-per-class motor pilot is preregistered but deliberately not downloaded implicitly.
   - The force-to-direct-MuJoCo-motor bridge is a separate unresolved surrogate calibration.
 next_action: >-
-  Build two source-data manifests: a minimal FeCO kinematic/calcium subset for
-  dual-representation residuals and a minimal motor spike/force subset for
-  class-level twitch kernels. Keep body-to-class alternatives explicit and do
-  not inspect a body trajectory or named behavior.
+  Acquire the checksum-locked FeCO tables with local Dryad credentials and compare
+  observation candidates on local held-out splits. Fetch the motor pilot only by
+  explicit flag. Keep body-to-class alternatives explicit and inspect no body trajectory.

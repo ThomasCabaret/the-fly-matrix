@@ -54,3 +54,66 @@ datasets:
     url: https://raw.githubusercontent.com/flyconnectome/flywire_annotations/a83b2776d60d5764cef36b927f5f9679c16c47a2/supplemental_files/Supplemental_file1_neuron_annotations.tsv
     roles: [cross_connectome_annotation, circuit_reference_identity]
     behaviors_present: []
+  - id: feco-mamiya2018-claw-calcium-adapted-2025
+    version: dryad_version_393607_file_4330032
+    license: CC0-1.0
+    path: data/raw/calibration/front-leg-local-v0/feco/claw_magnet_Mamiya2018.parquet
+    expected_bytes: 849677
+    sha256: 7fc8a108258529d52815dc6e28b84958afffa073362ae41d75f551f2d83d01da
+    url: https://datadryad.org/api/v2/files/4330032/download
+    roles: [local_interface, proprioception, calcium_observation]
+    behaviors_present: []
+  - id: feco-mamiya2018-club-calcium-adapted-2025
+    version: dryad_version_393607_file_4330034
+    license: CC0-1.0
+    path: data/raw/calibration/front-leg-local-v0/feco/club_magnet_Mamiya2018.parquet
+    expected_bytes: 389137
+    sha256: 1b5c797ff3d3242b096530e9b881f1e09a296e4af99cbfc03a98c94fe0341fe1
+    url: https://datadryad.org/api/v2/files/4330034/download
+    roles: [local_interface, proprioception, calcium_observation]
+    behaviors_present: []
+  - id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
+    version: dryad_version_393607_file_4330033
+    license: CC0-1.0
+    path: data/raw/calibration/front-leg-local-v0/feco/hook_flexion_01_magnet_Mamiya2018.parquet
+    expected_bytes: 766556
+    sha256: ea61eee2d26a5e6fddb7aebaee06e13e11c9b87427d0f70b350760ab0ae545be
+    url: https://datadryad.org/api/v2/files/4330033/download
+    roles: [local_interface, proprioception, calcium_observation]
+    behaviors_present: []
+  - id: feco-mamiya2018-adapted-2025-readme
+    version: dryad_version_393607_file_4330056
+    license: CC0-1.0
+    path: data/raw/calibration/front-leg-local-v0/feco/README.md
+    expected_bytes: 10086
+    sha256: a4927a16b15524bf8342bf0109fe7188257be2eb1036f94493ae780f8fd7762a
+    url: https://datadryad.org/api/v2/files/4330056/download
+    roles: [provenance, schema_documentation]
+    behaviors_present: []
+  - id: feco-dallmann2025-predict-gcamp-source
+    version: e1233f4a987c532c9f1ab42273af21a0a6a50393
+    license: MIT
+    path: data/raw/calibration/front-leg-local-v0/feco/imaging_predict_gcamp.m
+    expected_bytes: 2558
+    sha256: 8ac8c133195570d44311437c46e6e10a939404b1258f5df45e307bd7ffaa742b
+    url: https://raw.githubusercontent.com/chrisjdallmann/feco-inhibition/e1233f4a987c532c9f1ab42273af21a0a6a50393/code/utils/imaging_predict_gcamp.m
+    roles: [local_interface, source_code, calcium_observation]
+    behaviors_present: []
+  - id: feco-dallmann2025-fit-activation-source
+    version: e1233f4a987c532c9f1ab42273af21a0a6a50393
+    license: MIT
+    path: data/raw/calibration/front-leg-local-v0/feco/imaging_fit_activation_function.m
+    expected_bytes: 7279
+    sha256: 28236008995ebc5e0beaaf69c8b9baffea0e9b7fd97566482289e3d770279a12
+    url: https://raw.githubusercontent.com/chrisjdallmann/feco-inhibition/e1233f4a987c532c9f1ab42273af21a0a6a50393/code/imaging_fit_activation_function.m
+    roles: [local_interface, source_code, fitting_recipe]
+    behaviors_present: []
+  - id: feco-dallmann2025-polynomial-source
+    version: e1233f4a987c532c9f1ab42273af21a0a6a50393
+    license: MIT
+    path: data/raw/calibration/front-leg-local-v0/feco/imaging_poly_fun.m
+    expected_bytes: 606
+    sha256: b0673966b3f938bae9346665d27c69cbf00e3e1004148293c8a01bc37f343cee
+    url: https://raw.githubusercontent.com/chrisjdallmann/feco-inhibition/e1233f4a987c532c9f1ab42273af21a0a6a50393/code/utils/imaging_poly_fun.m
+    roles: [local_interface, source_code, calcium_observation]
+    behaviors_present: []

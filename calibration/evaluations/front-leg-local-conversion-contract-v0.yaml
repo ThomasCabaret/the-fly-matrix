@@ -31,7 +31,7 @@ reproducibility:
   artifact_refs:
     - data/derived/calibration/front-leg-local-conversion-v0/summary.json
     - calibration/runner/front-leg-local-conversion-contract-v0.yaml
-  semantic_result_sha256: c3af9f660055520071e1301805903acd8bffc54deb648aede362347ddba443b3
+  semantic_result_sha256: 00bc6db8a2a970ffc1125c5290bf17edf6a139d7c841f1c03597966b388f1efd
 contamination:
   inspected_before_parameter_freeze: false
   used_for_model_selection: false

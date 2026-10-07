@@ -305,6 +305,35 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertIn("conversion_contracts_executable", assignment["status"])
 
+    def test_feco_observation_source_contract_does_not_claim_native_spikes(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "feco-calcium-observation-source-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "feco-calcium-observation-source-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "feco-calcium-observation-source-v0.yaml"
+        )
+        model = load_yaml(
+            CALIBRATION_ROOT / "models" / "feco-calcium-observation-source-v0.yaml"
+        )
+
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertEqual(campaign["capacity_policy"]["optimized_parameters"], 0)
+        self.assertFalse(campaign["capacity_policy"]["representation_selected"])
+        self.assertEqual(evaluation["metrics"]["promoted_parameter_values"], 0)
+        self.assertTrue(evaluation["metrics"]["source_path_discrepancy_detected"])
+        self.assertFalse(
+            evaluation["metrics"]["source_path_discrepancy_silently_reconciled"]
+        )
+        self.assertFalse(model["native_neural_representation_selected"])
+        self.assertFalse(runner["interpretation"]["calcium_is_native_spiking_evidence"])
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)

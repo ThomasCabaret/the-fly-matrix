@@ -1,0 +1,93 @@
+schema_version: 1
+id: evidence.front_leg_local_source_subsets.v0
+title: Preregistered minimal source subsets for front-leg local calibration
+status: preregistered_feco_small_payload_motor_large_pilot_deferred
+updated: 2026-10-07
+
+scientific_boundary:
+  primary_class: local_interface
+  behavior_targets: []
+  topology_changes_allowed: false
+  body_trajectory_inspection_allowed: false
+  promotion_from_dataset_availability_alone: false
+
+feco_calcium_subset:
+  source_dataset:
+    doi: https://doi.org/10.5061/dryad.gqnk98t16
+    dryad_version_id: 393607
+    license: CC0-1.0
+    relationship_to_primary_experiment: >-
+      Processed/adapted Mamiya 2018 FeCO calcium data republished with the 2025
+      presynaptic-inhibition study. This is not the raw 2018 imaging archive.
+  acquisition_policy: required_small_complete_for_named_classes
+  total_expected_bytes: 2025899
+  files:
+    - dataset_id: feco-mamiya2018-claw-calcium-adapted-2025
+      functional_class: claw_position
+    - dataset_id: feco-mamiya2018-club-calcium-adapted-2025
+      functional_class: club_vibration_and_speed
+    - dataset_id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
+      functional_class: hook_flexion_direction
+    - dataset_id: feco-mamiya2018-adapted-2025-readme
+      functional_class: documentation
+    - dataset_id: feco-dallmann2025-predict-gcamp-source
+      functional_class: observation_model_source
+    - dataset_id: feco-dallmann2025-fit-activation-source
+      functional_class: fitting_recipe_source
+    - dataset_id: feco-dallmann2025-polynomial-source
+      functional_class: observation_model_source
+  admissible_uses:
+    - reproduce the published processed table schemas and local sample accounting
+    - fit or compare kinematics-to-calcium observation candidates with local held-out splits
+    - constrain class-level response shape in the units explicitly present in the files
+  forbidden_inferences:
+    - calcium traces directly identify spikes or membrane voltage
+    - the processed tables identify the native graded-versus-event representation
+    - recorded cells are individually crosswalked to the 36 selected MaleCNS bodies
+    - normalized calcium amplitude is a CNS runtime unit without a separate bridge
+  acquisition_constraint:
+    dryad_file_bytes: requires_DRYAD_BEARER_TOKEN_as_of_2026_10_07
+    public_github_sources: anonymous_download_available
+    credential_policy: bearer_removed_before_cross_host_presigned_storage_redirect
+
+motor_spike_force_pilot:
+  source_dataset:
+    doi: https://doi.org/10.5061/dryad.76hdr7stb
+    dryad_version_id: 105831
+    license: CC0-1.0
+    reported_complete_bytes: 48764413973
+  acquisition_policy: explicit_large_flag_only
+  promotion_adequacy: pilot_only_not_sufficient_for_population_or_body_level_promotion
+  selected_total_expected_bytes: 860450999
+  selection_rule: >-
+    Smallest currently enumerated cell archive for each article-defined motor-unit
+    class, plus the repository README and anatomy workbook. The selection is for
+    parser and kernel-identifiability feasibility, not population statistics.
+  files:
+    - {functional_class: fast_81A07, name: 171102_F2_C1.zip, dryad_file_id: 585422, expected_bytes: 369295693, sha256: 5acd9b7d93f594912ba54a515f645dd5a9d4c1e8ee8e2cb6b3bd5bd998e84686, url: https://datadryad.org/api/v2/files/585422/download}
+    - {functional_class: intermediate_22A08, name: 180222_F1_C1.zip, dryad_file_id: 585425, expected_bytes: 199758273, sha256: c904f419a52f7993f4146e578a760168178b0dc9ea61c19e9708f2adc99a6e33, url: https://datadryad.org/api/v2/files/585425/download}
+    - {functional_class: slow_35C09, name: 180111_F2_C1.zip, dryad_file_id: 585424, expected_bytes: 291303979, sha256: 59efa2e5a071d561e4b47691c0753924ee26f041a9ceec2becd1d722572ddc8c, url: https://datadryad.org/api/v2/files/585424/download}
+    - {functional_class: documentation, name: README.txt, dryad_file_id: 585475, expected_bytes: 2484, sha256: 2b4e81cbd8486f0c535f27f9bca6871f0633ce3ab5bae6b9d965530be907f90d, url: https://datadryad.org/api/v2/files/585475/download}
+    - {functional_class: anatomy_metadata, name: MN_anatomy_confocal_measurements.xlsx, dryad_file_id: 585474, expected_bytes: 90570, sha256: 7f17a281828842c9832499c283ba3ff828eb1539297a28df022d6e02625e7e97, url: https://datadryad.org/api/v2/files/585474/download}
+  admissible_uses:
+    - verify archive schemas and reproduce one-cell-per-class parser feasibility
+    - test whether a candidate twitch-kernel family is identifiable on representative local trials
+  forbidden_inferences:
+    - one cell per class estimates a population distribution
+    - driver class is an individual MaleCNS body-ID crosswalk
+    - a pilot fit may be promoted as a complete motor parameter set
+
+exception_accounting:
+  feco_named_classes: {total: 3, selected: 3, excluded: 0, blocked: 0}
+  motor_article_classes: {total: 3, selected_for_pilot: 3, excluded: 0, blocked: 0}
+  motor_body_crosswalk: {selected_malecns_bodies: 10, resolved_to_class: 0, unresolved: 10}
+  known_missing_article_cells: >-
+    The article analysis script names additional cells that were not matched to
+    standalone Dryad file entries during this inventory. This does not change the
+    pilot selection and must be resolved before a complete class-level fit.
+
+next_action: >-
+  Acquire and verify the 2,025,899-byte FeCO payload, inventory its schema and
+  preregister a local held-out calcium-observation comparison. Acquire the 860 MB
+  motor pilot only with an explicit large-data flag after its expected value is
+  judged sufficient; never fetch the full 48.76 GB repository implicitly.

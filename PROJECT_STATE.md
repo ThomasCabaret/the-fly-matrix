@@ -18,7 +18,20 @@ afférences FeCO restent explicitement `dual_unresolved`. Les quatre frontières
 locales sont maintenant exécutables et testées : cinématique→activité graduée,
 cinématique→intensité événementielle, événements moteurs→force biologique, puis
 force→commande directe MuJoCo comme pont surrogate séparé. Ce résultat ne choisit
-aucune constante et ne généralise pas hors de ce périmètre.
+aucune constante et ne généralise pas hors de ce périmètre. Les sources suivantes
+sont maintenant préréférencées : trois tables FeCO traitées et leur README font
+environ 2 Mo, tandis qu'un pilote moteur d'une cellule par classe fait environ
+860 Mo au lieu des 48,76 Go complets. Dryad exige désormais un jeton Bearer même
+pour les octets publics ; le pipeline classe explicitement ce blocage et ne lance
+jamais le gros téléchargement moteur implicitement.
+
+Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
+précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
+GCaMP causal normalisé, mais révèle deux divergences conservées comme telles :
+centrage du claw à 80 ou 90 degrés selon le chemin, et seuils hook/club à 5 ou
+50 degrés/s selon fitting ou application documentée. Zéro valeur est promue, et
+le calcium reste une observation qui ne choisit pas entre événements et activité
+graduée.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -99,9 +112,12 @@ canoniques sont tous couverts : 10 motoneurones T1 fléchisseurs du tibia exigen
 une représentation événementielle sur preuve de type, tandis que 36 afférences
 FeCO conservent les deux représentations admissibles. Leurs contrats de conversion
 sont maintenant exécutables sans valeur implicite ni observation d'un comportement
-nommé. Le front suivant verrouille les plus petits sous-ensembles de données brutes
-permettant de comparer localement ces deux représentations et d'ajuster des noyaux
-moteurs par classe sans inventer la correspondance individuelle des body IDs.
+nommé. Les plus petits sous-ensembles de sources sont désormais verrouillés et le
+contrat source de l'observation calcium passe. Le front suivant requiert un jeton
+Dryad local pour vérifier les trois tables, puis compare les chemins d'observation
+sur des splits animal/essai tenus à l'écart. Cette comparaison ne peut pas, seule,
+décider de la représentation native. Le pilote moteur reste opt-in et la
+correspondance individuelle des body IDs reste un ensemble.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
@@ -809,6 +825,8 @@ neural_model_micro_tests.bat # 27 oracles rapides de mécanique neuronale ; aucu
 lock_abn1_reference.bat # reconstruit/verrouille le probe aBN1 JO-CE/JO-F avant toute sortie candidate
 actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et saturation
 actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tethered, zéro fitting/comportement
+prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pilote moteur opt-in
+feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

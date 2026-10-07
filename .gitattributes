@@ -5,4 +5,5 @@
 *.feather binary
 *.npz binary
 *.parquet binary
+data/raw/calibration/front-leg-local-v0/feco/*.m binary
 

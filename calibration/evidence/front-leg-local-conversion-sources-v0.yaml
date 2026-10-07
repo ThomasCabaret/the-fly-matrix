@@ -1,7 +1,7 @@
 schema_version: 1
 id: evidence.front_leg_local_conversion_sources.v0
 title: Source locks and unresolved mappings for the first front-leg conversions
-status: source_inventory_complete_numeric_promotion_blocked
+status: source_inventory_and_minimal_manifests_complete_numeric_fit_blocked_by_authenticated_bytes_and_crosswalk
 updated: 2026-10-07
 
 scope:
@@ -23,10 +23,21 @@ feco_source:
   analysis_repository:
     ref: https://github.com/MamiyaA/NeuralCodingOfLegProprioception_CalciumImagingAnalyses
     pinned_commit: f8db1b3654d6870d2e9bfae03aeb8c04f37c472c
-    local_inspection: scripts_present_measurement_arrays_absent
+    local_inspection: scripts_present_measurement_arrays_external
     consequence: >-
       The public repository locks the analysis logic but cannot alone reproduce
       or fit the local transfer values. No value is promoted from it.
+  processed_measurement_subset:
+    ref: https://doi.org/10.5061/dryad.gqnk98t16
+    manifest: calibration/evidence/front-leg-local-source-subsets-v0.yaml
+    expected_bytes: 2015456
+    files: [claw_magnet_Mamiya2018.parquet, club_magnet_Mamiya2018.parquet, hook_flexion_01_magnet_Mamiya2018.parquet, README.md]
+    status: located_checksum_locked_download_blocked_missing_Dryad_Bearer_token
+    limitation: processed_adapted_calcium_tables_not_raw_imaging_and_not_native_spike_or_voltage_measurements
+  observation_source_contract:
+    ref: calibration/evaluations/feco-calcium-observation-source-v0.yaml
+    status: accepted_source_contract_zero_values_promoted
+    unresolved_discrepancies: [claw_center_80_vs_90_degrees, hook_threshold_minus5_vs_minus50_degrees_per_second, club_threshold_5_vs_50_degrees_per_second]
   male_cns_mapping:
     selected_bodies: 36
     selected_named_types: 11
@@ -81,11 +92,13 @@ accepted_claims:
   - The first local conversion boundaries can be implemented and tested without choosing values.
   - Motor event-to-force must retain motor-unit-class uncertainty.
   - FeCO graded and event candidates must coexist until local evidence discriminates them.
+  - The processed FeCO tables are small and precisely located, but their calcium signal constrains an observation proxy rather than native event versus graded semantics.
 forbidden_claims:
   - The public script repositories alone reproduce the numerical experiments.
   - Approximate article values are calibrated defaults.
   - MaleCNS body IDs are individually mapped to the experimental driver lines.
 next_action: >-
-  Preregister the smallest raw-file manifest needed for each local residual,
-  download only those files, then fit class-level candidates while retaining an
-  unresolved body-to-class ensemble.
+  Add a local Dryad Bearer token, acquire the checksum-locked 2 MB FeCO payload,
+  then fit and compare its explicit source observation paths with animal/trial-held-out
+  residuals. Acquire the 860 MB motor pilot only explicitly and retain the unresolved
+  body-to-class ensemble.

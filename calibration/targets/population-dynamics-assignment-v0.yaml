@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_values_and_feco_class_unresolved
+status: active_front_leg_conversion_contracts_executable_calcium_observation_source_contract_pass_values_and_feco_class_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -67,8 +67,8 @@ provenance:
 validation: partial_pass_46_of_46_accounted_conversion_boundaries_executable_zero_values
 blocked_reason: null
 next_action: >-
-  Preserve the executable boundaries and frozen topology while acquiring only
-  preregistered local source subsets. Compare FeCO event and graded candidates on
-  local kinematic/calcium residuals, and fit class-level motor twitch candidates
-  while propagating the unresolved body-to-class crosswalk. Do not inspect body
-  behavior to select them.
+  Preserve the executable boundaries and frozen topology. Acquire the 2 MB FeCO
+  subset with a local Dryad token, compare the conflicting source observation paths
+  on local held-out residuals, and do not claim that calcium alone distinguishes
+  event from graded dynamics. Then fit the explicit 860 MB motor pilot while
+  propagating the unresolved body-to-class crosswalk.

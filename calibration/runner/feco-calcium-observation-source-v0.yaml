@@ -1,0 +1,34 @@
+schema_version: 1
+id: runner_result.feco_calcium_observation_source.v0
+generated_at: '2026-10-07T06:45:05.891788+00:00'
+campaign_id: campaign.feco_calcium_observation_source.v0
+campaign_sha256: 11cc40ff168ec4423e630c2dd7dcb0a3a1c373e626e3164b9980784eca1aced1
+semantic_result_sha256: 33a326e9e6b48d366980fb8607b4e6c683f39bd920b6aaed212b53704fa40fec
+accounting:
+  source_hashes:
+  - path: data/raw/calibration/front-leg-local-v0/feco/imaging_predict_gcamp.m
+    sha256: 8ac8c133195570d44311437c46e6e10a939404b1258f5df45e307bd7ffaa742b
+  - path: data/raw/calibration/front-leg-local-v0/feco/imaging_fit_activation_function.m
+    sha256: 28236008995ebc5e0beaaf69c8b9baffea0e9b7fd97566482289e3d770279a12
+  - path: data/raw/calibration/front-leg-local-v0/feco/imaging_poly_fun.m
+    sha256: b0673966b3f938bae9346665d27c69cbf00e3e1004148293c8a01bc37f343cee
+  samples: 460
+  sampling_hz: 8.01
+  kernel_sum: 1.0
+  kernel_first: 0.0
+  claw_paths_equal: false
+  claw_path_max_abs_difference: 0.8676842469687196
+  hook_nonzero_samples: 0
+  club_nonzero_samples: 459
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  native_representation_selected: false
+  behavior_targets_exposed: 0
+  topology_changes: 0
+interpretation:
+  status: source_contract_pass_data_fit_blocked
+  calcium_is_native_spiking_evidence: false
+  calcium_is_cns_runtime_unit: false
+  source_path_discrepancy_detected: true
+  source_path_discrepancy_silently_reconciled: false
+  next_blocker: authenticated_Dryad_tables_not_present

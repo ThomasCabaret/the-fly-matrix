@@ -1,0 +1,49 @@
+schema_version: 1
+id: campaign.feco_calcium_observation_source.v0
+title: Source-fidelity contract for the FeCO calcium observation model
+status: completed_source_contract_data_fit_blocked_missing_dryad_token
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+claim_label: FECO CALCIUM OBSERVATION SOURCE CONTRACT / NOT NATIVE SPIKES / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+inputs:
+  model: calibration/models/feco-calcium-observation-source-v0.yaml
+  source_subset: calibration/evidence/front-leg-local-source-subsets-v0.yaml
+  source_files:
+    - {path: data/raw/calibration/front-leg-local-v0/feco/imaging_predict_gcamp.m, sha256: 8ac8c133195570d44311437c46e6e10a939404b1258f5df45e307bd7ffaa742b}
+    - {path: data/raw/calibration/front-leg-local-v0/feco/imaging_fit_activation_function.m, sha256: 28236008995ebc5e0beaaf69c8b9baffea0e9b7fd97566482289e3d770279a12}
+    - {path: data/raw/calibration/front-leg-local-v0/feco/imaging_poly_fun.m, sha256: b0673966b3f938bae9346665d27c69cbf00e3e1004148293c8a01bc37f343cee}
+
+structural_probe:
+  samples: 460
+  sampling_hz: 8.01
+  fixture_position_range_degrees: [0, 180]
+  source_recipe_thresholds_degrees_per_second: {hook_flexion: -5, club: 5}
+  values_role: exact_source_fidelity_fixtures_not_promoted_parameters
+
+acceptance:
+  - all three pinned source files reproduce their expected hashes
+  - observation kernels are causal finite and normalized
+  - hook and club thresholds are always explicit
+  - source-path numerical discrepancies are measured rather than silently reconciled
+  - zero behavior targets and zero topology changes are exposed
+  - no calcium result is labelled native spikes membrane voltage or CNS model activity
+
+capacity_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  representation_selected: false
+  source_constants_transferred_to_runtime: false
+
+result:
+  status: accepted_source_fidelity_contract_data_fit_blocked
+  parameter_values_promoted: 0
+  native_representation_selected: false
+  open_blocker: authenticated_Dryad_tables_not_present
+next_action: >-
+  Add DRYAD_BEARER_TOKEN locally, run prepare_local_source_data.bat, then open a
+  distinct animal/trial-held-out local fitting campaign. Keep this source contract immutable.
