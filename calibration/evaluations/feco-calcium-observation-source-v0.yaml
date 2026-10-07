@@ -36,7 +36,7 @@ interpretation:
 reproducibility:
   command: feco_observation_contract.bat
   runner_result: calibration/runner/feco-calcium-observation-source-v0.yaml
-  semantic_result_sha256: 33a326e9e6b48d366980fb8607b4e6c683f39bd920b6aaed212b53704fa40fec
+  semantic_result_sha256: c785f92f9fde7d9fc214e4ba54af0ab8d241d1f2554834fd83e10ab6b4536008
   derived_artifact: data/derived/calibration/feco-calcium-observation-source-v0/summary.json
 next_action: >-
   Obtain a local Dryad Bearer token, acquire the three checksum-locked Parquet

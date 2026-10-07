@@ -25,6 +25,8 @@ published_candidate_structure:
     polynomial_coefficients_descending_degree:
       [-4.28350195279596e-09, -3.08701145496934e-07, 0.000123726627502515, 0.000474757347677466, -0.0357758464550021]
     fit_recipe_center_degrees: 90
+    fit_recipe_form: quartic_refit_then_padded_gcamp_convolution
+    fit_recipe_parameters: 5
     fit_recipe_padding_frames: 1000
     fit_recipe_sampling_hz: 8.01
     discrepancy_status: unresolved_source_path_difference

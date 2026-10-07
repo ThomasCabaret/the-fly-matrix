@@ -244,6 +244,19 @@ differences. It fits zero values and cannot distinguish native spikes from grade
 activity: calcium remains a separate observation proxy. The accepted result is
 `evaluations/feco-calcium-observation-source-v0.yaml`.
 
+Run `fit_feco_calcium_observation.bat` after acquiring the three exact FeCO
+Parquet tables. The campaign compares seven explicit claw/hook/club source and
+boundary paths
+paths with leave-one-animal-out folds. Every trial/ROI on fixed predictor paths is
+convolved separately; those paths fit an affine scale/offset, while the public
+claw fit recipes estimate five polynomial coefficients through the pinned padded
+GCaMP convolution. The exact public concatenation and a boundary-safe per-trial
+port are both reported. Every fit uses training animals only, and held-out calcium is not
+used for normalization. The command currently returns a versioned blocked
+result because the authenticated tables are absent. Its synthetic tests validate
+accounting and leakage barriers only: they are not biological data and promote
+no source path, runtime unit or native event/graded representation.
+
 Do not bulk-download the 48.76 GB motor repository or infer defaults from article
 prose. The ten selected MaleCNS tibia-flexor motor body IDs still lack a
 source-backed fast/intermediate/slow crosswalk, so class assignments remain an

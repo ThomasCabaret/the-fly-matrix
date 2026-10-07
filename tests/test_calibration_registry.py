@@ -334,6 +334,30 @@ class CalibrationRegistryTests(unittest.TestCase):
             evaluation["reproducibility"]["semantic_result_sha256"],
         )
 
+    def test_feco_held_out_fit_is_preregistered_without_silent_selection(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "feco-calcium-held-out-fit-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "feco-calcium-held-out-fit-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "feco-calcium-held-out-fit-v0.yaml"
+        )
+
+        self.assertEqual(campaign["split"]["method"], "leave_one_animal_out")
+        self.assertFalse(campaign["selection_policy"]["choose_winner"])
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(
+            sum(len(dataset["candidates"]) for dataset in campaign["inputs"]["datasets"]),
+            7,
+        )
+        self.assertEqual(evaluation["acceptance_result"], "blocked_missing_authenticated_tables")
+        self.assertEqual(len(runner["accounting"]["datasets_blocked"]), 3)
+        self.assertFalse(runner["accounting"]["candidate_winner_selected"])
+        self.assertEqual(runner["accounting"]["parameter_values_promoted"], 0)
+
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)

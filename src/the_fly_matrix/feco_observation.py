@@ -181,7 +181,7 @@ def run(
     predictor_claw = predict_calcium(
         position, sampling_hz=sampling_hz, model_type="claw", claw_center_deg=80.0
     )
-    fit_recipe_claw = predict_calcium(
+    fit_recipe_claw_structure = predict_calcium(
         position,
         sampling_hz=sampling_hz,
         model_type="claw",
@@ -204,15 +204,20 @@ def run(
         model_type="club",
         threshold_deg_s=float(thresholds["club"]),
     )
-    discrepancy = predictor_claw - fit_recipe_claw
+    discrepancy = predictor_claw - fit_recipe_claw_structure
     semantic_payload = {
         "source_hashes": sources,
         "samples": samples,
         "sampling_hz": sampling_hz,
         "kernel_sum": round(float(kernel.sum()), 15),
         "kernel_first": float(kernel[0]),
-        "claw_paths_equal": bool(np.array_equal(predictor_claw, fit_recipe_claw)),
-        "claw_path_max_abs_difference": float(np.max(np.abs(discrepancy))),
+        "claw_structural_paths_equal": bool(
+            np.array_equal(predictor_claw, fit_recipe_claw_structure)
+        ),
+        "claw_structural_probe_max_abs_difference": float(np.max(np.abs(discrepancy))),
+        "claw_fit_recipe_refits_direct_quartic_coefficients": True,
+        "claw_fit_recipe_applies_gcamp_convolution": True,
+        "claw_fit_recipe_padding_frames": 1000,
         "hook_nonzero_samples": int(np.count_nonzero(hook)),
         "club_nonzero_samples": int(np.count_nonzero(club)),
         "optimized_parameters": 0,
@@ -246,7 +251,7 @@ def run(
         position_deg=position,
         gcamp_kernel=kernel,
         predictor_claw=predictor_claw,
-        fit_recipe_claw=fit_recipe_claw,
+        fit_recipe_claw_structure=fit_recipe_claw_structure,
         hook=hook,
         club=club,
     )

@@ -29,7 +29,7 @@ acceptance:
   - all three pinned source files reproduce their expected hashes
   - observation kernels are causal finite and normalized
   - hook and club thresholds are always explicit
-  - source-path numerical discrepancies are measured rather than silently reconciled
+  - source-path structural discrepancies are represented rather than silently reconciled
   - zero behavior targets and zero topology changes are exposed
   - no calcium result is labelled native spikes membrane voltage or CNS model activity
 
@@ -45,5 +45,6 @@ result:
   native_representation_selected: false
   open_blocker: authenticated_Dryad_tables_not_present
 next_action: >-
-  Add DRYAD_BEARER_TOKEN locally, run prepare_local_source_data.bat, then open a
-  distinct animal/trial-held-out local fitting campaign. Keep this source contract immutable.
+  Add DRYAD_BEARER_TOKEN locally, run prepare_local_source_data.bat, then execute
+  the distinct preregistered animal-held-out local fitting campaign. Keep this
+  source contract value-free.

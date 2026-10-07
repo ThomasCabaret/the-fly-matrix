@@ -1,7 +1,7 @@
 schema_version: 1
 id: scope.population_dynamics.front_leg.v0
 title: Bilateral front-leg FeCO and tibia-flexor terminal populations
-status: accounted_assignments_and_conversion_contracts_values_unfitted
+status: accounted_assignments_conversion_contracts_and_feco_fit_recipe_values_unfitted
 target_id: target.population_dynamics_assignment.v0
 
 population_ids:
@@ -43,6 +43,7 @@ forbidden_changes:
 sources:
   - calibration/evidence/front-leg-population-dynamics-v0.yaml
   - calibration/evidence/front-leg-local-conversion-sources-v0.yaml
+  - calibration/campaigns/feco-calcium-held-out-fit-v0.yaml
   - wiring/revalidation/proprioception-v1.yaml
   - wiring/revalidation/motor-output-v1.yaml
-next_action: Preserve this frozen scope while minimal local source subsets are preregistered and the two conversion families remain separately identifiable.
+next_action: Preserve this frozen scope while the preregistered FeCO fit awaits exact tables and the sensory/motor conversion families remain separately identifiable.

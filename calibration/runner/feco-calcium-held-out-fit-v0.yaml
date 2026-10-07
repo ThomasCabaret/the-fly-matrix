@@ -1,0 +1,26 @@
+schema_version: 1
+id: runner_result.feco_calcium_held_out_fit.v0
+generated_at: '2026-10-07T10:46:36.974939+00:00'
+campaign_id: campaign.feco_calcium_held_out_fit.v0
+campaign_sha256: c24f0127ea38956ac1f3ef9cd5d794d66418e3584b5490f39ac542bd7621e641
+status: blocked_missing_authenticated_tables
+semantic_result_sha256: 167ea2a58579f53ec36db9890dec3685775a912310e8610f0c2d4cda38fd294a
+accounting:
+  campaign_sha256: c24f0127ea38956ac1f3ef9cd5d794d66418e3584b5490f39ac542bd7621e641
+  datasets_expected: 3
+  datasets_verified: 0
+  datasets_blocked:
+  - dataset_id: feco-mamiya2018-claw-calcium-adapted-2025
+    reason: missing_file
+  - dataset_id: feco-mamiya2018-club-calcium-adapted-2025
+    reason: missing_file
+  - dataset_id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
+    reason: missing_file
+  candidate_winner_selected: false
+  parameter_values_promoted: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+interpretation:
+  biological_fit_completed: false
+  native_representation_selected: false
+  next_action: set_DRYAD_BEARER_TOKEN_and_run_prepare_local_source_data

@@ -1,0 +1,113 @@
+schema_version: 1
+id: campaign.feco_calcium_held_out_fit.v0
+title: Animal-held-out comparison of FeCO calcium observation source paths
+status: preregistered_blocked_missing_authenticated_tables
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: local_interface
+optimization_exposure: allowed
+claim_label: FECO LOCAL CALCIUM FIT / NO NATIVE-SPIKE CLAIM / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+inputs:
+  source_contract_campaign_id: campaign.feco_calcium_observation_source.v0
+  source_subset: calibration/evidence/front-leg-local-source-subsets-v0.yaml
+  datasets:
+    - dataset_id: feco-mamiya2018-claw-calcium-adapted-2025
+      functional_class: claw_position
+      path: data/raw/calibration/front-leg-local-v0/feco/claw_magnet_Mamiya2018.parquet
+      sha256: 7fc8a108258529d52815dc6e28b84958afffa073362ae41d75f551f2d83d01da
+      roi_contains: L1_x
+      candidates:
+        - {id: claw_published_predictor_center_80_gcamp, fit_kind: affine_on_fixed_prediction, model_type: claw, sampling_policy: source_ceil_second_time_sample, grouping_policy: per_animal_trial_roi, claw_center_deg: 80, pad_first_sample: 0}
+        - {id: claw_fit_recipe_exact_concatenated, fit_kind: quartic_gcamp_padded, model_type: claw, sampling_policy: fixed_8_01_hz_from_imaging_poly_fun, grouping_policy: concatenate_selected_rows_within_fold, claw_center_deg: 90, pad_first_sample: 1000}
+        - {id: claw_fit_recipe_boundary_safe, fit_kind: quartic_gcamp_padded, model_type: claw, sampling_policy: fixed_8_01_hz_from_imaging_poly_fun, grouping_policy: per_animal_trial_roi, claw_center_deg: 90, pad_first_sample: 1000}
+    - dataset_id: feco-mamiya2018-club-calcium-adapted-2025
+      functional_class: club_vibration_and_speed
+      path: data/raw/calibration/front-leg-local-v0/feco/club_magnet_Mamiya2018.parquet
+      sha256: 1b5c797ff3d3242b096530e9b881f1e09a296e4af99cbfc03a98c94fe0341fe1
+      roi_contains: L1_x
+      candidates:
+        - {id: club_fit_recipe_threshold_5_deg_s, fit_kind: affine_on_fixed_prediction, model_type: club, sampling_policy: source_ceil_second_time_sample, threshold_deg_s: 5}
+        - {id: club_documented_application_threshold_50_deg_s, fit_kind: affine_on_fixed_prediction, model_type: club, sampling_policy: source_ceil_second_time_sample, threshold_deg_s: 50}
+    - dataset_id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
+      functional_class: hook_flexion_direction
+      path: data/raw/calibration/front-leg-local-v0/feco/hook_flexion_01_magnet_Mamiya2018.parquet
+      sha256: ea61eee2d26a5e6fddb7aebaee06e13e11c9b87427d0f70b350760ab0ae545be
+      roi_contains: L1_medial
+      candidates:
+        - {id: hook_fit_recipe_threshold_minus_5_deg_s, fit_kind: affine_on_fixed_prediction, model_type: hook_flex, sampling_policy: source_ceil_second_time_sample, threshold_deg_s: -5}
+        - {id: hook_documented_application_threshold_minus_50_deg_s, fit_kind: affine_on_fixed_prediction, model_type: hook_flex, sampling_policy: source_ceil_second_time_sample, threshold_deg_s: -50}
+
+data_contract:
+  required_columns: [animal_id, trial, roi, analyze, time, calcium, L1C_flex]
+  row_filter: analyze_equals_1_and_roi_contains_preregistered_value
+  forbidden_selection_columns: [stimulus_type, predicted_calcium, behavior, movement_label]
+  calcium_unit: source_file_raw_calcium
+  normalization_policy: >-
+    Do not reproduce the source's whole-file calcium/max(selected) normalization,
+    because that reads held-out outcomes. The training-only affine fit absorbs
+    scale and offset without exposing held-out calcium.
+  trial_boundary_policy: >-
+    Fixed predictors and the boundary-safe claw port convolve each animal/trial/ROI
+    separately. The exact claw fitting candidate deliberately preserves the public
+    script's concatenation within each train or held-out fold and is labelled with
+    that known boundary artifact. No convolution ever crosses train/held-out animals.
+  sampling_policy: >-
+    Reproduce ceil(1/second_time_sample) from the pinned fitting source after verifying
+    every within-group interval is positive and within 2 percent of its median.
+    Also retain the timestamp reciprocal as an unresolved future physical-time
+    alternative rather than silently substituting it in this source-path campaign.
+
+split:
+  method: leave_one_animal_out
+  grouping_keys: [animal_id]
+  nested_trial_policy: every trial and ROI of a held-out animal remain held out
+  minimum_animals: 2
+  random_seed: null_deterministic_group_split
+
+fit:
+  candidate_parameter_counts:
+    fixed_predictor_paths: {parameters: [calcium_scale, calcium_offset], count: 2}
+    claw_fit_recipe_paths: {parameters: [quartic_degree_4, quartic_degree_3, quartic_degree_2, quartic_degree_1, offset], count: 5}
+  maximum_parameters_per_fold_candidate: 5
+  fitted_on: training_animals_only
+  objective: ordinary_least_squares_raw_calcium
+  nonlinear_shape_parameters_fitted: false
+  rationale: >-
+    V0 reproduces the source asymmetry explicitly. The fixed predictor paths get
+    only an affine observation bridge; the public claw fitting recipe refits five
+    polynomial coefficients through its padded GCaMP convolution. Both its exact
+    concatenation and a boundary-safe per-trial port are retained. Unequal capacities
+    and the boundary artifact are reported and forbid an automatic winner claim.
+
+metrics: [held_out_rmse_raw_calcium, held_out_mae_raw_calcium, held_out_pearson_r]
+selection_policy:
+  choose_winner: false
+  reason: >-
+    Report every source-path candidate and fold. A later acceptance record may
+    reject unsupported paths, but this campaign neither promotes parameters nor
+    selects native event versus graded dynamics.
+
+acceptance:
+  software_gate:
+    - exact source hashes match
+    - every input row is retained or assigned one explicit exclusion reason
+    - each animal is held out exactly once per candidate
+    - no convolution crosses a trial or ROI boundary
+    - all candidate paths and rank-deficient folds are reported
+  biological_acceptance: not_defined_in_v0
+  output_parameter_set: none
+
+forbidden_claims:
+  - calcium identifies native spikes membrane voltage or CNS runtime units
+  - best residual selects the native event-versus-graded representation
+  - an ROI or driver line maps to an individual MaleCNS body ID
+  - synthetic software tests are a biological fit
+  - this campaign changes routing topology
+
+next_action: >-
+  Add DRYAD_BEARER_TOKEN locally, run prepare_local_source_data.bat, then execute
+  fit_feco_calcium_observation.bat. Inspect all folds and retain the unresolved
+  source-path ensemble until a distinct acceptance decision is versioned.

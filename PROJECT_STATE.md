@@ -33,6 +33,20 @@ centrage du claw à 80 ou 90 degrés selon le chemin, et seuils hook/club à 5 o
 le calcium reste une observation qui ne choisit pas entre événements et activité
 graduée.
 
+La comparaison biologique correspondante est maintenant une procédure
+préenregistrée plutôt qu'une intention. Elle fixe sept chemins concurrents, tient
+chaque animal complet à l'écart, conserve essais et ROI dans le même fold, et
+recommence la convolution à chaque frontière d'essai. Contrairement au script
+source, elle ne normalise pas par un maximum qui aurait lu le calcium tenu à
+l'écart : les chemins fixes ajustent gain/offset sur les animaux d'entraînement,
+tandis que les chemins de fit claw réajustent cinq coefficients à travers le
+noyau GCaMP paddé. La concaténation exacte du script public et un port sûr par
+essai coexistent explicitement. Cette différence de capacité et de frontière
+interdit un gagnant automatique.
+Les oracles synthétiques de séparation et de comptabilité passent, mais les trois
+Parquet manquent encore localement ; zéro fold biologique a donc été exécuté et
+aucun chemin n'est choisi.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -113,9 +127,10 @@ une représentation événementielle sur preuve de type, tandis que 36 afférenc
 FeCO conservent les deux représentations admissibles. Leurs contrats de conversion
 sont maintenant exécutables sans valeur implicite ni observation d'un comportement
 nommé. Les plus petits sous-ensembles de sources sont désormais verrouillés et le
-contrat source de l'observation calcium passe. Le front suivant requiert un jeton
-Dryad local pour vérifier les trois tables, puis compare les chemins d'observation
-sur des splits animal/essai tenus à l'écart. Cette comparaison ne peut pas, seule,
+contrat source de l'observation calcium passe. La recette de fit tenue à l'écart
+est désormais exécutable et testée sur fixtures synthétiques. Le front suivant
+requiert un jeton Dryad local pour vérifier les trois tables, puis exécute ses sept
+chemins sur des splits par animal. Cette comparaison ne peut pas, seule,
 décider de la représentation native. Le pilote moteur reste opt-in et la
 correspondance individuelle des body IDs reste un ensemble.
 
@@ -728,9 +743,11 @@ pont global n'est inventé. `local_conversion_contract.bat` exerce les sorties F
 graduée et événementielle sans en choisir une, puis conserve deux étapes motrices
 distinctes : événements→force biologique et force→commande MuJoCo. Les tests
 contrôlent unités, formes, causalité, superposition, symétrie de fixture, seed et
-hashes topologiques. Le dépôt FeCO inspecté ne contient que les scripts d'analyse,
-et les données motrices brutes représentent environ 48,76 Go ; la prochaine étape
-est donc un manifeste minimal préenregistré, pas un téléchargement aveugle. La
+hashes topologiques. Le dépôt FeCO inspecté ne contient que les scripts d'analyse.
+Le manifeste minimal et la campagne tenue à l'écart sont maintenant préenregistrés ;
+les octets des tables restent bloqués par le jeton Dryad local. Les données
+motrices brutes représentent environ 48,76 Go et le pilote de 860 Mo reste
+explicitement opt-in. La
 correspondance fast/intermediate/slow des 10 body IDs reste un ensemble non résolu.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
@@ -827,6 +844,7 @@ actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et 
 actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tethered, zéro fitting/comportement
 prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pilote moteur opt-in
 feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
+fit_feco_calcium_observation.bat # 7 chemins FeCO, leave-one-animal-out ; bloqué sans tables exactes
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

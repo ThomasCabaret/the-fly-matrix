@@ -1,0 +1,39 @@
+schema_version: 1
+id: evaluation.feco_calcium_held_out_fit.v0
+title: Readiness evaluation for the FeCO animal-held-out source-path comparison
+status: blocked_inputs_procedure_and_synthetic_oracles_ready
+campaign_id: campaign.feco_calcium_held_out_fit.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: local_interface
+optimization_exposure: allowed
+behavior_targets: []
+acceptance_result: blocked_missing_authenticated_tables
+
+procedure_readiness:
+  source_tables_expected: 3
+  source_tables_verified: 0
+  candidate_paths_preregistered: 7
+  split: leave_one_animal_out_all_trials_and_rois_nested
+  fitted_parameters_per_fold_candidate: {fixed_predictor_paths: 2, claw_fit_recipe_paths: 5}
+  candidate_winner_selected: false
+  parameter_values_promoted: 0
+  native_representation_selected: false
+  synthetic_unit_tests: pass_5
+
+scientific_boundary:
+  accepted_claims:
+    - The procedure can account for rows, groups, source candidates and folds without reading a named behavior.
+    - Predictions reset at every animal/trial/ROI boundary and held-out calcium never sets normalization or affine values.
+  rejected_claims:
+    - Synthetic fixtures constitute a biological FeCO fit.
+    - Calcium identifies a native spike, membrane-voltage or CNS-runtime representation.
+    - A best residual may silently select or promote a source path.
+
+reproducibility:
+  command: fit_feco_calcium_observation.bat
+  blocked_runner_result: calibration/runner/feco-calcium-held-out-fit-v0.yaml
+  tests: .venv/Scripts/python.exe -m pytest tests/test_feco_calcium_fit.py
+next_action: >-
+  Acquire the exact three Dryad Parquet files with prepare_local_source_data.bat,
+  execute all six candidate paths and review the complete fold ensemble in a new
+  immutable evaluation before any parameter-set promotion.

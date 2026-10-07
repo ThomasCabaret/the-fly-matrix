@@ -54,15 +54,29 @@ class FeCOObservationTests(unittest.TestCase):
         predictor = predict_calcium(
             position, sampling_hz=8.01, model_type="claw", claw_center_deg=80.0
         )
-        fit_recipe = predict_calcium(
+        fit_recipe_structure = predict_calcium(
             position,
             sampling_hz=8.01,
             model_type="claw",
             claw_center_deg=90.0,
             pad_first_sample=1000,
         )
-        self.assertFalse(np.array_equal(predictor, fit_recipe))
-        self.assertGreater(float(np.max(np.abs(predictor - fit_recipe))), 0.0)
+        self.assertFalse(np.array_equal(predictor, fit_recipe_structure))
+        self.assertGreater(float(np.max(np.abs(predictor - fit_recipe_structure))), 0.0)
+
+    def test_claw_fit_recipe_uses_padded_gcamp_prediction(self) -> None:
+        position = np.linspace(0.0, 180.0, 460)
+        unpadded = predict_calcium(
+            position, sampling_hz=8.01, model_type="claw", claw_center_deg=90.0
+        )
+        padded = predict_calcium(
+            position,
+            sampling_hz=8.01,
+            model_type="claw",
+            claw_center_deg=90.0,
+            pad_first_sample=1000,
+        )
+        self.assertFalse(np.array_equal(unpadded, padded))
 
     def test_runner_is_reproducible_apart_from_timestamp(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
