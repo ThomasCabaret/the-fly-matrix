@@ -256,6 +256,16 @@ particular, the snapshot neither exposes the raw MAT variable schema nor defines
 a temporal bi-exponential twitch kernel; those remain separate post-download
 gates rather than assumptions hidden in the executable candidate.
 
+The next aggregate fitting step is already preregistered in
+`campaigns/motor-spike-force-pilot-fit-v0.yaml` and can be exercised with
+`fit_motor_spike_force_pilot.bat`. It deliberately waits for a versioned parser
+manifest built from the observed raw MAT variables. The slow zero-intercept line
+is labelled source reproduction; applying the same low-capacity form to the fast
+and intermediate pilot cells is labelled a diagnostic extension. Deterministic
+trial bootstrap intervals describe only each selected cell, never class or body
+uncertainty. The one-cell-per-class pilot promotes zero values and cannot identify
+a temporal twitch kernel or the ten-body class crosswalk.
+
 Run `feco_observation_contract.bat` without any Dryad token to reproduce the pinned
 public activation/GCaMP source paths. It detects rather than reconciles the source's
 80/90-degree claw centering and 5/50-degree-per-second hook/club threshold

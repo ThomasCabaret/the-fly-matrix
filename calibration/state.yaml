@@ -57,6 +57,7 @@ readiness:
   local_source_subsets: feco_2MB_checksum_locked_motor_860MB_pilot_preregistered_dryad_bytes_require_local_bearer_token
   feco_calcium_observation: source_fidelity_pass_held_out_fit_preregistered_seven_candidates_split_and_leakage_oracles_pass_data_fit_blocked
   motor_spike_force_pilot: source_fidelity_pass_23_cells_194_selected_trials_aggregate_rules_locked_59049_assignment_upper_bound_raw_schema_and_kernel_fit_blocked
+  motor_spike_force_fit: aggregate_fit_preregistered_one_source_reproduction_two_diagnostic_extensions_synthetic_oracles_pass_archives_and_parser_blocked_zero_values
   spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
@@ -95,6 +96,7 @@ blocked_by:
   - Calcium constrains a kinematics-to-observation proxy but does not by itself identify native spikes, membrane voltage, CNS model units or the graded-versus-event assignment.
   - The motor publication and code distinguish fast, intermediate and slow tibia-flexor units, but no source-backed crosswalk assigns those classes to the ten selected MaleCNS body IDs. Class membership must remain an ensemble until resolved.
   - The motor source contract now hash-locks five public files, accounts for 23 active cells and 194 selected pilot trials, and reproduces the aggregate force/spike filters and probe units. It does not expose the raw MAT variable schema or define a temporal twitch kernel. The exact one-cell-per-class 860 MB pilot remains deliberately opt-in and absent. The ten-body class uncertainty remains a factorized 3^10 upper bound (59,049 joint assignments), with no probability, symmetry or class-count prior and no selected crosswalk. Article-level approximate values are not runtime defaults.
+  - The aggregate motor pilot fit is preregistered and synthetically tested. Only the slow zero-intercept fit is labelled source reproduction; applying that form to fast/intermediate is a diagnostic extension. One cell per class can validate parsing and fit mechanics but cannot estimate population uncertainty, identify a twitch kernel or promote three runtime slopes.
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
@@ -105,6 +107,8 @@ next_action: >-
   a winner silently. The motor source-level cohort, filters and units are already
   reproducible with motor_source_contract.bat. Explicitly acquire the 860 MB motor
   pilot, run inspect_motor_pilot.bat and version the observed variable schema before
-  separating an aggregate force-per-spike fit from any independently justified
-  temporal twitch-kernel model. Retain the unresolved 59,049-assignment upper-bound
-  ensemble and the separate force-to-direct-motor surrogate.
+  running fit_motor_spike_force_pilot.bat. That campaign already separates the
+  aggregate force-per-spike diagnostic from any independently justified temporal
+  twitch-kernel model and promotes zero values from the one-cell pilot. Retain the
+  unresolved 59,049-assignment upper-bound ensemble and the separate
+  force-to-direct-motor surrogate.

@@ -1,0 +1,20 @@
+schema_version: 1
+id: runner_result.motor_spike_force_pilot_fit.v0
+generated_at: '2026-10-08T15:24:25.554081+00:00'
+campaign_id: campaign.motor_spike_force_pilot_fit.v0
+status: blocked_missing_versioned_parser_manifest
+semantic_result_sha256: 74c7e7400846dc22dc343552aa0ac106d6719fac3fe9e2cb9f627874d0835dc8
+accounting:
+  campaign_sha256: 0dae7e9ef154106c0a363df54b050fb5a562a32cb31f7d06720f19f6e907a858
+  source_archives_expected: 3
+  normalized_tables_verified: 0
+  class_fits_completed: 0
+  parameter_values_promoted: 0
+  body_class_assignments_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+interpretation:
+  fit_completed: false
+  twitch_kernel_identified: false
+  population_parameters_identified: false
+  next_action: acquire_and_inventory_archives_then_version_raw_parser

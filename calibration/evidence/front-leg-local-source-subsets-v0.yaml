@@ -1,8 +1,8 @@
 schema_version: 1
 id: evidence.front_leg_local_source_subsets.v0
 title: Preregistered minimal source subsets for front-leg local calibration
-status: preregistered_feco_small_payload_motor_large_pilot_deferred_inventory_ready
-updated: 2026-10-07
+status: preregistered_feco_small_payload_motor_large_pilot_deferred_inventory_and_aggregate_fit_ready
+updated: 2026-10-08
 
 scientific_boundary:
   primary_class: local_interface
@@ -76,6 +76,11 @@ motor_spike_force_pilot:
     - one cell per class estimates a population distribution
     - driver class is an individual MaleCNS body-ID crosswalk
     - a pilot fit may be promoted as a complete motor parameter set
+  downstream_fit_contract:
+    ref: calibration/campaigns/motor-spike-force-pilot-fit-v0.yaml
+    status: preregistered_blocked_missing_archives_and_versioned_parser
+    scope: one_cell_per_class_aggregate_force_per_spike_diagnostic
+    promoted_parameter_values: 0
 
 exception_accounting:
   feco_named_classes: {total: 3, selected: 3, excluded: 0, blocked: 0}

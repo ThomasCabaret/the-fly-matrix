@@ -1,0 +1,38 @@
+schema_version: 1
+id: evaluation.motor_spike_force_pilot_fit.v0
+title: Readiness evaluation for the aggregate motor spike-force pilot fit
+status: blocked_inputs_procedure_and_synthetic_oracles_ready
+campaign_id: campaign.motor_spike_force_pilot_fit.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: blocked_missing_archives_and_versioned_parser
+
+procedure_readiness:
+  source_archives_expected: 3
+  source_archives_verified: 0
+  normalized_tables_expected: 3
+  normalized_tables_verified: 0
+  class_fit_policies: {source_reproduction: 1, derived_diagnostic_extension: 2}
+  selected_cells_per_class: 1
+  fitted_parameters_if_run: 3
+  parameter_values_promoted: 0
+  body_class_assignments_selected: 0
+  twitch_kernels_selected: 0
+  synthetic_unit_tests: pass_5
+
+scientific_boundary:
+  accepted_claims:
+    - The procedure can validate a future raw parser and reproduce declared aggregate filters and force conversion.
+    - Trial-resampled uncertainty is explicitly limited to each selected cell.
+  rejected_claims:
+    - Synthetic fixtures or one cell per class constitute biological motor calibration.
+    - Aggregate slopes identify temporal dynamics, population distributions or body-level classes.
+
+reproducibility:
+  command: fit_motor_spike_force_pilot.bat
+  blocked_runner_result: calibration/runner/motor-spike-force-pilot-fit-v0.yaml
+  semantic_result_sha256: 74c7e7400846dc22dc343552aa0ac106d6719fac3fe9e2cb9f627874d0835dc8
+  tests: .venv/Scripts/python.exe -m pytest tests/test_motor_spike_force_fit.py
+next_action: Acquire and inventory the exact archives, then version the observed raw-variable parser and rerun.

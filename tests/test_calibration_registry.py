@@ -413,6 +413,37 @@ class CalibrationRegistryTests(unittest.TestCase):
             evaluation["reproducibility"]["semantic_result_sha256"],
         )
 
+    def test_motor_pilot_fit_is_preregistered_but_unpromoted(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "motor-spike-force-pilot-fit-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "motor-spike-force-pilot-fit-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "motor-spike-force-pilot-fit-v0.yaml"
+        )
+
+        self.assertEqual(campaign["primary_class"], "local_interface")
+        self.assertEqual(campaign["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertFalse(campaign["selection_policy"]["promote_values"])
+        self.assertEqual(
+            list(campaign["fit"]["class_policies"].values()).count(
+                "source_reproduction_line_through_origin"
+            ),
+            1,
+        )
+        self.assertEqual(evaluation["procedure_readiness"]["fitted_parameters_if_run"], 3)
+        self.assertEqual(evaluation["procedure_readiness"]["parameter_values_promoted"], 0)
+        self.assertEqual(runner["status"], "blocked_missing_versioned_parser_manifest")
+        self.assertFalse(runner["interpretation"]["twitch_kernel_identified"])
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)

@@ -1,0 +1,81 @@
+schema_version: 1
+id: campaign.motor_spike_force_pilot_fit.v0
+title: One-cell-per-class aggregate motor spike-force diagnostic
+status: preregistered_blocked_missing_archives_and_versioned_parser
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+claim_label: MOTOR AGGREGATE PILOT FIT / ONE CELL PER CLASS / NO KERNEL / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+inputs:
+  source_contract_campaign_id: campaign.motor_spike_force_source_contract.v0
+  archive_inventory_campaign_id: campaign.motor_spike_force_pilot_inventory.v0
+  normalized_manifest: data/derived/calibration/motor-spike-force-normalized-v0/manifest.yaml
+  source_archives:
+    - {functional_class: fast_81A07, sha256: 5acd9b7d93f594912ba54a515f645dd5a9d4c1e8ee8e2cb6b3bd5bd998e84686}
+    - {functional_class: intermediate_22A08, sha256: c904f419a52f7993f4146e578a760168178b0dc9ea61c19e9708f2adc99a6e33}
+    - {functional_class: slow_35C09, sha256: 59efa2e5a071d561e4b47691c0753924ee26f041a9ceec2becd1d722572ddc8c}
+
+normalized_table_contract:
+  required_columns: [cell_id, trial_id, functional_class, peak_displacement_um, peak_error_source_unit, probe_position_source_value, num_spikes, firing_rate_hz, rest_rate_hz, step_index]
+  parser_policy: must_be_versioned_after_observing_exact_raw_MAT_variables
+  raw_names_assumed_by_this_campaign: []
+  units:
+    peak_displacement_um: micrometre_after_probe_tracking_calibration
+    peak_force_uN: peak_displacement_um_times_0_2234_N_per_m
+    spike_count_for_fit: count_or_rate_minus_rest_times_0_5_seconds
+
+fit:
+  class_policies:
+    fast_81A07: derived_line_through_origin_diagnostic_extension
+    intermediate_22A08: derived_line_through_origin_diagnostic_extension
+    slow_35C09: source_reproduction_line_through_origin
+  fast_inter_filter: {num_spikes_min_inclusive: 0, num_spikes_max_inclusive: 30, peak_error_positive: true, probe_position_source_value: 0}
+  slow_filter: {step_index_min_exclusive: 13}
+  slow_stimulus_duration_s: 0.5
+  force_probe_spring_constant_N_per_m: 0.2234
+  objective: ordinary_least_squares_line_through_origin
+  fitted_parameters: one_slope_uN_per_spike_per_selected_cell_class
+  fitted_parameter_count: 3
+
+uncertainty:
+  method: deterministic_within_cell_trial_bootstrap
+  bootstrap_draws: 2000
+  bootstrap_seed: 20261008
+  interpretation: diagnostic_trial_resampling_not_population_or_body_uncertainty
+  population_uncertainty: unresolved_one_cell_per_class_is_insufficient
+
+selection_policy:
+  promote_values: false
+  choose_body_class_assignment: false
+  choose_twitch_kernel: false
+  reason: >-
+    The pilot contains one selected cell per article class. It can validate the
+    parser, filters, unit conversion and aggregate fit mechanics, but cannot
+    estimate a population distribution or map ten MaleCNS bodies to classes.
+
+acceptance:
+  software_gate:
+    - exact source archive hashes are retained by the normalized manifest
+    - every normalized row is retained or excluded by a declared filter
+    - exactly one selected cell and one table are accounted per class
+    - bootstrap resampling is deterministic and remains within each selected cell
+    - slow is labelled source reproduction while fast/intermediate are diagnostic extensions
+  biological_acceptance: none_in_v0
+  output_parameter_set: none
+
+forbidden_claims:
+  - one selected cell estimates class-level population uncertainty
+  - fast and intermediate line fits are direct reproductions of the pinned plotting script
+  - aggregate force per spike identifies a temporal twitch kernel
+  - article driver classes identify individual MaleCNS body IDs
+  - pilot values are runtime defaults or a complete motor calibration
+
+next_action: >-
+  Acquire and inventory the exact archives, version the observed MAT parser and
+  emit the normalized manifest. Run this diagnostic to verify aggregate fitting,
+  then obtain broader class evidence before any value promotion. Treat temporal
+  twitch dynamics and the force-to-direct-MuJoCo bridge as separate campaigns.
