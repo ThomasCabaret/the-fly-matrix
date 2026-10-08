@@ -247,6 +247,15 @@ directories and at most 128 header bytes per member without extracting anything.
 This produces a schema inventory, not a fit. A variable-level parser and kernel
 campaign may only be versioned from the observed formats afterward.
 
+Run `motor_source_contract.bat` without a Dryad token to reconstruct what the
+pinned public motor code actually establishes. It hash-checks five source files,
+accounts for all 23 active cells (7 fast, 7 intermediate, 9 slow), and verifies
+the 194 trials selected by the one-cell-per-class pilot plus the aggregate
+force/spike filters and force-probe units. It fits and promotes zero values. In
+particular, the snapshot neither exposes the raw MAT variable schema nor defines
+a temporal bi-exponential twitch kernel; those remain separate post-download
+gates rather than assumptions hidden in the executable candidate.
+
 Run `feco_observation_contract.bat` without any Dryad token to reproduce the pinned
 public activation/GCaMP source paths. It detects rather than reconciles the source's
 80/90-degree claw centering and 5/50-degree-per-second hook/club threshold

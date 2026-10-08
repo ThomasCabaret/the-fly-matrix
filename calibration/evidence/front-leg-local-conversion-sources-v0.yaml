@@ -1,8 +1,8 @@
 schema_version: 1
 id: evidence.front_leg_local_conversion_sources.v0
 title: Source locks and unresolved mappings for the first front-leg conversions
-status: source_inventory_and_minimal_manifests_complete_numeric_fit_blocked_by_authenticated_bytes_and_crosswalk
-updated: 2026-10-07
+status: source_contracts_complete_numeric_fit_blocked_by_authenticated_bytes_raw_schema_and_crosswalk
+updated: 2026-10-08
 
 scope:
   populations:
@@ -72,13 +72,24 @@ motor_source:
       - {name: Dataset3_SlowInterFast_ForcePerSpike.m, md5: a809aec32a089d17cd2798d6a61e605c}
       - {name: Script_forcePerSpike.m, md5: 592b556600ecb81bd1ba0f1deeb1e6e7}
       - {name: Script_forcePerSpikeAndFiringRate.m, md5: 8f7f07809be4f96cc64f889c28eec321}
+      - {name: Methods_ForceProbeCalibration.m, md5: 9b4df3d21ca558ad1e6441fc3906d63d}
     observed_cohorts:
       fast_driver: 81A07
       intermediate_driver: 22A08
       slow_driver: 35C09
     exact_script_constant:
       force_probe_spring_constant_N_per_m: 0.2234
-    limitation: scripts_reference_raw_trials_that_are_not_contained_in_the_small_code_snapshot
+    executable_contract:
+      ref: calibration/evaluations/motor-spike-force-source-contract-v0.yaml
+      status: accepted_source_contract_raw_fit_blocked
+      active_cells: {fast: 7, intermediate: 7, slow: 9, total: 23}
+      selected_pilot_trials: {fast: 127, intermediate: 29, slow: 38, total: 194}
+      promoted_parameter_values: 0
+    limitation: >-
+      The five pinned files define the cohort, aggregate force/spike filters,
+      0.5 s slow-count proxy and probe-calibration units. They reference raw trials
+      absent from the snapshot, do not expose the raw MAT variable schema and do
+      not define a temporal twitch time-course kernel.
   male_cns_mapping:
     selected_bodies: 10
     annotation_type: Ti_flexor_MN
@@ -93,6 +104,7 @@ accepted_claims:
   - Motor event-to-force must retain motor-unit-class uncertainty.
   - FeCO graded and event candidates must coexist until local evidence discriminates them.
   - The processed FeCO tables are small and precisely located, but their calcium signal constrains an observation proxy rather than native event versus graded semantics.
+  - The motor source snapshot fixes an aggregate 23-cell/194-selected-trial contract, not a fitted force scale or twitch kernel.
 forbidden_claims:
   - The public script repositories alone reproduce the numerical experiments.
   - Approximate article values are calibrated defaults.
@@ -101,4 +113,6 @@ next_action: >-
   Add a local Dryad Bearer token, acquire the checksum-locked 2 MB FeCO payload,
   then fit and compare its explicit source observation paths with animal/trial-held-out
   residuals. Acquire the 860 MB motor pilot only explicitly and retain the unresolved
-  body-to-class ensemble.
+  body-to-class ensemble. Reproduce the value-free motor source contract with
+  motor_source_contract.bat; after raw archive inspection, version the MAT parser
+  before fitting aggregate force-per-spike, and gate any temporal kernel separately.

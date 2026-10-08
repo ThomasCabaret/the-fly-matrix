@@ -386,6 +386,33 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(runner["accounting"]["body_class_assignments_selected"], 0)
         self.assertEqual(runner["accounting"]["parameter_values_promoted"], 0)
 
+    def test_motor_source_contract_locks_scope_without_fitting_values(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "motor-spike-force-source-contract-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "motor-spike-force-source-contract-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "motor-spike-force-source-contract-v0.yaml"
+        )
+
+        self.assertEqual(campaign["primary_class"], "evidence_transfer")
+        self.assertEqual(campaign["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(len(campaign["inputs"]["source_files"]), 5)
+        self.assertEqual(evaluation["metrics"]["active_cells_accounted"], 23)
+        self.assertEqual(evaluation["metrics"]["selected_pilot_trials"], 194)
+        self.assertFalse(evaluation["metrics"]["raw_variable_schema_identified"])
+        self.assertFalse(evaluation["metrics"]["twitch_kernel_identified"])
+        self.assertEqual(evaluation["metrics"]["promoted_parameter_values"], 0)
+        self.assertEqual(runner["accounting"]["body_class_assignments_selected"], 0)
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)

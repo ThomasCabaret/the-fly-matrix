@@ -1,0 +1,71 @@
+schema_version: 1
+id: campaign.motor_spike_force_source_contract.v0
+title: Source-fidelity contract for the tibia-flexor spike-force pilot
+status: completed_source_contract_raw_fit_blocked_missing_archives
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+claim_label: MOTOR SPIKE-FORCE SOURCE CONTRACT / NO KERNEL FIT / NO BODY CROSSWALK / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+inputs:
+  zenodo_record: https://doi.org/10.5281/zenodo.4527659
+  article: https://doi.org/10.7554/eLife.56754
+  raw_dataset: https://doi.org/10.5061/dryad.76hdr7stb
+  source_files:
+    - {role: dataset3_cohort, path: data/raw/calibration/front-leg-local-v0/motor-source/Dataset3_SlowInterFast_ForcePerSpike.m, sha256: 0601cf950ba8e07734d100f6c4e111e9c555b8f5ae8948d5d5590be11185af42}
+    - {role: force_per_spike_plot, path: data/raw/calibration/front-leg-local-v0/motor-source/Script_forcePerSpike.m, sha256: 12a3c9953be7b10867aa30ee3bd3f67be8d1b8476cf23ba42c64ce29acb1e87c}
+    - {role: force_per_spike_and_rate, path: data/raw/calibration/front-leg-local-v0/motor-source/Script_forcePerSpikeAndFiringRate.m, sha256: 02eaa44e93f458deb088b987e955116f9b18f68bf13d363ce087218d24eec130}
+    - {role: force_probe_calibration, path: data/raw/calibration/front-leg-local-v0/motor-source/Methods_ForceProbeCalibration.m, sha256: ee5ff14fc3b8c987b8f9adc6392c4fed039a9c1d0039de3ab9c4d06bdd2c8689}
+    - {role: readme, path: data/raw/calibration/front-leg-local-v0/motor-source/README.txt, sha256: 2b4e81cbd8486f0c535f27f9bca6871f0633ce3ab5bae6b9d965530be907f90d}
+
+pilot_scope:
+  selected_cell_ids:
+    fast: 171102_F2_C1
+    intermediate: 180222_F1_C1
+    slow: 180111_F2_C1
+  expected_selected_trials: 194
+  archive_manifest: calibration/evidence/front-leg-local-source-subsets-v0.yaml
+  class_ensemble: calibration/evidence/front-leg-motor-class-ensemble-v0.yaml
+
+source_contract:
+  cohort_columns: [CellID, Genotype, Cell_label, Protocol, TableFile, Positions, Trialnums]
+  active_cell_counts: {fast: 7, intermediate: 7, slow: 9}
+  fast_inter_filter: {NumSpikes_max: 30, PeakErr_positive: true, Position: 0}
+  slow_spike_count_proxy: {formula: (FiringRate-Rest)*0.5, stimulus_duration_s: 0.5, Step_min_exclusive: 13}
+  force_probe_calibration: {displacement_scale_to_m: 1.0e-6, mass_scale_to_kg: 1.0e-7, gravity_m_per_s2: 9.8, spring_fit: linear_polyfit, reported_k_N_per_m: 0.2234}
+  fit_form_visible_in_source: least_squares_line_through_origin
+  raw_trial_schema_status: file_naming_and_natural_units_described_variable_names_unresolved
+  twitch_time_course_model_status: not_defined_by_pinned_five_files
+
+capacity_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_body_class_assignments: 0
+  twitch_kernel_selected: false
+
+acceptance:
+  - all five exact source files reproduce their SHA-256 hashes
+  - all 23 active cells and three classes are accounted from executable source rows
+  - the selected one-cell-per-class pilot accounts for exactly 194 declared trials
+  - filters, duration and force-probe unit transforms remain explicit
+  - absence of a variable schema and twitch time-course recipe remains a blocker
+  - no value, body class, behavior or topology is selected
+
+forbidden_claims:
+  - the source plotting scripts alone identify a temporal twitch kernel
+  - the 0.2234 spring constant is a complete motor transfer parameter
+  - one selected cell estimates a population distribution
+  - driver classes identify individual MaleCNS bodies
+
+result:
+  status: accepted_source_contract_raw_fit_blocked
+  parameter_values_promoted: 0
+  selected_body_class_assignments: 0
+  open_blocker: exact_raw_archives_and_variable_schema_absent
+next_action: >-
+  Acquire the three exact archives, run the safe inventory, then write a parser
+  against observed variables. Separate source-supported aggregate force-per-spike
+  fitting from any temporal-kernel candidate not defined by these five files.

@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-07. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-08. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -24,6 +24,14 @@ environ 2 Mo, tandis qu'un pilote moteur d'une cellule par classe fait environ
 860 Mo au lieu des 48,76 Go complets. Dryad exige désormais un jeton Bearer même
 pour les octets publics ; le pipeline classe explicitement ce blocage et ne lance
 jamais le gros téléchargement moteur implicitement.
+
+Le petit code source moteur public est désormais lui aussi un contrat exécutable
+hash-verrouillé : il comptabilise 23 cellules actives (7 rapides, 7 intermédiaires,
+9 lentes), les 194 essais du pilote sélectionné et les règles agrégées de filtrage,
+comptage de spikes et calibration de sonde. Il ne calibre aucune valeur, ne révèle
+pas le schéma des variables des MAT bruts et ne définit pas de noyau temporel de
+twitch. Ces deux derniers points restent donc des gates après acquisition, au lieu
+d'être implicitement déduits du candidat logiciel bi-exponentiel.
 
 Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
 précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
@@ -643,7 +651,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; le pilote moteur a maintenant un inspecteur d'archives sûr et un ensemble de classes 3^10 explicite, mais zéro valeur et zéro jeu complet sont promus**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; le contrat source moteur couvre 23 cellules et 194 essais sélectionnés, l'inspecteur d'archives est sûr et l'ensemble de classes 3^10 reste explicite, mais zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 
@@ -849,6 +857,7 @@ prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pil
 feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
 fit_feco_calcium_observation.bat # 7 chemins FeCO, leave-one-animal-out ; bloqué sans tables exactes
 inspect_motor_pilot.bat # 3 archives moteur exactes, inventaire ZIP borné sans extraction ; bloqué sans pilote opt-in
+motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit, MAT/noyau temporel encore bloqués
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

@@ -10,6 +10,11 @@ data/raw/**
 !data/raw/calibration/front-leg-local-v0/
 !data/raw/calibration/front-leg-local-v0/feco/
 !data/raw/calibration/front-leg-local-v0/feco/*.m
+# Four tiny checksum-locked Zenodo files are analysis/source snapshots, not
+# experimental raw trials. The motor source contract requires their exact bytes.
+!data/raw/calibration/front-leg-local-v0/motor-source/
+!data/raw/calibration/front-leg-local-v0/motor-source/*.m
+!data/raw/calibration/front-leg-local-v0/motor-source/README.txt
 data/derived/**
 !data/derived/README.md
 runs/**

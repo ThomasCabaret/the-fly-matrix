@@ -21,7 +21,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.feco_calcium_observation_source.v0
+last_completed_campaign_id: campaign.motor_spike_force_source_contract.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -56,7 +56,7 @@ readiness:
   local_conversion_contract: feco_graded_and_event_candidates_executable_motor_event_to_force_to_direct_motor_stages_separate_zero_values
   local_source_subsets: feco_2MB_checksum_locked_motor_860MB_pilot_preregistered_dryad_bytes_require_local_bearer_token
   feco_calcium_observation: source_fidelity_pass_held_out_fit_preregistered_seven_candidates_split_and_leakage_oracles_pass_data_fit_blocked
-  motor_spike_force_pilot: three_class_archive_inventory_and_59049_assignment_upper_bound_preregistered_safety_oracles_pass_data_inventory_blocked
+  motor_spike_force_pilot: source_fidelity_pass_23_cells_194_selected_trials_aggregate_rules_locked_59049_assignment_upper_bound_raw_schema_and_kernel_fit_blocked
   spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
@@ -94,7 +94,7 @@ blocked_by:
   - The FeCO local fitting procedure is preregistered with seven source/boundary candidates and leave-one-animal-out splits. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. Its synthetic oracles pass, but all three biological tables are absent, so zero biological folds have run and no candidate is selected.
   - Calcium constrains a kinematics-to-observation proxy but does not by itself identify native spikes, membrane voltage, CNS model units or the graded-versus-event assignment.
   - The motor publication and code distinguish fast, intermediate and slow tibia-flexor units, but no source-backed crosswalk assigns those classes to the ten selected MaleCNS body IDs. Class membership must remain an ensemble until resolved.
-  - The motor raw-data repository is about 48.76 GB; the exact one-cell-per-class 860 MB pilot is deliberately opt-in and is insufficient for population-level promotion. Its safe archive inspector is preregistered and tested, but all three archives are absent. The ten-body class uncertainty is retained as a factorized 3^10 upper bound (59,049 joint assignments), with no probability, symmetry or class-count prior and no selected crosswalk. Article-level approximate values are not runtime defaults.
+  - The motor source contract now hash-locks five public files, accounts for 23 active cells and 194 selected pilot trials, and reproduces the aggregate force/spike filters and probe units. It does not expose the raw MAT variable schema or define a temporal twitch kernel. The exact one-cell-per-class 860 MB pilot remains deliberately opt-in and absent. The ten-body class uncertainty remains a factorized 3^10 upper bound (59,049 joint assignments), with no probability, symmetry or class-count prior and no selected crosswalk. Article-level approximate values are not runtime defaults.
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
@@ -102,7 +102,9 @@ next_action: >-
   and run prepare_local_source_data.bat to acquire and verify the 2 MB FeCO tables.
   Run fit_feco_calcium_observation.bat to compare all seven preregistered paths on
   animal-held-out residuals without treating calcium as native spikes or selecting
-  a winner silently. Then explicitly acquire the 860 MB motor pilot, run
-  inspect_motor_pilot.bat and version the observed variable schema before fitting
-  class-level twitch candidates. Retain the unresolved 59,049-assignment
-  upper-bound ensemble and the separate force-to-direct-motor surrogate.
+  a winner silently. The motor source-level cohort, filters and units are already
+  reproducible with motor_source_contract.bat. Explicitly acquire the 860 MB motor
+  pilot, run inspect_motor_pilot.bat and version the observed variable schema before
+  separating an aggregate force-per-spike fit from any independently justified
+  temporal twitch-kernel model. Retain the unresolved 59,049-assignment upper-bound
+  ensemble and the separate force-to-direct-motor surrogate.

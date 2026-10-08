@@ -1,0 +1,95 @@
+schema_version: 1
+id: runner_result.motor_spike_force_source_contract.v0
+generated_at: '2026-10-08T11:03:32.666972+00:00'
+campaign_id: campaign.motor_spike_force_source_contract.v0
+campaign_sha256: 75813378f62de5b7fcb88b0b3a21546f02a4f41cb6d3fe6f7d1b3d4dab91d50a
+semantic_result_sha256: 1e5373ce53200a4d61ec89314630e9a6f2f4588799558ff086a37408b7965373
+status: accepted_source_contract_raw_fit_blocked
+accounting:
+  source_hashes:
+  - path: data/raw/calibration/front-leg-local-v0/motor-source/Dataset3_SlowInterFast_ForcePerSpike.m
+    sha256: 0601cf950ba8e07734d100f6c4e111e9c555b8f5ae8948d5d5590be11185af42
+  - path: data/raw/calibration/front-leg-local-v0/motor-source/Script_forcePerSpike.m
+    sha256: 12a3c9953be7b10867aa30ee3bd3f67be8d1b8476cf23ba42c64ce29acb1e87c
+  - path: data/raw/calibration/front-leg-local-v0/motor-source/Script_forcePerSpikeAndFiringRate.m
+    sha256: 02eaa44e93f458deb088b987e955116f9b18f68bf13d363ce087218d24eec130
+  - path: data/raw/calibration/front-leg-local-v0/motor-source/Methods_ForceProbeCalibration.m
+    sha256: ee5ff14fc3b8c987b8f9adc6392c4fed039a9c1d0039de3ab9c4d06bdd2c8689
+  - path: data/raw/calibration/front-leg-local-v0/motor-source/README.txt
+    sha256: 2b4e81cbd8486f0c535f27f9bca6871f0633ce3ab5bae6b9d965530be907f90d
+  cohort_cells: 23
+  class_counts:
+    fast: 7
+    intermediate: 7
+    slow: 9
+  pilot:
+    fast:
+      cell_id: 171102_F2_C1
+      genotype: 81A07
+      cell_label: fast
+      protocol: EpiFlash2T
+      positions_expression: -200 -100 0 100 200
+      trial_expression: 47:173
+      trial_first: 47
+      trial_last: 173
+      trial_count: 127
+      source_table: fastinter
+      source_line: 13
+    intermediate:
+      cell_id: 180222_F1_C1
+      genotype: 22A08
+      cell_label: intermediate
+      protocol: CurrentStep2T
+      positions_expression: '0'
+      trial_expression: 98:126
+      trial_first: 98
+      trial_last: 126
+      trial_count: 29
+      source_table: fastinter
+      source_line: 21
+    slow:
+      cell_id: 180111_F2_C1
+      genotype: 35C09
+      cell_label: slow
+      protocol: CurrentStep2T
+      positions_expression: '0'
+      trial_expression: '5:42'
+      trial_first: 5
+      trial_last: 42
+      trial_count: 38
+      source_table: slow
+      source_line: 54
+  selected_pilot_trials: 194
+  rules:
+    force_probe_spring_constant_N_per_m: 0.2234
+    fast_inter_filter:
+      maximum_spikes: 30
+      peak_error_positive: true
+      probe_position: 0
+    slow_count_proxy:
+      formula: (FiringRate-Rest)*0.5
+      stimulus_duration_s: 0.5
+      step_filter: Step>13
+    fit_form: least_squares_line_through_origin
+    probe_calibration:
+      displacement_input_scale_to_m: 1.0e-06
+      mass_input_scale_to_kg: 1.0e-07
+      gravity_m_per_s2: 9.8
+      spring_fit: polyfit_degree_1
+      declared_axes:
+      - m
+      - N
+    raw_file_naming: <ProtocolName>_Raw_<CellID>_<Trial number>.mat
+    raw_trial_claim: stimulus_parameters_recorded_inputs_spike_detection_and_force_probe_tracking
+    twitch_time_course_fit_defined_by_these_five_files: false
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  body_class_assignments_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+interpretation:
+  source_cohort_and_filters_reconstructed: true
+  raw_variable_schema_identified: false
+  twitch_kernel_identified: false
+  body_level_crosswalk_resolved: false
+  next_action: inspect_exact_archives_then_version_variable_parser_and_fit

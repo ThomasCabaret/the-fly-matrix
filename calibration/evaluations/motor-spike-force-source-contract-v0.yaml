@@ -1,0 +1,45 @@
+schema_version: 1
+id: evaluation.motor_spike_force_source_contract.v0
+title: Evaluation of the pinned motor spike-force source contract
+status: accepted_source_contract_raw_fit_blocked
+campaign_id: campaign.motor_spike_force_source_contract.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_with_external_data_blocker
+
+metrics:
+  source_files_verified: 5
+  source_hash_mismatches: 0
+  active_cells_accounted: 23
+  class_counts: {fast: 7, intermediate: 7, slow: 9}
+  selected_pilot_cells: 3
+  selected_pilot_trials: 194
+  raw_variable_schema_identified: false
+  twitch_kernel_identified: false
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  body_class_assignments_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+
+interpretation:
+  accepted_claims:
+    - The pinned source defines the experimental cohort, pilot trial ranges, aggregate filters and force-probe calibration units.
+    - The source fits aggregate force against spike count with a line through the origin in the reported paths.
+    - The selected pilot comprises 127 fast, 29 intermediate and 38 slow declared trials.
+  rejected_claims:
+    - The pinned files define a temporal bi-exponential twitch kernel.
+    - The raw MATLAB variable schema has been inspected.
+    - A class distribution or individual MaleCNS body crosswalk is identified.
+    - Any source constant has been promoted into the runtime.
+
+reproducibility:
+  command: motor_source_contract.bat
+  runner_result: calibration/runner/motor-spike-force-source-contract-v0.yaml
+  semantic_result_sha256: 1e5373ce53200a4d61ec89314630e9a6f2f4588799558ff086a37408b7965373
+  derived_artifacts:
+    - data/derived/calibration/motor-spike-force-source-contract-v0/summary.json
+    - data/derived/calibration/motor-spike-force-source-contract-v0/source-cohort.csv
+next_action: Acquire and inspect the exact opt-in archives, then version the observed raw-variable parser before any fit.
