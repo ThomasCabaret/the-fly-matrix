@@ -1,0 +1,36 @@
+schema_version: 1
+id: evaluation.motor_spike_force_pilot_inventory.v0
+title: Readiness evaluation for the motor spike-force pilot archive inventory
+status: blocked_inputs_procedure_and_safety_oracles_ready
+campaign_id: campaign.motor_spike_force_pilot_inventory.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: blocked_missing_authenticated_archives
+
+procedure_readiness:
+  article_classes_expected: 3
+  article_classes_preregistered: 3
+  archives_verified: 0
+  malecns_bodies_accounted: 10
+  body_class_assignments_selected: 0
+  factorized_assignment_upper_bound: 59049
+  optimized_parameters: 0
+  parameter_values_promoted: 0
+  synthetic_unit_tests: pass_4
+
+scientific_boundary:
+  accepted_claims:
+    - The exact pilot and class uncertainty are exhaustively specified before acquisition.
+    - The inspector rejects unsafe members and reads only bounded headers without extraction.
+  rejected_claims:
+    - A class kernel or body crosswalk has been fitted.
+    - The pilot supports population-level promotion.
+
+reproducibility:
+  acquisition_command: prepare_local_source_data.bat --include-large-motor-pilot
+  inventory_command: inspect_motor_pilot.bat
+  blocked_runner_result: calibration/runner/motor-spike-force-pilot-inventory-v0.yaml
+  tests: .venv/Scripts/python.exe -m pytest tests/test_motor_pilot_inventory.py
+next_action: Acquire the exact opt-in archives, rerun the inventory, then version the observed variable schema before fitting.

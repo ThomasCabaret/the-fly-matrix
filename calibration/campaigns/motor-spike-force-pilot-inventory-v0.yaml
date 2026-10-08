@@ -1,0 +1,51 @@
+schema_version: 1
+id: campaign.motor_spike_force_pilot_inventory.v0
+title: Safe schema inventory for the one-cell-per-class motor spike-force pilot
+status: preregistered_blocked_missing_authenticated_archives
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+claim_label: MOTOR PILOT SCHEMA / NO FIT / NO BODY CROSSWALK / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+inputs:
+  source_subset: calibration/evidence/front-leg-local-source-subsets-v0.yaml
+  class_ensemble: calibration/evidence/front-leg-motor-class-ensemble-v0.yaml
+  archives:
+    - {functional_class: fast_81A07, path: data/raw/calibration/front-leg-local-v0/motor/171102_F2_C1.zip, expected_bytes: 369295693, sha256: 5acd9b7d93f594912ba54a515f645dd5a9d4c1e8ee8e2cb6b3bd5bd998e84686}
+    - {functional_class: intermediate_22A08, path: data/raw/calibration/front-leg-local-v0/motor/180222_F1_C1.zip, expected_bytes: 199758273, sha256: c904f419a52f7993f4146e578a760168178b0dc9ea61c19e9708f2adc99a6e33}
+    - {functional_class: slow_35C09, path: data/raw/calibration/front-leg-local-v0/motor/180111_F2_C1.zip, expected_bytes: 291303979, sha256: 59efa2e5a071d561e4b47691c0753924ee26f041a9ceec2becd1d722572ddc8c}
+
+inventory_contract:
+  extraction_allowed: false
+  maximum_header_bytes_per_member: 128
+  reject_path_traversal: true
+  reject_encrypted_members: true
+  reject_duplicate_normalized_member_names: true
+  record_each_member: [path, suffix, compressed_bytes, uncompressed_bytes, detected_header_format]
+  account_each_archive_as: [verified_and_inventoried, blocked_missing, failed_integrity]
+
+capacity_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_body_class_assignments: 0
+
+acceptance:
+  - all three exact archives pass byte count and SHA-256
+  - every member is safely accounted without extraction
+  - observed file formats are versioned before a variable-level parser is written
+  - the ten-body factorized class ensemble remains unselected
+  - no trajectory, behavior or routing topology is inspected
+
+forbidden_claims:
+  - archive availability is a biological spike-force fit
+  - one experimental cell estimates a class distribution
+  - a driver class maps to an individual MaleCNS body ID
+  - article prose approximations are runtime defaults
+
+next_action: >-
+  Put DRYAD_BEARER_TOKEN in .env, run prepare_local_source_data.bat with
+  --include-large-motor-pilot, then run inspect_motor_pilot.bat. Use the observed
+  schemas to preregister a variable-level parser and class-level kernel fit.

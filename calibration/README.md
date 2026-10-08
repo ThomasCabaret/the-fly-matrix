@@ -237,6 +237,16 @@ script removes that credential before Dryad redirects to object storage, reports
 every blocked/deferred file and never downloads the large motor archives unless
 `--include-large-motor-pilot` is passed explicitly.
 
+The motor path is also preregistered before those bytes arrive. The ten selected
+MaleCNS bodies each retain the three article classes as candidates, represented
+compactly as an unselected 3^10 upper bound (59,049 joint assignments) rather
+than a fabricated crosswalk or probability distribution. After the explicit
+download, run `inspect_motor_pilot.bat`: it verifies every archive, rejects path
+traversal, encryption and duplicate normalized members, then inventories ZIP
+directories and at most 128 header bytes per member without extracting anything.
+This produces a schema inventory, not a fit. A variable-level parser and kernel
+campaign may only be versioned from the observed formats afterward.
+
 Run `feco_observation_contract.bat` without any Dryad token to reproduce the pinned
 public activation/GCaMP source paths. It detects rather than reconciles the source's
 80/90-degree claw centering and 5/50-degree-per-second hook/club threshold

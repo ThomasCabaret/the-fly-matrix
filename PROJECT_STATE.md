@@ -643,7 +643,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables, mais zéro valeur et zéro jeu complet sont promus**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; le pilote moteur a maintenant un inspecteur d'archives sûr et un ensemble de classes 3^10 explicite, mais zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 
@@ -711,7 +711,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **152 tests** actuels passent, y compris les
+conservées et classifiées. Les **189 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -747,8 +747,11 @@ hashes topologiques. Le dépôt FeCO inspecté ne contient que les scripts d'ana
 Le manifeste minimal et la campagne tenue à l'écart sont maintenant préenregistrés ;
 les octets des tables restent bloqués par le jeton Dryad local. Les données
 motrices brutes représentent environ 48,76 Go et le pilote de 860 Mo reste
-explicitement opt-in. La
-correspondance fast/intermediate/slow des 10 body IDs reste un ensemble non résolu.
+explicitement opt-in. Son acquisition exacte, l'inventaire ZIP sans extraction et
+les garde-fous de sécurité sont préenregistrés. La correspondance
+fast/intermediate/slow des 10 body IDs reste un ensemble non résolu : chaque corps
+conserve trois classes candidates, soit une borne supérieure factorisée de 59 049
+affectations jointes, sans probabilité, symétrie ou cardinalité de classe inventée.
 
 1. Inventorier les familles de paramètres : rôle, type, dimension, unités,
    partage, origine, données autorisées, identifiabilité et incertitude.
@@ -845,6 +848,7 @@ actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tet
 prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pilote moteur opt-in
 feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
 fit_feco_calcium_observation.bat # 7 chemins FeCO, leave-one-animal-out ; bloqué sans tables exactes
+inspect_motor_pilot.bat # 3 archives moteur exactes, inventaire ZIP borné sans extraction ; bloqué sans pilote opt-in
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

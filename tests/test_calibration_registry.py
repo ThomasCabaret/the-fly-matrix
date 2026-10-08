@@ -358,6 +358,34 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(runner["accounting"]["candidate_winner_selected"])
         self.assertEqual(runner["accounting"]["parameter_values_promoted"], 0)
 
+    def test_motor_pilot_inventory_preserves_class_uncertainty(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "motor-spike-force-pilot-inventory-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "motor-spike-force-pilot-inventory-v0.yaml"
+        )
+        ensemble = load_yaml(
+            CALIBRATION_ROOT / "evidence" / "front-leg-motor-class-ensemble-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "motor-spike-force-pilot-inventory-v0.yaml"
+        )
+
+        self.assertEqual(campaign["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(len(campaign["inputs"]["archives"]), 3)
+        self.assertEqual(len(ensemble["members"]), 10)
+        self.assertEqual(ensemble["factorized_assignment_upper_bound"], 59_049)
+        self.assertEqual(ensemble["selected_joint_assignments"], 0)
+        self.assertTrue(all(item["selected_class"] is None for item in ensemble["members"]))
+        self.assertEqual(evaluation["acceptance_result"], "blocked_missing_authenticated_archives")
+        self.assertEqual(runner["status"], "blocked_missing_authenticated_archives")
+        self.assertEqual(len(runner["accounting"]["archives_blocked"]), 3)
+        self.assertEqual(runner["accounting"]["body_class_assignments_selected"], 0)
+        self.assertEqual(runner["accounting"]["parameter_values_promoted"], 0)
+
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)

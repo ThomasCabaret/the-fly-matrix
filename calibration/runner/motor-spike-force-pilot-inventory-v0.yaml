@@ -1,0 +1,32 @@
+schema_version: 1
+id: runner_result.motor_spike_force_pilot_inventory.v0
+generated_at: '2026-10-08T10:42:23.414419+00:00'
+campaign_id: campaign.motor_spike_force_pilot_inventory.v0
+status: blocked_missing_authenticated_archives
+semantic_result_sha256: 9c2fc53edb2ceb1eb349a6e76eedf36ee217ad13df24331692899d76e598b580
+accounting:
+  campaign_sha256: cc36bef1384abe0fe3c4d0110caab6db4d17eab4d3cd821f027061844e2f6c16
+  class_ensemble_sha256: 9b592fc0acc6367632f0dee4fb8195386c4eec9afb34cd56bdf5573325f6262d
+  archives_expected: 3
+  archives_verified: 0
+  archives_blocked:
+  - functional_class: fast_81A07
+    reason: missing_file
+  - functional_class: intermediate_22A08
+    reason: missing_file
+  - functional_class: slow_35C09
+    reason: missing_file
+  article_classes_expected: 3
+  article_classes_accounted: 3
+  malecns_bodies_accounted: 10
+  body_class_assignments_selected: 0
+  factorized_assignment_upper_bound: 59049
+  optimized_parameters: 0
+  parameter_values_promoted: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+interpretation:
+  archive_schema_inspected: false
+  spike_force_fit_completed: false
+  body_level_crosswalk_resolved: false
+  next_action: acquire_motor_pilot_with_explicit_large_flag_then_rerun_inventory

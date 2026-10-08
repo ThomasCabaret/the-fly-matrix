@@ -1,0 +1,50 @@
+schema_version: 1
+id: evidence.front_leg_motor_class_ensemble.v0
+title: Factorized unresolved motor-unit-class ensemble for the T1 tibia-flexor pool
+status: preregistered_exhaustive_unselected
+claim_label: MOTOR CLASS ENSEMBLE / NO BODY CROSSWALK / NO PARAMETER VALUES
+
+scope:
+  population_id: population.front_leg_tibia_flexor_motor.v0
+  selected_malecns_bodies: 10
+  left_bodies: 5
+  right_bodies: 5
+  annotation_type: Ti flexor MN
+
+admissible_classes: [fast_81A07, intermediate_22A08, slow_35C09]
+factorization_policy: >-
+  Preserve one categorical class variable per body. Do not enumerate all joint
+  assignments on disk and do not assume independence probabilistically. The
+  factorized representation is compact bookkeeping, not a prior distribution.
+factorized_assignment_upper_bound: 59049
+selected_joint_assignments: 0
+homolog_pairing_constraint: unresolved_not_imposed
+class_count_constraint: unresolved_not_imposed
+
+members:
+  - {body_id: 807165, side: L, route_channel_id: channel.motor.output.4fc6d883bf4f, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 809912, side: L, route_channel_id: channel.motor.output.6a4a0c4f9ee5, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 810098, side: R, route_channel_id: channel.motor.output.936624f7d0c8, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 818057, side: L, route_channel_id: channel.motor.output.fbc00ed751ad, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 819384, side: L, route_channel_id: channel.motor.output.ce5aa464871c, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 821635, side: R, route_channel_id: channel.motor.output.929d600a0467, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 827188, side: R, route_channel_id: channel.motor.output.a425edd9780f, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 909831, side: L, route_channel_id: channel.motor.output.61cfc9c32dba, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 1050031705, side: R, route_channel_id: channel.motor.output.7901bee0d33b, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+  - {body_id: 1050189039, side: R, route_channel_id: channel.motor.output.3fc6ad2c7f3d, candidate_classes: [fast_81A07, intermediate_22A08, slow_35C09], selected_class: null}
+
+provenance:
+  body_inventory: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+  class_source: https://doi.org/10.7554/eLife.56754
+  source_lock: calibration/evidence/front-leg-local-conversion-sources-v0.yaml
+  supports:
+    - The selected pool is event-capable and the article distinguishes fast, intermediate and slow functional classes.
+  does_not_support:
+    - Assignment of a driver-defined experimental class to an individual MaleCNS body ID.
+    - A probability, symmetry constraint, class count or parameter value for the ten bodies.
+
+propagation_contract:
+  - A class-level fit produces three candidate kernel families, not ten body assignments.
+  - Downstream local tests must retain class uncertainty or justify a separately sourced reduction.
+  - Body trajectory, posture or named behavior may not select a class assignment.
+next_action: Inspect one exact archive per class, then fit class-level candidates without collapsing this ensemble.
