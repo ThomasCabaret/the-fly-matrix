@@ -1,17 +1,19 @@
 schema_version: 1
 id: evaluation.feco_calcium_held_out_fit.v0
 title: Readiness evaluation for the FeCO animal-held-out source-path comparison
-status: blocked_inputs_procedure_and_synthetic_oracles_ready
+status: input_gate_passed_procedure_ready_biological_fit_not_run
 campaign_id: campaign.feco_calcium_held_out_fit.v0
 target_id: target.population_dynamics_assignment.v0
 primary_class: local_interface
 optimization_exposure: allowed
 behavior_targets: []
-acceptance_result: blocked_missing_authenticated_tables
+acceptance_result: ready_not_run
 
 procedure_readiness:
   source_tables_expected: 3
-  source_tables_verified: 0
+  source_tables_verified: 3
+  source_rows_inspected: 64300
+  source_acquisition_result: calibration/runner/front-leg-local-source-data-v0.yaml
   candidate_paths_preregistered: 7
   split: leave_one_animal_out_all_trials_and_rois_nested
   fitted_parameters_per_fold_candidate: {fixed_predictor_paths: 2, claw_fit_recipe_paths: 5}
@@ -34,6 +36,5 @@ reproducibility:
   blocked_runner_result: calibration/runner/feco-calcium-held-out-fit-v0.yaml
   tests: .venv/Scripts/python.exe -m pytest tests/test_feco_calcium_fit.py
 next_action: >-
-  Acquire the exact three Dryad Parquet files with prepare_local_source_data.bat,
-  execute all six candidate paths and review the complete fold ensemble in a new
+  Execute all seven candidate paths and review the complete fold ensemble in a new
   immutable evaluation before any parameter-set promotion.

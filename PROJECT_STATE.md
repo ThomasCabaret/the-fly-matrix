@@ -60,9 +60,13 @@ tandis que les chemins de fit claw réajustent cinq coefficients à travers le
 noyau GCaMP paddé. La concaténation exacte du script public et un port sûr par
 essai coexistent explicitement. Cette différence de capacité et de frontière
 interdit un gagnant automatique.
-Les oracles synthétiques de séparation et de comptabilité passent, mais les trois
-Parquet manquent encore localement ; zéro fold biologique a donc été exécuté et
-aucun chemin n'est choisi.
+Les oracles synthétiques de séparation et de comptabilité passent. Le test
+authentifié Dryad a maintenant acquis et vérifié exactement les trois Parquet et
+leur documentation : 2 025 899 octets dans le sous-ensemble FeCO complet, 64 300
+lignes inspectées, zéro doublon de ligne et aucun secret dans le rapport. Les deux
+petits fichiers documentaires moteurs sont aussi vérifiés ; les trois archives
+motrices totalisant 860 357 945 octets sont restées explicitement différées.
+Zéro fold biologique a encore été exécuté et aucun chemin n'est choisi.
 
 Un front indépendant du jeton Dryad ferme désormais le **contrat de mesure** de
 la future stabilité incarnée. `embodied_stability_metrics.bat` relit le replay
@@ -740,7 +744,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **191 tests** actuels passent, y compris les
+conservées et classifiées. Les **192 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -774,7 +778,7 @@ distinctes : événements→force biologique et force→commande MuJoCo. Les tes
 contrôlent unités, formes, causalité, superposition, symétrie de fixture, seed et
 hashes topologiques. Le dépôt FeCO inspecté ne contient que les scripts d'analyse.
 Le manifeste minimal et la campagne tenue à l'écart sont maintenant préenregistrés ;
-les octets des tables restent bloqués par le jeton Dryad local. Les données
+les trois tables sont localement vérifiées et le fit est prêt à être lancé. Les données
 motrices brutes représentent environ 48,76 Go et le pilote de 860 Mo reste
 explicitement opt-in. Son acquisition exacte, l'inventaire ZIP sans extraction et
 les garde-fous de sécurité sont préenregistrés. La correspondance

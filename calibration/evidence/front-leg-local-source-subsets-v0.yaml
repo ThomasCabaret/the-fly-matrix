@@ -1,7 +1,7 @@
 schema_version: 1
 id: evidence.front_leg_local_source_subsets.v0
 title: Preregistered minimal source subsets for front-leg local calibration
-status: preregistered_feco_small_payload_motor_large_pilot_deferred_inventory_and_aggregate_fit_ready
+status: feco_small_payload_verified_local_motor_metadata_verified_large_pilot_deferred
 updated: 2026-10-08
 
 scientific_boundary:
@@ -92,7 +92,7 @@ exception_accounting:
     pilot selection and must be resolved before a complete class-level fit.
 
 next_action: >-
-  Acquire and verify the 2,025,899-byte FeCO payload, then run its preregistered
+  The 2,025,899-byte FeCO payload is verified locally; run its preregistered
   held-out comparison. Acquire the 860 MB motor pilot only with an explicit
   large-data flag, run inspect_motor_pilot.bat, and version the observed variable
   schema before fitting; never fetch the full 48.76 GB repository implicitly.

@@ -1,7 +1,7 @@
 schema_version: 1
 id: evidence.front_leg_local_conversion_sources.v0
 title: Source locks and unresolved mappings for the first front-leg conversions
-status: source_contracts_complete_numeric_fit_blocked_by_authenticated_bytes_raw_schema_and_crosswalk
+status: source_contracts_complete_feco_bytes_verified_fit_not_run_motor_raw_schema_and_crosswalk_open
 updated: 2026-10-08
 
 scope:
@@ -32,7 +32,8 @@ feco_source:
     manifest: calibration/evidence/front-leg-local-source-subsets-v0.yaml
     expected_bytes: 2015456
     files: [claw_magnet_Mamiya2018.parquet, club_magnet_Mamiya2018.parquet, hook_flexion_01_magnet_Mamiya2018.parquet, README.md]
-    status: located_checksum_locked_download_blocked_missing_Dryad_Bearer_token
+    status: acquired_local_exact_size_and_sha256_verified_2026_10_08
+    acquisition_result: calibration/runner/front-leg-local-source-data-v0.yaml
     limitation: processed_adapted_calcium_tables_not_raw_imaging_and_not_native_spike_or_voltage_measurements
   observation_source_contract:
     ref: calibration/evaluations/feco-calcium-observation-source-v0.yaml
@@ -110,8 +111,7 @@ forbidden_claims:
   - Approximate article values are calibrated defaults.
   - MaleCNS body IDs are individually mapped to the experimental driver lines.
 next_action: >-
-  Add a local Dryad Bearer token, acquire the checksum-locked 2 MB FeCO payload,
-  then fit and compare its explicit source observation paths with animal/trial-held-out
+  Fit and compare the verified FeCO source observation paths with animal/trial-held-out
   residuals. Acquire the 860 MB motor pilot only explicitly and retain the unresolved
   body-to-class ensemble. Reproduce the value-free motor source contract with
   motor_source_contract.bat; after raw archive inspection, version the MAT parser

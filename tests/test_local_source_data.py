@@ -5,6 +5,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
+import yaml
+
 from the_fly_matrix.local_source_data import (
     SourceFile,
     build_source_plan,
@@ -59,6 +61,18 @@ class LocalSourceDataTests(unittest.TestCase):
                 optional_large=True,
             )
             self.assertEqual(verify_source_file(source), (False, "missing"))
+
+    def test_tracked_acquisition_result_records_no_credential(self) -> None:
+        result_path = Path("calibration/runner/front-leg-local-source-data-v0.yaml")
+        result_text = result_path.read_text(encoding="utf-8")
+        result = yaml.safe_load(result_text)
+        self.assertEqual(result["accounting"]["files_verified"], 9)
+        self.assertEqual(result["accounting"]["feco_tables_verified"], 3)
+        self.assertEqual(result["accounting"]["feco_rows_inspected"], 64_300)
+        self.assertEqual(result["accounting"]["motor_large_archives_downloaded"], 0)
+        self.assertFalse(result["authentication"]["credential_recorded_in_result"])
+        self.assertNotIn("DRYAD_BEARER_TOKEN=", result_text)
+        self.assertNotIn("Authorization: Bearer", result_text)
 
 
 if __name__ == "__main__":

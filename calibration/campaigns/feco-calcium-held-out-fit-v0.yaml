@@ -1,7 +1,7 @@
 schema_version: 1
 id: campaign.feco_calcium_held_out_fit.v0
 title: Animal-held-out comparison of FeCO calcium observation source paths
-status: preregistered_blocked_missing_authenticated_tables
+status: preregistered_runnable_exact_tables_verified_locally
 target_id: target.population_dynamics_assignment.v0
 scope_id: scope.population_dynamics.front_leg.v0
 primary_class: local_interface
@@ -108,6 +108,6 @@ forbidden_claims:
   - this campaign changes routing topology
 
 next_action: >-
-  Add DRYAD_BEARER_TOKEN locally, run prepare_local_source_data.bat, then execute
-  fit_feco_calcium_observation.bat. Inspect all folds and retain the unresolved
+  Execute fit_feco_calcium_observation.bat on the three verified tables. Inspect
+  all folds and retain the unresolved
   source-path ensemble until a distinct acceptance decision is versioned.

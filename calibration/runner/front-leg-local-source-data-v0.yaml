@@ -1,0 +1,54 @@
+schema_version: 1
+id: runner_result.front_leg_local_source_data.v0
+generated_at: '2026-10-08T16:39:34.132968+00:00'
+status: exact_small_sources_verified_large_motor_archives_deferred
+claim_label: LOCAL SOURCE ACQUISITION / NO FIT / NO BEHAVIOR
+manifest: calibration/evidence/front-leg-local-source-subsets-v0.yaml
+
+authentication:
+  dryad_bearer_token_detected: true
+  credential_recorded_in_result: false
+  credential_forwarded_to_object_storage: false
+
+accounting:
+  files_total: 12
+  files_verified: 9
+  files_deferred_large_not_requested: 3
+  feco_payload_expected_bytes: 2025899
+  feco_tables_verified: 3
+  feco_rows_inspected: 64300
+  motor_metadata_files_verified: 2
+  motor_large_archives_downloaded: 0
+  motor_large_archives_deferred: 3
+  motor_large_archives_deferred_bytes: 860357945
+  parameter_values_promoted: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+
+verified_feco_tables:
+  - {path: data/raw/calibration/front-leg-local-v0/feco/claw_magnet_Mamiya2018.parquet, bytes: 849677, sha256: 7fc8a108258529d52815dc6e28b84958afffa073362ae41d75f551f2d83d01da, rows: 26990}
+  - {path: data/raw/calibration/front-leg-local-v0/feco/club_magnet_Mamiya2018.parquet, bytes: 389137, sha256: 1b5c797ff3d3242b096530e9b881f1e09a296e4af99cbfc03a98c94fe0341fe1, rows: 12208}
+  - {path: data/raw/calibration/front-leg-local-v0/feco/hook_flexion_01_magnet_Mamiya2018.parquet, bytes: 766556, sha256: ea61eee2d26a5e6fddb7aebaee06e13e11c9b87427d0f70b350760ab0ae545be, rows: 25102}
+
+verified_documentation:
+  - {path: data/raw/calibration/front-leg-local-v0/feco/README.md, bytes: 10086, sha256: a4927a16b15524bf8342bf0109fe7188257be2eb1036f94493ae780f8fd7762a}
+  - {path: data/raw/calibration/front-leg-local-v0/motor/README.txt, bytes: 2484, sha256: 2b4e81cbd8486f0c535f27f9bca6871f0633ce3ab5bae6b9d965530be907f90d}
+  - {path: data/raw/calibration/front-leg-local-v0/motor/MN_anatomy_confocal_measurements.xlsx, bytes: 90570, sha256: 7f17a281828842c9832499c283ba3ff828eb1539297a28df022d6e02625e7e97}
+
+local_detailed_summary:
+  path: data/derived/calibration/front-leg-local-source-v0/summary.json
+  sha256: 87ea0919120e4b8e8c7d464a250ac87e7c0fad00ff1dc67a35539fe719e2a3a6
+  git_policy: ignored_reconstructible_local_data_report
+
+interpretation:
+  authenticated_download_setup_passed: true
+  feco_fit_input_gate_passed: true
+  biological_fit_completed: false
+  calcium_is_native_spiking_evidence: false
+  motor_pilot_acquired: false
+  body_level_crosswalk_resolved: false
+
+next_action: >-
+  Run fit_feco_calcium_observation.bat on all seven preregistered paths and retain
+  every animal-held-out fold without silently choosing a winner. Download the
+  860 MB motor pilot only as a separate explicit operation.
