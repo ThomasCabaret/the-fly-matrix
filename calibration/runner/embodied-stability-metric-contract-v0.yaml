@@ -1,0 +1,128 @@
+schema_version: 1
+id: runner_result.embodied_stability_metric_contract.v0
+campaign_id: campaign.embodied_stability_metric_contract.v0
+status: descriptive_metric_contract_pass_stability_unresolved
+completed_at: '2026-10-08T15:43:10.706385+00:00'
+claim_label: DESCRIPTIVE TECHNICAL METRICS / NOT STABILITY / NO BEHAVIOR
+input:
+  path: runs/closed-loop/closed-loop-20260927T124854Z/physical-trajectory.npz
+  sha256: 55e9dfe918653bc14d3c3d732f284877f0d6a4e68865f868d6d1cff2317721ff
+  claim_label: REAL MALECNS / UNCALIBRATED CLOSED LOOP
+accounting:
+  optimized_parameters: 0
+  behavior_targets_exposed: 0
+  stability_thresholds_selected: 0
+  topology_changes: 0
+  supported_metric_groups: 7
+  unavailable_metric_interpretations: 5
+metrics:
+  timebase:
+    frames: 200
+    duration_s: 0.9999999999999062
+    dt_s:
+      minimum: 0.004999999999999449
+      median: 0.004999999999999449
+      maximum: 0.005000000000000143
+      peak_absolute_jitter_from_median: 6.938893903907228e-16
+  numerical:
+    finite_fraction: 1.0
+    arrays_accounted: 7
+  central_summary:
+    contract:
+    - mean
+    - std
+    - minimum
+    - maximum
+    - active_fraction_abs_gt_1e-4
+    - saturated_fraction_abs_gt_0_95
+    maximum_absolute_state_summary: 0.4626743495464325
+    maximum_population_std: 0.07019942253828049
+    active_fraction:
+      minimum: 0.82783442735672
+      median: 0.996997594833374
+      maximum: 0.9988781809806824
+    saturated_fraction:
+      mean: 0.0
+      maximum: 0.0
+  root_state:
+    coordinate_units: FlyBody_model_length_units_not_relabelled_as_SI
+    translation_from_initial:
+      peak_l2: 1.4093605945418806
+      final_l2: 1.4093605945418806
+      axis_peak_absolute:
+      - 0.41766781928592966
+      - 0.019604166041922676
+      - 1.354061920705609
+    height:
+      minimum: 0.8745996649115451
+      initial: 2.228661585617154
+      final: 0.8745996649115451
+      maximum: 2.228661585617154
+    orientation_drift_rad:
+      peak: 0.13225812868275044
+      final: 0.13225812868275044
+    linear_velocity_l2:
+      rms: 7.404000424463721
+      peak: 64.844356045022
+    angular_velocity_l2:
+      rms: 2.2808807435073475
+      peak: 18.57088097539447
+  joints:
+    channels: 102
+    position_abs_max: 0.4145141839981079
+    velocity_abs_max: 12.089213371276855
+    velocity_rms: 0.39004126695863817
+    limit_violation_count: null
+    limit_violation_status: unavailable_trajectory_contract_lacks_joint_limits
+  contacts:
+    legs: 6
+    contacting_legs:
+      minimum: 0
+      mean: 4.485
+      maximum: 6
+    frames_without_ground_contact: 4
+    frames_with_all_six_contacts: 32
+    transitions_by_leg:
+    - 9
+    - 41
+    - 89
+    - 13
+    - 35
+    - 74
+    transition_count_total: 261
+  actuation:
+    command_abs_max: 5.727000461774878e-05
+    command_l2_rms: 9.143259482600676e-05
+    command_squared_effort_integral: 8.359919396615932e-09
+    command_slew_not_body_jerk:
+      available: true
+      rms_l2_per_s: 0.00018722799348497562
+      peak_l2_per_s: 0.0006913719590736079
+      maximum_channel_abs_per_s: 0.0003386637217772662
+    direct_motor_abs_force_velocity_integral: 2.513688109103972e-05
+    energy_interpretation: mixed-coordinate direct-motor work proxy; not metabolic
+      or muscle energy
+  unavailable_metrics:
+    center_of_mass_displacement: trajectory records root position, not COM
+    joint_limit_violations: joint limits are absent from physical trajectory schema
+      v1
+    biological_actuator_energy: direct MOTOR forces omit muscles and metabolism
+    body_jerk: command slew is not body acceleration jerk
+    recovery_after_perturbation: requires matched baseline and perturbed trajectories
+interpretation:
+  metric_extraction_passed: true
+  stability_accepted: false
+  baseline_is_uncalibrated_comparator: true
+  motion_is_biological_behavior: false
+  thresholds_may_be_selected_from_this_trace: false
+  root_translation_is_center_of_mass: false
+  command_slew_is_body_jerk: false
+  force_velocity_proxy_is_biological_energy: false
+semantic_result_sha256: a4ba805284aad4eaf95d8cac4c346b91363b41e32670e73a69778abb2d9d36d7
+heavy_artifact:
+  path: runs\calibration\embodied-stability-metric-contract-v0\stability-metrics-20261008T154310Z\metrics.json
+  sha256: 61c674207557ad0544a70f7941a283eda9170a9776640089fd6ddbe2085550b0
+  git_policy: ignored_heavy_run_output
+next_action: Before a stability campaign, version a trajectory contract that snapshots
+  joint limits and a paired perturbation protocol; choose acceptance thresholds from
+  independent physical/biological evidence, never from this uncalibrated baseline.

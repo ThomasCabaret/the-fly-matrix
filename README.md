@@ -150,6 +150,13 @@ Les familles et campagnes forment un DAG reconstructible : la liberté est parta
 au niveau le plus simple justifié, les familles acceptées sont gelées, et leur
 réouverture ou toute augmentation de capacité est explicitement versionnée.
 
+Le contrat de mesure de stabilité incarnée peut être rejoué avec
+`embodied_stability_metrics.bat`. Il décrit un replay physique checksum-verrouillé
+sans ajuster de valeur : état numérique/CNS, racine, articulations, contacts et
+commandes. Il ne choisit aucun seuil et refuse de rebaptiser position de racine en
+centre de masse, slew de commande en jerk corporel ou travail direct-motor en
+énergie biologique. Son succès ne signifie donc pas que la mouche est stable.
+
 Le pourcentage affiché est un indicateur structurel, pas une mesure de réussite
 scientifique. Il agrège séparément l'inventaire, le routage, l'implémentation, les
 paramètres et la validation. Une inconnue reste donc visible au lieu d'être masquée

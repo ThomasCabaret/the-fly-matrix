@@ -1,0 +1,79 @@
+schema_version: 1
+id: campaign.embodied_stability_metric_contract.v0
+title: Preregistered descriptive metrics for controller-independent physical trajectories
+status: runnable_diagnostic
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: DESCRIPTIVE TECHNICAL METRICS / NOT STABILITY / NO BEHAVIOR
+
+purpose: >-
+  Close the measurement contract before any embodied-stability fit. This campaign
+  measures a checksum-pinned uncalibrated physical replay only to validate metric
+  extraction and expose missing observables. It cannot choose thresholds, select
+  parameters or accept stability.
+
+pinned_input:
+  path: runs/closed-loop/closed-loop-20260927T124854Z/physical-trajectory.npz
+  sha256: 55e9dfe918653bc14d3c3d732f284877f0d6a4e68865f868d6d1cff2317721ff
+  schema_name: the_fly_matrix.physical_trajectory
+  schema_version: 1
+  claim_label: REAL MALECNS / UNCALIBRATED CLOSED LOOP
+  scientific_role: engineering_baseline_only
+
+metric_contract:
+  supported:
+    - simulation_timebase_and_completion
+    - finite_recorded_state_fraction
+    - central_summary_bounds
+    - root_translation_and_orientation_proxies
+    - joint_position_and_velocity_bounds_without_limit_claim
+    - ground_contact_counts_and_transitions
+    - command_effort_slew_and_direct_motor_work_proxies
+  explicitly_unavailable_from_schema_v1:
+    - true_center_of_mass_displacement
+    - joint_limit_violation_count
+    - biological_or_metabolic_actuator_energy
+    - physical_body_jerk
+    - recovery_after_small_generic_perturbation
+
+semantic_guards:
+  root_position_is_not_relabelled_as_center_of_mass: true
+  command_slew_is_not_relabelled_as_body_jerk: true
+  direct_motor_force_velocity_is_not_relabelled_as_biological_energy: true
+  no_named_pose_gait_or_action: true
+  no_threshold_selected_from_baseline: true
+  no_parameter_selection: true
+  no_topology_change: true
+
+acceptance:
+  metric_extraction_requires_all_supported_groups: true
+  absent_metrics_are_reported_not_defaulted: true
+  pinned_input_hash_match: true
+  finite_fraction: 1.0
+  stability_thresholds: unresolved
+  stability_acceptance_possible: false
+
+budgets:
+  trajectories: 1
+  optimized_parameters: 0
+  behavior_observations: 0
+  topology_changes: 0
+
+stop_conditions:
+  - pinned_input_hash_drift
+  - trajectory_schema_or_claim_drift
+  - missing_required_sensor_array
+  - non_finite_recorded_state
+  - any_attempt_to_select_stability_thresholds
+
+outputs:
+  heavy_run_root: runs/calibration/embodied-stability-metric-contract-v0
+  compact_result: calibration/runner/embodied-stability-metric-contract-v0.yaml
+  promotion_policy: no_parameter_set_metric_contract_only
+
+behavior_targets: []
+next_action: >-
+  Use the resulting coverage gap to version a richer trajectory/paired-perturbation
+  contract. Set stability thresholds only from independent evidence in a later
+  campaign, after local sensory and motor fits are frozen.

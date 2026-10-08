@@ -1,0 +1,67 @@
+schema_version: 1
+id: evaluation.embodied_stability_metric_contract.v0
+title: Coverage and semantic audit of the embodied-stability metric contract
+status: completed_metric_contract_only
+campaign_id: campaign.embodied_stability_metric_contract.v0
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: DESCRIPTIVE TECHNICAL METRICS / NOT STABILITY / NO BEHAVIOR
+
+acceptance_result: pass_metric_extraction_stability_unresolved
+acceptance_scope:
+  accepted:
+    - checksum-pinned physical trajectory loads under schema v1
+    - seven declared descriptive metric groups are computed
+    - unavailable scientific quantities are explicit rather than zero-filled
+    - zero parameters, thresholds, topology changes or behavior targets are exposed
+  not_accepted:
+    - embodied stability
+    - recovery after perturbation
+    - joint-limit safety
+    - center-of-mass stability
+    - biological actuator energy or muscle fidelity
+    - any behavioral interpretation of the observed motion
+
+descriptive_baseline:
+  frames: 200
+  duration_s: 1.0
+  finite_fraction: 1.0
+  peak_root_translation_model_units: 1.4093605945418806
+  peak_root_orientation_drift_rad: 0.13225812868275044
+  frames_without_ground_contact: 4
+  ground_contact_transition_count: 261
+  maximum_command_abs: 0.00005727000461774878
+  note: >-
+    These values characterize one uncalibrated engineering comparator. No bound
+    above is an acceptance threshold and no direction is labelled biologically
+    desirable.
+
+coverage_gap:
+  joint_limits: trajectory schema v1 does not snapshot limits
+  center_of_mass: root generalized position is not COM
+  perturbation_recovery: requires matched baseline and perturbed trajectories
+  body_jerk: command slew is not physical jerk
+  energy: direct MOTOR force-velocity integral is not biological energy
+
+reproducibility:
+  command: embodied_stability_metrics.bat
+  pinned_trajectory:
+    path: runs/closed-loop/closed-loop-20260927T124854Z/physical-trajectory.npz
+    sha256: 55e9dfe918653bc14d3c3d732f284877f0d6a4e68865f868d6d1cff2317721ff
+  campaign:
+    path: calibration/campaigns/embodied-stability-metric-contract-v0.yaml
+    sha256: b55eac33c78c949690e741dc865ce588d6a44b6f958ab00354bcfc26dc8f59b4
+  implementation:
+    path: src/the_fly_matrix/embodied_stability_metrics.py
+    sha256: db96efc90137dee9b0dcde40f03464b7f15e62e74445b68875ca89ff158422ce
+  compact_result: calibration/runner/embodied-stability-metric-contract-v0.yaml
+  semantic_result_sha256: a4ba805284aad4eaf95d8cac4c346b91363b41e32670e73a69778abb2d9d36d7
+
+behavior_targets: []
+parameter_values_promoted: 0
+stability_thresholds_selected: 0
+next_action: >-
+  Add joint-limit metadata and paired generic-perturbation trajectories in a new
+  version, then source thresholds independently after the local sensory and motor
+  chain is frozen. Do not infer thresholds from this baseline.

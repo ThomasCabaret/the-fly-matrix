@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: proposed
+status: metric_contract_executable_stability_not_calibrated
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -25,12 +25,26 @@ metrics:
   - simulation_completion
   - finite_cns_state_fraction
   - body_orientation_bounds
-  - center_of_mass_displacement
+  - center_of_mass_displacement_when_recorded_not_root_position_relabelled
   - joint_limit_violation_count
   - contact_instability_count
-  - actuator_energy
-  - actuator_jerk
+  - biological_or_declared_surrogate_actuator_energy
+  - physical_body_jerk_not_command_slew
   - recovery_after_small_generic_perturbation
+
+measurement_contract:
+  campaign_id: campaign.embodied_stability_metric_contract.v0
+  evaluation_id: evaluation.embodied_stability_metric_contract.v0
+  runner_result_id: runner_result.embodied_stability_metric_contract.v0
+  status: descriptive_extractor_pass_stability_unresolved
+  supported_groups: 7
+  explicit_gaps: 5
+  optimized_parameters: 0
+  selected_thresholds: 0
+  note: >-
+    The v0 physical replay can measure root, joint, contact, command and central
+    summaries. It cannot silently substitute root position for COM, command slew
+    for body jerk, or direct-motor work for biological energy.
 
 acceptance_policy:
   summary: >-
@@ -56,15 +70,16 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: not_run
+validation: metric_contract_pass_stability_campaign_not_run
 blocked_reason: >-
-  Runtime integration exists, but basal-source values, local motor transfer scope,
-  ensemble-accounting policy and technical thresholds are not yet registered. The
-  direct-motor actuator semantics are accepted only as a bounded short-horizon
-  surrogate; central, sensory, motor and mechanical families may not all remain
-  free without an explicit identifiability analysis.
+  The descriptive metric extractor is now executable, but the trajectory contract
+  still lacks joint limits and paired perturbation recovery, and no independent
+  technical thresholds are registered. Basal-source values, local motor transfer
+  scope and ensemble accounting remain unresolved. The direct-motor semantics are
+  accepted only as a bounded short-horizon surrogate; central, sensory, motor and
+  mechanical families may not all remain free without an identifiability analysis.
 next_action: >-
-  Freeze one minimal local sensory scope and one minimal motor scope, resolve the
-  neural model-class gate, then define a short flat-ground technical pilot that
-  propagates the accepted central uncertainty, exposes tonic output explicitly,
-  and forbids exact pose, gait or named-action targets.
+  Freeze one minimal local sensory scope and one minimal motor scope. In parallel,
+  version joint-limit metadata and a matched generic-perturbation trajectory pair,
+  then source thresholds independently before defining a short flat-ground pilot
+  that propagates central uncertainty and exposes tonic output explicitly.

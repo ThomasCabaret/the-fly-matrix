@@ -676,6 +676,16 @@ not falling immediately, limited actuator energy, and bounded CNS activity. A
 particular stance, gait, step sequence, or recognizable action is not prescribed.
 This remains trained technical stability and must be labelled as such.
 
+Close the measurement contract before fitting this stage. A physical replay may
+support root translation and orientation, joint-state, contact, command and CNS
+summary metrics without yet supporting the scientific quantity named by a target.
+In particular, root generalized position is not automatically center of mass,
+command slew is not body jerk, and force times generalized velocity under direct
+MuJoCo motors is not biological energy. Missing joint limits or perturbation pairs
+must be reported as unavailable, never filled with zero or inferred from the same
+baseline used to choose an acceptance threshold. Thresholds come from independent
+physical or biological evidence in a later preregistered campaign.
+
 The actuator-semantics gate and the relevant local sensory/motor scopes must be
 closed or explicitly frozen before this stage frees global parameters. Central,
 sensory, motor and mechanical families cannot all vary simultaneously unless a

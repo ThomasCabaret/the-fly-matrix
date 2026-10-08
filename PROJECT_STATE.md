@@ -64,6 +64,17 @@ Les oracles synthétiques de séparation et de comptabilité passent, mais les t
 Parquet manquent encore localement ; zéro fold biologique a donc été exécuté et
 aucun chemin n'est choisi.
 
+Un front indépendant du jeton Dryad ferme désormais le **contrat de mesure** de
+la future stabilité incarnée. `embodied_stability_metrics.bat` relit le replay
+physique gelé d'une seconde et calcule sept groupes descriptifs : temps/finitude,
+résumé CNS, racine, articulations, contacts et actionnement. Le run v0 compte 200
+trames finies, un déplacement maximal de racine de 1,409 unité modèle, une dérive
+d'orientation de 0,132 radian, quatre trames sans contact au sol et 261 transitions
+de contact. Ces nombres ne sont pas des seuils et le mouvement n'est pas un
+comportement. Cinq lacunes restent explicitement ouvertes : COM, limites
+articulaires, énergie biologique, jerk physique et récupération sur trajectoires
+appariées. Zéro paramètre ou seuil a été choisi.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -663,6 +674,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; le contrat source moteur couvre 23 cellules et 194 essais sélectionnés, l'inventaire et le fit agrégé pilote sont préenregistrés, et l'ensemble de classes 3^10 reste explicite, mais zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
+- Mesure de stabilité incarnée : **extracteur descriptif validé sur 7 groupes ; 5 quantités scientifiques restent explicitement indisponibles, zéro seuil choisi et stabilité toujours non calibrée**.
 
 Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -728,7 +740,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **189 tests** actuels passent, y compris les
+conservées et classifiées. Les **191 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -821,6 +833,12 @@ temps les familles centrales, sensorielles, motrices et mécaniques ; la mécani
 et le contrat direct-motor restent gelés et l'identifiabilité des interfaces doit
 être explicitement testée.
 
+Le contrat descriptif préalable à cette stabilité est exécutable via
+`embodied_stability_metrics.bat`. Il a validé l'extraction sur le replay non
+calibré gelé, pas la stabilité. La version suivante devra enregistrer les limites
+articulaires et produire des trajectoires baseline/perturbée appariées ; les seuils
+seront sourcés indépendamment et non choisis en regardant ce replay.
+
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
 
@@ -839,6 +857,7 @@ closed_loop_record.bat    # vrai MaleCNS en boucle fermée + trajectoire physiqu
 physical_replay.bat       # viewer autonome de la dernière trajectoire physique
 closed_loop_live.bat      # même boucle directement dans le viewer, même si lente
 diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
+embodied_stability_metrics.bat # métriques descriptives du replay gelé ; aucun seuil ni claim de stabilité
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG
