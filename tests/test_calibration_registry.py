@@ -353,15 +353,24 @@ class CalibrationRegistryTests(unittest.TestCase):
             sum(len(dataset["candidates"]) for dataset in campaign["inputs"]["datasets"]),
             7,
         )
-        self.assertEqual(evaluation["acceptance_result"], "ready_not_run")
+        self.assertEqual(
+            evaluation["acceptance_result"],
+            "pass_procedure_candidate_ensemble_retained",
+        )
         self.assertEqual(evaluation["procedure_readiness"]["source_tables_verified"], 3)
         self.assertEqual(evaluation["procedure_readiness"]["source_rows_inspected"], 64_300)
         self.assertEqual(
             runner["status"],
-            "blocked_missing_authenticated_tables",
-            "the old blocked runner remains historical until the fit is explicitly run",
+            "completed_candidate_ensemble_unpromoted",
         )
-        self.assertEqual(len(runner["accounting"]["datasets_blocked"]), 3)
+        self.assertEqual(runner["accounting"]["datasets_verified"], 3)
+        self.assertEqual(runner["accounting"]["candidate_paths"], 7)
+        self.assertEqual(runner["accounting"]["folds_total"], 86)
+        self.assertEqual(runner["accounting"]["folds_blocked"], 0)
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
         self.assertFalse(runner["accounting"]["candidate_winner_selected"])
         self.assertEqual(runner["accounting"]["parameter_values_promoted"], 0)
 

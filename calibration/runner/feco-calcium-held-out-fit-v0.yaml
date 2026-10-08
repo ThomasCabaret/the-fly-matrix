@@ -1,26 +1,1259 @@
 schema_version: 1
 id: runner_result.feco_calcium_held_out_fit.v0
-generated_at: '2026-10-07T10:46:36.974939+00:00'
+generated_at: '2026-10-08T16:44:55.754656+00:00'
 campaign_id: campaign.feco_calcium_held_out_fit.v0
-campaign_sha256: c24f0127ea38956ac1f3ef9cd5d794d66418e3584b5490f39ac542bd7621e641
-status: blocked_missing_authenticated_tables
-semantic_result_sha256: 167ea2a58579f53ec36db9890dec3685775a912310e8610f0c2d4cda38fd294a
+campaign_sha256: 268c8f56f5fda6e79fd44bb377ed2bc7bdfc26b9cb276b4d98bdf71bbd6133b6
+status: completed_candidate_ensemble_unpromoted
+semantic_result_sha256: 26d448c8483a86c2e32b4ee191c0e0a1d7136cd8249d15fbfe78a266b15b78d0
 accounting:
-  campaign_sha256: c24f0127ea38956ac1f3ef9cd5d794d66418e3584b5490f39ac542bd7621e641
+  campaign_sha256: 268c8f56f5fda6e79fd44bb377ed2bc7bdfc26b9cb276b4d98bdf71bbd6133b6
   datasets_expected: 3
-  datasets_verified: 0
-  datasets_blocked:
-  - dataset_id: feco-mamiya2018-claw-calcium-adapted-2025
-    reason: missing_file
-  - dataset_id: feco-mamiya2018-club-calcium-adapted-2025
-    reason: missing_file
-  - dataset_id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
-    reason: missing_file
+  datasets_verified: 3
+  candidate_paths: 7
+  folds_total: 86
+  folds_blocked: 0
+  rows_retained: 33766
   candidate_winner_selected: false
   parameter_values_promoted: 0
+  native_representation_selected: false
   behavior_targets_exposed: 0
   topology_changes: 0
+results:
+- dataset_id: feco-mamiya2018-claw-calcium-adapted-2025
+  functional_class: claw_position
+  accounting:
+    rows_total: 26990
+    rows_analyze_roi_selected_before_numeric_check: 9000
+    rows_excluded_analyze_or_roi: 17990
+    rows_excluded_nonfinite_numeric: 0
+    rows_excluded_missing_group_key: 0
+    rows_retained: 9000
+    animals_retained: 10
+    trials_retained: 20
+  candidates:
+  - candidate_id: claw_published_predictor_center_80_gcamp
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    parameters_per_fold: 2
+    folds:
+    - held_out_animal: '1.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 57.298539263442066
+        offset: 0.639400803769801
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.296820215736579
+        mae_raw_calcium: 6.029898719104471
+        pearson_r: 0.8365161417025778
+    - held_out_animal: '10.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 60.44528066224792
+        offset: 0.5208979153256705
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 11.071304306121322
+        mae_raw_calcium: 8.547312231443069
+        pearson_r: 0.5465227450876895
+    - held_out_animal: '2.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 59.04348610214831
+        offset: 0.37095661559911464
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 9.285116748359608
+        mae_raw_calcium: 7.369360984345379
+        pearson_r: 0.6814918740911708
+    - held_out_animal: '3.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 57.22635757563007
+        offset: 0.6963503881430996
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.607404044114826
+        mae_raw_calcium: 5.704485776701553
+        pearson_r: 0.8190079543873315
+    - held_out_animal: '4.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 55.816368519234196
+        offset: 0.7038801366224741
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.458165156019905
+        mae_raw_calcium: 5.241798940198219
+        pearson_r: 0.894783437569964
+    - held_out_animal: '5.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 56.26581106595489
+        offset: 0.776070457910698
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.232486094475497
+        mae_raw_calcium: 4.623704629517856
+        pearson_r: 0.9044165927724954
+    - held_out_animal: '6.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 56.81306979328913
+        offset: 0.8748771271917356
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 5.598734248396801
+        mae_raw_calcium: 4.1780175316292825
+        pearson_r: 0.903221894179634
+    - held_out_animal: '7.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 56.092874965011056
+        offset: 0.5116244345588201
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.177652445815637
+        mae_raw_calcium: 5.419622839719542
+        pearson_r: 0.9141346608446552
+    - held_out_animal: '8.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 57.130932695101514
+        offset: 0.4804797289029479
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.233812075863767
+        mae_raw_calcium: 5.434216655346465
+        pearson_r: 0.8396941822929344
+    - held_out_animal: '9.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        scale: 56.98103243063029
+        offset: 0.717255825642125
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.188608409968364
+        mae_raw_calcium: 5.296898923417559
+        pearson_r: 0.8437915690663507
+    aggregate:
+      folds_total: 10
+      folds_evaluated: 10
+      folds_blocked: 0
+      median_rmse_raw_calcium: 7.265316145800173
+      worst_rmse_raw_calcium: 11.071304306121322
+      median_mae_raw_calcium: 5.426919747533004
+      worst_mae_raw_calcium: 8.547312231443069
+  - candidate_id: claw_fit_recipe_exact_concatenated
+    fit_kind: quartic_gcamp_padded
+    sampling_policy: fixed_8_01_hz_from_imaging_poly_fun
+    grouping_policy: concatenate_selected_rows_within_fold
+    parameters_per_fold: 5
+    folds:
+    - held_out_animal: '1.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.9600836158921506e-07
+        degree_3: -1.7079827045152663e-05
+        degree_2: 0.0078076810235886635
+        degree_1: 0.06457125596591416
+        offset: -2.124305904806312
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.23069133482876
+        mae_raw_calcium: 4.81154445762431
+        pearson_r: 0.8853667133920483
+    - held_out_animal: '10.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -4.2480207486002463e-07
+        degree_3: -1.2308236309046026e-05
+        degree_2: 0.00813719286937022
+        degree_1: 0.05494656756184991
+        offset: -2.267438942205002
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 10.20182205726116
+        mae_raw_calcium: 7.441846971514226
+        pearson_r: 0.6552902553872153
+    - held_out_animal: '2.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.409470726297788e-07
+        degree_3: -1.584096184812362e-05
+        degree_2: 0.007523325110976989
+        degree_1: 0.06808827351463713
+        offset: -2.0421754496406366
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.532558700123191
+        mae_raw_calcium: 5.73826907332894
+        pearson_r: 0.7941955872155133
+    - held_out_animal: '3.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.6956690348817106e-07
+        degree_3: -1.3766379454371777e-05
+        degree_2: 0.007601248996069394
+        degree_1: 0.05292414757796012
+        offset: -1.9380137065357017
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.39886401062944
+        mae_raw_calcium: 4.47031272128905
+        pearson_r: 0.877227513033027
+    - held_out_animal: '4.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.2678563525878384e-07
+        degree_3: -1.2845862406924184e-05
+        degree_2: 0.007346921725354056
+        degree_1: 0.03628131537437983
+        offset: -1.9722687962023155
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 8.309448266636103
+        mae_raw_calcium: 5.683009711204773
+        pearson_r: 0.8478640908947699
+    - held_out_animal: '5.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.3822101265090987e-07
+        degree_3: -1.2096011438339764e-05
+        degree_2: 0.007438879401720095
+        degree_1: 0.03423469737881728
+        offset: -1.938230654475656
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.297778108808708
+        mae_raw_calcium: 5.397261898971398
+        pearson_r: 0.8535145605140227
+    - held_out_animal: '6.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.605347238228567e-07
+        degree_3: -1.4596753205331839e-05
+        degree_2: 0.00768666651218222
+        degree_1: 0.041484673150378404
+        offset: -1.991356951716794
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.980743500018986
+        mae_raw_calcium: 5.417168757198991
+        pearson_r: 0.8364348154172265
+    - held_out_animal: '7.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.1778701743254015e-07
+        degree_3: -1.3174868361998728e-05
+        degree_2: 0.007256934378600147
+        degree_1: 0.043660819343782145
+        offset: -2.013934445688731
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.643819040479829
+        mae_raw_calcium: 4.881465264374993
+        pearson_r: 0.9255184345123529
+    - held_out_animal: '8.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.5659929352240787e-07
+        degree_3: -1.2534242348914698e-05
+        degree_2: 0.007492941127843281
+        degree_1: 0.0490817102995887
+        offset: -2.081714762095168
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 5.84179942147248
+        mae_raw_calcium: 4.451567331387841
+        pearson_r: 0.9036488991747849
+    - held_out_animal: '9.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.7151925175422695e-07
+        degree_3: -1.2333381397453772e-05
+        degree_2: 0.007647616280908085
+        degree_1: 0.04221296083251188
+        offset: -2.0360495763202078
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.044382517430088
+        mae_raw_calcium: 5.0815024602142245
+        pearson_r: 0.8495381510070471
+    aggregate:
+      folds_total: 10
+      folds_evaluated: 10
+      folds_blocked: 0
+      median_rmse_raw_calcium: 7.012563008724537
+      worst_rmse_raw_calcium: 10.20182205726116
+      median_mae_raw_calcium: 5.239382179592811
+      worst_mae_raw_calcium: 7.441846971514226
+  - candidate_id: claw_fit_recipe_boundary_safe
+    fit_kind: quartic_gcamp_padded
+    sampling_policy: fixed_8_01_hz_from_imaging_poly_fun
+    grouping_policy: per_animal_trial_roi
+    parameters_per_fold: 5
+    folds:
+    - held_out_animal: '1.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.995075058930847e-07
+        degree_3: -1.695631119847605e-05
+        degree_2: 0.007824106032681483
+        degree_1: 0.06438259694114443
+        offset: -2.1327962214128364
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.227785487354804
+        mae_raw_calcium: 4.808937753929143
+        pearson_r: 0.8855288236908659
+    - held_out_animal: '10.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -4.273545010121727e-07
+        degree_3: -1.2037848494590649e-05
+        degree_2: 0.008144944996146175
+        degree_1: 0.05431167817689238
+        offset: -2.2694679305168464
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 10.209793743414963
+        mae_raw_calcium: 7.446837452798569
+        pearson_r: 0.6540650617274559
+    - held_out_animal: '2.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.4226550567767666e-07
+        degree_3: -1.568495188247201e-05
+        degree_2: 0.007526822031041037
+        degree_1: 0.06781293429832358
+        offset: -2.0429248728864793
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.5299531704235285
+        mae_raw_calcium: 5.731429863375749
+        pearson_r: 0.7941090069294836
+    - held_out_animal: '3.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.724206755369777e-07
+        degree_3: -1.357224240415122e-05
+        degree_2: 0.007612681612339871
+        degree_1: 0.05255000762514594
+        offset: -1.9430763584826654
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.402498666562492
+        mae_raw_calcium: 4.470677702174094
+        pearson_r: 0.8770799154935842
+    - held_out_animal: '4.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.2880474593326226e-07
+        degree_3: -1.2669898578635149e-05
+        degree_2: 0.007353621318936956
+        degree_1: 0.03596992204154951
+        offset: -1.974691702143512
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 8.296179977151496
+        mae_raw_calcium: 5.676216011316351
+        pearson_r: 0.8486513861106753
+    - held_out_animal: '5.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.3939254820586495e-07
+        degree_3: -1.1925319747077155e-05
+        degree_2: 0.00744079589829448
+        degree_1: 0.03391896679287847
+        offset: -1.937705503369838
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.274348195425942
+        mae_raw_calcium: 5.3863274507922085
+        pearson_r: 0.8547254877440443
+    - held_out_animal: '6.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.622520484603811e-07
+        degree_3: -1.4466192747825493e-05
+        degree_2: 0.007692087949139788
+        degree_1: 0.0413679731039296
+        offset: -1.9938072542663268
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.996370733005511
+        mae_raw_calcium: 5.419686452655405
+        pearson_r: 0.8357839153050213
+    - held_out_animal: '7.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.179466750769127e-07
+        degree_3: -1.3008698107843473e-05
+        degree_2: 0.007252846802189625
+        degree_1: 0.043327843028686565
+        offset: -2.0101588235959227
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 6.657572891429661
+        mae_raw_calcium: 4.903048007240183
+        pearson_r: 0.9240610935991643
+    - held_out_animal: '8.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.585051525298361e-07
+        degree_3: -1.2372895321450112e-05
+        degree_2: 0.00749938468759908
+        degree_1: 0.04880708360094346
+        offset: -2.084080916033926
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 5.848633434072076
+        mae_raw_calcium: 4.453821545865375
+        pearson_r: 0.9031476790707269
+    - held_out_animal: '9.0'
+      status: evaluated
+      train_samples: 8100
+      held_out_samples: 900
+      fit:
+        degree_4: -3.741644670698136e-07
+        degree_3: -1.2143901338106577e-05
+        degree_2: 0.0076575680355870064
+        degree_1: 0.04187375372858185
+        offset: -2.0402117366621133
+      metrics:
+        samples: 900
+        rmse_raw_calcium: 7.071025195258251
+        mae_raw_calcium: 5.094289248076277
+        pearson_r: 0.8482808281905272
+    aggregate:
+      folds_total: 10
+      folds_evaluated: 10
+      folds_blocked: 0
+      median_rmse_raw_calcium: 7.033697964131881
+      worst_rmse_raw_calcium: 10.209793743414963
+      median_mae_raw_calcium: 5.240308349434242
+      worst_mae_raw_calcium: 7.446837452798569
+  candidate_winner_selected: false
+  parameter_values_promoted: 0
+- dataset_id: feco-mamiya2018-club-calcium-adapted-2025
+  functional_class: club_vibration_and_speed
+  accounting:
+    rows_total: 12208
+    rows_analyze_roi_selected_before_numeric_check: 12208
+    rows_excluded_analyze_or_roi: 0
+    rows_excluded_nonfinite_numeric: 0
+    rows_excluded_missing_group_key: 0
+    rows_retained: 12208
+    animals_retained: 14
+    trials_retained: 28
+  candidates:
+  - candidate_id: club_fit_recipe_threshold_5_deg_s
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    parameters_per_fold: 2
+    folds:
+    - held_out_animal: '1.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 21.92820686451342
+        offset: 4.682909911289045
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.893968402994793
+        mae_raw_calcium: 4.90166115405104
+        pearson_r: 0.37932945998812495
+    - held_out_animal: '10.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 20.77946253940734
+        offset: 4.8793684813534925
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.788811626171624
+        mae_raw_calcium: 4.533272326213853
+        pearson_r: 0.6762218216759348
+    - held_out_animal: '11.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 21.09361747350142
+        offset: 4.879246707194609
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 4.980841433379819
+        mae_raw_calcium: 3.789953841489004
+        pearson_r: 0.6471190896892968
+    - held_out_animal: '12.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 21.29646365064524
+        offset: 4.945212728644769
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 7.0262786331592695
+        mae_raw_calcium: 5.574154310350853
+        pearson_r: 0.5282022716392111
+    - held_out_animal: '13.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 20.493561419545447
+        offset: 4.930939086610934
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.05485239652293
+        mae_raw_calcium: 4.092503919390818
+        pearson_r: 0.7752781214243556
+    - held_out_animal: '14.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 20.815859280317273
+        offset: 4.8221513735368156
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.313009574753398
+        mae_raw_calcium: 3.528657932897352
+        pearson_r: 0.6755834757720166
+    - held_out_animal: '2.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 20.960345889122717
+        offset: 4.737248803615365
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.718127429352549
+        mae_raw_calcium: 4.692404589339242
+        pearson_r: 0.5536780337618966
+    - held_out_animal: '3.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 22.278057925447236
+        offset: 4.189935188444459
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 11.195487832704494
+        mae_raw_calcium: 8.380636724602027
+        pearson_r: 0.17867690630964844
+    - held_out_animal: '4.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 21.031907177685582
+        offset: 4.595092984912735
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 8.18969989532789
+        mae_raw_calcium: 6.058549721093021
+        pearson_r: 0.48943479717798255
+    - held_out_animal: '5.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 22.145430687919387
+        offset: 4.613015977916368
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 9.26141413187196
+        mae_raw_calcium: 6.863542033084454
+        pearson_r: 0.22219626014765984
+    - held_out_animal: '6.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 22.05868106504757
+        offset: 4.725023191574904
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.55224179966014
+        mae_raw_calcium: 5.104433448381986
+        pearson_r: 0.2797139553237845
+    - held_out_animal: '7.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 22.029409498426645
+        offset: 4.907340486611482
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.362074467715944
+        mae_raw_calcium: 5.427725740897096
+        pearson_r: 0.39941644658149833
+    - held_out_animal: '8.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 21.12100385368901
+        offset: 4.8176960871143315
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.032591295919852
+        mae_raw_calcium: 4.807863438618777
+        pearson_r: 0.5757979286661387
+    - held_out_animal: '9.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 21.283030366813403
+        offset: 4.951294453909845
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.598687965608444
+        mae_raw_calcium: 5.5928983791019675
+        pearson_r: 0.5079175960124749
+    aggregate:
+      folds_total: 14
+      folds_evaluated: 14
+      folds_blocked: 0
+      median_rmse_raw_calcium: 6.457158133688042
+      worst_rmse_raw_calcium: 11.195487832704494
+      median_mae_raw_calcium: 5.0030473012165135
+      worst_mae_raw_calcium: 8.380636724602027
+  - candidate_id: club_documented_application_threshold_50_deg_s
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    parameters_per_fold: 2
+    folds:
+    - held_out_animal: '1.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 33.170904625955494
+        offset: 5.012298767033114
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.9262151867950905
+        mae_raw_calcium: 4.875670560619325
+        pearson_r: 0.35864646230161124
+    - held_out_animal: '10.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 31.74586281900746
+        offset: 5.1719698864110315
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.160233171025936
+        mae_raw_calcium: 4.761214633797051
+        pearson_r: 0.6012020514191612
+    - held_out_animal: '11.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 32.176102224737996
+        offset: 5.197165317310646
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.134858858163202
+        mae_raw_calcium: 3.947759853084225
+        pearson_r: 0.6168102939450383
+    - held_out_animal: '12.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 32.22735872739436
+        offset: 5.264908648186807
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 7.0320792779141925
+        mae_raw_calcium: 5.57201610887285
+        pearson_r: 0.5219524488205726
+    - held_out_animal: '13.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 30.91609598463347
+        offset: 5.244900549276893
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.130939289171113
+        mae_raw_calcium: 4.09215881609275
+        pearson_r: 0.7760284803823553
+    - held_out_animal: '14.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 31.7027654456313
+        offset: 5.1321013262524495
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 5.516790499533092
+        mae_raw_calcium: 3.6924010967618064
+        pearson_r: 0.6300519052011626
+    - held_out_animal: '2.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 31.88533850144781
+        offset: 5.052962817622271
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.838885029655087
+        mae_raw_calcium: 4.774055114185511
+        pearson_r: 0.5205758379299035
+    - held_out_animal: '3.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 33.54071450032793
+        offset: 4.544721907146023
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 11.045121902714747
+        mae_raw_calcium: 8.245230184571723
+        pearson_r: 0.21175358310889347
+    - held_out_animal: '4.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 32.01260359867321
+        offset: 4.916230188826438
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 8.230863019761387
+        mae_raw_calcium: 6.1293357381244
+        pearson_r: 0.46240254718042567
+    - held_out_animal: '5.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 33.83129779275145
+        offset: 4.9264877516347685
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 9.459945981224534
+        mae_raw_calcium: 7.118212433302346
+        pearson_r: 0.15980644810015326
+    - held_out_animal: '6.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 33.39496726646596
+        offset: 5.064599501917296
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.501551003375093
+        mae_raw_calcium: 5.107731435999678
+        pearson_r: 0.2903611361557268
+    - held_out_animal: '7.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 32.8475928500667
+        offset: 5.261161018142965
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.003466620031355
+        mae_raw_calcium: 5.259772236200421
+        pearson_r: 0.47366223759807713
+    - held_out_animal: '8.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 31.9156286464977
+        offset: 5.135104179226625
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.1224358463067965
+        mae_raw_calcium: 4.877800777589095
+        pearson_r: 0.5600064425828479
+    - held_out_animal: '9.0'
+      status: evaluated
+      train_samples: 11336
+      held_out_samples: 872
+      fit:
+        scale: 32.34826457461951
+        offset: 5.273674690027452
+      metrics:
+        samples: 872
+        rmse_raw_calcium: 6.684871295260814
+        mae_raw_calcium: 5.722428277574239
+        pearson_r: 0.4922499927898512
+    aggregate:
+      folds_total: 14
+      folds_evaluated: 14
+      folds_blocked: 0
+      median_rmse_raw_calcium: 6.330892087200515
+      worst_rmse_raw_calcium: 11.045121902714747
+      median_mae_raw_calcium: 4.992766106794386
+      worst_mae_raw_calcium: 8.245230184571723
+  candidate_winner_selected: false
+  parameter_values_promoted: 0
+- dataset_id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
+  functional_class: hook_flexion_direction
+  accounting:
+    rows_total: 25102
+    rows_analyze_roi_selected_before_numeric_check: 12558
+    rows_excluded_analyze_or_roi: 12544
+    rows_excluded_nonfinite_numeric: 0
+    rows_excluded_missing_group_key: 0
+    rows_retained: 12558
+    animals_retained: 14
+    trials_retained: 28
+  candidates:
+  - candidate_id: hook_fit_recipe_threshold_minus_5_deg_s
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    parameters_per_fold: 2
+    folds:
+    - held_out_animal: '1.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 51.40830800339386
+        offset: 0.7127892460616937
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.894272795034142
+        mae_raw_calcium: 2.8202847686476877
+        pearson_r: 0.7365664524905768
+    - held_out_animal: '10.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 51.54963909174223
+        offset: 0.8255027961325442
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.532450101836288
+        mae_raw_calcium: 2.8294609595405396
+        pearson_r: 0.7927081281541006
+    - held_out_animal: '11.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 50.15282226430076
+        offset: 0.8369260370599155
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.582812314931275
+        mae_raw_calcium: 2.350349530307249
+        pearson_r: 0.8429470717880448
+    - held_out_animal: '12.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 53.2905840994292
+        offset: 0.6023959899876171
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 10.149292338855608
+        mae_raw_calcium: 5.389159471657816
+        pearson_r: 0.29362231476970896
+    - held_out_animal: '13.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 50.95436140309414
+        offset: 0.8581393077210069
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.389920719813313
+        mae_raw_calcium: 2.2673134789268583
+        pearson_r: 0.8366231777767777
+    - held_out_animal: '14.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 51.963099321253715
+        offset: 0.7958334423954105
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.747461686392534
+        mae_raw_calcium: 2.5425650079418434
+        pearson_r: 0.82113662681663
+    - held_out_animal: '2.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 50.44231880142827
+        offset: 0.8488936212541428
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.791805287216468
+        mae_raw_calcium: 2.423164014717186
+        pearson_r: 0.8135135996524113
+    - held_out_animal: '3.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 50.949193105016846
+        offset: 0.8565314080248557
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.670121807275745
+        mae_raw_calcium: 2.286788802147746
+        pearson_r: 0.7808897960639724
+    - held_out_animal: '4.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 50.36808652281317
+        offset: 0.8475140576100504
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.711517457532821
+        mae_raw_calcium: 2.4574877834634696
+        pearson_r: 0.828875399379518
+    - held_out_animal: '5.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 50.51208661490805
+        offset: 0.762565391257516
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.902131316937391
+        mae_raw_calcium: 3.033848055121565
+        pearson_r: 0.7397494624052411
+    - held_out_animal: '6.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 50.696860560338536
+        offset: 0.829870815009384
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.877324538256848
+        mae_raw_calcium: 2.41533266737391
+        pearson_r: 0.8033779349595446
+    - held_out_animal: '7.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 49.258341511344014
+        offset: 0.7911214145833141
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.8799918368266795
+        mae_raw_calcium: 3.0002476180789976
+        pearson_r: 0.8698677480744653
+    - held_out_animal: '8.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 49.263513720057055
+        offset: 0.8679465673856993
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 6.075958331706601
+        mae_raw_calcium: 2.6493474506297767
+        pearson_r: 0.8526607664529628
+    - held_out_animal: '9.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 49.583102227977804
+        offset: 0.7996820753770703
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 6.894946374069912
+        mae_raw_calcium: 3.127876437296142
+        pearson_r: 0.7857113871251161
+    aggregate:
+      folds_total: 14
+      folds_evaluated: 14
+      folds_blocked: 0
+      median_rmse_raw_calcium: 4.885798666645495
+      worst_rmse_raw_calcium: 10.149292338855608
+      median_mae_raw_calcium: 2.59595622928581
+      worst_mae_raw_calcium: 5.389159471657816
+  - candidate_id: hook_documented_application_threshold_minus_50_deg_s
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    parameters_per_fold: 2
+    folds:
+    - held_out_animal: '1.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 73.3033825494338
+        offset: 1.212806258876057
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.081926663266548
+        mae_raw_calcium: 2.7481275711966653
+        pearson_r: 0.7012145475943764
+    - held_out_animal: '10.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 72.66859055080803
+        offset: 1.3206795345895976
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.635458667542955
+        mae_raw_calcium: 2.9219021618957255
+        pearson_r: 0.769519627776965
+    - held_out_animal: '11.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 72.02236815578206
+        offset: 1.3176562999951136
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.663994988501035
+        mae_raw_calcium: 2.94098282379838
+        pearson_r: 0.7285361371739874
+    - held_out_animal: '12.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 77.43824770303506
+        offset: 1.0851266405526334
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 10.714933120892937
+        mae_raw_calcium: 5.822324515995392
+        pearson_r: 0.19679707553499906
+    - held_out_animal: '13.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 72.15611853689909
+        offset: 1.3454853685689556
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.97929307013469
+        mae_raw_calcium: 2.5787772856807694
+        pearson_r: 0.7763141011427569
+    - held_out_animal: '14.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 73.39305256621235
+        offset: 1.2893804279492054
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 4.910232933170837
+        mae_raw_calcium: 2.753203638286381
+        pearson_r: 0.7765030779997142
+    - held_out_animal: '2.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 71.94599293788612
+        offset: 1.337128625778133
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.470303737858156
+        mae_raw_calcium: 2.8030158023734812
+        pearson_r: 0.7464139890537654
+    - held_out_animal: '3.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 72.709365252945
+        offset: 1.348574086820922
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.220476391683513
+        mae_raw_calcium: 2.6582447033265417
+        pearson_r: 0.7146660536666095
+    - held_out_animal: '4.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 71.76251387296622
+        offset: 1.332820182169999
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.482906270600188
+        mae_raw_calcium: 2.797444933066922
+        pearson_r: 0.757419548952991
+    - held_out_animal: '5.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 72.12565286346948
+        offset: 1.2598143528032164
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 6.20262312135275
+        mae_raw_calcium: 3.4543493702674137
+        pearson_r: 0.7024207958290878
+    - held_out_animal: '6.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 72.16469412784079
+        offset: 1.3052794407148627
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 5.927666181557782
+        mae_raw_calcium: 3.0253960440342866
+        pearson_r: 0.6888740109604778
+    - held_out_animal: '7.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 70.51587197316516
+        offset: 1.2608689214065807
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 7.015363353816962
+        mae_raw_calcium: 3.570019270091388
+        pearson_r: 0.7615880963282242
+    - held_out_animal: '8.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 70.4405313943253
+        offset: 1.3339514721152468
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 7.272533858975982
+        mae_raw_calcium: 3.350003478736239
+        pearson_r: 0.7445909608785521
+    - held_out_animal: '9.0'
+      status: evaluated
+      train_samples: 11661
+      held_out_samples: 897
+      fit:
+        scale: 70.43596188893899
+        offset: 1.2812930229337411
+      metrics:
+        samples: 897
+        rmse_raw_calcium: 7.534614897617672
+        mae_raw_calcium: 3.530461339518413
+        pearson_r: 0.735381066634961
+    aggregate:
+      folds_total: 14
+      folds_evaluated: 14
+      folds_blocked: 0
+      median_rmse_raw_calcium: 5.649726828021995
+      worst_rmse_raw_calcium: 10.714933120892937
+      median_mae_raw_calcium: 2.9314424928470526
+      worst_mae_raw_calcium: 5.822324515995392
+  candidate_winner_selected: false
+  parameter_values_promoted: 0
 interpretation:
-  biological_fit_completed: false
+  biological_fit_completed: true
+  candidate_winner_selected: false
   native_representation_selected: false
-  next_action: set_DRYAD_BEARER_TOKEN_and_run_prepare_local_source_data
+  calcium_is_native_spiking_evidence: false
+  claim: local source-path residual comparison only

@@ -21,7 +21,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.embodied_stability_metric_contract.v0
+last_completed_campaign_id: campaign.feco_calcium_held_out_fit.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -55,7 +55,7 @@ readiness:
   population_dynamics_assignment: front_leg_scope_46_of_46_accounted_10_motor_event_required_36_feco_dual_unresolved_conversion_boundaries_executable_zero_values
   local_conversion_contract: feco_graded_and_event_candidates_executable_motor_event_to_force_to_direct_motor_stages_separate_zero_values
   local_source_subsets: feco_2MB_exact_size_sha256_verified_64300_rows_motor_metadata_verified_860MB_pilot_deferred
-  feco_calcium_observation: source_fidelity_pass_held_out_fit_preregistered_seven_candidates_split_and_leakage_oracles_pass_data_fit_ready_not_run
+  feco_calcium_observation: source_fidelity_pass_seven_candidates_86_of_86_animal_held_out_folds_complete_zero_blocked_candidate_ensemble_unpromoted_native_units_unresolved
   motor_spike_force_pilot: source_fidelity_pass_23_cells_194_selected_trials_aggregate_rules_locked_59049_assignment_upper_bound_raw_schema_and_kernel_fit_blocked
   motor_spike_force_fit: aggregate_fit_preregistered_one_source_reproduction_two_diagnostic_extensions_synthetic_oracles_pass_archives_and_parser_blocked_zero_values
   spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
@@ -93,7 +93,7 @@ blocked_by:
   - The uncalibrated live MaleCNS feedback changes motor commands after both generic perturbations but changes the final physical deviation by only about two parts per million relative to frozen open-loop commands; it is not currently evidence of stabilization or biological feedback control.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
-  - The FeCO local fitting procedure is preregistered with seven source/boundary candidates and leave-one-animal-out splits. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. Its input gate and synthetic oracles pass, but zero biological folds have run and no candidate is selected.
+  - The FeCO local fitting procedure completed all 86 leave-one-animal-out folds across seven source/boundary candidates on 33,766 retained rows, with zero blocked folds. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. The complete candidate ensemble remains unpromoted, no runtime parameter set is selected, and the comparison does not identify native event-versus-graded dynamics.
   - Calcium constrains a kinematics-to-observation proxy but does not by itself identify native spikes, membrane voltage, CNS model units or the graded-versus-event assignment.
   - The motor publication and code distinguish fast, intermediate and slow tibia-flexor units, but no source-backed crosswalk assigns those classes to the ten selected MaleCNS body IDs. Class membership must remain an ensemble until resolved.
   - The motor source contract now hash-locks five public files, accounts for 23 active cells and 194 selected pilot trials, and reproduces the aggregate force/spike filters and probe units. It does not expose the raw MAT variable schema or define a temporal twitch kernel. The exact one-cell-per-class 860 MB pilot remains deliberately opt-in and absent. The ten-body class uncertainty remains a factorized 3^10 upper bound (59,049 joint assignments), with no probability, symmetry or class-count prior and no selected crosswalk. Article-level approximate values are not runtime defaults.
@@ -101,10 +101,9 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Under target.population_dynamics_assignment.v0, run
-  fit_feco_calcium_observation.bat on the three verified FeCO tables to compare
-  all seven preregistered paths on
-  animal-held-out residuals without treating calcium as native spikes or selecting
+  Under target.population_dynamics_assignment.v0, retain the completed seven-path
+  FeCO held-out ensemble until a separate acceptance decision accounts for unequal
+  capacity and boundary semantics; do not treat calcium as native spikes or select
   a winner silently. The motor source-level cohort, filters and units are already
   reproducible with motor_source_contract.bat. Explicitly acquire the 860 MB motor
   pilot, run inspect_motor_pilot.bat and version the observed variable schema before

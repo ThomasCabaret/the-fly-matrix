@@ -66,7 +66,12 @@ leur documentation : 2 025 899 octets dans le sous-ensemble FeCO complet, 64 300
 lignes inspectées, zéro doublon de ligne et aucun secret dans le rapport. Les deux
 petits fichiers documentaires moteurs sont aussi vérifiés ; les trois archives
 motrices totalisant 860 357 945 octets sont restées explicitement différées.
-Zéro fold biologique a encore été exécuté et aucun chemin n'est choisi.
+Les sept candidats ont maintenant terminé leurs 86 folds biologiques tenus à
+l'écart sur 33 766 lignes retenues, sans fold bloqué. Le chemin hook à seuil
+-5 degrés/s a des résidus agrégés inférieurs au chemin d'application à -50
+degrés/s ; les variantes claw et club restent proches. Aucun gagnant, paramètre
+runtime ou représentation native n'est néanmoins promu : capacités et politiques
+de frontière diffèrent, et le calcium seul ne tranche pas événement contre gradué.
 
 Un front indépendant du jeton Dryad ferme désormais le **contrat de mesure** de
 la future stabilité incarnée. `embodied_stability_metrics.bat` relit le replay
@@ -160,10 +165,10 @@ FeCO conservent les deux représentations admissibles. Leurs contrats de convers
 sont maintenant exécutables sans valeur implicite ni observation d'un comportement
 nommé. Les plus petits sous-ensembles de sources sont désormais verrouillés et le
 contrat source de l'observation calcium passe. La recette de fit tenue à l'écart
-est désormais exécutable et testée sur fixtures synthétiques. Le front suivant
-requiert un jeton Dryad local pour vérifier les trois tables, puis exécute ses sept
-chemins sur des splits par animal. Cette comparaison ne peut pas, seule,
-décider de la représentation native. Le pilote moteur reste opt-in et la
+est désormais exécutée sur les tables biologiques exactes : sept chemins, 86/86
+folds par animal, zéro blocage et zéro valeur promue. Une décision d'acceptation
+distincte devra conserver ou rejeter des chemins sans prétendre que ce seul
+résultat décide de la représentation native. Le pilote moteur reste opt-in et la
 correspondance individuelle des body IDs reste un ensemble.
 
 Le précédent front
@@ -675,7 +680,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; le contrat source moteur couvre 23 cellules et 194 essais sélectionnés, l'inventaire et le fit agrégé pilote sont préenregistrés, et l'ensemble de classes 3^10 reste explicite, mais zéro valeur et zéro jeu complet sont promus**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; les sept chemins FeCO ont terminé 86/86 folds biologiques mais restent un ensemble non promu ; le contrat source moteur couvre 23 cellules et 194 essais sélectionnés, l'inventaire et le fit agrégé pilote sont préenregistrés, et l'ensemble de classes 3^10 reste explicite, mais zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **extracteur descriptif validé sur 7 groupes ; 5 quantités scientifiques restent explicitement indisponibles, zéro seuil choisi et stabilité toujours non calibrée**.
@@ -778,7 +783,8 @@ distinctes : événements→force biologique et force→commande MuJoCo. Les tes
 contrôlent unités, formes, causalité, superposition, symétrie de fixture, seed et
 hashes topologiques. Le dépôt FeCO inspecté ne contient que les scripts d'analyse.
 Le manifeste minimal et la campagne tenue à l'écart sont maintenant préenregistrés ;
-les trois tables sont localement vérifiées et le fit est prêt à être lancé. Les données
+les trois tables sont localement vérifiées et le fit biologique est complet sous
+forme d'ensemble candidat non promu (86/86 folds, zéro bloqué). Les données
 motrices brutes représentent environ 48,76 Go et le pilote de 860 Mo reste
 explicitement opt-in. Son acquisition exacte, l'inventaire ZIP sans extraction et
 les garde-fous de sécurité sont préenregistrés. La correspondance
@@ -887,7 +893,7 @@ actuator_semantics_gate.bat # contrat local des 102 moteurs, probes passives et 
 actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tethered, zéro fitting/comportement
 prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pilote moteur opt-in
 feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
-fit_feco_calcium_observation.bat # 7 chemins FeCO, leave-one-animal-out ; bloqué sans tables exactes
+fit_feco_calcium_observation.bat # 7 chemins FeCO, 86 folds leave-one-animal-out ; ensemble non promu
 inspect_motor_pilot.bat # 3 archives moteur exactes, inventaire ZIP borné sans extraction ; bloqué sans pilote opt-in
 motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit, MAT/noyau temporel encore bloqués
 fit_motor_spike_force_pilot.bat # fit agrégé pilote sans promotion ; bloqué sans archives/parseur MAT versionné

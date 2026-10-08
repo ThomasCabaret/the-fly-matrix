@@ -1,18 +1,19 @@
 schema_version: 1
 id: evaluation.feco_calcium_held_out_fit.v0
-title: Readiness evaluation for the FeCO animal-held-out source-path comparison
-status: input_gate_passed_procedure_ready_biological_fit_not_run
+title: Completed FeCO animal-held-out source-path comparison
+status: completed_candidate_ensemble_unpromoted
 campaign_id: campaign.feco_calcium_held_out_fit.v0
 target_id: target.population_dynamics_assignment.v0
 primary_class: local_interface
 optimization_exposure: allowed
 behavior_targets: []
-acceptance_result: ready_not_run
+acceptance_result: pass_procedure_candidate_ensemble_retained
 
 procedure_readiness:
   source_tables_expected: 3
   source_tables_verified: 3
   source_rows_inspected: 64300
+  source_rows_retained_after_preregistered_filters: 33766
   source_acquisition_result: calibration/runner/front-leg-local-source-data-v0.yaml
   candidate_paths_preregistered: 7
   split: leave_one_animal_out_all_trials_and_rois_nested
@@ -21,20 +22,41 @@ procedure_readiness:
   parameter_values_promoted: 0
   native_representation_selected: false
   synthetic_unit_tests: pass_5
+  biological_folds_expected: 86
+  biological_folds_evaluated: 86
+  biological_folds_blocked: 0
+
+aggregate_residuals:
+  claw_position:
+    claw_published_predictor_center_80_gcamp: {median_rmse: 7.265316145800173, worst_rmse: 11.071304306121322, median_mae: 5.426919747533004, worst_mae: 8.547312231443069}
+    claw_fit_recipe_exact_concatenated: {median_rmse: 7.012563008724537, worst_rmse: 10.20182205726116, median_mae: 5.239382179592811, worst_mae: 7.441846971514226}
+    claw_fit_recipe_boundary_safe: {median_rmse: 7.033700634312938, worst_rmse: 10.209791457239382, median_mae: 5.240307867741671, worst_mae: 7.446844499731891}
+  club_vibration_and_speed:
+    club_fit_recipe_threshold_5_deg_s: {median_rmse: 6.457158133688042, worst_rmse: 11.195487832704494, median_mae: 5.0030473012165135, worst_mae: 8.380636724602027}
+    club_documented_application_threshold_50_deg_s: {median_rmse: 6.330892087200515, worst_rmse: 11.045121902714747, median_mae: 4.992766106794386, worst_mae: 8.245230184571723}
+  hook_flexion_direction:
+    hook_fit_recipe_threshold_minus_5_deg_s: {median_rmse: 4.885798666645495, worst_rmse: 10.149292338855608, median_mae: 2.59595622928581, worst_mae: 5.389159471657816}
+    hook_documented_application_threshold_minus_50_deg_s: {median_rmse: 5.649726828021995, worst_rmse: 10.714933120892937, median_mae: 2.9314424928470526, worst_mae: 5.822324515995392}
 
 scientific_boundary:
   accepted_claims:
     - The procedure can account for rows, groups, source candidates and folds without reading a named behavior.
     - Predictions reset at every animal/trial/ROI boundary and held-out calcium never sets normalization or affine values.
+    - All seven preregistered candidates completed all 86 animal-held-out folds on the exact source tables.
+    - The hook minus-5-degree-per-second source recipe has lower aggregate held-out residuals than the documented minus-50-degree-per-second application path in this observation-space comparison.
   rejected_claims:
     - Synthetic fixtures constitute a biological FeCO fit.
     - Calcium identifies a native spike, membrane-voltage or CNS-runtime representation.
     - A best residual may silently select or promote a source path.
+    - These residuals alone justify a runtime parameter set, an individual MaleCNS body mapping, or a native event-versus-graded assignment.
 
 reproducibility:
   command: fit_feco_calcium_observation.bat
-  blocked_runner_result: calibration/runner/feco-calcium-held-out-fit-v0.yaml
+  runner_result: calibration/runner/feco-calcium-held-out-fit-v0.yaml
+  semantic_result_sha256: 26d448c8483a86c2e32b4ee191c0e0a1d7136cd8249d15fbfe78a266b15b78d0
   tests: .venv/Scripts/python.exe -m pytest tests/test_feco_calcium_fit.py
 next_action: >-
-  Execute all seven candidate paths and review the complete fold ensemble in a new
-  immutable evaluation before any parameter-set promotion.
+  Keep all seven paths unpromoted. Version a distinct acceptance decision before
+  rejecting any source path or constructing a reusable FeCO parameter set; that
+  decision must account for unequal candidate capacity, the claw concatenation
+  artifact and the fact that calcium does not identify native neural units.

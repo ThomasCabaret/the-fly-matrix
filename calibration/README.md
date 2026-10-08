@@ -275,16 +275,17 @@ activity: calcium remains a separate observation proxy. The accepted result is
 
 Run `fit_feco_calcium_observation.bat` after acquiring the three exact FeCO
 Parquet tables. The campaign compares seven explicit claw/hook/club source and
-boundary paths
-paths with leave-one-animal-out folds. Every trial/ROI on fixed predictor paths is
+boundary paths with leave-one-animal-out folds. Every trial/ROI on fixed predictor paths is
 convolved separately; those paths fit an affine scale/offset, while the public
 claw fit recipes estimate five polynomial coefficients through the pinned padded
 GCaMP convolution. The exact public concatenation and a boundary-safe per-trial
 port are both reported. Every fit uses training animals only, and held-out calcium is not
-used for normalization. The command currently returns a versioned blocked
-result because the authenticated tables are absent. Its synthetic tests validate
-accounting and leakage barriers only: they are not biological data and promote
-no source path, runtime unit or native event/graded representation.
+used for normalization. The exact tables now complete all 86 biological folds
+across the seven candidates with zero blocked folds. The resulting observation-space
+ensemble remains unpromoted: it selects no source path, runtime unit or native
+event/graded representation. Its synthetic tests validate accounting and leakage
+barriers only; the biological residual summary lives in
+`evaluations/feco-calcium-held-out-fit-v0.yaml`.
 
 Do not bulk-download the 48.76 GB motor repository or infer defaults from article
 prose. The ten selected MaleCNS tibia-flexor motor body IDs still lack a
