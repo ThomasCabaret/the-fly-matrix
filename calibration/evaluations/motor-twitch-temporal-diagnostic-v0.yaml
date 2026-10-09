@@ -1,0 +1,56 @@
+schema_version: 1
+id: evaluation.motor_twitch_temporal_diagnostic.v0
+title: Evaluation of the one-cell motor twitch temporal diagnostic
+status: completed_diagnostic_fast_supported_intermediate_weak_slow_unidentified
+campaign_id: campaign.motor_twitch_temporal_diagnostic.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_diagnostic_mechanics_no_biological_parameter_acceptance
+procedure_result:
+  exact_archives_verified: 3
+  declared_trials_accounted: 194
+  selected_single_spike_trials: 33
+  fitted_classes: 2
+  unfitted_classes: 1
+  candidate_kernels_per_fitted_class: 902
+  fast_81A07:
+    selected_trials: 18
+    held_out_energy_fraction_explained: 0.784395442936864
+    best_peak_time_s: 0.012537559292045843
+    near_optimal_peak_time_s: [0.01078251814796819, 0.014211803624295265]
+    interpretation: strong_within_selected_cell_shape_support_not_population_validation
+  intermediate_22A08:
+    selected_trials: 15
+    held_out_energy_fraction_explained: 0.2766694777003842
+    best_peak_time_s: 0.00996082764718145
+    near_optimal_peak_time_s: [0.0032319237583136127, 0.013485720480902658]
+    interpretation: weak_broad_within_selected_cell_envelope_not_adequate_for_promotion
+  slow_35C09:
+    selected_trials: 0
+    interpretation: not_fit_no_isolated_single_spike_trials
+scientific_boundary:
+  parameter_values_promoted: 0
+  body_class_assignments_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+  accepted_claims:
+    - Fast and intermediate raw traces can exercise the exact runtime kernel family with trial-held-out accounting.
+    - The fast selected cell supports a comparatively narrow within-cell candidate envelope.
+    - Intermediate support is weak and broad, while slow remains unidentified by this isolated-twitch design.
+  rejected_claims:
+    - These fits identify class-population kernels or individual MaleCNS body parameters.
+    - The all-data best candidate is a promoted runtime default.
+    - Normalized-shape validation predicts absolute force without separate amplitude evidence.
+reproducibility:
+  command: fit_motor_twitch_temporal_pilot.bat
+  runner_result: calibration/runner/motor-twitch-temporal-diagnostic-v0.yaml
+  artifact: data/derived/calibration/motor-twitch-temporal-diagnostic-v0/summary.json
+  tests: .venv/Scripts/python.exe -m pytest tests/test_motor_twitch_temporal_fit.py
+  semantic_result_sha256: 88c3e86d5beadfe7ef2d20b11cc9a77506f170850f2662922cc6368fe03eeda6
+next_action: >-
+  Preserve the fast envelope as diagnostic evidence, the intermediate envelope as
+  weak and broad, and the slow kernel as unresolved. Obtain broader class evidence
+  before promotion; meanwhile propagate only a visibly diagnostic engineering
+  ensemble into the separately calibrated force-to-MuJoCo bridge.

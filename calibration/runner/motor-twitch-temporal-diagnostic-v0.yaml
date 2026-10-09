@@ -1,0 +1,249 @@
+schema_version: 1
+id: runner_result.motor_twitch_temporal_diagnostic.v0
+campaign_id: campaign.motor_twitch_temporal_diagnostic.v0
+target_id: target.population_dynamics_assignment.v0
+status: completed_diagnostic_fast_intermediate_slow_unidentified_zero_promoted
+claim_label: MOTOR TWITCH TEMPORAL DIAGNOSTIC / ONE CELL PER CLASS / NO SLOW FIT /
+  NO PROMOTION
+command: fit_motor_twitch_temporal_pilot.bat
+campaign_sha256: a601bdf8f6706204717dcc36239ed96925473d33a57bd957a37887ed1232d6d0
+semantic_result_sha256: 88c3e86d5beadfe7ef2d20b11cc9a77506f170850f2662922cc6368fe03eeda6
+artifact_ref: data/derived/calibration/motor-twitch-temporal-diagnostic-v0/summary.json
+accounting:
+  fitted_classes: 2
+  unfitted_classes: 1
+  selected_single_spike_trials: 33
+  promoted_parameter_values: 0
+  selected_body_class_assignments: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+class_results:
+  fast_81A07:
+    selected_trial_count: 18
+    selected_trial_ids:
+    - 47
+    - 50
+    - 53
+    - 57
+    - 65
+    - 68
+    - 71
+    - 74
+    - 80
+    - 83
+    - 86
+    - 106
+    - 108
+    - 110
+    - 112
+    - 114
+    - 116
+    - 118
+    fold_count: 5
+    candidate_count: 902
+    held_out_rmse_peak_normalized: 0.12825690483136862
+    held_out_energy_fraction_explained: 0.784395442936864
+    fold_results:
+    - fold: 0
+      held_out_trials:
+      - 47
+      - 68
+      - 86
+      - 114
+      rise_time_s: 0.011124851489195014
+      decay_time_s: 0.012750273066235076
+      peak_time_s: 0.011900641712779976
+      held_out_rmse_peak_normalized: 0.15363130307717793
+      held_out_energy_fraction_explained: 0.7177130841125121
+    - fold: 1
+      held_out_trials:
+      - 50
+      - 71
+      - 106
+      - 116
+      rise_time_s: 0.011124851489195014
+      decay_time_s: 0.014199935664406796
+      peak_time_s: 0.012537559292045843
+      held_out_rmse_peak_normalized: 0.11627248174658267
+      held_out_energy_fraction_explained: 0.8186157284255992
+    - fold: 2
+      held_out_trials:
+      - 53
+      - 74
+      - 108
+      - 118
+      rise_time_s: 0.011124851489195014
+      decay_time_s: 0.014199935664406796
+      peak_time_s: 0.012537559292045843
+      held_out_rmse_peak_normalized: 0.11069292613923362
+      held_out_energy_fraction_explained: 0.8258859348726793
+    - fold: 3
+      held_out_trials:
+      - 57
+      - 80
+      - 110
+      rise_time_s: 0.011124851489195014
+      decay_time_s: 0.014199935664406796
+      peak_time_s: 0.012537559292045843
+      held_out_rmse_peak_normalized: 0.1403312647875264
+      held_out_energy_fraction_explained: 0.7610297909043776
+    - fold: 4
+      held_out_trials:
+      - 65
+      - 83
+      - 112
+      rise_time_s: 0.011124851489195014
+      decay_time_s: 0.014199935664406796
+      peak_time_s: 0.012537559292045843
+      held_out_rmse_peak_normalized: 0.11531705410449156
+      held_out_energy_fraction_explained: 0.8122835046091992
+    all_data_best_candidate:
+      rise_time_s: 0.011124851489195014
+      decay_time_s: 0.014199935664406796
+      peak_time_s: 0.012537559292045843
+      rmse_peak_normalized: 0.1277168737852434
+    near_optimal_envelope:
+      relative_rmse_tolerance: 0.05
+      candidate_count: 19
+      rise_time_s:
+      - 0.007272003265815303
+      - 0.01281861019188702
+      decay_time_s:
+      - 0.011448605620872783
+      - 0.021845095110379967
+      peak_time_s:
+      - 0.01078251814796819
+      - 0.014211803624295265
+    observed_single_spike_summary:
+      peak_force_uN_median: 8.878451372251948
+      peak_force_uN_iqr:
+      - 8.702916168135218
+      - 9.217729272266332
+      time_to_peak_s_median: 0.016449999999999965
+      time_to_peak_s_iqr:
+      - 0.014774999999999927
+      - 0.017249999999999988
+  intermediate_22A08:
+    selected_trial_count: 15
+    selected_trial_ids:
+    - 98
+    - 99
+    - 101
+    - 104
+    - 108
+    - 110
+    - 111
+    - 114
+    - 116
+    - 119
+    - 120
+    - 122
+    - 123
+    - 125
+    - 126
+    fold_count: 5
+    candidate_count: 902
+    held_out_rmse_peak_normalized: 0.27454252841869725
+    held_out_energy_fraction_explained: 0.2766694777003842
+    fold_results:
+    - fold: 0
+      held_out_trials:
+      - 98
+      - 110
+      - 120
+      rise_time_s: 0.009654893846056294
+      decay_time_s: 0.010279824595237684
+      peak_time_s: 0.00996082764718145
+      held_out_rmse_peak_normalized: 0.2158237408941822
+      held_out_energy_fraction_explained: 0.3480474932765638
+    - fold: 1
+      held_out_trials:
+      - 99
+      - 111
+      - 122
+      rise_time_s: 0.008379165804519058
+      decay_time_s: 0.010279824595237684
+      peak_time_s: 0.0092648251401148
+      held_out_rmse_peak_normalized: 0.24827187998975753
+      held_out_energy_fraction_explained: 0.3434677708244551
+    - fold: 2
+      held_out_trials:
+      - 101
+      - 114
+      - 123
+      rise_time_s: 0.008379165804519058
+      decay_time_s: 0.009230363697408725
+      peak_time_s: 0.008791043453666101
+      held_out_rmse_peak_normalized: 0.30076395539622064
+      held_out_energy_fraction_explained: 0.36830750207814567
+    - fold: 3
+      held_out_trials:
+      - 104
+      - 116
+      - 125
+      rise_time_s: 0.009654893846056294
+      decay_time_s: 0.010279824595237684
+      peak_time_s: 0.00996082764718145
+      held_out_rmse_peak_normalized: 0.34484383058582857
+      held_out_energy_fraction_explained: 0.146766098940189
+    - fold: 4
+      held_out_trials:
+      - 108
+      - 119
+      - 126
+      rise_time_s: 0.009654893846056294
+      decay_time_s: 0.010279824595237684
+      peak_time_s: 0.00996082764718145
+      held_out_rmse_peak_normalized: 0.2440863780441286
+      held_out_energy_fraction_explained: 0.18718691426729428
+    all_data_best_candidate:
+      rise_time_s: 0.009654893846056294
+      decay_time_s: 0.010279824595237684
+      peak_time_s: 0.00996082764718145
+      rmse_peak_normalized: 0.27302882594926353
+    near_optimal_envelope:
+      relative_rmse_tolerance: 0.05
+      candidate_count: 139
+      rise_time_s:
+      - 0.001
+      - 0.01281861019188702
+      decay_time_s:
+      - 0.006682179553633573
+      - 0.027094910543926574
+      peak_time_s:
+      - 0.0032319237583136127
+      - 0.013485720480902658
+    observed_single_spike_summary:
+      peak_force_uN_median: 0.8597945869578362
+      peak_force_uN_iqr:
+      - 0.657755706625933
+      - 0.8930669854015861
+      time_to_peak_s_median: 0.013099999999999973
+      time_to_peak_s_iqr:
+      - 0.011799999999999991
+      - 0.014549999999999993
+  slow_35C09:
+    status: not_fit_no_isolated_single_spike_trials
+    selected_trial_count: 0
+    reason: The selected slow archive has no isolated single-spike trials. Its sustained,
+      spontaneously active current-step records do not identify the same isolated
+      twitch shape without additional baseline-history and summation assumptions.
+accepted_claims:
+- Exact raw archives can be converted into exhaustively accounted single-spike temporal
+  traces under recovered source rules.
+- Five-fold trial-held-out diagnostics can measure within-cell adequacy of the executable
+  bi-exponential kernel family for fast and intermediate pilot cells.
+- The absence of isolated slow-cell spikes is a measured identifiability limitation,
+  not a zero or a fitted default.
+forbidden_claims:
+- The v0 design is prospectively locked or independent of exploratory trace inspection.
+- One selected cell identifies a motor-unit-class population kernel.
+- A best grid member is a promoted runtime parameter or a unique biological solution.
+- Slow dynamics are equal to fast or intermediate dynamics.
+- The ten MaleCNS body IDs are assigned to experimental driver classes.
+- A movement or named behavior was trained, inspected or reproduced.
+next_action: Retain the fast and intermediate results as within-cell diagnostic envelopes
+  and the slow kernel as unresolved. Use broader class evidence before promotion.
+  A bounded end-to-end engineering ensemble may propagate these candidates only with
+  their diagnostic provenance while the separate force-to-MuJoCo surrogate bridge
+  is calibrated under frozen body mechanics.

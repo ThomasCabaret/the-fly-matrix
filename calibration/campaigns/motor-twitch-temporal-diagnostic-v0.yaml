@@ -1,0 +1,83 @@
+schema_version: 1
+id: campaign.motor_twitch_temporal_diagnostic.v0
+title: One-cell motor twitch temporal-shape diagnostic
+status: completed_diagnostic_only_no_promotion
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+claim_label: MOTOR TWITCH TEMPORAL DIAGNOSTIC / ONE CELL PER CLASS / NO SLOW FIT / NO PROMOTION
+behavior_targets: []
+topology_changes_allowed: false
+
+design_provenance:
+  preregistered_before_any_raw_trace_inspection: false
+  note: >-
+    Raw trace counts and exploratory candidate fits were inspected while designing
+    this first executable diagnostic. Cross-validation remains useful for measuring
+    within-cell predictive adequacy, but this v0 cannot be called a prospectively
+    locked biological validation or used for parameter promotion.
+
+inputs:
+  parser_contract: calibration/evidence/motor-spike-force-parser-v0.yaml
+  recovered_source_script:
+    repository: https://github.com/tony-azevedo/FlyAnalysis
+    commit: ebe1e5008fc5f76954cea3973aa30b103ec3fa9a
+    path: Records/Records_SlowInterFastScripts/Dataset3_ForcePerSpike/Script_tableOfForcePerSpike.m
+    supports: single-spike alignment, last-pre-spike baseline, 0-to-0.3-second peak window, neutral-position and fast-small-peak rules
+  source_archives:
+    - {functional_class: fast_81A07, path: data/raw/calibration/front-leg-local-v0/motor/171102_F2_C1.zip, expected_bytes: 369295693, sha256: 5acd9b7d93f594912ba54a515f645dd5a9d4c1e8ee8e2cb6b3bd5bd998e84686}
+    - {functional_class: intermediate_22A08, path: data/raw/calibration/front-leg-local-v0/motor/180222_F1_C1.zip, expected_bytes: 199758273, sha256: c904f419a52f7993f4146e578a760168178b0dc9ea61c19e9708f2adc99a6e33}
+    - {functional_class: slow_35C09, path: data/raw/calibration/front-leg-local-v0/motor/180111_F2_C1.zip, expected_bytes: 291303979, sha256: 59efa2e5a071d561e4b47691c0753924ee26f041a9ceec2becd1d722572ddc8c}
+
+trace_selection:
+  required_spike_count: 1
+  probe_position: 0
+  fit_window_s: [0.0, 0.3]
+  baseline: last_force_frame_before_spike_reject_trial_if_nonfinite
+  fast_minimum_peak_source_unit: 10
+  spring_constant_N_per_m: 0.2234
+  shape_normalization: divide_each_selected_trace_by_its_own_positive_peak
+  rationale: isolate temporal shape from the separately fitted aggregate force scale
+
+fit:
+  model: causal_peak_normalized_biexponential
+  fitted_classes: [fast_81A07, intermediate_22A08]
+  unfitted_class: slow_35C09
+  unfitted_class_reason: >-
+    The selected slow archive has no isolated single-spike trials. Its sustained,
+    spontaneously active current-step records do not identify the same isolated
+    twitch shape without additional baseline-history and summation assumptions.
+  candidate_grid:
+    rise_time_s: {scale: logarithmic, minimum: 0.001, maximum: 0.03, count: 25}
+    decay_time_s: {scale: logarithmic, minimum: 0.006, maximum: 0.4, count: 40}
+    constraint: decay_time_s_strictly_greater_than_rise_time_s
+  fold_count: 5
+  split: sorted_trial_numbers_round_robin
+  objective: sum_squared_error_on_peak_normalized_force_trace
+  fold_policy: select_shape_on_four_folds_report_only_on_held_out_fold
+  near_optimal_relative_rmse: 0.05
+
+selection_policy:
+  promote_values: false
+  choose_body_class_assignment: false
+  choose_slow_kernel: false
+  choose_population_distribution: false
+
+accepted_claims:
+  - Exact raw archives can be converted into exhaustively accounted single-spike temporal traces under recovered source rules.
+  - Five-fold trial-held-out diagnostics can measure within-cell adequacy of the executable bi-exponential kernel family for fast and intermediate pilot cells.
+  - The absence of isolated slow-cell spikes is a measured identifiability limitation, not a zero or a fitted default.
+forbidden_claims:
+  - The v0 design is prospectively locked or independent of exploratory trace inspection.
+  - One selected cell identifies a motor-unit-class population kernel.
+  - A best grid member is a promoted runtime parameter or a unique biological solution.
+  - Slow dynamics are equal to fast or intermediate dynamics.
+  - The ten MaleCNS body IDs are assigned to experimental driver classes.
+  - A movement or named behavior was trained, inspected or reproduced.
+next_action: >-
+  Retain the fast and intermediate results as within-cell diagnostic envelopes and
+  the slow kernel as unresolved. Use broader class evidence before promotion. A
+  bounded end-to-end engineering ensemble may propagate these candidates only with
+  their diagnostic provenance while the separate force-to-MuJoCo surrogate bridge
+  is calibrated under frozen body mechanics.

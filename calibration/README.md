@@ -268,6 +268,17 @@ cell, not raw trials, class or body uncertainty. All three fits are complete and
 preserve the expected class ordering, but promote zero values and identify neither
 a temporal twitch kernel nor the ten-body class crosswalk.
 
+Run `fit_motor_twitch_temporal_pilot.bat` for the separate raw-trace shape
+diagnostic. It applies the recovered single-spike alignment and source filters,
+then compares the executable peak-normalized bi-exponential family with five
+trial-held-out folds. The current pilot retains 18 fast and 15 intermediate
+neutral-position single-spike traces. The fast selected cell supports a relatively
+narrow shape envelope, the intermediate result is weak and broad, and the slow
+archive has no isolated single-spike trial. The design was informed by exploratory
+inspection and each held-out trace is normalized by its own measured peak, so this
+is shape adequacy within two cells—not absolute-force prediction, population
+calibration or a promoted runtime kernel.
+
 Run `feco_observation_contract.bat` without any Dryad token to reproduce the pinned
 public activation/GCaMP source paths. It detects rather than reconciles the source's
 80/90-degree claw centering and 5/50-degree-per-second hook/club threshold

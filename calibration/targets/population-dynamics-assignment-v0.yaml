@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_feco_and_motor_pilots_complete_unpromoted_values_and_class_unresolved
+status: active_front_leg_conversion_contracts_executable_feco_and_motor_temporal_diagnostics_complete_unpromoted_values_and_class_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,7 +64,7 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_46_of_46_accounted_conversion_boundaries_executable_feco_86_of_86_folds_motor_194_trials_and_three_fits_complete_zero_values
+validation: partial_pass_46_of_46_accounted_conversion_boundaries_executable_feco_86_of_86_folds_motor_194_trials_three_amplitude_fits_and_33_single_spike_temporal_traces_complete_zero_values
 blocked_reason: null
 next_action: >-
   Preserve the executable boundaries and frozen topology. The preregistered
@@ -73,7 +73,12 @@ next_action: >-
   for capacity and boundary differences. The exact 860 MB motor pilot is acquired,
   inventoried and normalized through a port of recovered historical source. Its
   three aggregate fits preserve the expected class ordering but remain one-cell
-  diagnostics with zero promoted values and no temporal twitch kernel.
+  diagnostics with zero promoted values. A separate temporal-shape diagnostic
+  accounts for all trials, selects 18 fast and 15 intermediate neutral-position
+  single-spike traces, and reports trial-held-out fit adequacy. The fast envelope
+  is comparatively narrow, the intermediate envelope is weak and broad, and the
+  slow cell has no isolated single-spike trial; therefore no class-population
+  kernel is promoted.
   Propagate the factorized 59,049-assignment upper bound until an independent
   source constrains the ten-body crosswalk. Next obtain broader class evidence or
   a separately justified temporal-kernel dataset before promoting motor dynamics.

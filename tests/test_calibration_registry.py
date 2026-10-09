@@ -463,6 +463,38 @@ class CalibrationRegistryTests(unittest.TestCase):
             evaluation["reproducibility"]["semantic_result_sha256"],
         )
 
+    def test_motor_twitch_temporal_diagnostic_preserves_identifiability_limits(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "motor-twitch-temporal-diagnostic-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "motor-twitch-temporal-diagnostic-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "motor-twitch-temporal-diagnostic-v0.yaml"
+        )
+
+        self.assertFalse(
+            campaign["design_provenance"]["preregistered_before_any_raw_trace_inspection"]
+        )
+        self.assertFalse(campaign["selection_policy"]["promote_values"])
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(runner["accounting"]["selected_single_spike_trials"], 33)
+        self.assertEqual(runner["accounting"]["promoted_parameter_values"], 0)
+        self.assertEqual(
+            runner["class_results"]["slow_35C09"]["status"],
+            "not_fit_no_isolated_single_spike_trials",
+        )
+        self.assertGreater(
+            runner["class_results"]["fast_81A07"]["held_out_energy_fraction_explained"],
+            runner["class_results"]["intermediate_22A08"]["held_out_energy_fraction_explained"],
+        )
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
     def test_model_risk_references_and_decisions_are_resolved(self) -> None:
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)

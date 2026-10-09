@@ -47,4 +47,8 @@ propagation_contract:
   - A class-level fit produces three candidate kernel families, not ten body assignments.
   - Downstream local tests must retain class uncertainty or justify a separately sourced reduction.
   - Body trajectory, posture or named behavior may not select a class assignment.
-next_action: Inspect one exact archive per class, then fit class-level candidates without collapsing this ensemble.
+next_action: >-
+  Preserve the completed aggregate and temporal pilot diagnostics without
+  collapsing this ensemble. The fast cell has a narrow within-cell temporal
+  envelope, intermediate is weak and broad, and slow remains unidentified; obtain
+  broader evidence before promoting class values or selecting body assignments.

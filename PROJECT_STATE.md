@@ -46,6 +46,19 @@ ni distribution de population ni correspondance aux dix body IDs. Le bootstrap
 porte sur les lignes agrégées, pas sur les essais bruts ; celui de l'intermédiaire
 est dégénéré. Zéro pente est promue et aucune dynamique temporelle n'est prétendue.
 
+Une campagne temporelle distincte exploite maintenant les traces brutes sans
+confondre forme et amplitude. Elle comptabilise les 194 essais, puis retient 18
+réponses mono-spike rapides et 15 intermédiaires à position neutre. Une forme
+bi-exponentielle causale, identique à la famille exécutable du runtime, explique
+0,7844 de l'énergie normalisée tenue à l'écart pour la cellule rapide mais
+seulement 0,2767 pour l'intermédiaire. L'enveloppe rapide est relativement étroite ;
+l'intermédiaire reste faible et large. La cellule lente ne contient aucun essai
+mono-spike isolé et n'est donc pas ajustée par ce protocole. Comme le design a été
+informé par une inspection exploratoire, que chaque trace est normalisée par son
+propre pic et qu'il n'y a qu'une cellule par classe, ce résultat reste un
+diagnostic de forme intra-cellule : zéro noyau populationnel, valeur runtime ou
+affectation de body ID est promu.
+
 Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
 précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
 GCaMP causal normalisé, mais révèle deux divergences conservées comme telles :
@@ -174,7 +187,9 @@ est désormais exécutée sur les tables biologiques exactes : sept chemins, 86/
 folds par animal, zéro blocage et zéro valeur promue. Une décision d'acceptation
 distincte devra conserver ou rejeter des chemins sans prétendre que ce seul
 résultat décide de la représentation native. Le pilote moteur reste opt-in et la
-correspondance individuelle des body IDs reste un ensemble.
+correspondance individuelle des body IDs reste un ensemble. Son diagnostic
+temporel est lui aussi terminé : rapide soutenu dans cette cellule, intermédiaire
+faiblement contraint et lent non identifié, sans promotion.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
@@ -685,7 +700,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; les sept chemins FeCO ont terminé 86/86 folds biologiques et le pilote moteur a normalisé 194 essais puis terminé trois fits agrégés, mais ces deux ensembles restent non promus ; l'ensemble de classes moteur 3^10 reste explicite, zéro valeur et zéro jeu complet sont promus**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; les sept chemins FeCO ont terminé 86/86 folds biologiques ; le pilote moteur a normalisé 194 essais, terminé trois fits agrégés et un diagnostic temporel sur 33 traces mono-spike, mais tous restent non promus ; l'ensemble de classes moteur 3^10 reste explicite, zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **extracteur descriptif validé sur 7 groupes ; 5 quantités scientifiques restent explicitement indisponibles, zéro seuil choisi et stabilité toujours non calibrée**.
@@ -904,6 +919,7 @@ inspect_motor_pilot.bat # 3 archives exactes vérifiées, 1 022 membres inventor
 motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit et aucun noyau temporel
 parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git
 fit_motor_spike_force_pilot.bat # 3 fits agrégés diagnostiques terminés, aucune valeur promue
+fit_motor_twitch_temporal_pilot.bat # 33 traces mono-spike, rapide soutenu, intermédiaire faible, lent non identifié
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

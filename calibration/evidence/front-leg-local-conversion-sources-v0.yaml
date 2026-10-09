@@ -1,7 +1,7 @@
 schema_version: 1
 id: evidence.front_leg_local_conversion_sources.v0
 title: Source locks and unresolved mappings for the first front-leg conversions
-status: source_contracts_complete_feco_fit_complete_motor_parser_and_aggregate_diagnostic_complete_crosswalk_open
+status: source_contracts_complete_feco_fit_complete_motor_aggregate_and_temporal_diagnostics_complete_crosswalk_open
 updated: 2026-10-09
 
 scope:
@@ -103,6 +103,16 @@ motor_source:
     status: completed_three_class_ordering_consistent_zero_values_promoted
     slopes_uN_per_spike: {fast_81A07: 4.775318855516674, intermediate_22A08: 0.8268137341676737, slow_35C09: 0.022837494464033468}
     limitation: one cell per class, aggregate rows, no temporal kernel and no population uncertainty
+  temporal_shape_diagnostic:
+    ref: calibration/evaluations/motor-twitch-temporal-diagnostic-v0.yaml
+    status: completed_fast_within_cell_supported_intermediate_weak_slow_unidentified_zero_values_promoted
+    selected_single_spike_trials: {fast_81A07: 18, intermediate_22A08: 15, slow_35C09: 0}
+    held_out_energy_fraction_explained: {fast_81A07: 0.784395442936864, intermediate_22A08: 0.2766694777003842}
+    limitation: >-
+      The design was informed by exploratory raw-trace inspection and normalizes
+      each trace by its own peak, so it measures within-cell shape adequacy only.
+      One cell cannot identify a class-population kernel; the slow class has no
+      isolated single-spike trial and remains unresolved.
   male_cns_mapping:
     selected_bodies: 10
     annotation_type: Ti_flexor_MN
@@ -123,7 +133,7 @@ forbidden_claims:
   - Approximate article values are calibrated defaults.
   - MaleCNS body IDs are individually mapped to the experimental driver lines.
 next_action: >-
-  Retain the completed FeCO and motor pilot outputs as unpromoted local evidence.
-  Obtain broader motor-class evidence before accepting values, keep the unresolved
-  body-to-class ensemble, and gate any temporal kernel and direct-MuJoCo force bridge
-  in separate campaigns.
+  Retain the completed FeCO, aggregate motor and temporal-shape pilot outputs as
+  unpromoted local evidence. Obtain broader motor-class evidence before accepting
+  values, keep the unresolved body-to-class ensemble, and calibrate the separate
+  direct-MuJoCo force bridge under frozen mechanics.
