@@ -1,0 +1,22 @@
+schema_version: 1
+id: runner_result.motor_spike_force_parser.v0
+generated_at: '2026-10-09T10:53:03.583095+00:00'
+parser_id: parser.motor_spike_force.source_port.v0
+status: completed_source_transform_port_zero_values_promoted
+semantic_result_sha256: 4eca24903e9bc60fdacc2f83aba0465dc4c77868b5a13fe8f5bd86bde7d03a56
+accounting:
+  archives_verified: 3
+  classes_normalized: 3
+  declared_trials: 194
+  excluded_trials: 11
+  normalized_rows: 22
+  parameter_values_promoted: 0
+  body_class_assignments_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+manifest_ref: data/derived/calibration/motor-spike-force-normalized-v0/manifest.yaml
+interpretation:
+  aggregate_source_tables_reconstructible: true
+  twitch_kernel_identified: false
+  population_parameters_identified: false
+  next_action: run_unpromoted_aggregate_fit_and_compare_ordering_to_article_constraints

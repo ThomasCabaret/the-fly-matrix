@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_feco_held_out_ensemble_complete_unpromoted_motor_large_pilot_deferred_values_and_class_unresolved
+status: active_front_leg_conversion_contracts_executable_feco_and_motor_pilots_complete_unpromoted_values_and_class_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,17 +64,16 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_46_of_46_accounted_conversion_boundaries_executable_feco_86_of_86_folds_complete_motor_source_contract_ready_zero_values
+validation: partial_pass_46_of_46_accounted_conversion_boundaries_executable_feco_86_of_86_folds_motor_194_trials_and_three_fits_complete_zero_values
 blocked_reason: null
 next_action: >-
   Preserve the executable boundaries and frozen topology. The preregistered
   seven-path leave-one-animal-out FeCO comparison completed 86 of 86 folds with
   zero promotion; retain its ensemble until a separate acceptance decision accounts
-  for capacity and boundary differences. Then explicitly acquire the 860 MB motor pilot, run
-  its safe archive inventory and version the observed variable schema before fitting;
-  the five-file source contract already fixes the 23-cell cohort, 194 selected trials,
-  aggregate filters and force-probe units, but not the raw MAT schema or twitch kernel.
-  The subsequent aggregate fit procedure is already preregistered and tested; it
-  explicitly treats the one-cell-per-class result as diagnostic and unpromoted.
+  for capacity and boundary differences. The exact 860 MB motor pilot is acquired,
+  inventoried and normalized through a port of recovered historical source. Its
+  three aggregate fits preserve the expected class ordering but remain one-cell
+  diagnostics with zero promoted values and no temporal twitch kernel.
   Propagate the factorized 59,049-assignment upper bound until an independent
-  source constrains the ten-body crosswalk.
+  source constrains the ten-body crosswalk. Next obtain broader class evidence or
+  a separately justified temporal-kernel dataset before promoting motor dynamics.

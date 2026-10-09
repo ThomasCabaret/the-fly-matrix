@@ -71,7 +71,10 @@ class MotorSpikeForceFitTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertEqual(first["fit_status"], "source_reproduction_line_through_origin")
         self.assertEqual(first["promoted_parameter_values"], 0)
-        self.assertIn("not_population_uncertainty", first["trial_bootstrap"]["interpretation"])
+        self.assertIn(
+            "not_trial_or_population_uncertainty",
+            first["aggregate_row_bootstrap"]["interpretation"],
+        )
 
     def test_schema_and_one_cell_boundary_fail_loudly(self) -> None:
         campaign = load_campaign()

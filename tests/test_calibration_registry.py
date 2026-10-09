@@ -396,9 +396,10 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(ensemble["factorized_assignment_upper_bound"], 59_049)
         self.assertEqual(ensemble["selected_joint_assignments"], 0)
         self.assertTrue(all(item["selected_class"] is None for item in ensemble["members"]))
-        self.assertEqual(evaluation["acceptance_result"], "blocked_missing_authenticated_archives")
-        self.assertEqual(runner["status"], "blocked_missing_authenticated_archives")
-        self.assertEqual(len(runner["accounting"]["archives_blocked"]), 3)
+        self.assertEqual(evaluation["acceptance_result"], "pass_inventory_only")
+        self.assertEqual(runner["status"], "completed_schema_inventory_fit_not_started")
+        self.assertEqual(runner["accounting"]["archives_verified"], 3)
+        self.assertEqual(len(runner["accounting"]["archives_blocked"]), 0)
         self.assertEqual(runner["accounting"]["body_class_assignments_selected"], 0)
         self.assertEqual(runner["accounting"]["parameter_values_promoted"], 0)
 
@@ -453,7 +454,9 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertEqual(evaluation["procedure_readiness"]["fitted_parameters_if_run"], 3)
         self.assertEqual(evaluation["procedure_readiness"]["parameter_values_promoted"], 0)
-        self.assertEqual(runner["status"], "blocked_missing_versioned_parser_manifest")
+        self.assertEqual(
+            runner["status"], "completed_diagnostic_one_cell_per_class_unpromoted"
+        )
         self.assertFalse(runner["interpretation"]["twitch_kernel_identified"])
         self.assertEqual(
             runner["semantic_result_sha256"],

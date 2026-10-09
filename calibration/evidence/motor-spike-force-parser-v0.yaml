@@ -1,0 +1,92 @@
+schema_version: 1
+id: parser.motor_spike_force.source_port.v0
+title: Source-faithful raw MAT to aggregate spike-force table port
+status: executable_unpromoted
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+behavior_targets: []
+topology_changes_allowed: false
+
+provenance:
+  analysis_repository: https://github.com/tony-azevedo/FlyAnalysis
+  historical_commit: ebe1e5008fc5f76954cea3973aa30b103ec3fa9a
+  historical_source_files:
+    - Records/Records_SlowInterFastScripts/Dataset3_ForcePerSpike/Script_tableOfForcePerSpike.m
+    - Records/Records_SlowInterFastScripts/Dataset3_ForcePerSpike/Script_tableOfForcePerNSpikes.m
+  removal_commit: 0add85361a7d9487059062ecf976ca7b7acfb822
+  dependency_repositories:
+    - {url: https://github.com/tony-azevedo/FlyAnalysis, commit: c68159f1f7a4ecc957c708ae8411fd2550482f63, roles: [postHocExposure, data_table_helpers]}
+    - {url: https://github.com/tony-azevedo/FlySound, commit: d9f18ffa3b2a13c7c8434450191e08be436d6d08, roles: [makeInTime, makeFrameTime]}
+  matlab_smooth_semantics: https://www.mathworks.com/help/curvefit/smooth.html
+  discovery_note: >-
+    The two table-construction scripts are absent at repository HEAD but remain
+    recoverable from the full public Git history. The port was written only after
+    recovering those sources; no peak window or firing-rate rule was inferred.
+
+class_specs:
+  fast_81A07:
+    functional_class: fast_81A07
+    cell_id: 171102_F2_C1
+    protocol: EpiFlash2T
+    trial_first: 47
+    trial_last: 173
+    trial_count: 127
+    positions: [-200, -100, 0, 100, 200]
+    source_table: T_FperSpike_0
+  intermediate_22A08:
+    functional_class: intermediate_22A08
+    cell_id: 180222_F1_C1
+    protocol: CurrentStep2T
+    trial_first: 98
+    trial_last: 126
+    trial_count: 29
+    positions: [0]
+    source_table: T_FperSpike_0
+  slow_35C09:
+    functional_class: slow_35C09
+    cell_id: 180111_F2_C1
+    protocol: CurrentStep2T
+    trial_first: 5
+    trial_last: 42
+    trial_count: 38
+    positions: [0]
+    source_table: T_FvsFiringRate_0
+
+ported_semantics:
+  matlab_indices_are_one_based: true
+  excluded_trials_are_removed: true
+  camera_time: falling_exposure_edges_with_single_missing_edge_repair
+  fast_intermediate:
+    alignment: first_neural_spike_or_stimulus_end_for_zero_spike_trials
+    peak_window_s: [0.0, 0.3]
+    zero_spike_mean_window_s: [0.0, 0.07]
+    fast_small_peak_rejection_source_pixels: 10
+    aggregation: mean_and_sample_sem_by_probe_position_and_spike_count
+  slow:
+    grouping: injected_current_step
+    probe_baseline_window_s: [-0.2, 0.0]
+    peak_window: stimulus_half_open_0_to_stimulus_duration
+    firing_rate_window_s: 0.03333333333333333
+    positive_step_rate: mean_upper_half_of_smoothed_stimulus_rate
+    negative_step_rate: mean_stimulus_rate
+    smoothing: MATLAB_smooth_moving_for_finite_vectors_LOWESS_when_NaNs_are_present
+  normalized_contract_note: >-
+    The legacy normalized column step_index carries the source injected-current
+    Step value, not an ordinal row index. It is retained for compatibility with
+    the preregistered fit and documented here to prevent semantic confusion.
+
+scientific_boundary:
+  aggregate_source_transform_reproduced: true
+  fast_intermediate_line_fit_is_source_claim: false
+  temporal_twitch_kernel_identified: false
+  population_distribution_identified: false
+  body_class_crosswalk_selected: false
+  parameter_values_promoted: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+
+next_action: >-
+  Run the parser and aggregate diagnostic fit. Compare only broad class ordering
+  against independent article-level constraints; do not promote one-cell slopes,
+  a temporal kernel or a MaleCNS body-to-class assignment.
+

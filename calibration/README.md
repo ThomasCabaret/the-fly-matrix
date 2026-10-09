@@ -231,8 +231,9 @@ result is in `evaluations/front-leg-local-conversion-contract-v0.yaml`.
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed
-subset; a one-cell-per-class motor pilot is preregistered at about 860 MB. Run
-`prepare_local_source_data.bat` after setting `DRYAD_BEARER_TOKEN` locally. The
+subset; the one-cell-per-class motor pilot is now locally verified at about 860 MB. Run
+`prepare_local_source_data.bat` after setting `DRYAD_BEARER_TOKEN` locally when a
+fresh clone needs the bytes. The
 script removes that credential before Dryad redirects to object storage, reports
 every blocked/deferred file and never downloads the large motor archives unless
 `--include-large-motor-pilot` is passed explicitly.
@@ -244,8 +245,8 @@ than a fabricated crosswalk or probability distribution. After the explicit
 download, run `inspect_motor_pilot.bat`: it verifies every archive, rejects path
 traversal, encryption and duplicate normalized members, then inventories ZIP
 directories and at most 128 header bytes per member without extracting anything.
-This produces a schema inventory, not a fit. A variable-level parser and kernel
-campaign may only be versioned from the observed formats afterward.
+This produces a schema inventory, not a fit. The current workspace completed that
+inventory; it does not need to reacquire the archives.
 
 Run `motor_source_contract.bat` without a Dryad token to reconstruct what the
 pinned public motor code actually establishes. It hash-checks five source files,
@@ -256,15 +257,16 @@ particular, the snapshot neither exposes the raw MAT variable schema nor defines
 a temporal bi-exponential twitch kernel; those remain separate post-download
 gates rather than assumptions hidden in the executable candidate.
 
-The next aggregate fitting step is already preregistered in
-`campaigns/motor-spike-force-pilot-fit-v0.yaml` and can be exercised with
-`fit_motor_spike_force_pilot.bat`. It deliberately waits for a versioned parser
-manifest built from the observed raw MAT variables. The slow zero-intercept line
-is labelled source reproduction; applying the same low-capacity form to the fast
-and intermediate pilot cells is labelled a diagnostic extension. Deterministic
-trial bootstrap intervals describe only each selected cell, never class or body
-uncertainty. The one-cell-per-class pilot promotes zero values and cannot identify
-a temporal twitch kernel or the ten-body class crosswalk.
+The aggregate path is now executable with `parse_motor_spike_force_pilot.bat`
+followed by `fit_motor_spike_force_pilot.bat`. The parser ports two table-building
+scripts recovered from historical commit
+`ebe1e5008fc5f76954cea3973aa30b103ec3fa9a`; it accounts for all 194 trials and
+keeps source exclusions explicit. The slow zero-intercept line is labelled source
+reproduction; applying the same low-capacity form to fast and intermediate is a
+diagnostic extension. Resampling describes aggregate rows within each selected
+cell, not raw trials, class or body uncertainty. All three fits are complete and
+preserve the expected class ordering, but promote zero values and identify neither
+a temporal twitch kernel nor the ten-body class crosswalk.
 
 Run `feco_observation_contract.bat` without any Dryad token to reproduce the pinned
 public activation/GCaMP source paths. It detects rather than reconciles the source's

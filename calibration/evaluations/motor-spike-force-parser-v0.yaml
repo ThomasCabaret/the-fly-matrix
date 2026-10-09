@@ -1,0 +1,41 @@
+schema_version: 1
+id: evaluation.motor_spike_force_parser.v0
+title: Evaluation of the recovered-source motor spike-force parser
+status: accepted_source_port_with_cross_runtime_equivalence_not_run
+parser_id: parser.motor_spike_force.source_port.v0
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_for_unpromoted_diagnostic_fit
+
+accounting:
+  exact_archives_verified: 3
+  declared_trials: 194
+  source_excluded_trials: 11
+  usable_trials: 183
+  normalized_aggregate_rows: 22
+  classes_accounted: 3
+  parameter_values_promoted: 0
+  body_class_assignments_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+
+provenance:
+  recovered_historical_commit: ebe1e5008fc5f76954cea3973aa30b103ec3fa9a
+  parser_contract: calibration/evidence/motor-spike-force-parser-v0.yaml
+  runner_result: calibration/runner/motor-spike-force-parser-v0.yaml
+  semantic_result_sha256: 4eca24903e9bc60fdacc2f83aba0465dc4c77868b5a13fe8f5bd86bde7d03a56
+  normalized_manifest: data/derived/calibration/motor-spike-force-normalized-v0/manifest.yaml
+  matlab_cross_runtime_equivalence: not_run_no_matlab_runtime
+  tests: .venv/Scripts/python.exe -m pytest tests/test_motor_spike_force_parser.py
+
+accepted_claims:
+  - Peak windows, alignment, grouping, smoothing and firing-rate rules are ported from recovered public source rather than inferred from the traces.
+  - Every declared pilot trial is present and is either usable or excluded by its stored source flag.
+  - The normalized output is sufficient for the preregistered unpromoted aggregate diagnostic.
+rejected_claims:
+  - The Python port is bitwise equivalent to MATLAB without a cross-runtime oracle.
+  - The aggregate parser identifies a temporal twitch kernel or population distribution.
+  - The three driver classes select classes for individual MaleCNS bodies.
+next_action: Keep the parser immutable for this pilot and preserve its contract hash in descendants.
+

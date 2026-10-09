@@ -1,20 +1,88 @@
 schema_version: 1
 id: runner_result.motor_spike_force_pilot_fit.v0
-generated_at: '2026-10-08T15:24:25.554081+00:00'
+generated_at: '2026-10-09T10:53:07.011976+00:00'
 campaign_id: campaign.motor_spike_force_pilot_fit.v0
-status: blocked_missing_versioned_parser_manifest
-semantic_result_sha256: 74c7e7400846dc22dc343552aa0ac106d6719fac3fe9e2cb9f627874d0835dc8
+status: completed_diagnostic_one_cell_per_class_unpromoted
+semantic_result_sha256: 32ddac038c200bdab89d5a8e1d47d7cfea064de9ad30813be614d8d538390642
 accounting:
-  campaign_sha256: 0dae7e9ef154106c0a363df54b050fb5a562a32cb31f7d06720f19f6e907a858
+  campaign_sha256: ca98ae1e8bbe4db23bd71131bea031d73e531d78ec70bf11b9ad3e8b6d7faa21
+  normalized_manifest_sha256: 6382d46c97730f11801198f4c29e65c28fbd8fd137a637759433d6972d26a203
   source_archives_expected: 3
-  normalized_tables_verified: 0
-  class_fits_completed: 0
+  normalized_tables_verified: 3
+  class_fits_completed: 3
+  source_reproduction_fits: 1
+  derived_diagnostic_fits: 2
   parameter_values_promoted: 0
   body_class_assignments_selected: 0
   behavior_targets_exposed: 0
   topology_changes: 0
+results:
+- functional_class: fast_81A07
+  fit_status: derived_line_through_origin_diagnostic_extension
+  accounting:
+    rows_total: 17
+    rows_retained: 4
+    rows_excluded: 13
+    cells_total: 1
+    aggregate_groups_total: 17
+  slope_uN_per_spike: 4.775318855516674
+  metrics:
+    rmse_uN: 3.211447457662499
+    mae_uN: 2.878902748983633
+  aggregate_row_bootstrap:
+    draws: 2000
+    seed: 20261008
+    informative_positive_spike_rows: 4
+    percentile_2_5_uN_per_spike: 4.120904454800663
+    median_uN_per_spike: 4.775318855516674
+    percentile_97_5_uN_per_spike: 7.070786496352298
+    interpretation: within_one_cell_aggregate_row_resampling_not_trial_or_population_uncertainty
+  promoted_parameter_values: 0
+- functional_class: intermediate_22A08
+  fit_status: derived_line_through_origin_diagnostic_extension
+  accounting:
+    rows_total: 2
+    rows_retained: 2
+    rows_excluded: 0
+    cells_total: 1
+    aggregate_groups_total: 2
+  slope_uN_per_spike: 0.8268137341676737
+  metrics:
+    rmse_uN: 0.006181570956792953
+    mae_uN: 0.004371030741934112
+  aggregate_row_bootstrap:
+    draws: 2000
+    seed: 20261008
+    informative_positive_spike_rows: 1
+    percentile_2_5_uN_per_spike: 0.8268137341676737
+    median_uN_per_spike: 0.8268137341676737
+    percentile_97_5_uN_per_spike: 0.8268137341676737
+    interpretation: within_one_cell_aggregate_row_resampling_not_trial_or_population_uncertainty
+  promoted_parameter_values: 0
+- functional_class: slow_35C09
+  fit_status: source_reproduction_line_through_origin
+  accounting:
+    rows_total: 3
+    rows_retained: 2
+    rows_excluded: 1
+    cells_total: 1
+    aggregate_groups_total: 3
+  slope_uN_per_spike: 0.022837494464033468
+  metrics:
+    rmse_uN: 0.08745072298287243
+    mae_uN: 0.08450919177026528
+  aggregate_row_bootstrap:
+    draws: 2000
+    seed: 20261008
+    informative_positive_spike_rows: 2
+    percentile_2_5_uN_per_spike: 0.021297025138693106
+    median_uN_per_spike: 0.022837494464033468
+    percentile_97_5_uN_per_spike: 0.027422863732328093
+    interpretation: within_one_cell_aggregate_row_resampling_not_trial_or_population_uncertainty
+  promoted_parameter_values: 0
 interpretation:
-  fit_completed: false
+  fit_completed: true
   twitch_kernel_identified: false
   population_parameters_identified: false
-  next_action: acquire_and_inventory_archives_then_version_raw_parser
+  class_ordering_is_body_crosswalk: false
+  claim: one-cell-per-class aggregate force-per-spike diagnostic only

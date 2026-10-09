@@ -1,8 +1,8 @@
 schema_version: 1
 id: evidence.front_leg_local_source_subsets.v0
 title: Preregistered minimal source subsets for front-leg local calibration
-status: feco_small_payload_verified_local_motor_metadata_verified_large_pilot_deferred
-updated: 2026-10-08
+status: feco_and_explicit_motor_pilot_verified_local
+updated: 2026-10-09
 
 scientific_boundary:
   primary_class: local_interface
@@ -77,8 +77,9 @@ motor_spike_force_pilot:
     - driver class is an individual MaleCNS body-ID crosswalk
     - a pilot fit may be promoted as a complete motor parameter set
   downstream_fit_contract:
-    ref: calibration/campaigns/motor-spike-force-pilot-fit-v0.yaml
-    status: preregistered_blocked_missing_archives_and_versioned_parser
+    ref: calibration/evaluations/motor-spike-force-pilot-fit-v0.yaml
+    parser_ref: calibration/evaluations/motor-spike-force-parser-v0.yaml
+    status: completed_diagnostic_one_cell_per_class_unpromoted
     scope: one_cell_per_class_aggregate_force_per_spike_diagnostic
     promoted_parameter_values: 0
 
@@ -92,7 +93,7 @@ exception_accounting:
     pilot selection and must be resolved before a complete class-level fit.
 
 next_action: >-
-  The 2,025,899-byte FeCO payload is verified locally; run its preregistered
-  held-out comparison. Acquire the 860 MB motor pilot only with an explicit
-  large-data flag, run inspect_motor_pilot.bat, and version the observed variable
-  schema before fitting; never fetch the full 48.76 GB repository implicitly.
+  Both selected payloads are verified locally. Preserve the completed FeCO
+  comparison and motor aggregate diagnostic as unpromoted evidence; never fetch
+  the full 48.76 GB motor repository implicitly. Broader class evidence is needed
+  before population-level motor values can be accepted.

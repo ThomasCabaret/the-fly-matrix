@@ -1,8 +1,8 @@
 schema_version: 1
 id: evidence.front_leg_local_conversion_sources.v0
 title: Source locks and unresolved mappings for the first front-leg conversions
-status: source_contracts_complete_feco_bytes_verified_fit_not_run_motor_raw_schema_and_crosswalk_open
-updated: 2026-10-08
+status: source_contracts_complete_feco_fit_complete_motor_parser_and_aggregate_diagnostic_complete_crosswalk_open
+updated: 2026-10-09
 
 scope:
   populations:
@@ -65,6 +65,7 @@ motor_source:
     ref: https://doi.org/10.5061/dryad.76hdr7stb
     reported_repository_size: 48.76_GB
     acquisition_policy: selective_files_only_after_preregistered_manifest
+    pilot_acquisition_status: exact_three_archives_verified_860357945_bytes
     reason_not_vendored: raw_repository_is_large_and_contains_per_cell_MATLAB_archives
   code_snapshot:
     ref: https://doi.org/10.5281/zenodo.4527659
@@ -91,6 +92,17 @@ motor_source:
       0.5 s slow-count proxy and probe-calibration units. They reference raw trials
       absent from the snapshot, do not expose the raw MAT variable schema and do
       not define a temporal twitch time-course kernel.
+  recovered_parser:
+    ref: calibration/evaluations/motor-spike-force-parser-v0.yaml
+    status: accepted_source_port_for_unpromoted_diagnostic
+    historical_source_commit: ebe1e5008fc5f76954cea3973aa30b103ec3fa9a
+    accounting: {declared_trials: 194, source_excluded_trials: 11, usable_trials: 183, normalized_rows: 22}
+    limitation: Python-to-MATLAB bitwise equivalence was not run because MATLAB is unavailable.
+  aggregate_diagnostic:
+    ref: calibration/evaluations/motor-spike-force-pilot-fit-v0.yaml
+    status: completed_three_class_ordering_consistent_zero_values_promoted
+    slopes_uN_per_spike: {fast_81A07: 4.775318855516674, intermediate_22A08: 0.8268137341676737, slow_35C09: 0.022837494464033468}
+    limitation: one cell per class, aggregate rows, no temporal kernel and no population uncertainty
   male_cns_mapping:
     selected_bodies: 10
     annotation_type: Ti_flexor_MN
@@ -111,8 +123,7 @@ forbidden_claims:
   - Approximate article values are calibrated defaults.
   - MaleCNS body IDs are individually mapped to the experimental driver lines.
 next_action: >-
-  Fit and compare the verified FeCO source observation paths with animal/trial-held-out
-  residuals. Acquire the 860 MB motor pilot only explicitly and retain the unresolved
-  body-to-class ensemble. Reproduce the value-free motor source contract with
-  motor_source_contract.bat; after raw archive inspection, version the MAT parser
-  before fitting aggregate force-per-spike, and gate any temporal kernel separately.
+  Retain the completed FeCO and motor pilot outputs as unpromoted local evidence.
+  Obtain broader motor-class evidence before accepting values, keep the unresolved
+  body-to-class ensemble, and gate any temporal kernel and direct-MuJoCo force bridge
+  in separate campaigns.

@@ -147,7 +147,7 @@ def prepare_class(
         "rows_retained": int(selected.sum()),
         "rows_excluded": int((~selected).sum()),
         "cells_total": int(local["cell_id"].astype(str).nunique()),
-        "trials_total": int(local["trial_id"].astype(str).nunique()),
+        "aggregate_groups_total": int(local["trial_id"].astype(str).nunique()),
     }
     return PreparedClass(functional_class, fit_status, retained.reset_index(drop=True), accounting)
 
@@ -199,14 +199,14 @@ def fit_prepared(
             "rmse_uN": float(np.sqrt(np.mean(residual**2))),
             "mae_uN": float(np.mean(np.abs(residual))),
         },
-        "trial_bootstrap": {
+        "aggregate_row_bootstrap": {
             "draws": draws,
             "seed": seed,
-            "informative_positive_spike_trials": int(informative.sum()),
+            "informative_positive_spike_rows": int(informative.sum()),
             "percentile_2_5_uN_per_spike": float(np.percentile(bootstrap, 2.5)),
             "median_uN_per_spike": float(np.percentile(bootstrap, 50.0)),
             "percentile_97_5_uN_per_spike": float(np.percentile(bootstrap, 97.5)),
-            "interpretation": "within_one_cell_trial_resampling_not_population_uncertainty",
+            "interpretation": "within_one_cell_aggregate_row_resampling_not_trial_or_population_uncertainty",
         },
         "promoted_parameter_values": 0,
     }

@@ -1,7 +1,7 @@
 schema_version: 1
 id: campaign.motor_spike_force_pilot_fit.v0
 title: One-cell-per-class aggregate motor spike-force diagnostic
-status: preregistered_blocked_missing_archives_and_versioned_parser
+status: completed_diagnostic_one_cell_per_class_unpromoted
 target_id: target.population_dynamics_assignment.v0
 scope_id: scope.population_dynamics.front_leg.v0
 primary_class: local_interface
@@ -42,10 +42,13 @@ fit:
   fitted_parameter_count: 3
 
 uncertainty:
-  method: deterministic_within_cell_trial_bootstrap
+  method: deterministic_within_cell_aggregate_row_bootstrap
   bootstrap_draws: 2000
   bootstrap_seed: 20261008
-  interpretation: diagnostic_trial_resampling_not_population_or_body_uncertainty
+  interpretation: >-
+    Diagnostic resampling of aggregate spike-count/current-step rows, not raw
+    trials and not population or body uncertainty. A class with one informative
+    aggregate row has degenerate bootstrap bounds and gains no uncertainty claim.
   population_uncertainty: unresolved_one_cell_per_class_is_insufficient
 
 selection_policy:
@@ -75,7 +78,7 @@ forbidden_claims:
   - pilot values are runtime defaults or a complete motor calibration
 
 next_action: >-
-  Acquire and inventory the exact archives, version the observed MAT parser and
-  emit the normalized manifest. Run this diagnostic to verify aggregate fitting,
-  then obtain broader class evidence before any value promotion. Treat temporal
-  twitch dynamics and the force-to-direct-MuJoCo bridge as separate campaigns.
+  Retain the unpromoted diagnostic and its broad fast > intermediate > slow
+  ordering as a source-port check only. Obtain broader class evidence before any
+  value promotion. Treat temporal twitch dynamics, the unresolved 3^10 body-class
+  ensemble and the force-to-direct-MuJoCo bridge as separate campaigns.

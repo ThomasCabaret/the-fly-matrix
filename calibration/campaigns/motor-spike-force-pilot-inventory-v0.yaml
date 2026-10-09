@@ -1,7 +1,7 @@
 schema_version: 1
 id: campaign.motor_spike_force_pilot_inventory.v0
 title: Safe schema inventory for the one-cell-per-class motor spike-force pilot
-status: preregistered_blocked_missing_authenticated_archives
+status: completed_schema_inventory_no_fit
 target_id: target.population_dynamics_assignment.v0
 scope_id: scope.population_dynamics.front_leg.v0
 primary_class: local_interface
@@ -46,6 +46,5 @@ forbidden_claims:
   - article prose approximations are runtime defaults
 
 next_action: >-
-  Put DRYAD_BEARER_TOKEN in .env, run prepare_local_source_data.bat with
-  --include-large-motor-pilot, then run inspect_motor_pilot.bat. Use the observed
-  schemas to preregister a variable-level parser and class-level kernel fit.
+  Preserve the exact archive hashes and inventory result. The variable-level
+  parser is versioned separately; do not reinterpret this inventory as a fit.

@@ -1,18 +1,21 @@
 schema_version: 1
 id: evaluation.motor_spike_force_pilot_inventory.v0
-title: Readiness evaluation for the motor spike-force pilot archive inventory
-status: blocked_inputs_procedure_and_safety_oracles_ready
+title: Evaluation of the motor spike-force pilot archive inventory
+status: accepted_schema_inventory_no_fit
 campaign_id: campaign.motor_spike_force_pilot_inventory.v0
 target_id: target.population_dynamics_assignment.v0
 primary_class: local_interface
 optimization_exposure: diagnostic_only
 behavior_targets: []
-acceptance_result: blocked_missing_authenticated_archives
+acceptance_result: pass_inventory_only
 
 procedure_readiness:
   article_classes_expected: 3
   article_classes_preregistered: 3
-  archives_verified: 0
+  archives_verified: 3
+  archive_members: 1022
+  data_like_members: 1016
+  extracted_files: 0
   malecns_bodies_accounted: 10
   body_class_assignments_selected: 0
   factorized_assignment_upper_bound: 59049
@@ -31,6 +34,7 @@ scientific_boundary:
 reproducibility:
   acquisition_command: prepare_local_source_data.bat --include-large-motor-pilot
   inventory_command: inspect_motor_pilot.bat
-  blocked_runner_result: calibration/runner/motor-spike-force-pilot-inventory-v0.yaml
+  runner_result: calibration/runner/motor-spike-force-pilot-inventory-v0.yaml
+  semantic_result_sha256: f4e52237fe69c50b2549bdcf7bff657d5465a9612e26752ce9de7d99e3f2c8ac
   tests: .venv/Scripts/python.exe -m pytest tests/test_motor_pilot_inventory.py
-next_action: Acquire the exact opt-in archives, rerun the inventory, then version the observed variable schema before fitting.
+next_action: Preserve the inventory; use the separate versioned parser and never treat archive availability as calibration.

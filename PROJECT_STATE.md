@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-08. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-09. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -21,26 +21,30 @@ force→commande directe MuJoCo comme pont surrogate séparé. Ce résultat ne c
 aucune constante et ne généralise pas hors de ce périmètre. Les sources suivantes
 sont maintenant préréférencées : trois tables FeCO traitées et leur README font
 environ 2 Mo, tandis qu'un pilote moteur d'une cellule par classe fait environ
-860 Mo au lieu des 48,76 Go complets. Dryad exige désormais un jeton Bearer même
-pour les octets publics ; le pipeline classe explicitement ce blocage et ne lance
-jamais le gros téléchargement moteur implicitement.
+860 Mo au lieu des 48,76 Go complets. Les trois archives pilotes exactes sont
+maintenant acquises et vérifiées (860 357 945 octets) ; le téléchargement reste
+strictement opt-in et les données lourdes restent ignorées par Git.
 
 Le petit code source moteur public est désormais lui aussi un contrat exécutable
 hash-verrouillé : il comptabilise 23 cellules actives (7 rapides, 7 intermédiaires,
 9 lentes), les 194 essais du pilote sélectionné et les règles agrégées de filtrage,
-comptage de spikes et calibration de sonde. Il ne calibre aucune valeur, ne révèle
-pas le schéma des variables des MAT bruts et ne définit pas de noyau temporel de
-twitch. Ces deux derniers points restent donc des gates après acquisition, au lieu
-d'être implicitement déduits du candidat logiciel bi-exponentiel.
+comptage de spikes et calibration de sonde. L'inventaire des MAT a ensuite montré
+le schéma réel. Les deux scripts historiques qui construisaient les tables finales,
+absents de la branche publique courante, ont été retrouvés dans le commit public
+`ebe1e5008fc5f76954cea3973aa30b103ec3fa9a`. Le port Python versionné reprend donc
+leurs fenêtres et regroupements sans les inférer : 194 essais déclarés, 11 exclus
+par leur drapeau source, 183 utilisables et 22 lignes agrégées. L'équivalence
+bit-à-bit avec MATLAB n'a pas été exécutée et aucun noyau temporel n'est identifié.
 
-La procédure agrégée qui consommera ces données est également préenregistrée et
-testée sur fixtures. Elle exige un manifeste produit par un parseur versionné des
-variables MAT réellement observées. Pour la cellule lente, la droite passant par
-zéro reproduit la forme du script source ; son application aux cellules rapide et
-intermédiaire est explicitement une extension diagnostique. Le bootstrap reste
-intra-cellule, zéro pente est promue et aucune incertitude de population, classe
-de body ID ou dynamique temporelle n'est prétendue. Le runner produit actuellement
-un résultat bloqué reproductible parce que les archives et ce parseur manquent.
+La procédure agrégée a maintenant consommé le manifeste hash-verrouillé et terminé
+les trois ajustements. Pour la cellule lente, la droite passant par zéro reproduit
+la forme du script source ; son application aux cellules rapide et intermédiaire
+reste explicitement une extension diagnostique. Les pentes diagnostiques sont
+respectivement 4,7753, 0,8268 et 0,02284 µN/spike : leur ordre rapide > intermédiaire
+> lente est cohérent avec la publication, mais une cellule par classe ne mesure
+ni distribution de population ni correspondance aux dix body IDs. Le bootstrap
+porte sur les lignes agrégées, pas sur les essais bruts ; celui de l'intermédiaire
+est dégénéré. Zéro pente est promue et aucune dynamique temporelle n'est prétendue.
 
 Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
 précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
@@ -64,8 +68,9 @@ Les oracles synthétiques de séparation et de comptabilité passent. Le test
 authentifié Dryad a maintenant acquis et vérifié exactement les trois Parquet et
 leur documentation : 2 025 899 octets dans le sous-ensemble FeCO complet, 64 300
 lignes inspectées, zéro doublon de ligne et aucun secret dans le rapport. Les deux
-petits fichiers documentaires moteurs sont aussi vérifiés ; les trois archives
-motrices totalisant 860 357 945 octets sont restées explicitement différées.
+petits fichiers documentaires moteurs et les trois archives motrices totalisant
+860 357 945 octets sont maintenant vérifiés ; leur acquisition a été explicitement
+demandée et n'est jamais déclenchée par défaut.
 Les sept candidats ont maintenant terminé leurs 86 folds biologiques tenus à
 l'écart sur 33 766 lignes retenues, sans fold bloqué. Le chemin hook à seuil
 -5 degrés/s a des résidus agrégés inférieurs au chemin d'application à -50
@@ -680,7 +685,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; les sept chemins FeCO ont terminé 86/86 folds biologiques mais restent un ensemble non promu ; le contrat source moteur couvre 23 cellules et 194 essais sélectionnés, l'inventaire et le fit agrégé pilote sont préenregistrés, et l'ensemble de classes 3^10 reste explicite, mais zéro valeur et zéro jeu complet sont promus**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; les sept chemins FeCO ont terminé 86/86 folds biologiques et le pilote moteur a normalisé 194 essais puis terminé trois fits agrégés, mais ces deux ensembles restent non promus ; l'ensemble de classes moteur 3^10 reste explicite, zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **extracteur descriptif validé sur 7 groupes ; 5 quantités scientifiques restent explicitement indisponibles, zéro seuil choisi et stabilité toujours non calibrée**.
@@ -785,9 +790,10 @@ hashes topologiques. Le dépôt FeCO inspecté ne contient que les scripts d'ana
 Le manifeste minimal et la campagne tenue à l'écart sont maintenant préenregistrés ;
 les trois tables sont localement vérifiées et le fit biologique est complet sous
 forme d'ensemble candidat non promu (86/86 folds, zéro bloqué). Les données
-motrices brutes représentent environ 48,76 Go et le pilote de 860 Mo reste
-explicitement opt-in. Son acquisition exacte, l'inventaire ZIP sans extraction et
-les garde-fous de sécurité sont préenregistrés. La correspondance
+motrices brutes représentent environ 48,76 Go ; le pilote opt-in de 860 Mo est
+maintenant acquis, hash-vérifié et inventorié sans extraction. Le port des scripts
+historiques a normalisé ses 194 essais en 22 lignes agrégées et les trois fits
+diagnostiques sont terminés sans promotion. La correspondance
 fast/intermediate/slow des 10 body IDs reste un ensemble non résolu : chaque corps
 conserve trois classes candidates, soit une borne supérieure factorisée de 59 049
 affectations jointes, sans probabilité, symétrie ou cardinalité de classe inventée.
@@ -894,9 +900,10 @@ actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tet
 prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pilote moteur opt-in
 feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
 fit_feco_calcium_observation.bat # 7 chemins FeCO, 86 folds leave-one-animal-out ; ensemble non promu
-inspect_motor_pilot.bat # 3 archives moteur exactes, inventaire ZIP borné sans extraction ; bloqué sans pilote opt-in
-motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit, MAT/noyau temporel encore bloqués
-fit_motor_spike_force_pilot.bat # fit agrégé pilote sans promotion ; bloqué sans archives/parseur MAT versionné
+inspect_motor_pilot.bat # 3 archives exactes vérifiées, 1 022 membres inventoriés sans extraction
+motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit et aucun noyau temporel
+parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git
+fit_motor_spike_force_pilot.bat # 3 fits agrégés diagnostiques terminés, aucune valeur promue
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

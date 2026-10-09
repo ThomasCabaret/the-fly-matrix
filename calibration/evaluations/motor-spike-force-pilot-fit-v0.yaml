@@ -1,38 +1,53 @@
 schema_version: 1
 id: evaluation.motor_spike_force_pilot_fit.v0
-title: Readiness evaluation for the aggregate motor spike-force pilot fit
-status: blocked_inputs_procedure_and_synthetic_oracles_ready
+title: Evaluation of the aggregate motor spike-force pilot fit
+status: accepted_diagnostic_mechanics_zero_values_promoted
 campaign_id: campaign.motor_spike_force_pilot_fit.v0
 target_id: target.population_dynamics_assignment.v0
 primary_class: local_interface
 optimization_exposure: diagnostic_only
 behavior_targets: []
-acceptance_result: blocked_missing_archives_and_versioned_parser
+acceptance_result: pass_diagnostic_only_no_biological_parameter_acceptance
 
 procedure_readiness:
   source_archives_expected: 3
-  source_archives_verified: 0
+  source_archives_verified: 3
   normalized_tables_expected: 3
-  normalized_tables_verified: 0
+  normalized_tables_verified: 3
   class_fit_policies: {source_reproduction: 1, derived_diagnostic_extension: 2}
   selected_cells_per_class: 1
   fitted_parameters_if_run: 3
   parameter_values_promoted: 0
   body_class_assignments_selected: 0
   twitch_kernels_selected: 0
-  synthetic_unit_tests: pass_5
+  declared_trials: 194
+  source_excluded_trials: 11
+  normalized_aggregate_rows: 22
+  completed_class_fits: 3
+  fitted_slopes_uN_per_spike:
+    fast_81A07: 4.775318855516674
+    intermediate_22A08: 0.8268137341676737
+    slow_35C09: 0.022837494464033468
+  ordering_check: fast_greater_than_intermediate_greater_than_slow_matches_article_level_direction
+  software_tests: pass_11_parser_and_fit
 
 scientific_boundary:
   accepted_claims:
-    - The procedure can validate a future raw parser and reproduce declared aggregate filters and force conversion.
-    - Trial-resampled uncertainty is explicitly limited to each selected cell.
+    - The recovered source transforms can normalize all three exact pilot archives with exhaustive trial accounting.
+    - The three unpromoted aggregate fits preserve the article-level fast > intermediate > slow ordering.
+    - Aggregate-row resampling is explicitly limited to each selected cell and is not raw-trial uncertainty.
   rejected_claims:
     - Synthetic fixtures or one cell per class constitute biological motor calibration.
     - Aggregate slopes identify temporal dynamics, population distributions or body-level classes.
+    - Degenerate intermediate-class bootstrap bounds quantify uncertainty.
 
 reproducibility:
   command: fit_motor_spike_force_pilot.bat
-  blocked_runner_result: calibration/runner/motor-spike-force-pilot-fit-v0.yaml
-  semantic_result_sha256: 74c7e7400846dc22dc343552aa0ac106d6719fac3fe9e2cb9f627874d0835dc8
-  tests: .venv/Scripts/python.exe -m pytest tests/test_motor_spike_force_fit.py
-next_action: Acquire and inventory the exact archives, then version the observed raw-variable parser and rerun.
+  parser_command: parse_motor_spike_force_pilot.bat
+  runner_result: calibration/runner/motor-spike-force-pilot-fit-v0.yaml
+  semantic_result_sha256: 32ddac038c200bdab89d5a8e1d47d7cfea064de9ad30813be614d8d538390642
+  tests: .venv/Scripts/python.exe -m pytest tests/test_motor_spike_force_parser.py tests/test_motor_spike_force_fit.py
+next_action: >-
+  Preserve all three values as diagnostics. Obtain broader class evidence before
+  promotion, retain the unresolved 59,049 body-class upper-bound ensemble, and
+  treat the twitch kernel and force-to-direct-MuJoCo bridge as separate campaigns.
