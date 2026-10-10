@@ -3,6 +3,12 @@
 This directory is the compact, versioned source of truth for calibration. The
 canonical rules are in `docs/calibration-methodology.md` and ADR 0005.
 
+For the exact fresh-clone order, credential boundaries, source sizes and the
+difference between replaying history and continuing the active frontier, use
+[`docs/reproduction-pipeline.md`](../docs/reproduction-pipeline.md). This README
+explains individual calibration records and commands; it is not an instruction to
+rerun every historical campaign.
+
 ## Contents
 
 - `state.yaml`: current phase, promoted references, readiness, blockers, and next

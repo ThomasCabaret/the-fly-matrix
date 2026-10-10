@@ -786,7 +786,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **192 tests** actuels passent, y compris les
+conservées et classifiées. Les **211 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -891,6 +891,13 @@ Les `next_action` du registre et le tableau de bord déterminent l'ordre concret
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
 
 ## Reproduction locale
+
+Le parcours canonique depuis un clone vierge est
+[`docs/reproduction-pipeline.md`](docs/reproduction-pipeline.md). Il fait foi pour
+l'ordre des commandes, les prérequis non versionnés, les tailles, les jetons et la
+séparation entre reconstruction obligatoire, campagnes courantes et replays
+historiques. La liste ci-dessous reste un aide-mémoire des points d'entrée, pas
+une demande de tout rejouer séquentiellement.
 
 ```text
 setup.bat                 # si l'environnement n'existe pas

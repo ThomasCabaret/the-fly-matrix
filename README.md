@@ -8,6 +8,13 @@ explicites, de faible capacité et auditables.
 Le contrat scientifique de référence est
 [`drosophila_virtual_fly_project_contract.md`](drosophila_virtual_fly_project_contract.md).
 
+Pour reconstruire un espace de travail depuis un clone vierge, suivre le runbook
+canonique [`docs/reproduction-pipeline.md`](docs/reproduction-pipeline.md). Il
+distingue le setup obligatoire, les téléchargements optionnels avec jeton, les
+artefacts générés et le rejeu des campagnes. Il précise aussi la limite actuelle :
+le runtime structurel est reconstructible, mais aucun jeu de paramètres complet
+n'est encore promu comme mouche calibrée de référence.
+
 Pour reprendre le projet sans le contexte des conversations :
 
 1. lire [`PROJECT_STATE.md`](PROJECT_STATE.md) pour l'état courant et les fronts restants ;
@@ -23,6 +30,9 @@ Pour reprendre le projet sans le contexte des conversations :
    [`calibration/state.yaml`](calibration/state.yaml).
 
 ## Commandes Windows
+
+Cette section est un catalogue. L'ordre d'exécution, les dépendances et les
+volumes sont dans [`docs/reproduction-pipeline.md`](docs/reproduction-pipeline.md).
 
 - `download_data.bat` télécharge ou contrôle les trois tables MaleCNS principales
   et le supplément de 109 Ko sur les colonnes optiques R7/R8.
