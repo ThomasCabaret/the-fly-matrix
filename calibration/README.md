@@ -228,6 +228,17 @@ or named behavior. Source availability, exact limitations and file locks are in
 `evidence/front-leg-local-conversion-sources-v0.yaml`; the accepted contract-only
 result is in `evaluations/front-leg-local-conversion-contract-v0.yaml`.
 
+Run `motor_actuator_bridge_envelope.bat` to rebuild the separate technical bridge
+diagnostic. It freezes the accepted route and actuator hashes, accounts for all
+110 candidate routes from the ten T1 motor bodies, and executes 198 tethered
+command probes over the 22 candidate front-leg actuators. All 22 respond at the
+lowest tested command, so the numerical threshold is explicitly left-censored.
+Conditional on the unpromoted one-cell force slopes, the procedure reports three
+gains spanning `4.3788e-5` to `1.0471e-3` command/µN; the strongest force remains
+below half of the fixed direct-motor limit. This is an engineering sensitivity
+ensemble, not a biological force-to-torque conversion, and no gain, route, body
+class, offset or behavior is selected.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

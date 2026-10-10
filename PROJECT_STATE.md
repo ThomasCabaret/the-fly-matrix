@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-09. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-10. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -58,6 +58,19 @@ informé par une inspection exploratoire, que chaque trace est normalisée par s
 propre pic et qu'il n'y a qu'une cellule par classe, ce résultat reste un
 diagnostic de forme intra-cellule : zéro noyau populationnel, valeur runtime ou
 affectation de body ID est promu.
+
+Le pont force biologique→moteur direct est maintenant un ensemble d'ingénierie
+exécutable, sans prétendre résoudre la conversion physique. Le diagnostic gèle
+les hashes de topologie, de mécanique et d'actionnement, comptabilise les 110
+routes candidates des dix motoneurones T1 vers 22 actionneurs des pattes
+antérieures, puis exécute 198 essais tethered. Les 22 actionneurs répondent dès
+la plus petite commande testée (`1e-6`) : leurs seuils exacts sont donc censurés
+à gauche. Conditionnellement aux trois pentes une-cellule non promues, trois gains
+de `4,3788e-5` à `1,0471e-3` commande/µN restent détectables tout en gardant la
+force candidate la plus forte sous la moitié de la limite MuJoCo. Aucun gain,
+offset, routage ou classe de body ID n'est sélectionné. L'absence de géométrie
+d'insertion musculaire et de bras de levier maintient la conversion biologique
+µN→couple explicitement non identifiée.
 
 Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
 précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
@@ -190,6 +203,10 @@ résultat décide de la représentation native. Le pilote moteur reste opt-in et
 correspondance individuelle des body IDs reste un ensemble. Son diagnostic
 temporel est lui aussi terminé : rapide soutenu dans cette cellule, intermédiaire
 faiblement contraint et lent non identifié, sans promotion.
+Le pont moteur aval est également terminé dans sa portée technique conditionnelle :
+les trois gains, les trois classes par body ID et toutes les routes candidates
+doivent maintenant être propagés ensemble dans la première chaîne locale, sans
+sélection par trajectoire corporelle.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
@@ -920,6 +937,7 @@ motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro
 parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git
 fit_motor_spike_force_pilot.bat # 3 fits agrégés diagnostiques terminés, aucune valeur promue
 fit_motor_twitch_temporal_pilot.bat # 33 traces mono-spike, rapide soutenu, intermédiaire faible, lent non identifié
+motor_actuator_bridge_envelope.bat # 198 probes tethered, ensemble de 3 gains conditionnels, aucune promotion
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

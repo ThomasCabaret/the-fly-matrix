@@ -1,6 +1,6 @@
 schema_version: 1
 phase: population_typed_dynamics_assignment_and_local_chain_calibration
-updated: 2026-10-09
+updated: 2026-10-10
 
 wiring_baseline:
   terminal_coverage: complete
@@ -21,7 +21,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.motor_twitch_temporal_diagnostic.v0
+last_completed_campaign_id: campaign.motor_actuator_bridge_envelope.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -59,6 +59,7 @@ readiness:
   motor_spike_force_pilot: source_fidelity_pass_23_cells_194_selected_trials_11_excluded_183_usable_22_aggregate_rows_59049_assignment_upper_bound_kernel_open
   motor_spike_force_fit: completed_three_classes_one_source_reproduction_two_diagnostic_extensions_ordering_consistent_zero_values
   motor_twitch_temporal_diagnostic: completed_33_single_spike_traces_fast_supported_intermediate_weak_slow_unidentified_zero_values
+  motor_actuator_bridge: completed_198_tethered_trials_22_of_22_scoped_actuators_detectable_three_conditional_gains_no_reference_or_biological_conversion
   spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
@@ -100,6 +101,7 @@ blocked_by:
   - The motor source contract hash-locks five public files and the exact one-cell-per-class pilot archives are now acquired and verified (860,357,945 bytes). The full public Git history recovered the two table-construction scripts deleted from the current branch; the Python port accounts for all 194 declared trials as 183 usable plus 11 source-excluded and emits 22 aggregate rows. MATLAB cross-runtime bitwise equivalence has not been run, and no temporal twitch kernel is defined. The ten-body class uncertainty remains a factorized 3^10 upper bound (59,049 joint assignments), with no probability, symmetry or class-count prior and no selected crosswalk.
   - The aggregate motor pilot fit completed all three classes and preserves fast > intermediate > slow ordering. Only the slow zero-intercept fit is labelled source reproduction; applying that form to fast/intermediate is a diagnostic extension. Resampling operates on aggregate rows, not raw trials; the intermediate interval is degenerate. One cell per class cannot estimate population uncertainty, identify a twitch kernel or promote runtime slopes, so all three values remain diagnostic.
   - The separate temporal-shape diagnostic exhaustively accounts for the same 194 trials and retains 18 fast plus 15 intermediate neutral-position single-spike traces. Five-fold trial-held-out normalized-shape fits explain 0.7844 and 0.2767 of observed energy respectively; the fast within-cell envelope is comparatively narrow, the intermediate envelope is broad and weak, and slow has no isolated single-spike trial. The design followed exploratory inspection, each trace uses its own peak normalization, and one cell cannot identify a population kernel; zero values and zero body assignments are promoted.
+  - The separate force-to-direct-motor bridge diagnostic accounts for all 110 candidate routes from the ten selected motor bodies to 22 front-leg actuators. All 22 respond at the lowest tested command in 198 tethered trials, so their exact detection thresholds are left-censored. Conditional on the unpromoted one-cell force slopes, three engineering gains span 4.3788e-5 to 1.0471e-3 command/uN while the strongest candidate remains below half of the fixed force limit. This is an executable sensitivity ensemble, not a biological force-to-torque conversion or a selected reference.
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
@@ -107,8 +109,8 @@ next_action: >-
   FeCO held-out ensemble until a separate acceptance decision accounts for unequal
   capacity and boundary semantics; do not treat calcium as native spikes or select
   a winner silently. Retain the completed motor parser and aggregate three-class
-  diagnostic as unpromoted one-cell evidence. Obtain broader class evidence before
-  accepting values. Preserve the fast/intermediate temporal diagnostics and the
-  unresolved slow kernel without promoting them, keep the unresolved 59,049
-  body-class upper-bound ensemble, and calibrate the force-to-direct-motor
-  surrogate as the next separate front under frozen mechanics.
+  diagnostic as unpromoted one-cell evidence. Preserve the fast/intermediate
+  temporal diagnostics and unresolved slow kernel without promoting them. Keep
+  the unresolved 59,049 body-class upper bound, all accepted route candidates and
+  the completed three-member conditional direct-motor gain ensemble; propagate
+  these uncertainties through one minimal frozen sensor-CNS-motor chain next.

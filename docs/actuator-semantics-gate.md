@@ -84,3 +84,22 @@ This closes neither muscle nor tendon fidelity, does not validate random motor
 transfer values or the rate comparator, and supports no stability or behavior
 claim. A change to actuator semantics reopens the gate; a claim requiring muscle,
 compliance or local-reflex fidelity requires a new model version.
+
+## Conditional force bridge
+
+`motor_actuator_bridge_envelope.bat` keeps that accepted direct-motor contract
+frozen and probes only the bounded front-leg candidate scope. The ten selected T1
+tibia-flexor bodies expose 110 accepted candidate routes to 22 left/right
+front-leg motors. Nine commands per motor produce 198 tethered trials; all
+commands equal the reported actuator force exactly and every motor exceeds the
+locked `1e-9` radian local-response threshold at the grid floor of `1e-6`.
+Consequently the actual detectability thresholds are left-censored rather than
+claimed as identified.
+
+The one-cell force slopes are then used only as conditional diagnostic inputs.
+They admit three reported gains between `4.3788e-5` and `1.0471e-3`
+command/µN, where the weakest force reaches the conservative observed detection
+floor and the strongest reaches half of the fixed `0.01` force limit. No member
+is preferred. The interval preserves a runnable engineering sensitivity path but
+does not supply muscle insertion geometry, moment arms or a physical conversion
+from micronewtons to joint torque. Body motion may not select among its members.

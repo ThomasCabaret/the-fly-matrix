@@ -1,0 +1,78 @@
+schema_version: 1
+id: campaign.motor_actuator_bridge_envelope.v0
+title: Conditional biological-force to direct-MuJoCo motor surrogate envelope
+status: completed_conditional_engineering_ensemble_no_promotion
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.population_dynamics.front_leg.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: MOTOR ACTUATOR BRIDGE / CONDITIONAL ENGINEERING ENSEMBLE / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+scope:
+  motor_body_ids: [807165, 809912, 810098, 818057, 819384, 821635, 827188, 909831, 1050031705, 1050189039]
+  expected_candidate_routes: 110
+  expected_actuators_per_body: 11
+  expected_unique_actuators: 22
+  routing_policy: >-
+    Account for the complete accepted left/right front-leg candidate envelope.
+    Do not select one motor-body to actuator route from physical response.
+
+frozen_inputs:
+  body_model: flygym==2.1.0
+  actuator_result: calibration/runner/actuator-causal-attribution-v1.yaml
+  actuator_contract_sha256: b1b11acc2b6d82dbfa6e8a4170c4b53475fb7d627ecb5a9de892efd87081abc2
+  motor_topology_sha256: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  direct_motor_force_limit_abs: 0.01
+  actuator_mode: fixed_gain_direct_joint_motor_no_bias_no_internal_dynamics
+
+conditional_force_evidence:
+  source: calibration/evaluations/motor-spike-force-pilot-fit-v0.yaml
+  status: unpromoted_one_cell_per_class_aggregate_diagnostic
+  diagnostic_uN_per_spike:
+    fast_81A07: 4.775318855516674
+    intermediate_22A08: 0.8268137341676737
+    slow_35C09: 0.022837494464033468
+  limitation: >-
+    These amplitudes condition the engineering envelope only. They are not
+    population estimates, twitch peaks, body assignments or accepted parameters.
+
+mechanical_probe:
+  scene: tethered_no_ground
+  settle_ms: 10.0
+  step_ms: 10.0
+  command_grid: [0.000001, 0.000003, 0.00001, 0.00003, 0.0001, 0.0003, 0.001, 0.003, 0.005]
+  minimum_joint_delta_rad: 0.000000001
+  force_command_atol: 0.000000000001
+  measured_quantity: target_joint_delta_relative_to_passive_fixture
+  censoring_policy: >-
+    When an actuator responds at the lowest command in the locked grid, report its
+    detection bound as left-censored. The derived lower gain remains conservative;
+    do not claim that the physical or numerical threshold was identified exactly.
+
+selection_policy:
+  lower_bound: worst_scoped_actuator_detection_command_divided_by_weakest_diagnostic_force
+  upper_bound: command_guard_divided_by_strongest_diagnostic_force
+  maximum_force_limit_fraction: 0.5
+  reported_candidate_count: 3
+  candidate_spacing: geometric_inclusive_bounds
+  command_offset: fixed_zero
+  promote_reference_gain: false
+  select_route: false
+  select_body_class: false
+
+accepted_claims:
+  - Every actuator in the bounded front-leg candidate envelope has a measured local response above the preregistered numerical threshold.
+  - A nonempty conditional gain interval can propagate the current force diagnostics while remaining below half of the frozen direct-motor force limit.
+  - The interval is an explicit engineering ensemble suitable for nonbehavioral end-to-end sensitivity runs.
+forbidden_claims:
+  - The conditional interval estimates a biological muscle moment arm or converts micronewtons to a physical joint torque.
+  - Any gain, offset, body class or route has been selected or promoted.
+  - The one-cell force diagnostics are population values or isolated twitch peaks.
+  - A posture, movement or named behavior has been trained, inspected or reproduced.
+next_action: >-
+  Propagate all three reported bridge gains, the unresolved motor classes and the
+  accepted route envelope through one minimal frozen sensor-CNS-motor chain.
+  Select nothing from body motion. Biological conversion remains blocked until
+  muscle insertion geometry, moment arms and compatible units are available.

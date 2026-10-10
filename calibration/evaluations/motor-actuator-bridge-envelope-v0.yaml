@@ -1,0 +1,52 @@
+schema_version: 1
+id: evaluation.motor_actuator_bridge_envelope.v0
+title: Evaluation of the conditional force-to-direct-motor surrogate envelope
+status: accepted_conditional_engineering_ensemble_no_reference_selected
+campaign_id: campaign.motor_actuator_bridge_envelope.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_bounded_surrogate_ensemble_no_biological_conversion
+
+procedure_result:
+  scoped_motor_bodies: 10
+  candidate_routes_accounted: 110
+  scoped_actuators: 22
+  mechanical_trials: 198
+  actuators_with_detectable_response: 22
+  force_command_max_abs_error: 0.0
+  lowest_tested_command: 0.000001
+  detection_floor_censored_actuators: 22
+  conditional_gain_interval_command_per_uN: [0.00004378764060895075, 0.0010470505009783303]
+  interval_ratio: 23.91201001965609
+  reported_gain_candidates: 3
+
+scientific_boundary:
+  parameter_values_promoted: 0
+  selected_reference_gains: 0
+  selected_routes: 0
+  selected_body_classes: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+  accepted_claims:
+    - The complete front-leg candidate actuator envelope responds locally in the frozen tethered direct-motor fixture.
+    - The current unpromoted one-cell force diagnostics admit a nonempty conservative engineering gain ensemble below half of the actuator force limit.
+    - This ensemble can be propagated in nonbehavioral sensitivity runs without pretending that one gain is biologically identified.
+  rejected_claims:
+    - The interval converts micronewtons into a physical joint torque or identifies muscle geometry.
+    - The grid floor identifies the exact minimum detectable command; all 22 thresholds are left-censored.
+    - One-cell class slopes are accepted population amplitudes or isolated twitch peaks.
+    - Body motion may choose a gain, route or body-class assignment.
+
+reproducibility:
+  command: motor_actuator_bridge_envelope.bat
+  runner_result: calibration/runner/motor-actuator-bridge-envelope-v0.yaml
+  artifact: data/derived/calibration/motor-actuator-bridge-envelope-v0/summary.json
+  tests: .venv/Scripts/python.exe -m pytest tests/test_motor_actuator_bridge.py
+  semantic_result_sha256: d5c3eacd8b0ca5da8f39b739156893092ff630b5f82587168a378e89c7976666
+next_action: >-
+  Propagate the three gain candidates jointly with the unresolved motor classes
+  and accepted route envelope in one minimal frozen sensor-CNS-motor chain. Keep
+  the biological force-to-torque conversion unresolved until compatible muscle
+  geometry and units exist.

@@ -1,0 +1,139 @@
+schema_version: 1
+id: runner_result.motor_actuator_bridge_envelope.v0
+campaign_id: campaign.motor_actuator_bridge_envelope.v0
+target_id: target.population_dynamics_assignment.v0
+status: accepted_conditional_engineering_gain_ensemble_no_reference_selected
+claim_label: MOTOR ACTUATOR BRIDGE / CONDITIONAL ENGINEERING ENSEMBLE / NO BEHAVIOR
+command: motor_actuator_bridge_envelope.bat
+behavior_targets: []
+hashes:
+  campaign_sha256: abbeb7d8167d8121c1b2d1f843f7ae0f9c76a7c9a61d4ae88c61387957acd26f
+  motor_fit_sha256: 397bcbb355efb4f1fe34004555c595bbf9c1400371501176472b81ee050a9b6a
+  actuator_result_sha256: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  route_table_sha256: a4ebad77da9ce2176d63824195eb017f0543090bdeeb1151ebb3f11d5e163352
+scope:
+  motor_body_ids:
+  - 807165
+  - 809912
+  - 810098
+  - 818057
+  - 819384
+  - 821635
+  - 827188
+  - 909831
+  - 1050031705
+  - 1050189039
+  candidate_routes: 110
+  actuator_ids:
+  - 36
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  - 69
+  - 70
+  - 71
+  - 72
+  - 73
+  - 74
+  - 75
+  - 76
+  - 77
+  - 78
+  - 79
+mechanical_probe:
+  actuators_probed: 22
+  commands_per_actuator: 9
+  trials: 198
+  maximum_force_command_abs_error: 0.0
+  actuators_with_detectable_response: 22
+  minimum_detectable_command_by_actuator:
+    '36': 1.0e-06
+    '37': 1.0e-06
+    '38': 1.0e-06
+    '39': 1.0e-06
+    '40': 1.0e-06
+    '41': 1.0e-06
+    '42': 1.0e-06
+    '43': 1.0e-06
+    '44': 1.0e-06
+    '45': 1.0e-06
+    '46': 1.0e-06
+    '69': 1.0e-06
+    '70': 1.0e-06
+    '71': 1.0e-06
+    '72': 1.0e-06
+    '73': 1.0e-06
+    '74': 1.0e-06
+    '75': 1.0e-06
+    '76': 1.0e-06
+    '77': 1.0e-06
+    '78': 1.0e-06
+    '79': 1.0e-06
+  worst_minimum_detectable_command: 1.0e-06
+  lowest_tested_command: 1.0e-06
+  detection_floor_censored_actuators: 22
+  detectable_response_per_command_abs:
+    minimum: 0.009840933526731287
+    median: 0.009851667136366756
+    maximum: 0.03858919677810799
+conditional_gain_envelope:
+  weakest_force_candidate:
+    id: slow_35C09
+    value_uN: 0.022837494464033468
+  strongest_force_candidate:
+    id: fast_81A07
+    value_uN: 4.775318855516674
+  lower_gain_command_per_uN: 4.378764060895075e-05
+  upper_gain_command_per_uN: 0.0010470505009783303
+  interval_ratio: 23.91201001965609
+  feasible: true
+  candidate_gains_command_per_uN:
+  - 4.378764060895075e-05
+  - 0.00021412115971164783
+  - 0.0010470505009783303
+  projected_commands:
+    fast_81A07:
+    - 0.00020909994583851013
+    - 0.001022496811336129
+    - 0.005
+    intermediate_22A08:
+    - 3.620422264227864e-05
+    - 0.0001770383156255004
+    - 0.0008657157345760267
+    slow_35C09:
+    - 1.0e-06
+    - 4.889990799547183e-06
+    - 2.391201001965609e-05
+accounting:
+  promoted_parameter_values: 0
+  selected_reference_gains: 0
+  optimized_parameters: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+  command_offsets_allowed: 0
+artifact_ref: data/derived/calibration/motor-actuator-bridge-envelope-v0/summary.json
+semantic_result_sha256: d5c3eacd8b0ca5da8f39b739156893092ff630b5f82587168a378e89c7976666
+accepted_claims:
+- Every actuator in the bounded front-leg candidate envelope has a measured local
+  response above the preregistered numerical threshold.
+- A nonempty conditional gain interval can propagate the current force diagnostics
+  while remaining below half of the frozen direct-motor force limit.
+- The interval is an explicit engineering ensemble suitable for nonbehavioral end-to-end
+  sensitivity runs.
+forbidden_claims:
+- The conditional interval estimates a biological muscle moment arm or converts micronewtons
+  to a physical joint torque.
+- Any gain, offset, body class or route has been selected or promoted.
+- The one-cell force diagnostics are population values or isolated twitch peaks.
+- A posture, movement or named behavior has been trained, inspected or reproduced.
+next_action: Propagate all three reported bridge gains, the unresolved motor classes
+  and the accepted route envelope through one minimal frozen sensor-CNS-motor chain.
+  Select nothing from body motion. Biological conversion remains blocked until muscle
+  insertion geometry, moment arms and compatible units are available.
