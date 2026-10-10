@@ -62,10 +62,12 @@ volumes sont dans [`docs/reproduction-pipeline.md`](docs/reproduction-pipeline.m
 - `dashboard.bat` recalcule puis ouvre la carte globale et le tableau de bord.
 - `build_preview.bat` recalcule le tableau de bord sans ouvrir le navigateur.
 - `build_audit_pack.bat` produit sous `audit-packs/` un petit ZIP textuel destiné
-  à une revue externe. Il inclut automatiquement politiques, décisions, registres,
-  statuts et configurations suivies par Git, borne les exemples de code et fournit
-  les manifestes complets des inclusions et omissions. Données, runs, rapports
-  générés, dépendances et secrets en sont exclus.
+  à une revue externe. Il inclut intégralement politiques et décisions, puis un
+  échantillon explicite des lignées scientifiques, registres et implémentations
+  autour du front courant. Des plafonds de lignes, d'octets et de code empêchent
+  sa croissance silencieuse ; les manifestes complets des inclusions et omissions
+  restent joints. Données, runs, rapports générés, dépendances et secrets en sont
+  exclus.
 - `wiring_map.bat` compile l'interface locale, régénère son graphe exhaustif depuis
   les manifestes réels, démarre un serveur local et ouvre la carte interactive.
 - `diagnostic_viewer.bat` ouvre le viewer MuJoCo et anime FlyBody avec un petit

@@ -2,7 +2,9 @@ param(
     [switch]$NoPause,
     [string]$OutputDirectory,
     [int64]$MaxTextFileBytes = 262144,
-    [int64]$CodeSampleBudgetBytes = 368640
+    [int64]$CodeSampleBudgetBytes = 184320,
+    [int64]$MaxIncludedBytes = 1048576,
+    [int64]$MaxIncludedLines = 18000
 )
 
 $ErrorActionPreference = "Stop"
@@ -27,12 +29,33 @@ $AllowedExtensions = @(
 $ExhaustivePrefixes = @(
     ".agents/skills/",
     "benchmarks/profiles/",
-    "calibration/",
     "decisions/",
     "docs/",
-    "ledger/",
-    "protocols/",
-    "wiring/revalidation/"
+    "protocols/"
+)
+
+# These calibration trees are compact contracts rather than run output. They are
+# included by class so future targets, models and parameter families appear
+# without editing this script. Detailed evidence/evaluation/runner records remain
+# sampled below to keep the pack useful in an LLM context window.
+$CalibrationContractPrefixes = @(
+    "calibration/_templates/",
+    "calibration/compilers/",
+    "calibration/diagnostics/",
+    "calibration/evaluation_candidates/",
+    "calibration/models/",
+    "calibration/parameter_families/",
+    "calibration/parameter_sets/",
+    "calibration/scopes/",
+    "calibration/targets/"
+)
+
+# Box and parameter-family records are compact and central to the architecture,
+# so their complete classes remain visible. The larger group/wire/validation
+# ledger is represented by the current end-to-end path and its templates below.
+$LedgerContractPrefixes = @(
+    "ledger/boxes/",
+    "ledger/parameter_families/"
 )
 
 $RootDocuments = @(
@@ -49,22 +72,121 @@ $RootDocuments = @(
     "runs/README.md"
 )
 
+# Stable high-level calibration state plus representative current and historical
+# lineage records. Campaign/result payloads are deliberately sampled: the pack
+# explains the active chain and its scientific gates without copying every fold
+# or every old diagnostic trace.
+$RepresentativeAuditFiles = @(
+    "calibration/README.md",
+    "calibration/dependency-dag.yaml",
+    "calibration/model-risks.yaml",
+    "calibration/state.yaml",
+    "calibration/campaigns/actuator-causal-attribution-v1.yaml",
+    "calibration/campaigns/feco-calcium-held-out-fit-v0.yaml",
+    "calibration/campaigns/front-leg-local-conversion-contract-v0.yaml",
+    "calibration/campaigns/motor-actuator-bridge-envelope-v0.yaml",
+    "calibration/campaigns/motor-spike-force-pilot-fit-v0.yaml",
+    "calibration/campaigns/motor-twitch-temporal-diagnostic-v0.yaml",
+    "calibration/campaigns/neural-model-class-brian2-conformance-v1.yaml",
+    "calibration/campaigns/neural-model-class-temporal-probes-v1.yaml",
+    "calibration/campaigns/population-dynamics-front-leg-accounting-v0.yaml",
+    "calibration/evidence/front-leg-local-conversion-sources-v0.yaml",
+    "calibration/evidence/front-leg-local-source-subsets-v0.yaml",
+    "calibration/evidence/front-leg-motor-class-ensemble-v0.yaml",
+    "calibration/evidence/front-leg-population-dynamics-v0.yaml",
+    "calibration/evidence/motor-spike-force-parser-v0.yaml",
+    "calibration/evaluations/feco-calcium-held-out-fit-v0.yaml",
+    "calibration/evaluations/front-leg-local-conversion-contract-v0.yaml",
+    "calibration/evaluations/motor-actuator-bridge-envelope-v0.yaml",
+    "calibration/evaluations/motor-spike-force-pilot-fit-v0.yaml",
+    "calibration/evaluations/motor-twitch-temporal-diagnostic-v0.yaml",
+    "calibration/evaluations/neural-model-class-gate-v0.yaml",
+    "calibration/evaluations/population-dynamics-front-leg-accounting-v0.yaml",
+    "calibration/runner/actuator-causal-attribution-v1.yaml",
+    "calibration/runner/front-leg-local-conversion-contract-v0.yaml",
+    "calibration/runner/front-leg-local-source-data-v0.yaml",
+    "calibration/runner/motor-actuator-bridge-envelope-v0.yaml",
+    "calibration/runner/neural-model-class-brian2-conformance-v1.yaml",
+    "calibration/runner/neural-model-class-temporal-probes-v1.yaml",
+    "calibration/runner/population-dynamics-front-leg-accounting-v0.yaml",
+    "wiring/revalidation/rules-v1.yaml",
+    "ledger/README.md",
+    "ledger/behaviors.yaml",
+    "ledger/datasets.yaml",
+    "ledger/groups/_template.yaml",
+    "ledger/groups/motor-vnc.yaml",
+    "ledger/groups/sensory-proprioceptive.yaml",
+    "ledger/groups/sensory-tactile.yaml",
+    "ledger/groups/sensory-visual.yaml",
+    "ledger/wires/_template.yaml",
+    "ledger/wires/body-to-proprioception.yaml",
+    "ledger/wires/body-to-world.yaml",
+    "ledger/wires/cns-to-motor-routing.yaml",
+    "ledger/wires/motor-routing-to-transduction.yaml",
+    "ledger/wires/motor-transduction-to-body.yaml",
+    "ledger/wires/proprioception-routing-to-cns.yaml",
+    "ledger/wires/proprioception-sensor-to-transduction.yaml",
+    "ledger/wires/proprioception-transduction-to-routing.yaml",
+    "ledger/wires/touch-routing-to-cns.yaml",
+    "ledger/wires/touch-sensor-to-transduction.yaml",
+    "ledger/wires/touch-transduction-to-routing.yaml",
+    "ledger/wires/vision-routing-to-cns.yaml",
+    "ledger/wires/vision-sensor-to-transduction.yaml",
+    "ledger/wires/vision-transduction-to-routing.yaml",
+    "ledger/wires/world-to-touch.yaml",
+    "ledger/wires/world-to-vision.yaml",
+    "ledger/validations/_template.yaml",
+    "ledger/validations/central-graph-runtime.yaml",
+    "ledger/validations/closed-loop.yaml",
+    "ledger/validations/ledger-integrity.yaml",
+    "ledger/validations/peripheral-parameter-compiler.yaml",
+    "ledger/validations/scientific-wiring-reaudit.yaml",
+    "ledger/validations/signed-dynamics-contract.yaml"
+)
+
+$PriorityLaunchers = @(
+    "build_audit_pack.bat",
+    "calibration_status.bat",
+    "download_data.bat",
+    "fit_feco_calcium_observation.bat",
+    "local_conversion_contract.bat",
+    "motor_actuator_bridge_envelope.bat",
+    "population_dynamics_assignment.bat",
+    "prepare_local_source_data.bat",
+    "run_analysis.bat",
+    "setup.bat",
+    "wiring_revalidation.bat"
+)
+
 # Whole files, not rewritten excerpts. The budget prevents implementation code
 # from crowding out policy. Update this short list only when a new subsystem is
 # important enough that an external reviewer needs to inspect its implementation.
 $PriorityCodeSamples = @(
     "src/the_fly_matrix/central_graph.py",
     "src/the_fly_matrix/calibration_registry.py",
-    "src/the_fly_matrix/calibration_parameters.py",
     "src/the_fly_matrix/calibration_runner.py",
-    "src/the_fly_matrix/wiring_revalidation.py",
-    "src/the_fly_matrix/runtime.py",
-    "src/the_fly_matrix/embodied_runtime.py",
-    "src/the_fly_matrix/physical_trajectory.py",
-    "src/the_fly_matrix/signed_dynamics.py",
-    "tests/test_calibration_registry.py",
-    "tests/test_wiring_revalidation.py",
-    "tests/test_embodied_runtime.py",
+    "src/the_fly_matrix/feco_calcium_fit.py",
+    "src/the_fly_matrix/motor_actuator_bridge.py",
+    "tests/test_motor_actuator_bridge.py",
+    "scripts/build_audit_pack.ps1"
+)
+
+$RequiredAuditPaths = @(
+    "AGENTS.md",
+    "PROJECT_STATE.md",
+    "README.md",
+    "docs/calibration-methodology.md",
+    "docs/reproduction-pipeline.md",
+    "docs/wiring-methodology.md",
+    "calibration/README.md",
+    "calibration/dependency-dag.yaml",
+    "calibration/model-risks.yaml",
+    "calibration/state.yaml",
+    "calibration/targets/population-dynamics-assignment-v0.yaml",
+    "calibration/campaigns/motor-actuator-bridge-envelope-v0.yaml",
+    "calibration/evaluations/motor-actuator-bridge-envelope-v0.yaml",
+    "decisions/0016-event-capable-typed-hybrid-neural-runtime.md",
+    "ledger/README.md",
     "scripts/build_audit_pack.ps1"
 )
 
@@ -192,10 +314,14 @@ try {
             $Reason = "non-text-or-unsupported-extension"
         } elseif ($RelativePath -match '(^|/)(\.env|[^/]*(secret|token|credential|private-key)[^/]*)$' -and $RelativePath -ne ".env.example") {
             $Reason = "secret-risk-name"
-        } elseif ((Split-Path -Parent $RelativePath) -eq "" -and $Extension -eq ".bat") {
+        } elseif ($PriorityLaunchers -contains $RelativePath) {
             $Category = "launcher"
-        } elseif (Starts-WithAny $RelativePath $ExhaustivePrefixes) {
+        } elseif ((Starts-WithAny $RelativePath $ExhaustivePrefixes) -or
+                  (Starts-WithAny $RelativePath $CalibrationContractPrefixes) -or
+                  (Starts-WithAny $RelativePath $LedgerContractPrefixes)) {
             $Category = "policy-status-and-reproducibility"
+        } elseif ($RepresentativeAuditFiles -contains $RelativePath) {
+            $Category = "representative-scientific-lineage"
         } elseif ($PriorityCodeSamples -contains $RelativePath) {
             $Category = "implementation-sample"
         } else {
@@ -231,6 +357,20 @@ try {
 
     Write-Host ("      {0} fichiers copies; {1} fichiers inventories mais omis." -f $Included.Count, $Omitted.Count)
 
+    $MissingRequired = @($RequiredAuditPaths | Where-Object { -not $Selected.Contains($_) })
+    if ($MissingRequired.Count -gt 0) {
+        throw "Pack incomplet; fichiers d'audit requis absents : $($MissingRequired -join ', ')"
+    }
+    $SourceBytes = [int64](($Included | Measure-Object -Property bytes -Sum).Sum)
+    $SourceLines = [int64](($Included | Measure-Object -Property lines -Sum).Sum)
+    if ($SourceBytes -gt $MaxIncludedBytes) {
+        throw "Pack trop volumineux avant compression : $SourceBytes octets > budget $MaxIncludedBytes. Revoir l'echantillonnage explicitement."
+    }
+    if ($SourceLines -gt $MaxIncludedLines) {
+        throw "Pack trop long : $SourceLines lignes > budget $MaxIncludedLines. Revoir l'echantillonnage explicitement."
+    }
+    Write-Host ("      Budget : {0}/{1} lignes; {2}/{3} octets." -f $SourceLines, $MaxIncludedLines, $SourceBytes, $MaxIncludedBytes)
+
     Write-Host "`n[2/4] Ecriture du contexte et des manifestes" -ForegroundColor Cyan
     $Dirty = if ($DirtyLines.Count -gt 0) { "yes" } else { "no" }
     $Readme = @"
@@ -251,10 +391,18 @@ large resources, secrets and most implementation code.
 - Included source lines: $([int64](($Included | Measure-Object -Property lines -Sum).Sum))
 
 Read `AGENTS.md`, `PROJECT_STATE.md`, `README.md`, `docs/`, `decisions/` and the
-canonical YAML registries first. `MANIFEST.tsv` records every copied file and its
-SHA-256. `OMISSIONS.tsv` records every tracked or visible non-ignored file that
-was not copied and why. Implementation samples are complete source files but are
-only examples; do not infer that omitted code does not exist.
+included canonical YAML records first. `MANIFEST.tsv` records every copied file
+and its SHA-256. `OMISSIONS.tsv` records every tracked or visible non-ignored file
+that was not copied and why.
+
+Selection is intentionally asymmetric: policy, decisions and documentation are
+complete; calibration contracts are included by class while detailed lineages
+are sampled around the active front and decisive historical gates; box and
+parameter-family ledgers are complete while groups, wires and validations are
+representative; implementation samples are complete source files but only
+examples. Do not infer that omitted code or records do not exist. The generator
+fails instead of silently exceeding $MaxIncludedLines lines or
+$MaxIncludedBytes source bytes.
 
 The archive copies current working-tree contents, so tracked modifications and
 eligible untracked files are represented even when `dirty` is `yes`.
@@ -318,8 +466,6 @@ eligible untracked files are represented even when `dirty` is `yes`.
     }
 
     $ArchiveItem = Get-Item -LiteralPath $ArchivePath
-    $SourceBytes = [int64](($Included | Measure-Object -Property bytes -Sum).Sum)
-    $SourceLines = [int64](($Included | Measure-Object -Property lines -Sum).Sum)
     Write-Host "`n[OK] Pack d'audit construit." -ForegroundColor Green
     Write-Host "     Archive       : $ArchivePath"
     Write-Host "     Taille ZIP    : $([math]::Round($ArchiveItem.Length / 1KB, 1)) KiB"
