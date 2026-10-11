@@ -1,0 +1,162 @@
+schema_version: 1
+id: campaign.neutral_embodied_stability_pilot.v0
+title: Bounded front-leg neutral embodied stability readiness pilot
+status: preregistered_schedule_builder_ready_execution_not_started
+target_id: target.technical_embodied_stability.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: NEUTRAL EMBODIED READINESS PANEL / NOT STABILITY / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Freeze an exact, bounded, behavior-naive execution panel for the first physical
+  front-leg chain pilot. Propagate the accepted uncertainty axes without choosing
+  a favorable profile, sensory representation, motor class, route or gain from
+  body motion. This version schedules execution; it performs no fitting and
+  cannot establish whole-body neutral stability.
+
+prior_diagnostic_exposure:
+  record: calibration/evaluations/embodied-measurement-contract-v1.yaml
+  permitted_use: technical_measurement_design_and_failure_instrumentation
+  forbidden_use: copy_observed_passive_magnitudes_into_acceptance_thresholds
+  named_behavior_observed: false
+
+frozen_inputs:
+  measurement_result: calibration/runner/embodied-measurement-contract-v1.yaml
+  uncertainty_result: calibration/runner/front-leg-uncertainty-propagation-v0.yaml
+  actuator_attribution_result: calibration/runner/actuator-causal-attribution-v1.yaml
+  motor_bridge_result: calibration/runner/motor-actuator-bridge-envelope-v0.yaml
+  motor_class_ensemble: calibration/evidence/front-leg-motor-class-ensemble-v0.yaml
+  intermediate_profile_panel: data/derived/calibration/front-leg-uncertainty-propagation-v0/intermediate-assignment-panel.csv
+  feco_joint_source_paths: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/feco-joint-source-paths.json
+  motor_basis_probes: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/motor-basis-probes.csv
+  body_model: flygym==2.1.0
+  actuator_type: MOTOR
+  actuator_semantics_contract_sha256: b1b11acc2b6d82dbfa6e8a4170c4b53475fb7d627ecb5a9de892efd87081abc2
+  physical_model_contract_sha256: 458720dff93d3db79196621232cd42ded42f55269d17c163aee59bfd041a439e
+
+frozen_semantic_hashes:
+  measurement_result: 64013262215f94ef231d3eaf73527106ebac25b0fc2eea025d988523c3ed2fc1
+  uncertainty_result: 7bcb1fac29bb2589f07d3e409fd5c878ae21c88e2c4bab5843784f7d2a751fee
+  motor_bridge_result: d5c3eacd8b0ca5da8f39b739156893092ff630b5f82587168a378e89c7976666
+
+execution_scope:
+  scene: simple_flat_ground
+  vision: disabled
+  local_chain: front_leg_feco_to_tibia_flexor
+  non_scoped_motor_outputs: frozen_zero_engineering_fixture
+  consequence: >-
+    This is a local-chain readiness panel. With non-scoped output frozen to zero,
+    neither passing nor failing can establish global whole-body stability.
+  frames_per_episode: 40
+  physics_substeps_per_frame: 50
+  expected_frame_dt_s: 0.005
+  perturbation_step: 10
+  perturbation:
+    id: generic_lateral_root_velocity_impulse
+    qvel_address: 1
+    delta: 0.1
+    units: FlyBody_model_length_units_per_second
+  paired_branches:
+    - identical_reset_baseline
+    - generic_qvel_perturbation
+
+schedule_policy:
+  scheduled_tuples: 120
+  seed_base: 27100
+  design: deterministic_factorized_round_robin_with_evenly_spaced_motor_indices
+  coverage:
+    intermediate_profiles: all_50_at_least_twice
+    feco_alternatives: all_24_exactly_five_times
+    motor_kernel_executable_assignments: 120_of_1024_evenly_spaced_including_both_extremes
+    motor_per_body_balance: 60_fast_and_60_intermediate_for_each_of_10_bodies
+    motor_pairwise_coverage: all_four_fast_intermediate_states_for_all_45_body_pairs
+    route_basis_edges: all_110_at_least_once
+    bridge_gains: all_3_exactly_40_times
+  explicitly_unscheduled:
+    motor_kernel_executable_assignments: 904
+    rationale: >-
+      The full executable Cartesian product has 405,504,000 tuples. This panel is
+      a deterministic sensitivity design, not a biological probability sample.
+  explicitly_blocked:
+    motor_slow_containing_assignments: 58025
+    reason: no_independent_isolated_slow_twitch_kernel
+  candidate_selection_from_body_motion: false
+  robust_claim_rule: a technical statement must hold for all 120 scheduled tuples
+
+parameter_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  frozen_mechanics: true
+  frozen_actuator_semantics: true
+  candidate_axes_are_propagated_not_optimized: true
+  interface_candidate_selection_allowed: false
+  common_parameter_fit_allowed_in_this_version: false
+  future_fit_rule: >-
+    A later campaign may expose a small shared technical family only after this
+    panel runs. It must apply the same family to every scheduled tuple and may not
+    select or discard tuples from physical output.
+
+technical_thresholds:
+  provenance_class: analytic_engineering_invariants_not_biological_thresholds
+  copied_from_prior_passive_magnitudes: false
+  execution_completion_fraction: 1.0
+  recorded_finite_fraction: 1.0
+  joint_limit_violation_samples: 0
+  gross_fall_proxy_frames: 0
+  paired_qvel_final_over_peak_max: 1.0
+  paired_com_final_over_peak_max: 1.0
+  descriptive_only_no_acceptance_threshold:
+    - physical_com_jerk
+    - direct_motor_work_proxy
+    - contact_transition_count
+    - contact_force_norm
+  limitations:
+    - gross_fall_proxy_is_not_a_complete_fall_classifier
+    - direct_motor_work_is_not_biological_energy
+    - a_local_front_leg_panel_cannot_validate_whole_body_stability
+
+acceptance:
+  available_intermediate_profiles: 50
+  available_feco_alternatives: 24
+  available_motor_kernel_executable_assignments: 1024
+  available_route_basis_edges: 110
+  available_bridge_gains: 3
+  scheduled_tuples: 120
+  paired_physical_episodes: 240
+  scheduled_motor_assignments: 120
+  blocked_slow_assignments: 58025
+  require_all_profiles: true
+  require_all_feco_alternatives: true
+  require_all_route_basis_edges: true
+  require_all_bridge_gains: true
+  require_balanced_motor_classes_per_body: true
+  require_motor_pairwise_state_coverage: true
+  require_zero_behavior_exposure: true
+  require_zero_parameter_promotion: true
+
+compute_budget:
+  physical_episodes: 240
+  simulated_seconds: 48.0
+  maximum_wall_clock_hours: 4
+  maximum_gpu_hours: 4
+  stop_on_contract_drift: true
+  stop_on_repeated_runtime_error_class: 3
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - The exact first readiness panel is reproducible and every accepted uncertainty axis is either scheduled, explicitly unscheduled or blocked.
+  - The panel can test execution and technical robustness over its 120 tuples without selecting an interface candidate from body motion.
+forbidden_claims:
+  - The schedule or a future successful run establishes neutral whole-body stability.
+  - A scheduled tuple is more biologically plausible than an unscheduled tuple.
+  - A favorable physical trajectory may select a profile, representation, class, route or gain.
+  - Slow motor assignments may borrow a fast or intermediate kernel.
+  - Any observed motion is a behavior or an emergent-behavior evaluation.
+next_action: >-
+  Implement the execution adapter for this immutable 120-tuple schedule, first run
+  a small contract sentinel without opening results for selection, then execute
+  the bounded panel if runtime and budget checks pass. Report every tuple as
+  completed, failed, errored or budget-skipped and retain all failures.

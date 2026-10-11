@@ -1,0 +1,18 @@
+schema_version: 1
+id: evaluation.neutral_embodied_stability_pilot.v0
+title: Bounded front-leg neutral embodied readiness pilot evaluation
+status: pending_execution
+campaign_id: campaign.neutral_embodied_stability_pilot.v0
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: NEUTRAL EMBODIED READINESS PANEL / NOT STABILITY / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+acceptance_result: pending_execution
+schedule_result: calibration/runner/neutral-embodied-stability-pilot-schedule-v0.yaml
+parameter_values_promoted: 0
+stability_accepted: false
+next_action: >-
+  Do not fill this record from visual inspection. Execute the versioned schedule
+  through the dedicated runner and copy its complete accounting, failures,
+  semantic hash and bounded conclusion here.

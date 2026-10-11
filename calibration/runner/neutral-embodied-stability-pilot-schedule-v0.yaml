@@ -1,0 +1,265 @@
+schema_version: 1
+id: runner_result.neutral_embodied_stability_pilot_schedule.v0
+campaign_id: campaign.neutral_embodied_stability_pilot.v0
+target_id: target.technical_embodied_stability.v0
+status: schedule_complete_execution_not_started_stability_unresolved
+claim_label: NEUTRAL EMBODIED READINESS PANEL / NOT STABILITY / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+command: neutral_embodied_pilot_schedule.bat
+campaign_sha256: 1c4e6c89c74c7e674a88cba9c25dfb921947673a3354bb629e28804a9a41ee22
+implementation_sha256: dfc5fad97a151af9cf5a35846de72281bd6bafcbb4e8e2e80f723dd31babeb97
+input_hashes:
+  intermediate_profile_panel: 4557f1bf7a999b4e3f71a6fd2d2f8d26b3b83ab1a654d46e2e20165d77f7cdc2
+  feco_joint_source_paths: 734607723923ff155d3586674f882dc45a18e8dae332f38ff499e3288b1912ce
+  motor_basis_probes: 5a7e9ad2f9ae693c29fcbf9069ae5d087455636b0506a70d19e7482685041093
+  motor_class_ensemble: 3595b0420bb815887d2d892ad5f9088e5af61a53ba38a7ef43c28277ac2304fa
+frozen_semantic_hashes:
+  measurement_result: 64013262215f94ef231d3eaf73527106ebac25b0fc2eea025d988523c3ed2fc1
+  uncertainty_result: 7bcb1fac29bb2589f07d3e409fd5c878ae21c88e2c4bab5843784f7d2a751fee
+  motor_bridge_result: d5c3eacd8b0ca5da8f39b739156893092ff630b5f82587168a378e89c7976666
+coverage:
+  scheduled_tuples: 120
+  paired_physical_episodes: 240
+  intermediate_profiles:
+    available: 50
+    scheduled_unique: 50
+    unscheduled: 0
+    minimum_repetitions: 2
+    maximum_repetitions: 3
+  feco_alternatives:
+    available: 24
+    scheduled_unique: 24
+    unscheduled: 0
+    minimum_repetitions: 5
+    maximum_repetitions: 5
+  motor_assignments:
+    scientific_total: 59049
+    kernel_executable_total: 1024
+    scheduled_unique: 120
+    kernel_executable_unscheduled: 904
+    blocked_slow_containing: 58025
+    selected_indices:
+    - 0
+    - 9
+    - 17
+    - 26
+    - 34
+    - 43
+    - 52
+    - 60
+    - 69
+    - 77
+    - 86
+    - 95
+    - 103
+    - 112
+    - 120
+    - 129
+    - 138
+    - 146
+    - 155
+    - 163
+    - 172
+    - 181
+    - 189
+    - 198
+    - 206
+    - 215
+    - 224
+    - 232
+    - 241
+    - 249
+    - 258
+    - 266
+    - 275
+    - 284
+    - 292
+    - 301
+    - 309
+    - 318
+    - 327
+    - 335
+    - 344
+    - 352
+    - 361
+    - 370
+    - 378
+    - 387
+    - 395
+    - 404
+    - 413
+    - 421
+    - 430
+    - 438
+    - 447
+    - 456
+    - 464
+    - 473
+    - 481
+    - 490
+    - 499
+    - 507
+    - 516
+    - 524
+    - 533
+    - 542
+    - 550
+    - 559
+    - 567
+    - 576
+    - 585
+    - 593
+    - 602
+    - 610
+    - 619
+    - 628
+    - 636
+    - 645
+    - 653
+    - 662
+    - 671
+    - 679
+    - 688
+    - 696
+    - 705
+    - 714
+    - 722
+    - 731
+    - 739
+    - 748
+    - 757
+    - 765
+    - 774
+    - 782
+    - 791
+    - 799
+    - 808
+    - 817
+    - 825
+    - 834
+    - 842
+    - 851
+    - 860
+    - 868
+    - 877
+    - 885
+    - 894
+    - 903
+    - 911
+    - 920
+    - 928
+    - 937
+    - 946
+    - 954
+    - 963
+    - 971
+    - 980
+    - 989
+    - 997
+    - 1006
+    - 1014
+    - 1023
+    signature_body_order:
+    - 807165
+    - 809912
+    - 810098
+    - 818057
+    - 819384
+    - 821635
+    - 827188
+    - 909831
+    - 1050031705
+    - 1050189039
+    per_body_class_counts:
+      '807165':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '809912':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '810098':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '818057':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '819384':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '821635':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '827188':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '909831':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '1050031705':
+        fast_81A07: 60
+        intermediate_22A08: 60
+      '1050189039':
+        fast_81A07: 60
+        intermediate_22A08: 60
+    body_pairs_with_all_four_fast_intermediate_states: 45
+    body_pairs_total: 45
+  route_basis_edges:
+    available: 110
+    scheduled_unique: 110
+    unscheduled: 0
+    minimum_repetitions: 1
+    maximum_repetitions: 2
+  bridge_gains:
+    available: 3
+    scheduled_unique: 3
+    unscheduled: 0
+    minimum_repetitions: 40
+    maximum_repetitions: 40
+  full_executable_cartesian_product: 405504000
+  full_scientific_cartesian_product: 23383404000
+  cartesian_product_materialized: false
+threshold_contract:
+  provenance_class: analytic_engineering_invariants_not_biological_thresholds
+  copied_from_prior_passive_magnitudes: false
+  execution_completion_fraction: 1.0
+  recorded_finite_fraction: 1.0
+  joint_limit_violation_samples: 0
+  gross_fall_proxy_frames: 0
+  paired_qvel_final_over_peak_max: 1.0
+  paired_com_final_over_peak_max: 1.0
+  descriptive_only_no_acceptance_threshold:
+  - physical_com_jerk
+  - direct_motor_work_proxy
+  - contact_transition_count
+  - contact_force_norm
+  limitations:
+  - gross_fall_proxy_is_not_a_complete_fall_classifier
+  - direct_motor_work_is_not_biological_energy
+  - a_local_front_leg_panel_cannot_validate_whole_body_stability
+parameter_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  frozen_mechanics: true
+  frozen_actuator_semantics: true
+  candidate_axes_are_propagated_not_optimized: true
+  interface_candidate_selection_allowed: false
+  common_parameter_fit_allowed_in_this_version: false
+  future_fit_rule: A later campaign may expose a small shared technical family only
+    after this panel runs. It must apply the same family to every scheduled tuple
+    and may not select or discard tuples from physical output.
+schedule:
+  path: calibration/schedules/neutral-embodied-stability-pilot-v0.csv
+  sha256: bc9663d1932aa5863666a82d48d5c8db34e0783032c1820e4c863de0bea21911
+  semantic_sha256: fe50da0f8dd102eac8ee60bdcb5ae1e8215f1aa9a1fa0aa4d4628349ecd3e885
+interpretation:
+  schedule_preregistered: true
+  execution_started: false
+  stability_accepted: false
+  parameter_values_promoted: 0
+  candidate_selected_from_body_motion: false
+  global_whole_body_stability_claim_allowed: false
+next_action: Implement the execution adapter for this immutable 120-tuple schedule,
+  first run a small contract sentinel without opening results for selection, then
+  execute the bounded panel if runtime and budget checks pass. Report every tuple
+  as completed, failed, errored or budget-skipped and retain all failures.
+semantic_result_sha256: b65d33ad87980935cbe1d6ff6b0c027df7a5aaf78ae1fd0364331795ee193e3f

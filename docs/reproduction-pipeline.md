@@ -251,9 +251,13 @@ Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and
 validates true COM, joint limits, physical jerk, contacts/forces, a declared
 direct-MOTOR work proxy, failure masks and paired recovery. It fits zero values
-and chooses zero thresholds or profiles. The next scientific step in
-`calibration/state.yaml:next_action` is now to preregister the explicitly bounded
-neutral pilot schedule and obtain its technical thresholds independently.
+and chooses zero thresholds or profiles. Then run
+`neutral_embodied_pilot_schedule.bat` to reconstruct the versioned 120-tuple,
+240-episode readiness panel. That command validates complete small-axis coverage,
+the balanced motor subset and explicit unscheduled/blocked accounting; it does
+not execute the physical campaign. The next scientific step in
+`calibration/state.yaml:next_action` is the bounded execution adapter and its
+contract sentinel.
 
 ### Historical neural-model gate
 

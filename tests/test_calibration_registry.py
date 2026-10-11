@@ -661,6 +661,44 @@ class CalibrationRegistryTests(unittest.TestCase):
             evaluation["reproducibility"]["semantic_result_sha256"],
         )
 
+    def test_neutral_embodied_pilot_schedule_is_bounded_and_nonselecting(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "neutral-embodied-stability-pilot-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "neutral-embodied-stability-pilot-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT
+            / "runner"
+            / "neutral-embodied-stability-pilot-schedule-v0.yaml"
+        )
+
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertEqual(campaign["parameter_policy"]["optimized_parameters"], 0)
+        self.assertFalse(campaign["schedule_policy"]["candidate_selection_from_body_motion"])
+        self.assertEqual(evaluation["acceptance_result"], "pending_execution")
+        self.assertEqual(
+            runner["status"],
+            "schedule_complete_execution_not_started_stability_unresolved",
+        )
+        self.assertEqual(runner["coverage"]["scheduled_tuples"], 120)
+        self.assertEqual(runner["coverage"]["paired_physical_episodes"], 240)
+        self.assertEqual(runner["coverage"]["intermediate_profiles"]["unscheduled"], 0)
+        self.assertEqual(runner["coverage"]["feco_alternatives"]["unscheduled"], 0)
+        self.assertEqual(runner["coverage"]["route_basis_edges"]["unscheduled"], 0)
+        self.assertEqual(runner["coverage"]["bridge_gains"]["unscheduled"], 0)
+        self.assertEqual(
+            runner["coverage"]["motor_assignments"]["kernel_executable_unscheduled"],
+            904,
+        )
+        self.assertEqual(
+            runner["coverage"]["motor_assignments"]["blocked_slow_containing"],
+            58_025,
+        )
+        self.assertFalse(runner["interpretation"]["stability_accepted"])
+        self.assertEqual(runner["interpretation"]["parameter_values_promoted"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

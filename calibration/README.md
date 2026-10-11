@@ -26,6 +26,8 @@ rerun every historical campaign.
 - `evidence/`: deterministic evidence-transfer recipes;
 - `diagnostics/`: preregistered non-fitting sweeps used to characterize unknown
   models without selecting or promoting values;
+- `schedules/`: exact versioned trial tuples for bounded campaigns; generated
+  schedule validators must account for every omitted or blocked alternative;
 - `compilers/`: hash-locked contracts that compile logical parameter families
   into runtime vectors without choosing or fitting their values;
 - `runner/`: immutable runner jobs plus compact accepted infrastructure results;
@@ -368,3 +370,12 @@ Its accepted result selects zero values, thresholds, uncertainty profiles or
 behaviors. The passive magnitudes are descriptive only. The next campaign must
 declare a bounded schedule and obtain thresholds independently rather than infer
 them from this fixture.
+
+Run `neutral_embodied_pilot_schedule.bat` to reconstruct the immutable first
+readiness panel. The versioned CSV has 120 tuples and 240 paired physical
+episodes. It covers all 50 intermediate profiles, 24 FeCO alternatives, 110 route
+basis edges and three gains, plus a deterministic balanced sample of 120/1,024
+fast/intermediate motor assignments. The other 904 executable assignments and
+all 58,025 slow-containing blocked assignments remain counted. This command does
+not run physics, fit a value or select a candidate; the execution adapter is the
+next registered action.
