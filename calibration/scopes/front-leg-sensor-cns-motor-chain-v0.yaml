@@ -1,7 +1,7 @@
 schema_version: 1
 id: scope.front_leg_sensor_cns_motor_chain.v0
 title: Bounded front-leg FeCO to tibia-flexor chain envelope
-status: factorized_envelope_accounted_intermediate_population_rules_complete_values_open
+status: factorized_envelope_accounted_unresolved_propagation_complete_values_open
 target_id: target.population_dynamics_assignment.v0
 
 endpoint_populations:
@@ -34,6 +34,8 @@ generated_intermediate_population:
   source_artifact: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/intermediate-populations.csv
   classified_artifact: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
   evidence_rules: calibration/evidence/front-leg-intermediate-dynamics-rules-v0.yaml
+  propagation_policy: calibration/campaigns/front-leg-uncertainty-propagation-v0.yaml
+  propagation_result: calibration/runner/front-leg-uncertainty-propagation-v0.yaml
 
 topology_boundary:
   central_body_id_sha256: 6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5
@@ -72,7 +74,7 @@ reproducibility:
   runner_result: calibration/runner/front-leg-sensor-cns-motor-chain-v0.yaml
   campaign: calibration/campaigns/front-leg-sensor-cns-motor-chain-v0.yaml
 next_action: >-
-  Preserve the two event-required tibia-extensor bodies and propagate the other
-  148 bodies under an explicit bounded unresolved-assignment policy. Define local
-  acceptance decisions for the FeCO and motor interface ensembles without using
-  body trajectory or a named behavior; do not borrow the missing slow kernel.
+  Preserve the completed 50-profile intermediate policy and factorized FeCO/motor
+  decisions while freezing the neutral embodied measurement contract. Any first
+  executable schedule must enumerate its tuples, retain unscheduled accounting
+  and keep every slow-containing motor branch blocked.

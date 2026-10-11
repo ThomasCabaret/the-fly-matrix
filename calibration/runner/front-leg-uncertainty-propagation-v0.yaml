@@ -1,0 +1,81 @@
+schema_version: 1
+id: runner_result.front_leg_uncertainty_propagation.v0
+campaign_id: campaign.front_leg_uncertainty_propagation.v0
+target_id: target.population_dynamics_assignment.v0
+status: pass_bounded_propagation_feasible_interface_decisions_explicit
+claim_label: UNCERTAINTY PROPAGATION / DIAGNOSTIC COVERING PANEL / NO PROMOTION
+command: front_leg_uncertainty_panel.bat
+behavior_targets: []
+campaign_sha256: 2af26a99006175da4ddbc1e0f8061c5b4ee299cd3415b48ae19217677c434734
+semantic_result_sha256: 7bcb1fac29bb2589f07d3e409fd5c878ae21c88e2c4bab5843784f7d2a751fee
+intermediate_panel:
+  unresolved_bodies: 148
+  scientific_assignment_space: 2^148
+  scientific_assignment_space_decimal: '356811923176489970264571492362373784095686656'
+  diagnostic_profiles: 50
+  complement_pairs: 24
+  unique_profile_signatures: 50
+  assignments_per_body:
+    event_candidate: 25
+    graded_candidate: 25
+  body_pairs: 10878
+  pairwise_state_count_histogram:
+    '1': 0
+    '2': 0
+    '3': 0
+    '4': 10878
+  pairs_with_all_four_states: 10878
+  incomplete_pair_count: 0
+  incomplete_pairs: []
+  higher_order_coverage_claimed: false
+  probability_prior_implied: false
+interface_decisions:
+  feco:
+    boundary_alternatives: 24
+    source_candidates: 7
+    native_representations: 2
+    decision: accepted_as_unselected_propagation_set
+    parameter_values_promoted: 0
+  motor:
+    body_class_variables: 10
+    class_candidates_per_body: 3
+    scientific_class_assignment_upper_bound: 59049
+    kernel_executable_fast_or_intermediate_assignments: 1024
+    kernel_blocked_slow_containing_assignments: 58025
+    route_basis_edges: 110
+    routing_simplex_dof_upper_bound: 100
+    bridge_gain_candidates: 3
+    decision: partially_executable_factorized_set_slow_branch_blocked
+    parameter_values_promoted: 0
+scientific_boundary:
+  parameter_values_promoted: 0
+  native_dynamics_assignments_promoted: 0
+  routes_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+  slow_kernel_borrowed: false
+artifact_ref: data/derived/calibration/front-leg-uncertainty-propagation-v0/summary.json
+accepted_claims:
+- The 2^148 intermediate assignment space can be probed with a deterministic 50-profile
+  pairwise covering panel without treating that panel as the full scientific ensemble.
+- Every unresolved intermediate is exercised equally in event and graded candidate
+  modes, and every pair sees all four state combinations.
+- The 24 FeCO alternatives are locally accepted as an unselected uncertainty set suitable
+  for factorized propagation.
+- The motor uncertainty set is explicitly partitioned into 1024 fast/intermediate
+  assignments with diagnostic kernels and 58025 slow-containing assignments blocked
+  by missing temporal evidence.
+- Route bases and bridge gains may enter declared nonbehavioral sensitivity schedules
+  without becoming biological reference values.
+forbidden_claims:
+- Pairwise panel coverage validates all higher-order interactions or reduces 2^148
+  scientific possibilities to 50.
+- A hash profile is a biological prior, parameter set or preferred native assignment.
+- FeCO residual ranking identifies event versus graded native dynamics.
+- Slow motor dynamics may be copied from fast or intermediate cells.
+- Body motion, stability or a named behavior may select any profile, path, class,
+  route or gain.
+next_action: Freeze the complete measurement contract for a minimal neutral embodied
+  technical campaign, then schedule a bounded factorized subset explicitly. Keep all
+  58025 slow-containing motor assignments visible as blocked and report robustness
+  only over the tuples actually executed.

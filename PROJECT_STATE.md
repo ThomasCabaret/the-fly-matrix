@@ -102,6 +102,18 @@ event/graded. Les 673 chemins à deux sauts passant par un nouvel intermédiaire
 sont tous attribués ; leur participation sert seulement à prioriser l'acquisition
 future de preuves. Zéro constante, chemin fonctionnel ou comportement est choisi.
 
+La propagation de cette incertitude est maintenant préréférencée et exécutable
+sans réduire silencieusement l'espace scientifique `2^148`. Un panneau
+diagnostique déterministe de 50 profils fait apparaître chacun des 148 corps 25
+fois comme candidat événementiel et 25 fois comme candidat gradué ; les 10 878
+paires voient toutes les quatre combinaisons. Ce panneau ne couvre pas les
+interactions d'ordre supérieur et ne définit aucune probabilité biologique. Les
+24 alternatives FeCO sont acceptées comme ensemble non sélectionné. Côté moteur,
+1 024 affectations ne contenant que les classes rapide/intermédiaire disposent de
+noyaux diagnostiques ; les 58 025 affectations contenant la classe lente restent
+explicitement bloquées. Aucun noyau lent n'est emprunté, et aucune valeur, route,
+représentation native ou réponse corporelle n'est promue.
+
 Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
 précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
 GCaMP causal normalisé, mais révèle deux divergences conservées comme telles :
@@ -752,7 +764,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 46 neurones locaux sont comptabilisés, dont 10 motoneurones `event_required` et 36 FeCO `dual_unresolved` ; leurs frontières de conversion typées sont exécutables ; les sept chemins FeCO ont terminé 86/86 folds biologiques ; le pilote moteur a normalisé 194 essais, terminé trois fits agrégés et un diagnostic temporel sur 33 traces mono-spike, mais tous restent non promus ; l'ensemble de classes moteur 3^10 reste explicite, zéro valeur et zéro jeu complet sont promus**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; la propagation des 148 intermédiaires est préréférencée par un panneau pairwise de 50 profils sans réduire l'espace `2^148` ; les 24 alternatives FeCO restent non sélectionnées ; le moteur conserve 59 049 affectations, dont 58 025 bloquées par le noyau lent absent ; zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **extracteur descriptif validé sur 7 groupes ; 5 quantités scientifiques restent explicitement indisponibles, zéro seuil choisi et stabilité toujours non calibrée**.
@@ -821,7 +833,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **211 tests** actuels passent, y compris les
+conservées et classifiées. Les **241 tests** actuels passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -981,6 +993,8 @@ fit_motor_spike_force_pilot.bat # 3 fits agrégés diagnostiques terminés, aucu
 fit_motor_twitch_temporal_pilot.bat # 33 traces mono-spike, rapide soutenu, intermédiaire faible, lent non identifié
 motor_actuator_bridge_envelope.bat # 198 probes tethered, ensemble de 3 gains conditionnels, aucune promotion
 front_leg_chain_envelope.bat # 360 couples CNS, 24 alternatives FeCO, 990 probes motrices, aucune sélection
+front_leg_intermediate_dynamics.bat # 150 intermédiaires comptés, 2 event_required, 148 dual_unresolved
+front_leg_uncertainty_panel.bat # 50 profils pairwise, FeCO/moteur factorisés, zéro promotion
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

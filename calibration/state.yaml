@@ -21,7 +21,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.front_leg_intermediate_dynamics_accounting.v0
+last_completed_campaign_id: campaign.front_leg_uncertainty_propagation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -62,6 +62,7 @@ readiness:
   motor_actuator_bridge: completed_198_tethered_trials_22_of_22_scoped_actuators_detectable_three_conditional_gains_no_reference_or_biological_conversion
   front_leg_sensor_cns_motor_chain: completed_factorized_envelope_360_of_360_endpoint_pairs_reachable_within_three_hops_150_new_intermediates_dual_unresolved_24_sensory_alternatives_990_motor_basis_probes_zero_selection
   front_leg_intermediate_dynamics: completed_rules_first_150_of_150_accounted_2_tibia_extensor_event_required_148_dual_unresolved_zero_values
+  front_leg_uncertainty_propagation: completed_50_profile_balanced_pairwise_panel_10878_of_10878_body_pairs_four_state_coverage_feco_24_unselected_motor_slow_branches_blocked_zero_values
   spike_event_runtime: fixed_delay_lif_v1_brian2_2_5_1_scheduler_conformant_full_graph_load_validated_population_promotion_open
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
@@ -105,14 +106,13 @@ blocked_by:
   - The separate temporal-shape diagnostic exhaustively accounts for the same 194 trials and retains 18 fast plus 15 intermediate neutral-position single-spike traces. Five-fold trial-held-out normalized-shape fits explain 0.7844 and 0.2767 of observed energy respectively; the fast within-cell envelope is comparatively narrow, the intermediate envelope is broad and weak, and slow has no isolated single-spike trial. The design followed exploratory inspection, each trace uses its own peak normalization, and one cell cannot identify a population kernel; zero values and zero body assignments are promoted.
   - The separate force-to-direct-motor bridge diagnostic accounts for all 110 candidate routes from the ten selected motor bodies to 22 front-leg actuators. All 22 respond at the lowest tested command in 198 tethered trials, so their exact detection thresholds are left-censored. Conditional on the unpromoted one-cell force slopes, three engineering gains span 4.3788e-5 to 1.0471e-3 command/uN while the strongest candidate remains below half of the fixed force limit. This is an executable sensitivity ensemble, not a biological force-to-torque conversion or a selected reference.
   - The first factorized sensor-CNS-motor chain envelope is complete without selecting a path or parameter. Its 150 new non-endpoint bodies now have exhaustive rules: two annotated tibia-extensor motor neurons receive a type-level event requirement from independent adult-fly physiology, while 148 remain dual_unresolved. One unresolved body lacks a type annotation and five additional motor types lack a direct dynamics transfer. The frozen transmitter prior covers all 150 but never determines native dynamics. The interface accounting still retains 24 joint FeCO alternatives, the 59,049 motor-class upper bound, 110 route basis edges and three gains; 330 slow-class probes remain blocked by the absent isolated-twitch kernel.
+  - The unresolved local-chain policy is now executable without silently reducing uncertainty. The scientific intermediate space remains 2^148; a deterministic 50-profile diagnostic panel balances every body 25/25 between event and graded candidates and covers all four states for all 10,878 body pairs, but claims no higher-order completeness or probability prior. All 24 FeCO alternatives are accepted as one unselected propagation set. The motor set remains factorized: 1,024 fast/intermediate assignments have diagnostic kernels, while all 58,025 slow-containing assignments remain explicitly blocked rather than receiving a borrowed kernel. No value, route or native assignment is promoted.
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Under target.population_dynamics_assignment.v0, preregister a tractable
-  unresolved-assignment propagation policy for the 148 intermediate bodies that
-  remain dual_unresolved. In parallel, version explicit local acceptance
-  decisions for the 24 FeCO source/representation alternatives and the motor
-  class/kernel/route/gain ensemble. Do not use body motion to select a candidate,
-  infer native dynamics from transmitter or path count, borrow a slow kernel
-  silently, or open neutral embodied fitting until consumed values are frozen or
-  their unresolved propagation policy is preregistered.
+  Freeze the complete measurement contract for a minimal neutral embodied
+  technical campaign, including paired baseline/perturbation scenes, joint-limit
+  margins, contact/force availability, fall and numerical-failure masks, and an
+  explicit schedule over the factorized front-leg uncertainty axes. Report every
+  scheduled and unscheduled tuple. Do not inspect a named behavior, promote a
+  favorable profile, or hide the 58,025 slow-containing blocked assignments.

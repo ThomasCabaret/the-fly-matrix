@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_intermediate_rules_complete_2_event_required_148_dual_unresolved_interface_values_unresolved
+status: active_front_leg_conversion_contracts_executable_uncertainty_propagation_complete_values_unresolved_measurement_contract_next
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,14 +64,14 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_24_sensory_alternatives_59049_motor_class_upper_bound_zero_values
+validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_50_profile_pairwise_panel_24_sensory_alternatives_59049_motor_class_upper_bound_zero_values
 blocked_reason: null
 next_action: >-
-  The first chain now accounts for all 196 unique bodies: the ten tibia-flexor
-  endpoints and two newly typed tibia-extensor intermediates require events,
-  while 36 FeCO endpoints and 148 intermediates remain dual_unresolved. Version a
-  tractable unresolved-assignment propagation policy; never infer dynamics from
-  transmitter or path count. Preserve the 24 FeCO alternatives, factorized
-  59,049 motor-class upper bound, 110 route basis edges and three bridge gains.
-  Freeze or explicitly propagate interface values before neutral embodied fitting;
-  the missing slow temporal kernel remains blocked rather than borrowed.
+  The first chain accounts for all 196 unique bodies and now has an explicit
+  unresolved propagation policy. The 148 intermediate alternatives retain their
+  full 2^148 scientific space; a 50-profile balanced pairwise diagnostic panel is
+  only a bounded execution design. The 24 FeCO alternatives are accepted as one
+  unselected set. The motor set retains all 59,049 class assignments, with 58,025
+  slow-containing branches visibly blocked. Freeze the neutral embodied
+  measurement contract and schedule an explicitly accounted factorized subset;
+  never choose a candidate from body motion or a named behavior.

@@ -1,0 +1,93 @@
+schema_version: 1
+id: campaign.front_leg_uncertainty_propagation.v0
+title: Bounded propagation of unresolved front-leg chain uncertainty
+status: preregistered_runnable_no_scientific_reduction
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: UNCERTAINTY PROPAGATION / DIAGNOSTIC COVERING PANEL / NO PROMOTION
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Make the unresolved local chain tractable without pretending to enumerate or
+  shrink its scientific uncertainty. Compile a deterministic balanced pairwise
+  sensitivity panel for the 148 dual-unresolved intermediates, and record
+  separate local acceptance decisions for the FeCO and motor interface sets.
+
+frozen_inputs:
+  classified_intermediates: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
+  intermediate_evaluation: calibration/evaluations/front-leg-intermediate-dynamics-accounting-v0.yaml
+  feco_evaluation: calibration/evaluations/feco-calcium-held-out-fit-v0.yaml
+  motor_class_ensemble: calibration/evidence/front-leg-motor-class-ensemble-v0.yaml
+  motor_temporal_evaluation: calibration/evaluations/motor-twitch-temporal-diagnostic-v0.yaml
+  motor_bridge_evaluation: calibration/evaluations/motor-actuator-bridge-envelope-v0.yaml
+  chain_evaluation: calibration/evaluations/front-leg-sensor-cns-motor-chain-v0.yaml
+
+intermediate_propagation_policy:
+  scientific_state: factorized_148_independent_categorical_variables_no_probability_prior
+  scientific_assignment_space: 2^148
+  execution_design: deterministic_hash_profiles_plus_complements_and_homogeneous_extremes
+  hash_namespace: front-leg-unresolved-v0
+  complement_pairs: 24
+  intended_coverage:
+    - every body appears equally often as event_candidate and graded_candidate
+    - every body pair sees all four binary state combinations
+    - homogeneous all-event and all-graded extremes remain visible
+  explicitly_not_covered:
+    - exhaustive higher-order interactions
+    - a biological probability distribution
+    - evidence for a native dynamics assignment
+  downstream_rule: >-
+    A technical conclusion may be called robust only if its preregistered
+    criterion holds across every scheduled profile. Failure escalates the model
+    or acquisition gate; it may not be repaired by choosing a favorable profile.
+
+interface_acceptance_policy:
+  feco: >-
+    Accept all 24 source-path/native-representation alternatives as one
+    unselected propagation set. Residual ranking does not select native units.
+  motor: >-
+    Retain one three-class variable per body, all route basis edges and all three
+    bridge gains. Fast/intermediate kernel branches are diagnostically executable;
+    every assignment containing slow remains blocked until independent temporal
+    evidence exists. Never borrow or interpolate a slow kernel.
+  cartesian_product: >-
+    Keep axes factorized. Every downstream campaign must declare the exact tuples
+    it schedules and account for the unscheduled remainder; no implicit default.
+
+acceptance:
+  expected_unresolved_intermediates: 148
+  expected_diagnostic_profiles: 50
+  expected_complement_pairs: 24
+  expected_assignments_per_body_per_state: 25
+  expected_pairwise_complete_pairs: 10878
+  expected_feco_boundary_alternatives: 24
+  expected_motor_class_assignment_upper_bound: 59049
+  expected_motor_kernel_executable_assignments: 1024
+  expected_motor_kernel_blocked_assignments: 58025
+  expected_route_basis_edges: 110
+  expected_routing_simplex_dof_upper_bound: 100
+  expected_bridge_gain_candidates: 3
+  require_zero_behavior_exposure: true
+  require_zero_parameter_promotion: true
+  require_zero_topology_changes: true
+
+accepted_claims:
+  - The 2^148 intermediate assignment space can be probed with a deterministic 50-profile pairwise covering panel without treating that panel as the full scientific ensemble.
+  - Every unresolved intermediate is exercised equally in event and graded candidate modes, and every pair sees all four state combinations.
+  - The 24 FeCO alternatives are locally accepted as an unselected uncertainty set suitable for factorized propagation.
+  - The motor uncertainty set is explicitly partitioned into 1024 fast/intermediate assignments with diagnostic kernels and 58025 slow-containing assignments blocked by missing temporal evidence.
+  - Route bases and bridge gains may enter declared nonbehavioral sensitivity schedules without becoming biological reference values.
+forbidden_claims:
+  - Pairwise panel coverage validates all higher-order interactions or reduces 2^148 scientific possibilities to 50.
+  - A hash profile is a biological prior, parameter set or preferred native assignment.
+  - FeCO residual ranking identifies event versus graded native dynamics.
+  - Slow motor dynamics may be copied from fast or intermediate cells.
+  - Body motion, stability or a named behavior may select any profile, path, class, route or gain.
+next_action: >-
+  Freeze the complete measurement contract for a minimal neutral embodied
+  technical campaign, then schedule a bounded factorized subset explicitly.
+  Keep all 58025 slow-containing motor assignments visible as blocked and report
+  robustness only over the tuples actually executed.

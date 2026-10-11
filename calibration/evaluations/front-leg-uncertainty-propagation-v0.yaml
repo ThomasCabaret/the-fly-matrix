@@ -1,0 +1,57 @@
+schema_version: 1
+id: evaluation.front_leg_uncertainty_propagation.v0
+title: Front-leg unresolved uncertainty propagation evaluation
+status: completed_bounded_propagation_feasible_interface_decisions_explicit
+campaign_id: campaign.front_leg_uncertainty_propagation.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_pairwise_panel_and_factorized_interface_acceptance
+procedure_result:
+  intermediate_uncertainty:
+    unresolved_bodies: 148
+    scientific_assignment_space: 2^148
+    diagnostic_profiles: 50
+    complement_pairs: 24
+    assignments_per_body: {event_candidate: 25, graded_candidate: 25}
+    body_pairs: 10878
+    pairs_with_all_four_states: 10878
+    higher_order_coverage_claimed: false
+    probability_prior_implied: false
+  feco:
+    boundary_alternatives: 24
+    decision: accepted_as_unselected_propagation_set
+    parameter_values_promoted: 0
+  motor:
+    scientific_class_assignment_upper_bound: 59049
+    kernel_executable_fast_or_intermediate_assignments: 1024
+    kernel_blocked_slow_containing_assignments: 58025
+    route_basis_edges: 110
+    routing_simplex_dof_upper_bound: 100
+    bridge_gain_candidates: 3
+    decision: partially_executable_factorized_set_slow_branch_blocked
+    parameter_values_promoted: 0
+scientific_boundary:
+  parameter_values_promoted: 0
+  native_dynamics_assignments_promoted: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+  slow_kernel_borrowed: false
+  accepted_claims:
+    - The 148-body scientific assignment space remains 2^148 while a deterministic 50-profile panel covers each body evenly and every pair in all four states.
+    - All 24 FeCO alternatives are accepted as an unselected propagation set.
+    - Motor branches are partitioned into executable fast/intermediate diagnostics and explicitly blocked slow-containing assignments.
+  rejected_claims:
+    - Pairwise coverage is exhaustive scientific coverage or a biological probability prior.
+    - Any FeCO representation, motor class, route, gain or dynamics value is selected.
+    - A missing slow kernel may be borrowed from another class.
+reproducibility:
+  command: front_leg_uncertainty_panel.bat
+  runner_result: calibration/runner/front-leg-uncertainty-propagation-v0.yaml
+  artifact: data/derived/calibration/front-leg-uncertainty-propagation-v0/summary.json
+  tests: .venv/Scripts/python.exe -m pytest tests/test_front_leg_uncertainty_propagation.py
+  semantic_result_sha256: 7bcb1fac29bb2589f07d3e409fd5c878ae21c88e2c4bab5843784f7d2a751fee
+next_action: >-
+  Freeze the complete measurement contract for a minimal neutral embodied
+  technical campaign, then schedule and account a bounded factorized subset.

@@ -224,6 +224,7 @@ actuator_attribution_gate.bat
 motor_actuator_bridge_envelope.bat
 front_leg_chain_envelope.bat
 front_leg_intermediate_dynamics.bat
+front_leg_uncertainty_panel.bat
 ```
 
 The blank lines denote partly independent branches, not required pauses. The
@@ -237,11 +238,16 @@ The factorized local-chain step is reproducible with
 intermediates. Two annotated tibia-extensor motor bodies acquire a source-backed
 event requirement; 148 remain explicit `dual_unresolved` alternatives. The
 transmitter prior is joined only for audit and never selects native dynamics.
-The next scientific step is therefore the one in
-`calibration/state.yaml:next_action`: preregister tractable propagation of those
-unresolved assignments and version local interface acceptance decisions. A fresh
-clone must stop at that same frontier rather than inventing a global rate/LIF
-default or a slow motor kernel.
+`front_leg_uncertainty_panel.bat` then rebuilds the accepted tractable propagation
+policy without reducing the scientific uncertainty. It emits 50 deterministic,
+balanced profiles covering all pairwise binary states, accepts all 24 FeCO
+alternatives as an unselected set, and preserves the motor split between 1,024
+fast/intermediate assignments with diagnostic kernels and 58,025 slow-containing
+blocked assignments. A fresh clone must stop at that same frontier rather than
+inventing a global rate/LIF default, a preferred hash profile or a slow motor
+kernel. The next scientific step in `calibration/state.yaml:next_action` is the
+complete neutral embodied measurement contract and an explicitly accounted
+factorized schedule.
 
 ### Historical neural-model gate
 

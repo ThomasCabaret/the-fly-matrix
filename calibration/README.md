@@ -271,6 +271,17 @@ Transmitter labels and path counts never select native dynamics. The command emi
 zero parameter values, changes no topology, observes no body and writes a compact
 exception report plus a non-selecting evidence-acquisition priority.
 
+Run `front_leg_uncertainty_panel.bat` to compile the bounded execution policy for
+those unresolved populations and the local interfaces. The full scientific
+intermediate space remains `2^148`; the command creates only a deterministic
+50-profile diagnostic panel. Every body appears 25 times in each candidate mode,
+and all 10,878 body pairs see the four binary combinations. This is pairwise
+sensitivity coverage, not exhaustive higher-order coverage or a probability
+prior. The same gate accepts all 24 FeCO alternatives as an unselected set and
+partitions the motor ensemble into 1,024 fast/intermediate assignments with
+diagnostic kernels and 58,025 slow-containing assignments that remain blocked.
+No value, route, representation or behavior is selected.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

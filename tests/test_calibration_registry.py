@@ -305,6 +305,40 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertIn("conversion_contracts_executable", assignment["status"])
 
+    def test_front_leg_uncertainty_propagation_preserves_scientific_space(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "front-leg-uncertainty-propagation-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "front-leg-uncertainty-propagation-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "front-leg-uncertainty-propagation-v0.yaml"
+        )
+
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(
+            campaign["intermediate_propagation_policy"]["scientific_assignment_space"],
+            "2^148",
+        )
+        self.assertEqual(runner["intermediate_panel"]["diagnostic_profiles"], 50)
+        self.assertEqual(
+            runner["intermediate_panel"]["pairs_with_all_four_states"], 10878
+        )
+        self.assertFalse(runner["intermediate_panel"]["higher_order_coverage_claimed"])
+        self.assertEqual(
+            runner["interface_decisions"]["motor"][
+                "kernel_blocked_slow_containing_assignments"
+            ],
+            58025,
+        )
+        self.assertEqual(evaluation["scientific_boundary"]["parameter_values_promoted"], 0)
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
     def test_front_leg_chain_envelope_preserves_factorized_uncertainty(self) -> None:
         campaign = load_yaml(
             CALIBRATION_ROOT / "campaigns" / "front-leg-sensor-cns-motor-chain-v0.yaml"

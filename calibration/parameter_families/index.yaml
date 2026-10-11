@@ -64,7 +64,8 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  The factorized front-leg sensor-CNS-motor envelope is complete without a
-  selection. Assign or explicitly retain as dual_unresolved its 150 newly exposed
-  intermediate neurons, then version local acceptance decisions for the FeCO and
-  motor interface ensembles. No local physiological parameter is promoted yet.
+  The factorized front-leg chain and its unresolved propagation policy are
+  complete without selecting a value. Freeze the neutral embodied measurement
+  contract, then declare a bounded schedule over the accepted FeCO set, the
+  50-profile intermediate diagnostic panel and the partially executable motor
+  ensemble. No local physiological parameter is promoted yet.
