@@ -627,6 +627,40 @@ class CalibrationRegistryTests(unittest.TestCase):
             self.state["readiness"]["actuator_semantics"],
         )
 
+    def test_embodied_measurement_contract_closes_observability_not_stability(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "embodied-measurement-contract-v1.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "embodied-measurement-contract-v1.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "embodied-measurement-contract-v1.yaml"
+        )
+
+        self.assertEqual(campaign["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertEqual(campaign["budgets"]["optimized_parameters"], 0)
+        self.assertEqual(campaign["acceptance"]["stability_thresholds"], "unresolved")
+        self.assertEqual(
+            evaluation["acceptance_result"],
+            "pass_measurement_contract_stability_unresolved",
+        )
+        self.assertEqual(runner["status"], "measurement_contract_pass_stability_unresolved")
+        self.assertTrue(all(runner["checks"].values()))
+        self.assertFalse(runner["interpretation"]["stability_accepted"])
+        self.assertEqual(runner["accounting"]["optimized_parameters"], 0)
+        self.assertEqual(runner["uncertainty_axes"]["intermediate_profiles"], 50)
+        self.assertEqual(runner["uncertainty_axes"]["feco_alternatives"], 24)
+        self.assertEqual(
+            runner["uncertainty_axes"]["motor_class_assignments_blocked_slow"],
+            58_025,
+        )
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

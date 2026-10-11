@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: metric_contract_executable_stability_not_calibrated
+status: measurement_contract_v1_complete_stability_not_calibrated
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -33,18 +33,27 @@ metrics:
   - recovery_after_small_generic_perturbation
 
 measurement_contract:
-  campaign_id: campaign.embodied_stability_metric_contract.v0
-  evaluation_id: evaluation.embodied_stability_metric_contract.v0
-  runner_result_id: runner_result.embodied_stability_metric_contract.v0
-  status: descriptive_extractor_pass_stability_unresolved
-  supported_groups: 7
-  explicit_gaps: 5
+  campaign_id: campaign.embodied_measurement_contract.v1
+  evaluation_id: evaluation.embodied_measurement_contract.v1
+  runner_result_id: runner_result.embodied_measurement_contract.v1
+  status: complete_short_horizon_measurement_contract_stability_unresolved
+  supported_groups:
+    - time_finitude_and_cadence
+    - mass_weighted_center_of_mass
+    - exact_joint_limits
+    - physical_com_kinematics_and_jerk
+    - ground_contacts_and_force_norms
+    - declared_direct_motor_work_proxy
+    - numerical_joint_and_gross_fall_masks
+    - paired_generic_perturbation_recovery
+    - deterministic_reset_repeatability
+  explicit_gaps: 0_for_short_horizon_technical_pilot
   optimized_parameters: 0
   selected_thresholds: 0
   note: >-
-    The v0 physical replay can measure root, joint, contact, command and central
-    summaries. It cannot silently substitute root position for COM, command slew
-    for body jerk, or direct-motor work for biological energy.
+    The v1 paired passive fixture records true model COM, exact joint limits,
+    physical COM jerk, contacts, a declared direct-motor work proxy, paired
+    recovery and failure masks. Biological energy remains explicitly unclaimed.
 
 acceptance_policy:
   summary: >-
@@ -70,16 +79,15 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: metric_contract_pass_stability_campaign_not_run
+validation: measurement_contract_v1_pass_stability_campaign_not_run
 blocked_reason: >-
-  The descriptive metric extractor is now executable, but the trajectory contract
-  still lacks joint limits and paired perturbation recovery, and no independent
-  technical thresholds are registered. Basal-source values, local motor transfer
-  scope and ensemble accounting remain unresolved. The direct-motor semantics are
-  accepted only as a bounded short-horizon surrogate; central, sensory, motor and
-  mechanical families may not all remain free without an identifiability analysis.
+  The complete short-horizon measurement contract is executable, but no
+  independent technical thresholds or bounded pilot schedule are registered.
+  Basal-source values and local motor transfers remain unresolved. The
+  direct-motor semantics are accepted only as a bounded short-horizon surrogate;
+  central, sensory, motor and mechanical families may not all remain free without
+  an identifiability analysis.
 next_action: >-
-  Freeze one minimal local sensory scope and one minimal motor scope. In parallel,
-  version joint-limit metadata and a matched generic-perturbation trajectory pair,
-  then source thresholds independently before defining a short flat-ground pilot
-  that propagates central uncertainty and exposes tonic output explicitly.
+  Preregister one minimal neutral flat-ground pilot with independently sourced
+  thresholds, fixed mechanics, explicit basal and motor scope, and a bounded
+  schedule that accounts for every accepted or blocked uncertainty alternative.

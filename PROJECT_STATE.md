@@ -157,6 +157,18 @@ comportement. Cinq lacunes restent explicitement ouvertes : COM, limites
 articulaires, énergie biologique, jerk physique et récupération sur trajectoires
 appariées. Zéro paramètre ou seuil a été choisi.
 
+La version complète v1 est maintenant validée par
+`embodied_measurement_contract_v1.bat` sur trois resets passifs déterministes :
+deux références répétées et une perturbation générique appariée. Elle mesure le
+centre de masse pondéré sur 67 corps FlyBody, les 102 limites articulaires, le
+jerk physique à cadence observée de 5 ms, six contacts et leurs forces, un proxy
+de travail direct-MOTOR explicitement non biologique, les masques d'échec et la
+récupération appariée. Le fixture passif produit déjà 27 échantillons hors limites
+sur 14 trames ; cette observation n'est ni un seuil ni un résultat de stabilité.
+Zéro paramètre, seuil, profil d'incertitude ou comportement a été sélectionné. Le
+prochain front est la préréférence du planning borné du pilote technique, pas une
+nouvelle extension des mesures.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -767,7 +779,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; la propagation des 148 intermédiaires est préréférencée par un panneau pairwise de 50 profils sans réduire l'espace `2^148` ; les 24 alternatives FeCO restent non sélectionnées ; le moteur conserve 59 049 affectations, dont 58 025 bloquées par le noyau lent absent ; zéro valeur et zéro jeu complet sont promus**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
-- Mesure de stabilité incarnée : **extracteur descriptif validé sur 7 groupes ; 5 quantités scientifiques restent explicitement indisponibles, zéro seuil choisi et stabilité toujours non calibrée**.
+- Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
 
 Le lot structurel correspondant a supprimé la dernière injection directe d'entrée. Les 1 883
 afférences sensorielles résiduelles conservent leurs routes `bodyId` exactes et sont
@@ -928,11 +940,11 @@ temps les familles centrales, sensorielles, motrices et mécaniques ; la mécani
 et le contrat direct-motor restent gelés et l'identifiabilité des interfaces doit
 être explicitement testée.
 
-Le contrat descriptif préalable à cette stabilité est exécutable via
-`embodied_stability_metrics.bat`. Il a validé l'extraction sur le replay non
-calibré gelé, pas la stabilité. La version suivante devra enregistrer les limites
-articulaires et produire des trajectoires baseline/perturbée appariées ; les seuils
-seront sourcés indépendamment et non choisis en regardant ce replay.
+Le contrat complet préalable à cette stabilité est exécutable via
+`embodied_measurement_contract_v1.bat`. Il valide les observables et les paires
+baseline/perturbée sur un fixture passif, pas la stabilité. Le prochain lot doit
+préréférencer un planning borné, garder les mécanismes physiques gelés et sourcer
+les seuils indépendamment de ces trajectoires descriptives.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -960,6 +972,7 @@ physical_replay.bat       # viewer autonome de la dernière trajectoire physique
 closed_loop_live.bat      # même boucle directement dans le viewer, même si lente
 diagnostic_viewer.bat     # viewer MuJoCo + faux CNS isolé, non scientifique
 embodied_stability_metrics.bat # métriques descriptives du replay gelé ; aucun seuil ni claim de stabilité
+embodied_measurement_contract_v1.bat # COM/limites/jerk/contacts/récupération appariée ; aucun fit ni seuil
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

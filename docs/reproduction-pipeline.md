@@ -245,9 +245,15 @@ alternatives as an unselected set, and preserves the motor split between 1,024
 fast/intermediate assignments with diagnostic kernels and 58,025 slow-containing
 blocked assignments. A fresh clone must stop at that same frontier rather than
 inventing a global rate/LIF default, a preferred hash profile or a slow motor
-kernel. The next scientific step in `calibration/state.yaml:next_action` is the
-complete neutral embodied measurement contract and an explicitly accounted
-factorized schedule.
+kernel.
+
+Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
+short-horizon measurement gate. It executes three passive physical episodes and
+validates true COM, joint limits, physical jerk, contacts/forces, a declared
+direct-MOTOR work proxy, failure masks and paired recovery. It fits zero values
+and chooses zero thresholds or profiles. The next scientific step in
+`calibration/state.yaml:next_action` is now to preregister the explicitly bounded
+neutral pilot schedule and obtain its technical thresholds independently.
 
 ### Historical neural-model gate
 

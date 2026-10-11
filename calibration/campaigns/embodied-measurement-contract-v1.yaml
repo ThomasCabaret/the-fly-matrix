@@ -1,0 +1,121 @@
+schema_version: 1
+id: campaign.embodied_measurement_contract.v1
+title: Complete short-horizon neutral embodied measurement contract
+status: preregistered_runnable_diagnostic
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: COMPLETE TECHNICAL MEASUREMENT CONTRACT / NOT STABILITY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Close the observability gap left by the v0 replay extractor before fitting any
+  neutral embodied parameter. On identical passive FlyBody resets, record two
+  unperturbed repetitions and one branch with a small generic velocity impulse.
+  Validate true model COM, snapshotted joint limits, physical COM jerk, declared
+  direct-motor work proxy, failure masks and paired recovery without choosing a
+  stability threshold or inspecting a named action.
+
+frozen_inputs:
+  prior_metric_evaluation: calibration/evaluations/embodied-stability-metric-contract-v0.yaml
+  actuator_attribution_result: calibration/runner/actuator-causal-attribution-v1.yaml
+  uncertainty_propagation_result: calibration/runner/front-leg-uncertainty-propagation-v0.yaml
+  body_model: flygym==2.1.0
+  actuator_type: MOTOR
+  actuator_semantics_contract_sha256: b1b11acc2b6d82dbfa6e8a4170c4b53475fb7d627ecb5a9de892efd87081abc2
+  physical_model_contract_sha256: 458720dff93d3db79196621232cd42ded42f55269d17c163aee59bfd041a439e
+
+paired_protocol:
+  scene: simple_flat_ground
+  controller: passive_zero_command_measurement_fixture
+  frames: 40
+  physics_substeps_per_frame: 50
+  expected_frame_dt_s: 0.005
+  perturbation_step: 10
+  perturbation:
+    id: generic_lateral_root_velocity_impulse
+    qvel_address: 1
+    delta: 0.1
+    units: FlyBody_model_length_units_per_second
+  branches:
+    - repeated_unperturbed_baseline_a
+    - repeated_unperturbed_baseline_b
+    - matched_generic_perturbation
+  selection_from_response: forbidden
+
+measurement_contract:
+  center_of_mass: mass_weighted_mujoco_body_xipos_for_all_positive_mass_flybody_bodies
+  joint_limits: exact_mujoco_joint_ranges_and_limited_flags_in_runtime_joint_order
+  physical_jerk: finite_difference_of_recorded_center_of_mass_not_command_slew
+  cadence: observed_mujoco_time_delta_checked_against_declared_frame_dt
+  contacts: per_foot_ground_contact_presence_and_contact_force_norm
+  energy: absolute_direct_motor_force_times_joint_velocity_integral_surrogate_only
+  paired_recovery: perturbation_minus_identical_reset_baseline_peak_final_and_stable_half
+  numerical_failure_mask: any_nonfinite_qpos_or_qvel
+  gross_fall_proxy: root_up_z_not_positive_or_mass_weighted_com_not_above_floor
+  gross_fall_limit: >-
+    This catches inversion or COM crossing the floor only. It is not a complete
+    biological fall classifier and cannot supply an acceptance threshold.
+
+uncertainty_schedule_contract:
+  expected_axes:
+    intermediate_profiles: 50
+    feco_alternatives: 24
+    motor_class_assignments_scientific: 59049
+    motor_class_assignments_kernel_executable: 1024
+    motor_class_assignments_blocked_slow: 58025
+    route_basis_edges: 110
+    bridge_gain_candidates: 3
+  next_campaign_requirements:
+    - list every scheduled tuple and every fixed engineering fixture
+    - account separately for unscheduled and blocked alternatives
+    - do not materialize the full Cartesian product
+    - use paired baseline and perturbation episodes for every scheduled tuple
+    - promote no profile from body motion or visual inspection
+
+acceptance:
+  expected_limited_joint_channels: 102
+  expected_positive_mass_fly_bodies: 67
+  expected_ground_contact_channels: 6
+  expected_branches: 3
+  frame_dt_abs_tolerance_s: 0.000000000001
+  baseline_repeat_state_max_abs_error: 0.000000000001
+  paired_qvel_response_l2_min: 0.000000000001
+  finite_fraction: 1.0
+  stability_thresholds: unresolved
+  stability_acceptance_possible: false
+  optimized_parameters: 0
+  behavior_targets_exposed: 0
+
+budgets:
+  physical_episodes: 3
+  frames_per_episode: 40
+  optimized_parameters: 0
+  behavior_observations: 0
+  topology_changes: 0
+
+stop_conditions:
+  - body_or_actuator_contract_drift
+  - nondeterministic_repeated_baseline
+  - missing_joint_limit_or_mass_metadata
+  - nonfinite_state
+  - undetectable_declared_perturbation
+  - any_attempt_to_select_stability_thresholds
+  - any_named_action_or_visual_selection
+
+accepted_claims:
+  - The current FlyBody path can record every technical observable required by a short-horizon neutral embodied pilot.
+  - Baseline and generic-perturbation branches can be paired from identical deterministic resets.
+  - The previously accepted uncertainty axes can be accounted before constructing a bounded schedule.
+forbidden_claims:
+  - The passive fixture or its motion is stable, biological or behaviorally meaningful.
+  - The gross-fall proxy detects every possible fall.
+  - Direct-motor work is muscle, metabolic or biological energy.
+  - Any observed magnitude may become a stability threshold or select a candidate.
+next_action: >-
+  Construct the minimal neutral embodied technical campaign v0. Declare its exact
+  bounded tuple schedule over the accepted uncertainty axes, frozen engineering
+  fixtures, allowed parameter families, paired scenes, seeds, compute budget and
+  threshold provenance. Do not execute fitting until that campaign passes the
+  registry and leakage checks.

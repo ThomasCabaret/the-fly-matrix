@@ -358,3 +358,13 @@ Do not bulk-download the 48.76 GB motor repository or infer defaults from articl
 prose. The ten selected MaleCNS tibia-flexor motor body IDs still lack a
 source-backed fast/intermediate/slow crosswalk, so class assignments remain an
 explicit ensemble rather than a silent per-neuron label.
+
+Run `embodied_measurement_contract_v1.bat` to reproduce the complete
+short-horizon measurement contract before any neutral embodied fit. It executes
+two identical passive baselines and one paired generic perturbation, then records
+true model COM, exact joint limits, physical jerk, six contact channels and
+forces, a declared direct-MOTOR work proxy, recovery summaries and failure masks.
+Its accepted result selects zero values, thresholds, uncertainty profiles or
+behaviors. The passive magnitudes are descriptive only. The next campaign must
+declare a bounded schedule and obtain thresholds independently rather than infer
+them from this fixture.

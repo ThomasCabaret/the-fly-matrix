@@ -21,7 +21,7 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.front_leg_uncertainty_propagation.v0
+last_completed_campaign_id: campaign.embodied_measurement_contract.v1
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -67,7 +67,7 @@ readiness:
   transmission_delay_policy: fixed_1_8_ms_reference_implemented_morphology_dependent_delays_unresolved
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
   actuator_semantics: accepted_bounded_direct_motor_surrogate_initial_short_horizon_passive_open_closed_attribution_complete_102_of_102_hashed
-  embodied_stability_measurement: descriptive_metric_contract_pass_7_groups_5_explicit_gaps_zero_thresholds_stability_unresolved
+  embodied_stability_measurement: complete_v1_true_com_joint_limits_physical_jerk_contacts_work_proxy_paired_recovery_failure_masks_zero_thresholds_stability_unresolved
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: not_run_1815_unknown_channels_require_behavior_naive_hypothesis_grid
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
@@ -96,6 +96,7 @@ blocked_by:
   - Basal evidence supports 128 known-modality annotation partitions but not a complete value table; all 1883 residual source channels remain explicitly unresolved or surrogate-only.
   - The direct-motor actuator gate is closed only as a bounded short-horizon surrogate: unloaded homolog responses are symmetric and passive/open/closed effects are separated, but muscle, tendon, compliance and local-reflex fidelity remain outside the accepted model.
   - The uncalibrated live MaleCNS feedback changes motor commands after both generic perturbations but changes the final physical deviation by only about two parts per million relative to frozen open-loop commands; it is not currently evidence of stabilization or biological feedback control.
+  - The complete short-horizon embodied measurement contract now exposes COM, exact joint limits, physical jerk, six contact/force channels, a declared direct-MOTOR work proxy, failure masks and paired recovery. Its passive fixture already records 27 joint-limit violation samples over 14 frames; these descriptive magnitudes may not become thresholds, and no stability result exists until an independently bounded pilot is preregistered and run.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
   - The FeCO local fitting procedure completed all 86 leave-one-animal-out folds across seven source/boundary candidates on 33,766 retained rows, with zero blocked folds. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. The complete candidate ensemble remains unpromoted, no runtime parameter set is selected, and the comparison does not identify native event-versus-graded dynamics.
@@ -110,9 +111,9 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Freeze the complete measurement contract for a minimal neutral embodied
-  technical campaign, including paired baseline/perturbation scenes, joint-limit
-  margins, contact/force availability, fall and numerical-failure masks, and an
-  explicit schedule over the factorized front-leg uncertainty axes. Report every
-  scheduled and unscheduled tuple. Do not inspect a named behavior, promote a
-  favorable profile, or hide the 58,025 slow-containing blocked assignments.
+  Preregister the minimal neutral embodied technical pilot. Freeze mechanics and
+  the direct-MOTOR surrogate, source thresholds independently, declare the exact
+  paired scene/seed/parameter schedule, and account for every scheduled,
+  unscheduled or blocked uncertainty tuple. Do not inspect a named behavior,
+  promote a favorable profile, or hide the 58,025 slow-containing blocked
+  assignments.

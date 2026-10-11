@@ -1,0 +1,73 @@
+schema_version: 1
+id: evaluation.embodied_measurement_contract.v1
+title: Complete neutral embodied measurement-contract evaluation
+status: completed_measurement_contract_only
+campaign_id: campaign.embodied_measurement_contract.v1
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: COMPLETE TECHNICAL MEASUREMENT CONTRACT / NOT STABILITY / NO BEHAVIOR
+behavior_targets: []
+
+acceptance_result: pass_measurement_contract_stability_unresolved
+accepted_scope:
+  - deterministic paired passive FlyBody resets
+  - mass-weighted center of mass over 67 positive-mass FlyBody bodies
+  - exact runtime ranges and limited flags for all 102 joint channels
+  - physical center-of-mass jerk at the observed 5 ms frame cadence
+  - six ground-contact channels and finite contact-force norms
+  - direct-MOTOR force-velocity work proxy with no biological-energy claim
+  - numerical, joint-limit and deliberately incomplete gross-fall masks
+  - paired recovery summaries after one generic velocity impulse
+not_accepted:
+  - neutral embodied stability
+  - any technical acceptance threshold
+  - biological energy, muscle fidelity or a complete fall classifier
+  - a selected uncertainty profile, route, gain or parameter value
+  - any named or emergent behavior
+
+descriptive_fixture_result:
+  branches_executed: 3
+  frames_per_branch: 40
+  duration_per_branch_s: 0.2
+  baseline_repeat_state_max_abs_error: 0.0
+  baseline_joint_limit_violation_samples: 27
+  baseline_joint_limit_violation_frames: 14
+  baseline_minimum_joint_margin_rad: -0.0008099979830723802
+  baseline_contact_frames: 37
+  baseline_peak_contact_force_norm: 5.6708039002440955
+  paired_qvel_peak_l2: 1.3379535265836193
+  paired_qvel_final_over_peak: 0.17943936957888348
+  note: >-
+    These are descriptive values from a passive zero-command fixture. They are
+    neither thresholds nor evidence that the body is stable or biological.
+
+uncertainty_accounting:
+  intermediate_profiles: 50
+  feco_alternatives: 24
+  motor_class_assignments_scientific: 59049
+  motor_class_assignments_kernel_executable: 1024
+  motor_class_assignments_blocked_slow: 58025
+  route_basis_edges: 110
+  bridge_gain_candidates: 3
+  pilot_schedule_status: must_be_declared_by_next_campaign
+
+reproducibility:
+  command: embodied_measurement_contract_v1.bat
+  campaign_sha256: a17be4a15372ac979da178a1b00e36a4b0904490a968e8a87fe819190d0d8df2
+  implementation_sha256: 8d2514ec76348424750e4e4f66b1be83361f01fcd7ee9071aaa7c8abff4df6c7
+  compact_result: calibration/runner/embodied-measurement-contract-v1.yaml
+  compact_result_sha256: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+  semantic_result_sha256: 64013262215f94ef231d3eaf73527106ebac25b0fc2eea025d988523c3ed2fc1
+  heavy_artifact:
+    path: runs/calibration/embodied-measurement-contract-v1/measurement-contract-20261011T145611Z/paired-passive-episodes.npz
+    sha256: 74dcfbefbcf1e894642d82e0bdad5ae5681f9874ebe273a2e98be24cd117ae30
+    git_policy: ignored_heavy_run_output
+
+parameter_values_promoted: 0
+stability_thresholds_selected: 0
+next_action: >-
+  Preregister the bounded neutral embodied pilot schedule, including every
+  scheduled tuple, unscheduled or blocked alternative, fixed engineering fixture,
+  independently sourced threshold, seed and compute budget. Do not select a tuple
+  from the passive results above.

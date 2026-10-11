@@ -1,0 +1,383 @@
+schema_version: 1
+id: runner_result.embodied_measurement_contract.v1
+campaign_id: campaign.embodied_measurement_contract.v1
+target_id: target.technical_embodied_stability.v0
+status: measurement_contract_pass_stability_unresolved
+completed_at: '2026-10-11T14:56:11.129067+00:00'
+claim_label: COMPLETE TECHNICAL MEASUREMENT CONTRACT / NOT STABILITY / NO BEHAVIOR
+command: embodied_measurement_contract_v1.bat
+model_contract:
+  id: flybody.generated-wiring-v1
+  nq: 109
+  nv: 108
+  nu: 102
+  actuator_names:
+  - c_thorax-c_head-yaw-motor
+  - c_thorax-c_head-pitch-motor
+  - c_thorax-c_head-roll-motor
+  - c_head-c_rostrum-pitch-motor
+  - c_rostrum-c_haustellum-yaw-motor
+  - c_rostrum-c_haustellum-pitch-motor
+  - c_haustellum-l_labrum-pitch-motor
+  - c_haustellum-r_labrum-pitch-motor
+  - c_head-l_antenna-yaw-motor
+  - c_head-l_antenna-pitch-motor
+  - c_head-l_antenna-roll-motor
+  - c_head-r_antenna-yaw-motor
+  - c_head-r_antenna-pitch-motor
+  - c_head-r_antenna-roll-motor
+  - c_thorax-c_abdomen1-yaw-motor
+  - c_thorax-c_abdomen1-pitch-motor
+  - c_abdomen1-c_abdomen2-yaw-motor
+  - c_abdomen1-c_abdomen2-pitch-motor
+  - c_abdomen2-c_abdomen3-yaw-motor
+  - c_abdomen2-c_abdomen3-pitch-motor
+  - c_abdomen3-c_abdomen4-yaw-motor
+  - c_abdomen3-c_abdomen4-pitch-motor
+  - c_abdomen4-c_abdomen5-yaw-motor
+  - c_abdomen4-c_abdomen5-pitch-motor
+  - c_abdomen5-c_abdomen6-yaw-motor
+  - c_abdomen5-c_abdomen6-pitch-motor
+  - c_abdomen6-c_abdomen7-yaw-motor
+  - c_abdomen6-c_abdomen7-pitch-motor
+  - c_thorax-l_wing-yaw-motor
+  - c_thorax-l_wing-pitch-motor
+  - c_thorax-l_wing-roll-motor
+  - c_thorax-r_wing-yaw-motor
+  - c_thorax-r_wing-pitch-motor
+  - c_thorax-r_wing-roll-motor
+  - c_thorax-l_haltere-pitch-motor
+  - c_thorax-r_haltere-pitch-motor
+  - c_thorax-lf_coxa-yaw-motor
+  - c_thorax-lf_coxa-pitch-motor
+  - c_thorax-lf_coxa-roll-motor
+  - lf_coxa-lf_trochanterfemur-pitch-motor
+  - lf_coxa-lf_trochanterfemur-roll-motor
+  - lf_trochanterfemur-lf_tibia-pitch-motor
+  - lf_tibia-lf_tarsus1-pitch-motor
+  - lf_tarsus1-lf_tarsus2-pitch-motor
+  - lf_tarsus2-lf_tarsus3-pitch-motor
+  - lf_tarsus3-lf_tarsus4-pitch-motor
+  - lf_tarsus4-lf_tarsus5-pitch-motor
+  - c_thorax-lm_coxa-yaw-motor
+  - c_thorax-lm_coxa-pitch-motor
+  - c_thorax-lm_coxa-roll-motor
+  - lm_coxa-lm_trochanterfemur-pitch-motor
+  - lm_coxa-lm_trochanterfemur-roll-motor
+  - lm_trochanterfemur-lm_tibia-pitch-motor
+  - lm_tibia-lm_tarsus1-pitch-motor
+  - lm_tarsus1-lm_tarsus2-pitch-motor
+  - lm_tarsus2-lm_tarsus3-pitch-motor
+  - lm_tarsus3-lm_tarsus4-pitch-motor
+  - lm_tarsus4-lm_tarsus5-pitch-motor
+  - c_thorax-lh_coxa-yaw-motor
+  - c_thorax-lh_coxa-pitch-motor
+  - c_thorax-lh_coxa-roll-motor
+  - lh_coxa-lh_trochanterfemur-pitch-motor
+  - lh_coxa-lh_trochanterfemur-roll-motor
+  - lh_trochanterfemur-lh_tibia-pitch-motor
+  - lh_tibia-lh_tarsus1-pitch-motor
+  - lh_tarsus1-lh_tarsus2-pitch-motor
+  - lh_tarsus2-lh_tarsus3-pitch-motor
+  - lh_tarsus3-lh_tarsus4-pitch-motor
+  - lh_tarsus4-lh_tarsus5-pitch-motor
+  - c_thorax-rf_coxa-yaw-motor
+  - c_thorax-rf_coxa-pitch-motor
+  - c_thorax-rf_coxa-roll-motor
+  - rf_coxa-rf_trochanterfemur-pitch-motor
+  - rf_coxa-rf_trochanterfemur-roll-motor
+  - rf_trochanterfemur-rf_tibia-pitch-motor
+  - rf_tibia-rf_tarsus1-pitch-motor
+  - rf_tarsus1-rf_tarsus2-pitch-motor
+  - rf_tarsus2-rf_tarsus3-pitch-motor
+  - rf_tarsus3-rf_tarsus4-pitch-motor
+  - rf_tarsus4-rf_tarsus5-pitch-motor
+  - c_thorax-rm_coxa-yaw-motor
+  - c_thorax-rm_coxa-pitch-motor
+  - c_thorax-rm_coxa-roll-motor
+  - rm_coxa-rm_trochanterfemur-pitch-motor
+  - rm_coxa-rm_trochanterfemur-roll-motor
+  - rm_trochanterfemur-rm_tibia-pitch-motor
+  - rm_tibia-rm_tarsus1-pitch-motor
+  - rm_tarsus1-rm_tarsus2-pitch-motor
+  - rm_tarsus2-rm_tarsus3-pitch-motor
+  - rm_tarsus3-rm_tarsus4-pitch-motor
+  - rm_tarsus4-rm_tarsus5-pitch-motor
+  - c_thorax-rh_coxa-yaw-motor
+  - c_thorax-rh_coxa-pitch-motor
+  - c_thorax-rh_coxa-roll-motor
+  - rh_coxa-rh_trochanterfemur-pitch-motor
+  - rh_coxa-rh_trochanterfemur-roll-motor
+  - rh_trochanterfemur-rh_tibia-pitch-motor
+  - rh_tibia-rh_tarsus1-pitch-motor
+  - rh_tarsus1-rh_tarsus2-pitch-motor
+  - rh_tarsus2-rh_tarsus3-pitch-motor
+  - rh_tarsus3-rh_tarsus4-pitch-motor
+  - rh_tarsus4-rh_tarsus5-pitch-motor
+  joint_names:
+  - c_thorax-c_head-yaw
+  - c_thorax-c_head-pitch
+  - c_thorax-c_head-roll
+  - c_head-c_rostrum-pitch
+  - c_rostrum-c_haustellum-yaw
+  - c_rostrum-c_haustellum-pitch
+  - c_haustellum-l_labrum-pitch
+  - c_haustellum-r_labrum-pitch
+  - c_head-l_antenna-yaw
+  - c_head-l_antenna-pitch
+  - c_head-l_antenna-roll
+  - c_head-r_antenna-yaw
+  - c_head-r_antenna-pitch
+  - c_head-r_antenna-roll
+  - c_thorax-c_abdomen1-yaw
+  - c_thorax-c_abdomen1-pitch
+  - c_abdomen1-c_abdomen2-yaw
+  - c_abdomen1-c_abdomen2-pitch
+  - c_abdomen2-c_abdomen3-yaw
+  - c_abdomen2-c_abdomen3-pitch
+  - c_abdomen3-c_abdomen4-yaw
+  - c_abdomen3-c_abdomen4-pitch
+  - c_abdomen4-c_abdomen5-yaw
+  - c_abdomen4-c_abdomen5-pitch
+  - c_abdomen5-c_abdomen6-yaw
+  - c_abdomen5-c_abdomen6-pitch
+  - c_abdomen6-c_abdomen7-yaw
+  - c_abdomen6-c_abdomen7-pitch
+  - c_thorax-l_wing-yaw
+  - c_thorax-l_wing-pitch
+  - c_thorax-l_wing-roll
+  - c_thorax-r_wing-yaw
+  - c_thorax-r_wing-pitch
+  - c_thorax-r_wing-roll
+  - c_thorax-l_haltere-pitch
+  - c_thorax-r_haltere-pitch
+  - c_thorax-lf_coxa-yaw
+  - c_thorax-lf_coxa-pitch
+  - c_thorax-lf_coxa-roll
+  - lf_coxa-lf_trochanterfemur-pitch
+  - lf_coxa-lf_trochanterfemur-roll
+  - lf_trochanterfemur-lf_tibia-pitch
+  - lf_tibia-lf_tarsus1-pitch
+  - lf_tarsus1-lf_tarsus2-pitch
+  - lf_tarsus2-lf_tarsus3-pitch
+  - lf_tarsus3-lf_tarsus4-pitch
+  - lf_tarsus4-lf_tarsus5-pitch
+  - c_thorax-lm_coxa-yaw
+  - c_thorax-lm_coxa-pitch
+  - c_thorax-lm_coxa-roll
+  - lm_coxa-lm_trochanterfemur-pitch
+  - lm_coxa-lm_trochanterfemur-roll
+  - lm_trochanterfemur-lm_tibia-pitch
+  - lm_tibia-lm_tarsus1-pitch
+  - lm_tarsus1-lm_tarsus2-pitch
+  - lm_tarsus2-lm_tarsus3-pitch
+  - lm_tarsus3-lm_tarsus4-pitch
+  - lm_tarsus4-lm_tarsus5-pitch
+  - c_thorax-lh_coxa-yaw
+  - c_thorax-lh_coxa-pitch
+  - c_thorax-lh_coxa-roll
+  - lh_coxa-lh_trochanterfemur-pitch
+  - lh_coxa-lh_trochanterfemur-roll
+  - lh_trochanterfemur-lh_tibia-pitch
+  - lh_tibia-lh_tarsus1-pitch
+  - lh_tarsus1-lh_tarsus2-pitch
+  - lh_tarsus2-lh_tarsus3-pitch
+  - lh_tarsus3-lh_tarsus4-pitch
+  - lh_tarsus4-lh_tarsus5-pitch
+  - c_thorax-rf_coxa-yaw
+  - c_thorax-rf_coxa-pitch
+  - c_thorax-rf_coxa-roll
+  - rf_coxa-rf_trochanterfemur-pitch
+  - rf_coxa-rf_trochanterfemur-roll
+  - rf_trochanterfemur-rf_tibia-pitch
+  - rf_tibia-rf_tarsus1-pitch
+  - rf_tarsus1-rf_tarsus2-pitch
+  - rf_tarsus2-rf_tarsus3-pitch
+  - rf_tarsus3-rf_tarsus4-pitch
+  - rf_tarsus4-rf_tarsus5-pitch
+  - c_thorax-rm_coxa-yaw
+  - c_thorax-rm_coxa-pitch
+  - c_thorax-rm_coxa-roll
+  - rm_coxa-rm_trochanterfemur-pitch
+  - rm_coxa-rm_trochanterfemur-roll
+  - rm_trochanterfemur-rm_tibia-pitch
+  - rm_tibia-rm_tarsus1-pitch
+  - rm_tarsus1-rm_tarsus2-pitch
+  - rm_tarsus2-rm_tarsus3-pitch
+  - rm_tarsus3-rm_tarsus4-pitch
+  - rm_tarsus4-rm_tarsus5-pitch
+  - c_thorax-rh_coxa-yaw
+  - c_thorax-rh_coxa-pitch
+  - c_thorax-rh_coxa-roll
+  - rh_coxa-rh_trochanterfemur-pitch
+  - rh_coxa-rh_trochanterfemur-roll
+  - rh_trochanterfemur-rh_tibia-pitch
+  - rh_tibia-rh_tarsus1-pitch
+  - rh_tarsus1-rh_tarsus2-pitch
+  - rh_tarsus2-rh_tarsus3-pitch
+  - rh_tarsus3-rh_tarsus4-pitch
+  - rh_tarsus4-rh_tarsus5-pitch
+  contract_sha256: 458720dff93d3db79196621232cd42ded42f55269d17c163aee59bfd041a439e
+paired_protocol:
+  scene: simple_flat_ground
+  controller: passive_zero_command_measurement_fixture
+  frames: 40
+  physics_substeps_per_frame: 50
+  expected_frame_dt_s: 0.005
+  perturbation_step: 10
+  perturbation:
+    id: generic_lateral_root_velocity_impulse
+    qvel_address: 1
+    delta: 0.1
+    units: FlyBody_model_length_units_per_second
+  branches:
+  - repeated_unperturbed_baseline_a
+  - repeated_unperturbed_baseline_b
+  - matched_generic_perturbation
+  selection_from_response: forbidden
+uncertainty_axes:
+  intermediate_profiles: 50
+  feco_alternatives: 24
+  motor_class_assignments_scientific: 59049
+  motor_class_assignments_kernel_executable: 1024
+  motor_class_assignments_blocked_slow: 58025
+  route_basis_edges: 110
+  bridge_gain_candidates: 3
+  cartesian_product_materialized: false
+  pilot_schedule_status: must_be_declared_by_next_campaign
+checks:
+  baseline_repeat_deterministic: true
+  all_recorded_values_finite: true
+  all_joint_limits_snapshotted: true
+  center_of_mass_available: true
+  physical_jerk_available: true
+  frame_cadence_matches_contract: true
+  ground_contact_channels_available: true
+  paired_perturbation_detectable: true
+  stability_thresholds_unselected: true
+accounting:
+  branches: 3
+  recorded_episode_branches: 2
+  frames_per_branch: 40
+  optimized_parameters: 0
+  stability_thresholds_selected: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+baseline_repeat_state_max_abs_error: 0.0
+baseline_metrics:
+  frames: 40
+  duration_s: 0.1999999999999943
+  finite_fraction: 1.0
+  cadence:
+    frame_dt_min_s: 0.004999999999999449
+    frame_dt_median_s: 0.004999999999999995
+    frame_dt_max_s: 0.005000000000000143
+  center_of_mass:
+    source: mass_weighted_mujoco_body_xipos_for_all_positive_mass_flybody_bodies
+    body_count: 67
+    translation_from_initial_peak_l2: 1.2253252338779153
+    height_minimum: 0.8796556155594641
+  joint_limits:
+    channels: 102
+    limited_channels: 102
+    violation_samples: 27
+    violating_frames: 14
+    minimum_margin_rad: -0.0008099979830723802
+  physical_com_kinematics:
+    method: finite_difference_of_mass_weighted_flybody_com
+    velocity_l2_rms: 15.757625218405854
+    acceleration_l2_rms: 1005.33588546259
+    acceleration_l2_peak: 3729.6903529928554
+    jerk_l2_rms: 140434.83822645326
+    jerk_l2_peak: 477162.1506928463
+  declared_direct_motor_work_proxy:
+    absolute_force_velocity_integral: 0.0
+    biological_energy_claimed: false
+  ground_contacts:
+    channels: 6
+    frames_with_any_contact: 37
+    frames_without_contact: 3
+    contact_state_transitions: 1
+    peak_force_norm: 5.6708039002440955
+    force_is_finite: true
+  failure_masks:
+    numerical_failure_frames: 0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    gross_fall_proxy_definition: root_up_z<=0 or mass_weighted_COM_z<=floor_z
+    gross_fall_proxy_is_complete_fall_classifier: false
+perturbed_metrics:
+  frames: 40
+  duration_s: 0.1999999999999943
+  finite_fraction: 1.0
+  cadence:
+    frame_dt_min_s: 0.004999999999999449
+    frame_dt_median_s: 0.004999999999999995
+    frame_dt_max_s: 0.005000000000000143
+  center_of_mass:
+    source: mass_weighted_mujoco_body_xipos_for_all_positive_mass_flybody_bodies
+    body_count: 67
+    translation_from_initial_peak_l2: 1.2253137780498673
+    height_minimum: 0.8796633935556927
+  joint_limits:
+    channels: 102
+    limited_channels: 102
+    violation_samples: 27
+    violating_frames: 14
+    minimum_margin_rad: -0.0007622923914589463
+  physical_com_kinematics:
+    method: finite_difference_of_mass_weighted_flybody_com
+    velocity_l2_rms: 15.757598081208434
+    acceleration_l2_rms: 1005.3310154238488
+    acceleration_l2_peak: 3729.6903529928554
+    jerk_l2_rms: 140433.77818592056
+    jerk_l2_peak: 477162.1506928463
+  declared_direct_motor_work_proxy:
+    absolute_force_velocity_integral: 0.0
+    biological_energy_claimed: false
+  ground_contacts:
+    channels: 6
+    frames_with_any_contact: 37
+    frames_without_contact: 3
+    contact_state_transitions: 1
+    peak_force_norm: 5.6708039002440955
+    force_is_finite: true
+  failure_masks:
+    numerical_failure_frames: 0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    gross_fall_proxy_definition: root_up_z<=0 or mass_weighted_COM_z<=floor_z
+    gross_fall_proxy_is_complete_fall_classifier: false
+paired_recovery:
+  center_of_mass:
+    peak_l2: 0.0001416653388220187
+    final_l2: 6.812493697046896e-05
+    final_over_peak: 0.4808864153853311
+    stable_half_recovery_frame_after_perturbation: 24
+  qpos:
+    peak_l2: 0.0003363202610265817
+    final_l2: 0.00023285554249096962
+    final_over_peak: 0.6923625171442331
+    stable_half_recovery_frame_after_perturbation: null
+  qvel:
+    peak_l2: 1.3379535265836193
+    final_l2: 0.24008153733600857
+    final_over_peak: 0.17943936957888348
+    stable_half_recovery_frame_after_perturbation: 8
+interpretation:
+  measurement_contract_complete_for_short_horizon_technical_pilot: true
+  stability_accepted: false
+  behavior_observed: false
+  biological_energy_claimed: false
+  gross_fall_proxy_complete: false
+  thresholds_may_be_selected_from_these_episodes: false
+heavy_artifact:
+  path: runs/calibration/embodied-measurement-contract-v1/measurement-contract-20261011T145611Z/paired-passive-episodes.npz
+  sha256: 74dcfbefbcf1e894642d82e0bdad5ae5681f9874ebe273a2e98be24cd117ae30
+  git_policy: ignored_heavy_run_output
+next_action: Construct the minimal neutral embodied technical campaign v0. Declare
+  its exact bounded tuple schedule over the accepted uncertainty axes, frozen engineering
+  fixtures, allowed parameter families, paired scenes, seeds, compute budget and threshold
+  provenance. Do not execute fitting until that campaign passes the registry and leakage
+  checks.
+semantic_result_sha256: 64013262215f94ef231d3eaf73527106ebac25b0fc2eea025d988523c3ed2fc1
