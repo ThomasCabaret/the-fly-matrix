@@ -1,0 +1,124 @@
+schema_version: 1
+id: campaign.front_leg_sensor_cns_motor_chain.v0
+title: Factorized front-leg sensor-CNS-motor chain envelope
+status: preregistered_runnable_no_parameter_promotion
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FRONT-LEG CHAIN ENVELOPE / FACTORIZED UNCERTAINTY / NO BEHAVIOR / NO PROMOTION
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Freeze and account one bounded FeCO-to-tibia-flexor-to-direct-motor chain
+  without selecting an observation path, native FeCO representation, motor body
+  class, route, temporal kernel, or force-to-command gain. The campaign may
+  expose missing population assignments; it may not fill them with a global
+  rate or LIF default.
+
+frozen_inputs:
+  population_accounting: calibration/runner/population-dynamics-front-leg-accounting-v0.yaml
+  population_members: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+  feco_fit_campaign: calibration/campaigns/feco-calcium-held-out-fit-v0.yaml
+  feco_fit_evaluation: calibration/evaluations/feco-calcium-held-out-fit-v0.yaml
+  motor_class_ensemble: calibration/evidence/front-leg-motor-class-ensemble-v0.yaml
+  motor_force_evaluation: calibration/evaluations/motor-spike-force-pilot-fit-v0.yaml
+  motor_temporal_result: calibration/runner/motor-twitch-temporal-diagnostic-v0.yaml
+  motor_bridge_result: calibration/runner/motor-actuator-bridge-envelope-v0.yaml
+  motor_route_table: data/derived/wiring/motor-actuator-candidates.parquet
+  outgoing_graph_cache: data/derived/execution-benchmark/malecns-full-outgoing-csr-v1.npz
+  graph_metadata: data/derived/execution-benchmark/malecns-full-csr-v1.json
+  body_annotations: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  proprioception_family_record: calibration/parameter_families/proprioception-transfer-v0.yaml
+  motor_family_record: calibration/parameter_families/motor-transfer-v0.yaml
+  semantic_topology_hashes:
+    proprioception: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    motor_output: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  central_body_id_sha256: 6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5
+  central_dataset_sha256: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+
+central_corridor_policy:
+  endpoint_pair_distance_max_hops: 3
+  local_envelope_max_hops: 2
+  include_every_direct_edge: true
+  include_every_two_hop_path: true
+  choose_path: false
+  intermediate_assignment: dual_unresolved
+  rationale: >-
+    Distances and the complete bounded path envelope are structural facts. A
+    shortest or strongest path must not be selected as the neural computation,
+    and every intermediate population remains unresolved until separately typed.
+
+factorization_policy:
+  feco_observation: one candidate per claw, club, and hook functional class
+  feco_native_representation: [graded_activity, event_intensity_hz]
+  motor_body_class: one unresolved categorical variable per selected body
+  motor_routing: retain all candidate basis edges and the local simplex dimension
+  motor_temporal_kernel: >-
+    Execute diagnostic basis probes only for fast and intermediate classes using
+    their all-data diagnostic representatives. Mark slow cases blocked because no
+    isolated single-spike kernel was identified.
+  bridge_gain: retain all three conditional engineering candidates
+  enumeration: >-
+    Keep the scientific uncertainty factorized. Enumerate only small source-path
+    products and local route/class/gain basis probes; never materialize the full
+    joint motor assignment or a continuous routing simplex.
+
+diagnostic_probe:
+  timestep_s: 0.001
+  samples: 400
+  event_index: 1
+  command_offset: 0.0
+  inspect_body_trajectory: false
+  run_mujoco: false
+  selection_from_probe: forbidden
+
+capacity_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_paths: 0
+  selected_routes: 0
+  selected_body_classes: 0
+  selected_bridge_gains: 0
+
+acceptance:
+  expected_feco_atomic_candidates: 7
+  expected_feco_joint_source_paths: 12
+  expected_native_representations: 2
+  expected_feco_boundary_alternatives: 24
+  expected_feco_neurons: 36
+  expected_motor_neurons: 10
+  expected_endpoint_pairs: 360
+  expected_direct_edges: 10
+  expected_two_hop_paths: 682
+  expected_new_intermediate_neurons: 150
+  expected_endpoint_pair_distance_hops: {'1': 10, '2': 101, '3': 249}
+  expected_motor_class_assignment_upper_bound: 59049
+  expected_motor_route_basis_edges: 110
+  expected_motor_routes_per_body: 11
+  expected_unique_actuators: 22
+  expected_bridge_gain_candidates: 3
+  expected_motor_basis_probes_executed: 660
+  expected_motor_basis_probes_blocked: 330
+  maximum_diagnostic_command_abs: 0.005
+  require_every_motor_reachable_within_local_envelope: true
+  require_every_endpoint_pair_reachable_within_distance_gate: true
+  require_blocked_slow_kernel_cases_reported: true
+  require_zero_behavior_exposure: true
+
+accepted_claims:
+  - The complete frozen endpoint scope and bounded central path envelope are structurally executable and exhaustively accounted.
+  - Existing sensory, motor-class, route, kernel, and gain uncertainty can be represented without selecting a body trajectory.
+  - Every local basis probe is either executed or assigned one explicit blocker.
+forbidden_claims:
+  - The bounded path envelope identifies the functional CNS route or its dynamics.
+  - Any intermediate population has an accepted event, graded, or point-neuron model.
+  - Diagnostic FeCO, force, kernel, route, or bridge candidates are calibrated or promoted values.
+  - A movement, pose, stability regime, or named behavior was fitted, inspected, or reproduced.
+next_action: >-
+  Use the reported intermediate-population inventory to define the smallest
+  evidence-backed typed/dual-unresolved CNS scope. Keep the factorized interface
+  envelope frozen. Do not start neutral embodied fitting until local sensory and
+  motor acceptance decisions either freeze values or explicitly propagate their
+  unresolved ensembles.

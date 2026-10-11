@@ -1,0 +1,73 @@
+schema_version: 1
+id: evaluation.front_leg_sensor_cns_motor_chain.v0
+title: Factorized front-leg sensor-CNS-motor chain envelope evaluation
+status: completed_envelope_accounting_intermediate_population_gate_open
+campaign_id: campaign.front_leg_sensor_cns_motor_chain.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_factorized_accounting_no_parameter_acceptance
+
+procedure_result:
+  sensory:
+    feco_atomic_source_candidates: 7
+    joint_functional_class_source_paths: 12
+    native_representation_candidates: 2
+    total_boundary_alternatives: 24
+    candidates_selected: 0
+  central:
+    sensory_endpoints: 36
+    motor_endpoints: 10
+    endpoint_pairs: 360
+    reachable_endpoint_pairs: 360
+    endpoint_pair_distance_hops: {'1': 10, '2': 101, '3': 249}
+    direct_edges: 10
+    two_hop_paths: 682
+    unique_new_intermediate_neurons: 150
+    intermediate_superclass_counts:
+      vnc_intrinsic: 133
+      vnc_motor: 7
+      ascending_neuron: 7
+      descending_neuron: 3
+    intermediate_assignment: dual_unresolved
+    paths_selected: 0
+  motor:
+    factorized_class_assignment_upper_bound: 59049
+    fully_kernel_executable_joint_assignments: 1024
+    kernel_blocked_joint_assignments: 58025
+    route_basis_edges: 110
+    local_routing_simplex_dof_upper_bound: 100
+    bridge_gain_candidates: 3
+    local_basis_probes_total: 990
+    local_basis_probes_executed: 660
+    local_basis_probes_blocked_missing_slow_kernel: 330
+    selected_classes_routes_or_gains: 0
+
+scientific_boundary:
+  parameter_values_promoted: 0
+  optimized_parameters: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+  accepted_claims:
+    - All 360 endpoint pairs are connected by the frozen canonical graph within three directed synapses.
+    - A complete two-hop local envelope reaches every selected motor endpoint without choosing one path.
+    - The FeCO, motor-class, route, kernel, and gain uncertainties remain factorized and exhaustively accounted.
+    - Every local motor basis case is executed or carries the explicit missing-slow-kernel blocker.
+  rejected_claims:
+    - Short graph distance identifies the biological computation or the correct neural representation.
+    - The 150 new intermediate neurons have accepted dynamics or parameter values.
+    - Diagnostic interface candidates are frozen biological parameters.
+    - This procedure ran a body, fitted stability, or observed a behavior.
+
+reproducibility:
+  command: front_leg_chain_envelope.bat
+  runner_result: calibration/runner/front-leg-sensor-cns-motor-chain-v0.yaml
+  artifact: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/summary.json
+  tests: .venv/Scripts/python.exe -m pytest tests/test_front_leg_chain.py
+  semantic_result_sha256: 5c320bb9febf20d360413f654c764744d7197cfbd8acd5391b0226264027053b
+next_action: >-
+  Treat the 150 new intermediate neurons as the next bounded population-assignment
+  gate. Preserve all interface alternatives while independent evidence determines
+  whether any subgroup can be typed or must remain dual_unresolved. The local
+  sensory and motor chains are not yet calibrated or frozen.

@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-10. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-11. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -71,6 +71,24 @@ force candidate la plus forte sous la moitié de la limite MuJoCo. Aucun gain,
 offset, routage ou classe de body ID n'est sélectionné. L'absence de géométrie
 d'insertion musculaire et de bras de levier maintient la conversion biologique
 µN→couple explicitement non identifiée.
+
+La première enveloppe locale sensorielle–CNS–motrice est maintenant compilée
+sans sélectionner un chemin ni une valeur. Les 36 FeCO et les dix motoneurones
+forment 360 couples : tous sont reliés dans le graphe canonique par un à trois
+sauts dirigés (10 à un saut, 101 à deux, 249 à trois). L'enveloppe exhaustive
+limitée à un/deux sauts contient dix arêtes directes, 682 chemins à deux sauts et
+atteint chacun des dix terminaux moteurs. Elle expose 150 nouveaux neurones
+intermédiaires non terminaux — 133 VNC intrinsèques, 7 ascendants, 7 moteurs et
+3 descendants — conservés `dual_unresolved` plutôt que forcés dans le rate ou le
+LIF. Côté interfaces, les sept chemins FeCO atomiques deviennent douze
+combinaisons fonctionnelles et 24 alternatives avec les deux représentations
+natives ; côté moteur, les 59 049 affectations de classes restent factorisées,
+avec 110 arêtes de base de routage et trois gains. Sur 990 probes motrices
+locales, 660 s'exécutent comme diagnostics rapide/intermédiaire et 330 restent
+explicitement bloquées par l'absence de noyau temporel lent. Zéro paramètre,
+route, chemin ou comportement est sélectionné. La chaîne est donc maintenant
+structurellement et algorithmiquement comptabilisée, mais ses populations
+intermédiaires et ses valeurs d'interface ne sont pas encore calibrées ni gelées.
 
 Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
 précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
@@ -203,10 +221,13 @@ résultat décide de la représentation native. Le pilote moteur reste opt-in et
 correspondance individuelle des body IDs reste un ensemble. Son diagnostic
 temporel est lui aussi terminé : rapide soutenu dans cette cellule, intermédiaire
 faiblement contraint et lent non identifié, sans promotion.
-Le pont moteur aval est également terminé dans sa portée technique conditionnelle :
-les trois gains, les trois classes par body ID et toutes les routes candidates
-doivent maintenant être propagés ensemble dans la première chaîne locale, sans
-sélection par trajectoire corporelle.
+Le pont moteur aval est également terminé dans sa portée technique conditionnelle,
+et les trois gains, les trois classes par body ID et toutes les routes candidates
+sont désormais propagés ensemble par la première enveloppe locale, sans sélection
+par trajectoire corporelle. Le prochain gate borné porte sur les 150 populations
+intermédiaires nouvellement exposées et sur des décisions d'acceptation explicites
+des ensembles d'interface ; la proximité topologique ne vaut pas affectation de
+dynamique ni calibration.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
@@ -945,6 +966,7 @@ parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, 
 fit_motor_spike_force_pilot.bat # 3 fits agrégés diagnostiques terminés, aucune valeur promue
 fit_motor_twitch_temporal_pilot.bat # 33 traces mono-spike, rapide soutenu, intermédiaire faible, lent non identifié
 motor_actuator_bridge_envelope.bat # 198 probes tethered, ensemble de 3 gains conditionnels, aucune promotion
+front_leg_chain_envelope.bat # 360 couples CNS, 24 alternatives FeCO, 990 probes motrices, aucune sélection
 ```
 
 Les données brutes, les artefacts `data/derived/`, les exécutions `runs/` et les

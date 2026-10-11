@@ -305,6 +305,37 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertIn("conversion_contracts_executable", assignment["status"])
 
+    def test_front_leg_chain_envelope_preserves_factorized_uncertainty(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "front-leg-sensor-cns-motor-chain-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "front-leg-sensor-cns-motor-chain-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "front-leg-sensor-cns-motor-chain-v0.yaml"
+        )
+        scope = load_yaml(
+            CALIBRATION_ROOT / "scopes" / "front-leg-sensor-cns-motor-chain-v0.yaml"
+        )
+
+        self.assertEqual(campaign["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(evaluation["procedure_result"]["central"]["reachable_endpoint_pairs"], 360)
+        self.assertEqual(evaluation["procedure_result"]["central"]["unique_new_intermediate_neurons"], 150)
+        self.assertEqual(scope["generated_intermediate_population"]["assignment"], "dual_unresolved")
+        self.assertEqual(runner["sensory_ensemble"]["boundary_alternatives"], 24)
+        self.assertEqual(runner["motor_ensemble"]["factorized_class_assignment_upper_bound"], 59_049)
+        self.assertEqual(runner["motor_ensemble"]["basis_probes_executed"], 660)
+        self.assertEqual(runner["motor_ensemble"]["basis_probes_blocked"], 330)
+        self.assertEqual(runner["accounting"]["promoted_parameter_values"], 0)
+        self.assertEqual(runner["accounting"]["behavior_targets_exposed"], 0)
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
     def test_feco_observation_source_contract_does_not_claim_native_spikes(self) -> None:
         campaign = load_yaml(
             CALIBRATION_ROOT / "campaigns" / "feco-calcium-observation-source-v0.yaml"

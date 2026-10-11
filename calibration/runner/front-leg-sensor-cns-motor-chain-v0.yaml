@@ -1,0 +1,94 @@
+schema_version: 1
+id: runner_result.front_leg_sensor_cns_motor_chain.v0
+campaign_id: campaign.front_leg_sensor_cns_motor_chain.v0
+target_id: target.population_dynamics_assignment.v0
+status: pass_factorized_chain_envelope_intermediate_assignments_open
+claim_label: FRONT-LEG CHAIN ENVELOPE / FACTORIZED UNCERTAINTY / NO BEHAVIOR / NO
+  PROMOTION
+command: front_leg_chain_envelope.bat
+behavior_targets: []
+campaign_sha256: 5bcfd38dea13f88bcd468e2c1ece38cc8a80996a27369bce37f2621bdcadad64
+semantic_result_sha256: 5c320bb9febf20d360413f654c764744d7197cfbd8acd5391b0226264027053b
+sensory_ensemble:
+  atomic_source_candidates: 7
+  joint_source_path_combinations: 12
+  native_representation_candidates: 2
+  boundary_alternatives: 24
+  source_path_selected: false
+  native_representation_selected: false
+central_corridor:
+  source_neurons: 36
+  target_neurons: 10
+  endpoint_pairs: 360
+  reachable_endpoint_pairs: 360
+  endpoint_pair_distance_hops:
+    '1': 10
+    '2': 101
+    '3': 249
+  minimum_hops: 1
+  maximum_hops: 3
+  direct_edges: 10
+  two_hop_paths: 682
+  local_path_records: 692
+  unique_intermediate_neurons: 150
+  paths_per_motor_min: 9
+  paths_per_motor_median: 50.0
+  paths_per_motor_max: 183
+  path_selected: false
+  intermediate_assignment: dual_unresolved
+  intermediate_parameter_values: 0
+  intermediate_superclass_counts:
+    vnc_intrinsic: 133
+    ascending_neuron: 7
+    vnc_motor: 7
+    descending_neuron: 3
+motor_ensemble:
+  motor_bodies: 10
+  admissible_classes_per_body: 3
+  factorized_class_assignment_upper_bound: 59049
+  fully_kernel_executable_joint_assignments: 1024
+  kernel_blocked_joint_assignments: 58025
+  route_basis_edges: 110
+  routes_per_body: 11
+  local_routing_simplex_dof_upper_bound: 100
+  unique_actuators: 22
+  bridge_gain_candidates: 3
+  basis_probes_total: 990
+  basis_probes_executed: 660
+  basis_probes_blocked: 330
+  executed_peak_command_min: 3.6203943505837646e-05
+  executed_peak_command_median: 0.0005373354612761036
+  executed_peak_command_max: 0.00499669815435862
+  selected_body_classes: 0
+  selected_routes: 0
+  selected_bridge_gains: 0
+accounting:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+artifact_ref: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/summary.json
+accepted_claims:
+- The complete frozen endpoint scope and bounded central path envelope are structurally
+  executable and exhaustively accounted.
+- Existing sensory, motor-class, route, kernel, and gain uncertainty can be represented
+  without selecting a body trajectory.
+- Every local basis probe is either executed or assigned one explicit blocker.
+forbidden_claims:
+- The bounded path envelope identifies the functional CNS route or its dynamics.
+- Any intermediate population has an accepted event, graded, or point-neuron model.
+- Diagnostic FeCO, force, kernel, route, or bridge candidates are calibrated or promoted
+  values.
+- A movement, pose, stability regime, or named behavior was fitted, inspected, or
+  reproduced.
+open_blockers:
+- All bounded CNS intermediate populations remain dual_unresolved; the path envelope
+  is not an accepted neural dynamics model.
+- The seven FeCO observation candidates and both native representations remain unselected.
+- Slow motor-class cases lack an isolated single-spike temporal kernel.
+- Motor class, routing simplex and force-to-command gain remain unresolved ensembles.
+next_action: Use the reported intermediate-population inventory to define the smallest
+  evidence-backed typed/dual-unresolved CNS scope. Keep the factorized interface envelope
+  frozen. Do not start neutral embodied fitting until local sensory and motor acceptance
+  decisions either freeze values or explicitly propagate their unresolved ensembles.

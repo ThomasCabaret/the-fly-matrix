@@ -245,6 +245,21 @@ below half of the fixed direct-motor limit. This is an engineering sensitivity
 ensemble, not a biological force-to-torque conversion, and no gain, route, body
 class, offset or behavior is selected.
 
+Run `front_leg_chain_envelope.bat` to rebuild the first factorized local
+sensor–CNS–motor envelope. It freezes the 36 FeCO and ten tibia-flexor endpoints,
+then checks all 360 directed endpoint pairs against the canonical graph. Every
+pair is reachable within three synapses; the complete one/two-hop envelope has
+10 direct edges, 682 two-hop paths and reaches every motor endpoint without
+choosing a path. Endpoint-aware accounting exposes 150 genuinely new intermediate
+neurons and keeps every one `dual_unresolved`. It also expands the seven atomic
+FeCO candidates into the 12 valid claw×club×hook combinations and 24 alternatives
+after native representation, while preserving the motor 3^10 class ensemble,
+110 route basis edges and three bridge gains. Of 990 local motor basis probes,
+660 execute diagnostically and 330 carry the explicit missing-slow-kernel block.
+The procedure runs no MuJoCo body, inspects no trajectory, optimizes zero values
+and promotes nothing. Its compact scientific boundary is in
+`evaluations/front-leg-sensor-cns-motor-chain-v0.yaml`.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

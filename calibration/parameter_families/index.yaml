@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter_family_inventory.v0
 status: complete_inventory_values_unfitted
-updated: 2026-10-10
+updated: 2026-10-11
 scope_statement: >-
   Exhaustive inventory of parameter families currently exposed or required by
   the accepted wiring-v0 embodied runtime. Completeness means every known family
@@ -64,7 +64,7 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  Continue target.population_dynamics_assignment.v0 with one minimal frozen
-  sensor-CNS-motor chain. Propagate the FeCO candidate ensemble, unresolved motor
-  classes/routes and all three conditional direct-motor bridge gains without
-  selecting from body motion; no local physiological parameter is promoted yet.
+  The factorized front-leg sensor-CNS-motor envelope is complete without a
+  selection. Assign or explicitly retain as dual_unresolved its 150 newly exposed
+  intermediate neurons, then version local acceptance decisions for the FeCO and
+  motor interface ensembles. No local physiological parameter is promoted yet.

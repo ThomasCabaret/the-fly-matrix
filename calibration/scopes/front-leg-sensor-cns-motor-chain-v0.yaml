@@ -1,0 +1,72 @@
+schema_version: 1
+id: scope.front_leg_sensor_cns_motor_chain.v0
+title: Bounded front-leg FeCO to tibia-flexor chain envelope
+status: factorized_envelope_accounted_intermediate_population_assignments_open
+target_id: target.population_dynamics_assignment.v0
+
+endpoint_populations:
+  sensory:
+    population_id: population.front_leg_feco.v0
+    canonical_neurons: 36
+    assignment: dual_unresolved
+  motor:
+    population_id: population.front_leg_tibia_flexor_motor.v0
+    canonical_neurons: 10
+    assignment: event_required
+
+generated_intermediate_population:
+  id: population.front_leg_two_hop_intermediates.v0
+  derivation: >-
+    Canonical non-endpoint neurons occurring in any directed two-hop path from
+    one of the 36 frozen FeCO endpoints to one of the ten frozen tibia-flexor
+    motor endpoints in the accepted MaleCNS graph.
+  canonical_neurons: 150
+  assignment: dual_unresolved
+  assignment_reason: >-
+    Topological membership is not evidence for event, graded, homogeneous LIF,
+    or rate dynamics. Endpoint nodes that recur inside a two-hop cycle retain
+    their existing endpoint assignment and are not reclassified.
+  parameter_values: 0
+  artifact: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/intermediate-populations.csv
+
+topology_boundary:
+  central_body_id_sha256: 6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5
+  central_dataset_sha256: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+  semantic_topology_hashes:
+    proprioception: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    motor_output: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  topology_changes_allowed: false
+
+accounting:
+  unique_endpoint_neurons: 46
+  unique_new_intermediate_neurons: 150
+  unique_chain_neurons: 196
+  endpoint_pairs: 360
+  reachable_endpoint_pairs: 360
+  pair_distance_hops: {'1': 10, '2': 101, '3': 249}
+  direct_edges: 10
+  two_hop_paths: 682
+  path_selected: false
+  parameter_values: 0
+  behavior_targets: 0
+
+allowed_changes:
+  - evidence-backed assignment or explicit unresolved alternatives for the 150 intermediate neurons
+  - unit and temporal conversion contracts at declared population boundaries
+  - factorized uncertainty and applicability records
+forbidden_changes:
+  - terminal membership or candidate routing topology
+  - central graph edges
+  - silent global rate or LIF assignment
+  - path selection from body movement or named behavior
+  - actuator semantics or FlyBody mechanics
+
+reproducibility:
+  command: front_leg_chain_envelope.bat
+  runner_result: calibration/runner/front-leg-sensor-cns-motor-chain-v0.yaml
+  campaign: calibration/campaigns/front-leg-sensor-cns-motor-chain-v0.yaml
+next_action: >-
+  Classify the 150 new intermediate neurons only as far as independent evidence
+  permits; otherwise retain both admissible representations. Then define local
+  acceptance decisions for the FeCO and motor interface ensembles without using
+  body trajectory or a named behavior.
