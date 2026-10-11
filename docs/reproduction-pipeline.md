@@ -223,6 +223,7 @@ actuator_semantics_gate.bat
 actuator_attribution_gate.bat
 motor_actuator_bridge_envelope.bat
 front_leg_chain_envelope.bat
+front_leg_intermediate_dynamics.bat
 ```
 
 The blank lines denote partly independent branches, not required pauses. The
@@ -230,16 +231,17 @@ tracked compact records show that these v0 commands have already been executed i
 the current project history. Their current products remain candidate ensembles
 or technical diagnostics; they are not a promoted end-to-end parameter set.
 
-The factorized local-chain step is now reproducible with
-`front_leg_chain_envelope.bat`. It accounts for all retained FeCO alternatives,
-unresolved motor body classes, route basis edges, conditional actuator gains and
-the bounded canonical CNS corridor without selecting a candidate. Its output
-exposes 150 new intermediate neurons whose dynamics remain `dual_unresolved`.
+The factorized local-chain step is reproducible with
+`front_leg_chain_envelope.bat`. Its downstream rules-first pass,
+`front_leg_intermediate_dynamics.bat`, accounts for every one of the 150 new
+intermediates. Two annotated tibia-extensor motor bodies acquire a source-backed
+event requirement; 148 remain explicit `dual_unresolved` alternatives. The
+transmitter prior is joined only for audit and never selects native dynamics.
 The next scientific step is therefore the one in
-`calibration/state.yaml:next_action`: type only the supported intermediate
-populations and version local interface acceptance decisions. A fresh clone must
-stop at that same frontier rather than inventing a global rate/LIF default or a
-slow motor kernel.
+`calibration/state.yaml:next_action`: preregister tractable propagation of those
+unresolved assignments and version local interface acceptance decisions. A fresh
+clone must stop at that same frontier rather than inventing a global rate/LIF
+default or a slow motor kernel.
 
 ### Historical neural-model gate
 

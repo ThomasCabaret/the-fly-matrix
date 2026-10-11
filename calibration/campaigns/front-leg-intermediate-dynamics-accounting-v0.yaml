@@ -1,0 +1,73 @@
+schema_version: 1
+id: campaign.front_leg_intermediate_dynamics_accounting.v0
+title: Exhaustive front-leg intermediate-population dynamics accounting
+status: preregistered_runnable
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+claim_label: INTERMEDIATE DYNAMICS ACCOUNTING / ZERO VALUES / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Apply a small ordered rule set to all 150 newly exposed CNS intermediate
+  bodies, promote only independently supported representation requirements and
+  retain every remaining body as dual_unresolved with a named evidence gap.
+
+frozen_inputs:
+  rules: calibration/evidence/front-leg-intermediate-dynamics-rules-v0.yaml
+  prior_chain_result: calibration/runner/front-leg-sensor-cns-motor-chain-v0.yaml
+  intermediate_inventory: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/intermediate-populations.csv
+  central_paths: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/central-paths-up-to-two-hops.csv
+  transmitter_prior: data/derived/calibration/transmitter-sign-prior-v0/neuron-priors.parquet
+  transmitter_parameter_set: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+  upstream_semantic_result_sha256: 5c320bb9febf20d360413f654c764744d7197cfbd8acd5391b0226264027053b
+  transmitter_semantic_values_sha256: fb3777b99eb913b41a86962cae33b8bf41a96bc0c26c25ca68ce34229a7a44da
+
+assignment_policy:
+  conflict_resolution: unique_highest_priority_rule
+  unmatched_body: hard_error
+  lower_priority_matches: reported_not_errors
+  annotation_only_assignment: forbidden
+  transmitter_to_native_dynamics_inference: forbidden
+  parameter_values_emitted: 0
+
+priority_report:
+  purpose: >-
+    Rank still-unresolved bodies only for future evidence acquisition using
+    frozen local path participation. This rank does not select a functional path,
+    a parameter, or a body response.
+  sort: path_count_descending_then_body_id
+  inspect_body_trajectory: false
+  selection_allowed: false
+
+acceptance:
+  expected_bodies: 150
+  expected_event_required: 2
+  expected_dual_unresolved: 148
+  expected_graded_required: 0
+  expected_missing_type: 1
+  expected_rules_applied: 3
+  expected_accounted_two_hop_paths: 673
+  expected_unique_sources_in_accounted_paths: 22
+  expected_unique_targets_in_accounted_paths: 10
+  expected_parameter_values_emitted: 0
+  require_zero_behavior_exposure: true
+  require_zero_topology_changes: true
+
+accepted_claims:
+  - Every scoped intermediate has one explicit dynamics disposition and a traceable rule.
+  - Two tibia-extensor motor bodies have a type-level event requirement from independent adult-fly evidence.
+  - The remaining 148 bodies have named evidence gaps and remain executable only under a preregistered unresolved-assignment policy.
+  - Frozen transmitter evidence is joined for audit but never converted into a native dynamics class.
+forbidden_claims:
+  - The event-required bodies have calibrated LIF or other membrane parameters.
+  - Any central interneuron, ascending neuron or descending neuron now has an accepted native dynamics class.
+  - Path participation identifies the functional route or permits pruning the frozen envelope.
+  - This campaign calibrates a movement, pose, stability regime or named behavior.
+next_action: >-
+  Version an explicit unresolved-assignment propagation policy for the 148 bodies
+  and local acceptance decisions for the FeCO and motor interface ensembles.
+  Only then open a minimal neutral embodied technical pilot; retain the missing
+  slow motor kernel as a visible blocked branch.

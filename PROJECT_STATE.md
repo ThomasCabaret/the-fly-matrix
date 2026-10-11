@@ -90,6 +90,18 @@ route, chemin ou comportement est sélectionné. La chaîne est donc maintenant
 structurellement et algorithmiquement comptabilisée, mais ses populations
 intermédiaires et ses valeurs d'interface ne sont pas encore calibrées ni gelées.
 
+La passe rules-first suivante ferme désormais la **comptabilité** des 150
+intermédiaires sans prétendre fermer leur physiologie. Deux corps annotés `Ti
+extensor MN` reçoivent une exigence événementielle au niveau du type, soutenue par
+des enregistrements indépendants de spikes des motoneurones extenseurs tibiaux de
+Drosophila. Les 148 autres restent `dual_unresolved` : 147 ont un type annoté mais
+aucune preuve locale de dynamique native, et le corps `852122` n'a pas de type.
+Les 150 ont un prior neurotransmetteur gelé (82 acétylcholine, 36 GABA, 27
+glutamate, 5 `unclear`), mais ce prior n'est jamais transformé en choix
+event/graded. Les 673 chemins à deux sauts passant par un nouvel intermédiaire
+sont tous attribués ; leur participation sert seulement à prioriser l'acquisition
+future de preuves. Zéro constante, chemin fonctionnel ou comportement est choisi.
+
 Le code public qui produit l'observation calcium FeCO est verrouillé sur un commit
 précis et reproduit par un contrat exécutable. Il sépare activation locale et noyau
 GCaMP causal normalisé, mais révèle deux divergences conservées comme telles :
@@ -224,10 +236,12 @@ faiblement contraint et lent non identifié, sans promotion.
 Le pont moteur aval est également terminé dans sa portée technique conditionnelle,
 et les trois gains, les trois classes par body ID et toutes les routes candidates
 sont désormais propagés ensemble par la première enveloppe locale, sans sélection
-par trajectoire corporelle. Le prochain gate borné porte sur les 150 populations
-intermédiaires nouvellement exposées et sur des décisions d'acceptation explicites
-des ensembles d'interface ; la proximité topologique ne vaut pas affectation de
-dynamique ni calibration.
+par trajectoire corporelle. Les 150 populations intermédiaires ont maintenant une
+disposition exhaustive : deux exigences événementielles et 148 alternatives
+`dual_unresolved`. Le prochain gate borné porte sur la propagation tractable de
+ces alternatives et sur des décisions d'acceptation explicites des ensembles
+d'interface ; la proximité topologique et le neurotransmetteur ne valent toujours
+pas affectation de dynamique ni calibration.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)

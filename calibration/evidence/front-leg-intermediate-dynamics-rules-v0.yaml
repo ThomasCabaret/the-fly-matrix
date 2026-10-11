@@ -1,0 +1,115 @@
+schema_version: 1
+id: evidence.front_leg_intermediate_dynamics_rules.v0
+title: Rules-first dynamics accounting for the bounded front-leg CNS intermediates
+status: runnable
+claim_label: POPULATION ASSIGNMENT ACCOUNTING / ZERO VALUES / NO BEHAVIOR
+
+scope:
+  population_id: population.front_leg_two_hop_intermediates.v0
+  derivation: >-
+    The 150 canonical non-endpoint bodies in the complete directed two-hop
+    FeCO-to-tibia-flexor envelope frozen by
+    campaign.front_leg_sensor_cns_motor_chain.v0.
+  topology_changes_allowed: false
+  parameter_values_allowed: false
+
+sources:
+  - id: source.malecns_systematic_annotations.v1
+    ref: https://doi.org/10.1038/s41467-025-59302-3
+    supports:
+      - Canonical body identity, superclass, subclass, named type and side.
+      - Identification of the two scoped bodies as front-leg tibia-extensor motor neurons.
+    does_not_support:
+      - A native event or graded model for central interneurons, ascending neurons or descending neurons.
+      - Physiological parameter values for any scoped body.
+  - id: source.drosophila_tibia_extensor_spikes.v0
+    ref: https://doi.org/10.1038/ncomms8288
+    supports:
+      - Adult Drosophila tibial extensor motor output is observed as action-potential firing in the resistance-reflex preparation.
+    does_not_support:
+      - A body-ID-specific membrane model, threshold, delay, force kernel or parameter value.
+      - Native dynamics of the other five motor bodies in this corridor.
+  - id: parameters.central_transmitter_sign_prior.v0
+    ref: calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+    supports:
+      - Frozen presynaptic transmitter evidence and typed sign prior for every canonical scoped body where available.
+    does_not_support:
+      - Native event-versus-graded dynamics.
+
+rules:
+  - id: intermediate.front_leg_tibia_extensor.event_required.v0
+    priority: 300
+    selector:
+      all:
+        - {field: superclass, op: equals, value: vnc_motor}
+        - {field: subclass, op: equals, value: fl}
+        - {field: type, op: equals, value: Ti extensor MN}
+    assignment: event_required
+    assignment_confidence: medium_type_level_transfer
+    evidence_ids:
+      - source.malecns_systematic_annotations.v1
+      - source.drosophila_tibia_extensor_spikes.v0
+    expected_count: 2
+    rationale: >-
+      The annotation provides an exact local motor type and independent adult-fly
+      electrophysiology establishes spikes for tibial extensor motor output. This
+      promotes only the event requirement, not a point-neuron model or constants.
+  - id: intermediate.annotated_but_native_dynamics_unresolved.v0
+    priority: 100
+    selector:
+      all:
+        - {field: type, op: not_missing}
+    assignment: dual_unresolved
+    assignment_confidence: high_for_unresolved_status
+    evidence_ids:
+      - source.malecns_systematic_annotations.v1
+      - parameters.central_transmitter_sign_prior.v0
+    expected_count: 147
+    rationale: >-
+      A named anatomical type and transmitter prior constrain identity and sign,
+      but neither establishes native event or graded temporal dynamics. The two
+      tibia-extensor bodies are consumed by the higher-priority rule.
+  - id: intermediate.missing_type_annotation.unresolved.v0
+    priority: 50
+    selector:
+      all:
+        - {field: type, op: is_missing}
+    assignment: dual_unresolved
+    assignment_confidence: high_for_unresolved_status_low_identity_resolution
+    evidence_ids:
+      - source.malecns_systematic_annotations.v1
+      - parameters.central_transmitter_sign_prior.v0
+    expected_count: 1
+    rationale: >-
+      The canonical body remains in the corridor and in the frozen sign prior,
+      but lacks a named type. Missing annotation is retained as an exception and
+      cannot trigger a silent population default.
+
+acceptance:
+  expected_bodies: 150
+  expected_event_required: 2
+  expected_dual_unresolved: 148
+  expected_graded_required: 0
+  expected_missing_type: 1
+  expected_rules_applied: 3
+  expected_accounted_two_hop_paths: 673
+  expected_unique_sources_in_accounted_paths: 22
+  expected_unique_targets_in_accounted_paths: 10
+  expected_parameter_values_emitted: 0
+  require_one_highest_priority_rule_per_body: true
+  require_every_body_in_at_least_one_frozen_path: true
+  require_transmitter_prior_for_every_body: true
+
+forbidden_inferences:
+  - A transmitter class determines native event-versus-graded dynamics.
+  - Topological proximity or path participation determines a neural model.
+  - event_required selects LIF, a threshold, a time constant or a delay.
+  - dual_unresolved is a zero activity or zero synaptic-effect assignment.
+  - The most connected unresolved bodies may be chosen by a body trajectory or named behavior.
+
+next_action: >-
+  Preserve the two type-level tibia-extensor event requirements and propagate
+  the other 148 bodies as explicit dual-unresolved alternatives. Acquire local
+  physiology only for the highest-impact unresolved groups where it can change
+  the executable assignment; do not hold neutral embodied fitting hostage to a
+  fabricated homogeneous default.

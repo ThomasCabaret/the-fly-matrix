@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_chain_envelope_complete_150_intermediate_assignments_and_interface_values_unresolved
+status: active_front_leg_conversion_contracts_executable_intermediate_rules_complete_2_event_required_148_dual_unresolved_interface_values_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,16 +64,14 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_factorized_chain_360_of_360_endpoint_pairs_reachable_150_new_intermediates_dual_unresolved_24_sensory_alternatives_59049_motor_class_upper_bound_zero_values
+validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_24_sensory_alternatives_59049_motor_class_upper_bound_zero_values
 blocked_reason: null
 next_action: >-
-  The first factorized chain envelope is complete: all 360 FeCO-to-motor endpoint
-  pairs are reachable within three directed synapses, and the complete local
-  one/two-hop envelope exposes 150 new non-endpoint neurons. Assign those neurons
-  only as far as independent evidence permits and retain the rest as
-  dual_unresolved; do not apply a homogeneous rate or LIF default. Preserve the
-  24 FeCO source/representation alternatives, the factorized 59,049 motor-class
-  upper bound, all 110 route basis edges and all three bridge gains. A separate
-  acceptance decision must freeze or explicitly propagate local interface values
-  before neutral embodied fitting; the missing slow temporal kernel remains an
-  explicit blocker rather than a borrowed default.
+  The first chain now accounts for all 196 unique bodies: the ten tibia-flexor
+  endpoints and two newly typed tibia-extensor intermediates require events,
+  while 36 FeCO endpoints and 148 intermediates remain dual_unresolved. Version a
+  tractable unresolved-assignment propagation policy; never infer dynamics from
+  transmitter or path count. Preserve the 24 FeCO alternatives, factorized
+  59,049 motor-class upper bound, 110 route basis edges and three bridge gains.
+  Freeze or explicitly propagate interface values before neutral embodied fitting;
+  the missing slow temporal kernel remains blocked rather than borrowed.

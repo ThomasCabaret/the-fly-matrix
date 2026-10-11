@@ -1,7 +1,7 @@
 schema_version: 1
 id: scope.front_leg_sensor_cns_motor_chain.v0
 title: Bounded front-leg FeCO to tibia-flexor chain envelope
-status: factorized_envelope_accounted_intermediate_population_assignments_open
+status: factorized_envelope_accounted_intermediate_population_rules_complete_values_open
 target_id: target.population_dynamics_assignment.v0
 
 endpoint_populations:
@@ -21,13 +21,19 @@ generated_intermediate_population:
     one of the 36 frozen FeCO endpoints to one of the ten frozen tibia-flexor
     motor endpoints in the accepted MaleCNS graph.
   canonical_neurons: 150
-  assignment: dual_unresolved
+  assignment: mixed_explicit_2_event_required_148_dual_unresolved
+  assignment_summary:
+    event_required: 2
+    dual_unresolved: 148
+    graded_required: 0
   assignment_reason: >-
     Topological membership is not evidence for event, graded, homogeneous LIF,
     or rate dynamics. Endpoint nodes that recur inside a two-hop cycle retain
     their existing endpoint assignment and are not reclassified.
   parameter_values: 0
-  artifact: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/intermediate-populations.csv
+  source_artifact: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/intermediate-populations.csv
+  classified_artifact: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
+  evidence_rules: calibration/evidence/front-leg-intermediate-dynamics-rules-v0.yaml
 
 topology_boundary:
   central_body_id_sha256: 6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5
@@ -66,7 +72,7 @@ reproducibility:
   runner_result: calibration/runner/front-leg-sensor-cns-motor-chain-v0.yaml
   campaign: calibration/campaigns/front-leg-sensor-cns-motor-chain-v0.yaml
 next_action: >-
-  Classify the 150 new intermediate neurons only as far as independent evidence
-  permits; otherwise retain both admissible representations. Then define local
+  Preserve the two event-required tibia-extensor bodies and propagate the other
+  148 bodies under an explicit bounded unresolved-assignment policy. Define local
   acceptance decisions for the FeCO and motor interface ensembles without using
-  body trajectory or a named behavior.
+  body trajectory or a named behavior; do not borrow the missing slow kernel.

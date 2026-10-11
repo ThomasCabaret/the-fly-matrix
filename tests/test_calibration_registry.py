@@ -324,13 +324,52 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(campaign["topology_changes_allowed"])
         self.assertEqual(evaluation["procedure_result"]["central"]["reachable_endpoint_pairs"], 360)
         self.assertEqual(evaluation["procedure_result"]["central"]["unique_new_intermediate_neurons"], 150)
-        self.assertEqual(scope["generated_intermediate_population"]["assignment"], "dual_unresolved")
+        self.assertEqual(
+            scope["generated_intermediate_population"]["assignment"],
+            "mixed_explicit_2_event_required_148_dual_unresolved",
+        )
+        self.assertEqual(
+            scope["generated_intermediate_population"]["assignment_summary"],
+            {"event_required": 2, "dual_unresolved": 148, "graded_required": 0},
+        )
         self.assertEqual(runner["sensory_ensemble"]["boundary_alternatives"], 24)
         self.assertEqual(runner["motor_ensemble"]["factorized_class_assignment_upper_bound"], 59_049)
         self.assertEqual(runner["motor_ensemble"]["basis_probes_executed"], 660)
         self.assertEqual(runner["motor_ensemble"]["basis_probes_blocked"], 330)
         self.assertEqual(runner["accounting"]["promoted_parameter_values"], 0)
         self.assertEqual(runner["accounting"]["behavior_targets_exposed"], 0)
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["semantic_result_sha256"],
+        )
+
+    def test_front_leg_intermediate_rules_account_every_body_without_values(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT
+            / "campaigns"
+            / "front-leg-intermediate-dynamics-accounting-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluations"
+            / "front-leg-intermediate-dynamics-accounting-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT
+            / "runner"
+            / "front-leg-intermediate-dynamics-accounting-v0.yaml"
+        )
+
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(runner["summary"]["scoped_bodies"], 150)
+        self.assertEqual(
+            runner["summary"]["assignment_counts"],
+            {"dual_unresolved": 148, "event_required": 2},
+        )
+        self.assertEqual(runner["summary"]["parameter_values_emitted"], 0)
+        self.assertEqual(runner["summary"]["topology_changes"], 0)
+        self.assertEqual(runner["summary"]["behavior_targets_exposed"], 0)
         self.assertEqual(
             runner["semantic_result_sha256"],
             evaluation["reproducibility"]["semantic_result_sha256"],

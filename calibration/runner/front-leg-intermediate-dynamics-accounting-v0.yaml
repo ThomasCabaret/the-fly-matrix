@@ -1,0 +1,82 @@
+schema_version: 1
+id: runner_result.front_leg_intermediate_dynamics_accounting.v0
+campaign_id: campaign.front_leg_intermediate_dynamics_accounting.v0
+target_id: target.population_dynamics_assignment.v0
+status: pass_exhaustive_accounting_two_event_required_148_dual_unresolved
+claim_label: INTERMEDIATE DYNAMICS ACCOUNTING / ZERO VALUES / NO BEHAVIOR
+command: front_leg_intermediate_dynamics.bat
+behavior_targets: []
+campaign_sha256: 9b45a80c359a5587b5ed57f6608f0eb60e3def562ee734bee7a2ce8008bb6188
+rules_sha256: 2cd0201f21cf107aaba9b267c7bdc6076dc63720ac790fa5cfffbef7199d3627
+upstream_semantic_result_sha256: 5c320bb9febf20d360413f654c764744d7197cfbd8acd5391b0226264027053b
+semantic_result_sha256: 614bf3075051de600df68ddc0e3e96f708329311f9893c8d286ba1c3d0ba6f42
+summary:
+  scoped_bodies: 150
+  assignment_counts:
+    dual_unresolved: 148
+    event_required: 2
+  rule_counts:
+    intermediate.front_leg_tibia_extensor.event_required.v0: 2
+    intermediate.annotated_but_native_dynamics_unresolved.v0: 147
+    intermediate.missing_type_annotation.unresolved.v0: 1
+  missing_type_annotations: 1
+  superclass_counts:
+    vnc_intrinsic: 133
+    ascending_neuron: 7
+    vnc_motor: 7
+    descending_neuron: 3
+  transmitter_counts:
+    acetylcholine: 82
+    gaba: 36
+    glutamate: 27
+    unclear: 5
+  accounted_two_hop_paths: 673
+  unique_sources_in_accounted_paths: 22
+  unique_targets_in_accounted_paths: 10
+  path_count_min: 1
+  path_count_median: 3.0
+  path_count_max: 25
+  parameter_values_emitted: 0
+  topology_changes: 0
+  behavior_targets_exposed: 0
+exceptions:
+- id: exception.native_dynamics_evidence_missing
+  status: open_propagate_dual_unresolved
+  count: 148
+  meaning: Identity/sign evidence exists but native event-versus-graded evidence does
+    not.
+- id: exception.annotation_type_missing
+  status: open_low_identity_resolution
+  count: 1
+  body_ids:
+  - 852122
+- id: exception.motor_types_without_direct_dynamics_transfer
+  status: open_keep_dual_unresolved
+  count: 5
+  body_ids:
+  - 801173
+  - 802072
+  - 803237
+  - 808640
+  - 1050268065
+artifact_ref: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/summary.json
+accepted_claims:
+- Every scoped intermediate has one explicit dynamics disposition and a traceable
+  rule.
+- Two tibia-extensor motor bodies have a type-level event requirement from independent
+  adult-fly evidence.
+- The remaining 148 bodies have named evidence gaps and remain executable only under
+  a preregistered unresolved-assignment policy.
+- Frozen transmitter evidence is joined for audit but never converted into a native
+  dynamics class.
+forbidden_claims:
+- The event-required bodies have calibrated LIF or other membrane parameters.
+- Any central interneuron, ascending neuron or descending neuron now has an accepted
+  native dynamics class.
+- Path participation identifies the functional route or permits pruning the frozen
+  envelope.
+- This campaign calibrates a movement, pose, stability regime or named behavior.
+next_action: Version an explicit unresolved-assignment propagation policy for the
+  148 bodies and local acceptance decisions for the FeCO and motor interface ensembles.
+  Only then open a minimal neutral embodied technical pilot; retain the missing slow
+  motor kernel as a visible blocked branch.

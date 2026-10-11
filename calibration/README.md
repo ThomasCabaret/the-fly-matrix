@@ -260,6 +260,17 @@ The procedure runs no MuJoCo body, inspects no trajectory, optimizes zero values
 and promotes nothing. Its compact scientific boundary is in
 `evaluations/front-leg-sensor-cns-motor-chain-v0.yaml`.
 
+Run `front_leg_intermediate_dynamics.bat` for the next rules-first population
+gate. It applies three ordered evidence rules to all 150 new intermediates,
+joins the frozen transmitter prior for audit, and accounts for all 673 two-hop
+path records that pass through those bodies. Independent adult-fly physiology
+supports an event requirement for the two annotated tibia-extensor motor bodies;
+the other 148 remain explicitly `dual_unresolved`, including five other motor
+types without a direct transfer and body `852122` without a type annotation.
+Transmitter labels and path counts never select native dynamics. The command emits
+zero parameter values, changes no topology, observes no body and writes a compact
+exception report plus a non-selecting evidence-acquisition priority.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

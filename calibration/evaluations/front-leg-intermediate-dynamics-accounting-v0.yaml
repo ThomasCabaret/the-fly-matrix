@@ -1,0 +1,69 @@
+schema_version: 1
+id: evaluation.front_leg_intermediate_dynamics_accounting.v0
+title: Front-leg intermediate-population dynamics accounting evaluation
+status: completed_exhaustive_accounting_two_event_requirements_148_unresolved
+campaign_id: campaign.front_leg_intermediate_dynamics_accounting.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: evidence_transfer
+optimization_exposure: diagnostic_only
+behavior_targets: []
+acceptance_result: pass_accounting_partial_assignment_zero_values
+
+procedure_result:
+  scoped_bodies: 150
+  accounted_bodies: 150
+  assignments: {event_required: 2, dual_unresolved: 148, graded_required: 0}
+  applied_rules:
+    tibia_extensor_type_level_event_transfer: 2
+    annotated_native_dynamics_unresolved: 147
+    missing_type_annotation_unresolved: 1
+  superclass_counts:
+    vnc_intrinsic: 133
+    ascending_neuron: 7
+    vnc_motor: 7
+    descending_neuron: 3
+  frozen_transmitter_audit:
+    acetylcholine: 82
+    gaba: 36
+    glutamate: 27
+    unclear: 5
+    native_dynamics_inferred_from_transmitter: 0
+  path_accounting:
+    two_hop_paths_with_new_intermediate: 673
+    unique_sources: 22
+    unique_targets: 10
+    path_count_per_body: {min: 1, median: 3.0, max: 25}
+    functional_paths_selected: 0
+
+exceptions:
+  - {id: exception.native_dynamics_evidence_missing, status: open_propagate_dual_unresolved, count: 148}
+  - {id: exception.annotation_type_missing, status: open_low_identity_resolution, count: 1, body_ids: [852122]}
+  - {id: exception.motor_types_without_direct_dynamics_transfer, status: open_keep_dual_unresolved, count: 5, body_ids: [801173, 802072, 803237, 808640, 1050268065]}
+
+scientific_boundary:
+  parameter_values_promoted: 0
+  optimized_parameters: 0
+  topology_changes: 0
+  behavior_targets_exposed: 0
+  accepted_claims:
+    - Every scoped body has exactly one explicit evidence rule and dynamics disposition.
+    - Two annotated tibia-extensor motor bodies require an event-capable representation at type-transfer confidence.
+    - All other bodies retain explicit event/graded uncertainty rather than a homogeneous default.
+    - Frozen transmitter labels constrain sign evidence but do not select native temporal dynamics.
+  rejected_claims:
+    - The two event-required bodies have calibrated membrane or synaptic constants.
+    - The 148 unresolved bodies may use a silent global rate or LIF default.
+    - High local path participation identifies a functional route.
+    - Any movement or behavior was fitted, inspected or reproduced.
+
+reproducibility:
+  command: front_leg_intermediate_dynamics.bat
+  runner_result: calibration/runner/front-leg-intermediate-dynamics-accounting-v0.yaml
+  artifact: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/summary.json
+  tests: .venv/Scripts/python.exe -m pytest tests/test_front_leg_intermediate_dynamics.py
+  semantic_result_sha256: 614bf3075051de600df68ddc0e3e96f708329311f9893c8d286ba1c3d0ba6f42
+next_action: >-
+  Preregister a tractable propagation policy for the 148 dual-unresolved bodies,
+  then decide whether the complete FeCO and motor interface ensembles are frozen
+  as uncertainty sets or require one additional local evidence gate. The absent
+  slow twitch kernel remains blocked and cannot be replaced silently.
