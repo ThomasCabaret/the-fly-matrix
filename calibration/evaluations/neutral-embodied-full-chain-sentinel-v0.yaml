@@ -1,0 +1,25 @@
+schema_version: 1
+id: evaluation.neutral_embodied_full_chain_sentinel.v0
+title: Neutral embodied full local-chain execution sentinel
+status: evaluated
+campaign_id: campaign.neutral_embodied_full_chain_sentinel.v0
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FULL LOCAL-CHAIN SENTINEL / DIAGNOSTIC CANDIDATES / NOT CALIBRATION /
+  NOT STABILITY / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+acceptance_result: pass_full_local_chain_execution_sentinel_no_calibration
+runner_result_id: runner_result.neutral_embodied_full_chain_sentinel.v0
+runner_semantic_sha256: 72cc474496dd29a5786d0402a0cd35e47e0a24aa1df092979e0bd3d91fb7506a
+parameter_values_promoted: 0
+stability_accepted: false
+full_local_chain_execution_contract: true
+conclusion: The four fixed schedule tuples executed FeCO transduction, typed local
+  CNS dynamics, motor events, the frozen physical adapter and paired MuJoCo episodes.
+  This is an execution contract using declared diagnostic candidates, not calibration
+  or stability evidence.
+next_action: If all four tuples pass, run the immutable 120-tuple local panel with
+  the same execution contract and retain every failure. Analyze robustness only over
+  the scheduled tuples; do not rank candidates from body motion and do not promote
+  these diagnostic neural constants.

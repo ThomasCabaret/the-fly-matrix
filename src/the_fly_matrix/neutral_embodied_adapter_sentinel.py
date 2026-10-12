@@ -196,6 +196,79 @@ def _decode_motor_assignment(
     }
 
 
+def compile_motor_route_trace(
+    row: Mapping[str, str],
+    inputs: Mapping[str, Any],
+    event_counts: np.ndarray,
+    *,
+    frame_dt_s: float,
+    actuator_names: tuple[str, ...] | None = None,
+) -> dict[str, Any]:
+    """Compile caller-owned motor events through the frozen physical adapter."""
+
+    events = np.asarray(event_counts)
+    if events.ndim != 1 or not np.issubdtype(events.dtype, np.integer):
+        raise NeutralAdapterSentinelError(
+            "route event_counts must be a one-dimensional integer vector"
+        )
+    if (events < 0).any():
+        raise NeutralAdapterSentinelError("route event_counts cannot be negative")
+    if not np.isfinite(frame_dt_s) or frame_dt_s <= 0.0:
+        raise NeutralAdapterSentinelError("route frame_dt_s must be finite and positive")
+
+    assignment = _decode_motor_assignment(row, list(inputs["body_ids"]))
+    route_body_id = int(row["route_body_id"])
+    if route_body_id not in assignment:
+        raise NeutralAdapterSentinelError("scheduled route body is outside motor ensemble")
+    route_class = assignment[route_body_id]
+    target_id = int(row["route_target_actuator_id"])
+    target_name = str(row["route_target_actuator_name"])
+    if not 0 <= target_id < 102:
+        raise NeutralAdapterSentinelError("scheduled target actuator id is invalid")
+    if actuator_names is not None and actuator_names[target_id] != target_name:
+        raise NeutralAdapterSentinelError("scheduled target actuator name/address drift")
+
+    temporal = inputs["temporal_by_class"][route_class]
+    twitch = MotorTwitchParameters(
+        force_per_event_uN=np.asarray([inputs["force_by_class"][route_class]]),
+        rise_time_s=np.asarray([temporal["rise_time_s"]]),
+        decay_time_s=np.asarray([temporal["decay_time_s"]]),
+    )
+    force = motor_events_to_force_uN(events[:, None], twitch, timestep_s=frame_dt_s)
+    gain = float(row["bridge_gain_command_per_uN"])
+    local_command = force_uN_to_actuator_command(
+        force,
+        ActuatorBridgeParameters(
+            command_per_uN=np.asarray([gain]),
+            command_offset=np.asarray([0.0]),
+        ),
+    )[:, 0]
+    command_trace = np.zeros((len(events), 102), dtype=np.float64)
+    command_trace[:, target_id] = local_command
+    active_columns = np.flatnonzero(np.any(command_trace != 0.0, axis=0)).tolist()
+    if active_columns not in ([], [target_id]):
+        raise NeutralAdapterSentinelError("motor event source leaked outside scheduled route")
+    if not np.isfinite(command_trace).all() or np.max(
+        np.abs(command_trace), initial=0.0
+    ) > 0.01:
+        raise NeutralAdapterSentinelError("compiled command is non-finite or exceeds motor limit")
+    return {
+        "assignment": assignment,
+        "route_body_id": route_body_id,
+        "route_body_class": route_class,
+        "target_actuator_id": target_id,
+        "target_actuator_name": target_name,
+        "force_per_event_uN": float(inputs["force_by_class"][route_class]),
+        "rise_time_s": temporal["rise_time_s"],
+        "decay_time_s": temporal["decay_time_s"],
+        "bridge_gain_index": int(row["bridge_gain_index"]),
+        "bridge_gain_command_per_uN": gain,
+        "event_count": int(events.sum()),
+        "command_trace": command_trace,
+        "active_actuator_ids": active_columns,
+    }
+
+
 def compile_tuple(
     row: Mapping[str, str],
     campaign: Mapping[str, Any],
@@ -216,47 +289,22 @@ def compile_tuple(
     if row["feco_alternative_id"] != expected_feco_id:
         raise NeutralAdapterSentinelError("FeCO alternative id/index mismatch")
 
-    assignment = _decode_motor_assignment(row, list(inputs["body_ids"]))
-    route_body_id = int(row["route_body_id"])
-    if route_body_id not in assignment:
-        raise NeutralAdapterSentinelError("scheduled route body is outside motor ensemble")
-    route_class = assignment[route_body_id]
-    target_id = int(row["route_target_actuator_id"])
-    target_name = str(row["route_target_actuator_name"])
-    if not 0 <= target_id < 102:
-        raise NeutralAdapterSentinelError("scheduled target actuator id is invalid")
-    if actuator_names is not None and actuator_names[target_id] != target_name:
-        raise NeutralAdapterSentinelError("scheduled target actuator name/address drift")
-
     protocol = campaign["physical_protocol"]
     fixture = campaign["synthetic_motor_fixture"]
     frames = int(protocol["frames"])
     event_frame = int(fixture["event_frame"])
     event_counts = np.zeros((frames, 1), dtype=np.int64)
     event_counts[event_frame, 0] = int(fixture["event_count"])
-    temporal = inputs["temporal_by_class"][route_class]
-    twitch = MotorTwitchParameters(
-        force_per_event_uN=np.asarray([inputs["force_by_class"][route_class]]),
-        rise_time_s=np.asarray([temporal["rise_time_s"]]),
-        decay_time_s=np.asarray([temporal["decay_time_s"]]),
+    route = compile_motor_route_trace(
+        row,
+        inputs,
+        event_counts[:, 0],
+        frame_dt_s=float(protocol["expected_frame_dt_s"]),
+        actuator_names=actuator_names,
     )
-    frame_dt = float(protocol["expected_frame_dt_s"])
-    force = motor_events_to_force_uN(event_counts, twitch, timestep_s=frame_dt)
-    gain = float(row["bridge_gain_command_per_uN"])
-    local_command = force_uN_to_actuator_command(
-        force,
-        ActuatorBridgeParameters(
-            command_per_uN=np.asarray([gain]),
-            command_offset=np.asarray([0.0]),
-        ),
-    )[:, 0]
-    command_trace = np.zeros((frames, 102), dtype=np.float64)
-    command_trace[:, target_id] = local_command
-    active_columns = np.flatnonzero(np.any(command_trace != 0.0, axis=0)).tolist()
-    if active_columns != [target_id]:
+    command_trace = route["command_trace"]
+    if route["active_actuator_ids"] != [route["target_actuator_id"]]:
         raise NeutralAdapterSentinelError("motor fixture leaked outside scheduled route")
-    if not np.isfinite(command_trace).all() or np.max(np.abs(command_trace)) > 0.01:
-        raise NeutralAdapterSentinelError("compiled command is non-finite or exceeds motor limit")
 
     profile = inputs["profiles"][profile_id]
     return {
@@ -279,25 +327,25 @@ def compile_tuple(
         "motor": {
             "assignment_index": int(row["motor_assignment_index"]),
             "assignment_signature": row["motor_assignment_signature"],
-            "decoded_bodies": len(assignment),
-            "route_body_id": route_body_id,
-            "route_body_class": route_class,
-            "force_per_event_uN": float(inputs["force_by_class"][route_class]),
-            "rise_time_s": temporal["rise_time_s"],
-            "decay_time_s": temporal["decay_time_s"],
+            "decoded_bodies": len(route["assignment"]),
+            "route_body_id": route["route_body_id"],
+            "route_body_class": route["route_body_class"],
+            "force_per_event_uN": route["force_per_event_uN"],
+            "rise_time_s": route["rise_time_s"],
+            "decay_time_s": route["decay_time_s"],
             "synthetic_event_count": int(event_counts.sum()),
         },
         "route": {
-            "target_actuator_id": target_id,
-            "target_actuator_name": target_name,
-            "bridge_gain_index": int(row["bridge_gain_index"]),
-            "bridge_gain_command_per_uN": gain,
+            "target_actuator_id": route["target_actuator_id"],
+            "target_actuator_name": route["target_actuator_name"],
+            "bridge_gain_index": route["bridge_gain_index"],
+            "bridge_gain_command_per_uN": route["bridge_gain_command_per_uN"],
         },
         "command_trace": command_trace,
         "command_contract": {
             "frames": frames,
             "actuators": 102,
-            "active_actuator_ids": active_columns,
+            "active_actuator_ids": route["active_actuator_ids"],
             "non_scoped_actuators_zero": True,
             "peak_abs_command": float(np.max(np.abs(command_trace))),
             "nonzero_samples": int(np.count_nonzero(command_trace)),

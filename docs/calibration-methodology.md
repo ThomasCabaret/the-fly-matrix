@@ -696,6 +696,17 @@ full-chain claim until those axes have explicit units, candidate values and an
 executed path. Synthetic events used to test an adapter remain fixtures, never
 MaleCNS output or evidence of stability.
 
+The next sentinel may close the **execution** gate with uncalibrated candidates,
+provided it makes every such choice visible. In the first front-leg contract this
+means that FeCO source functions, native graded/event conversion, typed local CNS
+populations, fixed delay, motor events and the physical adapter all execute. A
+diagnostic endpoint projection, normalized connection weight, unresolved-sign
+candidate or arbitrary membrane constant is not upgraded by that pass: it remains
+an input to an implementation probe, carries zero promotion, and must be replaced
+or propagated by later calibration. Passing four fixed tuples authorizes the
+predeclared local panel to run; it does not accept a population assignment,
+parameter value, neutral stability result or complete-MaleCNS model.
+
 The actuator-semantics gate and the relevant local sensory/motor scopes must be
 closed or explicitly frozen before this stage frees global parameters. Central,
 sensory, motor and mechanical families cannot all vary simultaneously unless a

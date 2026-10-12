@@ -1,0 +1,363 @@
+schema_version: 1
+campaign_id: campaign.neutral_embodied_full_chain_sentinel.v0
+status: pass_full_local_chain_execution_sentinel_no_calibration
+claim_label: FULL LOCAL-CHAIN SENTINEL / DIAGNOSTIC CANDIDATES / NOT CALIBRATION /
+  NOT STABILITY / NO BEHAVIOR / NO SELECTION
+accounting:
+  scheduled_tuples_loaded: 120
+  sentinel_tuples: 4
+  paired_physical_episodes: 8
+  completed_tuples: 4
+  failed_tuples: 0
+  all_axes_active: true
+execution_boundary:
+  feco_transduction_executed: true
+  typed_intermediate_cns_executed: true
+  motor_event_force_bridge_route_executed: true
+  paired_mujoco_physics_executed: true
+  local_chain_execution_contract_passed: true
+  population_assignments_promoted: 0
+  candidate_selected_from_motion: false
+  stability_evaluated: false
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+input_hashes:
+  central_paths: e26d05333d56e779c1b3cbb87d00635350fde34df355b79728a87475741aec4f
+  population_members: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  classified_intermediates: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+  transmitter_priors: f7f129585ba0e516c824fc5bb5b9e53f2a62c2203405b1fd8b01c7e5cee5162a
+adapter_input_hashes:
+  intermediate_profile_panel: 4557f1bf7a999b4e3f71a6fd2d2f8d26b3b83ab1a654d46e2e20165d77f7cdc2
+  feco_joint_source_paths: 734607723923ff155d3586674f882dc45a18e8dae332f38ff499e3288b1912ce
+  motor_class_ensemble: 3595b0420bb815887d2d892ad5f9088e5af61a53ba38a7ef43c28277ac2304fa
+  motor_force_fit: 397bcbb355efb4f1fe34004555c595bbf9c1400371501176472b81ee050a9b6a
+  motor_temporal_diagnostic: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+schedule_result_semantic_sha256: b65d33ad87980935cbe1d6ff6b0c027df7a5aaf78ae1fd0364331795ee193e3f
+tuple_outcomes:
+- tuple_id: neutral_tuple_000
+  status: completed_contract
+  local_chain:
+    samples: 2000
+    timestep_s: 0.0001
+    frame_dt_s: 0.005
+    transmission_delay_s: 0.0018
+    transmission_delay_steps: 18
+    feco_source_path_index: 0
+    feco_representation: graded_candidate
+    feco_projection_policy: sorted_body_id_round_robin_three_class_diagnostic_only
+    feco_projection_class_counts:
+      claw_position: 12
+      club_vibration_and_speed: 12
+      hook_flexion_direction: 12
+    feco_event_count: 0
+    feco_nonzero_drive_samples: 59808
+    intermediate_event_candidates: 150
+    intermediate_graded_candidates: 0
+    intermediate_spike_count: 2614
+    intermediate_nonzero_state_samples: 278319
+    unknown_sign_diagnostic_edges_sources: 32
+    motor_spike_count_all_bodies: 80
+    route_motor_event_count: 10
+    route_motor_body_id: 807165
+    neural_trace_sha256: 7d0e876ab8c90703f8cd918cfb61b2617b7f06868059426678a75e1db646c42a
+  route:
+    route_body_id: 807165
+    route_body_class: fast_81A07
+    target_actuator_id: 36
+    target_actuator_name: c_thorax-lf_coxa-yaw-motor
+    force_per_event_uN: 4.775318855516674
+    rise_time_s: 0.011124851489195014
+    decay_time_s: 0.014199935664406796
+    bridge_gain_index: 0
+    bridge_gain_command_per_uN: 4.378764060895075e-05
+    event_count: 10
+    active_actuator_ids:
+    - 36
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253207874969976
+    com_jerk_peak: 477162.554303947
+    direct_motor_work_proxy: 9.922903502355128e-06
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253085835712156
+    com_jerk_peak: 477162.554303947
+    direct_motor_work_proxy: 9.832542888002345e-06
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014167513246424036
+      final_l2: 6.665885936071637e-05
+      final_over_peak: 0.4705050081921855
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.00033632151538395507
+      final_l2: 0.00023598182222113727
+      final_over_peak: 0.7016554440524957
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.337945665239019
+      final_l2: 0.228657281591501
+      final_over_peak: 0.1709017694307132
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_000/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_000/perturbed.npz
+  wall_seconds: 3.7834930999670178
+- tuple_id: neutral_tuple_001
+  status: completed_contract
+  local_chain:
+    samples: 2000
+    timestep_s: 0.0001
+    frame_dt_s: 0.005
+    transmission_delay_s: 0.0018
+    transmission_delay_steps: 18
+    feco_source_path_index: 0
+    feco_representation: event_candidate
+    feco_projection_policy: sorted_body_id_round_robin_three_class_diagnostic_only
+    feco_projection_class_counts:
+      claw_position: 12
+      club_vibration_and_speed: 12
+      hook_flexion_direction: 12
+    feco_event_count: 925
+    feco_nonzero_drive_samples: 66626
+    intermediate_event_candidates: 2
+    intermediate_graded_candidates: 148
+    intermediate_spike_count: 20
+    intermediate_nonzero_state_samples: 282554
+    unknown_sign_diagnostic_edges_sources: 32
+    motor_spike_count_all_bodies: 95
+    route_motor_event_count: 10
+    route_motor_body_id: 807165
+    neural_trace_sha256: 6b87639281a8206160e525ef7bd497461b0cc1d082846b0de0d99ca65f638dfa
+  route:
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 37
+    target_actuator_name: c_thorax-lf_coxa-pitch-motor
+    force_per_event_uN: 0.8268137341676737
+    rise_time_s: 0.009654893846056294
+    decay_time_s: 0.010279824595237684
+    bridge_gain_index: 1
+    bridge_gain_command_per_uN: 0.00021412115971164783
+    event_count: 10
+    active_actuator_ids:
+    - 37
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253292520953736
+    com_jerk_peak: 477161.4659594339
+    direct_motor_work_proxy: 1.653479224318417e-05
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253177995143887
+    com_jerk_peak: 477161.4659594339
+    direct_motor_work_proxy: 1.6367589915016393e-05
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.000141658044591631
+      final_l2: 6.813545788814008e-05
+      final_over_peak: 0.48098544692297307
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202621041261
+      final_l2: 0.00023289369467282444
+      final_over_peak: 0.6924759549596201
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.337979910168957
+      final_l2: 0.24008327457855363
+      final_over_peak: 0.1794371296264355
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_001/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_001/perturbed.npz
+  wall_seconds: 3.7367472000187263
+- tuple_id: neutral_tuple_002
+  status: completed_contract
+  local_chain:
+    samples: 2000
+    timestep_s: 0.0001
+    frame_dt_s: 0.005
+    transmission_delay_s: 0.0018
+    transmission_delay_steps: 18
+    feco_source_path_index: 1
+    feco_representation: graded_candidate
+    feco_projection_policy: sorted_body_id_round_robin_three_class_diagnostic_only
+    feco_projection_class_counts:
+      claw_position: 12
+      club_vibration_and_speed: 12
+      hook_flexion_direction: 12
+    feco_event_count: 0
+    feco_nonzero_drive_samples: 59808
+    intermediate_event_candidates: 74
+    intermediate_graded_candidates: 76
+    intermediate_spike_count: 1336
+    intermediate_nonzero_state_samples: 284381
+    unknown_sign_diagnostic_edges_sources: 32
+    motor_spike_count_all_bodies: 87
+    route_motor_event_count: 10
+    route_motor_body_id: 807165
+    neural_trace_sha256: 809fab5d05e77af61157e0b5e5740ff5a4d3170395e5d0e3c7a0a1f89cb5bfca
+  route:
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 38
+    target_actuator_name: c_thorax-lf_coxa-roll-motor
+    force_per_event_uN: 0.8268137341676737
+    rise_time_s: 0.009654893846056294
+    decay_time_s: 0.010279824595237684
+    bridge_gain_index: 2
+    bridge_gain_command_per_uN: 0.0010470505009783303
+    event_count: 10
+    active_actuator_ids:
+    - 38
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253157624068391
+    com_jerk_peak: 477164.47696650744
+    direct_motor_work_proxy: 3.254979893124209e-05
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253299225530259
+    com_jerk_peak: 477164.47696650744
+    direct_motor_work_proxy: 3.196368527850262e-05
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014162798864041903
+      final_l2: 7.446484070027965e-05
+      final_over_peak: 0.5257777181976319
+      stable_half_recovery_frame_after_perturbation: null
+    qpos:
+      peak_l2: 0.00033754977111072944
+      final_l2: 0.00031988476786709086
+      final_over_peak: 0.9476669671986127
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3376567718619516
+      final_l2: 0.2581775864089198
+      final_over_peak: 0.19300734825238425
+      stable_half_recovery_frame_after_perturbation: 11
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_002/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_002/perturbed.npz
+  wall_seconds: 3.5830090999952517
+- tuple_id: neutral_tuple_119
+  status: completed_contract
+  local_chain:
+    samples: 2000
+    timestep_s: 0.0001
+    frame_dt_s: 0.005
+    transmission_delay_s: 0.0018
+    transmission_delay_steps: 18
+    feco_source_path_index: 11
+    feco_representation: event_candidate
+    feco_projection_policy: sorted_body_id_round_robin_three_class_diagnostic_only
+    feco_projection_class_counts:
+      claw_position: 12
+      club_vibration_and_speed: 12
+      hook_flexion_direction: 12
+    feco_event_count: 882
+    feco_nonzero_drive_samples: 61889
+    intermediate_event_candidates: 72
+    intermediate_graded_candidates: 78
+    intermediate_spike_count: 1051
+    intermediate_nonzero_state_samples: 271244
+    unknown_sign_diagnostic_edges_sources: 32
+    motor_spike_count_all_bodies: 94
+    route_motor_event_count: 10
+    route_motor_body_id: 807165
+    neural_trace_sha256: 4b7552aa2f86e663a0d2b8ae83860ccd00fa00ed20f421450c2861dd4ae2f41a
+  route:
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 45
+    target_actuator_name: lf_tarsus3-lf_tarsus4-pitch-motor
+    force_per_event_uN: 0.8268137341676737
+    rise_time_s: 0.009654893846056294
+    decay_time_s: 0.010279824595237684
+    bridge_gain_index: 2
+    bridge_gain_command_per_uN: 0.0010470505009783303
+    event_count: 10
+    active_actuator_ids:
+    - 45
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253399031906915
+    com_jerk_peak: 477162.0504049179
+    direct_motor_work_proxy: 1.871360417529087e-05
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253158231523895
+    com_jerk_peak: 477162.0504049179
+    direct_motor_work_proxy: 1.896675213714846e-05
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014165934691968138
+      final_l2: 8.232995852262776e-05
+      final_over_peak: 0.581182677407849
+      stable_half_recovery_frame_after_perturbation: null
+    qpos:
+      peak_l2: 0.00033632673548544427
+      final_l2: 0.0003046321326580349
+      final_over_peak: 0.9057624640465698
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.337992883456495
+      final_l2: 0.22976967832177456
+      final_over_peak: 0.17172713036275694
+      stable_half_recovery_frame_after_perturbation: 13
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_119/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/neutral_tuple_119/perturbed.npz
+  wall_seconds: 3.613796799967531
+accepted_claims:
+- The fixed sentinel tuples execute every declared local stage from FeCO source functions
+  through paired MuJoCo physics.
+- Event and graded intermediate candidates coexist in one event-capable typed execution
+  path with explicit conversion and delay boundaries.
+- The local graph, schedule, population inventories and physical adapter remain hash-frozen
+  and no unscoped actuator receives a command.
+forbidden_claims:
+- Any probe constant, unknown sign, functional projection, native representation,
+  population assignment, motor class, route or gain is calibrated or selected.
+- The diagnostic round-robin FeCO endpoint projection is a biological claw/club/hook
+  map.
+- A passing execution sentinel establishes neural stability, embodied stability or
+  behavior.
+- The bounded two-hop corridor is a complete model of the full MaleCNS recurrent dynamics.
+next_action: If all four tuples pass, run the immutable 120-tuple local panel with
+  the same execution contract and retain every failure. Analyze robustness only over
+  the scheduled tuples; do not rank candidates from body motion and do not promote
+  these diagnostic neural constants.
+semantic_result_sha256: 72cc474496dd29a5786d0402a0cd35e47e0a24aa1df092979e0bd3d91fb7506a
+id: runner_result.neutral_embodied_full_chain_sentinel.v0
+target_id: target.technical_embodied_stability.v0
+command: neutral_embodied_full_chain_sentinel.bat
+behavior_targets: []
+campaign_sha256: 5861118a51bc16a6d6b035c1be46f25efaf1d82c3f9c1942555bbabce9816866
+implementation_sha256: 829d23df2727e3c2b8722b11e92f09355e7d96608200d86cbc92ad172f281590
+artifact_ref: runs/calibration/neutral-embodied-full-chain-sentinel-v0/20261012T054704259393Z/summary.json

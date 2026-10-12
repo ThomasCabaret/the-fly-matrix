@@ -260,8 +260,15 @@ not execute the physical campaign. Then run
 executes four fixed tuples as eight paired MuJoCo episodes through the diagnostic
 motor event→force→route→direct-MOTOR path. It must reproduce the registered pass,
 but it deliberately leaves FeCO transduction and the typed intermediate-CNS
-populations dormant. The next scientific step in `calibration/state.yaml` is to
-instantiate those stages before any full 120-tuple execution.
+populations dormant. Finally run
+`neutral_embodied_full_chain_sentinel.bat`. The same four fixed tuples must pass
+through the scheduled FeCO source functions and native representation, all 150
+typed local intermediates, ten event motor bodies, the frozen physical adapter
+and eight paired MuJoCo episodes. This remains an implementation probe: its
+round-robin FeCO projection, normalized weights, unresolved-sign candidate and
+neural constants are explicit diagnostic fixtures with zero promotion. The next
+step in `calibration/state.yaml` is the accounted 120-tuple local panel, not a
+stability or behavior claim.
 
 ### Historical neural-model gate
 

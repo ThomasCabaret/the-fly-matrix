@@ -386,5 +386,13 @@ bridge gain and verifies that the other 101 direct-MOTOR channels stay zero. The
 synthetic single motor event is an adapter fixture, not MaleCNS output. The FeCO
 and intermediate-profile fields are verified and reported as loaded but not
 executed; consequently a passing sentinel closes only motor-to-physics plumbing.
-The 120-tuple panel remains blocked until explicit FeCO-to-CNS and typed
-intermediate-population stages make those axes affect the run.
+
+Run `neutral_embodied_full_chain_sentinel.bat` for the second execution gate. It
+uses the same four fixed tuples but replaces the synthetic motor event with an
+executed FeCO→typed-local-CNS→motor path before the frozen physical adapter. The
+36 FeCO endpoints, 150 intermediates and ten motor bodies are all accounted, the
+fixed 1.8 ms comparator delay is represented exactly at 0.1 ms, and eight paired
+episodes must finish. Its endpoint projection, normalized weights, unresolved-sign
+candidate and neural constants are deliberately diagnostic and unpromoted. A pass
+unblocks execution of the immutable 120-tuple local panel; it does not accept a
+population assignment, parameter value, stability result or behavior.

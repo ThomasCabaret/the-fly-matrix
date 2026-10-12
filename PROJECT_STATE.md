@@ -192,6 +192,20 @@ synthétique déclaré, les alternatives FeCO et les 148 affectations intermédi
 sont chargées mais n'affectent pas encore l'exécution. Aucun mouvement n'a servi à
 choisir un candidat, aucune valeur n'est promue et aucune stabilité n'est évaluée.
 
+Le second sentinel ferme maintenant le gate d'**exécution locale**, sans fermer
+la calibration. `neutral_embodied_full_chain_sentinel.bat` reprend les mêmes
+quatre IDs fixés et termine 4/4 tuples, soit 8/8 épisodes appariés, après avoir
+effectivement exécuté la cinématique synthétique, les fonctions source FeCO, la
+représentation graduée ou événementielle planifiée, les 150 intermédiaires typés,
+les dix motoneurones événementiels, puis l'adaptateur moteur et MuJoCo. Les traces
+neuronales diffèrent entre les quatre tuples et toutes les sorties non routées
+restent nulles. Ce passage utilise volontairement des fixtures diagnostiques
+visibles — projection round-robin des trois fonctions FeCO sur 36 corps, poids
+locaux normalisés, candidat excitateur pour les signes inconnus et constantes
+neuronales non ajustées. Il ne valide donc aucune affectation, valeur, stabilité
+ou biologie. Il autorise seulement l'exécution comptabilisée du panneau local de
+120 tuples, qui n'a pas encore commencé.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -799,7 +813,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le premier panneau incarné exact contient 120 tuples/240 épisodes et couvre tous les 50 profils, 24 alternatives FeCO, 110 routes et 3 gains, avec 120/1 024 affectations motrices exécutables ; 904 restent non planifiées et 58 025 lentes restent bloquées ; le sentinel moteur→physique termine 4/4 tuples et 8/8 épisodes, mais FeCO→CNS et les dynamiques intermédiaires ne sont pas encore exécutés ; zéro valeur est promue et le panneau complet n'a pas commencé**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le premier panneau incarné exact contient 120 tuples/240 épisodes et couvre tous les 50 profils, 24 alternatives FeCO, 110 routes et 3 gains, avec 120/1 024 affectations motrices exécutables ; 904 restent non planifiées et 58 025 lentes restent bloquées ; après le sentinel moteur→physique, un second sentinel exécute FeCO→CNS typé→moteur→MuJoCo sur 4/4 tuples et 8/8 épisodes avec des fixtures diagnostiques explicites ; zéro valeur ou affectation est promue et le panneau complet n'a pas commencé**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -965,12 +979,13 @@ et le contrat direct-motor restent gelés et l'identifiabilité des interfaces d
 
 Le contrat complet préalable à cette stabilité est exécutable via
 `embodied_measurement_contract_v1.bat`. Il valide les observables et les paires
-baseline/perturbée sur un fixture passif, pas la stabilité. Le prochain lot doit
-instancier les étapes FeCO→CNS et populations intermédiaires typées qui manquent
-entre le planning borné et le moteur. Le sentinel moteur→physique a déjà terminé
-4/4 tuples ; il ne doit pas être confondu avec une exécution de chaîne complète.
-Les mécanismes physiques restent gelés et aucun candidat d'interface ne peut être
-sélectionné à partir de la trajectoire corporelle.
+baseline/perturbée sur un fixture passif, pas la stabilité. Les étapes
+FeCO→CNS typé→moteur sont maintenant exécutées par le second sentinel sur 4/4
+tuples. Le prochain lot doit faire passer les 120 tuples immuables par ce même
+contrat et comptabiliser chaque échec, sans transformer les constantes ou
+projections diagnostiques en valeurs scientifiques. Les mécanismes physiques
+restent gelés et aucun candidat d'interface ne peut être sélectionné à partir de
+la trajectoire corporelle.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -1001,6 +1016,7 @@ embodied_stability_metrics.bat # métriques descriptives du replay gelé ; aucun
 embodied_measurement_contract_v1.bat # COM/limites/jerk/contacts/récupération appariée ; aucun fit ni seuil
 neutral_embodied_pilot_schedule.bat # reconstruit les 120 tuples/240 épisodes ; n'exécute pas encore le panel
 neutral_embodied_adapter_sentinel.bat # 4 tuples/8 épisodes moteur→MuJoCo ; FeCO/CNS restent explicitement non exécutés
+neutral_embodied_full_chain_sentinel.bat # 4 tuples/8 épisodes FeCO→CNS typé→moteur→MuJoCo ; fixtures diagnostiques, aucune calibration
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG
