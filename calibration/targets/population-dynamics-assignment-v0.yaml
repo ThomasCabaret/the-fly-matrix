@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_full_local_chain_execution_pass_values_and_assignments_unresolved
+status: active_front_leg_conversion_contracts_executable_full_120_tuple_local_panel_pass_values_and_assignments_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,12 +64,13 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_50_profile_pairwise_panel_24_sensory_alternatives_full_local_execution_sentinel_pass_zero_values_promoted
+validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_50_profile_pairwise_panel_24_sensory_alternatives_full_120_tuple_local_execution_panel_pass_zero_values_promoted
 blocked_reason: null
 next_action: >-
-  The first chain accounts for all 196 unique bodies and its four-tuple sentinel
-  now executes every local stage. That pass uses explicit diagnostic constants,
-  a nonbiological round-robin FeCO endpoint projection and a visible sign
-  candidate; it accepts no native assignment or value. Execute the immutable
-  120-tuple panel next, retain all failures and never choose a profile,
-  representation, sign, motor class, route or gain from body motion.
+  The first chain accounts for all 196 unique bodies and the immutable panel now
+  executes every local stage for 120/120 tuples with zero error, nonfinite pair or
+  skip. This remains an implementation result: it uses explicit diagnostic
+  constants, a nonbiological round-robin FeCO endpoint projection and a visible
+  sign candidate, and it accepts no native assignment or value. The next campaign
+  must replace those fixtures through declared parameter families while preserving
+  unresolved alternatives and never selecting from the recorded body motion.

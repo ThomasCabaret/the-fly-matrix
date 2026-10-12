@@ -21,8 +21,8 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.neutral_embodied_full_chain_sentinel.v0
-last_preregistered_campaign_id: campaign.neutral_embodied_stability_pilot.v0
+last_completed_campaign_id: campaign.neutral_embodied_full_chain_panel.v0
+last_preregistered_campaign_id: campaign.neutral_embodied_full_chain_panel.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -69,9 +69,10 @@ readiness:
   independent_circuit_reference_mapping: abn1_only_v2_pilot_complete_both_representations_directionally_positive_non_decisional_abn2_out_of_scope_whole_grooming_mapping_partial
   actuator_semantics: accepted_bounded_direct_motor_surrogate_initial_short_horizon_passive_open_closed_attribution_complete_102_of_102_hashed
   embodied_stability_measurement: complete_v1_true_com_joint_limits_physical_jerk_contacts_work_proxy_paired_recovery_failure_masks_zero_thresholds_stability_unresolved
-  neutral_embodied_pilot_schedule: complete_120_tuples_240_paired_episodes_all_50_profiles_24_feco_110_routes_3_gains_120_of_1024_motor_assignments_904_unscheduled_58025_slow_blocked_full_panel_execution_not_started
+  neutral_embodied_pilot_schedule: complete_120_tuples_240_paired_episodes_all_50_profiles_24_feco_110_routes_3_gains_120_of_1024_motor_assignments_904_unscheduled_58025_slow_blocked
   neutral_embodied_adapter_sentinel: pass_4_of_4_tuples_8_of_8_episodes_motor_event_force_route_mujoco_only_feco_and_intermediate_cns_not_executed
   neutral_embodied_full_chain_sentinel: pass_4_of_4_tuples_8_of_8_episodes_feco_typed_intermediate_motor_physics_execution_contract_diagnostic_candidates_only_zero_values_promoted
+  neutral_embodied_full_chain_panel: pass_120_of_120_tuples_240_of_240_episodes_zero_errors_zero_nonfinite_zero_skipped_50_profiles_24_feco_120_motor_assignments_110_routes_3_gains_diagnostic_candidates_only_zero_values_promoted
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: not_run_1815_unknown_channels_require_behavior_naive_hypothesis_grid
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
@@ -101,7 +102,7 @@ blocked_by:
   - The direct-motor actuator gate is closed only as a bounded short-horizon surrogate: unloaded homolog responses are symmetric and passive/open/closed effects are separated, but muscle, tendon, compliance and local-reflex fidelity remain outside the accepted model.
   - The uncalibrated live MaleCNS feedback changes motor commands after both generic perturbations but changes the final physical deviation by only about two parts per million relative to frozen open-loop commands; it is not currently evidence of stabilization or biological feedback control.
   - The complete short-horizon embodied measurement contract now exposes COM, exact joint limits, physical jerk, six contact/force channels, a declared direct-MOTOR work proxy, failure masks and paired recovery. Its passive fixture already records 27 joint-limit violation samples over 14 frames; these descriptive magnitudes may not become thresholds, and no stability result exists until an independently bounded pilot is preregistered and run.
-  - The first neutral embodied readiness panel is an immutable 120-tuple schedule with 240 paired episodes. It covers all 50 intermediate profiles, 24 FeCO alternatives, 110 routes and three gains, plus a balanced pairwise-complete sample of 120/1024 executable motor assignments. The remaining 904 executable assignments are unscheduled and all 58,025 slow-containing assignments remain blocked. The motor-only sentinel first completed 8/8 episodes. A second fixed four-tuple sentinel now also completes 8/8 episodes after executing the scheduled FeCO source functions and native representation, all 150 typed local intermediate bodies, ten event motor bodies and the frozen motor-to-physics adapter. It uses a declared nonbiological round-robin FeCO endpoint projection, normalized local weights, an excitatory diagnostic candidate for unresolved signs and uncalibrated neural constants; zero value or assignment is promoted. This closes only the local execution gate. The 120-tuple panel has not started and this local path cannot claim whole-body stability.
+  - The first neutral embodied readiness panel is an immutable 120-tuple schedule with 240 paired episodes. It covers all 50 intermediate profiles, 24 FeCO alternatives, 110 routes and three gains, plus a balanced pairwise-complete sample of 120/1024 executable motor assignments. The full local-chain runner completed 120/120 tuples and 240/240 episodes with zero runtime error, nonfinite pair or budget skip; all declared execution axes were active. Three scheduled route bodies emitted no event, which is retained rather than filtered, and 115 distinct neural hashes occurred because route/gain axes need not change the upstream neural trace. The remaining 904 executable assignments are unscheduled and all 58,025 slow-containing assignments remain blocked. The execution still uses a declared nonbiological round-robin FeCO endpoint projection, normalized local weights, an excitatory diagnostic candidate for unresolved signs and uncalibrated neural constants; zero value or assignment is promoted. This closes only robustness of the local implementation over the scheduled panel. It cannot claim whole-body stability, local physiology or behavior.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
   - The FeCO local fitting procedure completed all 86 leave-one-animal-out folds across seven source/boundary candidates on 33,766 retained rows, with zero blocked folds. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. The complete candidate ensemble remains unpromoted, no runtime parameter set is selected, and the comparison does not identify native event-versus-graded dynamics.
@@ -116,8 +117,9 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Execute the immutable 120-tuple local panel through the passed full local-chain
-  execution contract and account for every tuple and failure. Report robustness
-  only over the scheduled panel. Never use body motion to select a profile,
-  representation, sign candidate, class, route or gain; no diagnostic fixture may
-  be promoted, and the local panel still cannot establish whole-body stability.
+  Freeze the passed 120-tuple panel as an implementation baseline only, then
+  preregister the smallest ensemble-aware neutral closed-loop campaign that
+  replaces diagnostic fixtures with declared parameter families and independently
+  sourced or technically bounded values. Keep mechanics and actuator semantics
+  frozen, preserve unresolved alternatives, and do not use panel trajectories to
+  choose a profile, representation, sign, class, route, gain or neural constant.

@@ -677,7 +677,12 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(campaign["behavior_targets"], [])
         self.assertEqual(campaign["parameter_policy"]["optimized_parameters"], 0)
         self.assertFalse(campaign["schedule_policy"]["candidate_selection_from_body_motion"])
-        self.assertEqual(evaluation["acceptance_result"], "pending_execution")
+        self.assertEqual(
+            evaluation["acceptance_result"],
+            "pass_full_local_panel_execution_stability_not_evaluated",
+        )
+        self.assertEqual(evaluation["execution_accounting"]["completed_tuples"], 120)
+        self.assertFalse(evaluation["stability_accepted"])
         self.assertEqual(
             runner["status"],
             "schedule_complete_execution_not_started_stability_unresolved",

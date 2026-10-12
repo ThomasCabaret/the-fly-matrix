@@ -1,20 +1,29 @@
 schema_version: 1
 id: evaluation.neutral_embodied_stability_pilot.v0
 title: Bounded front-leg neutral embodied readiness pilot evaluation
-status: pending_execution
+status: evaluated_local_execution_only
 campaign_id: campaign.neutral_embodied_stability_pilot.v0
 target_id: target.technical_embodied_stability.v0
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: NEUTRAL EMBODIED READINESS PANEL / NOT STABILITY / NO BEHAVIOR / NO SELECTION
 behavior_targets: []
-acceptance_result: pending_execution
+acceptance_result: pass_full_local_panel_execution_stability_not_evaluated
 schedule_result: calibration/runner/neutral-embodied-stability-pilot-schedule-v0.yaml
+execution_result: calibration/runner/neutral-embodied-full-chain-panel-v0.yaml
+execution_semantic_sha256: f30821600556283cca81813f8bc4edfe7910cc33f919577249d7e89fba67d246
+execution_accounting:
+  scheduled_tuples: 120
+  completed_tuples: 120
+  paired_physical_episodes: 240
+  failed_nonfinite: 0
+  runtime_errors: 0
+  budget_skipped: 0
+  route_body_silent_tuples_retained: 3
 parameter_values_promoted: 0
 stability_accepted: false
 next_action: >-
-  Do not fill this record from visual inspection or from the passed motor-only
-  sentinel. First instantiate and validate FeCO-to-CNS and typed intermediate
-  execution, then execute the exact schedule through the dedicated full-chain
-  runner and copy its complete accounting, failures, semantic hash and bounded
-  conclusion here.
+  Preserve this result as execution evidence only. Preregister a separate,
+  ensemble-aware neutral closed-loop campaign whose values belong to declared
+  parameter families and whose acceptance bounds are independent of these body
+  trajectories. Do not rank or select any candidate from this panel.

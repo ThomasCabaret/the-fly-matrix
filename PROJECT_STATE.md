@@ -203,8 +203,16 @@ restent nulles. Ce passage utilise volontairement des fixtures diagnostiques
 visibles — projection round-robin des trois fonctions FeCO sur 36 corps, poids
 locaux normalisés, candidat excitateur pour les signes inconnus et constantes
 neuronales non ajustées. Il ne valide donc aucune affectation, valeur, stabilité
-ou biologie. Il autorise seulement l'exécution comptabilisée du panneau local de
-120 tuples, qui n'a pas encore commencé.
+ou biologie. Le panneau local complet est maintenant exécuté par
+`neutral_embodied_full_chain_panel.bat` : 120/120 tuples et 240/240 épisodes
+appariés terminent, sans erreur runtime, paire non finie ni budget épuisé. Les 50
+profils, 24 alternatives FeCO, 120 affectations motrices, 110 routes et trois
+gains sont tous présents. Trois corps routés restent silencieux et sont conservés
+dans le résultat ; 115 hashes neuronaux sont distincts, car changer une route ou
+un gain moteur ne doit pas nécessairement changer la trace amont. Le mouvement
+n'a sélectionné aucun candidat. Ce résultat ferme seulement la robustesse de
+l'implémentation locale sur le panneau prévu : les fixtures diagnostiques restent
+non calibrées et aucune stabilité globale n'est acceptée.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -299,10 +307,12 @@ et les trois gains, les trois classes par body ID et toutes les routes candidate
 sont désormais propagés ensemble par la première enveloppe locale, sans sélection
 par trajectoire corporelle. Les 150 populations intermédiaires ont maintenant une
 disposition exhaustive : deux exigences événementielles et 148 alternatives
-`dual_unresolved`. Le prochain gate borné porte sur la propagation tractable de
-ces alternatives et sur des décisions d'acceptation explicites des ensembles
-d'interface ; la proximité topologique et le neurotransmetteur ne valent toujours
-pas affectation de dynamique ni calibration.
+`dual_unresolved`. Leur propagation tractable est maintenant exécutée sur le
+panneau immuable de 120 tuples sans sélection ni promotion. Le prochain gate doit
+remplacer les fixtures diagnostiques par les plus petites familles de paramètres
+déclarées, sourcées ou techniquement bornées, tout en propageant les alternatives
+non identifiées. La proximité topologique et le neurotransmetteur ne valent
+toujours pas affectation de dynamique ni calibration.
 
 Le précédent front
 [`target.neural_model_class_gate.v0`](calibration/targets/neural-model-class-gate-v0.yaml)
@@ -813,7 +823,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le premier panneau incarné exact contient 120 tuples/240 épisodes et couvre tous les 50 profils, 24 alternatives FeCO, 110 routes et 3 gains, avec 120/1 024 affectations motrices exécutables ; 904 restent non planifiées et 58 025 lentes restent bloquées ; après le sentinel moteur→physique, un second sentinel exécute FeCO→CNS typé→moteur→MuJoCo sur 4/4 tuples et 8/8 épisodes avec des fixtures diagnostiques explicites ; zéro valeur ou affectation est promue et le panneau complet n'a pas commencé**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le premier panneau incarné exact couvre tous les 50 profils, 24 alternatives FeCO, 110 routes et 3 gains, avec 120/1 024 affectations motrices exécutables ; ses 120/120 tuples et 240/240 épisodes FeCO→CNS typé→moteur→MuJoCo terminent sans erreur, non-finitude ni skip ; 904 affectations exécutables restent non planifiées et 58 025 lentes restent bloquées ; zéro valeur ou affectation est promue et la stabilité reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -882,7 +892,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **257 tests** actuels passent, y compris les
+conservées et classifiées. Les **251 tests** découverts actuellement passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -980,12 +990,13 @@ et le contrat direct-motor restent gelés et l'identifiabilité des interfaces d
 Le contrat complet préalable à cette stabilité est exécutable via
 `embodied_measurement_contract_v1.bat`. Il valide les observables et les paires
 baseline/perturbée sur un fixture passif, pas la stabilité. Les étapes
-FeCO→CNS typé→moteur sont maintenant exécutées par le second sentinel sur 4/4
-tuples. Le prochain lot doit faire passer les 120 tuples immuables par ce même
-contrat et comptabiliser chaque échec, sans transformer les constantes ou
-projections diagnostiques en valeurs scientifiques. Les mécanismes physiques
-restent gelés et aucun candidat d'interface ne peut être sélectionné à partir de
-la trajectoire corporelle.
+FeCO→CNS typé→moteur sont maintenant exécutées par le panneau complet sur 120/120
+tuples et 240/240 épisodes. Le prochain lot doit conserver ce résultat comme
+baseline d'implémentation et définir le plus petit régime fermé ensemble-aware
+qui remplace les constantes, signes et projections diagnostiques par des familles
+déclarées et des valeurs sourcées ou techniquement bornées. Les mécanismes
+physiques restent gelés et aucun candidat d'interface ne peut être sélectionné à
+partir de la trajectoire corporelle.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
@@ -1017,6 +1028,7 @@ embodied_measurement_contract_v1.bat # COM/limites/jerk/contacts/récupération 
 neutral_embodied_pilot_schedule.bat # reconstruit les 120 tuples/240 épisodes ; n'exécute pas encore le panel
 neutral_embodied_adapter_sentinel.bat # 4 tuples/8 épisodes moteur→MuJoCo ; FeCO/CNS restent explicitement non exécutés
 neutral_embodied_full_chain_sentinel.bat # 4 tuples/8 épisodes FeCO→CNS typé→moteur→MuJoCo ; fixtures diagnostiques, aucune calibration
+neutral_embodied_full_chain_panel.bat # 120 tuples/240 épisodes du même contrat ; comptabilité exhaustive, aucune sélection ni stabilité
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

@@ -396,3 +396,16 @@ episodes must finish. Its endpoint projection, normalized weights, unresolved-si
 candidate and neural constants are deliberately diagnostic and unpromoted. A pass
 unblocks execution of the immutable 120-tuple local panel; it does not accept a
 population assignment, parameter value, stability result or behavior.
+
+Run `neutral_embodied_full_chain_panel.bat` to reproduce the completed bounded
+panel. It executes all 120 immutable tuples as 240 paired MuJoCo episodes through
+the same FeCO→typed-local-CNS→motor contract, records every outcome and keeps the
+heavy arrays under ignored `runs/calibration/`. The accepted run completed
+120/120 tuples with zero runtime error, non-finite pair or budget skip while
+covering all 50 profiles, 24 FeCO alternatives, 120 motor assignments, 110 routes
+and three gains. Three route bodies were silent and were retained; 115 neural
+trace hashes were distinct because motor route/gain axes need not alter the
+upstream trace. This is robustness of an implementation probe over the scheduled
+panel only. It does not promote the diagnostic projection, signs, neural
+constants, representations, classes, routes or gains and does not establish
+whole-body stability.

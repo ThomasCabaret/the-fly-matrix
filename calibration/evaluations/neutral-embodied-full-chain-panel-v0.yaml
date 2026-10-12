@@ -1,0 +1,27 @@
+schema_version: 1
+id: evaluation.neutral_embodied_full_chain_panel.v0
+title: Immutable 120-tuple full local-chain execution panel
+status: evaluated
+campaign_id: campaign.neutral_embodied_full_chain_panel.v0
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FULL LOCAL-CHAIN PANEL / DIAGNOSTIC CANDIDATES / NOT CALIBRATION / NOT
+  STABILITY / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+acceptance_result: pass_full_local_chain_panel_execution_no_calibration
+runner_result_id: runner_result.neutral_embodied_full_chain_panel.v0
+runner_semantic_sha256: f30821600556283cca81813f8bc4edfe7910cc33f919577249d7e89fba67d246
+parameter_values_promoted: 0
+population_assignments_promoted: 0
+candidate_selected_from_motion: false
+stability_accepted: false
+full_local_panel_execution_contract: true
+conclusion: All 120 immutable tuples completed the FeCO-to-MuJoCo local execution
+  contract with finite paired physical episodes. This establishes execution robustness
+  over the scheduled panel only; diagnostic fixtures remain uncalibrated and no body
+  trajectory selected a candidate.
+next_action: If the panel completes, freeze its execution result as an implementation
+  baseline only. Then define the smallest ensemble-aware neutral closed-loop campaign
+  that replaces diagnostic fixtures with declared parameter families; do not choose
+  any candidate using the panel's physical trajectories.

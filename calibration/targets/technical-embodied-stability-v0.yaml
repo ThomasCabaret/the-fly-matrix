@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: full_local_chain_execution_sentinel_pass_panel_not_run_stability_not_calibrated
+status: full_120_tuple_local_chain_panel_pass_stability_not_calibrated
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -64,7 +64,7 @@ acceptance_policy:
 pilot_schedule:
   campaign_id: campaign.neutral_embodied_stability_pilot.v0
   schedule_result_id: runner_result.neutral_embodied_stability_pilot_schedule.v0
-  status: exact_120_tuple_schedule_complete_full_local_chain_sentinel_pass_full_panel_not_started
+  status: exact_120_tuple_schedule_complete_full_panel_120_of_120_pass_zero_errors_zero_nonfinite
   tuples: 120
   paired_physical_episodes: 240
   coverage:
@@ -123,6 +123,24 @@ full_local_chain_sentinel:
   population_assignments_promoted: 0
   stability_accepted: false
 
+full_local_chain_panel:
+  campaign_id: campaign.neutral_embodied_full_chain_panel.v0
+  evaluation_id: evaluation.neutral_embodied_full_chain_panel.v0
+  runner_result_id: runner_result.neutral_embodied_full_chain_panel.v0
+  status: pass_execution_contract_over_fixed_schedule_diagnostic_candidates_only
+  tuples: 120
+  paired_physical_episodes: 240
+  completed_tuples: 120
+  failed_nonfinite: 0
+  runtime_errors: 0
+  budget_skipped: 0
+  route_body_silent_tuples_retained: 3
+  unique_neural_trace_hashes: 115
+  parameter_values_promoted: 0
+  population_assignments_promoted: 0
+  candidate_selected_from_motion: false
+  stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -141,20 +159,21 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_v1_pass_schedule_complete_full_local_chain_execution_sentinel_pass_panel_not_run
+validation: measurement_contract_v1_pass_schedule_complete_full_120_tuple_local_chain_panel_pass_stability_not_calibrated
 blocked_reason: >-
-  The complete measurement contract, exact schedule and both sentinels pass. The
-  second sentinel executes FeCO source functions, scheduled graded/event input,
-  all 150 typed intermediate bodies, ten event motor bodies, the frozen physical
-  adapter and eight paired MuJoCo episodes. This closes the local execution gate,
-  not calibration: its round-robin FeCO projection, unresolved-sign candidate and
-  neural constants are visible diagnostic fixtures with zero promotion. The
-  120-tuple panel has not run, the local corridor cannot establish whole-body
-  stability, basal sources remain unresolved, and direct motors remain a bounded
-  surrogate.
+  The complete measurement contract, exact schedule, both sentinels and the full
+  local panel pass. The panel executes FeCO source functions, scheduled
+  graded/event input, all 150 typed intermediate bodies, ten event motor bodies,
+  the frozen physical adapter and 240 paired MuJoCo episodes for 120/120 tuples,
+  with zero error, nonfinite pair or skip. This closes implementation robustness
+  over the scheduled local panel, not calibration: its round-robin FeCO
+  projection, unresolved-sign candidate and neural constants are visible
+  diagnostic fixtures with zero promotion. The local corridor cannot establish
+  whole-body stability, basal sources remain unresolved, and direct motors remain
+  a bounded surrogate.
 next_action: >-
-  Run and account for the immutable 120-tuple local panel through the passed
-  execution contract. Retain every failure, report robustness only over scheduled
-  tuples, and never select interface candidates from body motion. The result may
-  diagnose capacity or implementation limits but cannot promote the diagnostic
-  projection, sign or neural constants and cannot establish global stability.
+  Freeze the passed panel as an implementation baseline only. Preregister the
+  smallest ensemble-aware neutral closed-loop campaign that replaces diagnostic
+  projection, sign and neural constants with declared parameter families and
+  independently sourced or technically bounded values. Mechanics and actuator
+  semantics stay frozen; no physical trajectory may select an interface candidate.

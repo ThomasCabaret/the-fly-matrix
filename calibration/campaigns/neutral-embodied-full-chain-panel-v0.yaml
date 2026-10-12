@@ -1,0 +1,100 @@
+schema_version: 1
+id: campaign.neutral_embodied_full_chain_panel.v0
+title: Immutable 120-tuple full local-chain execution panel
+status: preregistered_ready_to_run
+target_id: target.technical_embodied_stability.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FULL LOCAL-CHAIN PANEL / DIAGNOSTIC CANDIDATES / NOT CALIBRATION / NOT STABILITY / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Execute every tuple in the already immutable neutral-embodied schedule through
+  the full local-chain contract passed by the four-tuple sentinel. Account for
+  every tuple and every failure while measuring execution robustness only. Body
+  motion is recorded for audit but cannot rank, discard or promote a profile,
+  representation, sign candidate, motor class, route, gain or neural constant.
+
+frozen_inputs:
+  schedule_campaign: calibration/campaigns/neutral-embodied-stability-pilot-v0.yaml
+  schedule_campaign_sha256: 1c4e6c89c74c7e674a88cba9c25dfb921947673a3354bb629e28804a9a41ee22
+  schedule_result: calibration/runner/neutral-embodied-stability-pilot-schedule-v0.yaml
+  schedule_result_semantic_sha256: b65d33ad87980935cbe1d6ff6b0c027df7a5aaf78ae1fd0364331795ee193e3f
+  schedule_csv: calibration/schedules/neutral-embodied-stability-pilot-v0.csv
+  schedule_csv_sha256: bc9663d1932aa5863666a82d48d5c8db34e0783032c1820e4c863de0bea21911
+  full_chain_contract: calibration/campaigns/neutral-embodied-full-chain-sentinel-v0.yaml
+  full_chain_contract_sha256: 5861118a51bc16a6d6b035c1be46f25efaf1d82c3f9c1942555bbabce9816866
+  passed_sentinel_result: calibration/runner/neutral-embodied-full-chain-sentinel-v0.yaml
+  passed_sentinel_semantic_sha256: 72cc474496dd29a5786d0402a0cd35e47e0a24aa1df092979e0bd3d91fb7506a
+
+schedule_contract:
+  tuples: 120
+  paired_physical_episodes: 240
+  intermediate_profiles: 50
+  feco_alternatives: 24
+  motor_assignments: 120
+  route_basis_edges: 110
+  bridge_gains: 3
+  motor_kernel_executable_unscheduled: 904
+  motor_slow_containing_blocked: 58025
+  candidate_selection_from_body_motion: false
+
+execution_contract:
+  reuse_passed_full_chain_sentinel_semantics: true
+  expected_feco_endpoints: 36
+  expected_intermediate_bodies: 150
+  expected_motor_bodies: 10
+  retain_heavy_arrays_under_ignored_runs: true
+  compact_versioned_accounting_per_tuple: true
+  error_policy:
+    retain_every_failure: true
+    stop_on_contract_drift: true
+    repeated_runtime_error_class_limit: 3
+    account_remaining_as_budget_skipped_after_stop: true
+
+acceptance:
+  require_all_120_tuples_accounted: true
+  require_exact_schedule_axis_coverage: true
+  require_feco_nonzero_drive_per_executed_tuple: true
+  require_intermediate_nonzero_state_per_executed_tuple: true
+  require_motor_events_somewhere_in_scoped_pool_per_executed_tuple: true
+  require_finite_physical_arrays_per_completed_tuple: true
+  require_non_scoped_motor_outputs_zero: true
+  allow_route_body_silence: true
+  allow_physical_magnitude_to_select_candidate: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  whole_body_stability_claimed: false
+  diagnostic_projection_promotable: false
+  diagnostic_sign_candidate_promotable: false
+  diagnostic_neural_constants_promotable: false
+
+compute_budget:
+  physical_episodes: 240
+  simulated_seconds: 48.0
+  maximum_wall_clock_hours: 4
+  maximum_gpu_hours: 4
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - Every scheduled tuple is accounted through the passed FeCO-to-MuJoCo local execution contract.
+  - Robust execution may be reported only over the fixed 120-tuple panel and only for implementation invariants.
+  - The panel preserves all declared uncertainty axes without selecting from body motion.
+forbidden_claims:
+  - Any diagnostic projection, sign, native representation, population assignment, motor class, route, gain or neural constant is calibrated or selected.
+  - A passing panel establishes local physiology, complete MaleCNS dynamics, neutral whole-body stability or behavior.
+  - A tuple may be removed, ranked or promoted because its body trajectory appears favorable.
+  - Unscheduled or slow-containing motor assignments are covered by this panel.
+next_action: >-
+  If the panel completes, freeze its execution result as an implementation
+  baseline only. Then define the smallest ensemble-aware neutral closed-loop
+  campaign that replaces diagnostic fixtures with declared parameter families;
+  do not choose any candidate using the panel's physical trajectories.

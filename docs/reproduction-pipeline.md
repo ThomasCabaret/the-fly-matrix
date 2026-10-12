@@ -266,9 +266,13 @@ through the scheduled FeCO source functions and native representation, all 150
 typed local intermediates, ten event motor bodies, the frozen physical adapter
 and eight paired MuJoCo episodes. This remains an implementation probe: its
 round-robin FeCO projection, normalized weights, unresolved-sign candidate and
-neural constants are explicit diagnostic fixtures with zero promotion. The next
-step in `calibration/state.yaml` is the accounted 120-tuple local panel, not a
-stability or behavior claim.
+neural constants are explicit diagnostic fixtures with zero promotion. Then run
+`neutral_embodied_full_chain_panel.bat`; it must account for all 120 scheduled
+tuples and 240 paired episodes and reproduce the compact execution result without
+using physical output to select a candidate. The accepted run is 120/120 with
+zero error, non-finite pair or skip. This closes only scheduled local execution
+robustness. The next step in `calibration/state.yaml` replaces diagnostic fixtures
+through declared parameter families; it is not yet a stability or behavior claim.
 
 ### Historical neural-model gate
 
