@@ -1,0 +1,128 @@
+schema_version: 1
+id: campaign.neutral_embodied_adapter_sentinel.v0
+title: Neutral embodied schedule adapter contract sentinel
+status: preregistered_ready_to_run
+target_id: target.technical_embodied_stability.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: ADAPTER SENTINEL / SYNTHETIC MOTOR EVENT / NOT FULL CHAIN / NOT STABILITY / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Prove that the immutable neutral embodied schedule can be parsed without
+  reinterpretation, that its fast/intermediate motor candidate, route and bridge
+  gain compile into an isolated 102-channel direct-MOTOR command trace, and that
+  the same trace can be executed in paired baseline/perturbed MuJoCo episodes.
+  The sentinel deliberately does not pretend that the FeCO and intermediate-CNS
+  axes are executable before their numeric local dynamics have been instantiated.
+
+frozen_inputs:
+  schedule_result: calibration/runner/neutral-embodied-stability-pilot-schedule-v0.yaml
+  schedule: calibration/schedules/neutral-embodied-stability-pilot-v0.csv
+  schedule_result_semantic_sha256: b65d33ad87980935cbe1d6ff6b0c027df7a5aaf78ae1fd0364331795ee193e3f
+  schedule_sha256: bc9663d1932aa5863666a82d48d5c8db34e0783032c1820e4c863de0bea21911
+  motor_class_ensemble: calibration/evidence/front-leg-motor-class-ensemble-v0.yaml
+  motor_force_fit: calibration/evaluations/motor-spike-force-pilot-fit-v0.yaml
+  motor_temporal_diagnostic: calibration/runner/motor-twitch-temporal-diagnostic-v0.yaml
+  intermediate_profile_panel: data/derived/calibration/front-leg-uncertainty-propagation-v0/intermediate-assignment-panel.csv
+  feco_joint_source_paths: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/feco-joint-source-paths.json
+  body_model: flygym==2.1.0
+  actuator_type: MOTOR
+
+frozen_input_sha256:
+  motor_class_ensemble: 3595b0420bb815887d2d892ad5f9088e5af61a53ba38a7ef43c28277ac2304fa
+  motor_force_fit: 397bcbb355efb4f1fe34004555c595bbf9c1400371501176472b81ee050a9b6a
+  motor_temporal_diagnostic: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+  intermediate_profile_panel: 4557f1bf7a999b4e3f71a6fd2d2f8d26b3b83ab1a654d46e2e20165d77f7cdc2
+  feco_joint_source_paths: 734607723923ff155d3586674f882dc45a18e8dae332f38ff499e3288b1912ce
+
+sentinel_selection:
+  policy: fixed_tuple_ids_declared_before_physical_execution
+  tuple_ids:
+    - neutral_tuple_000
+    - neutral_tuple_001
+    - neutral_tuple_002
+    - neutral_tuple_119
+  coverage_intent:
+    - all three bridge gains
+    - both executable route-body motor classes
+    - both FeCO native-representation candidates
+    - all-event and all-graded intermediate-profile extremes
+    - first and last scheduled motor assignments
+  selected_from_body_motion: false
+
+synthetic_motor_fixture:
+  event_count: 1
+  event_frame: 5
+  meaning: >-
+    A single declared event at the scheduled route body exercises only the
+    motor event-to-force kernel, the force-to-command bridge and the scheduled
+    route. It is not MaleCNS output and cannot validate the sensory or central
+    chain.
+  motor_amplitude_source: diagnostic_uN_per_spike_from_one_cell_per_class
+  motor_shape_source: all_data_best_candidate_from_one_cell_temporal_diagnostic
+  parameter_values_promoted: 0
+
+physical_protocol:
+  scene: simple_flat_ground
+  frames: 40
+  physics_substeps_per_frame: 50
+  expected_frame_dt_s: 0.005
+  perturbation_step: 10
+  perturbation:
+    id: generic_lateral_root_velocity_impulse
+    qvel_address: 1
+    delta: 0.1
+    units: FlyBody_model_length_units_per_second
+  paired_branches:
+    - identical_reset_baseline
+    - generic_qvel_perturbation
+
+acceptance:
+  scheduled_tuples_loaded: 120
+  sentinel_tuples: 4
+  paired_physical_episodes: 8
+  require_all_sentinel_tuples_accounted: true
+  require_exact_schedule_hashes: true
+  require_all_command_values_finite: true
+  require_exactly_one_nonzero_actuator_per_trace: true
+  require_non_scoped_motor_outputs_zero: true
+  require_identical_command_trace_across_pair: true
+  require_physical_arrays_finite: true
+  require_all_three_bridge_gains: true
+  require_both_executable_route_body_classes: true
+  allow_physical_magnitude_to_select_candidate: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  sensory_transduction_executed: false
+  intermediate_cns_dynamics_executed: false
+  full_sensor_cns_motor_chain_claimed: false
+  whole_body_stability_claimed: false
+
+compute_budget:
+  physical_episodes: 8
+  simulated_seconds: 1.6
+  maximum_wall_clock_minutes: 20
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - The immutable schedule fields and hashes can be consumed without reinterpretation.
+  - The scheduled executable motor class, route and gain compile to an isolated direct-MOTOR trace.
+  - The paired physical runner can execute and account for the exact same trace in both branches.
+forbidden_claims:
+  - FeCO transduction or intermediate-CNS dynamics were executed.
+  - The full 120-tuple panel is executable end to end.
+  - A motor class, route, gain, profile or representation was selected or promoted.
+  - Physical motion establishes neutral stability or any behavior.
+next_action: >-
+  If the sentinel passes, instantiate the missing FeCO-to-CNS and typed
+  intermediate-population execution stages with explicit candidate values and
+  units. Only then may the immutable 120-tuple panel be called full-chain
+  executable. Do not use sentinel motion to narrow any candidate axis.

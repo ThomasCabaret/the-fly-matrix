@@ -1,0 +1,24 @@
+schema_version: 1
+id: evaluation.neutral_embodied_adapter_sentinel.v0
+title: Neutral embodied adapter sentinel evaluation
+status: evaluated
+campaign_id: campaign.neutral_embodied_adapter_sentinel.v0
+target_id: target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: ADAPTER SENTINEL / SYNTHETIC MOTOR EVENT / NOT FULL CHAIN / NOT STABILITY
+  / NO BEHAVIOR / NO SELECTION
+behavior_targets: []
+acceptance_result: pass_motor_physical_adapter_only_full_chain_blocked
+runner_result_id: runner_result.neutral_embodied_adapter_sentinel.v0
+runner_semantic_sha256: 0de6014f1521ad20b0d1c178a768da6f8cf963e62375c3c3dd069e5269d227fb
+parameter_values_promoted: 0
+stability_accepted: false
+full_chain_executed: false
+conclusion: The immutable schedule and motor-to-physics adapter sentinel passed. FeCO
+  transduction and intermediate-CNS dynamics were intentionally not executed, so the
+  full panel remains blocked and no stability claim exists.
+next_action: If the sentinel passes, instantiate the missing FeCO-to-CNS and typed
+  intermediate-population execution stages with explicit candidate values and units.
+  Only then may the immutable 120-tuple panel be called full-chain executable. Do
+  not use sentinel motion to narrow any candidate axis.

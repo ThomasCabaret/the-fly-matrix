@@ -686,6 +686,16 @@ must be reported as unavailable, never filled with zero or inferred from the sam
 baseline used to choose an acceptance threshold. Thresholds come from independent
 physical or biological evidence in a later preregistered campaign.
 
+A versioned schedule is not yet an executable full-chain campaign merely because
+every uncertainty axis has a column. Before the large run, a fixed sentinel must
+show which columns alter actual execution at each boundary. Parsing or hashing a
+FeCO representation or population profile is not the same as applying it to the
+sensory/CNS runtime. A partial sentinel may validly close motor-to-physics
+plumbing, but its result must mark every loaded-but-dormant axis and block the
+full-chain claim until those axes have explicit units, candidate values and an
+executed path. Synthetic events used to test an adapter remain fixtures, never
+MaleCNS output or evidence of stability.
+
 The actuator-semantics gate and the relevant local sensory/motor scopes must be
 closed or explicitly frozen before this stage frees global parameters. Central,
 sensory, motor and mechanical families cannot all vary simultaneously unless a

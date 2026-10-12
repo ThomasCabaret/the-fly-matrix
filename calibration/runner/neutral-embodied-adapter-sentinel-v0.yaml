@@ -1,0 +1,270 @@
+schema_version: 1
+id: runner_result.neutral_embodied_adapter_sentinel.v0
+campaign_id: campaign.neutral_embodied_adapter_sentinel.v0
+target_id: target.technical_embodied_stability.v0
+status: pass_motor_physical_adapter_sentinel_full_chain_blocked
+claim_label: ADAPTER SENTINEL / SYNTHETIC MOTOR EVENT / NOT FULL CHAIN / NOT STABILITY
+  / NO BEHAVIOR / NO SELECTION
+command: neutral_embodied_adapter_sentinel.bat
+behavior_targets: []
+campaign_sha256: 64a2f4e4ba14c02e52823ca2c4012884d3621cec42889b6e24be63300caeaad5
+implementation_sha256: 2f0d347dac4c9971afd59639e2754f1546be337351de72b7a393e77b5b14d2a8
+semantic_result_sha256: 0de6014f1521ad20b0d1c178a768da6f8cf963e62375c3c3dd069e5269d227fb
+input_hashes:
+  intermediate_profile_panel: 4557f1bf7a999b4e3f71a6fd2d2f8d26b3b83ab1a654d46e2e20165d77f7cdc2
+  feco_joint_source_paths: 734607723923ff155d3586674f882dc45a18e8dae332f38ff499e3288b1912ce
+  motor_class_ensemble: 3595b0420bb815887d2d892ad5f9088e5af61a53ba38a7ef43c28277ac2304fa
+  motor_force_fit: 397bcbb355efb4f1fe34004555c595bbf9c1400371501176472b81ee050a9b6a
+  motor_temporal_diagnostic: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+accounting:
+  scheduled_tuples_loaded: 120
+  sentinel_tuples: 4
+  paired_physical_episodes: 8
+  outcome_counts:
+    completed_contract: 4
+    failed_nonfinite: 0
+    error: 0
+    budget_skipped: 0
+  all_sentinel_tuples_accounted: true
+runtime_budget:
+  observed_wall_seconds: 18.459502900019288
+  projected_full_panel_wall_seconds_linear: 553.7850870005786
+  full_panel_wall_budget_seconds: 14400.0
+  runtime_budget_gate_pass: true
+  projection_is_engineering_estimate_only: true
+execution_boundary:
+  schedule_consumed: true
+  intermediate_profiles_loaded_not_executed: true
+  feco_alternatives_loaded_not_executed: true
+  motor_event_force_bridge_route_executed: true
+  paired_mujoco_physics_executed: true
+  full_sensor_cns_motor_chain_executed: false
+  stability_evaluated: false
+  candidate_selected_from_motion: false
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+tuple_outcomes:
+- tuple_id: neutral_tuple_000
+  status: completed_contract
+  compiler:
+    intermediate_profile_id: extreme_all_event
+    intermediate_assignments_loaded: 148
+    intermediate_cns_executed: false
+    feco_alternative_id: feco_00_graded_candidate
+    feco_transduction_executed: false
+    motor_assignment_index: 0
+    route_body_class: fast_81A07
+    target_actuator_id: 36
+    target_actuator_name: c_thorax-lf_coxa-yaw-motor
+    bridge_gain_index: 0
+    command_trace_sha256: d9ae07275948016ab74190e0234359dec69c05e528559843d029be5210186cb1
+    peak_abs_command: 0.00020557768023079823
+    non_scoped_actuators_zero: true
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.225324452586587
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 4.425591746800631e-07
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253129958737863
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 4.3262646445587103e-07
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014166788311602692
+      final_l2: 6.812635735979312e-05
+      final_over_peak: 0.4808878050644491
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.00033632051521893287
+      final_l2: 0.00023285320217061528
+      final_over_peak: 0.6923550352527142
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379496112385074
+      final_l2: 0.24008202637379636
+      final_over_peak: 0.17944026019900575
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_000/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_000/perturbed.npz
+  wall_seconds: 4.064456899999641
+- tuple_id: neutral_tuple_001
+  status: completed_contract
+  compiler:
+    intermediate_profile_id: extreme_all_graded
+    intermediate_assignments_loaded: 148
+    intermediate_cns_executed: false
+    feco_alternative_id: feco_00_event_candidate
+    feco_transduction_executed: false
+    motor_assignment_index: 9
+    route_body_class: intermediate_22A08
+    target_actuator_id: 37
+    target_actuator_name: c_thorax-lf_coxa-pitch-motor
+    bridge_gain_index: 1
+    command_trace_sha256: e30f0241c0c29c76879263afd169fcf22b7b1ef0652cb82c1b70f7752d180a7b
+    peak_abs_command: 0.0001770369506508717
+    non_scoped_actuators_zero: true
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.22532583433589
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 1.4295274755981675e-06
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253143792192145
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 1.41248033507741e-06
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014166271020465697
+      final_l2: 6.812451835236814e-05
+      final_over_peak: 0.4808923834222158
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363191153305014
+      final_l2: 0.0002328608380821408
+      final_over_peak: 0.692380621462173
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379736521516954
+      final_l2: 0.24008163631807214
+      final_over_peak: 0.1794367444620295
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_001/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_001/perturbed.npz
+  wall_seconds: 3.923075400001835
+- tuple_id: neutral_tuple_002
+  status: completed_contract
+  compiler:
+    intermediate_profile_id: hash_00
+    intermediate_assignments_loaded: 148
+    intermediate_cns_executed: false
+    feco_alternative_id: feco_01_graded_candidate
+    feco_transduction_executed: false
+    motor_assignment_index: 17
+    route_body_class: intermediate_22A08
+    target_actuator_id: 38
+    target_actuator_name: c_thorax-lf_coxa-roll-motor
+    bridge_gain_index: 2
+    command_trace_sha256: c05f18a07e2d4e5437cdcbc16c5871cbd1a41cdee6184a0ae6a49313914f782e
+    peak_abs_command: 0.0008657090598626508
+    non_scoped_actuators_zero: true
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253017948469178
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 7.68198499503526e-06
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.225317163924564
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 7.656483534848277e-06
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416527097591634
+      final_l2: 6.495769220275022e-05
+      final_over_peak: 0.45857006416037277
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.00035037725312838156
+      final_l2: 0.0002953253692527272
+      final_over_peak: 0.8428782594072031
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3378464162930004
+      final_l2: 0.42075274945471114
+      final_over_peak: 0.3145000385175472
+      stable_half_recovery_frame_after_perturbation: 2
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_002/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_002/perturbed.npz
+  wall_seconds: 3.8101911999983713
+- tuple_id: neutral_tuple_119
+  status: completed_contract
+  compiler:
+    intermediate_profile_id: hash_08_complement
+    intermediate_assignments_loaded: 148
+    intermediate_cns_executed: false
+    feco_alternative_id: feco_11_event_candidate
+    feco_transduction_executed: false
+    motor_assignment_index: 1023
+    route_body_class: intermediate_22A08
+    target_actuator_id: 45
+    target_actuator_name: lf_tarsus3-lf_tarsus4-pitch-motor
+    bridge_gain_index: 2
+    command_trace_sha256: 25564ae7706930b9aaf5eb1d634eebe45fc42db5128cc77708241ceb47d27de9
+    peak_abs_command: 0.0008657090598626508
+    non_scoped_actuators_zero: true
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2252992030122376
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 3.911777259067169e-06
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253145619836259
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 3.90079710433311e-06
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014166041752317326
+      final_l2: 6.495606125249379e-05
+      final_over_peak: 0.45853360019829165
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.00035037905555403934
+      final_l2: 0.000295316193438754
+      final_over_peak: 0.8428477352100376
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379854119155392
+      final_l2: 0.4207480677828983
+      final_over_peak: 0.31446386786873143
+      stable_half_recovery_frame_after_perturbation: 2
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_119/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/neutral_tuple_119/perturbed.npz
+  wall_seconds: 3.94293469999684
+artifact_ref: runs/calibration/neutral-embodied-adapter-sentinel-v0/20261012T053237300498Z/summary.json
+accepted_claims:
+- The immutable schedule fields and hashes can be consumed without reinterpretation.
+- The scheduled executable motor class, route and gain compile to an isolated direct-MOTOR
+  trace.
+- The paired physical runner can execute and account for the exact same trace in both
+  branches.
+forbidden_claims:
+- FeCO transduction or intermediate-CNS dynamics were executed.
+- The full 120-tuple panel is executable end to end.
+- A motor class, route, gain, profile or representation was selected or promoted.
+- Physical motion establishes neutral stability or any behavior.
+next_action: If the sentinel passes, instantiate the missing FeCO-to-CNS and typed
+  intermediate-population execution stages with explicit candidate values and units.
+  Only then may the immutable 120-tuple panel be called full-chain executable. Do
+  not use sentinel motion to narrow any candidate axis.

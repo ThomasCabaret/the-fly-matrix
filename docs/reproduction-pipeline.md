@@ -255,9 +255,13 @@ and chooses zero thresholds or profiles. Then run
 `neutral_embodied_pilot_schedule.bat` to reconstruct the versioned 120-tuple,
 240-episode readiness panel. That command validates complete small-axis coverage,
 the balanced motor subset and explicit unscheduled/blocked accounting; it does
-not execute the physical campaign. The next scientific step in
-`calibration/state.yaml:next_action` is the bounded execution adapter and its
-contract sentinel.
+not execute the physical campaign. Then run
+`neutral_embodied_adapter_sentinel.bat`. It rechecks the immutable schedule and
+executes four fixed tuples as eight paired MuJoCo episodes through the diagnostic
+motor event→force→route→direct-MOTOR path. It must reproduce the registered pass,
+but it deliberately leaves FeCO transduction and the typed intermediate-CNS
+populations dormant. The next scientific step in `calibration/state.yaml` is to
+instantiate those stages before any full 120-tuple execution.
 
 ### Historical neural-model gate
 

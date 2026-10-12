@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: bounded_pilot_schedule_complete_execution_not_started_stability_not_calibrated
+status: motor_physical_adapter_sentinel_pass_full_chain_execution_blocked_stability_not_calibrated
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -64,7 +64,7 @@ acceptance_policy:
 pilot_schedule:
   campaign_id: campaign.neutral_embodied_stability_pilot.v0
   schedule_result_id: runner_result.neutral_embodied_stability_pilot_schedule.v0
-  status: exact_120_tuple_schedule_complete_execution_not_started
+  status: exact_120_tuple_schedule_complete_motor_physical_sentinel_pass_full_panel_not_started
   tuples: 120
   paired_physical_episodes: 240
   coverage:
@@ -75,6 +75,26 @@ pilot_schedule:
     motor_slow_containing_blocked: 58025
     route_basis_edges: 110_of_110
     bridge_gains: 3_of_3
+  parameter_values_promoted: 0
+  stability_accepted: false
+
+adapter_sentinel:
+  campaign_id: campaign.neutral_embodied_adapter_sentinel.v0
+  evaluation_id: evaluation.neutral_embodied_adapter_sentinel.v0
+  runner_result_id: runner_result.neutral_embodied_adapter_sentinel.v0
+  status: pass_motor_event_force_route_mujoco_only_full_chain_blocked
+  tuples: 4
+  paired_physical_episodes: 8
+  completed_tuples: 4
+  runtime_projection_for_240_episodes: approximately_9_minutes_linear_estimate
+  executed_stages:
+    - diagnostic_motor_event_to_force
+    - force_to_direct_motor_bridge
+    - scheduled_route_isolation
+    - paired_mujoco_physics
+  loaded_but_not_executed_stages:
+    - feco_transduction
+    - typed_intermediate_cns_dynamics
   parameter_values_promoted: 0
   stability_accepted: false
 
@@ -96,15 +116,18 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_v1_pass_pilot_schedule_complete_execution_not_started
+validation: measurement_contract_v1_pass_schedule_complete_motor_physical_adapter_sentinel_pass_full_chain_blocked
 blocked_reason: >-
-  The complete short-horizon measurement contract and an exact bounded readiness
-  schedule are now registered, but the execution adapter and physical panel have
-  not run. The schedule freezes non-scoped motor outputs to zero, so it cannot
-  establish whole-body stability. Basal-source values and local motor transfers
-  remain unresolved. The direct-motor semantics are accepted only as a bounded
-  short-horizon surrogate.
+  The complete measurement contract, exact schedule and motor-to-physics adapter
+  sentinel now pass. Four fixed tuples completed eight paired physical episodes
+  with isolated commands, and a linear runtime projection is well inside the
+  declared panel budget. However, the sentinel injected a declared synthetic
+  motor event: it loaded but did not execute FeCO transduction or the typed
+  intermediate-CNS populations. The full local chain and 120-tuple panel therefore
+  remain unexecuted. The local panel cannot establish whole-body stability, basal
+  sources remain unresolved, and direct motors remain a bounded surrogate.
 next_action: >-
-  Implement the exact schedule execution adapter, run a contract sentinel, then
-  execute the bounded 120-tuple panel if the runtime and compute budget gates pass.
-  Retain every failure and do not select interface candidates from body motion.
+  Implement the FeCO-to-CNS and typed intermediate-population stages with explicit
+  candidate values and units, extend the sentinel across the complete local chain,
+  then run the 120-tuple panel only if that second sentinel passes. Retain every
+  failure and do not select interface candidates from body motion.

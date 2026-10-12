@@ -377,5 +377,14 @@ episodes. It covers all 50 intermediate profiles, 24 FeCO alternatives, 110 rout
 basis edges and three gains, plus a deterministic balanced sample of 120/1,024
 fast/intermediate motor assignments. The other 904 executable assignments and
 all 58,025 slow-containing blocked assignments remain counted. This command does
-not run physics, fit a value or select a candidate; the execution adapter is the
-next registered action.
+not run physics, fit a value or select a candidate.
+
+Run `neutral_embodied_adapter_sentinel.bat` for the first bounded execution gate.
+Its four tuple IDs are preregistered and account for eight paired physical
+episodes. It consumes the scheduled motor class, diagnostic twitch, route and
+bridge gain and verifies that the other 101 direct-MOTOR channels stay zero. The
+synthetic single motor event is an adapter fixture, not MaleCNS output. The FeCO
+and intermediate-profile fields are verified and reported as loaded but not
+executed; consequently a passing sentinel closes only motor-to-physics plumbing.
+The 120-tuple panel remains blocked until explicit FeCO-to-CNS and typed
+intermediate-population stages make those axes affect the run.

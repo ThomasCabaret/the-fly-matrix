@@ -13,6 +13,8 @@ schedule_result: calibration/runner/neutral-embodied-stability-pilot-schedule-v0
 parameter_values_promoted: 0
 stability_accepted: false
 next_action: >-
-  Do not fill this record from visual inspection. Execute the versioned schedule
-  through the dedicated runner and copy its complete accounting, failures,
-  semantic hash and bounded conclusion here.
+  Do not fill this record from visual inspection or from the passed motor-only
+  sentinel. First instantiate and validate FeCO-to-CNS and typed intermediate
+  execution, then execute the exact schedule through the dedicated full-chain
+  runner and copy its complete accounting, failures, semantic hash and bounded
+  conclusion here.
