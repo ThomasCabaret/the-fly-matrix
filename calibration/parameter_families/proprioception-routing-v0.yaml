@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.proprioception.routing.v0
 title: Proprioception local routing
-status: compiler_ready_unfitted
+status: compiler_ready_81_profile_channel_group_candidate_panel_unselected
 primary_class: local_interface
 parameter_kind: routing
 claim_role: biological
@@ -19,4 +19,4 @@ uncertainty: {representation: admissible_routing_set, admissible_set_criteria: [
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: exact route-key and runtime expansion contract}]
 assumptions: [The current runtime weight vector couples route selection and gain and must be compiled from two logical families.]
-next_action: Select a minimum-capacity routing representation from local evidence, then supply its complete simplex weights to compiler.peripheral_routing_transfer.v0.
+next_action: Execute the 81-profile channel-group candidate panel from campaign.neutral_embodied_declared_envelope.v0; retain it as deliberately overinclusive until local evidence identifies FeCO functional classes.

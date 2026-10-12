@@ -1,0 +1,36 @@
+schema_version: 1
+id: evaluation.neutral_embodied_declared_envelope.v0
+title: Declared local-chain fixture-replacement envelope evaluation
+status: completed_schedule_contract
+target_ids:
+- target.population_dynamics_assignment.v0
+- target.technical_embodied_stability.v0
+parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+exposure_policy: diagnostic_only_no_behavior_no_selection
+metrics:
+  feco_bodies_accounted: 36
+  feco_route_groups_accounted: 17
+  unknown_sign_bodies_accounted: 32
+  feco_routing_profiles: 81
+  unknown_sign_profiles: 64
+  numeric_profiles: 12
+  schedule_tuples: 240
+  parameter_values_promoted: 0
+  candidates_selected: 0
+  behavior_targets_exposed: 0
+acceptance_result: pass_schedule_contract_execution_not_started
+reproducibility:
+  command: neutral_embodied_declared_envelope.bat
+  runner_semantic_sha256: 16108ccef684274afd2976c2986d067454ac4b7fda339f0036e272cf75d3fba8
+  schedule_sha256: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+contamination:
+  body_motion_inspected: false
+  used_for_model_selection: false
+  used_for_manual_tuning: false
+conclusion: Silent local-chain fixtures are replaced at the schedule boundary by named,
+  reconstructible candidate families. No member is identified, executed, fitted or
+  promoted by this result.
+next_action: Implement and execute one bounded neural sentinel over this exact 240-tuple
+  schedule. It must consume the declared FeCO-routing, unknown-sign and numeric profiles
+  before any new physical panel, without ranking members from neural magnitude or
+  body motion.

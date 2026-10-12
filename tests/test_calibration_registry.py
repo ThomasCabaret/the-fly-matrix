@@ -704,6 +704,40 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(runner["interpretation"]["stability_accepted"])
         self.assertEqual(runner["interpretation"]["parameter_values_promoted"], 0)
 
+    def test_declared_envelope_replaces_silent_fixtures_without_selection(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT / "campaigns" / "neutral-embodied-declared-envelope-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT / "evaluations" / "neutral-embodied-declared-envelope-v0.yaml"
+        )
+        parameter_set = load_yaml(
+            CALIBRATION_ROOT / "parameter_sets" / "neutral-embodied-declared-envelope-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT / "runner" / "neutral-embodied-declared-envelope-v0.yaml"
+        )
+
+        self.assertEqual(campaign["optimization_exposure"], "diagnostic_only")
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertFalse(campaign["topology_changes_allowed"])
+        self.assertEqual(campaign["capacity_policy"]["optimized_parameters"], 0)
+        self.assertEqual(campaign["capacity_policy"]["selected_candidates"], 0)
+        self.assertFalse(
+            campaign["schedule_policy"]["candidate_selection_from_body_motion"]
+        )
+        self.assertEqual(runner["factorized_panels"]["feco_routing"]["profiles"], 81)
+        self.assertEqual(runner["factorized_panels"]["unknown_sign"]["profiles"], 64)
+        self.assertEqual(len(runner["factorized_panels"]["numeric"]["profiles"]), 12)
+        self.assertEqual(runner["coverage"]["schedule_tuples"], 240)
+        self.assertEqual(runner["scientific_boundary"]["physical_episodes"], 0)
+        self.assertEqual(runner["scientific_boundary"]["promoted_parameter_values"], 0)
+        self.assertIsNone(parameter_set["solution_set"]["selected_reference_id"])
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["runner_semantic_sha256"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

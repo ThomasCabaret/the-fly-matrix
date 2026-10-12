@@ -409,3 +409,17 @@ upstream trace. This is robustness of an implementation probe over the scheduled
 panel only. It does not promote the diagnostic projection, signs, neural
 constants, representations, classes, routes or gains and does not establish
 whole-body stability.
+
+Run `neutral_embodied_declared_envelope.bat` for the next preregistration gate.
+It removes the old round-robin FeCO projection and fixed excitatory treatment of
+unknown signs from the future schedule. Instead it reconstructs 81 balanced,
+pairwise-complete functional-routing profiles over the 17 accepted FeCO channel
+groups and 64 balanced, pairwise-complete sign profiles over the 32 scoped
+`sign_code=0` intermediates. Twelve explicit numeric profiles distinguish pinned
+event-comparator timing constants from technical input-scale and event-intensity
+sensitivity axes. Structural synapse counts are represented in one named
+incoming-L1 coordinate system; this is not a biological efficacy. The resulting
+240-row schedule contains every old tuple twice and every new profile at least
+once. Compilation runs no neural or physical episode, performs no fit, promotes
+no value and selects no candidate. Its next gate is runtime consumption by a
+bounded neural sentinel before another MuJoCo panel is authorized.

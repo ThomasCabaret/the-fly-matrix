@@ -1,0 +1,170 @@
+schema_version: 1
+id: campaign.neutral_embodied_declared_envelope.v0
+title: Declared parameter envelope for the first neutral embodied local chain
+status: preregistered_schedule_compiler_ready
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+parameter_family_ids:
+  - parameter.proprioception.routing.v0
+  - parameter.proprioception.transfer.v0
+  - parameter.central.transmitter_sign_prior.v0
+  - parameter.central.synaptic_efficacy.v0
+  - parameter.central.neuron_dynamics.v0
+  - parameter.motor.routing.v0
+  - parameter.motor.transfer.v0
+dependency_campaign_ids:
+  - campaign.neutral_embodied_full_chain_panel.v0
+parent_parameter_set_ids:
+  - parameters.central_transmitter_sign_prior.v0
+output_parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: DECLARED FACTORIZED ENVELOPE / NO FIT / NO SELECTION / NOT STABILITY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Replace the four hidden or single-valued execution fixtures of the passed local
+  panel with explicit, reconstructible candidate families before another physical
+  run. The campaign retains uncertainty rather than selecting a FeCO functional
+  projection, an unknown transmitter sign, a native representation, a neural
+  gain, a motor class, a route or a bridge gain.
+
+frozen_inputs:
+  passed_panel_campaign: calibration/campaigns/neutral-embodied-full-chain-panel-v0.yaml
+  passed_panel_campaign_sha256: 4ac11cbd134430c34d57f69d2ecbc601cd6da398eb2e35a763d828731a9383a0
+  passed_panel_result: calibration/runner/neutral-embodied-full-chain-panel-v0.yaml
+  passed_panel_result_sha256: 99987371570d933c5df9e7f48fb88fbac28d50df43361ff159fb2165f253a640
+  base_schedule: calibration/schedules/neutral-embodied-stability-pilot-v0.csv
+  base_schedule_sha256: bc9663d1932aa5863666a82d48d5c8db34e0783032c1820e4c863de0bea21911
+  population_members: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+  population_members_sha256: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  classified_intermediates: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
+  classified_intermediates_sha256: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+  central_paths: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/central-paths-up-to-two-hops.csv
+  central_paths_sha256: e26d05333d56e779c1b3cbb87d00635350fde34df355b79728a87475741aec4f
+  event_comparator_model: calibration/models/malecns-lif-source-aligned-v1.yaml
+  event_comparator_model_sha256: 8acb7fe6db96e414d5eadd2ac0625be1815e70e52b30c2670f2d6a12af1c51ce
+
+factorized_envelope:
+  feco_functional_routing:
+    family_id: parameter.proprioception.routing.v0
+    objects: 17
+    object_kind: accepted_route_channel_group
+    levels: [claw_position, club_vibration_and_speed, hook_flexion_direction]
+    profiles: 81
+    construction: all_GF3_4_points_with_17_distinct_projective_directions
+    guarantees:
+      each_group_each_level: 27
+      every_group_pair_all_nine_states: 9
+    scientific_status: deliberately_overinclusive_unresolved_candidate_set
+    replaces: sorted_body_id_round_robin_three_class_diagnostic_only
+  unknown_intermediate_sign:
+    family_id: parameter.central.transmitter_sign_prior.v0
+    objects: 32
+    levels: [-1, 1]
+    level_encoding: GF2_level_0_means_minus_1_level_1_means_plus_1
+    profiles: 64
+    construction: all_GF2_6_points_with_32_distinct_nonzero_directions
+    guarantees:
+      each_unknown_each_level: 32
+      every_unknown_pair_all_four_states: 16
+    known_signs_frozen: true
+    scientific_status: sensitivity_ensemble_not_a_new_sign_prior
+    replaces: excitatory_candidate_for_every_sign_code_zero
+  local_numeric_profiles:
+    profiles: 12
+    cartesian_axes:
+      graded_membrane_tau_s: [0.01, 0.02]
+      dimensionless_input_scale: [0.5, 1.0, 2.0]
+      unresolved_event_intensity_ceiling_hz: [100.0, 200.0]
+    technical_bounds_rationale: >-
+      The dimensionless scales bracket the prior unit probe and the intensity
+      ceilings keep per-0.1-ms expected event count at or below 0.02. They are
+      engineering sensitivity bounds, not measurements or accepted priors.
+    source_aligned_event_constants:
+      timestep_s: 0.0001
+      transmission_delay_s: 0.0018
+      membrane_tau_s: 0.02
+      synaptic_tau_s: 0.005
+      refractory_s: 0.0022
+      threshold_relative_to_rest_mV: 7.0
+      status: pinned_published_comparator_values_not_promoted_as_population_physiology
+    technical_axes_status: bounded_sensitivity_values_not_biological_measurements
+    selected_profile: null
+  structural_coupling:
+    family_id: parameter.central.synaptic_efficacy.v0
+    source_value: integer_synapse_count
+    executable_transform: incoming_L1_synapse_fraction
+    transform_status: one_explicit_minimum_capacity_technical_coordinate_system
+    biological_efficacy_selected: false
+    edge_residuals: 0
+    replaces: hidden_normalized_local_weights
+
+schedule_policy:
+  tuples: 240
+  base_schedule_repetitions: 2
+  seed_base: 2026101200
+  cartesian_product_materialized: false
+  candidate_selection_from_body_motion: false
+  require_every_base_tuple: true
+  require_every_new_profile: true
+  preserve_slow_kernel_blocker: true
+
+capacity_policy:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  automatic_capacity_increase_allowed: false
+  joint_calibration_reason: null
+
+scenario_splits:
+  train: []
+  validation: []
+  diagnostic: [schedule_compilation_and_neural_execution_invariants]
+  held_out: []
+
+acceptance:
+  criteria_locked_before_run: true
+  expected_feco_bodies: 36
+  expected_feco_route_groups: 17
+  expected_unknown_sign_bodies: 32
+  expected_feco_routing_profiles: 81
+  expected_sign_profiles: 64
+  expected_numeric_profiles: 12
+  expected_schedule_tuples: 240
+  expected_base_schedule_tuples: 120
+  require_pairwise_profile_guarantees: true
+  require_zero_round_robin_projection: true
+  require_zero_fixed_unknown_sign_default: true
+  require_zero_body_motion_selection: true
+
+behavior_exposure:
+  behavior_targeted: false
+  exposed_behavior_ids: []
+  contamination_notes: []
+
+accepted_claims:
+  - Every former single-valued local-chain fixture is represented by a named family, source value or bounded candidate axis.
+  - The FeCO routing and unknown-sign panels are balanced and pairwise complete within their respective factor spaces.
+  - The exact 240-tuple execution schedule is reconstructible without inspecting a physical trajectory.
+forbidden_claims:
+  - Any FeCO functional assignment, unknown sign, native representation, constant, motor class, route or gain is selected or calibrated.
+  - The technical input scales or event-intensity ceilings are biological measurements.
+  - Incoming-L1 normalization identifies synaptic efficacy.
+  - Schedule compilation establishes neural or embodied stability.
+
+compute_budget:
+  schedule_rows: 240
+  physical_episodes_this_campaign: 0
+  fitting_trials: 0
+  no_automatic_budget_extension: true
+
+next_action: >-
+  Compile and validate the exact factorized schedule. Then implement one bounded
+  neural sentinel that consumes the declared FeCO routing, sign and numeric
+  profiles before spending physical-simulation budget. Preserve all candidates;
+  neither neural magnitude nor later body motion may select a member.

@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.synaptic_efficacy.v0
 title: Central signed synaptic efficacy
-status: typed_hybrid_architecture_accepted_units_and_population_assignments_unresolved
+status: typed_hybrid_architecture_accepted_explicit_incoming_l1_coordinate_system_efficacy_unresolved
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/raw/malecns/v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather, supports: structural synapse counts only}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: explicit minimal signed executable candidate but no values}]
 assumptions: [The unsigned incoming-L1 benchmark normalization is not an accepted model., The nine-class candidate is provisional and must not gain local or edge residuals without a versioned capacity decision.]
-next_action: Execute target.population_dynamics_assignment.v0 and define efficacy units per selected local lineage; keep every comparator value unfrozen and engineering-only.
+next_action: Use the explicit incoming-L1 synapse-fraction coordinate system in the bounded local sentinel while keeping biological efficacy and every comparator scale unfrozen and engineering-only.

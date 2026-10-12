@@ -707,6 +707,17 @@ or propagated by later calibration. Passing four fixed tuples authorizes the
 predeclared local panel to run; it does not accept a population assignment,
 parameter value, neutral stability result or complete-MaleCNS model.
 
+After an implementation panel passes, do not silently carry a convenient fixture
+into calibration. Replace each such fixture by one of three explicit objects: a
+sourced value with applicability limits, a technically bounded sensitivity axis,
+or a finite uncertainty panel. When a full Cartesian product is unreasonable, a
+balanced pairwise panel is acceptable for implementation and first-order
+sensitivity only; it is neither exhaustive higher-order coverage nor a probability
+distribution. The exact objects, construction, coverage guarantees and omitted
+interactions must be versioned before execution. A compiled schedule does not
+prove that its fields affect the runtime, so a small consumption sentinel precedes
+the costly physical campaign.
+
 The actuator-semantics gate and the relevant local sensory/motor scopes must be
 closed or explicitly frozen before this stage frees global parameters. Central,
 sensory, motor and mechanical families cannot all vary simultaneously unless a

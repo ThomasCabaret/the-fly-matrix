@@ -1,0 +1,504 @@
+schema_version: 1
+id: runner_result.neutral_embodied_declared_envelope.v0
+campaign_id: campaign.neutral_embodied_declared_envelope.v0
+target_ids:
+- target.population_dynamics_assignment.v0
+- target.technical_embodied_stability.v0
+status: pass_declared_envelope_schedule_no_fit_no_execution
+claim_label: DECLARED FACTORIZED ENVELOPE / NO FIT / NO SELECTION / NOT STABILITY
+  / NO BEHAVIOR
+behavior_targets: []
+command: neutral_embodied_declared_envelope.bat
+campaign_sha256: 26b731d6ee84b12b2ef4a9c5aeda886670d822f68e1612c1c1ab74d647bae9fd
+implementation_sha256: bb37a28ea853baeb1498f1f973f308d26d13a6e65a770449d9ad7bd942b7e693
+input_hashes:
+  passed_panel_campaign: 4ac11cbd134430c34d57f69d2ecbc601cd6da398eb2e35a763d828731a9383a0
+  passed_panel_result: 99987371570d933c5df9e7f48fb88fbac28d50df43361ff159fb2165f253a640
+  base_schedule: bc9663d1932aa5863666a82d48d5c8db34e0783032c1820e4c863de0bea21911
+  population_members: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  classified_intermediates: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+  central_paths: e26d05333d56e779c1b3cbb87d00635350fde34df355b79728a87475741aec4f
+  event_comparator_model: 8acb7fe6db96e414d5eadd2ac0625be1815e70e52b30c2670f2d6a12af1c51ce
+accounting:
+  feco_bodies: 36
+  feco_route_groups: 17
+  unknown_sign_bodies: 32
+  base_schedule_tuples: 120
+factorized_panels:
+  feco_routing:
+    groups: 17
+    profiles: 81
+    levels:
+    - claw_position
+    - club_vibration_and_speed
+    - hook_flexion_direction
+    directions:
+      channel.sensory.proprioceptive.11b1175e1c71:
+      - 0
+      - 0
+      - 0
+      - 1
+      channel.sensory.proprioceptive.3572035d5cda:
+      - 0
+      - 0
+      - 1
+      - 0
+      channel.sensory.proprioceptive.43c50f9ce36f:
+      - 0
+      - 0
+      - 1
+      - 1
+      channel.sensory.proprioceptive.48cfdc649587:
+      - 0
+      - 0
+      - 1
+      - 2
+      channel.sensory.proprioceptive.4c8e66d3410e:
+      - 0
+      - 1
+      - 0
+      - 0
+      channel.sensory.proprioceptive.64f66656cb08:
+      - 0
+      - 1
+      - 0
+      - 1
+      channel.sensory.proprioceptive.6b13c8554ca1:
+      - 0
+      - 1
+      - 0
+      - 2
+      channel.sensory.proprioceptive.750a6d44b795:
+      - 0
+      - 1
+      - 1
+      - 0
+      channel.sensory.proprioceptive.826766291e8f:
+      - 0
+      - 1
+      - 1
+      - 1
+      channel.sensory.proprioceptive.8f54b5c1551c:
+      - 0
+      - 1
+      - 1
+      - 2
+      channel.sensory.proprioceptive.94155ed37935:
+      - 0
+      - 1
+      - 2
+      - 0
+      channel.sensory.proprioceptive.95a98e198d78:
+      - 0
+      - 1
+      - 2
+      - 1
+      channel.sensory.proprioceptive.97608e02138f:
+      - 0
+      - 1
+      - 2
+      - 2
+      channel.sensory.proprioceptive.c47516065f30:
+      - 1
+      - 0
+      - 0
+      - 0
+      channel.sensory.proprioceptive.dcd331308ae5:
+      - 1
+      - 0
+      - 0
+      - 1
+      channel.sensory.proprioceptive.f46aa073413d:
+      - 1
+      - 0
+      - 0
+      - 2
+      channel.sensory.proprioceptive.fa07c4183f6f:
+      - 1
+      - 0
+      - 1
+      - 0
+    pairwise:
+      object_pairs: 136
+      pairs_missing_a_state: 0
+      minimum_state_repetitions: 9
+      maximum_state_repetitions: 9
+    selected_profile: null
+  unknown_sign:
+    bodies: 32
+    profiles: 64
+    levels:
+    - -1
+    - 1
+    level_encoding: GF2_level_0_means_minus_1_level_1_means_plus_1
+    directions:
+      '1050268065':
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 1
+      '11160':
+      - 0
+      - 0
+      - 0
+      - 0
+      - 1
+      - 0
+      '11486':
+      - 0
+      - 0
+      - 0
+      - 0
+      - 1
+      - 1
+      '800636':
+      - 0
+      - 0
+      - 0
+      - 1
+      - 0
+      - 0
+      '801017':
+      - 0
+      - 0
+      - 0
+      - 1
+      - 0
+      - 1
+      '801173':
+      - 0
+      - 0
+      - 0
+      - 1
+      - 1
+      - 0
+      '801773':
+      - 0
+      - 0
+      - 0
+      - 1
+      - 1
+      - 1
+      '801904':
+      - 0
+      - 0
+      - 1
+      - 0
+      - 0
+      - 0
+      '801985':
+      - 0
+      - 0
+      - 1
+      - 0
+      - 0
+      - 1
+      '802072':
+      - 0
+      - 0
+      - 1
+      - 0
+      - 1
+      - 0
+      '803237':
+      - 0
+      - 0
+      - 1
+      - 0
+      - 1
+      - 1
+      '803750':
+      - 0
+      - 0
+      - 1
+      - 1
+      - 0
+      - 0
+      '804084':
+      - 0
+      - 0
+      - 1
+      - 1
+      - 0
+      - 1
+      '807046':
+      - 0
+      - 0
+      - 1
+      - 1
+      - 1
+      - 0
+      '807936':
+      - 0
+      - 0
+      - 1
+      - 1
+      - 1
+      - 1
+      '808640':
+      - 0
+      - 1
+      - 0
+      - 0
+      - 0
+      - 0
+      '809203':
+      - 0
+      - 1
+      - 0
+      - 0
+      - 0
+      - 1
+      '810912':
+      - 0
+      - 1
+      - 0
+      - 0
+      - 1
+      - 0
+      '812554':
+      - 0
+      - 1
+      - 0
+      - 0
+      - 1
+      - 1
+      '815344':
+      - 0
+      - 1
+      - 0
+      - 1
+      - 0
+      - 0
+      '903366':
+      - 0
+      - 1
+      - 0
+      - 1
+      - 0
+      - 1
+      '904021':
+      - 0
+      - 1
+      - 0
+      - 1
+      - 1
+      - 0
+      '904989':
+      - 0
+      - 1
+      - 0
+      - 1
+      - 1
+      - 1
+      '905496':
+      - 0
+      - 1
+      - 1
+      - 0
+      - 0
+      - 0
+      '905861':
+      - 0
+      - 1
+      - 1
+      - 0
+      - 0
+      - 1
+      '906353':
+      - 0
+      - 1
+      - 1
+      - 0
+      - 1
+      - 0
+      '911444':
+      - 0
+      - 1
+      - 1
+      - 0
+      - 1
+      - 1
+      '913724':
+      - 0
+      - 1
+      - 1
+      - 1
+      - 0
+      - 0
+      '919551':
+      - 0
+      - 1
+      - 1
+      - 1
+      - 0
+      - 1
+      '930012':
+      - 0
+      - 1
+      - 1
+      - 1
+      - 1
+      - 0
+      '931203':
+      - 0
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      '941298':
+      - 1
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    pairwise:
+      object_pairs: 496
+      pairs_missing_a_state: 0
+      minimum_state_repetitions: 16
+      maximum_state_repetitions: 16
+    selected_profile: null
+  numeric:
+    profiles:
+    - profile_id: numeric_00
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 0.5
+      unresolved_event_intensity_ceiling_hz: 100.0
+    - profile_id: numeric_01
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 0.5
+      unresolved_event_intensity_ceiling_hz: 200.0
+    - profile_id: numeric_02
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 1.0
+      unresolved_event_intensity_ceiling_hz: 100.0
+    - profile_id: numeric_03
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 1.0
+      unresolved_event_intensity_ceiling_hz: 200.0
+    - profile_id: numeric_04
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 2.0
+      unresolved_event_intensity_ceiling_hz: 100.0
+    - profile_id: numeric_05
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 2.0
+      unresolved_event_intensity_ceiling_hz: 200.0
+    - profile_id: numeric_06
+      graded_membrane_tau_s: 0.02
+      dimensionless_input_scale: 0.5
+      unresolved_event_intensity_ceiling_hz: 100.0
+    - profile_id: numeric_07
+      graded_membrane_tau_s: 0.02
+      dimensionless_input_scale: 0.5
+      unresolved_event_intensity_ceiling_hz: 200.0
+    - profile_id: numeric_08
+      graded_membrane_tau_s: 0.02
+      dimensionless_input_scale: 1.0
+      unresolved_event_intensity_ceiling_hz: 100.0
+    - profile_id: numeric_09
+      graded_membrane_tau_s: 0.02
+      dimensionless_input_scale: 1.0
+      unresolved_event_intensity_ceiling_hz: 200.0
+    - profile_id: numeric_10
+      graded_membrane_tau_s: 0.02
+      dimensionless_input_scale: 2.0
+      unresolved_event_intensity_ceiling_hz: 100.0
+    - profile_id: numeric_11
+      graded_membrane_tau_s: 0.02
+      dimensionless_input_scale: 2.0
+      unresolved_event_intensity_ceiling_hz: 200.0
+    source_aligned_event_constants:
+      v_rest_mV: -52.0
+      reset_mV: -52.0
+      threshold_mV: -45.0
+      tau_membrane_ms: 20.0
+      tau_syn_ms: 5.0
+      refractory_ms: 2.2
+      fixed_delay_ms: 1.8
+    selected_profile: null
+  structural_coupling:
+    family_id: parameter.central.synaptic_efficacy.v0
+    source_value: integer_synapse_count
+    executable_transform: incoming_L1_synapse_fraction
+    transform_status: one_explicit_minimum_capacity_technical_coordinate_system
+    biological_efficacy_selected: false
+    edge_residuals: 0
+    replaces: hidden_normalized_local_weights
+coverage:
+  schedule_tuples: 240
+  base_schedule:
+    unique: 120
+    minimum_repetitions: 2
+    maximum_repetitions: 2
+  feco_routing_profiles:
+    unique: 81
+    minimum_repetitions: 2
+    maximum_repetitions: 3
+  unknown_sign_profiles:
+    unique: 64
+    minimum_repetitions: 3
+    maximum_repetitions: 4
+  numeric_profiles:
+    unique: 12
+    minimum_repetitions: 20
+    maximum_repetitions: 20
+  intermediate_profiles:
+    unique: 50
+    minimum_repetitions: 4
+    maximum_repetitions: 6
+  feco_alternatives:
+    unique: 24
+    minimum_repetitions: 10
+    maximum_repetitions: 10
+  motor_assignments:
+    unique: 120
+    minimum_repetitions: 2
+    maximum_repetitions: 2
+  route_basis_edges:
+    unique: 110
+  bridge_gains:
+    unique: 3
+    minimum_repetitions: 80
+    maximum_repetitions: 80
+checks:
+  schedule_size: true
+  feco_profile_count: true
+  sign_profile_count: true
+  numeric_profile_count: true
+  feco_pairwise_complete: true
+  sign_pairwise_complete: true
+  all_base_rows_present: true
+  all_feco_profiles_present: true
+  all_sign_profiles_present: true
+  all_numeric_profiles_present: true
+  no_round_robin_field: true
+  no_fixed_unknown_sign_field: true
+schedule:
+  path: calibration/schedules/neutral-embodied-declared-envelope-v0.csv
+  sha256: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+  semantic_sha256: e5057fa33578ed1596d2a3257b26d4c8d904cf8cb02c1058d036a23dd8bf1dd1
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  physical_episodes: 0
+  neural_execution_started: false
+  stability_evaluated: false
+  body_motion_used_for_selection: false
+open_blocks:
+- FeCO functional identity remains an overinclusive channel-group ensemble.
+- FeCO native event-intensity amplitude remains technically bounded rather than biologically
+  identified.
+- Event comparator constants are source-traceable but not accepted population physiology.
+- Incoming-L1 count normalization is a technical coordinate system, not synaptic efficacy.
+- Slow motor assignments remain blocked by the absent slow temporal kernel.
+next_action: Implement and execute one bounded neural sentinel over this exact 240-tuple
+  schedule. It must consume the declared FeCO-routing, unknown-sign and numeric profiles
+  before any new physical panel, without ranking members from neural magnitude or
+  body motion.
+semantic_result_sha256: 16108ccef684274afd2976c2986d067454ac4b7fda339f0036e272cf75d3fba8

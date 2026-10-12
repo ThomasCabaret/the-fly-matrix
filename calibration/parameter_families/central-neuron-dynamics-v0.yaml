@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.central.neuron_dynamics.v0
 title: Central neuron temporal dynamics
-status: typed_hybrid_architecture_accepted_first_local_assignment_values_unresolved
+status: typed_hybrid_architecture_accepted_declared_local_numeric_envelope_unselected
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_model_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1, evaluation.population_dynamics_front_leg_accounting.v0], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: benchmarks/profiles/malecns-benchmark-v0.yaml, supports: engineering throughput only and explicitly no parameter values}, {ref: calibration/models/malecns-typed-signed-rate-v0.yaml, supports: bounded executable graded comparator equation and parameter dimension only}, {ref: calibration/models/malecns-lif-source-aligned-v1.yaml, supports: source-aligned event comparator semantics only}, {ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md, supports: accepted typed/hybrid architecture and local assignment policy}]
 assumptions: [Population classes are not inferred by a global default., Execution timestep remains a scoped numerical choice., Bounded tanh or LIF conformance does not establish biological validity or acceptable activity.]
-next_action: Implement the FeCO dual-representation conversion probe and the T1 tibia-flexor event-to-force probe; retain dual-unresolved alternatives everywhere else and emit no value before local preregistration.
+next_action: Execute the declared 12-profile local numeric envelope with the 50 assignment profiles; source-aligned event constants remain comparator values and technical amplitudes remain unpromoted.

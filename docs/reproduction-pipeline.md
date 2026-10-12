@@ -274,6 +274,16 @@ zero error, non-finite pair or skip. This closes only scheduled local execution
 robustness. The next step in `calibration/state.yaml` replaces diagnostic fixtures
 through declared parameter families; it is not yet a stability or behavior claim.
 
+Then run `neutral_embodied_declared_envelope.bat`. It reconstructs the next exact
+240-tuple schedule from the passed panel plus three declared replacement axes:
+81 FeCO channel-group routing profiles, 64 unknown-sign profiles and 12 numeric
+profiles. All 120 previous tuples are retained twice. The command requires no
+network token and performs no neural or physical execution; its tracked compact
+result proves schedule accounting and pairwise coverage only. A fresh clone must
+not call this a calibrated parameter set. The current frontier is the bounded
+neural sentinel named by `calibration/state.yaml`, which must prove that these
+fields are consumed before another physical panel is run.
+
 ### Historical neural-model gate
 
 The rate/LIF global gate is closed with `revise` and is not a prerequisite to

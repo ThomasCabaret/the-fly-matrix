@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: full_120_tuple_local_chain_panel_pass_stability_not_calibrated
+status: declared_240_tuple_parameter_envelope_compiled_execution_and_stability_not_run
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -141,6 +141,23 @@ full_local_chain_panel:
   candidate_selected_from_motion: false
   stability_accepted: false
 
+declared_parameter_envelope:
+  campaign_id: campaign.neutral_embodied_declared_envelope.v0
+  evaluation_id: evaluation.neutral_embodied_declared_envelope.v0
+  runner_result_id: runner_result.neutral_embodied_declared_envelope.v0
+  parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+  status: pass_schedule_contract_execution_not_started
+  schedule_tuples: 240
+  feco_routing_profiles: 81
+  unknown_sign_profiles: 64
+  numeric_profiles: 12
+  previous_base_tuples_retained: 120
+  optimized_parameters: 0
+  parameter_values_promoted: 0
+  candidates_selected: 0
+  physical_episodes: 0
+  stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -159,7 +176,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_v1_pass_schedule_complete_full_120_tuple_local_chain_panel_pass_stability_not_calibrated
+validation: measurement_contract_v1_pass_full_panel_pass_declared_parameter_envelope_schedule_pass_execution_and_stability_not_run
 blocked_reason: >-
   The complete measurement contract, exact schedule, both sentinels and the full
   local panel pass. The panel executes FeCO source functions, scheduled
@@ -172,8 +189,9 @@ blocked_reason: >-
   whole-body stability, basal sources remain unresolved, and direct motors remain
   a bounded surrogate.
 next_action: >-
-  Freeze the passed panel as an implementation baseline only. Preregister the
-  smallest ensemble-aware neutral closed-loop campaign that replaces diagnostic
-  projection, sign and neural constants with declared parameter families and
-  independently sourced or technically bounded values. Mechanics and actuator
-  semantics stay frozen; no physical trajectory may select an interface candidate.
+  Execute a bounded neural sentinel over the exact 240-tuple declared envelope
+  before spending physical-simulation budget. It must consume the channel-group
+  FeCO routing profiles, balanced unknown-sign profiles and numeric profiles rather
+  than the prior round-robin and fixed-sign fixtures. Mechanics and actuator
+  semantics stay frozen, and neither neural magnitude nor later body motion may
+  select an interface candidate.

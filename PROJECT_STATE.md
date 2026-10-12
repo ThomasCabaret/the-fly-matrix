@@ -214,6 +214,21 @@ n'a sélectionné aucun candidat. Ce résultat ferme seulement la robustesse de
 l'implémentation locale sur le panneau prévu : les fixtures diagnostiques restent
 non calibrées et aucune stabilité globale n'est acceptée.
 
+Le lot suivant supprime maintenant ces choix uniques au niveau du **planning**,
+sans prétendre les avoir identifiés. Dix-sept groupes de canaux FeCO sont décrits
+par 81 profils ternaires : chaque groupe reçoit 27 fois chacune des fonctions
+claw/club/hook et chaque paire voit exactement neuf fois chacun des neuf états.
+Les 32 intermédiaires dont `sign_code=0` sont décrits par 64 profils binaires :
+chaque corps reçoit 32 fois chaque signe et chaque paire voit 16 fois chacun des
+quatre états. Douze profils numériques séparent les constantes temporelles du
+comparateur événementiel sourcé des amplitudes techniques non biologiques ; les
+comptages structuraux utilisent un repère `incoming_L1_synapse_fraction` nommé,
+pas une normalisation cachée. Le planning exact contient 240 tuples, reprend les
+120 tuples précédents deux fois et couvre tous les nouveaux profils. Il n'a
+encore exécuté ni neurone ni épisode physique : zéro membre, valeur ou stabilité
+est accepté. Le prochain gate est un petit sentinel neuronal qui doit réellement
+consommer ces champs avant tout nouveau budget MuJoCo.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -1029,6 +1044,7 @@ neutral_embodied_pilot_schedule.bat # reconstruit les 120 tuples/240 épisodes ;
 neutral_embodied_adapter_sentinel.bat # 4 tuples/8 épisodes moteur→MuJoCo ; FeCO/CNS restent explicitement non exécutés
 neutral_embodied_full_chain_sentinel.bat # 4 tuples/8 épisodes FeCO→CNS typé→moteur→MuJoCo ; fixtures diagnostiques, aucune calibration
 neutral_embodied_full_chain_panel.bat # 120 tuples/240 épisodes du même contrat ; comptabilité exhaustive, aucune sélection ni stabilité
+neutral_embodied_declared_envelope.bat # 240 tuples, profils FeCO/signes/numériques déclarés ; planning seulement, zéro fit/exécution
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

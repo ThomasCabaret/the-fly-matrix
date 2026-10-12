@@ -1,0 +1,104 @@
+schema_version: 1
+id: parameters.neutral_embodied_declared_envelope.v0
+title: Factorized declared candidate envelope for the first neutral local chain
+status: candidate_envelope_preregistered_not_fitted_not_frozen
+created: 2026-10-12
+parent_ids: [parameters.central_transmitter_sign_prior.v0]
+campaign_id: campaign.neutral_embodied_declared_envelope.v0
+
+claim_label: DECLARED CANDIDATE ENVELOPE / NO FIT / NO PROMOTION / NO BEHAVIOR
+behavior_exposure: {behavior_targeted: false, inherited_from: [], exposed_behavior_ids: []}
+
+parameter_families:
+  - family_id: parameter.proprioception.routing.v0
+    origin: unresolved_factorized_candidate_ensemble
+    units: categorical_function_per_route_channel_group
+    values_recipe_ref: calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+    candidate_profiles: 81
+    selected_member_id: null
+    frozen: false
+  - family_id: parameter.proprioception.transfer.v0
+    origin: mixed_source_path_and_technical_unit_bridge_candidates
+    units: graded_model_activity_or_event_intensity_hz
+    values_recipe_ref: calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+    selected_member_id: null
+    frozen: false
+  - family_id: parameter.central.transmitter_sign_prior.v0
+    origin: frozen_known_prior_plus_unresolved_binary_sensitivity_panel
+    units: sign_code
+    values_recipe_ref: calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+    known_values_frozen: true
+    unknown_candidate_profiles: 64
+    selected_unknown_profile_id: null
+    frozen: false
+  - family_id: parameter.central.synaptic_efficacy.v0
+    origin: structural_count_with_explicit_technical_coordinate_transform
+    units: incoming_synapse_fraction_before_unresolved_dynamic_scale
+    values_recipe_ref: calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+    individual_edge_residuals: 0
+    frozen: false
+  - family_id: parameter.central.neuron_dynamics.v0
+    origin: pinned_event_comparator_constants_plus_bounded_technical_sensitivity_axes
+    units: mixed
+    values_recipe_ref: calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+    candidate_profiles: 12
+    selected_member_id: null
+    frozen: false
+  - family_id: parameter.motor.routing.v0
+    origin: inherited_unselected_schedule_ensemble
+    values_recipe_ref: calibration/schedules/neutral-embodied-stability-pilot-v0.csv
+    selected_member_id: null
+    frozen: false
+  - family_id: parameter.motor.transfer.v0
+    origin: inherited_unselected_class_kernel_and_bridge_ensemble
+    values_recipe_ref: calibration/schedules/neutral-embodied-stability-pilot-v0.csv
+    selected_member_id: null
+    frozen: false
+
+solution_set:
+  representation: factorized_finite_candidate_panels_with_unmaterialized_cartesian_product
+  selected_reference_id: null
+  admissible_member_ids: []
+  uncertainty_artifact_refs:
+    - calibration/schedules/neutral-embodied-declared-envelope-v0.csv
+  selection_rule: none_preserve_every_candidate_until_independent_local_evidence_or_preregistered_technical_gate
+
+freeze:
+  frozen_family_ids: []
+  stale_family_ids: []
+  topology_boundary_hashes:
+    parameter.proprioception.routing.v0: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    parameter.proprioception.transfer.v0: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    parameter.motor.routing.v0: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+    parameter.motor.transfer.v0: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  reopen_history: []
+
+reproducibility:
+  git_commit: pending_batch_commit
+  input_hashes: {}
+  artifact_refs:
+    - calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+    - calibration/runner/neutral-embodied-declared-envelope-v0.yaml
+
+validation:
+  level: schedule_contract_only
+  evaluation_ids: [evaluation.neutral_embodied_declared_envelope.v0]
+  known_failures:
+    - FeCO body-to-functional-class mapping remains unidentified and is propagated as an overinclusive local ensemble.
+    - Event-intensity amplitude is a technical sensitivity axis because calcium does not identify native spike rate.
+    - The comparator constants are not accepted physiology for the scoped populations.
+    - Slow motor assignments remain blocked by the missing slow temporal kernel.
+
+promotion:
+  status: not_promoted
+  decision_reason: The record defines uncertainty and removes silent defaults; it does not identify a reference member.
+  previous_reference_id: null
+
+sources:
+  - calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+  - calibration/models/malecns-lif-source-aligned-v1.yaml
+  - calibration/parameter_sets/central-transmitter-sign-prior-v0.yaml
+assumptions:
+  - Pairwise-complete finite panels are diagnostic projections of larger uncertainty spaces, not probability distributions.
+  - A declared technical coordinate transform can make a runtime executable without becoming a biological calibration.
+next_action: Execute the preregistered neural sentinel over the exact schedule without ranking or selecting members.
