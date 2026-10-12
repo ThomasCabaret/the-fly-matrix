@@ -280,9 +280,13 @@ Then run `neutral_embodied_declared_envelope.bat`. It reconstructs the next exac
 profiles. All 120 previous tuples are retained twice. The command requires no
 network token and performs no neural or physical execution; its tracked compact
 result proves schedule accounting and pairwise coverage only. A fresh clone must
-not call this a calibrated parameter set. The current frontier is the bounded
-neural sentinel named by `calibration/state.yaml`, which must prove that these
-fields are consumed before another physical panel is run.
+not call this a calibrated parameter set. Then run
+`neutral_embodied_declared_neural_sentinel.bat`. It executes all 240 rows through
+the bounded neural corridor, with zero MuJoCo episode, and reproduces the
+registered consumption pass for all routing, sign and numeric profiles plus the
+incoming-L1 and isolated-axis oracles. This still selects and promotes nothing.
+The current frontier in `calibration/state.yaml` is the preregistration of the
+first neutral physical candidate panel with mechanics and actionneurs frozen.
 
 ### Historical neural-model gate
 

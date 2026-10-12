@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameters.neutral_embodied_declared_envelope.v0
 title: Factorized declared candidate envelope for the first neutral local chain
-status: candidate_envelope_preregistered_not_fitted_not_frozen
+status: candidate_envelope_neural_execution_pass_not_fitted_not_selected_not_frozen
 created: 2026-10-12
 parent_ids: [parameters.central_transmitter_sign_prior.v0]
 campaign_id: campaign.neutral_embodied_declared_envelope.v0
@@ -79,10 +79,14 @@ reproducibility:
   artifact_refs:
     - calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
     - calibration/runner/neutral-embodied-declared-envelope-v0.yaml
+    - calibration/campaigns/neutral-embodied-declared-neural-sentinel-v0.yaml
+    - calibration/runner/neutral-embodied-declared-neural-sentinel-v0.yaml
 
 validation:
-  level: schedule_contract_only
-  evaluation_ids: [evaluation.neutral_embodied_declared_envelope.v0]
+  level: schedule_and_bounded_neural_execution_contract
+  evaluation_ids:
+    - evaluation.neutral_embodied_declared_envelope.v0
+    - evaluation.neutral_embodied_declared_neural_sentinel.v0
   known_failures:
     - FeCO body-to-functional-class mapping remains unidentified and is propagated as an overinclusive local ensemble.
     - Event-intensity amplitude is a technical sensitivity axis because calcium does not identify native spike rate.
@@ -101,4 +105,4 @@ sources:
 assumptions:
   - Pairwise-complete finite panels are diagnostic projections of larger uncertainty spaces, not probability distributions.
   - A declared technical coordinate transform can make a runtime executable without becoming a biological calibration.
-next_action: Execute the preregistered neural sentinel over the exact schedule without ranking or selecting members.
+next_action: Preregister a neutral physical candidate panel with frozen mechanics and no candidate selection from motion.

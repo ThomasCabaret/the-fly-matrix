@@ -224,10 +224,16 @@ quatre états. Douze profils numériques séparent les constantes temporelles du
 comparateur événementiel sourcé des amplitudes techniques non biologiques ; les
 comptages structuraux utilisent un repère `incoming_L1_synapse_fraction` nommé,
 pas une normalisation cachée. Le planning exact contient 240 tuples, reprend les
-120 tuples précédents deux fois et couvre tous les nouveaux profils. Il n'a
-encore exécuté ni neurone ni épisode physique : zéro membre, valeur ou stabilité
-est accepté. Le prochain gate est un petit sentinel neuronal qui doit réellement
-consommer ces champs avant tout nouveau budget MuJoCo.
+120 tuples précédents deux fois et couvre tous les nouveaux profils. Le sentinel
+`neutral_embodied_declared_neural_sentinel.bat` exécute maintenant 240/240 lignes
+finies sans MuJoCo. Il consomme les 81 profils FeCO, 64 profils de signe et 12
+profils numériques ; les 32 inversions de signe ont une contribution aval non
+nulle et antisymétrique, les trois axes numériques changent leur micro-probe et
+chaque colonne structurelle non vide respecte exactement le repère incoming-L1.
+Ces contrôles ferment le gate de consommation runtime, pas la calibration : zéro
+membre, valeur ou stabilité est accepté, et les magnitudes neuronales ne servent
+pas à classer les candidats. Le prochain gate est le premier panneau physique
+neutre préenregistré avec mécanique et actionneurs gelés.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -838,7 +844,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le premier panneau incarné exact couvre tous les 50 profils, 24 alternatives FeCO, 110 routes et 3 gains, avec 120/1 024 affectations motrices exécutables ; ses 120/120 tuples et 240/240 épisodes FeCO→CNS typé→moteur→MuJoCo terminent sans erreur, non-finitude ni skip ; 904 affectations exécutables restent non planifiées et 58 025 lentes restent bloquées ; zéro valeur ou affectation est promue et la stabilité reste non calibrée**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le panneau diagnostique FeCO→CNS typé→moteur→MuJoCo passe 120/120 tuples et 240/240 épisodes ; son remplacement déclaré passe maintenant 240/240 exécutions neurales et consomme intégralement 81 profils FeCO, 64 profils de signe et 12 profils numériques avec oracles locaux ; zéro valeur ou affectation est promue et la stabilité physique reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -907,7 +913,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **251 tests** découverts actuellement passent, y compris les
+conservées et classifiées. Les **261 tests** découverts actuellement passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -1045,6 +1051,7 @@ neutral_embodied_adapter_sentinel.bat # 4 tuples/8 épisodes moteur→MuJoCo ; F
 neutral_embodied_full_chain_sentinel.bat # 4 tuples/8 épisodes FeCO→CNS typé→moteur→MuJoCo ; fixtures diagnostiques, aucune calibration
 neutral_embodied_full_chain_panel.bat # 120 tuples/240 épisodes du même contrat ; comptabilité exhaustive, aucune sélection ni stabilité
 neutral_embodied_declared_envelope.bat # 240 tuples, profils FeCO/signes/numériques déclarés ; planning seulement, zéro fit/exécution
+neutral_embodied_declared_neural_sentinel.bat # exécute les 240 tuples neuraux déclarés, oracles d'axes, zéro fit/physique/sélection
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

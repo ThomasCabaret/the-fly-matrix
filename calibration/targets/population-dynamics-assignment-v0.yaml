@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_declared_240_tuple_local_envelope_compiled_values_and_assignments_unresolved
+status: active_front_leg_conversion_contracts_executable_declared_240_tuple_neural_envelope_execution_pass_values_and_assignments_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,12 +64,12 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_declared_fixture_replacement_envelope_compiled_zero_values_promoted
+validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_declared_envelope_240_of_240_neural_execution_pass_zero_values_promoted
 blocked_reason: null
 next_action: >-
-  The first chain accounts for all 196 unique bodies. Its former round-robin FeCO
-  projection and fixed excitatory unknown-sign candidate are now replaced at the
-  schedule boundary by 81 and 64 balanced pairwise-complete profiles; twelve
-  explicit numeric profiles separate source-aligned event constants from technical
-  amplitudes. Execute a small neural sentinel that actually consumes these fields.
-  Preserve every alternative and do not rank from neural magnitude or body motion.
+  The first chain accounts for all 196 unique bodies. Its 240-row declared
+  envelope now executes finitely through the bounded neural corridor: all 81 FeCO
+  routing profiles, 64 unknown-sign profiles and 12 numeric profiles are consumed,
+  the incoming-L1 transform is exact, and isolated sign/numeric oracles pass.
+  Preserve every alternative while moving to a preregistered neutral physical
+  panel; neither neural magnitude nor body motion may rank a member.

@@ -410,7 +410,7 @@ panel only. It does not promote the diagnostic projection, signs, neural
 constants, representations, classes, routes or gains and does not establish
 whole-body stability.
 
-Run `neutral_embodied_declared_envelope.bat` for the next preregistration gate.
+Run `neutral_embodied_declared_envelope.bat` to reconstruct the declared envelope.
 It removes the old round-robin FeCO projection and fixed excitatory treatment of
 unknown signs from the future schedule. Instead it reconstructs 81 balanced,
 pairwise-complete functional-routing profiles over the 17 accepted FeCO channel
@@ -423,3 +423,13 @@ incoming-L1 coordinate system; this is not a biological efficacy. The resulting
 once. Compilation runs no neural or physical episode, performs no fit, promotes
 no value and selects no candidate. Its next gate is runtime consumption by a
 bounded neural sentinel before another MuJoCo panel is authorized.
+
+Run `neutral_embodied_declared_neural_sentinel.bat` to reproduce that completed
+runtime-consumption gate. It executes all 240 rows through the bounded neural
+corridor and no physical episode. All 81 FeCO routing, 64 unknown-sign and 12
+numeric profiles must be present; 32 isolated sign-flip oracles, all three numeric
+axis oracles and the explicit incoming-L1 structural transform must pass. Neural
+magnitudes are retained only as descriptive hashes and counts. The run performs
+zero fit, ranking, promotion, stability evaluation or behavior exposure. A pass
+authorizes preregistration of the first neutral physical candidate panel; it does
+not authorize choosing a member from body motion.

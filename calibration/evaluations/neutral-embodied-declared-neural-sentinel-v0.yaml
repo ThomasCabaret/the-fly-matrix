@@ -1,0 +1,28 @@
+schema_version: 1
+id: evaluation.neutral_embodied_declared_neural_sentinel.v0
+title: Declared-envelope local neural execution sentinel
+status: evaluated
+campaign_id: campaign.neutral_embodied_declared_neural_sentinel.v0
+target_ids:
+- target.population_dynamics_assignment.v0
+- target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: DECLARED ENVELOPE NEURAL SENTINEL / NO FIT / NO SELECTION / NO PHYSICS
+  / NO BEHAVIOR
+behavior_targets: []
+acceptance_result: pass_declared_neural_execution_no_fit_no_selection
+runner_result_id: runner_result.neutral_embodied_declared_neural_sentinel.v0
+runner_semantic_sha256: 68500808d7daa7fd74cc534b957deee4bb5db88cba474e21dbacc5f7a1675d2a
+parameter_values_promoted: 0
+candidates_selected: 0
+physical_episodes: 0
+stability_accepted: false
+conclusion: All 240 declared candidates execute through the bounded local neural corridor
+  and every declared axis passes an isolated consumption oracle. This is an execution
+  and sensitivity contract only; no magnitude ranks a member and no value is fitted
+  or promoted.
+next_action: If the exact neural sentinel passes, preregister the first physical neutral
+  candidate panel with mechanics and actuator semantics frozen. Preserve every admissible
+  member and use only technical pathology and paired-recovery criteria; do not inspect
+  or optimize a named behavior.

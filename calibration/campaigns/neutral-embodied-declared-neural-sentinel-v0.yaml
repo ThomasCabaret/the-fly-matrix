@@ -1,0 +1,111 @@
+schema_version: 1
+id: campaign.neutral_embodied_declared_neural_sentinel.v0
+title: Neural execution sentinel for the declared neutral local-chain envelope
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: DECLARED ENVELOPE NEURAL SENTINEL / NO FIT / NO SELECTION / NO PHYSICS / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Execute every row of the exact 240-tuple declared envelope through the bounded
+  FeCO-to-motor neural corridor before spending another physical-simulation
+  budget. The sentinel proves runtime consumption of the declared FeCO routing,
+  unknown-sign, numeric and incoming-L1 coordinate profiles. It cannot rank,
+  select, fit or promote a member from neural magnitude.
+
+frozen_inputs:
+  declared_envelope_campaign: calibration/campaigns/neutral-embodied-declared-envelope-v0.yaml
+  declared_envelope_campaign_sha256: 26b731d6ee84b12b2ef4a9c5aeda886670d822f68e1612c1c1ab74d647bae9fd
+  declared_envelope_result: calibration/runner/neutral-embodied-declared-envelope-v0.yaml
+  declared_envelope_result_sha256: 3f3109a313ad828273df9eda02a55fa598e94cf1673d9e207888ecc1a2344d75
+  declared_envelope_result_semantic_sha256: 16108ccef684274afd2976c2986d067454ac4b7fda339f0036e272cf75d3fba8
+  declared_schedule: calibration/schedules/neutral-embodied-declared-envelope-v0.csv
+  declared_schedule_sha256: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+  full_chain_contract: calibration/campaigns/neutral-embodied-full-chain-sentinel-v0.yaml
+  full_chain_contract_sha256: 5861118a51bc16a6d6b035c1be46f25efaf1d82c3f9c1942555bbabce9816866
+
+execution_fixture:
+  kind: deterministic_sinusoidal_front_leg_femur_tibia_angle
+  center_deg: 80.0
+  amplitude_deg: 20.0
+  frequency_hz: 10.0
+  duration_s: 0.2
+  timestep_s: 0.0001
+  source_trace_coordinate: per_trace_minmax_dimensionless_fixture_only
+  meaning: >-
+    The same deterministic engineering excitation used by the passed local-chain
+    panel. Per-trace normalization is explicit and diagnostic only. No resulting
+    magnitude is a biological observation or a candidate-selection criterion.
+
+runtime_contract:
+  feco_routing: profile_level_selects_one_of_three_source_functions_per_route_channel_group
+  unknown_sign: known_signs_frozen_and_GF2_level_zero_minus_one_level_one_plus_one
+  structural_coupling: incoming_L1_synapse_fraction_from_positive_integer_counts
+  event_voltage_coordinate: threshold_excursion_is_7_mV_and_rest_is_zero_relative_mV
+  graded_output_coordinate: nonnegative_membrane_excursion_divided_by_7_mV
+  dimensionless_input_scale_application: applied_to_intermediate_and_motor_drive
+  event_intensity_application: applied_only_to_event_candidate_FeCO_sources
+  fixed_delay_s: 0.0018
+  event_membrane_tau_s: 0.02
+  event_synaptic_tau_s: 0.005
+  event_refractory_s: 0.0022
+  event_threshold_excursion_mV: 7.0
+  physical_episodes: 0
+
+acceptance:
+  criteria_locked_before_run: true
+  expected_tuples: 240
+  expected_feco_routing_profiles: 81
+  expected_unknown_sign_profiles: 64
+  expected_numeric_profiles: 12
+  expected_feco_route_groups: 17
+  expected_unknown_sign_bodies: 32
+  require_every_tuple_accounted: true
+  require_every_profile_executed: true
+  require_all_arrays_finite: true
+  require_nonzero_source_drive: true
+  require_incoming_L1_columns_exact: true
+  require_each_unknown_sign_flip_oracle_nonzero_and_antisymmetric: true
+  require_each_numeric_axis_to_change_its_isolated_probe: true
+  allow_neural_magnitude_to_select_candidate: false
+  allow_physical_magnitude_to_select_candidate: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  physical_episodes: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+
+compute_budget:
+  neural_tuples: 240
+  simulated_seconds_per_tuple: 0.2
+  physical_episodes: 0
+  maximum_wall_clock_minutes: 20
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - Every exact schedule row is executed through the bounded local neural corridor.
+  - Each declared routing, sign and numeric profile is consumed by named runtime operations.
+  - Incoming-L1 normalization is explicit, reconstructible and exhaustively checked on the scoped matrices.
+forbidden_claims:
+  - Any candidate is preferred, selected, fitted or calibrated.
+  - Neural magnitude or silence establishes biological plausibility or stability.
+  - The fixture normalization or incoming-L1 coordinate identifies biological efficacy.
+  - The bounded two-hop corridor represents complete recurrent MaleCNS dynamics.
+next_action: >-
+  If the exact neural sentinel passes, preregister the first physical neutral
+  candidate panel with mechanics and actuator semantics frozen. Preserve every
+  admissible member and use only technical pathology and paired-recovery criteria;
+  do not inspect or optimize a named behavior.

@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: declared_240_tuple_parameter_envelope_compiled_execution_and_stability_not_run
+status: declared_240_tuple_neural_envelope_execution_pass_physical_stability_not_run
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -158,6 +158,25 @@ declared_parameter_envelope:
   physical_episodes: 0
   stability_accepted: false
 
+declared_neural_sentinel:
+  campaign_id: campaign.neutral_embodied_declared_neural_sentinel.v0
+  evaluation_id: evaluation.neutral_embodied_declared_neural_sentinel.v0
+  runner_result_id: runner_result.neutral_embodied_declared_neural_sentinel.v0
+  status: pass_execution_contract_no_fit_no_selection
+  neural_tuples: 240
+  completed_finite: 240
+  feco_routing_profiles_consumed: 81
+  unknown_sign_profiles_consumed: 64
+  numeric_profiles_consumed: 12
+  unknown_sign_flip_oracles: 32_of_32
+  numeric_axis_oracles: 3_of_3
+  incoming_L1_columns_exact: true
+  optimized_parameters: 0
+  parameter_values_promoted: 0
+  candidates_selected: 0
+  physical_episodes: 0
+  stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -176,7 +195,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_v1_pass_full_panel_pass_declared_parameter_envelope_schedule_pass_execution_and_stability_not_run
+validation: measurement_contract_v1_pass_full_panel_pass_declared_envelope_240_of_240_neural_execution_pass_physical_stability_not_run
 blocked_reason: >-
   The complete measurement contract, exact schedule, both sentinels and the full
   local panel pass. The panel executes FeCO source functions, scheduled
@@ -189,9 +208,8 @@ blocked_reason: >-
   whole-body stability, basal sources remain unresolved, and direct motors remain
   a bounded surrogate.
 next_action: >-
-  Execute a bounded neural sentinel over the exact 240-tuple declared envelope
-  before spending physical-simulation budget. It must consume the channel-group
-  FeCO routing profiles, balanced unknown-sign profiles and numeric profiles rather
-  than the prior round-robin and fixed-sign fixtures. Mechanics and actuator
-  semantics stay frozen, and neither neural magnitude nor later body motion may
-  select an interface candidate.
+  Preregister the first physical neutral candidate panel from the exact passed
+  neural envelope. Mechanics and actuator semantics stay frozen, all members stay
+  visible, and acceptance is restricted to technical pathology and paired generic
+  perturbation recovery. Neither body motion nor a named behavior may select an
+  interface or neural candidate.
