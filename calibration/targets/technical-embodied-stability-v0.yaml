@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: declared_240_tuple_neural_envelope_execution_pass_physical_stability_not_run
+status: causal_declared_envelope_sentinel_pass_full_240_physical_panel_not_run_stability_unresolved
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -177,6 +177,24 @@ declared_neural_sentinel:
   physical_episodes: 0
   stability_accepted: false
 
+declared_closed_loop_sentinel:
+  campaign_id: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+  evaluation_id: evaluation.neutral_embodied_declared_closed_loop_sentinel.v0
+  runner_result_id: runner_result.neutral_embodied_declared_closed_loop_sentinel.v0
+  status: pass_causal_closed_loop_execution_no_fit_no_selection
+  tuples: 16
+  paired_physical_episodes: 32
+  completed_tuples: 16
+  bilateral_geometry_oracle: pass_strictly_increasing_minimum_span_139_76_deg
+  causal_source_active_episodes: 32_of_32
+  tuples_with_nonzero_routed_motor_command: 5
+  non_scoped_actuator_outputs_zero: true
+  generic_perturbation_detected_pairs: 16_of_16
+  optimized_parameters: 0
+  parameter_values_promoted: 0
+  candidates_selected: 0
+  stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -195,21 +213,26 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_v1_pass_full_panel_pass_declared_envelope_240_of_240_neural_execution_pass_physical_stability_not_run
+validation: measurement_contract_v1_pass_declared_envelope_240_of_240_neural_execution_pass_causal_physical_sentinel_16_of_16_full_240_physical_panel_not_run_stability_unresolved
 blocked_reason: >-
-  The complete measurement contract, exact schedule, both sentinels and the full
+  The complete measurement contract, exact schedule, earlier implementation
+  sentinels and the full
   local panel pass. The panel executes FeCO source functions, scheduled
   graded/event input, all 150 typed intermediate bodies, ten event motor bodies,
   the frozen physical adapter and 240 paired MuJoCo episodes for 120/120 tuples,
   with zero error, nonfinite pair or skip. This closes implementation robustness
   over the scheduled local panel, not calibration: its round-robin FeCO
   projection, unresolved-sign candidate and neural constants are visible
-  diagnostic fixtures with zero promotion. The local corridor cannot establish
+  diagnostic fixtures with zero promotion. The new declared-envelope causal
+  sentinel removes the future-normalized sinusoid: it registers bilateral
+  front-knee geometry, executes persistent neuronal/delay/twitch state at the
+  native 0.1 ms physics step, and completes 16/16 fixed-stride tuples as 32/32
+  paired episodes. Five tuples deliver a nonzero causal command to exactly their
+  scheduled actuator. This is still an execution gate, not stability. The local corridor cannot establish
   whole-body stability, basal sources remain unresolved, and direct motors remain
   a bounded surrogate.
 next_action: >-
-  Preregister the first physical neutral candidate panel from the exact passed
-  neural envelope. Mechanics and actuator semantics stay frozen, all members stay
-  visible, and acceptance is restricted to technical pathology and paired generic
-  perturbation recovery. Neither body motion nor a named behavior may select an
-  interface or neural candidate.
+  Execute and account the complete exact 240-member declared physical panel with
+  the same frozen causal runtime. Preserve every member and restrict any later
+  narrowing to independently preregistered technical pathology criteria. Neither
+  raw body motion nor a named behavior may select an interface or neural candidate.

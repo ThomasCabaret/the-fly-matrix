@@ -1,0 +1,1409 @@
+schema_version: 1
+id: runner_result.neutral_embodied_declared_closed_loop_sentinel.v0
+campaign_id: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+status: pass_causal_closed_loop_execution_no_fit_no_selection
+completed_at: '2026-10-12T15:48:40.257736+00:00'
+claim_label: CAUSAL CLOSED-LOOP SENTINEL / NO FIT / NO SELECTION / NOT STABILITY /
+  NO BEHAVIOR
+command: neutral_embodied_declared_closed_loop_sentinel.bat
+frozen_input_sha256:
+  declared_neural_campaign: 0518c5849230be16f6dfc90e7c5de2270cb66fdd88a782f6b814b5769d7b781d
+  declared_neural_result: 7cb4dee9d22fe9a9f3d169dcbefefd48fe169c9242c8a01960543c8c159559ed
+  declared_schedule: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+  declared_parameter_set: 8b036b2d4b07776b2d0c7b8983ff39a96e6bbc76bbde268fad24453d1c4d121f
+  actuator_attribution_result: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  measurement_contract_result: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+geometry_registration:
+  method: world_joint_anchor_internal_angle_arccos
+  sides:
+    L:
+      raw_joint_deg:
+      - -70.0
+      - -35.0
+      - 0.0
+      - 35.0
+      - 70.0
+      anatomical_internal_deg:
+      - 19.017183710994495
+      - 53.923031632787044
+      - 88.89241960403082
+      - 123.86262471516561
+      - 158.78016935393126
+      strictly_increasing: true
+      minimum_increment_deg: 34.90584792179255
+      covered_span_deg: 139.76298564293677
+    R:
+      raw_joint_deg:
+      - -70.0
+      - -35.0
+      - 0.0
+      - 35.0
+      - 70.0
+      anatomical_internal_deg:
+      - 18.14487074767549
+      - 53.11311426470584
+      - 88.10322761238747
+      - 123.09378898304446
+      - 158.0685181284763
+      strictly_increasing: true
+      minimum_increment_deg: 34.96824351703035
+      covered_span_deg: 139.92364738080082
+  all_strictly_increasing: true
+  minimum_covered_span_deg: 139.76298564293677
+structural_coupling_audit:
+  transform: incoming_L1_synapse_fraction
+  matrices:
+  - matrix: sensory_to_intermediate
+    shape:
+    - 36
+    - 150
+    nonzero_edges: 270
+    nonzero_target_columns: 150
+    zero_target_columns: 0
+    nonzero_columns_l1_exact: true
+    raw_sha256: f833b7dfc4e0998aecfebe2269d1d8abb87d62f1e3ee527fd8bd71553a7ddf3c
+    transformed_sha256: e3b6e6d2ca8575b5809c5d8a5192937f999d75f459a840bb0efff2a483149844
+  - matrix: intermediate_to_motor
+    shape:
+    - 150
+    - 10
+    nonzero_edges: 368
+    nonzero_target_columns: 10
+    zero_target_columns: 0
+    nonzero_columns_l1_exact: true
+    raw_sha256: d496cb7e6ed24278dd6460f14314b5f612bb68350c5d18f33fcdb39c0a3554a6
+    transformed_sha256: 1f1b4c48db864452d58fa224e85cfbb6552ac48d58c4676d8153e0ec1679b5e7
+  - matrix: sensory_to_motor
+    shape:
+    - 36
+    - 10
+    nonzero_edges: 10
+    nonzero_target_columns: 5
+    zero_target_columns: 5
+    nonzero_columns_l1_exact: true
+    raw_sha256: 87b2fd177b472d88efccbbdd667cb599142001f52fa51e9c7760d15229762140
+    transformed_sha256: 1c7c3de61ffae16f73f80c89b53ae6520f4ecfbfcf621004f2ac4a6b4a5cef7a
+  all_nonzero_columns_exact: true
+accounting:
+  sentinel_tuples: 16
+  paired_physical_episodes: 32
+  outcome_counts:
+    completed_contract: 16
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+checks:
+  all_sentinel_tuples_accounted: true
+  all_paired_episodes_finite: true
+  bilateral_geometric_registration_passed: true
+  causal_source_path_active_in_every_episode: true
+  non_scoped_actuator_outputs_zero: true
+  at_least_one_causal_nonzero_actuator_command: true
+  generic_perturbation_detected_in_every_pair: true
+  incoming_L1_columns_exact: true
+  zero_fit_zero_selection_zero_behavior: true
+outcomes:
+- tuple_id: declared_tuple_000
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 176006f22ad64ce79b870893eac45920becb7722c66b6c691b229f13d9dbb707
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: fast_81A07
+    target_actuator_id: 36
+    target_actuator_name: c_thorax-lf_coxa-yaw-motor
+    trace_sha256: 162c0543a62504c95c54296e68663cbc0fd782418cdd65c75fde2c810d4f4132
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 176006f22ad64ce79b870893eac45920becb7722c66b6c691b229f13d9dbb707
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: fast_81A07
+    target_actuator_id: 36
+    target_actuator_name: c_thorax-lf_coxa-yaw-motor
+    trace_sha256: b973ec0c3e4880686471a2915c9982b57e216faaf78ecd417eac6ea7b1c235c6
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_000/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_000/perturbed.npz
+- tuple_id: declared_tuple_016
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.225331087161961
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 2.4949244774800216e-05
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253230676390203
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 2.494595450584099e-05
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: a1aabf00cb7901b4b76d101ea736f311349ecadf19fc21d4fbd9905e3dd80619
+    angle_min_deg:
+      L: 83.40942657138311
+      R: 82.40710849766265
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 666
+    motor_spike_count: 111
+    route_motor_event_count: 15
+    peak_abs_command: 0.00043449887514921147
+    active_actuator_ids:
+    - 41
+    route_body_id: 809912
+    route_body_class: intermediate_22A08
+    target_actuator_id: 41
+    target_actuator_name: lf_trochanterfemur-lf_tibia-pitch-motor
+    trace_sha256: 82a88bf24d67d28f52a46ae0bb8076c56c085576188eacc06d9b8fc99a817a9b
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: a1aabf00cb7901b4b76d101ea736f311349ecadf19fc21d4fbd9905e3dd80619
+    angle_min_deg:
+      L: 83.40436324868574
+      R: 82.41155454572784
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 666
+    motor_spike_count: 111
+    route_motor_event_count: 15
+    peak_abs_command: 0.0004344386770258426
+    active_actuator_ids:
+    - 41
+    route_body_id: 809912
+    route_body_class: intermediate_22A08
+    target_actuator_id: 41
+    target_actuator_name: lf_trochanterfemur-lf_tibia-pitch-motor
+    trace_sha256: c8025a3394db4c15015b8bafe9ecae522a9e8a156c5ea67a1f5b7459dbeccbf2
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014166574564023653
+      final_l2: 8.733198084013113e-05
+      final_over_peak: 0.6164650490875383
+      stable_half_recovery_frame_after_perturbation: null
+    qpos:
+      peak_l2: 0.00033633639917328727
+      final_l2: 0.00021871389365224348
+      final_over_peak: 0.6502831516001266
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3380988216899485
+      final_l2: 0.34426380272285556
+      final_over_peak: 0.25727830945106767
+      stable_half_recovery_frame_after_perturbation: 7
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_016/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_016/perturbed.npz
+- tuple_id: declared_tuple_032
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2252964321336626
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 7.565969385802659e-06
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253046889571764
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 7.255306549306614e-06
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: d48902a7f0a0603a90d3301bb2cefa2c3a7267c35cd01c1a5317bef586dd6842
+    angle_min_deg:
+      L: 83.399445191149
+      R: 82.40306472905108
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 15
+    route_motor_event_count: 4
+    peak_abs_command: 0.0062229020720625345
+    active_actuator_ids:
+    - 79
+    route_body_id: 810098
+    route_body_class: fast_81A07
+    target_actuator_id: 79
+    target_actuator_name: rf_tarsus4-rf_tarsus5-pitch-motor
+    trace_sha256: bee9950bb764c2d98d8d91b27f189118c1ef24e2a14ea132f3266ec82acdbfe1
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: d48902a7f0a0603a90d3301bb2cefa2c3a7267c35cd01c1a5317bef586dd6842
+    angle_min_deg:
+      L: 83.39945384014626
+      R: 82.40650295596369
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 15
+    route_motor_event_count: 4
+    peak_abs_command: 0.0062229020720625345
+    active_actuator_ids:
+    - 79
+    route_body_id: 810098
+    route_body_class: fast_81A07
+    target_actuator_id: 79
+    target_actuator_name: rf_tarsus4-rf_tarsus5-pitch-motor
+    trace_sha256: 0d6d9ad326d5a4eb808bf9f551d972fa8a5b518490914b3a4cf4ff1c6d157af8
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014163552377922324
+      final_l2: 3.1233118732829115e-05
+      final_over_peak: 0.22051755025465408
+      stable_half_recovery_frame_after_perturbation: 17
+    qpos:
+      peak_l2: 0.0003476345187866537
+      final_l2: 0.0003074767733439859
+      final_over_peak: 0.8844828598068164
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.1328114935494683
+      final_over_peak: 0.09926465374966659
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_032/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_032/perturbed.npz
+- tuple_id: declared_tuple_048
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: ec62820c30acf6489300987821d3b986a51a1237cb76b970b00bf95a19bfc6a5
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 819384
+    route_body_class: intermediate_22A08
+    target_actuator_id: 40
+    target_actuator_name: lf_coxa-lf_trochanterfemur-roll-motor
+    trace_sha256: ef6a1632c318d239a1059328e10dd08d404e5656914f447f1edbb2b65e3f9b81
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: ec62820c30acf6489300987821d3b986a51a1237cb76b970b00bf95a19bfc6a5
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 819384
+    route_body_class: intermediate_22A08
+    target_actuator_id: 40
+    target_actuator_name: lf_coxa-lf_trochanterfemur-roll-motor
+    trace_sha256: bc1747b21afdfd403e8399cd343e407546a4d3836708ebbe072ddf1cbac4f3fd
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_048/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_048/perturbed.npz
+- tuple_id: declared_tuple_064
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2252983653053036
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 1.2503113736304712e-06
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137304879895
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 1.0751159686840731e-06
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 24a7c4aafd61e8ea1efa202597bb459418ff45f9799cc93a4846824cc37b0de6
+    angle_min_deg:
+      L: 83.39956615895275
+      R: 82.40452336637053
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 698
+    motor_spike_count: 115
+    route_motor_event_count: 14
+    peak_abs_command: 0.0004297655528130671
+    active_actuator_ids:
+    - 78
+    route_body_id: 821635
+    route_body_class: intermediate_22A08
+    target_actuator_id: 78
+    target_actuator_name: rf_tarsus3-rf_tarsus4-pitch-motor
+    trace_sha256: e74b413e8ebd698b75c3c52aee8fc064ca5c2f47adf2a24de8a1065392f30a1a
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 24a7c4aafd61e8ea1efa202597bb459418ff45f9799cc93a4846824cc37b0de6
+    angle_min_deg:
+      L: 83.40054738577355
+      R: 82.41049233630616
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 698
+    motor_spike_count: 115
+    route_motor_event_count: 14
+    peak_abs_command: 0.0004297647199139325
+    active_actuator_ids:
+    - 78
+    route_body_id: 821635
+    route_body_class: intermediate_22A08
+    target_actuator_id: 78
+    target_actuator_name: rf_tarsus3-rf_tarsus4-pitch-motor
+    trace_sha256: 64bfc3b8c8d309ecefefdc863ac1afeb4d30303973aef5b3f5e26db555ead6d6
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416642353840821
+      final_l2: 6.496845653148363e-05
+      final_over_peak: 0.4586087402747787
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003503839690697124
+      final_l2: 0.00029532017965476764
+      final_over_peak: 0.8428472924684826
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379251448648395
+      final_l2: 0.4207502955171847
+      final_over_peak: 0.3144796980100781
+      stable_half_recovery_frame_after_perturbation: 2
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_064/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_064/perturbed.npz
+- tuple_id: declared_tuple_080
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 0e6c6d9b89ae34db50c2f68505756d46ce5f051c56b7f4fec830bc3877ada72e
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 909831
+    route_body_class: intermediate_22A08
+    target_actuator_id: 39
+    target_actuator_name: lf_coxa-lf_trochanterfemur-pitch-motor
+    trace_sha256: 2cfe51dfdea3473ce90b41faf8d68b95067e27cf2ba3f2b13aff0da5e0f92692
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 0e6c6d9b89ae34db50c2f68505756d46ce5f051c56b7f4fec830bc3877ada72e
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 909831
+    route_body_class: intermediate_22A08
+    target_actuator_id: 39
+    target_actuator_name: lf_coxa-lf_trochanterfemur-pitch-motor
+    trace_sha256: 86ea78d8b6e4371b09f38697486d71407b85edcbed3a86811aca09ac4b024b3b
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_080/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_080/perturbed.npz
+- tuple_id: declared_tuple_096
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 14a74b43790cc7f9cb979793db6765c4b87c5974d1d0d0f9fc1f869f2f0a9055
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 1050031705
+    route_body_class: intermediate_22A08
+    target_actuator_id: 77
+    target_actuator_name: rf_tarsus2-rf_tarsus3-pitch-motor
+    trace_sha256: aec67cfc073f7e7a50c2f093ce21de06d32746320a1cc81adfcc6d497bc83711
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 14a74b43790cc7f9cb979793db6765c4b87c5974d1d0d0f9fc1f869f2f0a9055
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 1050031705
+    route_body_class: intermediate_22A08
+    target_actuator_id: 77
+    target_actuator_name: rf_tarsus2-rf_tarsus3-pitch-motor
+    trace_sha256: e9711da9d6dcb0a47062363f7198af589ae3dedc082de0cd8810c650ba9775ad
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_096/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_096/perturbed.npz
+- tuple_id: declared_tuple_112
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 731f03b248107f421de401315cef90d869350437c8c763d9d49394ca5f100414
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 309
+    motor_spike_count: 3
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 38
+    target_actuator_name: c_thorax-lf_coxa-roll-motor
+    trace_sha256: cc2d2f2ba8dd17932c209bbf1e5a4ea1d21d796f530b46990ab46475ec06f418
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 731f03b248107f421de401315cef90d869350437c8c763d9d49394ca5f100414
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 309
+    motor_spike_count: 3
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 38
+    target_actuator_name: c_thorax-lf_coxa-roll-motor
+    trace_sha256: 04352ad8b6c1930b38da887190fca321120fb643165b615c1985ed67ac560b3e
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_112/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_112/perturbed.npz
+- tuple_id: declared_tuple_128
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 830fdae0aedac2da4507b0bac98063786757510afac8aeed89897cfeebc846ac
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 13
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 44
+    target_actuator_name: lf_tarsus2-lf_tarsus3-pitch-motor
+    trace_sha256: f72e7e345231851b201cc65fac7c8db54d8b3b1112f08ae5046a7668c0df8cfb
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 830fdae0aedac2da4507b0bac98063786757510afac8aeed89897cfeebc846ac
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 13
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 44
+    target_actuator_name: lf_tarsus2-lf_tarsus3-pitch-motor
+    trace_sha256: 37c6dff941cad4ad0678deeb70902efa87b9a28da93253756280eb886cc73d59
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_128/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_128/perturbed.npz
+- tuple_id: declared_tuple_144
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 3179420926910774b71581cc10003a53c1cd034dea282a3df4800c5b8f3b23a8
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 810098
+    route_body_class: intermediate_22A08
+    target_actuator_id: 71
+    target_actuator_name: c_thorax-rf_coxa-roll-motor
+    trace_sha256: bd86478d185e6d48be72fd1eb82d99014b065ac5e6d792bad96a633c8b7717e2
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 3179420926910774b71581cc10003a53c1cd034dea282a3df4800c5b8f3b23a8
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 810098
+    route_body_class: intermediate_22A08
+    target_actuator_id: 71
+    target_actuator_name: c_thorax-rf_coxa-roll-motor
+    trace_sha256: 39c156e5ed929a7f52c98ca037717439886dfa1f3a269fbe1cedb6002693f9c2
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_144/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_144/perturbed.npz
+- tuple_id: declared_tuple_160
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253263136688004
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 3.874387241553333e-06
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253148590828504
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 3.913689552614244e-06
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 09ffa2d72546137159699e6a5eb5d6810a25797148b67daba7f193b0208a81ae
+    angle_min_deg:
+      L: 83.40438046004589
+      R: 82.40699508871083
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 582
+    motor_spike_count: 91
+    route_motor_event_count: 11
+    peak_abs_command: 0.0003288413068718783
+    active_actuator_ids:
+    - 43
+    route_body_id: 818057
+    route_body_class: intermediate_22A08
+    target_actuator_id: 43
+    target_actuator_name: lf_tarsus1-lf_tarsus2-pitch-motor
+    trace_sha256: 2fd2030f1755d336327884244322f6acc378461225a0be82c9821e64c6e0f2c5
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 09ffa2d72546137159699e6a5eb5d6810a25797148b67daba7f193b0208a81ae
+    angle_min_deg:
+      L: 83.400306852466
+      R: 82.41075490177661
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 582
+    motor_spike_count: 91
+    route_motor_event_count: 11
+    peak_abs_command: 0.0003288412891313853
+    active_actuator_ids:
+    - 43
+    route_body_id: 818057
+    route_body_class: intermediate_22A08
+    target_actuator_id: 43
+    target_actuator_name: lf_tarsus1-lf_tarsus2-pitch-motor
+    trace_sha256: 535b348a22cd60077c6194cb5d1d2824cb1924de314201a6127c8a552d12271d
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.00014166410130862306
+      final_l2: 6.812263625904791e-05
+      final_over_peak: 0.4808743755811431
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.000336326303989561
+      final_l2: 0.00023285706459557717
+      final_over_peak: 0.6923546027574597
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.338008066369349
+      final_l2: 0.24007859314966146
+      final_over_peak: 0.17942985485962626
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_160/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_160/perturbed.npz
+- tuple_id: declared_tuple_176
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 83987a61bda0d314f95d15862d4c1b601b7d6b47da59fcee66d7f036113d4bdd
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 19
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 821635
+    route_body_class: intermediate_22A08
+    target_actuator_id: 70
+    target_actuator_name: c_thorax-rf_coxa-pitch-motor
+    trace_sha256: a9c073bfedbf07c5c8c253919a47774fbd6dec0f7b17594989996e70e39c4276
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 83987a61bda0d314f95d15862d4c1b601b7d6b47da59fcee66d7f036113d4bdd
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 19
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 821635
+    route_body_class: intermediate_22A08
+    target_actuator_id: 70
+    target_actuator_name: c_thorax-rf_coxa-pitch-motor
+    trace_sha256: 2b01f5643f42a4db1f49d20097fa04fd98f56cc479bb6b94efd3a872b7d85449
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_176/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_176/perturbed.npz
+- tuple_id: declared_tuple_192
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 6725b3487b59c83634df4aa2fa8d69b3ec62e613441a7d1c2a37f2144da9fade
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 827188
+    route_body_class: intermediate_22A08
+    target_actuator_id: 75
+    target_actuator_name: rf_tibia-rf_tarsus1-pitch-motor
+    trace_sha256: 8d1f83194c579926590513a2461ac39e09e5d330f233243caad4b385dd0e02a3
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 6725b3487b59c83634df4aa2fa8d69b3ec62e613441a7d1c2a37f2144da9fade
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 827188
+    route_body_class: intermediate_22A08
+    target_actuator_id: 75
+    target_actuator_name: rf_tibia-rf_tarsus1-pitch-motor
+    trace_sha256: c410109520448e19585a52add5fd4af78c627bce4907729a4b48dca61623516f
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_192/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_192/perturbed.npz
+- tuple_id: declared_tuple_208
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.225292512455103
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 2.8258030593797087e-05
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253123854175123
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 2.8060212538348357e-05
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 8e9a60b702c79d6f543c538e5bfbb7eb059b6e46554a2f569250199f3f9b4293
+    angle_min_deg:
+      L: 83.39920203348372
+      R: 82.40595325828147
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 295
+    motor_spike_count: 50
+    route_motor_event_count: 5
+    peak_abs_command: 0.001446165768272193
+    active_actuator_ids:
+    - 69
+    route_body_id: 1050031705
+    route_body_class: fast_81A07
+    target_actuator_id: 69
+    target_actuator_name: c_thorax-rf_coxa-yaw-motor
+    trace_sha256: 6c1213476682ca20efa62f8821a16899dceb18c917625eeca307736111f11523
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: 8e9a60b702c79d6f543c538e5bfbb7eb059b6e46554a2f569250199f3f9b4293
+    angle_min_deg:
+      L: 83.3996725868344
+      R: 82.41430703579601
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 295
+    motor_spike_count: 50
+    route_motor_event_count: 5
+    peak_abs_command: 0.0014461575673512868
+    active_actuator_ids:
+    - 69
+    route_body_id: 1050031705
+    route_body_class: fast_81A07
+    target_actuator_id: 69
+    target_actuator_name: c_thorax-rf_coxa-yaw-motor
+    trace_sha256: b64f3a6c1fefbf0fb0f67f70f783d77b1949b1acec7950d387d73bc57db02ff1
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416633141902984
+      final_l2: 9.622070742983114e-05
+      final_over_peak: 0.6792210670758166
+      stable_half_recovery_frame_after_perturbation: null
+    qpos:
+      peak_l2: 0.00036265318329270285
+      final_l2: 0.00036265318329270285
+      final_over_peak: 1.0
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.3603771267919445
+      final_over_peak: 0.269349510002896
+      stable_half_recovery_frame_after_perturbation: 2
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_208/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_208/perturbed.npz
+- tuple_id: declared_tuple_224
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: fd09346f2d97c9c98e36dd9e5eca07e2f11329d4179a7f6814b935ddd2677922
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 1050189039
+    route_body_class: intermediate_22A08
+    target_actuator_id: 74
+    target_actuator_name: rf_trochanterfemur-rf_tibia-pitch-motor
+    trace_sha256: 57f0548bb4403b65c261ee57306a72dc77a71b28e8292f7102c9cdef4819c86a
+  perturbed_chain:
+    source_representation: graded_candidate
+    feco_projection_sha256: fd09346f2d97c9c98e36dd9e5eca07e2f11329d4179a7f6814b935ddd2677922
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 0
+    motor_spike_count: 0
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 1050189039
+    route_body_class: intermediate_22A08
+    target_actuator_id: 74
+    target_actuator_name: rf_trochanterfemur-rf_tibia-pitch-motor
+    trace_sha256: 520e8100bd2321d920d47725e33525ffa507767659c8a3130a4a57fff81d4869
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_224/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_224/perturbed.npz
+- tuple_id: declared_tuple_239
+  status: completed_contract
+  baseline:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253252338779153
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  perturbed:
+    finite_fraction: 1.0
+    joint_limit_violation_frames: 14
+    gross_fall_proxy_frames: 0
+    numerical_failure_frames: 0
+    com_translation_peak_l2: 1.2253137780498673
+    com_jerk_peak: 477162.1506928463
+    direct_motor_work_proxy: 0.0
+  baseline_chain:
+    source_representation: event_candidate
+    feco_projection_sha256: 59db3827b8ae239fb180576268898062e0639d4230d957c9dcbac6a2217ac6e8
+    angle_min_deg:
+      L: 83.4046467926757
+      R: 82.40695472061728
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 1894
+    source_event_count: 855
+    intermediate_spike_count: 227
+    motor_spike_count: 47
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 45
+    target_actuator_name: lf_tarsus3-lf_tarsus4-pitch-motor
+    trace_sha256: 379b46b41ccabb6557bc2d47a8aaf145583900cb172e6899a54a60e35485e9c7
+  perturbed_chain:
+    source_representation: event_candidate
+    feco_projection_sha256: 59db3827b8ae239fb180576268898062e0639d4230d957c9dcbac6a2217ac6e8
+    angle_min_deg:
+      L: 83.40057295111345
+      R: 82.41071433987247
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 1894
+    source_event_count: 868
+    intermediate_spike_count: 232
+    motor_spike_count: 58
+    route_motor_event_count: 0
+    peak_abs_command: 0.0
+    active_actuator_ids: []
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 45
+    target_actuator_name: lf_tarsus3-lf_tarsus4-pitch-motor
+    trace_sha256: c31349198a5037cffe163b9b76e814da35e663f109ff2816814ca86be0d9bebf
+  paired_recovery:
+    center_of_mass:
+      peak_l2: 0.0001416653388220187
+      final_l2: 6.812493697046896e-05
+      final_over_peak: 0.4808864153853311
+      stable_half_recovery_frame_after_perturbation: 24
+    qpos:
+      peak_l2: 0.0003363202610265817
+      final_l2: 0.00023285554249096962
+      final_over_peak: 0.6923625171442331
+      stable_half_recovery_frame_after_perturbation: null
+    qvel:
+      peak_l2: 1.3379535265836193
+      final_l2: 0.24008153733600857
+      final_over_peak: 0.17943936957888348
+      stable_half_recovery_frame_after_perturbation: 8
+  artifacts:
+    baseline: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_239/baseline.npz
+    perturbed: runs/calibration/neutral-embodied-declared-closed-loop-sentinel-v0/20261012T154659778475Z/declared_tuple_239/perturbed.npz
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  local_chain_only: true
+  complete_recurrent_MaleCNS_claimed: false
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+accepted_claims:
+- Bilateral FlyBody front-knee geometry can be converted causally to the anatomical
+  angle coordinate required by the declared FeCO functions.
+- Fixed declared tuples execute through one causal local body-neural-body loop with
+  persistent delays, neuronal state and motor twitch state.
+- Mechanics, actuator type, topology and candidate identities remain frozen and every
+  physical episode is accounted.
+forbidden_claims:
+- Any routing profile, sign profile, numeric profile, population assignment, motor
+  class, route or bridge gain is selected, calibrated or promoted.
+- The bounded two-hop local corridor is complete recurrent MaleCNS.
+- Finite motion, silence, recovery or a passing perturbation establishes neutral stability
+  or biological behavior.
+- The geometric coordinate conversion validates the biological FeCO functional map.
+wall_seconds: 103.5808207000373
+next_action: If this causal sentinel passes, execute the exact 240-member neutral
+  physical panel under the same frozen loop and retain every pathology or exception.
+  Use only preregistered technical pathology and paired-recovery criteria; do not
+  inspect or optimize any named behavior and do not select from raw motion.
+semantic_result_sha256: 5d41f586ff72bbb725acc317280de69701c6206b8ee08e6630612cd0e4746d23

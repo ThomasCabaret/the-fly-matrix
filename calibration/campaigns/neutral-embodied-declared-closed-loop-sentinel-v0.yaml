@@ -1,0 +1,163 @@
+schema_version: 1
+id: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+title: Causal neutral body-neural-body execution sentinel
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: CAUSAL CLOSED-LOOP SENTINEL / NO FIT / NO SELECTION / NOT STABILITY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Replace the sinusoidal joint fixture by actual bilateral FlyBody femur-tibia
+  geometry and execute a small, fixed subset of the passed 240-tuple envelope in
+  a causal body-to-FeCO-to-typed-population-to-motor-to-body loop. This closes a
+  coordinate-registration and execution gate only. It cannot rank, select,
+  calibrate or promote a candidate from neural magnitude or body motion.
+
+frozen_inputs:
+  declared_neural_campaign: calibration/campaigns/neutral-embodied-declared-neural-sentinel-v0.yaml
+  declared_neural_campaign_sha256: 0518c5849230be16f6dfc90e7c5de2270cb66fdd88a782f6b814b5769d7b781d
+  declared_neural_result: calibration/runner/neutral-embodied-declared-neural-sentinel-v0.yaml
+  declared_neural_result_sha256: 7cb4dee9d22fe9a9f3d169dcbefefd48fe169c9242c8a01960543c8c159559ed
+  declared_neural_result_semantic_sha256: 68500808d7daa7fd74cc534b957deee4bb5db88cba474e21dbacc5f7a1675d2a
+  declared_schedule: calibration/schedules/neutral-embodied-declared-envelope-v0.csv
+  declared_schedule_sha256: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+  declared_parameter_set: calibration/parameter_sets/neutral-embodied-declared-envelope-v0.yaml
+  declared_parameter_set_sha256: 8b036b2d4b07776b2d0c7b8983ff39a96e6bbc76bbde268fad24453d1c4d121f
+  actuator_attribution_result: calibration/runner/actuator-causal-attribution-v1.yaml
+  actuator_attribution_result_sha256: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  measurement_contract_result: calibration/runner/embodied-measurement-contract-v1.yaml
+  measurement_contract_result_sha256: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+  body_model: flygym==2.1.0
+  actuator_type: MOTOR
+
+sentinel_selection:
+  policy: deterministic_near_uniform_stride_over_exact_schedule_declared_before_accepted_run
+  tuple_ids:
+    - declared_tuple_000
+    - declared_tuple_016
+    - declared_tuple_032
+    - declared_tuple_048
+    - declared_tuple_064
+    - declared_tuple_080
+    - declared_tuple_096
+    - declared_tuple_112
+    - declared_tuple_128
+    - declared_tuple_144
+    - declared_tuple_160
+    - declared_tuple_176
+    - declared_tuple_192
+    - declared_tuple_208
+    - declared_tuple_224
+    - declared_tuple_239
+  selected_from_body_motion: false
+  selected_from_neural_magnitude: false
+  coverage_intent:
+    - both FeCO native-representation candidates
+    - all-event, all-graded and mixed intermediate assignments
+    - all three bridge gains
+    - first and last portions of the exact schedule
+  development_gate_history: >-
+    An uncommitted four-row dry run (000, 001, 002, 239) exercised bilateral
+    sensory feedback but every scheduled route body was silent. It was not
+    accepted as causal actuation closure. Before the versioned accepted run the
+    selection was replaced by this deterministic near-uniform schedule stride;
+    no row was added or removed because of body motion or command magnitude.
+
+coordinate_registration:
+  physical_source: bilateral front-leg femur-tibia joint anchors in FlyBody world geometry
+  anatomical_coordinate: internal angle between proximal-knee and distal-knee anchor vectors
+  units: degrees
+  direction_oracle: signed FlyBody knee coordinate must map strictly increasingly on both sides
+  oracle_raw_joint_degrees: [-70, -35, 0, 35, 70]
+  minimum_oracle_span_deg: 120.0
+  claw_normalization: fixed polynomial range over the preregistered anatomical domain 0_to_180_deg
+  velocity: causal_backward_difference_at_native_physics_timestep
+  forbidden_normalization: per_episode_or_future_trace_minmax
+  interpretation: >-
+    This is an explicit coordinate conversion required to apply the already
+    declared FeCO source functions. It is not a fitted biological transfer.
+
+runtime_contract:
+  timestep_s: 0.0001
+  timestep_relation: exactly_one_neural_update_per_native_MuJoCo_step
+  side_policy: each FeCO body consumes the left or right front-leg angle from its frozen side annotation
+  feedback_policy: every neural update reads body geometry produced by the preceding physics state
+  feco_routing: declared_profile_selects_one_of_three_functions_per_frozen_route_group
+  source_event_sampling: persistent_seeded_Poisson_stream
+  population_state: persistent_event_capable_typed_state_across_physics_steps
+  transmission_delay: persistent_ring_buffer_using_the_frozen_1.8_ms_comparator
+  motor_kernel: persistent_peak_normalized_biexponential_state
+  actuator_route: exactly_one_scheduled_direct_MOTOR_address_per_tuple
+  mechanics_parameters: frozen_by_model_contract_and_not_optimized
+
+physical_protocol:
+  scene: simple_flat_ground
+  frames: 40
+  physics_substeps_per_frame: 50
+  expected_frame_dt_s: 0.005
+  duration_s: 0.2
+  perturbation_step: 10
+  perturbation:
+    id: generic_lateral_root_velocity_impulse
+    qvel_address: 1
+    delta: 0.1
+    units: FlyBody_model_length_units_per_second
+  paired_branches:
+    - identical_reset_baseline
+    - generic_qvel_perturbation
+
+acceptance:
+  criteria_locked_before_run: true
+  sentinel_tuples: 16
+  paired_physical_episodes: 32
+  require_every_tuple_accounted: true
+  require_all_physical_and_neural_arrays_finite: true
+  require_bilateral_geometry_oracle: true
+  require_source_path_active_in_every_episode: true
+  require_incoming_L1_columns_exact: true
+  require_non_scoped_motor_outputs_zero: true
+  require_at_least_one_causal_nonzero_actuator_command: true
+  require_generic_perturbation_detected: true
+  allow_route_body_silence: true
+  allow_neural_magnitude_to_select_candidate: false
+  allow_physical_magnitude_to_select_candidate: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  local_chain_only: true
+  complete_recurrent_MaleCNS_claimed: false
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+
+compute_budget:
+  physical_episodes: 32
+  simulated_seconds: 6.4
+  maximum_wall_clock_minutes: 30
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - Bilateral FlyBody front-knee geometry can be converted causally to the anatomical angle coordinate required by the declared FeCO functions.
+  - Fixed declared tuples execute through one causal local body-neural-body loop with persistent delays, neuronal state and motor twitch state.
+  - Mechanics, actuator type, topology and candidate identities remain frozen and every physical episode is accounted.
+forbidden_claims:
+  - Any routing profile, sign profile, numeric profile, population assignment, motor class, route or bridge gain is selected, calibrated or promoted.
+  - The bounded two-hop local corridor is complete recurrent MaleCNS.
+  - Finite motion, silence, recovery or a passing perturbation establishes neutral stability or biological behavior.
+  - The geometric coordinate conversion validates the biological FeCO functional map.
+next_action: >-
+  If this causal sentinel passes, execute the exact 240-member neutral physical
+  panel under the same frozen loop and retain every pathology or exception. Use
+  only preregistered technical pathology and paired-recovery criteria; do not
+  inspect or optimize any named behavior and do not select from raw motion.

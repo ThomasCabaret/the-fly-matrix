@@ -433,3 +433,17 @@ magnitudes are retained only as descriptive hashes and counts. The run performs
 zero fit, ranking, promotion, stability evaluation or behavior exposure. A pass
 authorizes preregistration of the first neutral physical candidate panel; it does
 not authorize choosing a member from body motion.
+
+Run `neutral_embodied_declared_closed_loop_sentinel.bat` to reproduce the first
+causal physical gate for that envelope. It derives left/right front femur-tibia
+anatomical angles from MuJoCo joint anchors at every native 0.1 ms step, applies
+the declared FeCO function per frozen side/group profile, preserves neuronal,
+delay and motor-twitch state, and feeds exactly one scheduled direct-MOTOR route
+back to physics. A deterministic near-uniform set of 16 schedule rows completes
+32 paired episodes; all inputs and arrays are finite, all perturbations are
+detected, and five rows actually deliver nonzero causal commands without leakage.
+The initial uncommitted four-row dry run was explicitly rejected because all four
+scheduled route bodies were silent; the expanded rule did not use body motion to
+pick rows. A pass validates coordinate registration and execution only. It fits,
+ranks and promotes nothing, does not accept stability, and authorizes only the
+exhaustive 240-member physical accounting under the identical frozen contract.

@@ -235,6 +235,24 @@ membre, valeur ou stabilité est accepté, et les magnitudes neuronales ne serve
 pas à classer les candidats. Le prochain gate est le premier panneau physique
 neutre préenregistré avec mécanique et actionneurs gelés.
 
+Ce gate physique causal est maintenant fermé sur un sentinel borné par
+`neutral_embodied_declared_closed_loop_sentinel.bat`. La cinématique synthétique
+normalisée sur sa trace complète a été remplacée par l'angle anatomique interne
+fémur-tibia calculé causalement depuis les ancres MuJoCo des deux pattes avant.
+L'oracle à cinq positions est strictement croissant à gauche et à droite et couvre
+au minimum 139,76 degrés. Seize tuples choisis par un stride déterministe sur le
+planning exact terminent 16/16, soit 32/32 épisodes appariés de 0,2 s, au même pas
+physique et neuronal de 0,1 ms. Les sources FeCO sont actives dans chaque épisode,
+la perturbation est détectée dans chaque paire, aucune commande ne fuit vers un
+actionneur non planifié et cinq routes produisent effectivement une commande
+motrice non nulle. Un dry-run non livré à quatre lignes avait laissé les quatre
+routes silencieuses ; il a été refusé comme preuve de fermeture et cette exception
+est conservée dans la campagne. Le résultat ne sélectionne pourtant aucun de ces
+cinq cas : zéro fit, promotion, stabilité ou comportement. Les 14 frames de
+violation de limites articulaires présentes dans chaque baseline restent une
+pathologie descriptive. Le prochain lot doit appliquer exactement ce contrat aux
+240 membres avant tout filtrage technique.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -1052,6 +1070,7 @@ neutral_embodied_full_chain_sentinel.bat # 4 tuples/8 épisodes FeCO→CNS typé
 neutral_embodied_full_chain_panel.bat # 120 tuples/240 épisodes du même contrat ; comptabilité exhaustive, aucune sélection ni stabilité
 neutral_embodied_declared_envelope.bat # 240 tuples, profils FeCO/signes/numériques déclarés ; planning seulement, zéro fit/exécution
 neutral_embodied_declared_neural_sentinel.bat # exécute les 240 tuples neuraux déclarés, oracles d'axes, zéro fit/physique/sélection
+neutral_embodied_declared_closed_loop_sentinel.bat # 16 tuples/32 épisodes corps→FeCO→CNS local→moteur→corps ; zéro fit/sélection
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

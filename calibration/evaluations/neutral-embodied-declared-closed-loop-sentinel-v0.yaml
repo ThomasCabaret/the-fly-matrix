@@ -1,0 +1,26 @@
+schema_version: 1
+id: evaluation.neutral_embodied_declared_closed_loop_sentinel.v0
+campaign_id: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+runner_result_id: runner_result.neutral_embodied_declared_closed_loop_sentinel.v0
+runner_semantic_sha256: 5d41f586ff72bbb725acc317280de69701c6206b8ee08e6630612cd0e4746d23
+status: pass
+checks:
+  all_sentinel_tuples_accounted: true
+  all_paired_episodes_finite: true
+  bilateral_geometric_registration_passed: true
+  causal_source_path_active_in_every_episode: true
+  non_scoped_actuator_outputs_zero: true
+  at_least_one_causal_nonzero_actuator_command: true
+  generic_perturbation_detected_in_every_pair: true
+  incoming_L1_columns_exact: true
+  zero_fit_zero_selection_zero_behavior: true
+stability_accepted: false
+population_assignment_accepted: false
+candidate_selected: false
+behavior_claimed: false
+interpretation: A pass establishes a causal local body-neural-body execution and coordinate
+  bridge only; it calibrates nothing.
+next_action: If this causal sentinel passes, execute the exact 240-member neutral
+  physical panel under the same frozen loop and retain every pathology or exception.
+  Use only preregistered technical pathology and paired-recovery criteria; do not
+  inspect or optimize any named behavior and do not select from raw motion.

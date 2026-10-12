@@ -285,8 +285,15 @@ not call this a calibrated parameter set. Then run
 the bounded neural corridor, with zero MuJoCo episode, and reproduces the
 registered consumption pass for all routing, sign and numeric profiles plus the
 incoming-L1 and isolated-axis oracles. This still selects and promotes nothing.
-The current frontier in `calibration/state.yaml` is the preregistration of the
-first neutral physical candidate panel with mechanics and actionneurs frozen.
+Then run `neutral_embodied_declared_closed_loop_sentinel.bat`. It performs the
+first actual causal physical gate for the declared envelope: bilateral front-knee
+geometry is converted to the anatomical FeCO angle at every 0.1 ms physics step,
+then persistent FeCO, typed-population, delay, motor-twitch and direct-MOTOR state
+is executed for 16 deterministic fixed-stride tuples as 32 paired episodes. The
+tracked pass includes five nonzero routed commands and no unscoped actuator
+output. It still performs zero fit, selection, stability acceptance or behavior
+exposure. The current frontier in `calibration/state.yaml` is exhaustive physical
+execution of all 240 declared members under this same frozen causal contract.
 
 ### Historical neural-model gate
 
