@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: causal_declared_envelope_sentinel_pass_full_240_physical_panel_not_run_stability_unresolved
+status: causal_full_panel_failed_3_command_limit_rows_deterministically_localized_pathology_policy_open_stability_unresolved
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -195,6 +195,42 @@ declared_closed_loop_sentinel:
   candidates_selected: 0
   stability_accepted: false
 
+declared_closed_loop_panel:
+  campaign_id: campaign.neutral_embodied_declared_closed_loop_panel.v0
+  evaluation_id: evaluation.neutral_embodied_declared_closed_loop_panel.v0
+  runner_result_id: runner_result.neutral_embodied_declared_closed_loop_panel.v0
+  status: failed_exhaustive_causal_physical_accounting
+  schedule_tuples: 240
+  completed_tuples: 237
+  failed_command_limit_tuples: 3
+  completed_physical_episodes: 474
+  failed_tuple_ids: [declared_tuple_029, declared_tuple_041, declared_tuple_149]
+  frozen_sentinel_trace_pairs_reproduced: 16_of_16
+  tuples_with_silent_scheduled_route_among_completed: 172
+  tuples_with_nonzero_routed_command_among_completed: 65
+  clipping_or_posthoc_threshold_change: false
+  optimized_parameters: 0
+  parameter_values_promoted: 0
+  candidates_selected: 0
+  stability_accepted: false
+
+command_limit_diagnostic:
+  campaign_id: campaign.neutral_embodied_command_limit_diagnostic.v0
+  evaluation_id: evaluation.neutral_embodied_command_limit_diagnostic.v0
+  runner_result_id: runner_result.neutral_embodied_command_limit_diagnostic.v0
+  status: pass_deterministic_command_limit_localization_no_selection
+  tuples: 3
+  branches: 6
+  deterministic_probe_episodes: 12
+  first_limit_crossing_probes: 12
+  native_step_range: [634, 1036]
+  time_range_ms: [63.4, 103.6]
+  attempted_command_range: [0.010008805161694816, 0.010057704623404988]
+  offending_commands_applied: false
+  clipping_or_threshold_change: false
+  candidates_selected: 0
+  stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -213,7 +249,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_v1_pass_declared_envelope_240_of_240_neural_execution_pass_causal_physical_sentinel_16_of_16_full_240_physical_panel_not_run_stability_unresolved
+validation: measurement_contract_pass_neural_240_pass_causal_sentinel_full_panel_237_complete_3_limit_failures_diagnostic_12_of_12_deterministic_policy_open_stability_unresolved
 blocked_reason: >-
   The complete measurement contract, exact schedule, earlier implementation
   sentinels and the full
@@ -228,11 +264,20 @@ blocked_reason: >-
   front-knee geometry, executes persistent neuronal/delay/twitch state at the
   native 0.1 ms physics step, and completes 16/16 fixed-stride tuples as 32/32
   paired episodes. Five tuples deliver a nonzero causal command to exactly their
-  scheduled actuator. This is still an execution gate, not stability. The local corridor cannot establish
-  whole-body stability, basal sources remain unresolved, and direct motors remain
-  a bounded surrogate.
+  scheduled actuator. The exhaustive follow-up accounts all 240 rows but fails
+  its locked all-episodes criterion: 237 rows finish both branches and rows 029,
+  041 and 149 are stopped before an over-limit direct-MOTOR command can be
+  applied. The frozen sentinel traces reproduce under simulator reuse, so this is
+  not reset drift. No clipping or survivor promotion is allowed. This is still an
+  execution gate, not stability. The local corridor cannot establish whole-body
+  stability, basal sources remain unresolved, and direct motors remain a bounded
+  surrogate. The follow-up locked diagnostic reproduces all six failed branches
+  twice and localizes every first crossing before application at 63.4--103.6 ms,
+  with finite attempted commands 0.0100088--0.0100577. This excludes reset noise
+  but does not identify whether the composite rows, maximum bridge gain, numeric
+  profile or their interaction defines the invalid domain.
 next_action: >-
-  Execute and account the complete exact 240-member declared physical panel with
-  the same frozen causal runtime. Preserve every member and restrict any later
-  narrowing to independently preregistered technical pathology criteria. Neither
-  raw body motion nor a named behavior may select an interface or neural candidate.
+  Preregister the smallest factor-isolation panel and technical pathology policy
+  that can distinguish a composite-row failure from a broader gain/numeric domain.
+  Apply it to all 240 rows without clipping, actuator-limit changes, named behavior
+  or automatic promotion of the 237 completed rows.

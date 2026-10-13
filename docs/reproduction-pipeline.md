@@ -292,8 +292,25 @@ then persistent FeCO, typed-population, delay, motor-twitch and direct-MOTOR sta
 is executed for 16 deterministic fixed-stride tuples as 32 paired episodes. The
 tracked pass includes five nonzero routed commands and no unscoped actuator
 output. It still performs zero fit, selection, stability acceptance or behavior
-exposure. The current frontier in `calibration/state.yaml` is exhaustive physical
-execution of all 240 declared members under this same frozen causal contract.
+exposure. The next historical frontier was exhaustive physical execution of all
+240 declared members under this same frozen causal contract. The corresponding
+command is
+`neutral_embodied_declared_closed_loop_panel.bat`. Its current versioned result
+is intentionally a failed gate: 237 rows complete both branches, while rows 029,
+041 and 149 are stopped before an over-limit direct-MOTOR command is applied.
+All 16 sentinel trace pairs reproduce under model reuse, and no command is
+clipped. Re-running this command reproduces the failure; it is not the current
+continuation action. To continue the project, first create and lock the bounded
+command-limit diagnostic named in `calibration/state.yaml`, then run it before
+defining any technical narrowing rule.
+
+The bounded continuation command
+`neutral_embodied_command_limit_diagnostic.bat` is now completed and versioned.
+It reproduces all six failed branches twice, localizes their first finite limit
+crossing at 63.4--103.6 ms and never applies the offending command. It still does
+not define a rejection rule. The active frontier is the smallest preregistered
+factor-isolation panel plus a technical pathology policy that accounts for all
+240 rows; consult `calibration/state.yaml` before adding that campaign.
 
 ### Historical neural-model gate
 

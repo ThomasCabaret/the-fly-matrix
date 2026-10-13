@@ -6,6 +6,7 @@ import hashlib
 import json
 import time
 from collections import Counter
+from contextlib import nullcontext
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Mapping
@@ -40,6 +41,21 @@ RUN_ROOT = ROOT / "runs" / "calibration" / "neutral-embodied-declared-closed-loo
 
 class DeclaredClosedLoopSentinelError(RuntimeError):
     """Raised when the causal body-to-local-chain sentinel violates its contract."""
+
+
+class MotorCommandLimitError(DeclaredClosedLoopSentinelError):
+    """Structured stop raised before an invalid direct-MOTOR command is applied."""
+
+    def __init__(self, *, step_index: int, command: float, target_actuator_id: int, route_body_id: int):
+        self.step_index = int(step_index)
+        self.command = float(command)
+        self.target_actuator_id = int(target_actuator_id)
+        self.route_body_id = int(route_body_id)
+        super().__init__(
+            "closed-loop command is non-finite or exceeds MOTOR limit "
+            f"at native step {self.step_index}: command={self.command!r}, "
+            f"target_actuator_id={self.target_actuator_id}, route_body_id={self.route_body_id}"
+        )
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
@@ -334,6 +350,7 @@ def _run_episode(
     matrices: tuple[np.ndarray, np.ndarray, np.ndarray],
     *,
     perturbation: Mapping[str, Any] | None,
+    reusable_loop: FlyBodyPhysicsLoop | None = None,
 ) -> tuple[dict[str, np.ndarray], dict[str, Any], dict[str, Any]]:
     import mujoco
 
@@ -411,7 +428,16 @@ def _run_episode(
     source_events = 0
     perturbation_step = int(protocol["perturbation_step"]) * substeps
 
-    with FlyBodyPhysicsLoop.from_generated_wiring(with_vision=False) as loop:
+    loop_context = (
+        FlyBodyPhysicsLoop.from_generated_wiring(with_vision=False)
+        if reusable_loop is None
+        else nullcontext(reusable_loop)
+    )
+    with loop_context as loop:
+        # A full panel contains hundreds of short episodes. Reusing the compiled
+        # MuJoCo model avoids rebuilding it for every branch while reset keeps
+        # the scientific initial condition identical.
+        loop.reset()
         metadata = _model_measurement_metadata(loop)
         native_dt = float(loop.simulation.mj_model.opt.timestep)
         if not np.isclose(native_dt, timestep_s, atol=0.0, rtol=1e-12):
@@ -463,7 +489,12 @@ def _run_episode(
             route_event_trace.append(route_event)
             force_uN, command_scalar = twitch.step(route_event)
             if not np.isfinite(command_scalar) or abs(command_scalar) > 0.01:
-                raise DeclaredClosedLoopSentinelError("closed-loop command is non-finite or exceeds MOTOR limit")
+                raise MotorCommandLimitError(
+                    step_index=step_index,
+                    command=command_scalar,
+                    target_actuator_id=target_id,
+                    route_body_id=route_body_id,
+                )
             command = np.zeros(102, dtype=np.float64)
             command[target_id] = command_scalar
             addressed = loop.actuator_interface.step(command)

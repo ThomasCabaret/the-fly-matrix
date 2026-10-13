@@ -1,0 +1,119 @@
+schema_version: 1
+id: campaign.neutral_embodied_declared_closed_loop_panel.v0
+title: Exhaustive causal physical accounting of the declared neutral envelope
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: EXHAUSTIVE CAUSAL PHYSICAL PANEL / NO FIT / NO SELECTION / NOT STABILITY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Execute every member of the exact 240-row declared envelope through the causal
+  body-to-FeCO-to-typed-population-to-motor-to-body loop accepted by the sentinel.
+  Account for all 480 paired physical episodes and retain silence, pathologies and
+  exceptions without ranking any member from neural activity or body motion.
+
+frozen_inputs:
+  causal_sentinel_campaign: calibration/campaigns/neutral-embodied-declared-closed-loop-sentinel-v0.yaml
+  causal_sentinel_campaign_sha256: 6fd958bd9e72072e6d09e8629bad6829fd8f282f2c3ad836810a45ea7065ab2b
+  causal_sentinel_result: calibration/runner/neutral-embodied-declared-closed-loop-sentinel-v0.yaml
+  causal_sentinel_result_sha256: 37fbed8673fc96f6d9551f804f0ec1e494afb9d57c60c334949eb317950a22f7
+  causal_sentinel_result_semantic_sha256: 5d41f586ff72bbb725acc317280de69701c6206b8ee08e6630612cd0e4746d23
+  causal_sentinel_evaluation: calibration/evaluations/neutral-embodied-declared-closed-loop-sentinel-v0.yaml
+  causal_sentinel_evaluation_sha256: c82f4fd2eb6484cdce2c5ca3d7de5724eb90b5c8d4b4ba931bce2c99e79aa3f9
+  declared_schedule: calibration/schedules/neutral-embodied-declared-envelope-v0.csv
+  declared_schedule_sha256: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+  declared_parameter_set: calibration/parameter_sets/neutral-embodied-declared-envelope-v0.yaml
+  declared_parameter_set_sha256: 8b036b2d4b07776b2d0c7b8983ff39a96e6bbc76bbde268fad24453d1c4d121f
+
+runtime_contract:
+  inherited_from: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+  exact_schedule_policy: every_row_once_in_schedule_order
+  paired_branch_policy: identical_reset_baseline_then_generic_qvel_perturbation
+  model_reuse_policy: one_compiled_MuJoCo_model_reset_before_every_episode
+  timestep_s: 0.0001
+  frames: 40
+  physics_substeps_per_frame: 50
+  duration_s_per_episode: 0.2
+  note: >-
+    Model reuse is a wall-time optimization only. A full simulator reset precedes
+    every branch and the accepted sentinel contract remains unchanged.
+
+coverage_contract:
+  schedule_tuples: 240
+  paired_physical_episodes: 480
+  feco_routing_profiles: 81
+  unknown_sign_profiles: 64
+  numeric_profiles: 12
+  intermediate_profiles: 50
+  feco_alternatives: 24
+  motor_assignments: 120
+  route_basis_edges: 110
+  bridge_gains: 3
+  require_exact_tuple_identity: true
+  allow_skipped_tuple: false
+
+acceptance:
+  criteria_locked_before_run: true
+  require_every_tuple_accounted: true
+  require_every_paired_episode_finite: true
+  require_exact_schedule_and_axis_coverage: true
+  require_bilateral_geometry_oracle: true
+  require_source_path_active_in_every_episode: true
+  require_incoming_L1_columns_exact: true
+  require_non_scoped_motor_outputs_zero: true
+  require_generic_perturbation_detected_in_every_pair: true
+  require_at_least_one_causal_nonzero_actuator_command: true
+  require_all_frozen_sentinel_traces_reproduced_after_model_reuse: true
+  require_within_compute_budget: true
+  allow_route_body_silence: true
+  allow_joint_limit_or_fall_proxy_to_reject_member: false
+  allow_neural_magnitude_to_select_candidate: false
+  allow_physical_magnitude_to_select_candidate: false
+  stability_acceptance_possible: false
+
+descriptive_outputs:
+  - source_event_intermediate_spike_motor_spike_and_route_event_counts
+  - peak_command_and_active_actuator_counts
+  - joint_limit_numerical_failure_and_gross_fall_proxy_frames
+  - paired_recovery_distributions
+  - distinct_neural_physical_trace_hashes
+  - all_silent_routes_and_runtime_exceptions
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  local_chain_only: true
+  complete_recurrent_MaleCNS_claimed: false
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+
+compute_budget:
+  physical_episodes: 480
+  simulated_seconds: 96.0
+  maximum_wall_clock_minutes: 60
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - Every member of the exact declared schedule was submitted to the identical causal physical execution contract and explicitly accounted.
+  - The full factorized panel is executable through the bounded local chain without hidden candidate filtering when all locked checks pass.
+  - Descriptive silence, actuation and pathology distributions can inform a later independently preregistered technical gate.
+forbidden_claims:
+  - Any routing profile, sign profile, numeric profile, population assignment, motor class, route or gain is selected, calibrated or promoted.
+  - Observed motion, silence, recovery or pathology defines a threshold or accepts stability.
+  - The local two-hop corridor is complete recurrent MaleCNS or produces a biological behavior.
+  - A later technical criterion may be chosen and retroactively applied as if it had been preregistered here.
+next_action: >-
+  After exhaustive accounting, preregister a separate technical pathology and
+  paired-recovery gate using independent engineering or biological justification.
+  Keep the full panel immutable; any narrowing must report every retained and
+  rejected member and cannot inspect a named behavior.

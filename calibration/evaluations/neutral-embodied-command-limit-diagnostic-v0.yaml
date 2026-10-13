@@ -1,0 +1,23 @@
+schema_version: 1
+id: evaluation.neutral_embodied_command_limit_diagnostic.v0
+campaign_id: campaign.neutral_embodied_command_limit_diagnostic.v0
+runner_result_id: runner_result.neutral_embodied_command_limit_diagnostic.v0
+runner_semantic_sha256: cda65c69598f95fa9c943572232654995687aad7c2024c813c1be87257a900c3
+status: pass
+checks:
+  exact_failed_tuple_identity: true
+  all_12_probe_episodes_accounted: true
+  all_repeat_signatures_identical: true
+  each_tuple_reproduces_at_least_one_finite_absolute_limit_crossing: true
+  offending_commands_never_applied: true
+  zero_clipping_zero_fit_zero_selection_zero_behavior: true
+  within_compute_budget: true
+candidate_selected: false
+stability_accepted: false
+behavior_claimed: false
+interpretation: A pass localizes deterministic first command-limit crossings only;
+  it does not decide the later pathology policy.
+next_action: Use this bounded diagnosis together with the pre-existing actuator contract
+  to preregister a technical pathology policy for all 240 rows. The policy must say
+  whether a crossing blocks only the composite row or a broader factor domain, and
+  must validate that decision without named-behavior exposure.

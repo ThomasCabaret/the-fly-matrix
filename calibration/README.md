@@ -447,3 +447,27 @@ scheduled route bodies were silent; the expanded rule did not use body motion to
 pick rows. A pass validates coordinate registration and execution only. It fits,
 ranks and promotes nothing, does not accept stability, and authorizes only the
 exhaustive 240-member physical accounting under the identical frozen contract.
+
+Run `neutral_embodied_declared_closed_loop_panel.bat` to reproduce that exhaustive
+accounting. It uses one compiled FlyBody/MuJoCo model but performs a full reset
+before each of the 480 baseline/perturbed physical episodes; all 16 frozen
+sentinel trace pairs must reproduce exactly, so reuse cannot silently alter the
+initial condition. The first complete run accounts for all 240 schedule rows but
+does not pass: 237 rows complete both branches, while rows 029, 041 and 149 are
+stopped before applying a command outside the frozen direct-MOTOR limit. The
+failure is versioned and the 237 completed rows are not promoted. Among them, 172
+scheduled routes are silent and 65 produce a nonzero routed command; both counts
+are descriptive only. Do not clip the three commands or derive a threshold from
+their trajectories. The next runnable scientific step must first preregister a
+bounded command-limit diagnosis, then a separate behavior-naive technical
+pathology policy.
+
+Run `neutral_embodied_command_limit_diagnostic.bat` to reproduce the bounded
+follow-up. It replays exactly the three failed rows, both branches and two repeats
+per branch. All 12 probes deterministically reach a finite first crossing between
+63.4 and 103.6 ms, at attempted commands 0.010008805--0.010057705, and stop before
+application. Shared factor coordinates are recorded, but the diagnostic cannot
+decide whether the invalid domain is a composite row, the maximum bridge gain,
+numeric profile 05 or an interaction. It performs no clipping, narrowing,
+promotion, stability evaluation or behavior exposure. A separate preregistered
+factor-isolation/pathology campaign remains required.

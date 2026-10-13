@@ -1,6 +1,6 @@
 schema_version: 1
 phase: population_typed_dynamics_assignment_and_local_chain_calibration
-updated: 2026-10-12
+updated: 2026-10-13
 
 wiring_baseline:
   terminal_coverage: complete
@@ -21,8 +21,10 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
-last_preregistered_campaign_id: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+last_completed_campaign_id: campaign.neutral_embodied_command_limit_diagnostic.v0
+last_preregistered_campaign_id: campaign.neutral_embodied_command_limit_diagnostic.v0
+last_executed_campaign_id: campaign.neutral_embodied_command_limit_diagnostic.v0
+last_failed_campaign_id: campaign.neutral_embodied_declared_closed_loop_panel.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
@@ -76,6 +78,8 @@ readiness:
   neutral_embodied_declared_envelope: pass_schedule_contract_240_tuples_81_feco_routing_profiles_64_unknown_sign_profiles_12_numeric_profiles_zero_fit_zero_selection
   neutral_embodied_declared_neural_sentinel: pass_240_of_240_finite_all_declared_profiles_consumed_32_of_32_sign_oracles_3_of_3_numeric_oracles_incoming_L1_exact_zero_fit_zero_selection_zero_physics
   neutral_embodied_declared_closed_loop_sentinel: pass_16_of_16_tuples_32_of_32_paired_episodes_bilateral_geometry_registered_causal_feedback_and_nonzero_actuation_observed_zero_fit_zero_selection_zero_behavior
+  neutral_embodied_declared_closed_loop_panel: failed_honestly_237_of_240_tuples_completed_474_physical_episodes_3_rows_blocked_before_invalid_motor_command_all_16_sentinel_traces_reproduced_zero_fit_zero_selection_zero_behavior
+  neutral_embodied_command_limit_diagnostic: pass_3_rows_6_branches_12_of_12_repeat_probes_deterministic_first_crossings_63_4_to_103_6_ms_commands_0_010009_to_0_010058_never_applied_zero_clipping_selection_behavior
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: not_run_1815_unknown_channels_require_behavior_naive_hypothesis_grid
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
@@ -108,6 +112,8 @@ blocked_by:
   - The first neutral embodied readiness panel is an immutable 120-tuple schedule with 240 paired episodes. It covers all 50 intermediate profiles, 24 FeCO alternatives, 110 routes and three gains, plus a balanced pairwise-complete sample of 120/1024 executable motor assignments. The full local-chain runner completed 120/120 tuples and 240/240 episodes with zero runtime error, nonfinite pair or budget skip; all declared execution axes were active. Three scheduled route bodies emitted no event, which is retained rather than filtered, and 115 distinct neural hashes occurred because route/gain axes need not change the upstream neural trace. The remaining 904 executable assignments are unscheduled and all 58,025 slow-containing assignments remain blocked. The execution still uses a declared nonbiological round-robin FeCO endpoint projection, normalized local weights, an excitatory diagnostic candidate for unresolved signs and uncalibrated neural constants; zero value or assignment is promoted. This closes only robustness of the local implementation over the scheduled panel. It cannot claim whole-body stability, local physiology or behavior.
   - The follow-up declared-envelope compiler replaces those single-valued fixtures without pretending to identify them. Seventeen FeCO route-channel groups receive an 81-profile ternary panel in which every group pair sees all nine functional-class states; the 32 sign-code-zero intermediates receive a 64-profile binary panel in which every pair sees all four sign states. Twelve numeric profiles separate pinned event-comparator timing constants from explicitly technical input scales and event-intensity ceilings, while structural counts use one named incoming-L1 coordinate transform. The 240-row schedule retains all 120 prior tuples twice and covers every new profile. The neural sentinel now executes all 240/240 rows finitely with zero physics: all 81 routing, 64 sign and 12 numeric profiles are consumed, all 32 sign-flip oracles are nonzero and antisymmetric, all three numeric axes alter their isolated probe and each nonempty structural target column has exact incoming L1. This closes runtime consumption only; it fits, promotes and selects nothing, and neural magnitude is not a plausibility criterion.
   - The first declared-envelope physical sentinel now closes a real causal local loop instead of replaying a future-normalized sinusoid. Bilateral FlyBody front-knee geometry is converted from joint anchors to a 0--180-degree anatomical internal angle; a five-point oracle is strictly increasing on both sides and spans 139.76 degrees. Sixteen tuples selected by a deterministic near-uniform schedule stride completed 32/32 paired 0.2-second episodes. Every episode had active causal FeCO input, all arrays were finite, the generic perturbation was detected, and only the scheduled actuator could receive output. Five tuples produced a nonzero routed motor command, proving actual neural-to-body closure rather than merely executing a zero route. An uncommitted four-row dry run had all four routed bodies silent and was rejected as underpowered before the versioned accepted run; the expansion rule did not use body motion or command magnitude to choose rows. All 16 rows retain the passive fixture's 14 joint-limit-violation frames, which is descriptive pathology, not an acceptance threshold. Zero parameter, candidate, population assignment, stability result or behavior is promoted.
+  - The exact 240-row causal physical panel is fully accounted but does not pass. It completed both reset-isolated branches for 237 rows (474 physical episodes); rows 029, 041 and 149 were stopped before applying a non-finite or over-limit direct-MOTOR command. All three use numeric profile 05 and the maximum bridge gain; rows 029 and 149 are two declared projections of the same base tuple. No clipping, threshold change or survivor promotion was applied after inspection. The 16 frozen sentinel trace pairs reproduce bit-for-bit under one reset reusable MuJoCo model, proving that model reuse did not cause the failure. Among completed rows, 172 scheduled routes are silent and 65 emit a nonzero command; these are descriptive counts only. A separate preregistered technical diagnosis must localize the command-limit interaction before any narrowing or stability gate.
+  - The bounded command-limit diagnostic now replays exactly those three rows, both baseline and perturbed branches, twice each. All 12 probes reproduce deterministic first crossings before command application. Crossings occur from native step 634 to 1036 (63.4--103.6 ms), with finite attempted commands from 0.010008805 to 0.010057705 against the frozen absolute 0.01 contract. Every row uses numeric profile 05 and maximum bridge gain; rows 029 and 149 also share base tuple 029 and route body 810098. This localizes a shared interaction but does not identify a unique causal factor or authorize clipping, threshold changes, row rejection or survivor promotion.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
   - The FeCO local fitting procedure completed all 86 leave-one-animal-out folds across seven source/boundary candidates on 33,766 retained rows, with zero blocked folds. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. The complete candidate ensemble remains unpromoted, no runtime parameter set is selected, and the comparison does not identify native event-versus-graded dynamics.
@@ -122,9 +128,8 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Execute the exact 240-member declared neutral physical panel under the passed
-  causal registration/runtime contract. Retain every pathology and exception,
-  keep mechanics and actuator semantics frozen, and do not use raw motion or a
-  named behavior to select any routing, sign, representation, class, route, gain
-  or neural constant. Only after exhaustive accounting may independent technical
-  pathology criteria narrow the envelope.
+  Use the passed bounded diagnosis and the pre-existing direct-MOTOR contract to
+  preregister a technical pathology policy for all 240 rows. State whether a
+  crossing blocks only the composite row or a broader factor domain, and add the
+  smallest factor-isolation probes needed to support that choice. Do not clip,
+  change the actuator limit or promote the 237 completed rows post hoc.

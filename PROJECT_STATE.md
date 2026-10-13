@@ -250,8 +250,37 @@ routes silencieuses ; il a été refusé comme preuve de fermeture et cette exce
 est conservée dans la campagne. Le résultat ne sélectionne pourtant aucun de ces
 cinq cas : zéro fit, promotion, stabilité ou comportement. Les 14 frames de
 violation de limites articulaires présentes dans chaque baseline restent une
-pathologie descriptive. Le prochain lot doit appliquer exactement ce contrat aux
+pathologie descriptive. Le lot suivant a donc appliqué exactement ce contrat aux
 240 membres avant tout filtrage technique.
+
+Le panneau causal exhaustif a maintenant été exécuté par
+`neutral_embodied_declared_closed_loop_panel.bat`, et son résultat négatif est
+conservé plutôt que corrigé après inspection. Les 240 lignes sont comptabilisées :
+237 terminent leurs deux branches réinitialisées, soit 474 épisodes physiques,
+mais `declared_tuple_029`, `declared_tuple_041` et `declared_tuple_149` sont
+arrêtés avant l'application d'une commande `MOTOR` non finie ou supérieure à la
+limite gelée de 0,01. Tous trois utilisent `numeric_05` et le gain maximal ; 029
+et 149 proviennent du même tuple de base avec d'autres profils déclarés. Les 16
+paires de traces du sentinel sont reproduites bit à bit avec une unique instance
+MuJoCo réinitialisée, ce qui exclut une dérive due à l'optimisation de runtime.
+Parmi les 237 lignes terminées, 172 routes planifiées restent silencieuses et 65
+émettent une commande non nulle ; ces nombres ne classent aucun candidat. Il n'y
+a eu ni clipping, ni seuil ajouté après coup, ni fit, sélection, promotion,
+stabilité ou exposition comportementale. La prochaine étape est un diagnostic
+technique préenregistré et borné des trois interactions qui dépassent la limite,
+puis seulement une politique de pathologie indépendante appliquée aux 240 lignes.
+
+Ce diagnostic borné est maintenant fermé par
+`neutral_embodied_command_limit_diagnostic.bat`. Les trois lignes, leurs branches
+baseline/perturbée et deux répétitions déterministes donnent 12/12 premiers
+franchissements identiques. Ils surviennent entre les pas natifs 634 et 1036
+(63,4--103,6 ms) ; les commandes tentées, toutes finies, vont de 0,010008805 à
+0,010057705 et sont arrêtées avant application. Le partage de `numeric_05` et du
+gain maximal est visible, tout comme le partage du tuple de base et du corps routé
+entre 029 et 149, mais cette observation ne prouve pas quel facteur est causal et
+n'autorise aucun clipping ou rejet de domaine. La prochaine étape est donc le
+plus petit panneau d'isolation factorielle préenregistré, puis une politique de
+pathologie technique appliquée à toutes les 240 lignes.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -1071,6 +1100,8 @@ neutral_embodied_full_chain_panel.bat # 120 tuples/240 épisodes du même contra
 neutral_embodied_declared_envelope.bat # 240 tuples, profils FeCO/signes/numériques déclarés ; planning seulement, zéro fit/exécution
 neutral_embodied_declared_neural_sentinel.bat # exécute les 240 tuples neuraux déclarés, oracles d'axes, zéro fit/physique/sélection
 neutral_embodied_declared_closed_loop_sentinel.bat # 16 tuples/32 épisodes corps→FeCO→CNS local→moteur→corps ; zéro fit/sélection
+neutral_embodied_declared_closed_loop_panel.bat # 240 lignes comptées ; résultat courant 237 complètes/3 bloquées par limite MOTOR ; zéro clipping/sélection
+neutral_embodied_command_limit_diagnostic.bat # 3 lignes x 2 branches x 2 répétitions ; localise le premier franchissement sans l'appliquer
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

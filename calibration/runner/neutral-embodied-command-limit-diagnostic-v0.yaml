@@ -1,0 +1,239 @@
+schema_version: 1
+id: runner_result.neutral_embodied_command_limit_diagnostic.v0
+campaign_id: campaign.neutral_embodied_command_limit_diagnostic.v0
+status: pass_deterministic_command_limit_localization_no_selection
+completed_at: '2026-10-13T08:08:47.989389+00:00'
+claim_label: COMMAND-LIMIT DIAGNOSTIC / NO CLIPPING / NO FIT / NO SELECTION / NO BEHAVIOR
+command: neutral_embodied_command_limit_diagnostic.bat
+frozen_input_sha256:
+  failed_panel_campaign: 2961ab1988b8d3dbd6b778a907c9335d802be7a9668f463055d5d9521b4652a0
+  failed_panel_result: 5bc218af0302361de4c674e4670c8d552305cbee8adc566138c5b0ca8e753819
+  failed_panel_evaluation: 65b553ed507d245ecdb0e796a54f3a8be953ee974b254f18ef2adb46758d1697
+accounting:
+  tuples: 3
+  branches: 6
+  probe_episodes: 12
+  first_limit_crossing_probes: 12
+  completed_within_limit_probes: 0
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+checks:
+  exact_failed_tuple_identity: true
+  all_12_probe_episodes_accounted: true
+  all_repeat_signatures_identical: true
+  each_tuple_reproduces_at_least_one_finite_absolute_limit_crossing: true
+  offending_commands_never_applied: true
+  zero_clipping_zero_fit_zero_selection_zero_behavior: true
+  within_compute_budget: true
+outcomes:
+- tuple_id: declared_tuple_029
+  factor_coordinates:
+    base_tuple_id: neutral_tuple_029
+    feco_routing_profile_id: feco_route_29
+    unknown_sign_profile_id: unknown_sign_29
+    numeric_profile_id: numeric_05
+    intermediate_profile_id: hash_13_complement
+    feco_alternative_id: feco_02_event_candidate
+    feco_native_representation: event_candidate
+    motor_assignment_index: '249'
+    motor_assignment_signature: IFFIIIIIFF
+    route_body_id: '810098'
+    route_target_actuator_id: '76'
+    route_target_actuator_name: rf_tarsus1-rf_tarsus2-pitch-motor
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      repeats:
+      - status: first_command_limit_crossing
+        native_step: 762
+        time_s: 0.0762
+        attempted_command: 0.010036257965102564
+        absolute_attempted_command: 0.010036257965102564
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: 1f8559cb260f8ba1c18e7613a30ecc76d4b431807aac9fa90659d04bf263c524
+      - status: first_command_limit_crossing
+        native_step: 762
+        time_s: 0.0762
+        attempted_command: 0.010036257965102564
+        absolute_attempted_command: 0.010036257965102564
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: 1f8559cb260f8ba1c18e7613a30ecc76d4b431807aac9fa90659d04bf263c524
+      repeat_signatures_identical: true
+    perturbed:
+      repeats:
+      - status: first_command_limit_crossing
+        native_step: 1036
+        time_s: 0.10360000000000001
+        attempted_command: 0.010008805161694816
+        absolute_attempted_command: 0.010008805161694816
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: eb4dc8ce4dbbd1b1b43a092bfb29a7d70b88164d5e6315e2e934a19d8c1dc4f5
+      - status: first_command_limit_crossing
+        native_step: 1036
+        time_s: 0.10360000000000001
+        attempted_command: 0.010008805161694816
+        absolute_attempted_command: 0.010008805161694816
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: eb4dc8ce4dbbd1b1b43a092bfb29a7d70b88164d5e6315e2e934a19d8c1dc4f5
+      repeat_signatures_identical: true
+- tuple_id: declared_tuple_041
+  factor_coordinates:
+    base_tuple_id: neutral_tuple_041
+    feco_routing_profile_id: feco_route_41
+    unknown_sign_profile_id: unknown_sign_41
+    numeric_profile_id: numeric_05
+    intermediate_profile_id: hash_19_complement
+    feco_alternative_id: feco_08_event_candidate
+    feco_native_representation: event_candidate
+    motor_assignment_index: '352'
+    motor_assignment_signature: FFFFFIIFIF
+    route_body_id: '818057'
+    route_target_actuator_id: '44'
+    route_target_actuator_name: lf_tarsus2-lf_tarsus3-pitch-motor
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      repeats:
+      - status: first_command_limit_crossing
+        native_step: 778
+        time_s: 0.07780000000000001
+        attempted_command: 0.010011559921169522
+        absolute_attempted_command: 0.010011559921169522
+        target_actuator_id: 44
+        route_body_id: 818057
+        offending_command_applied: false
+        signature_sha256: 9b52ee3668b451513bc91a2a762c9ec0e4e9b030d9c3da782f0375a6e0c73c84
+      - status: first_command_limit_crossing
+        native_step: 778
+        time_s: 0.07780000000000001
+        attempted_command: 0.010011559921169522
+        absolute_attempted_command: 0.010011559921169522
+        target_actuator_id: 44
+        route_body_id: 818057
+        offending_command_applied: false
+        signature_sha256: 9b52ee3668b451513bc91a2a762c9ec0e4e9b030d9c3da782f0375a6e0c73c84
+      repeat_signatures_identical: true
+    perturbed:
+      repeats:
+      - status: first_command_limit_crossing
+        native_step: 689
+        time_s: 0.0689
+        attempted_command: 0.010057704623404988
+        absolute_attempted_command: 0.010057704623404988
+        target_actuator_id: 44
+        route_body_id: 818057
+        offending_command_applied: false
+        signature_sha256: ca07def3d5e61ae58b7ea81c2853686e293388169859c14bf3d2f7dd4a523a78
+      - status: first_command_limit_crossing
+        native_step: 689
+        time_s: 0.0689
+        attempted_command: 0.010057704623404988
+        absolute_attempted_command: 0.010057704623404988
+        target_actuator_id: 44
+        route_body_id: 818057
+        offending_command_applied: false
+        signature_sha256: ca07def3d5e61ae58b7ea81c2853686e293388169859c14bf3d2f7dd4a523a78
+      repeat_signatures_identical: true
+- tuple_id: declared_tuple_149
+  factor_coordinates:
+    base_tuple_id: neutral_tuple_029
+    feco_routing_profile_id: feco_route_68
+    unknown_sign_profile_id: unknown_sign_21
+    numeric_profile_id: numeric_05
+    intermediate_profile_id: hash_13_complement
+    feco_alternative_id: feco_02_event_candidate
+    feco_native_representation: event_candidate
+    motor_assignment_index: '249'
+    motor_assignment_signature: IFFIIIIIFF
+    route_body_id: '810098'
+    route_target_actuator_id: '76'
+    route_target_actuator_name: rf_tarsus1-rf_tarsus2-pitch-motor
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      repeats:
+      - status: first_command_limit_crossing
+        native_step: 675
+        time_s: 0.0675
+        attempted_command: 0.010033473299249454
+        absolute_attempted_command: 0.010033473299249454
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: 74f69d36e2241b695766954edac3140f5f79ed4bdee63105d8b79400e3b6ce7c
+      - status: first_command_limit_crossing
+        native_step: 675
+        time_s: 0.0675
+        attempted_command: 0.010033473299249454
+        absolute_attempted_command: 0.010033473299249454
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: 74f69d36e2241b695766954edac3140f5f79ed4bdee63105d8b79400e3b6ce7c
+      repeat_signatures_identical: true
+    perturbed:
+      repeats:
+      - status: first_command_limit_crossing
+        native_step: 634
+        time_s: 0.0634
+        attempted_command: 0.010012748393505662
+        absolute_attempted_command: 0.010012748393505662
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: d5ae4d62ca90b16dabb8f789408bda2e85a6d36dca418f94a86f47f45e9274f7
+      - status: first_command_limit_crossing
+        native_step: 634
+        time_s: 0.0634
+        attempted_command: 0.010012748393505662
+        absolute_attempted_command: 0.010012748393505662
+        target_actuator_id: 76
+        route_body_id: 810098
+        offending_command_applied: false
+        signature_sha256: d5ae4d62ca90b16dabb8f789408bda2e85a6d36dca418f94a86f47f45e9274f7
+      repeat_signatures_identical: true
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+accepted_claims:
+- The first command-limit crossing is localized and deterministically reproduced for
+  the exact failed rows when all checks pass.
+- Shared factor coordinates may be reported as hypotheses for a later independently
+  locked technical policy.
+forbidden_claims:
+- The observed shared coordinates identify a unique causal parameter or justify rejecting
+  all rows carrying that coordinate.
+- A clipped or saturated replay is equivalent to the frozen direct-MOTOR contract.
+- Any completed or failed row is selected, promoted, stable or behavioral.
+wall_seconds: 21.439537800033577
+next_action: Use this bounded diagnosis together with the pre-existing actuator contract
+  to preregister a technical pathology policy for all 240 rows. The policy must say
+  whether a crossing blocks only the composite row or a broader factor domain, and
+  must validate that decision without named-behavior exposure.
+semantic_result_sha256: cda65c69598f95fa9c943572232654995687aad7c2024c813c1be87257a900c3

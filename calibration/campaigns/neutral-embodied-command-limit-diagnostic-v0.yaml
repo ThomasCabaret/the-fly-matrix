@@ -1,0 +1,85 @@
+schema_version: 1
+id: campaign.neutral_embodied_command_limit_diagnostic.v0
+title: Bounded diagnosis of the three declared direct-MOTOR limit failures
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: COMMAND-LIMIT DIAGNOSTIC / NO CLIPPING / NO FIT / NO SELECTION / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Localize the first direct-MOTOR command-limit crossing in each branch of the
+  three rows that failed the exhaustive causal panel. Repeat every branch exactly
+  twice to distinguish a deterministic factor interaction from reset drift. Stop
+  before applying an invalid command; do not clip, rank or redefine the limit.
+
+frozen_inputs:
+  failed_panel_campaign: calibration/campaigns/neutral-embodied-declared-closed-loop-panel-v0.yaml
+  failed_panel_campaign_sha256: 2961ab1988b8d3dbd6b778a907c9335d802be7a9668f463055d5d9521b4652a0
+  failed_panel_result: calibration/runner/neutral-embodied-declared-closed-loop-panel-v0.yaml
+  failed_panel_result_sha256: 5bc218af0302361de4c674e4670c8d552305cbee8adc566138c5b0ca8e753819
+  failed_panel_result_semantic_sha256: 9e54ebaa58d1216d2c4711d189658eff54d269cfc30d6c6928a1d035d3f7d9ca
+  failed_panel_evaluation: calibration/evaluations/neutral-embodied-declared-closed-loop-panel-v0.yaml
+  failed_panel_evaluation_sha256: 65b553ed507d245ecdb0e796a54f3a8be953ee974b254f18ef2adb46758d1697
+
+diagnostic_scope:
+  tuple_ids: [declared_tuple_029, declared_tuple_041, declared_tuple_149]
+  branches: [baseline, perturbed]
+  deterministic_repeats_per_branch: 2
+  total_probe_episodes: 12
+  motor_command_absolute_limit: 0.01
+  stop_policy: stop_before_first_nonfinite_or_absolute_limit_crossing
+  apply_offending_command: false
+
+recorded_coordinates:
+  - branch_and_repeat
+  - first_offending_native_step
+  - attempted_command
+  - target_actuator_and_route_body
+  - numeric_routing_sign_source_motor_assignment_and_gain_profile_ids
+  - deterministic_outcome_signature
+
+acceptance:
+  criteria_locked_before_run: true
+  require_exact_failed_tuple_identity: true
+  require_every_branch_and_repeat_accounted: true
+  require_repeat_signatures_identical: true
+  require_each_tuple_to_reproduce_at_least_one_finite_absolute_limit_crossing: true
+  require_offending_command_not_applied: true
+  allow_candidate_narrowing: false
+  allow_threshold_change: false
+  allow_clipping: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+
+compute_budget:
+  probe_episodes: 12
+  maximum_wall_clock_minutes: 10
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - The first command-limit crossing is localized and deterministically reproduced for the exact failed rows when all checks pass.
+  - Shared factor coordinates may be reported as hypotheses for a later independently locked technical policy.
+forbidden_claims:
+  - The observed shared coordinates identify a unique causal parameter or justify rejecting all rows carrying that coordinate.
+  - A clipped or saturated replay is equivalent to the frozen direct-MOTOR contract.
+  - Any completed or failed row is selected, promoted, stable or behavioral.
+next_action: >-
+  Use this bounded diagnosis together with the pre-existing actuator contract to
+  preregister a technical pathology policy for all 240 rows. The policy must say
+  whether a crossing blocks only the composite row or a broader factor domain,
+  and must validate that decision without named-behavior exposure.
