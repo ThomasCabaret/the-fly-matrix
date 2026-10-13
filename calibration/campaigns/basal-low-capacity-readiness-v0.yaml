@@ -1,0 +1,96 @@
+schema_version: 1
+id: campaign.basal_low_capacity_readiness.v0
+title: Low-capacity basal sensitivity design and whole-MaleCNS execution readiness gate
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: BASAL DESIGN READINESS / ZERO BASAL VALUES / NOT WHOLE-MALECNS EXECUTION / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Account for all six basal families, preregister the smallest behavior-naive
+  sensitivity shapes that could later be instantiated, and refuse numerical
+  basal values or a whole-MaleCNS run until every consumed population has an
+  accepted typed/hybrid assignment and an explicit unit conversion contract.
+
+frozen_inputs:
+  basal_evidence: calibration/evidence/basal-source-readiness-v0.yaml
+  basal_evidence_sha256: 4558a2619f9ad15e9ef97eaacc49db3aee32518566d863b375447853b013f059
+  conditioned_bundles: calibration/parameter_sets/front-leg-member-conditioned-bundles-v0.yaml
+  conditioned_bundles_sha256: 02fd1961f8e935b592142bc0210c2c649cce5b556aa6cc5900203211bc1bf429
+  conditioned_bundles_semantic_sha256: 190306bb9d0553f63ecf48911bd277d993ee43fd508b9d7db2e62ff34f7ceaed
+  population_accounting: calibration/runner/population-dynamics-front-leg-accounting-v0.yaml
+  population_accounting_sha256: 883399516b1228a4e204b398f837c8c6ca19b8bf5cefa62a833b6630dececa15
+  intermediate_population_accounting: calibration/runner/front-leg-intermediate-dynamics-accounting-v0.yaml
+  intermediate_population_accounting_sha256: 8961dec444a45533fe55b438ad9301fd054b164ea2e9d902c5950604702cb6a6
+  population_target: calibration/targets/population-dynamics-assignment-v0.yaml
+  population_target_sha256: ce8357bd7f131fd5dc96c1b69168b7b0ea1cecf609dcbe274a28bb3fbeb20a25
+
+expected_accounting:
+  basal_families: 6
+  basal_channels: 2212
+  basal_terminals: 6041
+  canonical_MaleCNS_neurons: 166700
+  currently_accounted_local_population_neurons: 196
+  currently_event_required_local_neurons: 12
+  currently_dual_unresolved_local_neurons: 184
+
+sensitivity_design:
+  status: preregistered_shapes_only_absolute_scales_blocked
+  common_rules:
+    - Every terminal in every family must be accounted for in every arm.
+    - No arm may be selected from a named behavior or visual inspection.
+    - Event populations require event intensity units; graded populations require an explicit conversion contract.
+    - Absolute scales, seeds and time courses remain unset until the typed/hybrid consuming scope is accepted.
+  arms:
+    - id: explicit_silence_control
+      shape: zero_input_for_every_basal_terminal
+      role: negative_control_only_not_a_default
+    - id: uniform_per_terminal
+      shape: one_shared_unresolved_scale_per_terminal
+      role: tests_sensitivity_to_total_terminal_count
+    - id: equal_family_mass
+      shape: one_shared_unresolved_total_mass_per_family_distributed_within_family
+      role: tests_whether_large_families_dominate_only_by_cardinality
+
+execution_gates:
+  - id: complete_consumed_population_assignment
+    required: true
+  - id: explicit_event_or_graded_unit_bridge_per_consumed_population
+    required: true
+  - id: no_legacy_normalized_rate_comparator_for_scientific_claim
+    required: true
+  - id: every_basal_family_consumed_or_explicitly_excluded
+    required: true
+
+acceptance:
+  require_all_families_accounted: true
+  require_zero_numeric_basal_values: true
+  require_zero_named_behavior_exposure: true
+  require_honest_block_if_only_local_population_assignment_exists: true
+  whole_MaleCNS_execution_acceptance_possible: false
+
+outputs:
+  compact_result: calibration/runner/basal-low-capacity-readiness-v0.yaml
+  evaluation: calibration/evaluations/basal-low-capacity-readiness-v0.yaml
+  derived_design: calibration/parameter_sets/basal-low-capacity-sensitivity-design-v0.yaml
+
+accepted_claims:
+  - The low-capacity uncertainty axes are preregistered without physiological values.
+  - Every currently declared basal family is accounted for.
+  - The gate identifies whether a typed/hybrid whole-MaleCNS execution can honestly consume these families.
+forbidden_claims:
+  - Any basal magnitude, rate or time course is calibrated or physiologically accepted.
+  - The three local front-leg bundles cover the complete recurrent MaleCNS graph.
+  - The historical normalized-rate comparator satisfies the accepted typed/hybrid contract.
+  - Any named behavior, whole-body stability or emergence has been tested.
+next_action: >-
+  Extend typed/hybrid population accounting from the local 46-neuron evidence
+  scope to the populations actually reached by the six basal families, define
+  their event/graded unit bridges, then instantiate all preregistered arms with a
+  bounded absolute-scale axis. In parallel, the three accepted local composites
+  may be rendered as explicitly local-chain physical previews.

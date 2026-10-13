@@ -1,0 +1,78 @@
+schema_version: 1
+id: campaign.front_leg_member_physical_preview.v0
+title: Controller-independent physical previews for every accepted front-leg composite
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: WHOLE FLYBODY PHYSICS / LOCAL FRONT-LEG CHAIN ONLY / BASAL NOT CONSUMED / NOT WHOLE MALECNS / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Execute each of the three accepted exact local composites once under the frozen
+  0.2-second closed-loop protocol and export controller-independent physical
+  trajectories for human inspection. The complete FlyBody model is present, but
+  the controller is only the local 36-to-150-to-10 front-leg corridor; this is
+  not a complete MaleCNS run and the six basal families are not consumed.
+
+frozen_inputs:
+  conditioned_bundles: calibration/parameter_sets/front-leg-member-conditioned-bundles-v0.yaml
+  conditioned_bundles_sha256: 02fd1961f8e935b592142bc0210c2c649cce5b556aa6cc5900203211bc1bf429
+  conditioned_bundles_semantic_sha256: 190306bb9d0553f63ecf48911bd277d993ee43fd508b9d7db2e62ff34f7ceaed
+  causal_execution_campaign: calibration/campaigns/neutral-embodied-declared-closed-loop-sentinel-v0.yaml
+  causal_execution_campaign_sha256: 6fd958bd9e72072e6d09e8629bad6829fd8f282f2c3ad836810a45ea7065ab2b
+
+execution:
+  exact_member_ids:
+    - declared_tuple_129
+    - declared_tuple_141
+    - declared_tuple_238
+  inherited_protocol: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+  episodes_per_member: 1
+  perturbation: null
+  duration_s_per_episode: 0.2
+  replay_schema: the_fly_matrix.physical_trajectory
+  default_member_for_presentation: declared_tuple_129
+  default_is_scientific_selection: false
+
+acceptance:
+  expected_members: 3
+  expected_trajectories: 3
+  require_all_finite: true
+  require_controller_independent_replay_validation: true
+  require_exact_member_identity: true
+  require_zero_numeric_optimization: true
+  require_zero_named_behavior_exposure: true
+  allow_member_ranking: false
+  whole_MaleCNS_claim_possible: false
+  whole_body_stability_claim_possible: false
+
+human_checkpoint:
+  required_after_generation: true
+  inspection_is_diagnostic_only: true
+  forbidden_automatic_follow_up: >-
+    Do not tune, rank, reject or promote a member from visual inspection. Record
+    observations first; any resulting change requires a new explicit campaign.
+
+outputs:
+  heavy_run_root: runs/calibration/front-leg-member-physical-preview-v0
+  compact_result: calibration/runner/front-leg-member-physical-preview-v0.yaml
+  evaluation: calibration/evaluations/front-leg-member-physical-preview-v0.yaml
+
+accepted_claims:
+  - All three accepted exact local composites can drive the complete FlyBody physics model through the declared causal loop.
+  - Each generated trajectory is independent of its controller at replay time.
+forbidden_claims:
+  - Complete recurrent MaleCNS, vision, all sensory families or all motor outputs were simulated.
+  - Basal sources were calibrated or consumed.
+  - A member is preferred, stable, physiological or behaviorally meaningful.
+  - A visible movement is an emergent behavior.
+next_action: >-
+  Present all three trajectories to the user as a diagnostic checkpoint. Do not
+  tune from the inspection. Independently close the basal/population readiness
+  blockers before attempting a typed/hybrid whole-MaleCNS run.

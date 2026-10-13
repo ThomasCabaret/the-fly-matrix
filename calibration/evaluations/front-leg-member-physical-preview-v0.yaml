@@ -1,0 +1,37 @@
+schema_version: 1
+id: evaluation.front_leg_member_physical_preview.v0
+campaign_id: campaign.front_leg_member_physical_preview.v0
+runner_result_id: runner_result.front_leg_member_physical_preview.v0
+runner_semantic_sha256: 12a969041ea6d2eae6ae1e0bc2a1bf17f7136788babac53af20a3d10fd213a35
+status: accepted_diagnostic_previews_pending_human_checkpoint
+checks:
+  all_exact_members_accounted: true
+  all_trajectories_created: true
+  all_trajectories_finite_and_replayable: true
+  zero_numeric_optimization: true
+  zero_named_behavior_exposure: true
+  zero_member_ranking: true
+  basal_families_not_consumed: true
+  complete_recurrent_MaleCNS_not_claimed: true
+  human_checkpoint_required: true
+member_ids:
+- declared_tuple_129
+- declared_tuple_141
+- declared_tuple_238
+members_ranked: false
+basal_families_consumed: false
+whole_MaleCNS_executed: false
+whole_body_stability_accepted: false
+named_behavior_exposed: false
+interpretation: The complete FlyBody physics model replayed all three local exact
+  composites. Only the declared front-leg corridor controlled one actuator per member;
+  these are not global MaleCNS runs.
+human_checkpoint:
+  required_after_generation: true
+  inspection_is_diagnostic_only: true
+  forbidden_automatic_follow_up: Do not tune, rank, reject or promote a member from
+    visual inspection. Record observations first; any resulting change requires a
+    new explicit campaign.
+next_action: Present all three trajectories to the user as a diagnostic checkpoint.
+  Do not tune from the inspection. Independently close the basal/population readiness
+  blockers before attempting a typed/hybrid whole-MaleCNS run.

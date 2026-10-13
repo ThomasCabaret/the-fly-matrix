@@ -1,0 +1,65 @@
+schema_version: 1
+id: runner_result.basal_low_capacity_readiness.v0
+campaign_id: campaign.basal_low_capacity_readiness.v0
+status: completed_honest_block_before_numeric_basal_or_whole_MaleCNS_run
+completed_at: '2026-10-13T19:11:23.224119+00:00'
+command: basal_low_capacity_readiness.bat
+claim_label: BASAL DESIGN READINESS / ZERO BASAL VALUES / NOT WHOLE-MALECNS EXECUTION
+  / NO BEHAVIOR
+accounting:
+  basal_family_ids:
+  - parameter.baseline.olfaction.v0
+  - parameter.baseline.gustation.v0
+  - parameter.baseline.thermohygro.v0
+  - parameter.residual_sensory.chemosensory_nominal.v0
+  - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  - parameter.residual_sensory.unknown_nominal.v0
+  basal_families: 6
+  basal_channels: 2212
+  basal_terminals: 6041
+  canonical_MaleCNS_neurons: 166700
+  currently_accounted_local_population_neurons: 196
+  currently_event_required_local_neurons: 12
+  currently_dual_unresolved_local_neurons: 184
+  basal_family_bundle_dispositions:
+    parameter.baseline.olfaction.v0: not_exercised_no_freeze
+    parameter.baseline.gustation.v0: not_exercised_no_freeze
+    parameter.baseline.thermohygro.v0: not_exercised_no_freeze
+    parameter.residual_sensory.chemosensory_nominal.v0: not_exercised_no_freeze
+    parameter.residual_sensory.mechanosensory_tbc_nominal.v0: not_exercised_no_freeze
+    parameter.residual_sensory.unknown_nominal.v0: not_exercised_no_freeze
+population_assignment_scope_fraction: 0.0011757648470305938
+sensitivity_arm_ids:
+- explicit_silence_control
+- uniform_per_terminal
+- equal_family_mass
+numerical_basal_values_emitted: 0
+gates:
+  all_six_basal_families_accounted: true
+  all_6041_basal_terminals_accounted: true
+  all_basal_families_explicitly_not_exercised_in_local_bundles: true
+  absolute_basal_values_remain_unset: true
+  complete_consumed_population_assignment: false
+  explicit_event_or_graded_unit_bridge_per_consumed_population: false
+  accepted_typed_hybrid_whole_MaleCNS_runtime: false
+blocker_ids:
+- complete_consumed_population_assignment
+- explicit_event_or_graded_unit_bridge_per_consumed_population
+- accepted_typed_hybrid_whole_MaleCNS_runtime
+whole_MaleCNS_execution_disposition: blocked_not_executed
+accepted_claims:
+- The low-capacity uncertainty axes are preregistered without physiological values.
+- Every currently declared basal family is accounted for.
+- The gate identifies whether a typed/hybrid whole-MaleCNS execution can honestly
+  consume these families.
+forbidden_claims:
+- Any basal magnitude, rate or time course is calibrated or physiologically accepted.
+- The three local front-leg bundles cover the complete recurrent MaleCNS graph.
+- The historical normalized-rate comparator satisfies the accepted typed/hybrid contract.
+- Any named behavior, whole-body stability or emergence has been tested.
+next_action: Extend typed/hybrid population accounting from the local 46-neuron evidence
+  scope to the populations actually reached by the six basal families, define their
+  event/graded unit bridges, then instantiate all preregistered arms with a bounded
+  absolute-scale axis. In parallel, the three accepted local composites may be rendered
+  as explicitly local-chain physical previews.
+semantic_result_sha256: e9e9cd79067118c1b15a3f4bd709cb5f5544e4f939691042b4c0adac9efb06ec

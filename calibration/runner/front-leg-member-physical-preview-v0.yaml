@@ -1,0 +1,134 @@
+schema_version: 1
+id: runner_result.front_leg_member_physical_preview.v0
+campaign_id: campaign.front_leg_member_physical_preview.v0
+status: completed_local_chain_physical_previews_pending_human_checkpoint
+completed_at: '2026-10-13T19:19:56.801290+00:00'
+command: front_leg_member_physical_preview.bat
+replay_command: front_leg_member_preview_replay.bat [129|141|238]
+claim_label: WHOLE FLYBODY PHYSICS / LOCAL FRONT-LEG CHAIN ONLY / BASAL NOT CONSUMED
+  / NOT WHOLE MALECNS / NO BEHAVIOR
+accounting:
+  expected_members: 3
+  completed_members: 3
+  replay_validated_members: 3
+  numeric_optimization_steps: 0
+  named_behavior_exposures: 0
+  basal_families_consumed: 0
+artifacts:
+- member_id: declared_tuple_129
+  path: runs/calibration/front-leg-member-physical-preview-v0/declared_tuple_129/physical-trajectory.npz
+  sha256: b086c042888fe71558e9c25da9f2895d889bc43c557c836aa276c08d5b2901fc
+  trajectory_semantic_sha256: 69a4c8270d93ce4dae244f63eb644e440b5730a45d96ccac4d5ff0fc5e2ac1a3
+  bytes: 107969
+  frames: 40
+  duration_s: 0.1999999999999943
+  diagnostic:
+    source_representation: event_candidate
+    feco_projection_sha256: ec62820c30acf6489300987821d3b986a51a1237cb76b970b00bf95a19bfc6a5
+    angle_min_deg:
+      L: 83.40464288890999
+      R: 82.40695616008499
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 1896
+    source_event_count: 904
+    intermediate_spike_count: 240
+    motor_spike_count: 26
+    route_motor_event_count: 6
+    peak_abs_command: 6.675075881069827e-05
+    active_actuator_ids:
+    - 45
+    route_body_id: 807165
+    route_body_class: intermediate_22A08
+    target_actuator_id: 45
+    target_actuator_name: lf_tarsus3-lf_tarsus4-pitch-motor
+    trace_sha256: e31c788c2be24a765d1db1eeca4a6bb88ffee71b59f5c0ac89759dd79a647b19
+- member_id: declared_tuple_141
+  path: runs/calibration/front-leg-member-physical-preview-v0/declared_tuple_141/physical-trajectory.npz
+  sha256: a6d885e1db6666ee89c6c4abe70de02a46d311b8102a0bf742b753f9f4dc96c3
+  trajectory_semantic_sha256: 02b594ece13b1767b23e492cfc84fd2b8b3c01e8061deaa9cd05bc6482f3f67d
+  bytes: 107898
+  frames: 40
+  duration_s: 0.1999999999999943
+  diagnostic:
+    source_representation: event_candidate
+    feco_projection_sha256: ff8375030391ea75379917cb53d76ddcbe931981c90e98a7e2de0c483e95c3f7
+    angle_min_deg:
+      L: 83.40459531529488
+      R: 82.4069603921525
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 1867
+    source_event_count: 1139
+    intermediate_spike_count: 267
+    motor_spike_count: 16
+    route_motor_event_count: 3
+    peak_abs_command: 0.00023268140502731593
+    active_actuator_ids:
+    - 46
+    route_body_id: 809912
+    route_body_class: fast_81A07
+    target_actuator_id: 46
+    target_actuator_name: lf_tarsus4-lf_tarsus5-pitch-motor
+    trace_sha256: 0022fae28b3141e1d306bb3c441aeaec66e084b66db18dc716a76bb8cfda0139
+- member_id: declared_tuple_238
+  path: runs/calibration/front-leg-member-physical-preview-v0/declared_tuple_238/physical-trajectory.npz
+  sha256: aeae54d01abf0863c0c28432bfe460fea5f5451a71f8cbd2a3b5018bb6c80a3c
+  trajectory_semantic_sha256: d272fc157ebc525389a03a13d00e6d7137bbf23ed15f3db9a92dd68016c88ce2
+  bytes: 107990
+  frames: 40
+  duration_s: 0.1999999999999943
+  diagnostic:
+    source_representation: graded_candidate
+    feco_projection_sha256: 86cf9f49d8c79fb55f1fae508994580e416a900e5c3ace5bd1564c2469e42672
+    angle_min_deg:
+      L: 83.40248402310854
+      R: 82.40642779467115
+    angle_max_deg:
+      L: 88.96316970944761
+      R: 88.1716350769524
+    source_nonzero_steps: 2000
+    source_event_count: 0
+    intermediate_spike_count: 754
+    motor_spike_count: 75
+    route_motor_event_count: 15
+    peak_abs_command: 0.0030603133819388896
+    active_actuator_ids:
+    - 44
+    route_body_id: 807165
+    route_body_class: fast_81A07
+    target_actuator_id: 44
+    target_actuator_name: lf_tarsus2-lf_tarsus3-pitch-motor
+    trace_sha256: 7f3a605f4ae29f5b418ecc8ac20e33407e4d97346d902d296a9fbada59f0a50f
+checks:
+  all_exact_members_accounted: true
+  all_trajectories_created: true
+  all_trajectories_finite_and_replayable: true
+  zero_numeric_optimization: true
+  zero_named_behavior_exposure: true
+  zero_member_ranking: true
+  basal_families_not_consumed: true
+  complete_recurrent_MaleCNS_not_claimed: true
+  human_checkpoint_required: true
+human_checkpoint:
+  required_after_generation: true
+  inspection_is_diagnostic_only: true
+  forbidden_automatic_follow_up: Do not tune, rank, reject or promote a member from
+    visual inspection. Record observations first; any resulting change requires a
+    new explicit campaign.
+accepted_claims:
+- All three accepted exact local composites can drive the complete FlyBody physics
+  model through the declared causal loop.
+- Each generated trajectory is independent of its controller at replay time.
+forbidden_claims:
+- Complete recurrent MaleCNS, vision, all sensory families or all motor outputs were
+  simulated.
+- Basal sources were calibrated or consumed.
+- A member is preferred, stable, physiological or behaviorally meaningful.
+- A visible movement is an emergent behavior.
+next_action: Present all three trajectories to the user as a diagnostic checkpoint.
+  Do not tune from the inspection. Independently close the basal/population readiness
+  blockers before attempting a typed/hybrid whole-MaleCNS run.
+semantic_result_sha256: 12a969041ea6d2eae6ae1e0bc2a1bf17f7136788babac53af20a3d10fd213a35

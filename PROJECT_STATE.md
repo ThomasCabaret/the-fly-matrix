@@ -337,10 +337,28 @@ sémantique par bundle sensoriel–central–moteur. Il ne transforme pas leur s
 composite en succès marginal : aucune famille n'est gelée indépendamment, aucun
 membre n'est classé ou choisi comme référence. Les six familles de sources basales
 sont comptées mais explicitement `not_exercised_no_freeze`, donc aucune valeur
-nulle implicite ne contaminera le prochain run. La prochaine étape est un sentinel
-technique corps entier borné sur les trois bundles et une petite grille basale
-préenregistrée ; après son premier replay visualisable, le projet doit s'arrêter
-pour un point de contrôle utilisateur avant tout réglage motivé par l'inspection.
+nulle implicite ne contaminera le prochain run.
+
+Le gate suivant a révélé que l'étape « corps entier » formulée auparavant était
+trop optimiste. `basal_low_capacity_readiness.bat` comptabilise bien les six
+familles, 2 212 canaux et 6 041 terminaux, et préenregistre trois formes de
+sensibilité pauvres et comportement-naïves. Il n'émet cependant aucune magnitude,
+seed ou série temporelle : les trois bundles acceptés ne couvrent que le corridor
+local de 196 neurones et ne consomment aucune famille basale. Une exécution
+scientifique typée/hybride de MaleCNS entier reste donc bloquée par l'affectation
+des populations atteintes, leurs ponts d'unités événementiels/gradués et le runtime
+global accepté. Le comparateur rate normalisé historique ne peut pas servir de
+raccourci silencieux.
+
+Le point de contrôle visuel existe néanmoins sous une frontière causale exacte.
+`front_leg_member_physical_preview.bat` produit trois trajectoires indépendantes
+du contrôleur, une pour chacun des tuples 129, 141 et 238. Elles contiennent le
+corps FlyBody complet pendant 0,2 s et passent toutes le lecteur headless, mais le
+contrôleur n'est que la chaîne locale 36 afférences → 150 intermédiaires → 10
+motoneurones avec un actionneur ciblé. Elles n'exécutent ni basal, ni vision, ni
+MaleCNS récurrent complet et ne prouvent aucun comportement ou stabilité. Le projet
+s'arrête maintenant pour l'inspection utilisateur ; celle-ci ne peut provoquer un
+réglage, classement ou rejet implicite.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -1039,9 +1057,10 @@ précédents.
 un défaut homogène rate ou LIF et accepte le contrat event-capable typé/hybride de
 l'ADR 0016. Le front actif affecte maintenant les dynamiques à des populations
 bornées dans une chaîne sensorielle et une chaîne motrice locales. Zéro
-constante n'est encore promue. La première portée locale couvre exactement 46
-neurones : l'exigence événementielle des 10 motoneurones T1 fléchisseurs est
-acceptée, tandis que les 36 afférences FeCO restent `dual_unresolved`. Les 31
+constante n'est encore promue. La portée locale complète couvre exactement 196
+neurones : l'exigence événementielle de 10 motoneurones T1 fléchisseurs et de deux
+intermédiaires tibia-extenseurs est acceptée, tandis que les 36 afférences FeCO et
+148 autres intermédiaires restent `dual_unresolved`. Les 31
 survivants rate et le LIF source-aligné restent des comparateurs, et la suffisance
 des douze paramètres partagés demeure un risque ouvert.
 
@@ -1103,9 +1122,12 @@ population non affectée ne doit être promu. Les fichiers de
 `calibration/` déterminent l'ordre effectif ; cette section en est le résumé humain.
 
 Le gate d'évidence basal ferme l'inventaire mais conclut qu'aucune valeur n'est
-encore transférable. Le prochain lot ne doit ni répéter cet inventaire ni inventer
-le pont d'unités : il doit définir l'interface native des seules populations
-locales affectées et conserver ailleurs l'incertitude `dual_unresolved`.
+encore transférable. Le gate de readiness ajoute trois formes de sensibilité sans
+valeur et refuse explicitement le run global : 196 neurones locaux sont comptés sur
+166 700, et les six familles basales sont hors de ce corridor. Le prochain lot ne
+doit ni répéter cet inventaire ni inventer le pont d'unités : il doit étendre
+l'affectation aux populations effectivement atteintes, puis définir leurs interfaces
+natives en conservant l'incertitude `dual_unresolved`.
 
 En parallèle, le gate d'actionneurs est maintenant terminé sans attendre le choix
 rate/LIF, car ses probes sont physiques et comportement-naïfs. Le prochain front
@@ -1164,6 +1186,9 @@ neutral_embodied_declared_closed_loop_panel.bat # 240 lignes comptées ; résult
 neutral_embodied_command_limit_diagnostic.bat # 3 lignes x 2 branches x 2 répétitions ; localise le premier franchissement sans l'appliquer
 neutral_embodied_feedback_nonamplification.bat # 65 lignes actives x 10 épisodes ; produit l'ensemble technique local non classé de 3 composites
 front_leg_member_conditioned_freeze_boundary.bat # reconstruit les 3 bundles exacts ; zéro gel marginal, 6 familles basales non exercées
+basal_low_capacity_readiness.bat # 3 formes basales sans valeur ; expose les blockers du run typé/hybride global
+front_leg_member_physical_preview.bat # génère 3 replays physiques : FlyBody complet, contrôleur local seulement
+front_leg_member_preview_replay.bat [129|141|238] # ouvre un replay ; aucun membre n'est une référence scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

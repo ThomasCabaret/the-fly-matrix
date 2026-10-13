@@ -1,0 +1,30 @@
+schema_version: 1
+id: evaluation.basal_low_capacity_readiness.v0
+campaign_id: campaign.basal_low_capacity_readiness.v0
+runner_result_id: runner_result.basal_low_capacity_readiness.v0
+runner_semantic_sha256: e9e9cd79067118c1b15a3f4bd709cb5f5544e4f939691042b4c0adac9efb06ec
+design_id: parameters.basal_low_capacity_sensitivity_design.v0
+status: accepted_readiness_accounting_with_blocked_execution
+checks:
+  all_six_basal_families_accounted: true
+  all_6041_basal_terminals_accounted: true
+  all_basal_families_explicitly_not_exercised_in_local_bundles: true
+  absolute_basal_values_remain_unset: true
+  complete_consumed_population_assignment: false
+  explicit_event_or_graded_unit_bridge_per_consumed_population: false
+  accepted_typed_hybrid_whole_MaleCNS_runtime: false
+blocker_ids:
+- complete_consumed_population_assignment
+- explicit_event_or_graded_unit_bridge_per_consumed_population
+- accepted_typed_hybrid_whole_MaleCNS_runtime
+numerical_basal_values_emitted: 0
+named_behavior_exposed: false
+interpretation: The uncertainty axes are now explicit, but only 196 local-corridor
+  neurons have population accounting; the six basal families are outside the three
+  local bundles and no accepted typed/hybrid whole-MaleCNS runtime can consume them
+  yet.
+next_action: Extend typed/hybrid population accounting from the local 46-neuron evidence
+  scope to the populations actually reached by the six basal families, define their
+  event/graded unit bridges, then instantiate all preregistered arms with a bounded
+  absolute-scale axis. In parallel, the three accepted local composites may be rendered
+  as explicitly local-chain physical previews.
