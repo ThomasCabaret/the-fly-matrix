@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_local_nonamplification_3_member_unranked_ensemble_values_unfitted
+status: active_front_leg_conversion_contracts_executable_3_exact_member_conditioned_bundles_reconstructible_factors_confounded_values_unfitted
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,7 +64,7 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_neural_240_of_240_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_nonamplification_3_member_local_ensemble_172_silent_zero_individual_values_promoted
+validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_neural_240_of_240_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_nonamplification_3_member_local_ensemble_reconstructed_zero_independent_family_freezes_6_basal_not_exercised
 blocked_reason: null
 next_action: >-
   The first chain accounts for all 196 unique bodies. Its 240-row declared
@@ -92,6 +92,10 @@ next_action: >-
   are mixed or amplifying and row 028 remains non-identifiable. The survivors are
   retained without ranking as one finite technical ensemble: this promotes no
   individual population assignment or numeric value and does not establish
-  whole-body stability. Propagate all three members into separately versioned
-  local sensory, motor and basal freeze campaigns while preserving every
-  unresolved stratum.
+  whole-body stability. A subsequent hash-locked compiler reconstructs every
+  survivor as an exact member-conditioned sensory-central-motor bundle. It does
+  not infer marginal factor quality: zero family is independently frozen, no
+  member is ranked, and all six basal families are explicitly not exercised.
+  Propagate all three bundles through a separately preregistered low-capacity
+  basal grid into the first bounded whole-body technical sentinel, preserving
+  every unresolved stratum and stopping for the required visual checkpoint.

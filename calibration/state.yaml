@@ -21,14 +21,15 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.neutral_embodied_feedback_nonamplification.v0
-last_preregistered_campaign_id: campaign.neutral_embodied_feedback_nonamplification.v0
-last_executed_campaign_id: campaign.neutral_embodied_feedback_nonamplification.v0
+last_completed_campaign_id: campaign.front_leg_member_conditioned_freeze_boundary.v0
+last_preregistered_campaign_id: campaign.front_leg_member_conditioned_freeze_boundary.v0
+last_executed_campaign_id: campaign.front_leg_member_conditioned_freeze_boundary.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
   - parameters.front_leg_local_feedback_nonamplifying_ensemble.v0
+  - parameters.front_leg_member_conditioned_bundles.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
 parameter_dependency_dag_id: calibration.parameter_dependency_dag.v0
 
@@ -85,6 +86,7 @@ readiness:
   neutral_embodied_command_pathology_policy: pass_exact_240_row_policy_237_admitted_to_next_technical_gate_3_composites_blocked_no_broad_domain_rejection_unseen_fail_closed_zero_promotion
   neutral_embodied_feedback_identifiability: pass_240_rows_accounted_65_active_four_branch_probes_64_feedback_physical_1_not_identifiable_172_silent_noninformative_3_command_blocked_zero_fit_ranking_promotion_behavior_stability_unresolved
   neutral_embodied_feedback_nonamplification: pass_locked_650_episode_validation_3_of_65_active_exact_composites_pass_all_four_mirrored_perturbations_61_mixed_or_amplifying_1_not_identifiable_172_silent_3_command_blocked_unranked_local_technical_ensemble_whole_body_stability_unresolved
+  front_leg_member_conditioned_freeze_boundary: accepted_3_of_3_exact_composites_reconstructible_zero_independent_family_freezes_6_basal_families_not_exercised_human_checkpoint_required_after_first_whole_body_preview
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: not_run_1815_unknown_channels_require_behavior_naive_hypothesis_grid
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
@@ -123,6 +125,7 @@ blocked_by:
   - The subsequent independently locked command policy closes only the immutable schedule. It accounts all 240 rows, admits the 237 observed within the direct-MOTOR contract to the next technical gate, and blocks exactly rows 029, 041 and 149. It rejects no gain or numeric domain, promotes nothing, and requires every unseen or modified combination to execute the same pre-application guard fail-closed. Neutral stability remains unresolved.
   - The feedback-identifiability gate now accounts the same 240 rows without candidate ranking. The 172 admitted rows whose frozen exhaustive-panel route command was identically zero remain silent/non-informative and are not rejected. Each of the 65 active admitted rows executes four 0.2-second branches: live baseline with native-step command capture, exact unperturbed replay, perturbed frozen-command replay and perturbed live feedback. All 260 episodes are finite and every unperturbed replay is within the locked numerical tolerance. Sixty-four rows show both command adaptation and a physical closed-versus-open state gap; declared_tuple_028 shows neither under the generic lateral impulse and remains non-identifiable. Rows 029, 041 and 149 remain blocked by the prior command contract. This validates a causal measurement path only; no stability, assignment, parameter value or behavior is accepted.
   - The separately preregistered local non-amplification gate executes 650 finite 0.2-second episodes over all 65 active rows: exact baseline replay plus four mirrored forward/roll perturbations in frozen-command and live-feedback modes. Three exact composites (129, 141 and 238) pass every locked command-adaptation, physical-identifiability, final-position, final-velocity and failure-mask criterion; 61 are mixed or amplifying and row 028 remains non-identifiable. The three survivors form an unranked finite local technical ensemble. This is not an individual value promotion, whole-body stability, physiology or behavior; the 172 silent rows and three command-contract blocks remain outside this validation.
+  - The member-conditioned freeze-boundary compiler reconstructs all three survivors from their exact hash-locked schedule rows and assigns a semantic hash to every complete sensory-central-motor bundle. Their factors remain indivisible: zero sensory, central or motor family is independently frozen, no member is ranked, and no reference member is selected. All six basal families are explicitly accounted as not exercised and receive no implicit zero/default. The first bounded whole-body technical preview must propagate all three bundles through a separately declared low-capacity basal grid, then stop for user visual inspection before any inspection-driven tuning.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
   - The FeCO local fitting procedure completed all 86 leave-one-animal-out folds across seven source/boundary candidates on 33,766 retained rows, with zero blocked folds. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. The complete candidate ensemble remains unpromoted, no runtime parameter set is selected, and the comparison does not identify native event-versus-graded dynamics.
@@ -137,9 +140,9 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Propagate the three-member exact-composite local technical ensemble without
-  ranking into separately versioned sensory, motor and basal freeze campaigns.
-  Keep all three members until independent local evidence can discriminate them,
-  retain the 172 silent rows, declared_tuple_028 and the three command-contract
-  blocks as explicit unresolved strata, and do not present this short-horizon
-  local result as whole-body stability or physiology.
+  Preregister a low-capacity basal hypothesis grid, then execute the first bounded
+  whole-body technical sentinel for every one of the three exact member-conditioned
+  bundles without ranking them. Retain the 172 silent rows, declared_tuple_028 and
+  the three command-contract blocks as explicit unresolved strata. After producing
+  a replay/viewable technical preview, stop for the required user checkpoint before
+  any inspection-driven tuning; do not present the run as physiology or behavior.

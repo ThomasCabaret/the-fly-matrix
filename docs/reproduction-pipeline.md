@@ -351,6 +351,17 @@ campaigns, but it is not the calibrated reference fly, whole-body stability,
 physiology or behavior. All three members must be propagated until independent
 local evidence can discriminate them.
 
+The next deterministic step is
+`front_leg_member_conditioned_freeze_boundary.bat`. It verifies the frozen parent
+hashes and exact schedule, reconstructs all three survivors as indivisible
+sensory-central-motor bundles, and writes a semantic hash for each. It performs no
+optimization, ranking or independent family freeze. It also records the six basal
+families as not exercised rather than silently assigning zero. The following
+whole-body technical sentinel must consume all three bundles plus a separately
+preregistered low-capacity basal grid. Once it emits a replay/viewable preview,
+the pipeline stops for a user checkpoint before any visual-inspection-driven
+parameter change.
+
 ### Historical neural-model gate
 
 The rate/LIF global gate is closed with `revise` and is not a prerequisite to

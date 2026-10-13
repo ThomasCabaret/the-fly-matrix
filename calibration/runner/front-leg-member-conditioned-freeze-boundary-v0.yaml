@@ -1,0 +1,189 @@
+schema_version: 1
+id: runner_result.front_leg_member_conditioned_freeze_boundary.v0
+campaign_id: campaign.front_leg_member_conditioned_freeze_boundary.v0
+status: completed_member_conditioned_compilation
+completed_at: '2026-10-13T18:26:09.352343+00:00'
+command: front_leg_member_conditioned_freeze_boundary.bat
+claim_label: MEMBER-CONDITIONED COMPILATION / NO INDEPENDENT FAMILY FREEZE / NO BEHAVIOR
+accounting:
+  expected_members: 3
+  compiled_bundles: 3
+  independent_family_freezes: 0
+  basal_families_not_exercised: 6
+  numeric_optimization_steps: 0
+  named_behavior_exposures: 0
+bundles:
+- member_id: declared_tuple_129
+  factors:
+    sensory:
+      family_ids:
+      - parameter.proprioception.routing.v0
+      - parameter.proprioception.transfer.v0
+      values:
+        feco_routing_profile_id: feco_route_48
+        feco_alternative_id: feco_04_event_candidate
+        feco_source_path_index: 4
+        feco_native_representation: event_candidate
+      semantic_sha256: 31d141323f907abad8e83b5c64c408a2d7176faf8b05ecdd351a530c38d642ee
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+    central:
+      family_ids:
+      - parameter.central.transmitter_sign_prior.v0
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+      values:
+        unknown_sign_profile_id: unknown_sign_01
+        numeric_profile_id: numeric_09
+        intermediate_profile_id: hash_03_complement
+        graded_membrane_tau_s: 0.02
+        dimensionless_input_scale: 1.0
+        unresolved_event_intensity_ceiling_hz: 200.0
+      semantic_sha256: ab0832e3e1d00f2265c9d41236c2dada98484341ecdde8dd34e4ffa12452f9d0
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+    motor:
+      family_ids:
+      - parameter.motor.routing.v0
+      - parameter.motor.transfer.v0
+      values:
+        motor_assignment_index: 77
+        motor_assignment_signature: IFIIFFIFFF
+        route_body_id: 807165
+        route_target_actuator_id: 45
+        route_target_actuator_name: lf_tarsus3-lf_tarsus4-pitch-motor
+        bridge_gain_index: 0
+        bridge_gain_command_per_uN: 4.378764060895075e-05
+      semantic_sha256: cd54bc7439d66d3ec0a065dbc3f2ef8474f6ed21c7fd369f1d71ccaeb05d54c7
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+  coupling_contract: sensory_central_motor_values_are_an_indivisible_exact_composite
+  bundle_semantic_sha256: 96d856e29160fe346bace6866358c466d1295e60b7bb451727774e8be58f3730
+- member_id: declared_tuple_141
+  factors:
+    sensory:
+      family_ids:
+      - parameter.proprioception.routing.v0
+      - parameter.proprioception.transfer.v0
+      values:
+        feco_routing_profile_id: feco_route_60
+        feco_alternative_id: feco_10_event_candidate
+        feco_source_path_index: 10
+        feco_native_representation: event_candidate
+      semantic_sha256: bafc0ba068668cc229ab09dacfbeef0f19cbb8cad7cdfb17e598e641bb2b4f00
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+    central:
+      family_ids:
+      - parameter.central.transmitter_sign_prior.v0
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+      values:
+        unknown_sign_profile_id: unknown_sign_13
+        numeric_profile_id: numeric_09
+        intermediate_profile_id: hash_09_complement
+        graded_membrane_tau_s: 0.02
+        dimensionless_input_scale: 1.0
+        unresolved_event_intensity_ceiling_hz: 200.0
+      semantic_sha256: 2dbdc88aff3271a71a5e97c3c2cce7627ff0fc5d36612eedfdf6ea6394b8424e
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+    motor:
+      family_ids:
+      - parameter.motor.routing.v0
+      - parameter.motor.transfer.v0
+      values:
+        motor_assignment_index: 181
+        motor_assignment_signature: IFIFIIFIFF
+        route_body_id: 809912
+        route_target_actuator_id: 46
+        route_target_actuator_name: lf_tarsus4-lf_tarsus5-pitch-motor
+        bridge_gain_index: 0
+        bridge_gain_command_per_uN: 4.378764060895075e-05
+      semantic_sha256: d708003a46e6dfe9dd5419cd607a835f8668a1e126036f5eca0102e14ad17a84
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+  coupling_contract: sensory_central_motor_values_are_an_indivisible_exact_composite
+  bundle_semantic_sha256: 9bb0bc037dce53839502cdb745a9d2cc987d72c908f75bd0b0a2eed2d3c04e62
+- member_id: declared_tuple_238
+  factors:
+    sensory:
+      family_ids:
+      - parameter.proprioception.routing.v0
+      - parameter.proprioception.transfer.v0
+      values:
+        feco_routing_profile_id: feco_route_76
+        feco_alternative_id: feco_11_graded_candidate
+        feco_source_path_index: 11
+        feco_native_representation: graded_candidate
+      semantic_sha256: 134e3adeefc016a69e3a16d728a2bf8666058379428ac8cb99dd093f975d3ecf
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+    central:
+      family_ids:
+      - parameter.central.transmitter_sign_prior.v0
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+      values:
+        unknown_sign_profile_id: unknown_sign_46
+        numeric_profile_id: numeric_10
+        intermediate_profile_id: hash_08
+        graded_membrane_tau_s: 0.02
+        dimensionless_input_scale: 2.0
+        unresolved_event_intensity_ceiling_hz: 100.0
+      semantic_sha256: e7ccc6a67f2a5a1c1a89c8585670c03fc1b0c4e0fc31934bf65f4cf2c8b9aeb6
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+    motor:
+      family_ids:
+      - parameter.motor.routing.v0
+      - parameter.motor.transfer.v0
+      values:
+        motor_assignment_index: 1014
+        motor_assignment_signature: FIIFIIIIII
+        route_body_id: 807165
+        route_target_actuator_id: 44
+        route_target_actuator_name: lf_tarsus2-lf_tarsus3-pitch-motor
+        bridge_gain_index: 1
+        bridge_gain_command_per_uN: 0.00021412115971164783
+      semantic_sha256: 2208e5450be76929fd1d00cfdc2cf1aa353e8e873b9fe3eb8a9e56d7ca31f911
+      freeze_disposition: member_conditioned_only_not_independently_frozen
+  coupling_contract: sensory_central_motor_values_are_an_indivisible_exact_composite
+  bundle_semantic_sha256: faaa19a863d5ae73d1bd00a9a44b2fa09fe36aeaadaab667cc14a268827c6310
+family_dispositions:
+  parameter.proprioception.routing.v0: member_conditioned_only_not_independently_frozen
+  parameter.proprioception.transfer.v0: member_conditioned_only_not_independently_frozen
+  parameter.central.transmitter_sign_prior.v0: member_conditioned_only_not_independently_frozen
+  parameter.central.synaptic_efficacy.v0: member_conditioned_only_not_independently_frozen
+  parameter.central.neuron_dynamics.v0: member_conditioned_only_not_independently_frozen
+  parameter.motor.routing.v0: member_conditioned_only_not_independently_frozen
+  parameter.motor.transfer.v0: member_conditioned_only_not_independently_frozen
+  parameter.baseline.olfaction.v0: not_exercised_no_freeze
+  parameter.baseline.gustation.v0: not_exercised_no_freeze
+  parameter.baseline.thermohygro.v0: not_exercised_no_freeze
+  parameter.residual_sensory.chemosensory_nominal.v0: not_exercised_no_freeze
+  parameter.residual_sensory.mechanosensory_tbc_nominal.v0: not_exercised_no_freeze
+  parameter.residual_sensory.unknown_nominal.v0: not_exercised_no_freeze
+checks:
+  all_expected_members_accounted: true
+  exact_member_order_preserved: true
+  all_factor_fields_present: true
+  independent_family_freezes_zero: true
+  all_basal_families_accounted_not_exercised: true
+  no_member_ranking_or_reference_selection: true
+  zero_numeric_optimization_zero_behavior_exposure: true
+  human_checkpoint_required_before_post_global_visual_tuning: true
+human_checkpoint:
+  required_before_post_global_visual_tuning: true
+  first_checkpoint_kind: technical_embodied_preview
+  held_out_behavior_opened: false
+  policy: A future first whole-body run may be inspected by the user as a technical
+    integration checkpoint. No automatic parameter changes may follow that inspection.
+    Any change aimed at a named action creates an explicitly behavior-exposed lineage.
+accepted_claims:
+- The three local technical ensemble members are reconstructible as exact member-conditioned
+  bundles.
+- Every involved parameter family has an explicit freeze disposition.
+- Basal families are accounted as not exercised and remain unresolved.
+forbidden_claims:
+- Any sensory central motor or basal family is independently calibrated or frozen.
+- Any one member is preferred biologically or technically beyond the parent exact-composite
+  gate.
+- The bundles establish whole-body stability physiology or behavior.
+next_action: Use all three conditioned bundles in the first bounded whole-body technical
+  sentinel while keeping basal hypotheses as a separately declared low-capacity uncertainty
+  grid. Stop for the required human visual checkpoint before any inspection-driven
+  tuning.
+semantic_result_sha256: 190306bb9d0553f63ecf48911bd277d993ee43fd508b9d7db2e62ff34f7ceaed

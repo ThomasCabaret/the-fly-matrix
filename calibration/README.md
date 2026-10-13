@@ -509,3 +509,13 @@ amplifying and row 028 remains non-identifiable. The resulting parameter-set fil
 is a finite local technical ensemble, not a biological reference: it promotes no
 individual value, does not resolve the 172 silent rows or three command blocks,
 and does not establish whole-body stability or behavior.
+
+Run `front_leg_member_conditioned_freeze_boundary.bat` to turn those three exact
+survivors into reconstructible, hash-addressed runtime bundles. This is a
+compilation boundary, not another fit: each bundle keeps its sensory, central and
+motor factors coupled by member ID, selects no reference and freezes no marginal
+family. The command also accounts for all six basal families as
+`not_exercised_no_freeze`; it never invents a zero/default basal drive. Its output
+is the only accepted input from this local ensemble to the future bounded
+whole-body sentinel. That sentinel must produce a viewable technical preview and
+pause for user inspection before inspection-driven tuning.

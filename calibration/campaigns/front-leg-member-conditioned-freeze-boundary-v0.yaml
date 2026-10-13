@@ -1,0 +1,133 @@
+schema_version: 1
+id: campaign.front_leg_member_conditioned_freeze_boundary.v0
+title: Reconstructible member-conditioned freeze boundary for the local front-leg ensemble
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: MEMBER-CONDITIONED COMPILATION / NO INDEPENDENT FAMILY FREEZE / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Expand every accepted exact composite from the local feedback
+  non-amplification gate into a reconstructible runtime bundle. Preserve the
+  coupling between sensory, central and motor factors instead of treating a
+  surviving factor level as independently validated. Account explicitly for
+  basal families, which were not exercised by the parent campaign.
+
+frozen_inputs:
+  accepted_ensemble: calibration/parameter_sets/front-leg-local-feedback-nonamplifying-ensemble-v0.yaml
+  accepted_ensemble_sha256: 6fba7fa017c0f893bb4db1033bc095d246a5abe4c9fabfda7f1cfaf35e723fba
+  parent_result: calibration/runner/neutral-embodied-feedback-nonamplification-v0.yaml
+  parent_result_sha256: b23c87399860992403872782ec999186a67d4bca8393cdcd37a4e4f97ed9d155
+  parent_semantic_sha256: 32d5c285a3f96a1f0d536f115a39ef500bdd613e4af641a44bc97dbd0b8e3880
+  exact_schedule: calibration/schedules/neutral-embodied-declared-envelope-v0.csv
+  exact_schedule_sha256: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+  declared_envelope: calibration/parameter_sets/neutral-embodied-declared-envelope-v0.yaml
+  topology_boundaries:
+    proprioception: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    motor: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+
+expected_parent_state:
+  exact_member_count: 3
+  exact_member_ids:
+    - declared_tuple_129
+    - declared_tuple_141
+    - declared_tuple_238
+  members_ranked: false
+  individual_parameter_values_promoted: 0
+
+factor_partition:
+  sensory:
+    family_ids:
+      - parameter.proprioception.routing.v0
+      - parameter.proprioception.transfer.v0
+    schedule_fields:
+      - feco_routing_profile_id
+      - feco_alternative_id
+      - feco_source_path_index
+      - feco_native_representation
+  central:
+    family_ids:
+      - parameter.central.transmitter_sign_prior.v0
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+    schedule_fields:
+      - unknown_sign_profile_id
+      - numeric_profile_id
+      - intermediate_profile_id
+      - graded_membrane_tau_s
+      - dimensionless_input_scale
+      - unresolved_event_intensity_ceiling_hz
+  motor:
+    family_ids:
+      - parameter.motor.routing.v0
+      - parameter.motor.transfer.v0
+    schedule_fields:
+      - motor_assignment_index
+      - motor_assignment_signature
+      - route_body_id
+      - route_target_actuator_id
+      - route_target_actuator_name
+      - bridge_gain_index
+      - bridge_gain_command_per_uN
+  basal:
+    family_ids:
+      - parameter.baseline.olfaction.v0
+      - parameter.baseline.gustation.v0
+      - parameter.baseline.thermohygro.v0
+      - parameter.residual_sensory.chemosensory_nominal.v0
+      - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+      - parameter.residual_sensory.unknown_nominal.v0
+    schedule_fields: []
+    required_disposition: not_exercised_no_freeze
+
+locked_rules:
+  - every accepted member is reconstructed from exactly one frozen schedule row
+  - no rejected silent non-identifiable or command-blocked row enters the bundle
+  - sensory central and motor factors remain coupled by exact member id
+  - no marginal factor level is promoted from exact-composite acceptance
+  - no basal value or zero default is inferred from absence in the local schedule
+  - no member is ranked or chosen as a reference
+
+acceptance:
+  all_expected_members_accounted: true
+  all_schedule_fields_present: true
+  exact_bundle_hashes_reproducible: true
+  independent_family_freezes_expected: 0
+  basal_families_accounted_not_exercised: 6
+  numeric_optimization_allowed: false
+
+human_checkpoint:
+  required_before_post_global_visual_tuning: true
+  first_checkpoint_kind: technical_embodied_preview
+  held_out_behavior_opened: false
+  policy: >-
+    A future first whole-body run may be inspected by the user as a technical
+    integration checkpoint. No automatic parameter changes may follow that
+    inspection. Any change aimed at a named action creates an explicitly
+    behavior-exposed lineage.
+
+outputs:
+  compact_result: calibration/runner/front-leg-member-conditioned-freeze-boundary-v0.yaml
+  evaluation: calibration/evaluations/front-leg-member-conditioned-freeze-boundary-v0.yaml
+  parameter_set: calibration/parameter_sets/front-leg-member-conditioned-bundles-v0.yaml
+
+accepted_claims:
+  - The three local technical ensemble members are reconstructible as exact member-conditioned bundles.
+  - Every involved parameter family has an explicit freeze disposition.
+  - Basal families are accounted as not exercised and remain unresolved.
+forbidden_claims:
+  - Any sensory central motor or basal family is independently calibrated or frozen.
+  - Any one member is preferred biologically or technically beyond the parent exact-composite gate.
+  - The bundles establish whole-body stability physiology or behavior.
+next_action: >-
+  Use all three conditioned bundles in the first bounded whole-body technical
+  sentinel while keeping basal hypotheses as a separately declared low-capacity
+  uncertainty grid. Stop for the required human visual checkpoint before any
+  inspection-driven tuning.

@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: local_feedback_nonamplification_pass_3_member_unranked_ensemble_61_mixed_1_not_identifiable_172_silent_3_blocked_whole_body_stability_open
+status: local_feedback_nonamplification_pass_3_member_conditioned_bundles_compiled_zero_independent_family_freezes_6_basal_not_exercised_whole_body_stability_open
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -302,6 +302,22 @@ local_feedback_nonamplification:
   named_behavior_exposed: false
   whole_body_stability_accepted: false
 
+member_conditioned_freeze_boundary:
+  campaign_id: campaign.front_leg_member_conditioned_freeze_boundary.v0
+  evaluation_id: evaluation.front_leg_member_conditioned_freeze_boundary.v0
+  runner_result_id: runner_result.front_leg_member_conditioned_freeze_boundary.v0
+  parameter_set_id: parameters.front_leg_member_conditioned_bundles.v0
+  runner_semantic_sha256: 190306bb9d0553f63ecf48911bd277d993ee43fd508b9d7db2e62ff34f7ceaed
+  status: accepted_reconstructible_conditioned_bundles_not_family_freeze
+  compiled_exact_members: 3
+  member_ids: [declared_tuple_129, declared_tuple_141, declared_tuple_238]
+  independent_family_freezes: 0
+  basal_families_not_exercised: 6
+  members_ranked: false
+  reference_member_selected: false
+  human_checkpoint_required_after_first_whole_body_preview: true
+  whole_body_stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -320,7 +336,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_pass_neural_240_pass_causal_sentinel_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_nonamplification_3_member_unranked_local_ensemble_61_mixed_172_silent_whole_body_stability_unresolved
+validation: measurement_contract_pass_neural_240_pass_causal_sentinel_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_nonamplification_3_member_unranked_local_ensemble_reconstructed_zero_independent_family_freezes_6_basal_not_exercised_whole_body_stability_unresolved
 blocked_reason: >-
   The complete measurement contract, exact schedule, earlier implementation
   sentinels and the full
@@ -365,9 +381,14 @@ blocked_reason: >-
   pass every locked paired non-amplification criterion, 61 are mixed or
   amplifying and row 028 remains non-identifiable. These three members are kept
   as an unranked local technical ensemble; no individual factor is inferred from
-  the confounded schedule and whole-body stability remains unresolved.
+  the confounded schedule and whole-body stability remains unresolved. The next
+  compiler reconstructs all three exact schedule rows into hash-addressed bundles
+  but deliberately freezes no marginal family: sensory, central and motor factors
+  remain coupled by member, while all six basal families are marked not exercised.
+  This closes reproducibility of propagation, not local or global calibration.
 next_action: >-
-  Propagate all three exact-composite members without ranking into separately
-  versioned local sensory, motor and basal freeze campaigns. Preserve the 172
-  silent rows, row 028 and the three command-contract blocks as unresolved
-  strata; do not treat this bounded result as whole-body stability.
+  Preregister a low-capacity basal hypothesis grid and execute every exact
+  member-conditioned bundle in the first bounded whole-body technical sentinel.
+  Preserve the 172 silent rows, row 028 and the three command-contract blocks as
+  unresolved strata. Produce a replay/viewable preview, then stop for the required
+  user checkpoint before any inspection-driven tuning or stability claim.

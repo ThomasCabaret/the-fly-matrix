@@ -330,6 +330,18 @@ un ensemble technique local fini et non classé ; aucune valeur individuelle,
 physiologie, stabilité du corps entier ou comportement n'est promu. Les 172 routes
 silencieuses et les trois lignes bloquées restent explicitement non résolues.
 
+Un compilateur de frontière de gel conditionnelle est maintenant exécuté avec
+`front_leg_member_conditioned_freeze_boundary.bat`. Il reconstruit les trois
+survivants depuis leurs lignes exactes verrouillées par hash et produit un hash
+sémantique par bundle sensoriel–central–moteur. Il ne transforme pas leur succès
+composite en succès marginal : aucune famille n'est gelée indépendamment, aucun
+membre n'est classé ou choisi comme référence. Les six familles de sources basales
+sont comptées mais explicitement `not_exercised_no_freeze`, donc aucune valeur
+nulle implicite ne contaminera le prochain run. La prochaine étape est un sentinel
+technique corps entier borné sur les trois bundles et une petite grille basale
+préenregistrée ; après son premier replay visualisable, le projet doit s'arrêter
+pour un point de contrôle utilisateur avant tout réglage motivé par l'inspection.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -1151,6 +1163,7 @@ neutral_embodied_declared_closed_loop_sentinel.bat # 16 tuples/32 épisodes corp
 neutral_embodied_declared_closed_loop_panel.bat # 240 lignes comptées ; résultat courant 237 complètes/3 bloquées par limite MOTOR ; zéro clipping/sélection
 neutral_embodied_command_limit_diagnostic.bat # 3 lignes x 2 branches x 2 répétitions ; localise le premier franchissement sans l'appliquer
 neutral_embodied_feedback_nonamplification.bat # 65 lignes actives x 10 épisodes ; produit l'ensemble technique local non classé de 3 composites
+front_leg_member_conditioned_freeze_boundary.bat # reconstruit les 3 bundles exacts ; zéro gel marginal, 6 familles basales non exercées
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

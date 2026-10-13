@@ -1,0 +1,39 @@
+schema_version: 1
+id: evaluation.front_leg_member_conditioned_freeze_boundary.v0
+campaign_id: campaign.front_leg_member_conditioned_freeze_boundary.v0
+runner_result_id: runner_result.front_leg_member_conditioned_freeze_boundary.v0
+runner_semantic_sha256: 190306bb9d0553f63ecf48911bd277d993ee43fd508b9d7db2e62ff34f7ceaed
+parameter_set_id: parameters.front_leg_member_conditioned_bundles.v0
+status: accepted_reconstructible_compilation
+checks:
+  all_expected_members_accounted: true
+  exact_member_order_preserved: true
+  all_factor_fields_present: true
+  independent_family_freezes_zero: true
+  all_basal_families_accounted_not_exercised: true
+  no_member_ranking_or_reference_selection: true
+  zero_numeric_optimization_zero_behavior_exposure: true
+  human_checkpoint_required_before_post_global_visual_tuning: true
+compiled_member_ids:
+- declared_tuple_129
+- declared_tuple_141
+- declared_tuple_238
+independent_family_freezes: 0
+basal_family_disposition: not_exercised_no_freeze
+whole_body_stability_accepted: false
+population_assignment_accepted: false
+named_behavior_exposed: false
+interpretation: The three exact local composites are reconstructible and may be propagated
+  without ranking. Their sensory, central and motor factors remain confounded; basal
+  families remain unexercised.
+human_checkpoint:
+  required_before_post_global_visual_tuning: true
+  first_checkpoint_kind: technical_embodied_preview
+  held_out_behavior_opened: false
+  policy: A future first whole-body run may be inspected by the user as a technical
+    integration checkpoint. No automatic parameter changes may follow that inspection.
+    Any change aimed at a named action creates an explicitly behavior-exposed lineage.
+next_action: Use all three conditioned bundles in the first bounded whole-body technical
+  sentinel while keeping basal hypotheses as a separately declared low-capacity uncertainty
+  grid. Stop for the required human visual checkpoint before any inspection-driven
+  tuning.
