@@ -1,0 +1,32 @@
+schema_version: 1
+id: evaluation.neutral_embodied_command_factor_isolation.v0
+campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
+runner_result_id: runner_result.neutral_embodied_command_factor_isolation.v0
+runner_semantic_sha256: c2f7184aa000885e64950cbd1efd310801339549674fa65381c94898104646f5
+status: fail
+checks:
+  exact_failed_tuple_identity: true
+  all_12_variants_accounted: true
+  all_24_probe_episodes_accounted: true
+  each_variant_changes_exactly_one_conceptual_factor: true
+  every_single_factor_ablation_completed_within_limit: false
+  offending_commands_never_applied: true
+  all_240_policy_rows_accounted: true
+  exact_237_within_and_3_blocked_dispositions: true
+  zero_clipping_threshold_change_fit_selection_promotion_behavior: true
+  within_compute_budget: true
+policy_scope: open
+blocked_tuple_ids:
+- declared_tuple_029
+- declared_tuple_041
+- declared_tuple_149
+candidate_selected: false
+parameter_promoted: false
+stability_accepted: false
+behavior_claimed: false
+interpretation: A pass closes only exact-row direct-MOTOR command-contract accounting
+  for the immutable 240-row schedule. The 237 completed rows remain unselected and
+  scientifically uncalibrated.
+next_action: If this gate passes, preserve the three exact-row blocks while carrying
+  the 237 technically executable rows into a separately preregistered, behavior-naive
+  stability/identifiability gate. Do not rank them from this panel.

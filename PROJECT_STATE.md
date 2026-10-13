@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-12. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-13. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -281,6 +281,27 @@ entre 029 et 149, mais cette observation ne prouve pas quel facteur est causal e
 n'autorise aucun clipping ou rejet de domaine. La prochaine étape est donc le
 plus petit panneau d'isolation factorielle préenregistré, puis une politique de
 pathologie technique appliquée à toutes les 240 lignes.
+
+Ce panneau d'isolation a été exécuté et son échec est conservé. Il teste quatre
+ablations à un seul facteur autour de chacune des trois lignes, dans les deux
+branches : 12 variantes et 24 probes au total. Le gain médian termine 6/6 probes,
+mais les ablations numériques ne définissent pas un domaine sûr : dix branches
+atteignent encore la limite et seulement 14/24 probes terminent. L'analyse du
+planning révèle en outre que chacun des douze profils numériques n'y apparaît
+qu'avec un seul des trois gains ; leurs effets principaux sont donc confondus dans
+ce panneau historique. Aucune règle générale sur un gain ou un profil numérique
+n'est tirée de ce résultat.
+
+La politique indépendante suivante est maintenant fermée par
+`neutral_embodied_command_pathology_policy.bat`. Elle ne généralise pas : les 240
+lignes immuables ont chacune une disposition versionnée, 237 sont seulement
+« observées dans la limite MOTOR » et peuvent entrer dans le prochain gate
+technique, tandis que 029, 041 et 149 restent bloquées comme composites exacts.
+Cela ne sélectionne ni ne promeut aucun survivant et n'accepte pas la stabilité.
+Une combinaison nouvelle ou modifiée n'hérite jamais de ce statut : elle doit
+exécuter le même garde avant application et échouer fermée. Le front actif devient
+donc un gate de stabilité et d'identifiabilité sans comportement nommé sur les 237
+lignes admises, avec le hash de cette politique gelé.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence

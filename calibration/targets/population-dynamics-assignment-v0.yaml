@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_full_physical_accounting_failed_3_command_limit_rows_deterministically_localized_policy_open
+status: active_front_leg_conversion_contracts_executable_exact_command_policy_237_rows_admitted_3_composites_blocked_stability_open
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,7 +64,7 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_neural_240_of_240_causal_sentinel_pass_full_panel_237_complete_3_limit_failures_12_of_12_diagnostic_repeats_zero_values_promoted
+validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_neural_240_of_240_causal_sentinel_pass_full_panel_237_complete_3_limit_failures_factor_panel_14_complete_10_crossings_exact_policy_237_admitted_3_blocked_zero_values_promoted
 blocked_reason: null
 next_action: >-
   The first chain accounts for all 196 unique bodies. Its 240-row declared
@@ -76,6 +76,11 @@ next_action: >-
   all 240 rows but fails honestly: 237 complete both branches and rows 029, 041
   and 149 exceed the frozen direct-MOTOR command contract before application.
   The separate locked diagnostic reproduces all six failed branches twice and
-  localizes finite first crossings at 63.4--103.6 ms without applying them.
-  Preregister the factor-isolation/pathology policy for all 240 rows. Do not clip,
-  rank from motion or promote the 237 completed rows.
+  localizes finite first crossings at 63.4--103.6 ms without applying them. A
+  preregistered one-factor panel then fails honestly: 14/24 probes complete and
+  ten numeric-ablation branches still cross, while all six middle-gain probes
+  complete. Because the original schedule confounds each numeric profile with one
+  gain, the accepted follow-up policy remains exact-row only. It admits 237 rows
+  to the next technical gate, blocks exactly 029, 041 and 149, rejects no broad
+  factor domain and promotes nothing. Next build the behavior-naive stability and
+  identifiability gate over those 237 exact rows with the command guard frozen.

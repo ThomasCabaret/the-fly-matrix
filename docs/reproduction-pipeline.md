@@ -312,6 +312,24 @@ not define a rejection rule. The active frontier is the smallest preregistered
 factor-isolation panel plus a technical pathology policy that accounts for all
 240 rows; consult `calibration/state.yaml` before adding that campaign.
 
+That factor panel now exists as
+`neutral_embodied_command_factor_isolation.bat` and is intentionally versioned as
+a failed gate. It accounts 24/24 probes: all six middle-gain probes complete, but
+ten of eighteen numeric-ablation probes still cross the frozen command limit.
+Re-running it must reproduce the failure; do not change its criterion or clip the
+commands. It also exposes that each numeric profile in the historical schedule is
+paired with only one gain, so that schedule cannot estimate their independent
+main effects.
+
+Run `neutral_embodied_command_pathology_policy.bat` to reproduce the accepted
+exact-schedule policy. It performs no physical simulation: it hash-checks the
+failed factor result and exhaustive lineage, then regenerates the 240-row policy
+CSV. The expected result admits 237 exact rows to the next technical gate and
+blocks rows 029, 041 and 149. No broad factor domain is rejected, no row is
+selected or promoted, and any unseen combination must execute the same command
+guard fail-closed. The current continuation action is the behavior-naive stability
+and identifiability gate named in `calibration/state.yaml`.
+
 ### Historical neural-model gate
 
 The rate/LIF global gate is closed with `revise` and is not a prerequisite to

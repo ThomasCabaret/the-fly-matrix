@@ -1,0 +1,99 @@
+schema_version: 1
+id: campaign.neutral_embodied_command_pathology_policy.v1
+title: Exact-schedule direct-MOTOR pathology disposition after failed factor generalization
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: EXACT SCHEDULE COMMAND POLICY / UNSEEN COMBINATIONS FAIL CLOSED / NO SELECTION
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Compile a complete disposition for the immutable 240-row schedule using the
+  pre-existing absolute direct-MOTOR limit and its exhaustive observed outcomes.
+  The failed factor-isolation campaign is retained as negative evidence: middle
+  gain prevented all six reference crossings, but adjacent numeric changes did
+  not. Therefore no gain or numeric-profile domain is rejected or accepted as a
+  whole. Only the three observed failing composites are blocked; any unseen or
+  modified combination must execute the same guard and cannot inherit safety.
+
+frozen_inputs:
+  factor_campaign: calibration/campaigns/neutral-embodied-command-factor-isolation-v0.yaml
+  factor_campaign_sha256: ed50d48c56066b04d973e79b46b14c98b392257821340b49c5573bed5f26ac16
+  factor_result: calibration/runner/neutral-embodied-command-factor-isolation-v0.yaml
+  factor_result_sha256: 3dac5a2201741eb1ce7cf8225b7ca37a33afefc7391d7a3898eb21ea0d6311e3
+  factor_result_semantic_sha256: c2f7184aa000885e64950cbd1efd310801339549674fa65381c94898104646f5
+  factor_evaluation: calibration/evaluations/neutral-embodied-command-factor-isolation-v0.yaml
+  factor_evaluation_sha256: 424e4ee1aabe87f3472d052ed5c62c8c63f1627cd375416ee581afd69b153e4f
+
+evidence_interpretation:
+  factor_campaign_status_expected: failed_factor_isolation_policy_open
+  complete_probe_accounting_required: 24
+  observed_completed_probes: 14
+  observed_crossing_probes: 10
+  middle_gain_probes_completed: 6
+  numeric_ablation_crossing_probes: 10
+  declared_schedule_design_warning: >-
+    Each of the twelve numeric profiles appears with exactly one of the three
+    bridge gains in the original 240-row schedule. Main effects of numeric profile
+    and gain are therefore not independently identifiable from that panel.
+
+policy_contract:
+  scope: exact_immutable_240_row_schedule
+  output: calibration/schedules/neutral-embodied-command-pathology-policy-v1.csv
+  dispositions:
+    completed: observed_within_direct_motor_contract_not_promoted
+    failed: blocked_exact_composite_direct_motor_limit
+  expected_completed: 237
+  expected_blocked: 3
+  expected_blocked_tuple_ids: [declared_tuple_029, declared_tuple_041, declared_tuple_149]
+  broad_gain_domains_rejected: []
+  broad_numeric_domains_rejected: []
+  unseen_combination_policy: execute_same_pre_application_guard_fail_closed
+  inheritance_policy: no_safety_inheritance_from_shared_factor_or_neighbor
+
+acceptance:
+  criteria_locked_before_compilation: true
+  require_factor_campaign_failure_preserved: true
+  require_complete_24_probe_factor_accounting: true
+  require_exact_14_complete_10_crossing_factor_outcomes: true
+  require_middle_gain_6_of_6_complete: true
+  require_numeric_ablation_crossings_retained: true
+  require_numeric_gain_confounding_reported: true
+  require_all_240_schedule_rows_accounted: true
+  require_exact_237_completed_and_3_blocked: true
+  allow_broad_factor_rejection: false
+  allow_safety_inheritance_to_unseen_combinations: false
+  allow_clipping: false
+  allow_threshold_change: false
+  allow_candidate_ranking: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+
+accepted_claims:
+  - The immutable schedule has a complete exact-row direct-MOTOR command disposition.
+  - The three observed failing composites are blocked before invalid command application.
+  - The remaining 237 rows may enter the next technical gate but are not selected or promoted.
+  - The original schedule cannot independently estimate numeric-profile and gain main effects.
+forbidden_claims:
+  - A broad gain or numeric-profile domain is safe or invalid.
+  - A neighboring factor value repairs, calibrates or validates an original row.
+  - Any row is stable, physiological, behavioral or scientifically promoted.
+  - An unseen combination may bypass the pre-application command guard.
+next_action: >-
+  Build the next behavior-naive stability and identifiability gate over the 237
+  exact rows admitted by this command contract. Keep the three blocks explicit,
+  freeze the policy hash, and independently cross gain with numeric factors only
+  if a later claim requires their separate effects.

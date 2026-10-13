@@ -1,0 +1,136 @@
+schema_version: 1
+id: campaign.neutral_embodied_command_factor_isolation.v0
+title: Single-factor isolation and exact-row direct-MOTOR pathology policy
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+parameter_set_id: parameters.neutral_embodied_declared_envelope.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: COMMAND FACTOR ISOLATION / EXACT-ROW POLICY / NO CLIPPING / NO FIT / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Apply the smallest one-coordinate-at-a-time panel around the three deterministic
+  direct-MOTOR command-limit failures. Test the middle bridge gain and each of the
+  three immediately adjacent numeric coordinates while preserving every other
+  schedule coordinate and seed. If every ablation completes both branches under
+  the frozen limit, close the current schedule's pathology accounting at exact
+  composite-row scope: block only the three observed failing rows and record the
+  other 237 as observed within the command contract, never as selected, stable or
+  biologically valid.
+
+frozen_inputs:
+  diagnostic_campaign: calibration/campaigns/neutral-embodied-command-limit-diagnostic-v0.yaml
+  diagnostic_campaign_sha256: 5be05b2237b71c62a35456a070497209be506adadafb52a9c14bb9d8293454ef
+  diagnostic_result: calibration/runner/neutral-embodied-command-limit-diagnostic-v0.yaml
+  diagnostic_result_sha256: 16ee4857c7fb0f439a2d55edf55bdd24fa0bb29e05d0b251023f134c8366b3e8
+  diagnostic_result_semantic_sha256: cda65c69598f95fa9c943572232654995687aad7c2024c813c1be87257a900c3
+  diagnostic_evaluation: calibration/evaluations/neutral-embodied-command-limit-diagnostic-v0.yaml
+  diagnostic_evaluation_sha256: f1da390cee70c0384248702b7404b58e0a6fa5daad93fa3222d438eaf3038a18
+  declared_schedule: calibration/schedules/neutral-embodied-declared-envelope-v0.csv
+  declared_schedule_sha256: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+
+factor_isolation:
+  failed_tuple_ids: [declared_tuple_029, declared_tuple_041, declared_tuple_149]
+  branches: [baseline, perturbed]
+  repeats_per_branch: 1
+  reference_coordinates:
+    bridge_gain_index: 2
+    bridge_gain_command_per_uN: 0.0010470505009783303
+    numeric_profile_id: numeric_05
+    graded_membrane_tau_s: 0.01
+    dimensionless_input_scale: 2.0
+    unresolved_event_intensity_ceiling_hz: 200.0
+  ablations:
+    - id: bridge_gain_middle
+      changed_axis: bridge_gain
+      bridge_gain_index: 1
+      bridge_gain_command_per_uN: 0.00021412115971164783
+    - id: event_ceiling_100
+      changed_axis: unresolved_event_intensity_ceiling_hz
+      numeric_profile_id: numeric_04
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 2.0
+      unresolved_event_intensity_ceiling_hz: 100.0
+    - id: input_scale_1
+      changed_axis: dimensionless_input_scale
+      numeric_profile_id: numeric_03
+      graded_membrane_tau_s: 0.01
+      dimensionless_input_scale: 1.0
+      unresolved_event_intensity_ceiling_hz: 200.0
+    - id: graded_tau_20ms
+      changed_axis: graded_membrane_tau_s
+      numeric_profile_id: numeric_11
+      graded_membrane_tau_s: 0.02
+      dimensionless_input_scale: 2.0
+      unresolved_event_intensity_ceiling_hz: 200.0
+  expected_variants: 12
+  expected_probe_episodes: 24
+  motor_command_absolute_limit: 0.01
+  stop_policy: stop_before_first_nonfinite_or_absolute_limit_crossing
+  apply_offending_command: false
+
+policy_contract:
+  declared_schedule_rows: 240
+  completed_panel_rows: 237
+  observed_failed_rows: 3
+  output: calibration/schedules/neutral-embodied-command-pathology-policy-v0.csv
+  pass_scope: exact_observed_composite_rows_only
+  completed_row_disposition: observed_within_direct_motor_contract_not_promoted
+  failed_row_disposition: blocked_exact_composite_direct_motor_limit
+  broad_factor_rejection_allowed: false
+  rule: >-
+    The fixed absolute 0.01 direct-MOTOR limit is applied to the immutable panel
+    outcomes. A row that crossed is blocked as that exact composite row. A row
+    that completed is only recorded as observed within this technical contract.
+    Shared factor coordinates are not rejected as domains from three failures.
+  decision_tree:
+    all_single_factor_ablations_complete: close_exact_row_policy_and_report_interaction_localized
+    any_single_factor_ablation_crosses: fail_this_campaign_and_leave_broader_factor_scope_open
+
+acceptance:
+  criteria_locked_before_run: true
+  require_exact_failed_tuple_identity: true
+  require_each_variant_to_change_exactly_one_declared_factor: true
+  require_every_probe_episode_accounted: true
+  require_every_single_factor_ablation_to_complete_within_limit: true
+  require_all_240_policy_rows_accounted: true
+  require_exact_237_within_and_3_blocked_dispositions: true
+  require_offending_command_not_applied: true
+  allow_candidate_narrowing: false
+  allow_broad_factor_rejection: false
+  allow_threshold_change: false
+  allow_clipping: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+
+compute_budget:
+  probe_episodes: 24
+  maximum_wall_clock_minutes: 15
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - Every tested one-factor downgrade prevents the three observed crossings when this campaign passes.
+  - The exact 240-row schedule has a complete technical command-contract disposition.
+  - The evidence supports exact-composite blocking, not rejection of a complete gain or numeric-profile domain.
+forbidden_claims:
+  - Any of the 237 rows is selected, promoted, stable, physiological or behavioral.
+  - The middle gain or an adjacent numeric profile is preferred or calibrated.
+  - Clipping, saturation or a changed actuator limit repairs a failed row.
+  - The factor panel proves a unique causal factor or all untested combinations safe.
+next_action: >-
+  If this gate passes, preserve the three exact-row blocks while carrying the 237
+  technically executable rows into a separately preregistered, behavior-naive
+  stability/identifiability gate. Do not rank them from this panel.

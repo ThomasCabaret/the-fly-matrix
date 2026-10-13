@@ -718,6 +718,16 @@ interactions must be versioned before execution. A compiled schedule does not
 prove that its fields affect the runtime, so a small consumption sentinel precedes
 the costly physical campaign.
 
+Coverage of every level does not imply factor identifiability. Before interpreting
+main effects, compile the level-to-level incidence table: if one numeric profile
+always occurs with one gain, their effects are confounded even when both axes are
+individually balanced. A follow-up may still issue exact composite-row dispositions
+under an independent hard safety contract, but it must not label a whole factor
+domain safe or invalid. New combinations inherit no safety from neighboring rows;
+they execute the same pre-application guard or remain blocked. A failed locked
+factor panel is retained as evidence and may motivate a new crossed design, never
+rewritten into a successful campaign after inspection.
+
 The actuator-semantics gate and the relevant local sensory/motor scopes must be
 closed or explicitly frozen before this stage frees global parameters. Central,
 sensory, motor and mechanical families cannot all vary simultaneously unless a

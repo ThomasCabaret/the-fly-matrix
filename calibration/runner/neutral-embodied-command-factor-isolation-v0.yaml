@@ -1,0 +1,412 @@
+schema_version: 1
+id: runner_result.neutral_embodied_command_factor_isolation.v0
+campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
+status: failed_factor_isolation_policy_open
+completed_at: '2026-10-13T08:49:34.420642+00:00'
+claim_label: COMMAND FACTOR ISOLATION / EXACT-ROW POLICY / NO CLIPPING / NO FIT /
+  NO BEHAVIOR
+command: neutral_embodied_command_factor_isolation.bat
+frozen_input_sha256:
+  diagnostic_campaign: 5be05b2237b71c62a35456a070497209be506adadafb52a9c14bb9d8293454ef
+  diagnostic_result: 16ee4857c7fb0f439a2d55edf55bdd24fa0bb29e05d0b251023f134c8366b3e8
+  diagnostic_evaluation: f1da390cee70c0384248702b7404b58e0a6fa5daad93fa3222d438eaf3038a18
+  declared_schedule: f37964edcf702488d11bad30a06aa573fe4347338707d2de68ffd27b6452f3bb
+accounting:
+  failed_reference_tuples: 3
+  single_factor_variants: 12
+  probe_episodes: 24
+  completed_within_limit_probes: 14
+  first_limit_crossing_probes: 10
+  declared_policy_rows: 240
+  within_contract_rows: 237
+  blocked_exact_composite_rows: 3
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+checks:
+  exact_failed_tuple_identity: true
+  all_12_variants_accounted: true
+  all_24_probe_episodes_accounted: true
+  each_variant_changes_exactly_one_conceptual_factor: true
+  every_single_factor_ablation_completed_within_limit: false
+  offending_commands_never_applied: true
+  all_240_policy_rows_accounted: true
+  exact_237_within_and_3_blocked_dispositions: true
+  zero_clipping_threshold_change_fit_selection_promotion_behavior: true
+  within_compute_budget: true
+factor_outcomes:
+- tuple_id: declared_tuple_029
+  ablation_id: bridge_gain_middle
+  changed_axis: bridge_gain
+  changed_fields:
+  - bridge_gain_index
+  - bridge_gain_command_per_uN
+  factor_values:
+    bridge_gain_index: '1'
+    bridge_gain_command_per_uN: '0.00021412115971164783'
+    numeric_profile_id: numeric_05
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: 5a85218d5c2281222f7794bd976b9e8232a6b90640f0979d426ea9ebb0bdbb3c
+      peak_abs_command: 0.0028453958913473047
+      signature_sha256: 9c7520e91913fcda9076f2405334df32c56b12a7f50302c670925492b271c4d6
+    perturbed:
+      status: completed_within_limit
+      trace_sha256: 35a608b2467e2bfc7ead7c99df03472178e094d265cdc90b18557a221796732a
+      peak_abs_command: 0.0030306258192032078
+      signature_sha256: 63417f3f555331eaa6ff3b14a19c76003a35cfea0e0d7535dcb4c04bdbe6f4b8
+- tuple_id: declared_tuple_029
+  ablation_id: event_ceiling_100
+  changed_axis: unresolved_event_intensity_ceiling_hz
+  changed_fields:
+  - numeric_profile_id
+  - unresolved_event_intensity_ceiling_hz
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_04
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '100.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: b4bfa5012155554116240a7c62cfa4060d7e93fc6bcd8a5aa5fc74a96298021c
+      peak_abs_command: 0.004999977630000411
+      signature_sha256: 40dca34fa8a450c2737c22ce96644e0ea7becfb50f54d2092ff3cf94199af4e1
+    perturbed:
+      status: first_command_limit_crossing
+      native_step: 1069
+      time_s: 0.10690000000000001
+      attempted_command: 0.010030772326160101
+      absolute_attempted_command: 0.010030772326160101
+      target_actuator_id: 76
+      route_body_id: 810098
+      offending_command_applied: false
+      signature_sha256: 9e784f8fa52a65547a831b5ad8eb168171ea9840696fb9cc86efd9bc3978ba2c
+- tuple_id: declared_tuple_029
+  ablation_id: input_scale_1
+  changed_axis: dimensionless_input_scale
+  changed_fields:
+  - numeric_profile_id
+  - dimensionless_input_scale
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_03
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '1.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: 23cd611779b0d2101daa6ff69567b83695bcb17b466991874fbca29b1b0595c4
+      peak_abs_command: 0.004999977630000411
+      signature_sha256: 7ea357502392bf48134c6184d022b1c701f6968a7322e1d71101f98c68e690b9
+    perturbed:
+      status: completed_within_limit
+      trace_sha256: 11e20f9e83391e28901702f08ef1a2d690cc34bb21dc932c60985cfcc3ea87d3
+      peak_abs_command: 0.004999977630000411
+      signature_sha256: d637aad3335f059c3f61c5d801de6808f27d4b9b969a4ac792e59273b46a9f01
+- tuple_id: declared_tuple_029
+  ablation_id: graded_tau_20ms
+  changed_axis: graded_membrane_tau_s
+  changed_fields:
+  - numeric_profile_id
+  - graded_membrane_tau_s
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_11
+    graded_membrane_tau_s: '0.02'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: first_command_limit_crossing
+      native_step: 756
+      time_s: 0.0756
+      attempted_command: 0.010007069534486964
+      absolute_attempted_command: 0.010007069534486964
+      target_actuator_id: 76
+      route_body_id: 810098
+      offending_command_applied: false
+      signature_sha256: a7ddd63de0f937ad3e796dbd3fa228d18a4875c3b755ff12c0dae8184b4fb1b1
+    perturbed:
+      status: first_command_limit_crossing
+      native_step: 1016
+      time_s: 0.10160000000000001
+      attempted_command: 0.0100337097622687
+      absolute_attempted_command: 0.0100337097622687
+      target_actuator_id: 76
+      route_body_id: 810098
+      offending_command_applied: false
+      signature_sha256: 6cc15fa394463563975baa6c15d169567a5d06defa4280401b3c3307d4bd702c
+- tuple_id: declared_tuple_041
+  ablation_id: bridge_gain_middle
+  changed_axis: bridge_gain
+  changed_fields:
+  - bridge_gain_index
+  - bridge_gain_command_per_uN
+  factor_values:
+    bridge_gain_index: '1'
+    bridge_gain_command_per_uN: '0.00021412115971164783'
+    numeric_profile_id: numeric_05
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: 399ad0be4e2110f5939161f82c7d87f963e3eeb6892f0f5291a692308be5d94d
+      peak_abs_command: 0.0046567671335616834
+      signature_sha256: 2b8a1b056d08ec5c577e2d6571ec35a6882d3165d2d0384555edf0b2e94037c5
+    perturbed:
+      status: completed_within_limit
+      trace_sha256: d3a6207b23762993dc499cbb07fe77cf14ec6c3a8b7d71ffd8892a312408c422
+      peak_abs_command: 0.0051670240306431955
+      signature_sha256: fb5e1af6a49373d4e9740d84e4ac1e73c8087e9a48a09a2608e46f0b49c101c8
+- tuple_id: declared_tuple_041
+  ablation_id: event_ceiling_100
+  changed_axis: unresolved_event_intensity_ceiling_hz
+  changed_fields:
+  - numeric_profile_id
+  - unresolved_event_intensity_ceiling_hz
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_04
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '100.0'
+  branches:
+    baseline:
+      status: first_command_limit_crossing
+      native_step: 818
+      time_s: 0.0818
+      attempted_command: 0.010014754419754388
+      absolute_attempted_command: 0.010014754419754388
+      target_actuator_id: 44
+      route_body_id: 818057
+      offending_command_applied: false
+      signature_sha256: eb1e7feefc4a4eff5ecc39225f288703a63ed68cf2928397c3754fc920ec4f4b
+    perturbed:
+      status: first_command_limit_crossing
+      native_step: 773
+      time_s: 0.07730000000000001
+      attempted_command: 0.010055558421760629
+      absolute_attempted_command: 0.010055558421760629
+      target_actuator_id: 44
+      route_body_id: 818057
+      offending_command_applied: false
+      signature_sha256: 0bbe7af406a02688eac6863f6ac6c343381ba5e36462e95338209f4c9cdc96d7
+- tuple_id: declared_tuple_041
+  ablation_id: input_scale_1
+  changed_axis: dimensionless_input_scale
+  changed_fields:
+  - numeric_profile_id
+  - dimensionless_input_scale
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_03
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '1.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: 4df781ad3f254fa15189223903b010c0d5d6e0b871da8b6c3ca6e143a6999cbd
+      peak_abs_command: 0.009178497746651536
+      signature_sha256: 85617930046270d9a09cb841b04eb222acef35f510467ff05ed2acb9b65cd9d0
+    perturbed:
+      status: first_command_limit_crossing
+      native_step: 1028
+      time_s: 0.1028
+      attempted_command: 0.010010828416603508
+      absolute_attempted_command: 0.010010828416603508
+      target_actuator_id: 44
+      route_body_id: 818057
+      offending_command_applied: false
+      signature_sha256: 9113d5cc50b39bf74d4631772ed94e984ab69f9d00c3f98de0e9b6e2beb76f93
+- tuple_id: declared_tuple_041
+  ablation_id: graded_tau_20ms
+  changed_axis: graded_membrane_tau_s
+  changed_fields:
+  - numeric_profile_id
+  - graded_membrane_tau_s
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_11
+    graded_membrane_tau_s: '0.02'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: first_command_limit_crossing
+      native_step: 841
+      time_s: 0.08410000000000001
+      attempted_command: 0.010031637392533009
+      absolute_attempted_command: 0.010031637392533009
+      target_actuator_id: 44
+      route_body_id: 818057
+      offending_command_applied: false
+      signature_sha256: 1f41e6239fb662cd2b4d4770bae9ba8256fd9c7ea972767144b7bd8d703591ef
+    perturbed:
+      status: first_command_limit_crossing
+      native_step: 711
+      time_s: 0.0711
+      attempted_command: 0.010034245454879477
+      absolute_attempted_command: 0.010034245454879477
+      target_actuator_id: 44
+      route_body_id: 818057
+      offending_command_applied: false
+      signature_sha256: 4eaa9a6aaf6e87c63bb422ca244ad952e47cd7572c93466bc3f0de261f059ffe
+- tuple_id: declared_tuple_149
+  ablation_id: bridge_gain_middle
+  changed_axis: bridge_gain
+  changed_fields:
+  - bridge_gain_index
+  - bridge_gain_command_per_uN
+  factor_values:
+    bridge_gain_index: '1'
+    bridge_gain_command_per_uN: '0.00021412115971164783'
+    numeric_profile_id: numeric_05
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: 3082d542d291299cd84a5bddfdc2b1296d451c8836d8873fa49596372e3e0b63
+      peak_abs_command: 0.00365904747151831
+      signature_sha256: 239fb187c66b03595d00f27364c2e254f9915ed366e203c684507280fac31468
+    perturbed:
+      status: completed_within_limit
+      trace_sha256: 4ba26ef0484c97ccc7c85f28af2650f2131769c9288b57390c71ede87c701616
+      peak_abs_command: 0.003884247537904302
+      signature_sha256: 045d42cc567cb6448fe9d63e686f62c56fa4a1ab980a98607a8a29e042440451
+- tuple_id: declared_tuple_149
+  ablation_id: event_ceiling_100
+  changed_axis: unresolved_event_intensity_ceiling_hz
+  changed_fields:
+  - numeric_profile_id
+  - unresolved_event_intensity_ceiling_hz
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_04
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '100.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: 85e4b6b27979a0b8b0e34b5da342288cd99d185cd3feb20cd70c37813bfd2658
+      peak_abs_command: 0.007802153615399875
+      signature_sha256: 9d0c530304143554ac7ebdb345e17de1f69dfbae265203ce7ab21c12d924af05
+    perturbed:
+      status: completed_within_limit
+      trace_sha256: e43dcc104f1b73e926f296c263cc75ee7939c843cdcb236183d700bee9adb90e
+      peak_abs_command: 0.009914747008689028
+      signature_sha256: f167cd099f95500b416d4fac15340f5dd04fef2ade689c0d4c3c9945f15c461d
+- tuple_id: declared_tuple_149
+  ablation_id: input_scale_1
+  changed_axis: dimensionless_input_scale
+  changed_fields:
+  - numeric_profile_id
+  - dimensionless_input_scale
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_03
+    graded_membrane_tau_s: '0.01'
+    dimensionless_input_scale: '1.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: completed_within_limit
+      trace_sha256: 4343aeabe6c729ce5116563763456717baa45c20f58f94aaba0c0cd39408dde1
+      peak_abs_command: 0.0066219650466933086
+      signature_sha256: 4e944e95d3c2856666aabec85e0351c983a4bb11db98835577ea87069cd1a951
+    perturbed:
+      status: completed_within_limit
+      trace_sha256: 3a511da8f5e1d1236319e5d757ef74745f683119aeb491194e9c44f1c10a6bfa
+      peak_abs_command: 0.008892287746695222
+      signature_sha256: b3c896da4dc382618c5475a21705bc721a14f9fe3282413b38e147a40565aa2e
+- tuple_id: declared_tuple_149
+  ablation_id: graded_tau_20ms
+  changed_axis: graded_membrane_tau_s
+  changed_fields:
+  - numeric_profile_id
+  - graded_membrane_tau_s
+  factor_values:
+    bridge_gain_index: '2'
+    bridge_gain_command_per_uN: '0.0010470505009783303'
+    numeric_profile_id: numeric_11
+    graded_membrane_tau_s: '0.02'
+    dimensionless_input_scale: '2.0'
+    unresolved_event_intensity_ceiling_hz: '200.0'
+  branches:
+    baseline:
+      status: first_command_limit_crossing
+      native_step: 672
+      time_s: 0.06720000000000001
+      attempted_command: 0.010042279441781052
+      absolute_attempted_command: 0.010042279441781052
+      target_actuator_id: 76
+      route_body_id: 810098
+      offending_command_applied: false
+      signature_sha256: bd014b42c1cb37bdc4fe20fc2ee7172f934e6a0d1819e07731776cb109cf2d75
+    perturbed:
+      status: first_command_limit_crossing
+      native_step: 632
+      time_s: 0.0632
+      attempted_command: 0.0100566483898019
+      absolute_attempted_command: 0.0100566483898019
+      target_actuator_id: 76
+      route_body_id: 810098
+      offending_command_applied: false
+      signature_sha256: 0288c26875cd79ceea72a2b477a62e437ee81cc4cf870b5247bccc2f4707db2f
+policy:
+  scope: exact_observed_composite_rows_only
+  path: calibration/schedules/neutral-embodied-command-pathology-policy-v0.csv
+  rows: 240
+  within_contract_rows: 237
+  blocked_rows: 3
+  blocked_tuple_ids:
+  - declared_tuple_029
+  - declared_tuple_041
+  - declared_tuple_149
+  sha256: 23d2cfa165cba70f833b92f01b4c6e3bbfefc4d68ee275b46cc4f0cd0729a008
+  broad_factor_domains_rejected: []
+  survivor_meaning: observed within fixed command contract only; not selected or promoted
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+accepted_claims:
+- Every tested one-factor downgrade prevents the three observed crossings when this
+  campaign passes.
+- The exact 240-row schedule has a complete technical command-contract disposition.
+- The evidence supports exact-composite blocking, not rejection of a complete gain
+  or numeric-profile domain.
+forbidden_claims:
+- Any of the 237 rows is selected, promoted, stable, physiological or behavioral.
+- The middle gain or an adjacent numeric profile is preferred or calibrated.
+- Clipping, saturation or a changed actuator limit repairs a failed row.
+- The factor panel proves a unique causal factor or all untested combinations safe.
+wall_seconds: 68.32751110004028
+next_action: If this gate passes, preserve the three exact-row blocks while carrying
+  the 237 technically executable rows into a separately preregistered, behavior-naive
+  stability/identifiability gate. Do not rank them from this panel.
+semantic_result_sha256: c2f7184aa000885e64950cbd1efd310801339549674fa65381c94898104646f5

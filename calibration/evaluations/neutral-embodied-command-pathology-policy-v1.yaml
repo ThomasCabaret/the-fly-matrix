@@ -1,0 +1,32 @@
+schema_version: 1
+id: evaluation.neutral_embodied_command_pathology_policy.v1
+campaign_id: campaign.neutral_embodied_command_pathology_policy.v1
+runner_result_id: runner_result.neutral_embodied_command_pathology_policy.v1
+runner_semantic_sha256: 1a72b5d25caf24386fd06c8dd9d98a57dfab69750214423d563c3aa5081e34fe
+status: pass
+checks:
+  factor_campaign_failure_preserved: true
+  complete_24_probe_factor_accounting: true
+  exact_14_complete_10_crossing_factor_outcomes: true
+  middle_gain_6_of_6_complete: true
+  numeric_ablation_crossings_retained: true
+  numeric_gain_confounding_reported: true
+  all_240_schedule_rows_accounted: true
+  exact_237_completed_and_3_blocked: true
+  zero_broad_domain_rejection_clipping_ranking_promotion_behavior: true
+policy_scope: exact_immutable_240_row_schedule
+rows_admitted_to_next_technical_gate: 237
+blocked_tuple_ids:
+- declared_tuple_029
+- declared_tuple_041
+- declared_tuple_149
+candidate_selected: false
+parameter_promoted: false
+stability_accepted: false
+behavior_claimed: false
+interpretation: The exact schedule command guard is closed; factor-domain safety and
+  stability remain open.
+next_action: Build the next behavior-naive stability and identifiability gate over
+  the 237 exact rows admitted by this command contract. Keep the three blocks explicit,
+  freeze the policy hash, and independently cross gain with numeric factors only if
+  a later claim requires their separate effects.

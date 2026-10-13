@@ -471,3 +471,19 @@ decide whether the invalid domain is a composite row, the maximum bridge gain,
 numeric profile 05 or an interaction. It performs no clipping, narrowing,
 promotion, stability evaluation or behavior exposure. A separate preregistered
 factor-isolation/pathology campaign remains required.
+
+Run `neutral_embodied_command_factor_isolation.bat` to reproduce that locked
+factor campaign. Its failure is the accepted outcome of the experiment, not a
+runtime error: 14/24 probes complete and ten still cross before command
+application. All six middle-gain probes complete, whereas isolated numeric
+changes do not establish a safe domain. The historical schedule also pairs every
+numeric profile with exactly one gain, so it cannot identify their separate main
+effects. Keep this failed result immutable.
+
+Run `neutral_embodied_command_pathology_policy.bat` to rebuild the independently
+locked exact-row policy. It hash-checks the complete lineage and writes
+`calibration/schedules/neutral-embodied-command-pathology-policy-v1.csv`: 237 rows
+are observed within the fixed command contract and may enter the next technical
+gate; rows 029, 041 and 149 remain blocked. This is not candidate selection,
+parameter promotion or stability acceptance. No gain or numeric domain is
+rejected, and unseen combinations must run the same pre-application guard.

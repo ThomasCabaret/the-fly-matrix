@@ -1,0 +1,131 @@
+schema_version: 1
+id: runner_result.neutral_embodied_command_pathology_policy.v1
+campaign_id: campaign.neutral_embodied_command_pathology_policy.v1
+status: pass_exact_schedule_command_policy_unseen_fail_closed
+completed_at: '2026-10-13T08:52:08.002204+00:00'
+claim_label: EXACT SCHEDULE COMMAND POLICY / UNSEEN COMBINATIONS FAIL CLOSED / NO
+  SELECTION
+command: neutral_embodied_command_pathology_policy.bat
+frozen_input_sha256:
+  factor_campaign: ed50d48c56066b04d973e79b46b14c98b392257821340b49c5573bed5f26ac16
+  factor_result: 3dac5a2201741eb1ce7cf8225b7ca37a33afefc7391d7a3898eb21ea0d6311e3
+  factor_evaluation: 424e4ee1aabe87f3472d052ed5c62c8c63f1627cd375416ee581afd69b153e4f
+factor_isolation:
+  source_status: failed_factor_isolation_policy_open
+  completed_probes: 14
+  crossing_probes: 10
+  by_ablation:
+    bridge_gain_middle:
+      completed_within_limit: 6
+    event_ceiling_100:
+      completed_within_limit: 3
+      first_command_limit_crossing: 3
+    graded_tau_20ms:
+      first_command_limit_crossing: 6
+    input_scale_1:
+      completed_within_limit: 5
+      first_command_limit_crossing: 1
+  interpretation: Middle gain prevents the observed crossings, while numeric ablations
+    do not define a safe domain.
+schedule_factor_identifiability:
+  numeric_profile_to_gain_indices:
+    numeric_00:
+    - '0'
+    numeric_01:
+    - '1'
+    numeric_02:
+    - '2'
+    numeric_03:
+    - '0'
+    numeric_04:
+    - '1'
+    numeric_05:
+    - '2'
+    numeric_06:
+    - '0'
+    numeric_07:
+    - '1'
+    numeric_08:
+    - '2'
+    numeric_09:
+    - '0'
+    numeric_10:
+    - '1'
+    numeric_11:
+    - '2'
+  gain_index_to_numeric_profiles:
+    '0':
+    - numeric_00
+    - numeric_03
+    - numeric_06
+    - numeric_09
+    '1':
+    - numeric_01
+    - numeric_04
+    - numeric_07
+    - numeric_10
+    '2':
+    - numeric_02
+    - numeric_05
+    - numeric_08
+    - numeric_11
+  each_numeric_profile_has_exactly_one_gain: true
+  numeric_profile_count: 12
+  gain_count: 3
+policy:
+  scope: exact_immutable_240_row_schedule
+  path: calibration/schedules/neutral-embodied-command-pathology-policy-v1.csv
+  rows: 240
+  within_contract_rows: 237
+  blocked_rows: 3
+  blocked_tuple_ids:
+  - declared_tuple_029
+  - declared_tuple_041
+  - declared_tuple_149
+  sha256: 23d2cfa165cba70f833b92f01b4c6e3bbfefc4d68ee275b46cc4f0cd0729a008
+  broad_gain_domains_rejected: []
+  broad_numeric_domains_rejected: []
+  unseen_combination_policy: execute_same_pre_application_guard_fail_closed
+  inheritance_policy: no_safety_inheritance_from_shared_factor_or_neighbor
+accounting:
+  schedule_rows: 240
+  rows_admitted_to_next_technical_gate: 237
+  rows_blocked_at_command_contract: 3
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+checks:
+  factor_campaign_failure_preserved: true
+  complete_24_probe_factor_accounting: true
+  exact_14_complete_10_crossing_factor_outcomes: true
+  middle_gain_6_of_6_complete: true
+  numeric_ablation_crossings_retained: true
+  numeric_gain_confounding_reported: true
+  all_240_schedule_rows_accounted: true
+  exact_237_completed_and_3_blocked: true
+  zero_broad_domain_rejection_clipping_ranking_promotion_behavior: true
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+accepted_claims:
+- The immutable schedule has a complete exact-row direct-MOTOR command disposition.
+- The three observed failing composites are blocked before invalid command application.
+- The remaining 237 rows may enter the next technical gate but are not selected or
+  promoted.
+- The original schedule cannot independently estimate numeric-profile and gain main
+  effects.
+forbidden_claims:
+- A broad gain or numeric-profile domain is safe or invalid.
+- A neighboring factor value repairs, calibrates or validates an original row.
+- Any row is stable, physiological, behavioral or scientifically promoted.
+- An unseen combination may bypass the pre-application command guard.
+next_action: Build the next behavior-naive stability and identifiability gate over
+  the 237 exact rows admitted by this command contract. Keep the three blocks explicit,
+  freeze the policy hash, and independently cross gain with numeric factors only if
+  a later claim requires their separate effects.
+semantic_result_sha256: 1a72b5d25caf24386fd06c8dd9d98a57dfab69750214423d563c3aa5081e34fe

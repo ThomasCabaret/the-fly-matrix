@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: causal_full_panel_failed_3_command_limit_rows_deterministically_localized_pathology_policy_open_stability_unresolved
+status: exact_command_policy_closed_237_rows_admitted_3_composites_blocked_stability_identifiability_gate_open
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -231,6 +231,38 @@ command_limit_diagnostic:
   candidates_selected: 0
   stability_accepted: false
 
+command_factor_isolation:
+  campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
+  evaluation_id: evaluation.neutral_embodied_command_factor_isolation.v0
+  runner_result_id: runner_result.neutral_embodied_command_factor_isolation.v0
+  status: failed_factor_isolation_policy_open
+  single_factor_variants: 12
+  probe_episodes: 24
+  completed_within_limit_probes: 14
+  first_limit_crossing_probes: 10
+  middle_gain_probes_completed: 6_of_6
+  numeric_ablation_crossings: 10
+  offending_commands_applied: false
+  clipping_or_threshold_change: false
+  candidates_selected: 0
+  stability_accepted: false
+
+command_pathology_policy:
+  campaign_id: campaign.neutral_embodied_command_pathology_policy.v1
+  evaluation_id: evaluation.neutral_embodied_command_pathology_policy.v1
+  runner_result_id: runner_result.neutral_embodied_command_pathology_policy.v1
+  status: pass_exact_schedule_command_policy_unseen_fail_closed
+  schedule_rows: 240
+  rows_admitted_to_next_technical_gate: 237
+  rows_blocked_at_command_contract: 3
+  blocked_tuple_ids: [declared_tuple_029, declared_tuple_041, declared_tuple_149]
+  broad_gain_domains_rejected: []
+  broad_numeric_domains_rejected: []
+  unseen_combination_policy: execute_same_pre_application_guard_fail_closed
+  candidates_selected: 0
+  parameter_values_promoted: 0
+  stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -249,7 +281,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_pass_neural_240_pass_causal_sentinel_full_panel_237_complete_3_limit_failures_diagnostic_12_of_12_deterministic_policy_open_stability_unresolved
+validation: measurement_contract_pass_neural_240_pass_causal_sentinel_full_panel_237_complete_3_limit_failures_diagnostic_12_of_12_factor_panel_failed_14_complete_10_crossings_exact_policy_237_admitted_3_blocked_stability_unresolved
 blocked_reason: >-
   The complete measurement contract, exact schedule, earlier implementation
   sentinels and the full
@@ -273,11 +305,16 @@ blocked_reason: >-
   stability, basal sources remain unresolved, and direct motors remain a bounded
   surrogate. The follow-up locked diagnostic reproduces all six failed branches
   twice and localizes every first crossing before application at 63.4--103.6 ms,
-  with finite attempted commands 0.0100088--0.0100577. This excludes reset noise
-  but does not identify whether the composite rows, maximum bridge gain, numeric
-  profile or their interaction defines the invalid domain.
+  with finite attempted commands 0.0100088--0.0100577. The preregistered
+  one-factor follow-up retains its negative result: all six middle-gain probes
+  complete, but ten numeric-ablation branches still cross. Moreover, each numeric
+  profile in the original schedule is paired with only one gain, so their main
+  effects are not separately identifiable. The accepted policy therefore closes
+  only exact schedule accounting: 237 rows may enter the next technical gate and
+  rows 029, 041 and 149 remain blocked. No broad domain is rejected, no survivor
+  is promoted and every unseen combination must execute the guard fail-closed.
 next_action: >-
-  Preregister the smallest factor-isolation panel and technical pathology policy
-  that can distinguish a composite-row failure from a broader gain/numeric domain.
-  Apply it to all 240 rows without clipping, actuator-limit changes, named behavior
-  or automatic promotion of the 237 completed rows.
+  Preregister a behavior-naive stability and identifiability gate over the 237
+  exact rows admitted by the frozen command policy. Keep the three blocks and the
+  pre-application guard, and do not infer independent gain/numeric effects unless
+  a separate crossed design is preregistered.
