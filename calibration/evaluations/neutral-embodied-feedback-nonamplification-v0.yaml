@@ -1,0 +1,35 @@
+schema_version: 1
+id: evaluation.neutral_embodied_feedback_nonamplification.v0
+campaign_id: campaign.neutral_embodied_feedback_nonamplification.v0
+runner_result_id: runner_result.neutral_embodied_feedback_nonamplification.v0
+runner_semantic_sha256: 32d5c285a3f96a1f0d536f115a39ef500bdd613e4af641a44bc97dbd0b8e3880
+parameter_set_id: parameters.front_leg_local_feedback_nonamplifying_ensemble.v0
+status: completed
+checks:
+  all_65_active_rows_accounted: true
+  all_65_rows_completed: true
+  all_650_episodes_complete: true
+  all_recorded_branch_arrays_finite: true
+  all_unperturbed_replays_within_tolerance: true
+  four_unique_new_mirrored_perturbations: true
+  incoming_L1_columns_exact: true
+  zero_numeric_optimization_zero_ranking_zero_behavior: true
+classification_counts:
+  accepted_local_nonamplifying: 3
+  mixed_or_amplifying: 61
+  not_identifiable_on_validation_perturbations: 1
+accepted_tuple_ids:
+- declared_tuple_129
+- declared_tuple_141
+- declared_tuple_238
+local_feedback_nonamplification_accepted: true
+whole_body_stability_accepted: false
+population_assignment_accepted: false
+named_behavior_exposed: false
+candidate_ranking_used: false
+interpretation: A nonempty set is a bounded exact-composite technical ensemble for
+  the local front-leg chain only. It is neither a whole-body stability result nor
+  a biological parameter promotion.
+next_action: If a nonempty exact-composite ensemble passes, propagate it without ranking
+  to local sensory, motor and basal freeze campaigns. If none passes, diagnose the
+  criterion failures by boundary before changing any parameter family.

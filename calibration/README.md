@@ -498,3 +498,14 @@ episodes: 64 routes show command adaptation plus a physical state gap, while row
 028 is non-identifiable under this perturbation. Rows 029, 041 and 149 remain
 blocked. This pass validates causal measurement and replay controls only; it does
 not accept stability, rank candidates or promote parameters.
+
+Run `neutral_embodied_feedback_nonamplification.bat` to reproduce the next locked
+technical validation. It applies four new mirrored forward/roll perturbations to
+all 65 active exact rows and compares live feedback with exact frozen-command
+replays, for 650 physical episodes. The accepted result retains three exact
+composites (`declared_tuple_129`, `declared_tuple_141`, `declared_tuple_238`) that
+pass every paired criterion, without ranking them. Sixty-one rows are mixed or
+amplifying and row 028 remains non-identifiable. The resulting parameter-set file
+is a finite local technical ensemble, not a biological reference: it promotes no
+individual value, does not resolve the 172 silent rows or three command blocks,
+and does not establish whole-body stability or behavior.

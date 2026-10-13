@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_feedback_identifiability_64_physical_1_not_identifiable_172_silent_stability_open
+status: active_front_leg_conversion_contracts_executable_local_nonamplification_3_member_unranked_ensemble_values_unfitted
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,7 +64,7 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_neural_240_of_240_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_172_silent_zero_values_promoted
+validation: partial_pass_196_chain_bodies_accounted_12_event_required_184_dual_unresolved_neural_240_of_240_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_nonamplification_3_member_local_ensemble_172_silent_zero_individual_values_promoted
 blocked_reason: null
 next_action: >-
   The first chain accounts for all 196 unique bodies. Its 240-row declared
@@ -86,6 +86,12 @@ next_action: >-
   accounts all 237 admitted rows: 172 silent routes remain non-informative, while
   65 active routes receive exact replay controls. Sixty-four show a physical
   closed-versus-open feedback effect and row 028 remains non-identifiable under
-  the generic perturbation. This promotes no population assignment or value.
-  Next preregister technical stability criteria only on causally measurable
-  observables while preserving every unresolved stratum.
+  the generic perturbation. The locked follow-up then tests all 65 active rows
+  under four new mirrored perturbations and exact open-loop controls. Three exact
+  composites (129, 141 and 238) pass every local non-amplification criterion, 61
+  are mixed or amplifying and row 028 remains non-identifiable. The survivors are
+  retained without ranking as one finite technical ensemble: this promotes no
+  individual population assignment or numeric value and does not establish
+  whole-body stability. Propagate all three members into separately versioned
+  local sensory, motor and basal freeze campaigns while preserving every
+  unresolved stratum.

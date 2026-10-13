@@ -1,0 +1,50 @@
+schema_version: 1
+id: parameters.front_leg_local_feedback_nonamplifying_ensemble.v0
+title: Exact-composite ensemble passing mirrored local feedback non-amplification
+status: accepted_local_technical_ensemble
+scope_ids:
+- scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+claim_label: LOCAL TECHNICAL NON-AMPLIFICATION / NOT WHOLE-BODY STABILITY / NO BEHAVIOR
+campaign_id: campaign.neutral_embodied_feedback_nonamplification.v0
+runner_result_id: runner_result.neutral_embodied_feedback_nonamplification.v0
+runner_semantic_sha256: 32d5c285a3f96a1f0d536f115a39ef500bdd613e4af641a44bc97dbd0b8e3880
+selection_exposure:
+  technical_body_trajectory_used: true
+  named_behavior_used: false
+  ranking_used: false
+  held_out_protocol_used: false
+ensemble:
+  representation: finite_exact_composite_ids
+  member_count: 3
+  member_tuple_ids:
+  - declared_tuple_129
+  - declared_tuple_141
+  - declared_tuple_238
+  members_ranked: false
+  individual_parameter_values_promoted: 0
+applicability:
+  local_front_leg_chain_only: true
+  short_horizon_seconds: 0.2
+  perturbation_ids:
+  - root_forward_velocity_positive
+  - root_forward_velocity_negative
+  - root_roll_velocity_positive
+  - root_roll_velocity_negative
+  whole_body_stability: false
+  complete_recurrent_MaleCNS: false
+  biological_behavior: false
+frozen_lineage:
+  feedback_campaign: calibration/campaigns/neutral-embodied-feedback-identifiability-v0.yaml
+  feedback_campaign_sha256: 5f65bf67f5ab838c07825b2c5ba1cd64f7e8d8270174ff8fa3da30b8cc5ec91f
+  feedback_result: calibration/runner/neutral-embodied-feedback-identifiability-v0.yaml
+  feedback_result_sha256: 655f71821a60cfc82968fcd94c9c5e1653ecbe542a2c5c271b5ad9eab40d4cde
+  feedback_result_semantic_sha256: 07380af62d4d6095ff712de0f6d95465f245a22b484c74ba10b531422b1cbd7d
+  feedback_evaluation: calibration/evaluations/neutral-embodied-feedback-identifiability-v0.yaml
+  feedback_evaluation_sha256: da9b60eb24549132391e19f458d7e15c92f43f497938808b1c74535a2070bd06
+  causal_execution_campaign: calibration/campaigns/neutral-embodied-declared-closed-loop-sentinel-v0.yaml
+  causal_execution_campaign_sha256: 6fd958bd9e72072e6d09e8629bad6829fd8f282f2c3ad836810a45ea7065ab2b
+reopening_policy: new_campaign_required_no_silent_threshold_or_topology_change
+next_action: If a nonempty exact-composite ensemble passes, propagate it without ranking
+  to local sensory, motor and basal freeze campaigns. If none passes, diagnose the
+  criterion failures by boundary before changing any parameter family.

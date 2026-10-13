@@ -317,6 +317,19 @@ application. Ce résultat ferme l'identifiabilité causale du protocole, pas la
 stabilité : aucune amplitude, route ou configuration n'est classée par qualité,
 et aucun paramètre n'est promu.
 
+Le critère technique suivant a été préenregistré puis exécuté sans adaptation
+postérieure avec `neutral_embodied_feedback_nonamplification.bat`. Les 65 routes
+actives reçoivent chacune une baseline, son rejeu exact, puis quatre perturbations
+miroir (translation avant/arrière et rotation ±) en commande gelée et en feedback,
+soit 650 épisodes finis. Trois composites exacts — `declared_tuple_129`,
+`declared_tuple_141` et `declared_tuple_238` — passent simultanément les critères
+d'adaptation de commande, d'effet physique, de position finale, de vitesse finale
+et de non-aggravation des masques de défaillance. Soixante-et-un sont mixtes ou
+amplifiants et le tuple 028 reste non identifiable. Les trois survivants forment
+un ensemble technique local fini et non classé ; aucune valeur individuelle,
+physiologie, stabilité du corps entier ou comportement n'est promu. Les 172 routes
+silencieuses et les trois lignes bloquées restent explicitement non résolues.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
@@ -926,7 +939,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le panneau diagnostique FeCO→CNS typé→moteur→MuJoCo passe 120/120 tuples et 240/240 épisodes ; son remplacement déclaré passe maintenant 240/240 exécutions neurales et consomme intégralement 81 profils FeCO, 64 profils de signe et 12 profils numériques avec oracles locaux ; zéro valeur ou affectation est promue et la stabilité physique reste non calibrée**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 196 neurones de la première chaîne sont comptabilisés, dont 12 `event_required` et 184 `dual_unresolved` ; le gate causal local compte 650 épisodes et conserve sans classement 3/65 composites actifs non amplifiants sous quatre perturbations miroir ; 61 sont mixtes/amplifiants, 1 non identifiable, 172 silencieux et 3 bloqués ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1137,6 +1150,7 @@ neutral_embodied_declared_neural_sentinel.bat # exécute les 240 tuples neuraux 
 neutral_embodied_declared_closed_loop_sentinel.bat # 16 tuples/32 épisodes corps→FeCO→CNS local→moteur→corps ; zéro fit/sélection
 neutral_embodied_declared_closed_loop_panel.bat # 240 lignes comptées ; résultat courant 237 complètes/3 bloquées par limite MOTOR ; zéro clipping/sélection
 neutral_embodied_command_limit_diagnostic.bat # 3 lignes x 2 branches x 2 répétitions ; localise le premier franchissement sans l'appliquer
+neutral_embodied_feedback_nonamplification.bat # 65 lignes actives x 10 épisodes ; produit l'ensemble technique local non classé de 3 composites
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS
 wiring_revalidation.bat   # règles indépendantes, comparaisons et exceptions input/output
 calibration_status.bat     # inventaire des familles + cohérence/acyclicité du DAG

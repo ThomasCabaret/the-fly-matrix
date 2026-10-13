@@ -1,0 +1,149 @@
+schema_version: 1
+id: campaign.neutral_embodied_feedback_nonamplification.v0
+title: Mirrored short-horizon local feedback non-amplification validation
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: allowed
+claim_label: LOCAL TECHNICAL NON-AMPLIFICATION / NOT WHOLE-BODY STABILITY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Apply four new mirrored generic perturbations to every active exact-row member
+  from the completed feedback-identifiability gate. Compare live feedback with an
+  open-loop replay of the identical native-step baseline command. Accept an exact
+  composite only when closed feedback is identifiable and does not amplify final
+  position, final velocity or failure-mask counts on every perturbation. This is
+  technical pass/fail selection for one bounded local chain, not ranking, global
+  stability, physiology or behavior.
+
+frozen_inputs:
+  feedback_campaign: calibration/campaigns/neutral-embodied-feedback-identifiability-v0.yaml
+  feedback_campaign_sha256: 5f65bf67f5ab838c07825b2c5ba1cd64f7e8d8270174ff8fa3da30b8cc5ec91f
+  feedback_result: calibration/runner/neutral-embodied-feedback-identifiability-v0.yaml
+  feedback_result_sha256: 655f71821a60cfc82968fcd94c9c5e1653ecbe542a2c5c271b5ad9eab40d4cde
+  feedback_result_semantic_sha256: 07380af62d4d6095ff712de0f6d95465f245a22b484c74ba10b531422b1cbd7d
+  feedback_evaluation: calibration/evaluations/neutral-embodied-feedback-identifiability-v0.yaml
+  feedback_evaluation_sha256: da9b60eb24549132391e19f458d7e15c92f43f497938808b1c74535a2070bd06
+  causal_execution_campaign: calibration/campaigns/neutral-embodied-declared-closed-loop-sentinel-v0.yaml
+  causal_execution_campaign_sha256: 6fd958bd9e72072e6d09e8629bad6829fd8f282f2c3ad836810a45ea7065ab2b
+
+workload_rule:
+  source: completed_feedback_identifiability_gate_active_stratum
+  active_exact_rows: 65
+  previously_physically_identifiable: 64
+  previously_not_identifiable: 1
+  previously_not_identifiable_tuple_ids: [declared_tuple_028]
+  silent_rows_retained_outside_validation: 172
+  command_blocked_rows_retained_outside_validation: 3
+  interpretation: >-
+    All 65 active rows are tested, including row 028. The previous result fixes
+    workload only; neither its effect magnitude nor its class decides the new
+    validation outcome.
+
+physical_protocol:
+  inherited_execution_contract: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+  timestep_s: 0.0001
+  frames: 40
+  physics_substeps_per_frame: 50
+  duration_s_per_episode: 0.2
+  perturbation_step: 10
+  perturbations:
+    - id: root_forward_velocity_positive
+      qvel_address: 0
+      delta: 0.1
+      units: FlyBody_model_length_units_per_second
+    - id: root_forward_velocity_negative
+      qvel_address: 0
+      delta: -0.1
+      units: FlyBody_model_length_units_per_second
+    - id: root_roll_velocity_positive
+      qvel_address: 3
+      delta: 0.1
+      units: rad_per_second
+    - id: root_roll_velocity_negative
+      qvel_address: 3
+      delta: -0.1
+      units: rad_per_second
+  branches_per_row:
+    - live_unperturbed_baseline_with_native_command_capture
+    - frozen_unperturbed_baseline_command_replay
+    - four_frozen_baseline_command_perturbation_replays
+    - four_live_closed_feedback_perturbations
+  total_physical_episodes: 650
+
+locked_numeric_tolerances:
+  provenance: inherited_engineering_tolerances_from_actuator_attribution_and_feedback_identifiability
+  unperturbed_replay_state_max_abs_error: 0.00000001
+  unperturbed_replay_command_max_abs_error: 0.00000001
+  feedback_command_adaptation_l2_min: 0.0000000001
+  closed_open_state_gap_l2_min: 0.0000000001
+  paired_comparison_absolute_tolerance: 0.000000000001
+  paired_comparison_relative_tolerance: 0.000001
+
+per_perturbation_acceptance:
+  require_feedback_command_adaptation: true
+  require_physical_closed_open_state_gap: true
+  require_closed_final_qpos_l2_not_above_open: true
+  require_closed_final_qvel_l2_not_above_open: true
+  require_closed_failure_masks_not_above_open:
+    - numerical_failure_frames
+    - gross_fall_proxy_frames
+    - joint_limit_violation_frames
+  comparison_rule: closed_value_le_open_value_plus_absolute_tolerance_plus_relative_tolerance_times_abs_open_value
+
+per_row_acceptance:
+  require_all_four_perturbations: true
+  allow_ranking_within_accepted_set: false
+  allow_best_member_selection: false
+  uncertainty_representation: finite_exact_composite_ensemble
+
+campaign_acceptance:
+  require_all_65_rows_accounted: true
+  require_all_650_episodes_complete_and_finite: true
+  require_all_unperturbed_replays_within_tolerance: true
+  permit_zero_accepted_rows_as_honest_negative_result: true
+  stability_acceptance_possible: false
+  local_feedback_nonamplification_acceptance_possible: true
+
+scientific_boundary:
+  optimized_numeric_values: 0
+  topology_changes: 0
+  named_behavior_exposure: 0
+  local_chain_only: true
+  complete_recurrent_MaleCNS_claimed: false
+  whole_body_stability_possible: false
+  population_assignment_promotion_possible: false
+
+compute_budget:
+  active_rows: 65
+  perturbations: 4
+  physical_episodes: 650
+  simulated_seconds: 130.0
+  maximum_wall_clock_minutes: 45
+  no_automatic_budget_extension: true
+
+outputs:
+  heavy_run_root: runs/calibration/neutral-embodied-feedback-nonamplification-v0
+  compact_result: calibration/runner/neutral-embodied-feedback-nonamplification-v0.yaml
+  evaluation: calibration/evaluations/neutral-embodied-feedback-nonamplification-v0.yaml
+  derived_parameter_set: calibration/parameter_sets/front-leg-local-feedback-nonamplifying-ensemble-v0.yaml
+
+accepted_claims:
+  - The four new mirrored perturbations are evaluated against exact frozen-command controls for every active exact-row member.
+  - Exact composites passing every locked paired criterion form a bounded local technical ensemble, if any pass.
+  - A zero-member result is retained as evidence that the current uncalibrated envelope does not meet this local criterion.
+forbidden_claims:
+  - Any member is ranked, biologically preferred or globally stable.
+  - The fly stands, walks, recovers naturally or exhibits a named behavior.
+  - Passing promotes an individual routing, sign, gain, time constant or population assignment as physiology.
+  - Failing authorizes wider topology, more model capacity or relaxed thresholds.
+next_action: >-
+  If a nonempty exact-composite ensemble passes, propagate it without ranking to
+  local sensory, motor and basal freeze campaigns. If none passes, diagnose the
+  criterion failures by boundary before changing any parameter family.

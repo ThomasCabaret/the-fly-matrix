@@ -338,8 +338,18 @@ active rows receive four branches with exact native-step command replay. The
 expected result is 260 finite episodes, 64 physically identifiable feedback
 effects and one non-identifiable active row (`declared_tuple_028`), with the three
 prior command blocks unchanged. Re-running it must not reinterpret effect size as
-fitness or stability. The current continuation is a separately preregistered,
-behavior-naive technical stability criterion over causally measurable observables.
+fitness or stability.
+
+The separately preregistered continuation is reproduced with
+`neutral_embodied_feedback_nonamplification.bat`. It executes 65 active rows under
+four new mirrored perturbations in exact open-loop replay and live feedback, plus
+the paired unperturbed controls: 650 physical episodes in total. The expected
+result retains exactly rows 129, 141 and 238 as an unranked finite local technical
+ensemble; 61 rows are mixed or amplifying and row 028 remains non-identifiable.
+This output can seed separately versioned local sensory, motor and basal freeze
+campaigns, but it is not the calibrated reference fly, whole-body stability,
+physiology or behavior. All three members must be propagated until independent
+local evidence can discriminate them.
 
 ### Historical neural-model gate
 
