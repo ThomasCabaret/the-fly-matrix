@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: exact_command_policy_closed_237_rows_admitted_3_composites_blocked_stability_identifiability_gate_open
+status: feedback_identifiability_pass_64_physical_1_not_identifiable_172_silent_3_blocked_stability_criteria_open
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -263,6 +263,23 @@ command_pathology_policy:
   parameter_values_promoted: 0
   stability_accepted: false
 
+feedback_identifiability:
+  campaign_id: campaign.neutral_embodied_feedback_identifiability.v0
+  evaluation_id: evaluation.neutral_embodied_feedback_identifiability.v0
+  runner_result_id: runner_result.neutral_embodied_feedback_identifiability.v0
+  status: pass_feedback_identifiability_no_selection
+  schedule_rows_accounted: 240
+  active_rows_probed: 65
+  silent_noninformative_rows: 172
+  blocked_command_contract_rows: 3
+  physical_episodes: 260
+  feedback_physically_identifiable_rows: 64
+  feedback_not_identifiable_rows: 1
+  feedback_not_identifiable_tuple_ids: [declared_tuple_028]
+  candidates_selected: 0
+  parameter_values_promoted: 0
+  stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -281,7 +298,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_pass_neural_240_pass_causal_sentinel_full_panel_237_complete_3_limit_failures_diagnostic_12_of_12_factor_panel_failed_14_complete_10_crossings_exact_policy_237_admitted_3_blocked_stability_unresolved
+validation: measurement_contract_pass_neural_240_pass_causal_sentinel_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_172_silent_stability_unresolved
 blocked_reason: >-
   The complete measurement contract, exact schedule, earlier implementation
   sentinels and the full
@@ -313,8 +330,16 @@ blocked_reason: >-
   only exact schedule accounting: 237 rows may enter the next technical gate and
   rows 029, 041 and 149 remain blocked. No broad domain is rejected, no survivor
   is promoted and every unseen combination must execute the guard fail-closed.
+  The next causal gate then executes 260 physical episodes over the 65 active
+  admitted rows and reproduces every unperturbed baseline from its exact
+  native-step command trace. Sixty-four rows show both command adaptation and a
+  physical closed-versus-open state gap; row 028 shows neither under this probe.
+  The other 172 admitted rows remain silent/non-informative rather than rejected.
+  This proves that the stability observables can be causally attributed on most
+  active routes, but it does not define a good direction, a threshold or an
+  accepted stable member.
 next_action: >-
-  Preregister a behavior-naive stability and identifiability gate over the 237
-  exact rows admitted by the frozen command policy. Keep the three blocks and the
-  pre-application guard, and do not infer independent gain/numeric effects unless
-  a separate crossed design is preregistered.
+  Preregister behavior-naive technical stability criteria only for observables
+  proven measurable by the feedback gate. Preserve 172 silent rows and row 028
+  as unresolved strata, keep the three command-contract blocks and do not rank
+  the 64 responsive rows by effect magnitude.

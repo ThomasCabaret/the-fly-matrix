@@ -487,3 +487,14 @@ are observed within the fixed command contract and may enter the next technical
 gate; rows 029, 041 and 149 remain blocked. This is not candidate selection,
 parameter promotion or stability acceptance. No gain or numeric domain is
 rejected, and unseen combinations must run the same pre-application guard.
+
+Run `neutral_embodied_feedback_identifiability.bat` for the next causal gate. It
+hash-locks the exact-row command policy and frozen exhaustive panel, then accounts
+all 237 admitted rows without ranking them. The 172 routes with an exactly zero
+frozen command are retained as `silent_noninformative`. Each of the 65 active
+routes executes a live baseline, an exact native-step replay, a perturbed frozen
+replay and a perturbed live-feedback branch. The accepted run completes all 260
+episodes: 64 routes show command adaptation plus a physical state gap, while row
+028 is non-identifiable under this perturbation. Rows 029, 041 and 149 remain
+blocked. This pass validates causal measurement and replay controls only; it does
+not accept stability, rank candidates or promote parameters.

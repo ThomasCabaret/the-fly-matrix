@@ -1,0 +1,30 @@
+schema_version: 1
+id: evaluation.neutral_embodied_feedback_identifiability.v0
+campaign_id: campaign.neutral_embodied_feedback_identifiability.v0
+runner_result_id: runner_result.neutral_embodied_feedback_identifiability.v0
+runner_semantic_sha256: 07380af62d4d6095ff712de0f6d95465f245a22b484c74ba10b531422b1cbd7d
+status: pass
+checks:
+  all_240_rows_accounted_exactly_once: true
+  exact_237_admitted_3_blocked: true
+  exact_65_active_172_silent: true
+  all_65_active_probes_complete: true
+  all_active_probe_arrays_finite: true
+  unperturbed_native_command_replay_within_tolerance: true
+  at_least_one_feedback_command_adaptation: true
+  at_least_one_feedback_physical_state_gap: true
+  incoming_L1_columns_exact: true
+  zero_fit_zero_ranking_zero_promotion_zero_behavior: true
+classification_counts:
+  feedback_not_identifiable: 1
+  feedback_physically_identifiable: 64
+silent_rows_remain_unresolved: true
+stability_accepted: false
+population_assignment_accepted: false
+candidate_selected: false
+behavior_claimed: false
+interpretation: A pass validates causal feedback identifiability and replay controls
+  only; it does not accept stability or any parameter member.
+next_action: If the causal feedback gate passes, preregister technical stability criteria
+  only for observables shown to be identifiable. Preserve silent rows as an unresolved
+  stratum and do not rank the active rows from effect magnitude.

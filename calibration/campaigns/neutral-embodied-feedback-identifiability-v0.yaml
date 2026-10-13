@@ -1,0 +1,136 @@
+schema_version: 1
+id: campaign.neutral_embodied_feedback_identifiability.v0
+title: Exact-row closed-feedback identifiability over the admitted neutral envelope
+status: preregistered_ready_to_run
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_ids:
+  - scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FEEDBACK IDENTIFIABILITY / NO FIT / NO RANKING / NOT STABILITY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Determine whether the embodied loop can causally distinguish live MaleCNS
+  feedback from an open-loop replay of the exact native-step baseline command.
+  This is an identifiability gate, not a stability threshold or candidate
+  selection. Every row admitted by the command policy is accounted: rows that
+  emitted no routed command in the frozen exhaustive panel are explicitly
+  non-informative, while active rows receive an identical four-branch probe.
+
+frozen_inputs:
+  command_policy_campaign: calibration/campaigns/neutral-embodied-command-pathology-policy-v1.yaml
+  command_policy_campaign_sha256: 14509af9f34c45e9b79e4ba59c4942239159ee76cccdc23234f288d8b3df627f
+  command_policy_result: calibration/runner/neutral-embodied-command-pathology-policy-v1.yaml
+  command_policy_result_sha256: c2c1652649f5dca47f4f76920c9d11ba90c298fb87a34362a267763fa9b4907a
+  command_policy_result_semantic_sha256: 1a72b5d25caf24386fd06c8dd9d98a57dfab69750214423d563c3aa5081e34fe
+  command_policy_evaluation: calibration/evaluations/neutral-embodied-command-pathology-policy-v1.yaml
+  command_policy_evaluation_sha256: c5c265b1e5e940eac260a1223e8224b47960d814dd11530ef2f80b3af34bb805
+  command_policy_schedule: calibration/schedules/neutral-embodied-command-pathology-policy-v1.csv
+  command_policy_schedule_sha256: 23d2cfa165cba70f833b92f01b4c6e3bbfefc4d68ee275b46cc4f0cd0729a008
+  exhaustive_panel_campaign: calibration/campaigns/neutral-embodied-declared-closed-loop-panel-v0.yaml
+  exhaustive_panel_campaign_sha256: 2961ab1988b8d3dbd6b778a907c9335d802be7a9668f463055d5d9521b4652a0
+  exhaustive_panel_result: calibration/runner/neutral-embodied-declared-closed-loop-panel-v0.yaml
+  exhaustive_panel_result_sha256: 5bc218af0302361de4c674e4670c8d552305cbee8adc566138c5b0ca8e753819
+  exhaustive_panel_result_semantic_sha256: 9e54ebaa58d1216d2c4711d189658eff54d269cfc30d6c6928a1d035d3f7d9ca
+  exhaustive_panel_evaluation: calibration/evaluations/neutral-embodied-declared-closed-loop-panel-v0.yaml
+  exhaustive_panel_evaluation_sha256: 65b553ed507d245ecdb0e796a54f3a8be953ee974b254f18ef2adb46758d1697
+  causal_execution_campaign: calibration/campaigns/neutral-embodied-declared-closed-loop-sentinel-v0.yaml
+  causal_execution_campaign_sha256: 6fd958bd9e72072e6d09e8629bad6829fd8f282f2c3ad836810a45ea7065ab2b
+
+workload_rule:
+  source: frozen_exhaustive_panel_descriptive_outputs
+  informative_if: baseline_or_perturbed_peak_abs_routed_command_strictly_positive
+  admitted_rows: 237
+  active_rows_to_probe: 65
+  silent_rows_accounted_without_reexecution: 172
+  blocked_rows_retained_outside_gate: 3
+  blocked_tuple_ids: [declared_tuple_029, declared_tuple_041, declared_tuple_149]
+  interpretation: >-
+    This post-observation rule only avoids causal probes that cannot identify a
+    motor feedback effect because their routed command was identically zero. It
+    does not rank, accept, reject or promote either active or silent rows.
+
+physical_protocol:
+  inherited_from: campaign.neutral_embodied_declared_closed_loop_sentinel.v0
+  timestep_s: 0.0001
+  frames: 40
+  physics_substeps_per_frame: 50
+  duration_s_per_episode: 0.2
+  perturbation_step: 10
+  perturbation:
+    id: generic_lateral_root_velocity_impulse
+    qvel_address: 1
+    delta: 0.1
+    units: FlyBody_model_length_units_per_second
+  branches:
+    - live_unperturbed_baseline_with_native_command_capture
+    - frozen_unperturbed_baseline_command_replay
+    - frozen_baseline_commands_with_perturbation
+    - live_closed_feedback_with_perturbation
+  replay_rule: exact_native_step_scalar_command_to_the_same_frozen_actuator_address
+
+identifiability_thresholds:
+  justification: inherited_numerical_tolerances_from_actuator_causal_attribution_v1
+  unperturbed_replay_state_max_abs_error: 0.00000001
+  unperturbed_replay_command_max_abs_error: 0.00000001
+  closed_feedback_command_adaptation_l2_min: 0.0000000001
+  closed_open_state_gap_l2_min: 0.0000000001
+  feedback_may_help_or_hurt: true
+  no_recovery_direction_used_for_selection: true
+
+classification_contract:
+  feedback_physically_identifiable: command_adaptation_and_closed_open_state_gap_cross_locked_minima
+  feedback_command_only: command_adaptation_crosses_minimum_but_state_gap_does_not
+  feedback_not_identifiable: command_adaptation_does_not_cross_minimum
+  silent_noninformative: frozen_panel_route_command_was_identically_zero
+  blocked_command_contract: exact_composite_failed_pre_application_motor_guard
+
+acceptance:
+  criteria_locked_before_run: true
+  require_all_240_rows_accounted_exactly_once: true
+  require_exact_237_admitted_3_blocked: true
+  require_exact_65_active_172_silent: true
+  require_all_65_active_probes_complete_and_finite: true
+  require_unperturbed_native_command_replay: true
+  require_at_least_one_feedback_command_adaptation: true
+  require_at_least_one_feedback_physical_state_gap: true
+  allow_feedback_direction_to_select_candidate: false
+  allow_activity_or_motion_magnitude_to_rank_candidate: false
+  allow_silent_row_rejection: false
+  allow_parameter_promotion: false
+  stability_acceptance_possible: false
+
+scientific_boundary:
+  optimized_parameters: 0
+  promoted_parameter_values: 0
+  selected_candidates: 0
+  named_behavior_exposure: 0
+  local_chain_only: true
+  complete_recurrent_MaleCNS_claimed: false
+  population_assignment_acceptance_possible: false
+  stability_acceptance_possible: false
+
+compute_budget:
+  active_rows: 65
+  physical_episodes: 260
+  simulated_seconds: 52.0
+  maximum_wall_clock_minutes: 45
+  no_automatic_budget_extension: true
+
+accepted_claims:
+  - Every exact schedule row is accounted as blocked, silent/non-informative or causally probed.
+  - The native-step replay control can separate a live feedback response from frozen-command mechanics when all locked checks pass.
+  - The distribution of identifiability classes may define what a later stability campaign can measure.
+forbidden_claims:
+  - Any candidate, parameter value, population assignment, route or gain is selected, calibrated or promoted.
+  - A silent route is invalid, stable or biologically implausible.
+  - Feedback that helps or hurts this generic perturbation constitutes biological behavior.
+  - Completion or finite execution accepts neutral embodied stability.
+next_action: >-
+  If the causal feedback gate passes, preregister technical stability criteria
+  only for observables shown to be identifiable. Preserve silent rows as an
+  unresolved stratum and do not rank the active rows from effect magnitude.

@@ -330,6 +330,17 @@ selected or promoted, and any unseen combination must execute the same command
 guard fail-closed. The current continuation action is the behavior-naive stability
 and identifiability gate named in `calibration/state.yaml`.
 
+That gate is now reproducible with
+`neutral_embodied_feedback_identifiability.bat`. It uses the frozen panel only to
+partition diagnostic workload, never to select a candidate: 172 admitted rows
+whose routed command was exactly zero remain silent/non-informative, and all 65
+active rows receive four branches with exact native-step command replay. The
+expected result is 260 finite episodes, 64 physically identifiable feedback
+effects and one non-identifiable active row (`declared_tuple_028`), with the three
+prior command blocks unchanged. Re-running it must not reinterpret effect size as
+fitness or stability. The current continuation is a separately preregistered,
+behavior-naive technical stability criterion over causally measurable observables.
+
 ### Historical neural-model gate
 
 The rate/LIF global gate is closed with `revise` and is not a prerequisite to

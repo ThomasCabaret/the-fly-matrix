@@ -351,6 +351,7 @@ def _run_episode(
     *,
     perturbation: Mapping[str, Any] | None,
     reusable_loop: FlyBodyPhysicsLoop | None = None,
+    native_command_trace_out: list[np.ndarray] | None = None,
 ) -> tuple[dict[str, np.ndarray], dict[str, Any], dict[str, Any]]:
     import mujoco
 
@@ -545,6 +546,11 @@ def _run_episode(
     }
     if not all(np.isfinite(value).all() for value in episode.values()) or not np.isfinite(angles_array).all():
         raise DeclaredClosedLoopSentinelError("episode contains non-finite state")
+    if native_command_trace_out is not None:
+        # Keep the compact diagnostic/result schema unchanged.  Exact native-step
+        # commands are exposed only to explicit causal-attribution callers; the
+        # ordinary sentinel and panel continue to serialize frame-rate summaries.
+        native_command_trace_out.append(command_array.copy())
     return episode, metadata, diagnostic
 
 

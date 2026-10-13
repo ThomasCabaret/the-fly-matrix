@@ -303,6 +303,20 @@ exécuter le même garde avant application et échouer fermée. Le front actif d
 donc un gate de stabilité et d'identifiabilité sans comportement nommé sur les 237
 lignes admises, avec le hash de cette politique gelé.
 
+Ce gate causal est maintenant exécuté par
+`neutral_embodied_feedback_identifiability.bat`. Les 237 lignes admises restent
+toutes comptabilisées : les 172 routes dont la commande était exactement nulle
+dans le panneau gelé sont conservées comme `silent_noninformative`, sans rejet ni
+promotion ; les 65 routes actives ont chacune quatre branches de 0,2 s. Le replay
+ouvert de la commande native de baseline reproduit l'état non perturbé dans la
+tolérance gelée. Sous la même impulsion générique, 64 routes modifient leur
+commande en boucle fermée et produisent un écart physique distinct du replay ;
+`declared_tuple_028` ne modifie ni commande ni état sous ce probe et reste
+non identifiable. Les trois composites 029, 041 et 149 restent bloqués avant
+application. Ce résultat ferme l'identifiabilité causale du protocole, pas la
+stabilité : aucune amplitude, route ou configuration n'est classée par qualité,
+et aucun paramètre n'est promu.
+
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
 LIF événementielle à délai fixe reproduit exactement une implémentation NumPy
