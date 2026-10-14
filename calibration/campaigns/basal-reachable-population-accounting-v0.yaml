@@ -1,0 +1,107 @@
+schema_version: 1
+id: campaign.basal_reachable_population_accounting.v0
+title: Exhaustive typed/hybrid accounting downstream of all basal source families
+status: preregistered_runnable
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.basal_reachable_populations.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: BASAL REACHABILITY / POPULATION AND BRIDGE DISPOSITIONS / ZERO VALUES / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+
+purpose: >-
+  Determine the exact canonical-neuron scope reached by each basal family and by
+  their union, then apply the smallest rules-first population and unit-boundary
+  dispositions without choosing a native class or numerical parameter.
+
+frozen_inputs:
+  compiler:
+    path: src/the_fly_matrix/basal_population_reachability.py
+    sha256: 0e39f45866e0c76594418ad95dcc62744c199fb68aebd6b34090b6f6fb3eecd6
+  rules:
+    path: calibration/evidence/basal-reachable-population-rules-v0.yaml
+    sha256: b322a606c7e6061275a61846392a33c835522df6432a087eaf1fcff4635335cf
+  basal_evidence:
+    path: calibration/evidence/basal-source-readiness-v0.yaml
+    sha256: 4558a2619f9ad15e9ef97eaacc49db3aee32518566d863b375447853b013f059
+  basal_routes:
+    path: data/derived/wiring/basal-clamp-routes.parquet
+    sha256: c60a71b41c7a878cc6149a4c9c4e6d79b6e3e5a03c5354d7c4eb587344d8a5ea
+  residual_channels:
+    path: data/derived/wiring/unclassified-sensory-channels.csv
+    sha256: d8e33df842992cee14919977a0220ff91da3453f59d79776b387ff45cac1e108
+  residual_routes:
+    path: data/derived/wiring/unclassified-sensory-routes.parquet
+    sha256: 2454f0b9a4c0b6c1a304c87e9f3a986969636e12fbbffffd1cc4ee2b000f61a6
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  outgoing_graph:
+    path: data/derived/execution-benchmark/malecns-full-outgoing-csr-v1.npz
+    sha256: ac377aa39536d143a9d1d8d12c64be314875e18bf6fc84a727ad167ec6aac1d0
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+  graph_metadata:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.json
+    sha256: c24e74ba981def48bb487feb3db808db910d945f39af1155f25529365b16152b
+  accepted_endpoint_assignments:
+    path: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    sha256: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  accepted_intermediate_assignments:
+    path: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
+    sha256: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+
+family_selectors:
+  - family_id: parameter.baseline.olfaction.v0
+    table: basal_routes
+    field: clamp_id
+    value: clamp.olfaction
+  - family_id: parameter.baseline.gustation.v0
+    table: basal_routes
+    field: clamp_id
+    value: clamp.gustation
+  - family_id: parameter.baseline.thermohygro.v0
+    table: basal_routes
+    field: clamp_id
+    value: clamp.thermohygro
+  - family_id: parameter.residual_sensory.chemosensory_nominal.v0
+    table: residual_routes
+    field: source_model_box_id
+    value: source.sensory.residual.chemosensory
+  - family_id: parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+    table: residual_routes
+    field: source_model_box_id
+    value: source.sensory.residual.mechanosensory_tbc
+  - family_id: parameter.residual_sensory.unknown_nominal.v0
+    table: residual_routes
+    field: source_model_box_id
+    value: source.sensory.residual.unknown
+
+acceptance:
+  expected_families: 6
+  expected_unique_source_terminals: 6041
+  expected_canonical_neurons: 166700
+  expected_preaccepted_event_bodies: 12
+  require_disjoint_family_sources: true
+  require_every_source_canonical: true
+  require_every_reached_neuron_assigned: true
+  require_no_edge_from_reached_to_unreached: true
+  require_every_source_bridge_disposition: true
+  require_zero_numeric_values: true
+  require_zero_named_behavior_exposure: true
+
+accepted_claims:
+  - Every canonical neuron reachable from the six basal families has an explicit event-required or dual-unresolved disposition.
+  - Every basal source terminal has an explicit native-input bridge disposition.
+  - Internal event/graded boundary combinations are exhaustively named and counted without values.
+forbidden_claims:
+  - Dual-unresolved populations have an accepted native representation.
+  - A named bridge disposition is executable or calibrated.
+  - The accepted local event requirements generalize to other bodies sharing an annotation.
+  - Basal values, whole-body stability or a named behavior have been tested.
+next_action: >-
+  Use the exact reachability and boundary counts to implement a sparse typed/hybrid
+  runtime that preserves dual alternatives. Resolve or bound the source event-process
+  and graded-conversion families before instantiating numerical basal sensitivity arms.

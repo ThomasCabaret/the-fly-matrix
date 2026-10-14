@@ -519,3 +519,13 @@ family. The command also accounts for all six basal families as
 is the only accepted input from this local ensemble to the future bounded
 whole-body sentinel. That sentinel must produce a viewable technical preview and
 pause for user inspection before inspection-driven tuning.
+
+Run `basal_low_capacity_readiness.bat` to reconstruct the six-family,
+shape-only basal design, then `basal_population_reachability.bat` to close the
+exact downstream accounting. The latter reaches 166,431/166,700 canonical
+neurons, preserves only twelve previously accepted exact event requirements and
+marks the other 166,419 as `dual_unresolved`. It also counts all four internal
+event/dual boundary classes and gives each of the 6,041 source terminals an
+explicit bridge disposition. This is not an executable basal model: event
+processes, Hz-to-graded conversions, absolute values and the global typed/hybrid
+runtime remain blocked.

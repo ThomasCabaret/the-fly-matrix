@@ -342,6 +342,15 @@ same input domain; and how the result behaves across the complete central
 ensemble. A hidden normalization constant or a convenient per-run rescaling is
 not evidence transfer.
 
+Reachability accounting and bridge executability are separate gates. A reached
+population may be exhaustively recorded as `dual_unresolved`, and every possible
+event/graded boundary may be named, without making the basal source executable.
+Execution additionally requires an accepted native choice or propagated finite
+alternative, an event-process contract for event inputs, a sourced or bounded
+Hz-to-graded conversion for graded inputs, and numerical values with explicit
+units. A large directed closure must be reported as such; it cannot be described
+as a local basal experiment merely because the source families are local.
+
 ### Embodied causal attribution and actuator semantics
 
 The current embodied path instantiates all 102 FlyBody channels as classical

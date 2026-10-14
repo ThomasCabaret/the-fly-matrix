@@ -1,6 +1,6 @@
 schema_version: 1
 phase: population_typed_dynamics_assignment_and_local_chain_calibration
-updated: 2026-10-13
+updated: 2026-10-14
 
 wiring_baseline:
   terminal_coverage: complete
@@ -21,9 +21,9 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.front_leg_member_physical_preview.v0
-last_preregistered_campaign_id: campaign.front_leg_member_physical_preview.v0
-last_executed_campaign_id: campaign.front_leg_member_physical_preview.v0
+last_completed_campaign_id: campaign.basal_reachable_population_accounting.v0
+last_preregistered_campaign_id: campaign.basal_reachable_population_accounting.v0
+last_executed_campaign_id: campaign.basal_reachable_population_accounting.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
@@ -88,6 +88,7 @@ readiness:
   neutral_embodied_feedback_nonamplification: pass_locked_650_episode_validation_3_of_65_active_exact_composites_pass_all_four_mirrored_perturbations_61_mixed_or_amplifying_1_not_identifiable_172_silent_3_command_blocked_unranked_local_technical_ensemble_whole_body_stability_unresolved
   front_leg_member_conditioned_freeze_boundary: accepted_3_of_3_exact_composites_reconstructible_zero_independent_family_freezes_6_basal_families_not_exercised_human_checkpoint_required_after_first_whole_body_preview
   basal_low_capacity_readiness: completed_6_families_2212_channels_6041_terminals_3_shape_only_arms_zero_values_whole_MaleCNS_execution_blocked
+  basal_reachable_population_accounting: accepted_6_families_6041_terminal_bodies_reach_166431_of_166700_12_event_required_166419_dual_unresolved_all_boundary_dispositions_counted_zero_values_unit_bridges_and_global_runtime_blocked
   front_leg_member_physical_preview: completed_3_of_3_controller_independent_replays_complete_FlyBody_physics_local_front_leg_chain_only_no_basal_not_whole_MaleCNS_human_checkpoint_open
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: shape_only_grid_preregistered_not_run_1815_unknown_channels_absolute_scales_and_consuming_unit_bridges_blocked
@@ -129,6 +130,7 @@ blocked_by:
   - The separately preregistered local non-amplification gate executes 650 finite 0.2-second episodes over all 65 active rows: exact baseline replay plus four mirrored forward/roll perturbations in frozen-command and live-feedback modes. Three exact composites (129, 141 and 238) pass every locked command-adaptation, physical-identifiability, final-position, final-velocity and failure-mask criterion; 61 are mixed or amplifying and row 028 remains non-identifiable. The three survivors form an unranked finite local technical ensemble. This is not an individual value promotion, whole-body stability, physiology or behavior; the 172 silent rows and three command-contract blocks remain outside this validation.
   - The member-conditioned freeze-boundary compiler reconstructs all three survivors from their exact hash-locked schedule rows and assigns a semantic hash to every complete sensory-central-motor bundle. Their factors remain indivisible: zero sensory, central or motor family is independently frozen, no member is ranked, and no reference member is selected. All six basal families are explicitly accounted as not exercised and receive no implicit zero/default. Its former whole-body next-step wording is superseded by the explicit readiness gate below.
   - The basal low-capacity readiness compiler corrects that earlier optimistic next-step wording. It accounts all six families, 2,212 channels and 6,041 terminals and preregisters three behavior-naive sensitivity shapes, but emits zero magnitudes, seeds or time courses. The three accepted bundles contain only 196 local corridor neurons and consume none of those basal families. A scientific typed/hybrid whole-MaleCNS run is therefore blocked until the actually reached populations receive explicit assignments, event/graded unit bridges and an accepted runtime; the historical normalized-rate comparator cannot close this gate.
+  - The exhaustive basal reachability compiler now closes the first of those blockers as accounting, not physiology. The six disjoint families reach 166,431/166,700 canonical neurons within at most five directed hops. Exactly the twelve previously accepted local bodies retain event requirements; the other 166,419 reached neurons remain dual_unresolved. All 25,582,574 edges internal to the reached scope are partitioned by endpoint disposition, and all 6,041 source terminals have a named dual event/graded bridge disposition. None of those bridges is numerically executable and no global typed/hybrid runtime is accepted, so no basal arm or whole-MaleCNS run is authorized yet.
   - Three controller-independent trajectories now provide the required visual checkpoint for tuples 129, 141 and 238. Each replay contains the complete FlyBody physical state for 0.2 seconds and passes headless model-contract validation, but its controller is only the local 36-afferent to 150-intermediate to 10-motor front-leg corridor and one selected actuator. Basal sources, vision and the complete recurrent MaleCNS are not consumed. Inspection may record anomalies but cannot rank, tune, reject or promote a member without a new campaign.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
@@ -144,10 +146,10 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Stop for the required user checkpoint and present all three local-chain physical
-  replays without ranking them. Record observations but do not tune from them.
-  Independently extend typed/hybrid accounting from the 196-neuron local corridor
-  to the populations actually reached by all six basal families, define explicit
-  event/graded unit bridges, and only then instantiate the preregistered sensitivity
-  shapes. Do not use the historical normalized-rate comparator as a scientific
-  whole-MaleCNS substitute.
+  Preserve the visual checkpoint as non-selecting evidence. Implement the smallest
+  sparse typed/hybrid runtime that can execute the 166,431-neuron basal-reached
+  scope while preserving dual alternatives and the four explicit boundary classes.
+  Separately define bounded source event-process and Hz-to-graded conversion
+  families before assigning any absolute basal value. Only after those two gates
+  pass may all preregistered basal sensitivity shapes enter a whole-graph sentinel;
+  never substitute the historical normalized-rate comparator.

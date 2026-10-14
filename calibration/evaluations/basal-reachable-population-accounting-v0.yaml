@@ -1,0 +1,28 @@
+schema_version: 1
+id: evaluation.basal_reachable_population_accounting.v0
+campaign_id: campaign.basal_reachable_population_accounting.v0
+runner_result_id: runner_result.basal_reachable_population_accounting.v0
+runner_semantic_sha256: 91a485d755ba7e941e9bb041431330b22941bba8b3e6eecdf2976f7db749e6fd
+status: accepted_population_and_bridge_disposition_accounting_execution_still_blocked
+checks:
+  all_six_basal_families_accounted: true
+  all_6041_source_terminals_disjoint_and_canonical: true
+  every_reached_neuron_has_assignment_disposition: true
+  no_edge_from_reached_scope_to_unreached_scope: true
+  every_source_has_bridge_disposition: true
+  internal_boundary_grammar_exhaustively_counted: true
+  numerical_values_emitted: false
+  executable_source_unit_bridges_available: false
+  accepted_global_typed_hybrid_runtime_available: false
+blocker_ids:
+- executable_source_unit_bridges_available
+- accepted_global_typed_hybrid_runtime_available
+interpretation: The six basal families reach 166,431 of 166,700 canonical neurons.
+  Every reached neuron and internal boundary is accounted, but dual-unresolved assignments
+  and non-executable unit bridges prevent a scientific whole-MaleCNS basal run.
+parameter_values_emitted: 0
+named_behavior_exposed: false
+next_action: Use the exact reachability and boundary counts to implement a sparse
+  typed/hybrid runtime that preserves dual alternatives. Resolve or bound the source
+  event-process and graded-conversion families before instantiating numerical basal
+  sensitivity arms.

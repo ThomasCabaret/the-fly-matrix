@@ -1,0 +1,234 @@
+schema_version: 1
+id: runner_result.basal_reachable_population_accounting.v0
+campaign_id: campaign.basal_reachable_population_accounting.v0
+status: accepted_exhaustive_reachability_and_dispositions_numeric_bridges_blocked
+completed_at: '2026-10-14T06:28:28.514924+00:00'
+command: basal_population_reachability.bat
+claim_label: BASAL REACHABILITY / POPULATION AND BRIDGE DISPOSITIONS / ZERO VALUES
+  / NO BEHAVIOR
+source_accounting:
+  families: 6
+  channels: 2212
+  unique_terminal_bodies: 6041
+union_reachability:
+  source_terminals: 6041
+  reachable_neurons: 166431
+  unreachable_neurons: 269
+  reachable_fraction: 0.9983863227354529
+  maximum_depth: 5
+  depth_histogram:
+    '0': 6041
+    '1': 13719
+    '2': 77344
+    '3': 66030
+    '4': 3287
+    '5': 10
+family_reachability:
+  parameter.baseline.olfaction.v0:
+    source_terminals: 2639
+    reachable_neurons: 166325
+    unreachable_neurons: 375
+    maximum_depth: 5
+    depth_histogram:
+      '0': 2639
+      '1': 1147
+      '2': 43438
+      '3': 112669
+      '4': 6403
+      '5': 29
+  parameter.baseline.gustation.v0:
+    source_terminals: 1428
+    reachable_neurons: 166326
+    unreachable_neurons: 374
+    maximum_depth: 5
+    depth_histogram:
+      '0': 1428
+      '1': 3853
+      '2': 52563
+      '3': 101301
+      '4': 7150
+      '5': 31
+  parameter.baseline.thermohygro.v0:
+    source_terminals: 91
+    reachable_neurons: 166325
+    unreachable_neurons: 375
+    maximum_depth: 5
+    depth_histogram:
+      '0': 91
+      '1': 736
+      '2': 41956
+      '3': 116394
+      '4': 7114
+      '5': 34
+  parameter.residual_sensory.chemosensory_nominal.v0:
+    source_terminals: 57
+    reachable_neurons: 166325
+    unreachable_neurons: 375
+    maximum_depth: 6
+    depth_histogram:
+      '0': 57
+      '1': 1634
+      '2': 28401
+      '3': 101917
+      '4': 32880
+      '5': 1432
+      '6': 4
+  parameter.residual_sensory.mechanosensory_tbc_nominal.v0:
+    source_terminals: 11
+    reachable_neurons: 166325
+    unreachable_neurons: 375
+    maximum_depth: 6
+    depth_histogram:
+      '0': 11
+      '1': 747
+      '2': 37323
+      '3': 105217
+      '4': 22152
+      '5': 871
+      '6': 4
+  parameter.residual_sensory.unknown_nominal.v0:
+    source_terminals: 1815
+    reachable_neurons: 166430
+    unreachable_neurons: 270
+    maximum_depth: 5
+    depth_histogram:
+      '0': 1815
+      '1': 11783
+      '2': 67712
+      '3': 81539
+      '4': 3571
+      '5': 10
+population_assignment_counts:
+  dual_unresolved: 166419
+  event_required: 12
+preaccepted_event_body_ids:
+- 800636
+- 807165
+- 809912
+- 810098
+- 815344
+- 818057
+- 819384
+- 821635
+- 827188
+- 909831
+- 1050031705
+- 1050189039
+assignment_semantic_sha256: cc04bf821d37628f407670a50dad2af674dc95bda7597e4b34e3c1ad4254b312
+source_bridge_counts:
+  dual_event_or_graded_bridge_unresolved: 6041
+source_bridge_semantic_sha256: 8fc84add8ad13bd2987a9f1db8b9a780c2c1039938bdc455adc99200c11fbd53
+internal_boundary_counts:
+  event_required_to_event_required: 5
+  event_required_to_dual_unresolved: 119
+  dual_unresolved_to_event_required: 2280
+  dual_unresolved_to_dual_unresolved: 25580170
+  total_reached_scope_edges: 25582574
+annotation_strata: 11778
+largest_annotation_strata:
+- accounting_stratum_id: type:R1-R6
+  assignment: dual_unresolved
+  neurons: 3308
+- accounting_stratum_id: type:Tm3
+  assignment: dual_unresolved
+  neurons: 2054
+- accounting_stratum_id: type:T3
+  assignment: dual_unresolved
+  neurons: 1940
+- accounting_stratum_id: type:T2a
+  assignment: dual_unresolved
+  neurons: 1871
+- accounting_stratum_id: type:L5
+  assignment: dual_unresolved
+  neurons: 1787
+- accounting_stratum_id: type:C3
+  assignment: dual_unresolved
+  neurons: 1779
+- accounting_stratum_id: type:L2
+  assignment: dual_unresolved
+  neurons: 1779
+- accounting_stratum_id: type:T4c
+  assignment: dual_unresolved
+  neurons: 1778
+- accounting_stratum_id: type:T1
+  assignment: dual_unresolved
+  neurons: 1777
+- accounting_stratum_id: type:Tm1
+  assignment: dual_unresolved
+  neurons: 1777
+- accounting_stratum_id: type:L1
+  assignment: dual_unresolved
+  neurons: 1776
+- accounting_stratum_id: type:Mi9
+  assignment: dual_unresolved
+  neurons: 1775
+- accounting_stratum_id: type:Mi1
+  assignment: dual_unresolved
+  neurons: 1773
+- accounting_stratum_id: type:L3
+  assignment: dual_unresolved
+  neurons: 1772
+- accounting_stratum_id: type:Mi4
+  assignment: dual_unresolved
+  neurons: 1772
+- accounting_stratum_id: type:Tm9
+  assignment: dual_unresolved
+  neurons: 1771
+- accounting_stratum_id: type:L4
+  assignment: dual_unresolved
+  neurons: 1770
+- accounting_stratum_id: type:Tm2
+  assignment: dual_unresolved
+  neurons: 1766
+- accounting_stratum_id: type:Tm20
+  assignment: dual_unresolved
+  neurons: 1762
+- accounting_stratum_id: type:C2
+  assignment: dual_unresolved
+  neurons: 1745
+parameter_values_emitted: 0
+gates:
+  all_six_basal_families_accounted: true
+  all_6041_source_terminals_disjoint_and_canonical: true
+  every_reached_neuron_has_assignment_disposition: true
+  no_edge_from_reached_scope_to_unreached_scope: true
+  every_source_has_bridge_disposition: true
+  internal_boundary_grammar_exhaustively_counted: true
+  numerical_values_emitted: false
+  executable_source_unit_bridges_available: false
+  accepted_global_typed_hybrid_runtime_available: false
+blocker_ids:
+- executable_source_unit_bridges_available
+- accepted_global_typed_hybrid_runtime_available
+artifacts:
+- path: data/derived/calibration/basal-reachable-population-accounting-v0/reached-populations.parquet
+  sha256: 4116604700ec2bf383432f1474af616daa867e40be3a63f00da74e131ed064f4
+  bytes: 2080835
+- path: data/derived/calibration/basal-reachable-population-accounting-v0/source-terminals.csv
+  sha256: a27adeae0ec523507867498abf24482a7fd2ab66562b9611e9f8018ac8ebd97a
+  bytes: 933714
+- path: data/derived/calibration/basal-reachable-population-accounting-v0/annotation-strata.csv
+  sha256: 6f33febc38fe71340e9d9075b4290fd9a9bd31576cd67421970f64225770653c
+  bytes: 377518
+- path: data/derived/calibration/basal-reachable-population-accounting-v0/unreachable-canonical-neurons.csv
+  sha256: 37c3053c39f8173e7fba57d90054fd5e009b369539e9893b4c7eec41a95e1788
+  bytes: 13680
+- path: data/derived/calibration/basal-reachable-population-accounting-v0/summary.json
+  sha256: eb16a74879d0d2b2defafc7c45fb99e65ebd1f451e8cfe734a6ffb4f79b570f5
+  bytes: 3901
+accepted_claims:
+- Every canonical neuron reachable from the six basal families has an explicit event-required
+  or dual-unresolved disposition.
+- Every basal source terminal has an explicit native-input bridge disposition.
+- Internal event/graded boundary combinations are exhaustively named and counted without
+  values.
+forbidden_claims:
+- Dual-unresolved populations have an accepted native representation.
+- A named bridge disposition is executable or calibrated.
+- The accepted local event requirements generalize to other bodies sharing an annotation.
+- Basal values, whole-body stability or a named behavior have been tested.
+next_action: Use the exact reachability and boundary counts to implement a sparse
+  typed/hybrid runtime that preserves dual alternatives. Resolve or bound the source
+  event-process and graded-conversion families before instantiating numerical basal
+  sensitivity arms.
+semantic_result_sha256: 91a485d755ba7e941e9bb041431330b22941bba8b3e6eecdf2976f7db749e6fd

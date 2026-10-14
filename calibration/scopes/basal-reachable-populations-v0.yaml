@@ -1,0 +1,24 @@
+schema_version: 1
+id: scope.basal_reachable_populations.v0
+title: Canonical MaleCNS populations reachable from six basal source families
+status: active_structural_accounting
+includes:
+  - all 6041 exact basal terminal body IDs owned by the six registered families
+  - every canonical neuron reachable by directed chemical-connectome edges
+  - exact accepted event requirements imported from the bounded front-leg records
+  - dual-unresolved disposition for every other reached neuron
+  - source input-bridge and internal typed-boundary dispositions
+excludes:
+  - basal numerical values, seeds, event generators, gains, offsets or kernels
+  - a global homogeneous rate or LIF default
+  - morphology-derived delays, electrical coupling and compartmental dynamics
+  - body motion, named behavior and candidate selection
+topology_policy:
+  changes_allowed: false
+  graph_scope: canonical_neurons_only
+  edge_semantics: published_directed_chemical_synapse_count
+  reachability_semantics: directed_unweighted_transitive_closure_from_exact_terminal_body_ids
+claim_boundary: >-
+  A dual-unresolved assignment is complete accounting under ADR 0016, not an
+  executable native-model choice. A named bridge disposition is not a calibrated
+  unit conversion.

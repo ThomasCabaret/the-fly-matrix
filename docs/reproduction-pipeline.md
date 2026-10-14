@@ -362,6 +362,18 @@ preregistered low-capacity basal grid. Once it emits a replay/viewable preview,
 the pipeline stops for a user checkpoint before any visual-inspection-driven
 parameter change.
 
+Run `basal_low_capacity_readiness.bat` to reproduce the shape-only basal gate. It
+accounts for six families, 2,212 channels and 6,041 terminal bodies, but emits no
+numeric value. Then run `basal_population_reachability.bat`. It verifies the
+frozen graph and source tables, computes one exact directed closure per family,
+and assigns every neuron reached by their union either the twelve already
+accepted exact event requirements or `dual_unresolved`. The accepted result is
+166,431/166,700 reached neurons and 25,582,574 internal edges exhaustively
+partitioned by endpoint disposition. Derived full tables remain ignored under
+`data/derived/`; the compact result and evaluation are versioned. This closes
+accounting only: all 6,041 source unit bridges remain non-executable and no
+whole-MaleCNS typed/hybrid runtime or basal value is accepted.
+
 ### Historical neural-model gate
 
 The rate/LIF global gate is closed with `revise` and is not a prerequisite to

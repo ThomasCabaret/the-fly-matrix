@@ -1,0 +1,71 @@
+schema_version: 1
+id: rules.basal_reachable_population_assignment.v0
+title: Rules for typed/hybrid accounting downstream of basal source terminals
+status: active_zero_values
+claim_label: POPULATION ACCOUNTING / DUAL-UNRESOLVED PRESERVED / ZERO VALUES / NO BEHAVIOR
+
+purpose: >-
+  Account every canonical MaleCNS neuron reachable from the six declared basal
+  families without inferring native dynamics from annotation names,
+  neurotransmitter identity, graph position, or numerical convenience.
+
+assignment_rules:
+  - id: basal.reachable.accepted_local_event_requirement.v0
+    priority: 100
+    match: exact_body_ids_from_accepted_local_population_results
+    assignment: event_required
+    rationale: >-
+      Reuse only the twelve exact body-level requirements already accepted in
+      the front-leg scope. This rule does not generalize their type label to
+      another body, segment, or population.
+  - id: basal.reachable.native_dynamics_unresolved.v0
+    priority: 0
+    match: every_other_reachable_canonical_neuron
+    assignment: dual_unresolved
+    rationale: >-
+      Reachability, annotation and transmitter priors do not determine whether
+      the population is event-native or graded-native.
+
+forbidden_inferences:
+  - annotation_type_to_native_dynamics
+  - superclass_to_native_dynamics
+  - transmitter_to_native_dynamics
+  - graph_depth_to_native_dynamics
+  - source_family_to_native_dynamics
+
+reporting_strata:
+  ordered_fallback: [type, class, superclass, body_id]
+  scientific_status: audit_partition_only_not_a_population_model
+
+source_bridge_dispositions:
+  event_required:
+    native_input_port: event_intensity_hz
+    executable_status: blocked_event_process_family_and_values_unresolved
+    required_unknowns: [event_process_family, variability, absolute_rate, temporal_profile]
+  graded_required:
+    native_input_port: graded_activity
+    executable_status: blocked_hz_to_graded_transfer_unresolved
+    required_unknowns: [gain, offset, temporal_kernel, saturation]
+  dual_unresolved:
+    native_input_port: explicit_event_or_graded_candidate_pair
+    executable_status: blocked_native_representation_and_both_numeric_bridges_unresolved
+    candidates:
+      - event_intensity_hz
+      - graded_activity_via_explicit_hz_to_graded_transfer
+
+internal_boundary_grammar:
+  event_to_event:
+    required_contract: delayed_synaptic_event_and_event_kernel
+  event_to_graded:
+    required_contract: causal_event_to_continuous_kernel
+  graded_to_event:
+    required_contract: causal_graded_to_event_intensity_map
+  graded_to_graded:
+    required_contract: causal_continuous_transfer
+  common_status: structurally_named_numeric_parameters_unresolved
+
+capacity_policy:
+  parameter_values_emitted: 0
+  population_assignments_inferred_from_graph: 0
+  named_behavior_exposure: 0
+  topology_changes: 0
