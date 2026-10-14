@@ -237,8 +237,10 @@ class CalibrationRegistryTests(unittest.TestCase):
             "dual_unresolved",
         )
         assignment_coverage = architecture["scope"]["population_assignment_coverage"]
-        self.assertEqual(assignment_coverage["event_required_neurons"], 10)
-        self.assertEqual(assignment_coverage["dual_unresolved_scoped_neurons"], 36)
+        self.assertEqual(assignment_coverage["basal_reached_neurons"], 166431)
+        self.assertEqual(assignment_coverage["exact_event_required_neurons"], 12)
+        self.assertEqual(assignment_coverage["dual_unresolved_reached_neurons"], 166419)
+        self.assertEqual(assignment_coverage["canonical_neurons_outside_basal_reached_scope"], 269)
         self.assertEqual(architecture["scope"]["parameter_values_promoted"], 0)
         self.assertIn(
             "homogeneous_continuous_rate",
@@ -251,6 +253,39 @@ class CalibrationRegistryTests(unittest.TestCase):
         for artifact_ref in evaluation["reproducibility"]["artifact_refs"]:
             with self.subTest(artifact_ref=artifact_ref):
                 self.assertTrue((ROOT / artifact_ref).is_file())
+
+    def test_full_graph_typed_hybrid_runtime_is_mechanics_only(self) -> None:
+        campaign = load_yaml(
+            CALIBRATION_ROOT
+            / "campaigns"
+            / "basal-reached-typed-hybrid-runtime-sentinel-v0.yaml"
+        )
+        runner = load_yaml(
+            CALIBRATION_ROOT
+            / "runner"
+            / "basal-reached-typed-hybrid-runtime-sentinel-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluations"
+            / "basal-reached-typed-hybrid-runtime-sentinel-v0.yaml"
+        )
+
+        self.assertEqual(campaign["behavior_targets"], [])
+        self.assertEqual(campaign["parameter_values_promoted"], 0)
+        self.assertFalse(all(runner["checks"].values()))
+        self.assertFalse(runner["checks"]["parameter_values_promoted"])
+        self.assertFalse(runner["checks"]["named_behavior_exposed"])
+        mixed = runner["profiles"]["exact_event_plus_all_dual_as_graded"]
+        self.assertEqual(mixed["node_counts"], {"inactive": 269, "event": 12, "graded": 166419})
+        self.assertTrue(all(value > 0 for value in mixed["boundary_projection_max_l1"].values()))
+        self.assertEqual(runner["scientific_boundary"]["population_assignments_promoted"], 0)
+        self.assertEqual(runner["scientific_boundary"]["source_bridges_executed"], 0)
+        self.assertFalse(runner["scientific_boundary"]["higher_order_assignment_space_covered"])
+        self.assertEqual(
+            runner["semantic_result_sha256"],
+            evaluation["reproducibility"]["runner_semantic_sha256"],
+        )
 
     def test_first_local_population_assignment_is_partial_and_value_free(self) -> None:
         campaign = load_yaml(

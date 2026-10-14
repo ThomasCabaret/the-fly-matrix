@@ -28,7 +28,11 @@ frozen_inputs:
   intermediate_population_accounting: calibration/runner/front-leg-intermediate-dynamics-accounting-v0.yaml
   intermediate_population_accounting_sha256: 8961dec444a45533fe55b438ad9301fd054b164ea2e9d902c5950604702cb6a6
   population_target: calibration/targets/population-dynamics-assignment-v0.yaml
-  population_target_sha256: ce8357bd7f131fd5dc96c1b69168b7b0ea1cecf609dcbe274a28bb3fbeb20a25
+  population_target_sha256: b72aaa6a8ddbcc30dd5a888aeeae80a1ed7bc25abad5db34b579ae2c2098eb24
+  basal_population_reachability: calibration/runner/basal-reachable-population-accounting-v0.yaml
+  basal_population_reachability_sha256: 345a1a9139e21c9c8e513728e86b3aefaec4a0848963c5930128443c749897a6
+  typed_hybrid_runtime: calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml
+  typed_hybrid_runtime_sha256: 922a21b533d52d5cb6be435c31aee3e48a4616c7e72e87a835ff510ae4af49d0
 
 expected_accounting:
   basal_families: 6
@@ -38,6 +42,10 @@ expected_accounting:
   currently_accounted_local_population_neurons: 196
   currently_event_required_local_neurons: 12
   currently_dual_unresolved_local_neurons: 184
+  basal_reached_population_neurons: 166431
+  basal_reached_event_required_neurons: 12
+  basal_reached_dual_unresolved_neurons: 166419
+  basal_unreached_neurons: 269
 
 sensitivity_design:
   status: preregistered_shapes_only_absolute_scales_blocked
@@ -58,7 +66,7 @@ sensitivity_design:
       role: tests_whether_large_families_dominate_only_by_cardinality
 
 execution_gates:
-  - id: complete_consumed_population_assignment
+  - id: complete_consumed_population_disposition_accounting
     required: true
   - id: explicit_event_or_graded_unit_bridge_per_consumed_population
     required: true
@@ -89,8 +97,7 @@ forbidden_claims:
   - The historical normalized-rate comparator satisfies the accepted typed/hybrid contract.
   - Any named behavior, whole-body stability or emergence has been tested.
 next_action: >-
-  Extend typed/hybrid population accounting from the local 46-neuron evidence
-  scope to the populations actually reached by the six basal families, define
-  their event/graded unit bridges, then instantiate all preregistered arms with a
-  bounded absolute-scale axis. In parallel, the three accepted local composites
-  may be rendered as explicitly local-chain physical previews.
+  Define the event-process and Hz-to-graded source bridges for all 6,041 basal
+  terminals, then instantiate every preregistered arm over explicit typed/hybrid
+  candidate profiles with a bounded absolute-scale axis. Do not select a native
+  population assignment from runtime convenience or a named behavior.

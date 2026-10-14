@@ -1,0 +1,127 @@
+schema_version: 1
+id: campaign.basal_reached_typed_hybrid_runtime_sentinel.v0
+title: Sparse typed/hybrid execution sentinel over the basal-reached MaleCNS scope
+status: preregistered_runnable
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.basal_reachable_populations.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: TYPED/HYBRID RUNTIME MECHANICS / TWO EXPLICIT EXTREMES / ZERO CALIBRATION / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+
+purpose: >-
+  Prove that one sparse engine can execute an explicit per-neuron event/graded
+  assignment on the complete 166,431-neuron basal-reached scope, preserve delayed
+  event state and continuous graded state, and expose all four conversion
+  boundaries. This is an implementation gate, not a scientific assignment.
+
+frozen_inputs:
+  runtime:
+    path: src/the_fly_matrix/typed_hybrid_runtime.py
+    sha256: 2060f71624efe2019c75be349bda08a61a65fc49fb378d72868143c16e1e1195
+  architecture_contract:
+    path: calibration/models/malecns-event-capable-typed-hybrid-v0.yaml
+    sha256: bf73469636cb9988b4f482483eeaac1dba08c1d37a50ac8824b071d1d61be555
+  architecture_decision:
+    path: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+    sha256: 4fa8ae39707c10c4c3d268c2b365afd4625f277e695d413b46370ee200f07888
+  population_accounting_result:
+    path: calibration/runner/basal-reachable-population-accounting-v0.yaml
+    sha256: 345a1a9139e21c9c8e513728e86b3aefaec4a0848963c5930128443c749897a6
+  reached_populations:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/reached-populations.parquet
+    sha256: 4116604700ec2bf383432f1474af616daa867e40be3a63f00da74e131ed064f4
+  source_terminals:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/source-terminals.csv
+    sha256: a27adeae0ec523507867498abf24482a7fd2ab66562b9611e9f8018ac8ebd97a
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+
+assignment_profiles:
+  - id: exact_event_plus_all_dual_as_graded
+    policy: preserve_the_12_exact_event_requirements_and_instantiate_every_dual_unresolved_neuron_as_a_graded_candidate
+    scientific_status: diagnostic_extreme_not_population_assignment
+  - id: all_reached_as_event_candidate
+    policy: instantiate_every_reached_neuron_as_an_event_candidate
+    scientific_status: diagnostic_extreme_not_population_assignment
+assignment_profile_completeness: >-
+  The engine accepts any explicit assignment vector. The two executed extremes
+  do not cover the 2^166419 scientific assignment space, its higher-order
+  interactions, or a probability distribution over assignments.
+
+diagnostic_only_constants:
+  status: UNPROMOTABLE_ENGINEERING_PROBES
+  dt_ms: 0.1
+  event_comparator:
+    v_rest_mV: -52.0
+    reset_mV: -52.0
+    threshold_mV: -45.0
+    tau_membrane_ms: 20.0
+    tau_syn_ms: 5.0
+    refractory_ms: 2.2
+    fixed_delay_ms: 1.8
+    origin: model.malecns_lif_source_aligned.v1_comparison_only
+  boundary_scales:
+    event_to_event_mV: 0.05
+    event_to_graded: 0.5
+    graded_to_event_mV: 0.05
+    graded_to_graded: 0.5
+    origin: engineering_only_nonzero_microprobe_scales
+  graded_tau_ms: 5.0
+  external_graded_probe: 0.25
+  restriction: >-
+    No constant in this block is a parameter set, physiological estimate, basal
+    source value, population assignment criterion or candidate for promotion.
+
+execution:
+  backend: auto_cuda_else_cpu
+  sparse_operator: published_synapse_count_incoming_csr
+  coordinate_transform: incoming_L1_synapse_fraction
+  steps: 24
+  all_event_forced_sources: 512
+  source_bridges_executed: 0
+  event_scheduler: source_aligned_state_update_threshold_synapses_reset
+  event_delay_policy: fixed_1_8_ms_comparator_only
+  graded_update: causal_leaky_continuous_state_without_hidden_binning
+
+acceptance:
+  expected_canonical_neurons: 166700
+  expected_reached_neurons: 166431
+  expected_exact_event_neurons: 12
+  expected_mixed_boundary_counts:
+    event_to_event: 5
+    event_to_graded: 119
+    graded_to_event: 2280
+    graded_to_graded: 25580170
+    total_active_edges: 25582574
+  micro_backend_atol: 0.000001
+  require_four_boundary_micro_oracle: true
+  require_exact_delay_visibility: true
+  require_both_full_graph_profiles_finite: true
+  require_inactive_state_quiescent: true
+  require_zero_population_assignment_promotion: true
+  require_zero_parameter_promotion: true
+  require_zero_named_behavior_exposure: true
+
+accepted_claims:
+  - An explicit assignment vector, rather than a hidden global default, controls every active population.
+  - The same sparse engine executes event and graded state plus all four boundary directions.
+  - The complete basal-reached scope fits and advances on the available backend under both diagnostic extremes.
+  - Event delivery is visible only at the declared comparator delay.
+forbidden_claims:
+  - Either diagnostic extreme is a biological population assignment.
+  - Two extremes represent the complete 2^166419 assignment uncertainty.
+  - The diagnostic constants are calibrated, physiological or promotable.
+  - A source event process or Hz-to-graded basal conversion has executed.
+  - Finite execution validates stability, behavior or the point-neuron approximation.
+
+next_action: >-
+  Define bounded source event-process and Hz-to-graded conversion families, then
+  execute the preregistered basal sensitivity shapes through this engine while
+  retaining population-assignment uncertainty and zero named-behavior exposure.

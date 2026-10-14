@@ -1,0 +1,28 @@
+schema_version: 1
+id: evaluation.basal_reached_typed_hybrid_runtime_sentinel.v0
+campaign_id: campaign.basal_reached_typed_hybrid_runtime_sentinel.v0
+status: accepted_runtime_mechanics_source_bridges_and_population_assignments_still_open
+conclusion: The 166,431-neuron basal-reached scope now executes under an explicit
+  arbitrary typed assignment vector. The mixed extreme exercises all four event/graded
+  boundaries and the event extreme preserves delayed event mechanics. These two profiles
+  are mechanics probes, not coverage of 2^166419 assignments, physiology, calibration,
+  or behavior.
+metrics:
+  reached_neurons: 166431
+  inactive_neurons: 269
+  exact_event_requirements_preserved: 12
+  dual_unresolved_scientific_assignments: 166419
+  diagnostic_extremes_executed: 2
+  boundary_classes_executed_in_mixed_profile: 4
+  parameter_values_promoted: 0
+  population_assignments_promoted: 0
+  source_bridges_executed: 0
+  behavior_targets_exposed: 0
+reproducibility:
+  command: basal_typed_hybrid_runtime_sentinel.bat
+  runner_semantic_sha256: 315dd14b0630b76255b1297a02bd744ad01f02962c87ebf79aaef325182cffc8
+  derived_summary: data/derived/calibration/basal-reached-typed-hybrid-runtime-sentinel-v0/summary.json
+  semantic_boundary: counts_delays_and_gates_not_timing_or_raw_cuda_reduction_bytes
+next_action: Define bounded source event-process and Hz-to-graded conversion families,
+  then execute the preregistered basal sensitivity shapes through this engine without
+  selecting a native population assignment from numerical convenience.

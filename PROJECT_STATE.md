@@ -339,16 +339,17 @@ membre n'est classé ou choisi comme référence. Les six familles de sources ba
 sont comptées mais explicitement `not_exercised_no_freeze`, donc aucune valeur
 nulle implicite ne contaminera le prochain run.
 
-Le gate suivant a révélé que l'étape « corps entier » formulée auparavant était
-trop optimiste. `basal_low_capacity_readiness.bat` comptabilise bien les six
-familles, 2 212 canaux et 6 041 terminaux, et préenregistre trois formes de
-sensibilité pauvres et comportement-naïves. Il n'émet cependant aucune magnitude,
-seed ou série temporelle : les trois bundles acceptés ne couvrent que le corridor
-local de 196 neurones et ne consomment aucune famille basale. Une exécution
-scientifique typée/hybride de MaleCNS entier reste donc bloquée par l'affectation
-des populations atteintes, leurs ponts d'unités événementiels/gradués et le runtime
-global accepté. Le comparateur rate normalisé historique ne peut pas servir de
-raccourci silencieux.
+Le gate basal a d'abord révélé que l'étape « corps entier » formulée auparavant
+était trop optimiste. Après fermeture de la comptabilité globale et du moteur
+décrites ci-dessous, `basal_low_capacity_readiness.bat` a été régénéré : il
+comptabilise les six familles, 2 212 canaux et 6 041 terminaux, consomme les
+166 431 dispositions atteintes et accepte la mécanique des deux extrêmes du
+runtime typé/hybride. Il préenregistre toujours trois formes de sensibilité
+pauvres et comportement-naïves sans émettre magnitude, seed ou série temporelle.
+Le seul blocker de cette campagne est maintenant la définition explicite des
+ponts source événementiels et Hz→activité graduée ; aucune classe `dual_unresolved`
+ni valeur n'est promue. Le comparateur rate normalisé historique ne peut pas
+servir de raccourci silencieux.
 
 Le point de contrôle visuel existe néanmoins sous une frontière causale exacte.
 `front_leg_member_physical_preview.bat` produit trois trajectoires indépendantes
@@ -370,7 +371,21 @@ autres sont conservés `dual_unresolved`. Les 25 582 574 arêtes internes à cet
 portée sont toutes réparties entre les quatre classes de frontière event/dual, et
 chaque terminal source possède une disposition de pont event/graded. Zéro valeur,
 générateur d'événements ou conversion Hz→activité graduée n'est choisi : les ponts
-restent non exécutables et le runtime typé/hybride global reste le prochain gate.
+restent non exécutables.
+
+Le gate d'**exécution typée/hybride globale** est maintenant fermé au niveau
+logiciel, sans résoudre la physiologie. `basal_typed_hybrid_runtime_sentinel.bat`
+fait du vecteur d'affectation par neurone une entrée explicite du noyau sparse et
+exécute deux extrêmes diagnostiques sur les 166 431 neurones atteints. Le premier
+conserve les douze exigences événementielles exactes et instancie les 166 419
+inconnus comme candidats gradués : ses quatre frontières event→event,
+event→graded, graded→event et graded→graded sont toutes actives. Le second
+instancie tous les neurones atteints comme candidats événementiels. Les deux runs
+CUDA de 24 pas restent finis, livrent les événements au délai déclaré de 1,8 ms
+et laissent les 269 neurones hors portée exactement au repos. Ils mesurent environ
+quelques centaines de pas/s selon le profil et utilisent environ 217 Mo de mémoire GPU.
+Ces deux points ne couvrent pas l'espace `2^166419`, ne choisissent aucune classe,
+ne calibrent aucune constante et n'exécutent aucun des 6 041 ponts source.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -981,7 +996,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; la portée atteinte par les six familles basales est exhaustivement comptée à 166 431/166 700 neurones, dont 12 `event_required` et 166 419 `dual_unresolved`, avec 6 041 dispositions de pont source mais zéro pont numérique exécutable ; le gate causal local compte 650 épisodes et conserve sans classement 3/65 composites actifs non amplifiants sous quatre perturbations miroir ; 61 sont mixtes/amplifiants, 1 non identifiable, 172 silencieux et 3 bloqués ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; la portée atteinte par les six familles basales est exhaustivement comptée à 166 431/166 700 neurones, dont 12 `event_required` et 166 419 `dual_unresolved` ; le noyau sparse exécute deux extrêmes explicites et les quatre frontières sur CUDA, mais les 6 041 ponts source restent numériquement bloqués et aucun extrême n'est une affectation scientifique ; le gate causal local compte 650 épisodes et conserve sans classement 3/65 composites actifs non amplifiants sous quatre perturbations miroir ; 61 sont mixtes/amplifiants, 1 non identifiable, 172 silencieux et 3 bloqués ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1050,7 +1065,7 @@ monde/corps → modèles source → adaptateurs → entrées CNS → MaleCNS →
 Le smoke test traverse toujours 17 884 entrées CNS et 815 sorties motrices, toutes
 canoniques, mais le runtime central est maintenant limité aux 25 582 938 arêtes
 entre les 166 700 neurones canoniques. Les 211 577 lignes d'annotation restent
-conservées et classifiées. Les **294 tests** découverts actuellement passent, y compris les
+conservées et classifiées. Les tests découverts actuellement passent, y compris les
 garde-fous du runner, les tests de compilation, le runtime et les validations
 structurelles.
 
@@ -1142,9 +1157,11 @@ l'affectation aux populations effectivement atteintes, puis définir leurs inter
 natives en conservant l'incertitude `dual_unresolved`. La première moitié est
 maintenant fermée par la comptabilité exhaustive : 166 431 neurones atteints ont
 une disposition et les 25 582 574 frontières internes sont comptées. La seconde
-reste ouverte : les 6 041 sources sont toutes `dual_unresolved`, leurs ponts
-event/graded ne portent encore aucune valeur exécutable et le runtime global
-typé/hybride accepté n'existe pas encore.
+est maintenant scindée : le noyau global typé/hybride est exécutable avec un
+vecteur d'affectation explicite, mais les 6 041 sources sont toutes
+`dual_unresolved` et leurs ponts event/graded ne portent encore aucune valeur
+exécutable. Les deux extrêmes du sentinel ferment la mécanique du runtime, pas
+l'espace combinatoire ni la calibration des interfaces.
 
 En parallèle, le gate d'actionneurs est maintenant terminé sans attendre le choix
 rate/LIF, car ses probes sont physiques et comportement-naïfs. Le prochain front
@@ -1205,6 +1222,7 @@ neutral_embodied_feedback_nonamplification.bat # 65 lignes actives x 10 épisode
 front_leg_member_conditioned_freeze_boundary.bat # reconstruit les 3 bundles exacts ; zéro gel marginal, 6 familles basales non exercées
 basal_low_capacity_readiness.bat # 3 formes basales sans valeur ; expose les blockers du run typé/hybride global
 basal_population_reachability.bat # 6 familles -> 166431 neurones ; dispositions exhaustives, ponts numériques encore bloqués
+basal_typed_hybrid_runtime_sentinel.bat # 2 extrêmes plein graphe ; 4 frontières, zéro affectation/valeur promue
 front_leg_member_physical_preview.bat # génère 3 replays physiques : FlyBody complet, contrôleur local seulement
 front_leg_member_preview_replay.bat [129|141|238] # ouvre un replay ; aucun membre n'est une référence scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS

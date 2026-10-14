@@ -6,12 +6,13 @@ echo  The Fly Matrix - microscopic neural-runtime regression suite
 echo  SOFTWARE VERIFICATION / NOT A BIOLOGICAL MODEL VALIDATION
 echo ============================================================
 echo.
-echo [SCOPE 1/4] aBN1 event/rate runner: units, signs, delays, resets,
+echo [SCOPE 1/5] aBN1 event/rate runner: units, signs, delays, resets,
 echo             fresh state, configuration wiring and CPU/GPU parity.
-echo [SCOPE 2/4] Source-aligned LIF: NumPy/Torch recurrence and state rules.
-echo [SCOPE 3/4] Brian2 scheduler boundaries: integration, reset,
+echo [SCOPE 2/5] Source-aligned LIF: NumPy/Torch recurrence and state rules.
+echo [SCOPE 3/5] Brian2 scheduler boundaries: integration, reset,
 echo             refractory eligibility and delayed delivery.
-echo [SCOPE 4/4] Temporal probes: rate-bin information loss and pathologies.
+echo [SCOPE 4/5] Temporal probes: rate-bin information loss and pathologies.
+echo [SCOPE 5/5] Typed/hybrid ports: four boundaries, delay and type guards.
 echo.
 echo [RUN] Executing deterministic microscopic oracles...
 call .venv\Scripts\python.exe -m pytest ^
@@ -19,6 +20,7 @@ call .venv\Scripts\python.exe -m pytest ^
   tests\test_lif_source_fidelity.py ^
   tests\test_brian2_conformance.py ^
   tests\test_temporal_model_probes.py ^
+  tests\test_typed_hybrid_runtime.py ^
   -q
 set "EXIT_CODE=%ERRORLEVEL%"
 echo.

@@ -1,0 +1,185 @@
+schema_version: 1
+id: runner_result.basal_reached_typed_hybrid_runtime_sentinel.v0
+campaign_id: campaign.basal_reached_typed_hybrid_runtime_sentinel.v0
+status: accepted_execution_engine_two_extremes_zero_scientific_assignment_or_values
+completed_at: '2026-10-14T11:18:59.972600+00:00'
+command: basal_typed_hybrid_runtime_sentinel.bat
+claim_label: TYPED/HYBRID RUNTIME MECHANICS / TWO EXPLICIT EXTREMES / ZERO CALIBRATION
+  / NO BEHAVIOR
+backend: cuda
+micro_oracle:
+  cpu:
+    device: cpu
+    nodes: 4
+    edges: 4
+    boundary_counts:
+      event_to_event: 1
+      event_to_graded: 1
+      graded_to_event: 1
+      graded_to_graded: 1
+      total_active_edges: 4
+    delay_steps: 18
+    event_projection_zero_before_delay: true
+    event_projection_nonzero_at_delay: true
+    graded_boundaries_nonzero: true
+    finite: true
+    final_state:
+      v:
+      - -52.0
+      - -51.999847412109375
+      - -52.0
+      - -52.0
+      g:
+      - 0.0
+      - 0.02191300317645073
+      - 0.0
+      - 0.0
+      refractory:
+      - 0
+      - 0
+      - 0
+      - 0
+      graded:
+      - 0.0
+      - 0.0
+      - 0.012042596936225891
+      - 0.0008343184017576277
+    accepted: true
+  selected_backend:
+    device: cuda
+    nodes: 4
+    edges: 4
+    boundary_counts:
+      event_to_event: 1
+      event_to_graded: 1
+      graded_to_event: 1
+      graded_to_graded: 1
+      total_active_edges: 4
+    delay_steps: 18
+    event_projection_zero_before_delay: true
+    event_projection_nonzero_at_delay: true
+    graded_boundaries_nonzero: true
+    finite: true
+    final_state:
+      v:
+      - -52.0
+      - -51.999847412109375
+      - -52.0
+      - -52.0
+      g:
+      - 0.0
+      - 0.02191300317645073
+      - 0.0
+      - 0.0
+      refractory:
+      - 0
+      - 0
+      - 0
+      - 0
+      graded:
+      - 0.0
+      - 0.0
+      - 0.012042596936225891
+      - 0.0008343184017576277
+    accepted: true
+  max_abs_state_error: 0.0
+profiles:
+  exact_event_plus_all_dual_as_graded:
+    node_counts:
+      inactive: 269
+      event: 12
+      graded: 166419
+    boundary_edge_counts:
+      event_to_event: 5
+      event_to_graded: 119
+      graded_to_event: 2280
+      graded_to_graded: 25580170
+      total_active_edges: 25582574
+    steps: 24
+    simulated_ms: 2.4000000000000004
+    elapsed_seconds: 0.1054364000010537
+    steps_per_second: 227.62537415693396
+    simulated_to_wall_ratio: 0.0227625374156934
+    forced_event_sources: 12
+    graded_probe_sources: 1128
+    first_delivered_event_step: 18
+    boundary_projection_max_l1:
+      event_to_event_l1: 0.008628543466329575
+      event_to_graded_l1: 0.1438375562429428
+      graded_to_event_l1: 0.05815472453832626
+      graded_to_graded_l1: 8.268996238708496
+    finite_state: true
+    inactive_state_exactly_zero_or_rest: true
+    generated_event_count: 0
+    state_semantic_sha256: fba041c801d34c5dcf45d1329467745e6395eb9b7afbb0888af34a1c40fba4a2
+    peak_gpu_bytes: 216859648
+  all_reached_as_event_candidate:
+    node_counts:
+      inactive: 269
+      event: 166431
+      graded: 0
+    boundary_edge_counts:
+      event_to_event: 25582574
+      event_to_graded: 0
+      graded_to_event: 0
+      graded_to_graded: 0
+      total_active_edges: 25582574
+    steps: 24
+    simulated_ms: 2.4000000000000004
+    elapsed_seconds: 0.08876349999991362
+    steps_per_second: 270.38140677219076
+    simulated_to_wall_ratio: 0.027038140677219078
+    forced_event_sources: 512
+    graded_probe_sources: 0
+    first_delivered_event_step: 18
+    boundary_projection_max_l1:
+      event_to_event_l1: 498.0041809082031
+      event_to_graded_l1: 0.0
+      graded_to_event_l1: 0.0
+      graded_to_graded_l1: 0.0
+    finite_state: true
+    inactive_state_exactly_zero_or_rest: true
+    generated_event_count: 0
+    state_semantic_sha256: 274ccb27fec9b9f2e411595443cca679ab6519fab9e0d66f65c1f1a0ce92a8af
+    peak_gpu_bytes: 217527296
+checks:
+  micro_all_four_boundaries_and_delay_pass: true
+  micro_cpu_backend_parity_pass: true
+  mixed_profile_preserves_12_exact_event_requirements: true
+  mixed_profile_executes_all_four_boundary_classes: true
+  all_event_profile_executes_event_boundary: true
+  event_delivery_occurs_at_declared_delay: true
+  both_full_graph_profiles_finite: true
+  inactive_269_neurons_remain_quiescent: true
+  assignment_is_explicit_runtime_input: true
+  dual_assignment_not_scientifically_selected: true
+  parameter_values_promoted: false
+  named_behavior_exposed: false
+scientific_boundary:
+  profiles_executed: 2
+  scientific_assignment_space_size: 2^166419
+  higher_order_assignment_space_covered: false
+  population_assignments_promoted: 0
+  parameter_values_promoted: 0
+  source_bridges_executed: 0
+  behavior_targets_exposed: 0
+reproducibility_boundary:
+  semantic_hash_includes:
+  - assignment_and_boundary_counts
+  - step_and_delay_accounting
+  - finite_and_inactive_state_gates
+  - nonzero_boundary_consumption_gates
+  - promotion_and_exposure_gates
+  semantic_hash_excludes:
+  - elapsed_seconds
+  - steps_per_second
+  - peak_gpu_bytes
+  - raw_gpu_state_bytes
+  - raw_boundary_projection_magnitudes
+  reason: CUDA sparse reductions may change last-place floating values with reduction
+    order; performance and byte identity are retained diagnostically but are not semantic
+    claims.
+semantic_result_sha256: 315dd14b0630b76255b1297a02bd744ad01f02962c87ebf79aaef325182cffc8
+next_action: Define bounded source event-process and Hz-to-graded conversion families,
+  then execute the preregistered basal sensitivity shapes through this engine without
+  selecting a native population assignment from numerical convenience.

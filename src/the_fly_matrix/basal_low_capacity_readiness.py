@@ -41,6 +41,7 @@ def _verified_inputs(campaign: Mapping[str, Any]) -> dict[str, Any]:
     for key in (
         "basal_evidence", "conditioned_bundles", "population_accounting",
         "intermediate_population_accounting", "population_target",
+        "basal_population_reachability", "typed_hybrid_runtime",
     ):
         path = ROOT / str(frozen[key])
         observed = _sha256(path)
@@ -59,6 +60,7 @@ def _accounting(campaign: Mapping[str, Any], artifacts: Mapping[str, Any]) -> di
     population = artifacts["population_accounting"]
     intermediate = artifacts["intermediate_population_accounting"]
     bundles = artifacts["conditioned_bundles"]
+    reachability = artifacts["basal_population_reachability"]
     expected = campaign["expected_accounting"]
     families = list(evidence["family_rules"])
     channels = sum(int(item["expected"]["channels"]) for item in families)
@@ -82,12 +84,18 @@ def _accounting(campaign: Mapping[str, Any], artifacts: Mapping[str, Any]) -> di
             int(population["accounting"]["dual_unresolved_neurons"])
             + int(intermediate["summary"]["assignment_counts"]["dual_unresolved"])
         ),
+        "basal_reached_population_neurons": int(reachability["union_reachability"]["reachable_neurons"]),
+        "basal_reached_event_required_neurons": int(reachability["population_assignment_counts"]["event_required"]),
+        "basal_reached_dual_unresolved_neurons": int(reachability["population_assignment_counts"]["dual_unresolved"]),
+        "basal_unreached_neurons": int(reachability["union_reachability"]["unreachable_neurons"]),
         "basal_family_bundle_dispositions": {family_id: dispositions.get(family_id) for family_id in family_ids},
     }
     exact_fields = (
         "basal_families", "basal_channels", "basal_terminals",
         "currently_accounted_local_population_neurons", "currently_event_required_local_neurons",
         "currently_dual_unresolved_local_neurons",
+        "basal_reached_population_neurons", "basal_reached_event_required_neurons",
+        "basal_reached_dual_unresolved_neurons", "basal_unreached_neurons",
     )
     drift = [field for field in exact_fields if result[field] != int(expected[field])]
     if drift:
@@ -108,6 +116,7 @@ def run_readiness(
     print("[2/6] Accounting every basal family, channel and terminal", flush=True)
     accounting = _accounting(campaign, artifacts)
     family_dispositions = accounting["basal_family_bundle_dispositions"]
+    runtime = artifacts["typed_hybrid_runtime"]
 
     print("[3/6] Compiling behavior-naive sensitivity shapes without numerical values", flush=True)
     arms = list(campaign["sensitivity_design"]["arms"])
@@ -115,7 +124,7 @@ def run_readiness(
         raise BasalReadinessError("sensitivity-arm identity or order drift")
     numerical_value_count = 0
     scope_fraction = (
-        accounting["currently_accounted_local_population_neurons"]
+        accounting["basal_reached_population_neurons"]
         / accounting["canonical_MaleCNS_neurons"]
     )
 
@@ -127,13 +136,22 @@ def run_readiness(
             value == "not_exercised_no_freeze" for value in family_dispositions.values()
         ),
         "absolute_basal_values_remain_unset": numerical_value_count == 0,
-        "complete_consumed_population_assignment": False,
+        "complete_consumed_population_disposition_accounting": (
+            accounting["basal_reached_event_required_neurons"]
+            + accounting["basal_reached_dual_unresolved_neurons"]
+            == accounting["basal_reached_population_neurons"]
+        ),
         "explicit_event_or_graded_unit_bridge_per_consumed_population": False,
-        "accepted_typed_hybrid_whole_MaleCNS_runtime": False,
+        "accepted_typed_hybrid_whole_MaleCNS_runtime": (
+            runtime["status"]
+            == "accepted_execution_engine_two_extremes_zero_scientific_assignment_or_values"
+            and runtime["scientific_boundary"]["population_assignments_promoted"] == 0
+            and runtime["scientific_boundary"]["source_bridges_executed"] == 0
+        ),
     }
     blocker_ids = [
         key for key in (
-            "complete_consumed_population_assignment",
+            "complete_consumed_population_disposition_accounting",
             "explicit_event_or_graded_unit_bridge_per_consumed_population",
             "accepted_typed_hybrid_whole_MaleCNS_runtime",
         )
@@ -159,7 +177,7 @@ def run_readiness(
         "schema_version": 1,
         "id": "runner_result.basal_low_capacity_readiness.v0",
         "campaign_id": campaign["id"],
-        "status": "completed_honest_block_before_numeric_basal_or_whole_MaleCNS_run",
+        "status": "completed_runtime_mechanics_available_basal_source_bridges_blocked",
         "completed_at": datetime.now(UTC).isoformat(),
         "command": "basal_low_capacity_readiness.bat",
         "claim_label": campaign["claim_label"],
@@ -169,7 +187,7 @@ def run_readiness(
         "numerical_basal_values_emitted": numerical_value_count,
         "gates": gates,
         "blocker_ids": blocker_ids,
-        "whole_MaleCNS_execution_disposition": "blocked_not_executed",
+        "whole_MaleCNS_execution_disposition": "mechanics_executed_basal_inputs_not_executed",
         "accepted_claims": campaign["accepted_claims"],
         "forbidden_claims": campaign["forbidden_claims"],
         "next_action": campaign["next_action"],
@@ -181,7 +199,7 @@ def run_readiness(
         "schema_version": 1,
         "id": "parameters.basal_low_capacity_sensitivity_design.v0",
         "title": "Behavior-naive basal sensitivity shapes with unresolved absolute scales",
-        "status": "preregistered_shape_only_blocked_not_executable",
+        "status": "preregistered_shape_only_blocked_on_source_unit_bridges",
         "primary_class": "technical",
         "campaign_id": campaign["id"],
         "runner_result_id": result["id"],
@@ -198,7 +216,8 @@ def run_readiness(
         "unit_contract": "blocked_until_event_or_graded_conversion_is_explicit_for_every_consumed_population",
         "selection_contract": "execute_all_arms_after_unblocking_no_named_behavior_selection",
         "applicability": {
-            "whole_MaleCNS_executable": False,
+            "whole_MaleCNS_mechanics_executable": True,
+            "basal_arms_executable": False,
             "local_front_leg_bundles_consume_basal_families": False,
             "biological_baseline_claim": False,
         },
@@ -211,15 +230,16 @@ def run_readiness(
         "runner_result_id": result["id"],
         "runner_semantic_sha256": semantic_hash,
         "design_id": design["id"],
-        "status": "accepted_readiness_accounting_with_blocked_execution",
+        "status": "accepted_readiness_accounting_runtime_mechanics_pass_basal_bridges_blocked",
         "checks": gates,
         "blocker_ids": blocker_ids,
         "numerical_basal_values_emitted": 0,
         "named_behavior_exposed": False,
         "interpretation": (
-            "The uncertainty axes are now explicit, but only 196 local-corridor neurons have population accounting; "
-            "the six basal families are outside the three local bundles and no accepted typed/hybrid whole-MaleCNS "
-            "runtime can consume them yet."
+            "The uncertainty axes are explicit, all 166,431 basal-reached neurons have an event-required or "
+            "dual-unresolved disposition, and both explicit runtime extremes execute. The six basal families still "
+            "lack event-process or Hz-to-graded source bridges, so no basal arm has executed and no assignment or "
+            "value is promoted."
         ),
         "next_action": campaign["next_action"],
     }
@@ -227,9 +247,9 @@ def run_readiness(
     design_path.write_text(yaml.safe_dump(design, sort_keys=False, allow_unicode=True), encoding="utf-8")
     evaluation_path.write_text(yaml.safe_dump(evaluation, sort_keys=False, allow_unicode=True), encoding="utf-8")
 
-    print("[6/6] COMPLETE — readiness compiled; whole-MaleCNS run honestly blocked", flush=True)
+    print("[6/6] COMPLETE — runtime mechanics available; basal source bridges honestly blocked", flush=True)
     print(f"[ACCOUNTING] {accounting['basal_families']} families / {accounting['basal_channels']} channels / {accounting['basal_terminals']} terminals", flush=True)
-    print(f"[POPULATIONS] {accounting['currently_accounted_local_population_neurons']:,}/{accounting['canonical_MaleCNS_neurons']:,} currently accounted in the local evidence scope", flush=True)
+    print(f"[POPULATIONS] {accounting['basal_reached_population_neurons']:,}/{accounting['canonical_MaleCNS_neurons']:,} basal-reached neurons disposition-accounted", flush=True)
     print(f"[BLOCKERS] {', '.join(blocker_ids)}", flush=True)
     print(f"[HASH] {semantic_hash}", flush=True)
     return result

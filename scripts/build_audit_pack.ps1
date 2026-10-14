@@ -83,6 +83,7 @@ $RepresentativeAuditFiles = @(
     "calibration/state.yaml",
     "calibration/campaigns/actuator-causal-attribution-v1.yaml",
     "calibration/campaigns/basal-reachable-population-accounting-v0.yaml",
+    "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
     "calibration/campaigns/front-leg-local-conversion-contract-v0.yaml",
     "calibration/campaigns/neural-model-class-brian2-conformance-v1.yaml",
     "calibration/campaigns/population-dynamics-front-leg-accounting-v0.yaml",
@@ -92,10 +93,12 @@ $RepresentativeAuditFiles = @(
     "calibration/evidence/front-leg-motor-class-ensemble-v0.yaml",
     "calibration/evidence/front-leg-population-dynamics-v0.yaml",
     "calibration/evaluations/basal-reachable-population-accounting-v0.yaml",
+    "calibration/evaluations/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
     "calibration/evaluations/front-leg-local-conversion-contract-v0.yaml",
     "calibration/evaluations/neural-model-class-gate-v0.yaml",
     "calibration/evaluations/population-dynamics-front-leg-accounting-v0.yaml",
     "calibration/runner/basal-reachable-population-accounting-v0.yaml",
+    "calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
     "calibration/runner/front-leg-local-conversion-contract-v0.yaml",
     "calibration/runner/front-leg-local-source-data-v0.yaml",
     "calibration/runner/neural-model-class-brian2-conformance-v1.yaml",
@@ -137,6 +140,7 @@ $RepresentativeAuditFiles = @(
 
 $PriorityLaunchers = @(
     "build_audit_pack.bat",
+    "basal_typed_hybrid_runtime_sentinel.bat",
     "calibration_status.bat",
     "download_data.bat",
     "fit_feco_calcium_observation.bat",
@@ -154,8 +158,7 @@ $PriorityLaunchers = @(
 # important enough that an external reviewer needs to inspect its implementation.
 $PriorityCodeSamples = @(
     "src/the_fly_matrix/calibration_registry.py",
-    "src/the_fly_matrix/calibration_runner.py",
-    "src/the_fly_matrix/basal_population_reachability.py",
+    "src/the_fly_matrix/typed_hybrid_runtime.py",
     "scripts/build_audit_pack.ps1"
 )
 
@@ -173,6 +176,9 @@ $RequiredAuditPaths = @(
     "calibration/targets/population-dynamics-assignment-v0.yaml",
     "calibration/campaigns/basal-reachable-population-accounting-v0.yaml",
     "calibration/evaluations/basal-reachable-population-accounting-v0.yaml",
+    "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
+    "calibration/evaluations/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
+    "calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
     "decisions/0016-event-capable-typed-hybrid-neural-runtime.md",
     "ledger/README.md",
     "scripts/build_audit_pack.ps1"

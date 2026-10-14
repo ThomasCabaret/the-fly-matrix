@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import unittest
+import tempfile
+from pathlib import Path
 
 import numpy as np
 import yaml
@@ -18,8 +20,19 @@ from the_fly_matrix.neutral_embodied_declared_neural_sentinel import (
 class NeutralEmbodiedDeclaredNeuralSentinelTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.result = run_sentinel()
+        cls._temporary_directory = tempfile.TemporaryDirectory(
+            dir=Path(__file__).resolve().parents[1] / "runs"
+        )
+        output_root = Path(cls._temporary_directory.name)
+        cls.result = run_sentinel(
+            result_path=output_root / "result.yaml",
+            evaluation_path=output_root / "evaluation.yaml",
+        )
         cls.campaign = _load_campaign(CAMPAIGN_PATH)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls._temporary_directory.cleanup()
 
     def test_campaign_is_zero_fit_nonselecting_and_has_no_physics(self) -> None:
         self.assertEqual(self.campaign["optimization_exposure"], "diagnostic_only")

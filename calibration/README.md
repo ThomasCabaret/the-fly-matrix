@@ -527,5 +527,14 @@ neurons, preserves only twelve previously accepted exact event requirements and
 marks the other 166,419 as `dual_unresolved`. It also counts all four internal
 event/dual boundary classes and gives each of the 6,041 source terminals an
 explicit bridge disposition. This is not an executable basal model: event
-processes, Hz-to-graded conversions, absolute values and the global typed/hybrid
-runtime remain blocked.
+processes, Hz-to-graded conversions and absolute values remain blocked.
+
+Run `basal_typed_hybrid_runtime_sentinel.bat` for the next implementation gate.
+It loads the same 166,431-neuron scope into one sparse engine whose per-neuron
+event/graded assignment is an explicit input. The first diagnostic extreme keeps
+the twelve exact event requirements and instantiates all 166,419 unresolved
+neurons as graded candidates, exercising all four boundary directions. The second
+instantiates every reached neuron as an event candidate and preserves the fixed
+1.8 ms comparator delay. Both runs are finite on CUDA and keep the 269 inactive
+neurons quiescent. They are two mechanics probes, not coverage of `2^166419`, a
+population census, a source bridge, calibration, fitness or stability.

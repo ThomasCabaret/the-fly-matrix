@@ -29,9 +29,13 @@ class BasalLowCapacityReadinessTests(unittest.TestCase):
         self.assertEqual(result["accounting"]["currently_accounted_local_population_neurons"], 196)
         self.assertEqual(result["accounting"]["currently_event_required_local_neurons"], 12)
         self.assertEqual(result["accounting"]["currently_dual_unresolved_local_neurons"], 184)
+        self.assertEqual(result["accounting"]["basal_reached_population_neurons"], 166431)
+        self.assertEqual(result["accounting"]["basal_reached_event_required_neurons"], 12)
+        self.assertEqual(result["accounting"]["basal_reached_dual_unresolved_neurons"], 166419)
         self.assertEqual(result["numerical_basal_values_emitted"], 0)
         self.assertEqual(design["absolute_numeric_values"], [])
-        self.assertFalse(design["applicability"]["whole_MaleCNS_executable"])
+        self.assertTrue(design["applicability"]["whole_MaleCNS_mechanics_executable"])
+        self.assertFalse(design["applicability"]["basal_arms_executable"])
         self.assertEqual(
             [arm["id"] for arm in design["arms"]],
             ["explicit_silence_control", "uniform_per_terminal", "equal_family_mass"],
@@ -46,16 +50,17 @@ class BasalLowCapacityReadinessTests(unittest.TestCase):
                 design_path=root / "design.yaml",
             )
 
-        self.assertEqual(result["whole_MaleCNS_execution_disposition"], "blocked_not_executed")
+        self.assertEqual(
+            result["whole_MaleCNS_execution_disposition"],
+            "mechanics_executed_basal_inputs_not_executed",
+        )
         self.assertEqual(
             set(result["blocker_ids"]),
             {
-                "complete_consumed_population_assignment",
                 "explicit_event_or_graded_unit_bridge_per_consumed_population",
-                "accepted_typed_hybrid_whole_MaleCNS_runtime",
             },
         )
-        self.assertLess(result["population_assignment_scope_fraction"], 0.002)
+        self.assertGreater(result["population_assignment_scope_fraction"], 0.998)
 
 
 if __name__ == "__main__":

@@ -1,18 +1,21 @@
 schema_version: 1
 id: model.malecns_event_capable_typed_hybrid.v0
 title: Event-capable population-typed MaleCNS architecture contract
-status: accepted_architecture_contract_first_local_assignment_values_unresolved
-claim_label: ARCHITECTURE CONTRACT / PARTIAL LOCAL ASSIGNMENT / UNFITTED
+status: accepted_architecture_and_full_graph_execution_contract_population_assignments_and_values_unresolved
+claim_label: ARCHITECTURE + EXECUTION CONTRACT / POPULATION ASSIGNMENTS UNRESOLVED / UNFITTED
 scientific_role: minimum_defensible_runtime_lineage
 
 scope:
   canonical_neurons: 166700
   runtime_edges: 25582938
   population_assignment_coverage:
-    event_required_neurons: 10
-    dual_unresolved_scoped_neurons: 36
-    all_other_canonical_neurons: dual_unresolved_by_default
-    evidence_ref: calibration/evidence/front-leg-population-dynamics-v0.yaml
+    basal_reached_neurons: 166431
+    exact_event_required_neurons: 12
+    dual_unresolved_reached_neurons: 166419
+    canonical_neurons_outside_basal_reached_scope: 269
+    evidence_refs:
+      - calibration/evidence/front-leg-population-dynamics-v0.yaml
+      - calibration/runner/basal-reachable-population-accounting-v0.yaml
   parameter_values_promoted: 0
 
 dynamics_classes:
@@ -61,6 +64,13 @@ execution_contract:
   deterministic_seed_accounting_required: true
   offline_replay_compatible: true
   near_real_time_required_for_scientific_acceptance: false
+  implementation_status: >-
+    The sparse full-graph engine accepts an explicit per-neuron event/graded
+    assignment vector and has executed two declared diagnostic extremes over the
+    166,431-neuron basal-reached scope. One extreme exercises all four boundary
+    directions. This closes runtime mechanics only: it does not choose any of the
+    166,419 unresolved assignments or execute basal unit bridges.
+  implementation_ref: calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml
 
 accepted_claims:
   - A universal rate-only MaleCNS lineage is not promoted.
@@ -69,8 +79,12 @@ accepted_claims:
   - The existing event scheduler and rate comparator are reusable implementation references.
   - The ten scoped T1 tibia-flexor motor neurons require an event-capable representation at type-transfer confidence.
   - The 36 scoped FeCO neurons remain dual-unresolved rather than receiving a silent default.
+  - A single sparse engine now advances explicit event and graded states on the complete basal-reached scope under an externally supplied assignment vector.
+  - The mixed diagnostic extreme exercises event-to-event, event-to-graded, graded-to-event and graded-to-graded boundaries without promoting its assignment or constants.
 forbidden_claims:
-  - The full hybrid runtime is implemented.
+  - The two diagnostic extremes cover the 2^166419 unresolved assignment space.
+  - Runtime executability identifies a native population class.
+  - The source event-process and Hz-to-graded bridges are calibrated or executable.
   - Every canonical motor or sensory population shares the scoped front-leg assignment.
   - Existing LIF constants or rate-ensemble values are accepted physiology.
   - A typed architecture by itself predicts a fly behavior.
@@ -82,6 +96,7 @@ critical_risk_refs:
 
 decision_ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
 next_action: >-
-  Implement bounded FeCO dual-representation and tibia-flexor event-to-force
-  probes. Leave all populations outside this scope dual_unresolved and do not
-  invent a global unit bridge or physiological constants.
+  Define bounded source event-process and Hz-to-graded conversion families, then
+  execute the preregistered basal sensitivity shapes through the sparse engine.
+  Keep all 166419 unresolved scientific assignments explicit; neither diagnostic
+  extreme is a promoted population census.
