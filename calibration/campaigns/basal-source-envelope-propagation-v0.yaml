@@ -1,0 +1,180 @@
+schema_version: 1
+id: campaign.basal_source_envelope_propagation.v0
+title: Finite basal source technical envelope propagated to the first local chain
+status: preregistered_runnable
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: BASAL TECHNICAL ENVELOPE / LOCAL-CHAIN PROPAGATION / ZERO PHYSIOLOGY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+population_assignments_promoted: 0
+
+purpose: >-
+  Execute a finite, behavior-naive engineering envelope for all 6,041 basal
+  terminals, preserve both event and graded population alternatives, and observe
+  every member at the frozen 196-neuron front-leg chain. The envelope is a
+  sensitivity and plumbing gate, not a physiological prior or admissible set.
+
+scientific_boundary:
+  numerical_origin: explicit_engineering_sensitivity_coordinates_only
+  values_are_physiological_bounds: false
+  values_are_literature_transfers: false
+  members_may_be_ranked: false
+  members_may_be_selected: false
+  named_behavior_may_be_observed: false
+  rationale: >-
+    Current evidence covers partitions but supplies no complete transferable
+    numerical table for any family. Finite execution is still useful to expose
+    sensitivity, alias failures and whether unresolved afferents dominate the
+    first local-chain probe, provided no number is promoted as biology.
+
+frozen_inputs:
+  envelope_runtime:
+    path: src/the_fly_matrix/basal_source_envelope.py
+    sha256: e87d60dbc76c1afd31b21cf4d38c22c59e1b047f9bc05d97356df457d9fbd037
+  bridge_runtime:
+    path: src/the_fly_matrix/basal_source_bridges.py
+    sha256: 6ee48585c18ee215a6c867e1bdaa419d4e73fb036b1f616cbf7f2224d12e6b62
+  bridge_campaign:
+    path: calibration/campaigns/basal-source-bridge-mechanics-v0.yaml
+    sha256: 6a6ab30ad60cb943f9414df353ac2a873b7e98d47f166188a2d7ca499e96a99c
+  bridge_result:
+    path: calibration/runner/basal-source-bridge-mechanics-v0.yaml
+    sha256: 3a0b4c801a2d9a26a0cc7c71160282db0b0f8c70a78bb9db282186d7d14f98d5
+  runtime_campaign:
+    path: calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml
+    sha256: fd2f56f3c4e27083318b5ecd7d3dae69469e620f6b664d10c6b3dbea50a5a401
+  local_bundle_result:
+    path: calibration/runner/front-leg-member-conditioned-freeze-boundary-v0.yaml
+    sha256: ddcd250e98076ac217229c9470793d09233b0536714f32bf879df1d28a7ab939
+  local_members:
+    path: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    sha256: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  reached_populations:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/reached-populations.parquet
+    sha256: 4116604700ec2bf383432f1474af616daa867e40be3a63f00da74e131ed064f4
+  source_terminals:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/source-terminals.csv
+    sha256: a27adeae0ec523507867498abf24482a7fd2ab66562b9611e9f8018ac8ebd97a
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+  local_paths:
+    path: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/central-paths-up-to-two-hops.csv
+    sha256: e26d05333d56e779c1b3cbb87d00635350fde34df355b79728a87475741aec4f
+  local_intermediates:
+    path: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/intermediate-populations.csv
+    sha256: 026240510f1dbc87d3e7464c223562e5581ac35ee4630683bad79ba6cd2596f0
+
+technical_envelope:
+  status: UNPROMOTABLE_ENGINEERING_SENSITIVITY_COORDINATES
+  assignment_profiles:
+    - exact_event_plus_all_dual_as_graded
+    - all_reached_as_event_candidate
+  shapes:
+    - explicit_silence_control
+    - uniform_per_terminal
+    - equal_family_mass
+  uniform_per_terminal_scales:
+    - {id: low, rate_hz: 5.0}
+    - {id: reference, rate_hz: 20.0}
+    - {id: high, rate_hz: 80.0}
+  equal_family_mass_scales:
+    - {id: low, family_total_rate_hz: 1250.0}
+    - {id: reference, family_total_rate_hz: 2500.0}
+    - {id: high, family_total_rate_hz: 5000.0}
+  graded_half_saturation_hz: [25.0, 100.0, 400.0]
+  ablation_family_ids:
+    - parameter.baseline.gustation.v0
+    - parameter.baseline.olfaction.v0
+    - parameter.baseline.thermohygro.v0
+    - parameter.residual_sensory.chemosensory_nominal.v0
+    - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+    - parameter.residual_sensory.unknown_nominal.v0
+  ablation_reference_uniform_rate_hz: 20.0
+  ablation_reference_graded_half_saturation_hz: 100.0
+  long_horizon_event_reference:
+    uniform_rate_hz: 80.0
+    steps: 960
+    role: distinguish_short_observation_window_from_event_threshold_or_scale_incompatibility
+  steps: 96
+  dt_ms: 0.1
+  seed: 42017
+  restriction: >-
+    Rate and half-saturation coordinates span implementation sensitivity only.
+    They are neither physiological bounds nor priors and cannot be copied into a
+    promoted parameter set. Every member and ablation is retained without ranking.
+
+local_probe:
+  scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+  populations:
+    sensory: 36
+    intermediate: 150
+    motor: 10
+  total_disjoint_neurons: 196
+  observables:
+    - maximum event-conductance L1
+    - maximum graded-state L1
+    - maximum absolute local state
+    - delta from same-profile silence
+  interpretation: propagation_and_sensitivity_only_not_local_function_or_behavior
+
+reproducibility:
+  semantic_float_significant_digits: 6
+  rationale: >-
+    Sparse CUDA reductions may differ in non-scientific trailing bits. Raw
+    diagnostics remain stored outside Git. The semantic hash covers exact member
+    definitions, seeds/configurations, counts, gates, finitude and nonzero probe
+    reachability; it excludes backend-dependent state magnitudes. The versioned
+    human summary rounds descriptive magnitudes to three significant digits.
+
+acceptance:
+  expected_members: 39
+  expected_terminals: 6041
+  expected_family_terminals:
+    parameter.baseline.gustation.v0: 1428
+    parameter.baseline.olfaction.v0: 2639
+    parameter.baseline.thermohygro.v0: 91
+    parameter.residual_sensory.chemosensory_nominal.v0: 57
+    parameter.residual_sensory.mechanosensory_tbc_nominal.v0: 11
+    parameter.residual_sensory.unknown_nominal.v0: 1815
+  max_event_presence_probability_per_step: 0.05
+  require_complete_grid: true
+  require_all_six_ablation_probes_per_profile: true
+  require_finite_state: true
+  require_nonzero_local_chain_propagation_in_at_least_one_non_silence_member: true
+  require_zero_parameter_and_assignment_promotion: true
+  require_zero_member_ranking_or_selection: true
+  require_zero_named_behavior_exposure: true
+
+accepted_claims:
+  - A finite engineering envelope spans both candidate source-port profiles and all six families.
+  - Every member executes through the full graph and is observed at the frozen 196-neuron local-chain probe.
+  - Leave-one-family-out diagnostics expose whether a family, including unknown afferents, materially changes the local probe under the declared fixtures.
+  - The complete member list and every result are retained without ranking or selection.
+forbidden_claims:
+  - The technical coordinates are physiological estimates, priors or accepted bounds.
+  - A low-sensitivity ablation proves that a basal family is biologically irrelevant.
+  - A high-sensitivity ablation identifies a correct source magnitude or neuronal assignment.
+  - Local-chain activity establishes local function, embodied stability or behavior.
+  - Either assignment profile is biologically preferred.
+
+outputs:
+  compact_result: calibration/runner/basal-source-envelope-propagation-v0.yaml
+  evaluation: calibration/evaluations/basal-source-envelope-propagation-v0.yaml
+  parameter_set_index: calibration/parameter_sets/basal-source-technical-envelope-v0.yaml
+  ignored_diagnostics: data/derived/calibration/basal-source-envelope-propagation-v0/
+
+next_action: >-
+  Inspect the preregistered family-ablation sensitivity without ranking members.
+  Independently source or justify scientific bounds for the families that dominate
+  the local probe; where evidence remains unavailable, carry this finite technical
+  uncertainty into the first whole-body typed/hybrid sentinel rather than silently
+  choosing one value or population assignment.

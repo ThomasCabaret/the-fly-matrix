@@ -21,9 +21,9 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.basal_source_bridge_mechanics.v0
-last_preregistered_campaign_id: campaign.basal_source_bridge_mechanics.v0
-last_executed_campaign_id: campaign.basal_source_bridge_mechanics.v0
+last_completed_campaign_id: campaign.basal_source_envelope_propagation.v0
+last_preregistered_campaign_id: campaign.basal_source_envelope_propagation.v0
+last_executed_campaign_id: campaign.basal_source_envelope_propagation.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
@@ -42,8 +42,8 @@ readiness:
   controller_independent_physical_replay: integration_pass
   calibration_runner: fit_and_diagnostic_runner_validated
   baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
-  parameter_family_inventory: complete_19_families_values_unfitted
-  parameter_dependency_dag: complete_acyclic_8_edges
+  parameter_family_inventory: complete_21_families_values_unfitted
+  parameter_dependency_dag: complete_acyclic_20_edges
   local_interface_parameter_inventory: complete_runtime_dimensions_and_couplings_declared
   peripheral_parameter_compiler: structure_validated_three_families_values_unfitted
   scientific_wiring_revalidation: independently_validated_zero_blocked_families
@@ -91,9 +91,10 @@ readiness:
   basal_reachable_population_accounting: accepted_6_families_6041_terminal_bodies_reach_166431_of_166700_12_event_required_166419_dual_unresolved_all_boundary_dispositions_counted_zero_values_source_bridge_mechanics_now_separately_passed
   basal_reached_typed_hybrid_runtime: accepted_execution_mechanics_166431_reached_neurons_two_explicit_extremes_four_boundaries_cuda_12_exact_event_requirements_166419_scientifically_dual_unresolved_zero_assignment_value_or_source_bridge_promoted
   basal_source_bridge_mechanics: accepted_6041_event_and_graded_candidate_bridges_3_shapes_2_assignment_extremes_6_finite_cuda_runs_seeded_alias_bounded_zero_values_assignments_or_behavior_promoted
+  basal_source_technical_envelope: accepted_39_unranked_members_12_family_ablations_196_local_probes_both_assignment_profiles_event_long_horizon_reaches_probe_subthreshold_zero_values_assignments_or_behavior_promoted
   front_leg_member_physical_preview: completed_3_of_3_controller_independent_replays_complete_FlyBody_physics_local_front_leg_chain_only_no_basal_not_whole_MaleCNS_human_checkpoint_open
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
-  unknown_afferent_sensitivity: all_3_shapes_executed_for_1815_unknown_channels_with_unpromotable_fixtures_absolute_scales_and_native_assignments_unresolved
+  unknown_afferent_sensitivity: high_priority_under_mixed_reference_fixture_unknown_family_ablation_changes_motor_probe_about_89_percent_all_values_unpromotable_native_assignments_unresolved
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
   prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
@@ -134,6 +135,19 @@ blocked_by:
   - The refreshed basal low-capacity readiness compiler accounts all six families, 2,212 channels and 6,041 terminals and preregisters three behavior-naive sensitivity shapes. The source-bridge mechanics campaign now executes every shape under both diagnostic population-assignment extremes through an explicit seeded Poisson-presence event process and a bounded monotone Hz-to-graded conversion. All numerical rates, seeds and the half-saturation scale are visibly unpromotable fixtures: zero basal value, bridge scale or dual-unresolved population class is accepted.
   - The exhaustive basal reachability compiler closes population accounting, not physiology. The six disjoint families reach 166,431/166,700 canonical neurons within at most five directed hops. Exactly the twelve previously accepted local bodies retain event requirements; the other 166,419 reached neurons remain dual_unresolved. All 25,582,574 internal edges and 6,041 source bridge dispositions are counted.
   - The sparse typed/hybrid engine now executes that full reached scope under an explicit assignment vector. A mixed extreme preserves the twelve exact event bodies and treats every unresolved body as a graded candidate; a second treats every reached body as an event candidate. The subsequent source-bridge campaign compiles both bridge alternatives for all 6,041 terminals and executes silence, uniform-per-terminal and equal-family-mass shapes for 96 steps in both profiles. All six runs are finite and leave 269 inactive neurons quiescent. This closes source-interface mechanics only, not the 2^166419 assignment space, physiological basal values, conversion scales, stability or behavior.
+  - >-
+    The finite basal technical-envelope gate now executes 39 unranked full-graph
+    members: three load levels for uniform and equal-family-mass shapes, three
+    graded conversion scales, two assignment extremes, silence controls, twelve
+    leave-one-family-out probes and one 96 ms all-event discriminant. Every run
+    is finite and every source is counted. The mixed reference reaches the frozen
+    36+150+10 local-chain probe within 9.6 ms; under these engineering fixtures,
+    removing the 1,815 unknown-modality terminals changes the motor-probe
+    event-conductance and maximum-state metrics by about 89 percent. The short
+    all-event runs are silent at the motor probe, while the longer run reaches
+    all three local populations but generates no internal threshold crossing.
+    These are sensitivity and scale-risk findings only; no rate, conversion
+    scale, assignment, member or behavior is promoted.
   - Three controller-independent trajectories now provide the required visual checkpoint for tuples 129, 141 and 238. Each replay contains the complete FlyBody physical state for 0.2 seconds and passes headless model-contract validation, but its controller is only the local 36-afferent to 150-intermediate to 10-motor front-leg corridor and one selected actuator. Basal sources, vision and the complete recurrent MaleCNS are not consumed. Inspection may record anomalies but cannot rank, tune, reject or promote a member without a new campaign.
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
@@ -149,9 +163,11 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Preserve the visual checkpoint, the two full-graph runtime extremes and all six
-  source-bridge mechanics runs as non-selecting evidence. Source or bound finite
-  basal-rate and conversion-scale ensembles per family, retain event and graded
-  alternatives wherever assignments remain dual_unresolved, then propagate the
-  finite ensemble into the first local sensor-CNS-motor chain. Never select a
-  class or bridge value from numerical convenience or a named behavior.
+  Preserve the visual checkpoint, source-bridge mechanics and the complete
+  39-member technical envelope as non-selecting evidence. Treat unknown-modality
+  basal input and event-threshold/scale compatibility as priority risks. Source
+  or justify scientific bounds first for the dominant families; otherwise carry
+  the finite technical uncertainty, both native alternatives and all three exact
+  local bundles into a bounded whole-body typed/hybrid sentinel. Never select a
+  class, rate, conversion scale or bridge value from numerical convenience,
+  fixture magnitude, body motion or a named behavior.

@@ -1175,6 +1175,18 @@ taux/échelles physiologiques restent absents. Les deux extrêmes et les six run
 de formes basales ferment la mécanique du runtime et de l'interface, pas
 l'espace combinatoire ni la calibration des interfaces.
 
+Le gate suivant propage désormais une enveloppe technique finie jusqu'à la chaîne
+locale gelée, sans la présenter comme une calibration physiologique. Les 39 runs
+GPU couvrent deux profils d'affectation, trois niveaux de charge par forme, trois
+échelles graded, deux silences, douze ablations famille par famille et un contrôle
+event de 96 ms. Tous sont finis et les 6 041 sources restent comptées. Sous le
+fixture mixed/graded de référence, l'ablation des 1 815 afférences de modalité
+inconnue modifie d'environ 89 % les métriques du probe moteur : cette famille est
+donc un risque prioritaire, pas une valeur à choisir. Le profil tout-event atteint
+les 36+150+10 neurones locaux au contrôle long mais reste sous le seuil de génération
+d'événements internes. Ce résultat pointe un gate d'échelle/seuil, sans invalider
+ni sélectionner le modèle event.
+
 En parallèle, le gate d'actionneurs est maintenant terminé sans attendre le choix
 rate/LIF, car ses probes sont physiques et comportement-naïfs. Le prochain front
 indépendant doit figer une chaîne sensorielle locale minimale et une chaîne motrice
@@ -1236,6 +1248,7 @@ basal_low_capacity_readiness.bat # 3 formes basales sans valeur ; expose les blo
 basal_population_reachability.bat # 6 familles -> 166431 neurones ; dispositions exhaustives, valeurs physiologiques encore bloquées
 basal_typed_hybrid_runtime_sentinel.bat # 2 extrêmes plein graphe ; 4 frontières, zéro affectation/valeur promue
 basal_source_bridges.bat # 6041 sources x 2 ponts candidats ; 3 formes x 2 extrêmes, fixtures non promouvables
+basal_source_envelope.bat # 39 membres, 12 ablations, probe local 196 neurones ; sensibilité technique sans promotion
 front_leg_member_physical_preview.bat # génère 3 replays physiques : FlyBody complet, contrôleur local seulement
 front_leg_member_preview_replay.bat [129|141|238] # ouvre un replay ; aucun membre n'est une référence scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS

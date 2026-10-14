@@ -1,0 +1,59 @@
+schema_version: 1
+id: evaluation.basal_source_envelope_propagation.v0
+campaign_id: campaign.basal_source_envelope_propagation.v0
+status: accepted_technical_sensitivity_only_scientific_basal_values_unresolved
+conclusion: The finite behavior-naive engineering envelope and all family ablations
+  execute through both candidate source-port profiles. The mixed profile reaches the
+  frozen local-chain probe within 9.6 ms and is strongly fixture-sensitive to the
+  unknown-modality family. The all-event profile reaches all three probe groups at
+  96 ms but produces no internal threshold crossing under the diagnostic constants.
+  No member is ranked and no numerical value, conversion scale or population assignment
+  is promoted as physiology.
+diagnostic_findings:
+  mixed_reference_unknown_family_ablation_motor_event_g_l1_absolute_fraction: 0.893
+  mixed_reference_unknown_family_ablation_motor_state_max_absolute_fraction: 0.889
+  short_horizon_all_event_reference_motor_probe_is_zero: true
+  long_horizon_all_event_probe_nonzero_by_group:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  long_horizon_all_event_generated_internal_events: 0
+  interpretation: Under engineering fixtures only, the unknown-modality family dominates
+    the mixed-profile motor-probe sensitivity. The event profile reaches all local
+    probe groups only at the longer horizon and remains subthreshold for internally
+    generated events. Neither finding selects a profile or establishes physiology.
+checks:
+  all_6041_sources_accounted_once: true
+  all_six_families_accounted: true
+  local_probe_scope_is_36_plus_150_plus_10_disjoint: true
+  complete_finite_grid_executed: true
+  both_assignment_profiles_retained: true
+  all_six_ablation_probes_per_profile_executed: true
+  event_alias_bound_pass: true
+  all_runs_finite: true
+  non_silence_reaches_local_chain_in_at_least_one_profile: true
+  long_horizon_event_reference_reaches_all_local_probe_groups: true
+  parameter_values_promoted: false
+  population_assignments_promoted: false
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+runner_semantic_sha256: 1356caedcfefcaeed82ca77e25e7f3cce6e38fb840ef2e874ba3e9829c2f2917
+accepted_claims:
+- A finite engineering envelope spans both candidate source-port profiles and all
+  six families.
+- Every member executes through the full graph and is observed at the frozen 196-neuron
+  local-chain probe.
+- Leave-one-family-out diagnostics expose whether a family, including unknown afferents,
+  materially changes the local probe under the declared fixtures.
+- The complete member list and every result are retained without ranking or selection.
+forbidden_claims:
+- The technical coordinates are physiological estimates, priors or accepted bounds.
+- A low-sensitivity ablation proves that a basal family is biologically irrelevant.
+- A high-sensitivity ablation identifies a correct source magnitude or neuronal assignment.
+- Local-chain activity establishes local function, embodied stability or behavior.
+- Either assignment profile is biologically preferred.
+next_action: Inspect the preregistered family-ablation sensitivity without ranking
+  members. Independently source or justify scientific bounds for the families that
+  dominate the local probe; where evidence remains unavailable, carry this finite
+  technical uncertainty into the first whole-body typed/hybrid sentinel rather than
+  silently choosing one value or population assignment.

@@ -547,3 +547,15 @@ diagnostic assignment extremes. All six CUDA runs are finite and keep the 269
 inactive neurons quiescent. The fixture rates, seeds and half-saturation scale
 are deliberately non-physiological and unpromotable; success closes source-port
 mechanics only, not basal values, native assignments, stability or behavior.
+
+Run `basal_source_envelope.bat` to reproduce the next bounded sensitivity gate.
+It executes 39 unranked full-graph members on CUDA: silence, three technical load
+levels for both declared source shapes, three graded half-saturation coordinates,
+both population-assignment extremes, twelve leave-one-family-out probes and one
+96 ms all-event discriminant. Every run is observed at the complete frozen
+36-FeCO + 150-intermediate + 10-motor local probe. Under the engineering reference
+fixture, the unknown-modality family has a large effect on the mixed motor probe;
+the all-event profile reaches the probe only on the longer horizon and remains
+subthreshold for internally generated events. These findings prioritize future
+evidence and scale tests. They do not rank members or promote rates, conversion
+scales, population assignments, stability or behavior.

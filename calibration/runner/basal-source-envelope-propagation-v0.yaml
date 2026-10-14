@@ -1,0 +1,600 @@
+schema_version: 1
+id: runner_result.basal_source_envelope_propagation.v0
+campaign_id: campaign.basal_source_envelope_propagation.v0
+status: accepted_technical_envelope_propagated_zero_scientific_promotion
+completed_at: '2026-10-14T16:42:15.079036+00:00'
+command: basal_source_envelope.bat
+claim_label: BASAL TECHNICAL ENVELOPE / LOCAL-CHAIN PROPAGATION / ZERO PHYSIOLOGY
+  / NO BEHAVIOR
+backend: cuda
+accounting:
+  families: 6
+  terminals: 6041
+  members: 39
+  assignment_profiles: 2
+  family_ablation_runs: 12
+  local_probe_neurons: 196
+technical_boundary:
+  status: UNPROMOTABLE_ENGINEERING_SENSITIVITY_COORDINATES
+  assignment_profiles:
+  - exact_event_plus_all_dual_as_graded
+  - all_reached_as_event_candidate
+  shapes:
+  - explicit_silence_control
+  - uniform_per_terminal
+  - equal_family_mass
+  uniform_per_terminal_scales:
+  - id: low
+    rate_hz: 5.0
+  - id: reference
+    rate_hz: 20.0
+  - id: high
+    rate_hz: 80.0
+  equal_family_mass_scales:
+  - id: low
+    family_total_rate_hz: 1250.0
+  - id: reference
+    family_total_rate_hz: 2500.0
+  - id: high
+    family_total_rate_hz: 5000.0
+  graded_half_saturation_hz:
+  - 25.0
+  - 100.0
+  - 400.0
+  ablation_family_ids:
+  - parameter.baseline.gustation.v0
+  - parameter.baseline.olfaction.v0
+  - parameter.baseline.thermohygro.v0
+  - parameter.residual_sensory.chemosensory_nominal.v0
+  - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  - parameter.residual_sensory.unknown_nominal.v0
+  ablation_reference_uniform_rate_hz: 20.0
+  ablation_reference_graded_half_saturation_hz: 100.0
+  long_horizon_event_reference:
+    uniform_rate_hz: 80.0
+    steps: 960
+    role: distinguish_short_observation_window_from_event_threshold_or_scale_incompatibility
+  steps: 96
+  dt_ms: 0.1
+  seed: 42017
+  restriction: Rate and half-saturation coordinates span implementation sensitivity
+    only. They are neither physiological bounds nor priors and cannot be copied into
+    a promoted parameter set. Every member and ablation is retained without ranking.
+members:
+- member_id: exact_event_plus_all_dual_as_graded__silence
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: explicit_silence_control
+  scale_id: zero
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups: []
+  semantic_sha256: 980f6a5b3cee61e6c7af7592a17d37c4ad0a7ee48d360afcdcd7ca2b5dd6145b
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__low__half_sat_25hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 6cc05e4fd53b8031fb89cb7893452384e9153c745466acddb1c108eec2e2b439
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__low__half_sat_100hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 2d0f3319f65b956dc49615ac0a1b66f40d00a9f4bec29d2eb944b2e7aecf8e6e
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__low__half_sat_400hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: f8bc2773498ef859d2da43e93567443a39315df7f94943f4c7bde1dfe519826d
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__reference__half_sat_25hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 76347b2a2ad4cb0e99b6828c1abb4456abf34fa5841cf53e961095ff25db4e6d
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__reference__half_sat_100hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: daf23861cbfa7b31a7a25792470d9cdc85131c94ca60a95d48a025e3112856a9
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__reference__half_sat_400hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 5cc3b3d173fa4c7b1a4d6344ef1d1eccd241a9c6359853b2445f80555fe025f2
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__high__half_sat_25hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: a33b75d97d6aadb7f3d16bdd332f1043b29403fd58d6fb3070008e411ef92ca7
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__high__half_sat_100hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 2b72e01cc9ddb41e08853d5e43beefbb982fcb2ce38deac5b584a5dc65078b90
+- member_id: exact_event_plus_all_dual_as_graded__uniform_per_terminal__high__half_sat_400hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: ef5c09c28f27c79d9f6f0985ca63f67a3fc61adaae1305239025d0bcc1e1d242
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__low__half_sat_25hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: d6129967e5bf288cd251aa2a21457ec5a5696d1381b5059e61685406e9ebf9b6
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__low__half_sat_100hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 98a5200dd5a874aa4699f43921ab0832f03cc48eac24ecfe410c9735fd069de7
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__low__half_sat_400hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: a22dd89258da6614660b77654633d756ba639047dbce82d0a32a0bc389c2af39
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__reference__half_sat_25hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: ce9091251b337f20293c09f38648e0482979207b516ae5c0f991010395492833
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__reference__half_sat_100hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: e49c3cfb7a0451848ebe989ee0f1f04057c2b361ecb30040b8f59dfda81b6cee
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__reference__half_sat_400hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 8f80ac378905b02120f8924024fd630203326809514c4498758b5782dd367189
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__high__half_sat_25hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: c1127a4035634d0cca0b491256a9232889719664d40914bbbe7b2350e1c402ae
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__high__half_sat_100hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 87b112b84c814a1c4d624f5b92412699612d6bb9be3e657674dc9f5acd74db91
+- member_id: exact_event_plus_all_dual_as_graded__equal_family_mass__high__half_sat_400hz
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: equal_family_mass
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 1b415fa27af673a8dca9e5d08567d43f1d001e0de8178d0f78bc966fcf5b66aa
+- member_id: exact_event_plus_all_dual_as_graded__uniform_reference__without__parameter.baseline.gustation.v0
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.baseline.gustation.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: be51b4ccd873fa51cb927d01bb251c1a382fc740ea3a69cf347e27f9c7acae7b
+- member_id: exact_event_plus_all_dual_as_graded__uniform_reference__without__parameter.baseline.olfaction.v0
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.baseline.olfaction.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 86c1b48b0ad13cbf05148bc278d926d96a8b97c91c8da1a38b51d26a5a559afb
+- member_id: exact_event_plus_all_dual_as_graded__uniform_reference__without__parameter.baseline.thermohygro.v0
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.baseline.thermohygro.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 015447af4cf00c3168e903258ed77ef1d53aba69fa696eb232f177606b914fb0
+- member_id: exact_event_plus_all_dual_as_graded__uniform_reference__without__parameter.residual_sensory.chemosensory_nominal.v0
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.residual_sensory.chemosensory_nominal.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: ba08deede4073df2d4d6898f9f85ff887e894c9985a448fc43cc24a308165233
+- member_id: exact_event_plus_all_dual_as_graded__uniform_reference__without__parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 53e3ce1ec354416c4eac45b86ab2f7ec914af412ed0b7850f466623bd9c5b79f
+- member_id: exact_event_plus_all_dual_as_graded__uniform_reference__without__parameter.residual_sensory.unknown_nominal.v0
+  assignment_profile_id: exact_event_plus_all_dual_as_graded
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.residual_sensory.unknown_nominal.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 74728964635e188f5e7dcbb0cef2d7e08b2bbfd6c8080af2ac22a5042f426dcf
+- member_id: all_reached_as_event_candidate__silence
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: explicit_silence_control
+  scale_id: zero
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups: []
+  semantic_sha256: 529b478f985adc5c2db89dfe74e7ff2c8e8a722324b7af0a44ceb4dfeb044bb3
+- member_id: all_reached_as_event_candidate__uniform_per_terminal__low__half_sat_100hz
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 8b3825424d1b2ec800b11d578384c30ce5efa5ef1472490bdb5aad7bf50d8a93
+- member_id: all_reached_as_event_candidate__uniform_per_terminal__reference__half_sat_100hz
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 3e8222241a1b7915c904e69e02ae8578fe9b22469d6336a25fdf3407703940ca
+- member_id: all_reached_as_event_candidate__uniform_per_terminal__high__half_sat_100hz
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  semantic_sha256: f14ec6bd2d37ff20654cad11ff3cc7f2db0f78060ae1ea5996a631953c45aaae
+- member_id: all_reached_as_event_candidate__equal_family_mass__low__half_sat_100hz
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: equal_family_mass
+  scale_id: low
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 3ef46018c7f09ae172127e59d89d357f81a24221656f9ee287b89ed3df00415d
+- member_id: all_reached_as_event_candidate__equal_family_mass__reference__half_sat_100hz
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: equal_family_mass
+  scale_id: reference
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 98c2c316cb1813a23420320032fcfd6880775994dcc9666650cb7a2ec4ebd7e1
+- member_id: all_reached_as_event_candidate__equal_family_mass__high__half_sat_100hz
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: equal_family_mass
+  scale_id: high
+  ablated_family_id: null
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 29ad36af9d7dff77ad4d478906843f716f12ba555855a278e04f7eed23e60d4c
+- member_id: all_reached_as_event_candidate__uniform_reference__without__parameter.baseline.gustation.v0
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.baseline.gustation.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: ac8103718e8e1208e3a147f6671fd78280f095f5e2272b9fa4a8978570c3d0a8
+- member_id: all_reached_as_event_candidate__uniform_reference__without__parameter.baseline.olfaction.v0
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.baseline.olfaction.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: f8f0747b1caa9c669028c8890b521dab3ada3af4c7e3085e3c4da9f5bfb41412
+- member_id: all_reached_as_event_candidate__uniform_reference__without__parameter.baseline.thermohygro.v0
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.baseline.thermohygro.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 347c40b8ecb9b83cb544154e96daaf1832a345d0dab9d33da1c1eab4d260613f
+- member_id: all_reached_as_event_candidate__uniform_reference__without__parameter.residual_sensory.chemosensory_nominal.v0
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.residual_sensory.chemosensory_nominal.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 8c4ae20eda1ad9e25cf37a99e0fef102ffbb64c9d4d28124b5e5980f1de8f0e0
+- member_id: all_reached_as_event_candidate__uniform_reference__without__parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: ec5122d981f0133be183b0dd56d9c7178db6096c87173e3cfc2430ef88e49c9a
+- member_id: all_reached_as_event_candidate__uniform_reference__without__parameter.residual_sensory.unknown_nominal.v0
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: reference
+  ablated_family_id: parameter.residual_sensory.unknown_nominal.v0
+  steps: 96
+  finite_state: true
+  local_probe_reached_groups:
+  - intermediate_150
+  semantic_sha256: 723c0afdd038e8eea124995b8da0b0796df9d377b8ae7da48ba8c72a6d37142b
+- member_id: all_reached_as_event_candidate__uniform_high__long_horizon
+  assignment_profile_id: all_reached_as_event_candidate
+  shape_id: uniform_per_terminal
+  scale_id: high_long_horizon
+  ablated_family_id: null
+  steps: 960
+  finite_state: true
+  local_probe_reached_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  semantic_sha256: 939216d942b4cadf30b0fbebb719600bdd5f9d6b9f5b03109a896ff04c50d30d
+family_ablation_probe_summary:
+  exact_event_plus_all_dual_as_graded:
+    parameter.baseline.gustation.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: 0.09
+      motor_state_max_absolute_fraction_of_reference: 0.0972
+      intermediate_state_max_absolute_fraction_of_reference: 0.034
+    parameter.baseline.olfaction.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: 0.00105
+      motor_state_max_absolute_fraction_of_reference: 0.000473
+      intermediate_state_max_absolute_fraction_of_reference: 8.94e-05
+    parameter.baseline.thermohygro.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: 0.000743
+      motor_state_max_absolute_fraction_of_reference: 0.000182
+      intermediate_state_max_absolute_fraction_of_reference: 3.48e-05
+    parameter.residual_sensory.chemosensory_nominal.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: 0.0122
+      motor_state_max_absolute_fraction_of_reference: 0.0104
+      intermediate_state_max_absolute_fraction_of_reference: 0.0406
+    parameter.residual_sensory.mechanosensory_tbc_nominal.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: 0.00313
+      motor_state_max_absolute_fraction_of_reference: 0.0027
+      intermediate_state_max_absolute_fraction_of_reference: 0.00135
+    parameter.residual_sensory.unknown_nominal.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: 0.893
+      motor_state_max_absolute_fraction_of_reference: 0.889
+      intermediate_state_max_absolute_fraction_of_reference: 0.682
+  all_reached_as_event_candidate:
+    parameter.baseline.gustation.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: null
+      motor_state_max_absolute_fraction_of_reference: null
+      intermediate_state_max_absolute_fraction_of_reference: 0.0
+    parameter.baseline.olfaction.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: null
+      motor_state_max_absolute_fraction_of_reference: null
+      intermediate_state_max_absolute_fraction_of_reference: 0.0
+    parameter.baseline.thermohygro.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: null
+      motor_state_max_absolute_fraction_of_reference: null
+      intermediate_state_max_absolute_fraction_of_reference: 0.0
+    parameter.residual_sensory.chemosensory_nominal.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: null
+      motor_state_max_absolute_fraction_of_reference: null
+      intermediate_state_max_absolute_fraction_of_reference: 0.0
+    parameter.residual_sensory.mechanosensory_tbc_nominal.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: null
+      motor_state_max_absolute_fraction_of_reference: null
+      intermediate_state_max_absolute_fraction_of_reference: 0.0
+    parameter.residual_sensory.unknown_nominal.v0:
+      motor_event_g_l1_absolute_fraction_of_reference: null
+      motor_state_max_absolute_fraction_of_reference: null
+      intermediate_state_max_absolute_fraction_of_reference: 0.887
+diagnostic_findings:
+  mixed_reference_unknown_family_ablation_motor_event_g_l1_absolute_fraction: 0.893
+  mixed_reference_unknown_family_ablation_motor_state_max_absolute_fraction: 0.889
+  short_horizon_all_event_reference_motor_probe_is_zero: true
+  long_horizon_all_event_probe_nonzero_by_group:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  long_horizon_all_event_generated_internal_events: 0
+  interpretation: Under engineering fixtures only, the unknown-modality family dominates
+    the mixed-profile motor-probe sensitivity. The event profile reaches all local
+    probe groups only at the longer horizon and remains subthreshold for internally
+    generated events. Neither finding selects a profile or establishes physiology.
+checks:
+  all_6041_sources_accounted_once: true
+  all_six_families_accounted: true
+  local_probe_scope_is_36_plus_150_plus_10_disjoint: true
+  complete_finite_grid_executed: true
+  both_assignment_profiles_retained: true
+  all_six_ablation_probes_per_profile_executed: true
+  event_alias_bound_pass: true
+  all_runs_finite: true
+  non_silence_reaches_local_chain_in_at_least_one_profile: true
+  long_horizon_event_reference_reaches_all_local_probe_groups: true
+  parameter_values_promoted: false
+  population_assignments_promoted: false
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+scientific_boundary:
+  physiological_basal_values_promoted: 0
+  conversion_scales_promoted: 0
+  population_assignments_promoted: 0
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+  interpretation: bounded engineering sensitivity only; not an admissible physiological
+    set
+reproducibility_boundary:
+  semantic_float_significant_digits: 6
+  raw_float_diagnostics_retained: true
+  raw_diagnostics_path: data/derived/calibration/basal-source-envelope-propagation-v0/raw-diagnostics.json
+  runtime_backend_noise_can_change_raw_last_bits: true
+semantic_result_sha256: 1356caedcfefcaeed82ca77e25e7f3cce6e38fb840ef2e874ba3e9829c2f2917
+next_action: Inspect the preregistered family-ablation sensitivity without ranking
+  members. Independently source or justify scientific bounds for the families that
+  dominate the local probe; where evidence remains unavailable, carry this finite
+  technical uncertainty into the first whole-body typed/hybrid sentinel rather than
+  silently choosing one value or population assignment.
