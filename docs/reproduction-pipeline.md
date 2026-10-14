@@ -371,8 +371,7 @@ accepted exact event requirements or `dual_unresolved`. The accepted result is
 166,431/166,700 reached neurons and 25,582,574 internal edges exhaustively
 partitioned by endpoint disposition. Derived full tables remain ignored under
 `data/derived/`; the compact result and evaluation are versioned. This closes
-accounting only: all 6,041 source unit bridges remain non-executable and no basal
-value is accepted.
+accounting only: no basal value or native dynamics assignment is accepted.
 
 Then run `basal_typed_hybrid_runtime_sentinel.bat`. It requires the derived
 reachability table produced by the preceding command and the canonical incoming
@@ -382,8 +381,18 @@ visibility, CPU/GPU micro parity and exact quiescence of the 269 excluded nodes.
 The compact runner/evaluation records are versioned; the full JSON summary under
 `data/derived/` is ignored. Success closes runtime mechanics only. It promotes no
 population assignment or value and deliberately executes zero basal source
-bridges. The current frontier after this command is therefore source event-process
-and Hz-to-graded conversion families, not another hidden normalized-rate input.
+bridges.
+
+Then run `basal_source_bridges.bat`. It consumes those derived tables and executes
+all three preregistered low-capacity source shapes under the two explicit runtime
+assignment extremes. Every terminal is compiled both as an event-process
+candidate and as a bounded Hz-to-graded candidate; the run enforces a per-step
+event alias bound, seeded schedule hashes, zero-preserving conversion, finite
+state and exact quiescence outside the reached scope. Its numerical rates, seeds
+and conversion scale are unpromotable diagnostic fixtures. The current frontier
+after this command is independent evidence or bounded ensembles for basal rates
+and conversion scales, propagated together with unresolved event/graded native
+assignments — not another hidden normalized-rate input.
 
 ### Historical neural-model gate
 

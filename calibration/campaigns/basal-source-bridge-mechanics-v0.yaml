@@ -1,0 +1,129 @@
+schema_version: 1
+id: campaign.basal_source_bridge_mechanics.v0
+title: Basal event-process and Hz-to-graded bridge mechanics over all reached sources
+status: preregistered_runnable
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: BASAL SOURCE BRIDGE MECHANICS / DIAGNOSTIC FIXTURES / ZERO CALIBRATION / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+population_assignments_promoted: 0
+
+purpose: >-
+  Close the executable source-unit boundary for all 6,041 basal terminals without
+  pretending to know their physiological values or native neuronal dynamics.
+  Every preregistered low-capacity input shape is executed through a seeded event
+  process and a bounded monotone Hz-to-graded conversion under both explicit
+  diagnostic assignment extremes. No result is ranked or selected.
+
+frozen_inputs:
+  bridge_runtime:
+    path: src/the_fly_matrix/basal_source_bridges.py
+    sha256: 6ee48585c18ee215a6c867e1bdaa419d4e73fb036b1f616cbf7f2224d12e6b62
+  typed_hybrid_runtime:
+    path: src/the_fly_matrix/typed_hybrid_runtime.py
+    sha256: 2060f71624efe2019c75be349bda08a61a65fc49fb378d72868143c16e1e1195
+  runtime_campaign:
+    path: calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml
+    sha256: fd2f56f3c4e27083318b5ecd7d3dae69469e620f6b664d10c6b3dbea50a5a401
+  sensitivity_design:
+    path: calibration/parameter_sets/basal-low-capacity-sensitivity-design-v0.yaml
+    sha256: 112cbdce9121ec4c8f04136898fe6080c84cb488fb699797321b26117e938e19
+  population_accounting_result:
+    path: calibration/runner/basal-reachable-population-accounting-v0.yaml
+    sha256: 345a1a9139e21c9c8e513728e86b3aefaec4a0848963c5930128443c749897a6
+  reached_populations:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/reached-populations.parquet
+    sha256: 4116604700ec2bf383432f1474af616daa867e40be3a63f00da74e131ed064f4
+  source_terminals:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/source-terminals.csv
+    sha256: a27adeae0ec523507867498abf24482a7fd2ab66562b9611e9f8018ac8ebd97a
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+
+source_bridge_contracts:
+  event_process:
+    family_id: parameter.bridge.basal_event_process.v0
+    input_units: spikes_per_second
+    output_units: event_presence_per_timestep
+    candidate_form: independent_homogeneous_poisson_presence
+    probability: 1_minus_exp_minus_rate_hz_times_dt_seconds
+    multiplicity_policy: multiple_events_from_one_source_inside_one_step_collapse_to_presence
+    required_guard: maximum_presence_probability_per_step
+  graded_conversion:
+    family_id: parameter.bridge.basal_hz_to_graded.v0
+    input_units: spikes_per_second
+    output_units: dimensionless_graded_drive
+    candidate_form: rate_divided_by_rate_plus_half_saturation
+    invariants: [zero_preserving, monotone, finite, bounded_below_one]
+    unresolved_capacity: [half_saturation_hz, optional_shared_temporal_filter]
+
+diagnostic_execution:
+  status: UNPROMOTABLE_ENGINEERING_FIXTURES
+  arms: [explicit_silence_control, uniform_per_terminal, equal_family_mass]
+  assignment_profiles:
+    - exact_event_plus_all_dual_as_graded
+    - all_reached_as_event_candidate
+  steps: 96
+  dt_ms: 0.1
+  seed_by_arm:
+    explicit_silence_control: 1729
+    uniform_per_terminal: 2718
+    equal_family_mass: 3141
+  uniform_per_terminal_fixture_hz: 20.0
+  equal_family_total_fixture_hz: 5000.0
+  graded_half_saturation_fixture_hz: 100.0
+  restriction: >-
+    These values exist only to exercise mechanics and alias guards. They are not
+    physiological estimates, priors, accepted bounds, fitted values, population
+    assignments or candidates for promotion.
+
+acceptance:
+  expected_terminals: 6041
+  expected_family_terminals:
+    parameter.baseline.gustation.v0: 1428
+    parameter.baseline.olfaction.v0: 2639
+    parameter.baseline.thermohygro.v0: 91
+    parameter.residual_sensory.chemosensory_nominal.v0: 57
+    parameter.residual_sensory.mechanosensory_tbc_nominal.v0: 11
+    parameter.residual_sensory.unknown_nominal.v0: 1815
+  max_event_presence_probability_per_step: 0.05
+  require_every_terminal_exactly_once: true
+  require_all_three_arms_both_profiles: true
+  require_event_and_graded_paths_exercised: true
+  require_seeded_schedule_hashes: true
+  require_inactive_state_quiescent: true
+  require_zero_population_assignment_promotion: true
+  require_zero_parameter_promotion: true
+  require_zero_named_behavior_exposure: true
+
+accepted_claims:
+  - All 6,041 basal terminals have executable candidate bridges for event and graded ports.
+  - All three preregistered low-capacity input shapes execute under both diagnostic assignment extremes.
+  - Event sampling is seeded and collision risk is bounded by an explicit per-step presence limit.
+  - The graded conversion is explicit, zero-preserving, monotone and bounded.
+forbidden_claims:
+  - Any diagnostic rate, scale, seed or time course is physiological, fitted or accepted.
+  - Either assignment extreme identifies native dynamics for any dual-unresolved population.
+  - Independent Poisson sources or the saturating conversion are biologically validated.
+  - Finite execution calibrates a basal family, central dynamics, stability or behavior.
+  - Any named behavior has been trained, evaluated or visually selected.
+
+outputs:
+  compact_result: calibration/runner/basal-source-bridge-mechanics-v0.yaml
+  evaluation: calibration/evaluations/basal-source-bridge-mechanics-v0.yaml
+  ignored_diagnostics: data/derived/calibration/basal-source-bridge-mechanics-v0/
+
+next_action: >-
+  Source or bound finite basal-rate and conversion-scale ensembles per family,
+  retain event and graded alternatives wherever the population assignment remains
+  dual-unresolved, then propagate that finite ensemble into the first local
+  sensor-CNS-motor chain without named-behavior selection.

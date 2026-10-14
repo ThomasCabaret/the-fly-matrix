@@ -346,10 +346,17 @@ comptabilise les six familles, 2 212 canaux et 6 041 terminaux, consomme les
 166 431 dispositions atteintes et accepte la mécanique des deux extrêmes du
 runtime typé/hybride. Il préenregistre toujours trois formes de sensibilité
 pauvres et comportement-naïves sans émettre magnitude, seed ou série temporelle.
-Le seul blocker de cette campagne est maintenant la définition explicite des
-ponts source événementiels et Hz→activité graduée ; aucune classe `dual_unresolved`
-ni valeur n'est promue. Le comparateur rate normalisé historique ne peut pas
-servir de raccourci silencieux.
+Ce blocker d'implémentation est maintenant fermé par
+`basal_source_bridges.bat`. Les 6 041 terminaux possèdent chacun deux candidats
+explicites : un processus de présence événementielle de Poisson semé, avec borne
+de collision par pas, et une conversion Hz→activité graduée monotone, bornée et
+à échelle explicite. Les trois formes préenregistrées — silence, uniforme par
+terminal et masse égale par famille — ont toutes été exécutées pendant 96 pas
+sous les deux extrêmes d'affectation. Les six runs CUDA sont finis et laissent
+les 269 neurones inactifs au repos. Les taux, seeds et l'échelle utilisés ne sont
+que des fixtures d'ingénierie non promouvables : aucune classe `dual_unresolved`,
+valeur basale ou échelle de conversion n'est acceptée. Le comparateur rate
+normalisé historique ne peut toujours pas servir de raccourci silencieux.
 
 Le point de contrôle visuel existe néanmoins sous une frontière causale exacte.
 `front_leg_member_physical_preview.bat` produit trois trajectoires indépendantes
@@ -384,8 +391,10 @@ instancie tous les neurones atteints comme candidats événementiels. Les deux r
 CUDA de 24 pas restent finis, livrent les événements au délai déclaré de 1,8 ms
 et laissent les 269 neurones hors portée exactement au repos. Ils mesurent environ
 quelques centaines de pas/s selon le profil et utilisent environ 217 Mo de mémoire GPU.
-Ces deux points ne couvrent pas l'espace `2^166419`, ne choisissent aucune classe,
-ne calibrent aucune constante et n'exécutent aucun des 6 041 ponts source.
+Ces deux points ne couvrent pas l'espace `2^166419`, ne choisissent aucune classe
+et ne calibrent aucune constante. Le lot suivant a depuis exécuté les ponts
+source avec des fixtures explicitement non physiologiques ; il n'en accepte
+toujours aucune valeur.
 
 Le gate global de classe neuronale est maintenant fermé avec la décision
 `revise`. Une référence
@@ -599,20 +608,22 @@ explicite sur sa valeur d'information, ou une seconde référence plus sensible 
 temps.
 
 Une prévalidation microscopique dédiée couvre désormais le chemin avant toute
-nouvelle exécution longue. `neural_model_micro_tests.bat` regroupe 27 oracles sur
+nouvelle exécution longue. `neural_model_micro_tests.bat` regroupe 37 oracles sur
 petits graphes : poids scientifique et provenance, multiplicité et signe,
 chronologie délai/intégration, reset/réfractaire, événements consécutifs, état
 frais et indépendance d'ordre, absence de mutation du CSR, parité CPU/GPU,
-agrégation rate, liaison configuration réelle→graphe minimal, conformité Brian2
-et pertes temporelles rate/event. Ce jalon ferme une faiblesse de vérification du
+agrégation rate, liaison configuration réelle→graphe minimal, conformité Brian2,
+pertes temporelles rate/event, processus source de Poisson et conversion
+Hz→gradué. Ce jalon ferme une faiblesse de vérification du
 code ; il ne ferme pas le gate scientifique de classe de modèle.
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
-19 familles : six sources basales, quatre routages, quatre transferts, trois
+21 familles : six sources basales, quatre routages, six transferts — dont les
+deux ponts basaux event et Hz→gradué —, trois
 familles de dynamique centrale, la mécanique FlyBody conservée comme dépendance
 externe gelée et l'enveloppe numérique motrice isolée comme nuisance technique.
-Le [`DAG`](calibration/dependency-dag.yaml) contient huit dépendances et est validé
+Le [`DAG`](calibration/dependency-dag.yaml) contient vingt dépendances et est validé
 acyclique. Les dimensions maximales exécutables sont séparées des degrés de
 liberté scientifiques encore à choisir. Le couplage historique entre routage et
 gain en proprioception, mécanoréception et sortie motrice est désormais résolu à
@@ -996,7 +1007,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; la portée atteinte par les six familles basales est exhaustivement comptée à 166 431/166 700 neurones, dont 12 `event_required` et 166 419 `dual_unresolved` ; le noyau sparse exécute deux extrêmes explicites et les quatre frontières sur CUDA, mais les 6 041 ponts source restent numériquement bloqués et aucun extrême n'est une affectation scientifique ; le gate causal local compte 650 épisodes et conserve sans classement 3/65 composites actifs non amplifiants sous quatre perturbations miroir ; 61 sont mixtes/amplifiants, 1 non identifiable, 172 silencieux et 3 bloqués ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
+- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; la portée atteinte par les six familles basales est exhaustivement comptée à 166 431/166 700 neurones, dont 12 `event_required` et 166 419 `dual_unresolved` ; le noyau sparse exécute deux extrêmes explicites et les quatre frontières sur CUDA ; les deux formes de pont source compilent désormais les 6 041 terminaux et les trois formes de sensibilité s'exécutent sous les deux extrêmes, mais toutes les valeurs utilisées restent des fixtures non physiologiques et aucun extrême n'est une affectation scientifique ; le gate causal local compte 650 épisodes et conserve sans classement 3/65 composites actifs non amplifiants sous quatre perturbations miroir ; 61 sont mixtes/amplifiants, 1 non identifiable, 172 silencieux et 3 bloqués ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1158,9 +1169,10 @@ natives en conservant l'incertitude `dual_unresolved`. La première moitié est
 maintenant fermée par la comptabilité exhaustive : 166 431 neurones atteints ont
 une disposition et les 25 582 574 frontières internes sont comptées. La seconde
 est maintenant scindée : le noyau global typé/hybride est exécutable avec un
-vecteur d'affectation explicite, mais les 6 041 sources sont toutes
-`dual_unresolved` et leurs ponts event/graded ne portent encore aucune valeur
-exécutable. Les deux extrêmes du sentinel ferment la mécanique du runtime, pas
+vecteur d'affectation explicite, et les 6 041 sources compilent désormais vers
+les deux ponts event/graded. Leur classe native reste `dual_unresolved` et leurs
+taux/échelles physiologiques restent absents. Les deux extrêmes et les six runs
+de formes basales ferment la mécanique du runtime et de l'interface, pas
 l'espace combinatoire ni la calibration des interfaces.
 
 En parallèle, le gate d'actionneurs est maintenant terminé sans attendre le choix
@@ -1221,8 +1233,9 @@ neutral_embodied_command_limit_diagnostic.bat # 3 lignes x 2 branches x 2 répé
 neutral_embodied_feedback_nonamplification.bat # 65 lignes actives x 10 épisodes ; produit l'ensemble technique local non classé de 3 composites
 front_leg_member_conditioned_freeze_boundary.bat # reconstruit les 3 bundles exacts ; zéro gel marginal, 6 familles basales non exercées
 basal_low_capacity_readiness.bat # 3 formes basales sans valeur ; expose les blockers du run typé/hybride global
-basal_population_reachability.bat # 6 familles -> 166431 neurones ; dispositions exhaustives, ponts numériques encore bloqués
+basal_population_reachability.bat # 6 familles -> 166431 neurones ; dispositions exhaustives, valeurs physiologiques encore bloquées
 basal_typed_hybrid_runtime_sentinel.bat # 2 extrêmes plein graphe ; 4 frontières, zéro affectation/valeur promue
+basal_source_bridges.bat # 6041 sources x 2 ponts candidats ; 3 formes x 2 extrêmes, fixtures non promouvables
 front_leg_member_physical_preview.bat # génère 3 replays physiques : FlyBody complet, contrôleur local seulement
 front_leg_member_preview_replay.bat [129|141|238] # ouvre un replay ; aucun membre n'est une référence scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS

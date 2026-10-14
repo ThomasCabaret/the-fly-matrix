@@ -1,0 +1,284 @@
+schema_version: 1
+id: runner_result.basal_source_bridge_mechanics.v0
+campaign_id: campaign.basal_source_bridge_mechanics.v0
+status: accepted_source_bridge_mechanics_three_arms_two_assignment_extremes_zero_promotion
+completed_at: '2026-10-14T11:49:38.510572+00:00'
+command: basal_source_bridges.bat
+claim_label: BASAL SOURCE BRIDGE MECHANICS / DIAGNOSTIC FIXTURES / ZERO CALIBRATION
+  / NO BEHAVIOR
+backend: cuda
+source_accounting:
+  family_counts:
+    parameter.baseline.gustation.v0: 1428
+    parameter.baseline.olfaction.v0: 2639
+    parameter.baseline.thermohygro.v0: 91
+    parameter.residual_sensory.chemosensory_nominal.v0: 57
+    parameter.residual_sensory.mechanosensory_tbc_nominal.v0: 11
+    parameter.residual_sensory.unknown_nominal.v0: 1815
+  family_count: 6
+  terminal_count: 6041
+  event_candidate_bridges_compiled: 6041
+  graded_candidate_bridges_compiled: 6041
+diagnostic_fixture_boundary:
+  status: UNPROMOTABLE_ENGINEERING_FIXTURES
+  arms:
+  - explicit_silence_control
+  - uniform_per_terminal
+  - equal_family_mass
+  assignment_profiles:
+  - exact_event_plus_all_dual_as_graded
+  - all_reached_as_event_candidate
+  steps: 96
+  dt_ms: 0.1
+  seed_by_arm:
+    explicit_silence_control: 1729
+    uniform_per_terminal: 2718
+    equal_family_mass: 3141
+  uniform_per_terminal_fixture_hz: 20.0
+  equal_family_total_fixture_hz: 5000.0
+  graded_half_saturation_fixture_hz: 100.0
+  restriction: These values exist only to exercise mechanics and alias guards. They
+    are not physiological estimates, priors, accepted bounds, fitted values, population
+    assignments or candidates for promotion.
+equal_family_rate_totals_hz:
+  parameter.baseline.gustation.v0: 5000.000000000002
+  parameter.baseline.olfaction.v0: 5000.0
+  parameter.baseline.thermohygro.v0: 4999.999999999999
+  parameter.residual_sensory.chemosensory_nominal.v0: 5000.000000000001
+  parameter.residual_sensory.mechanosensory_tbc_nominal.v0: 5000.000000000001
+  parameter.residual_sensory.unknown_nominal.v0: 4999.999999999999
+profiles:
+  exact_event_plus_all_dual_as_graded:
+    node_counts:
+      inactive: 269
+      event: 12
+      graded: 166419
+    arms:
+      explicit_silence_control:
+        source_port_counts:
+          event: 0
+          graded: 6041
+          total: 6041
+        rate_hz_summary:
+          minimum: 0.0
+          maximum: 0.0
+          sum: 0.0
+        max_event_presence_probability_per_step: 0.0
+        graded_drive_summary:
+          minimum: 0.0
+          maximum: 0.0
+          nonzero_sources: 0
+        steps: 96
+        simulated_ms: 9.600000000000001
+        seed: 1729
+        candidate_event_schedule_sha256: 61db86aca723f5a7f4334a0367ebe733e362a22fcb5e20e788f8591eb8793317
+        forced_source_events: 0
+        distinct_event_sources_emitting: 0
+        delivered_source_events: 0
+        generated_internal_events: 0
+        state_maxima:
+          event_state_max_abs: 0.0
+          graded_state_max_abs: 0.0
+        finite_state: true
+        inactive_state_exactly_zero_or_rest: true
+        elapsed_seconds: 0.6607093999991775
+        steps_per_second: 145.2983717200323
+        peak_gpu_bytes: 216192000
+      uniform_per_terminal:
+        source_port_counts:
+          event: 0
+          graded: 6041
+          total: 6041
+        rate_hz_summary:
+          minimum: 20.0
+          maximum: 20.0
+          sum: 120820.0
+        max_event_presence_probability_per_step: 0.001998001332666933
+        graded_drive_summary:
+          minimum: 0.1666666716337204
+          maximum: 0.1666666716337204
+          nonzero_sources: 6041
+        steps: 96
+        simulated_ms: 9.600000000000001
+        seed: 2718
+        candidate_event_schedule_sha256: 45c880c1cc4d36100ba1f1c3e4e268fa9ca51e4fdb2639c180593cbd8da5069b
+        forced_source_events: 0
+        distinct_event_sources_emitting: 0
+        delivered_source_events: 0
+        generated_internal_events: 0
+        state_maxima:
+          event_state_max_abs: 0.0024603703059256077
+          graded_state_max_abs: 0.19860999286174774
+        finite_state: true
+        inactive_state_exactly_zero_or_rest: true
+        elapsed_seconds: 0.4457168000008096
+        steps_per_second: 215.38340040093985
+        peak_gpu_bytes: 216192000
+      equal_family_mass:
+        source_port_counts:
+          event: 0
+          graded: 6041
+          total: 6041
+        rate_hz_summary:
+          minimum: 1.8946570670708602
+          maximum: 454.54545454545456
+          sum: 30000.0
+        max_event_presence_probability_per_step: 0.044436963731715746
+        graded_drive_summary:
+          minimum: 0.018594272434711456
+          maximum: 0.8196721076965332
+          nonzero_sources: 6041
+        steps: 96
+        simulated_ms: 9.600000000000001
+        seed: 3141
+        candidate_event_schedule_sha256: bfefae224a90d46bba9537153626a744df913acf57b2936f34bbd1ab638de56f
+        forced_source_events: 0
+        distinct_event_sources_emitting: 0
+        delivered_source_events: 0
+        generated_internal_events: 0
+        state_maxima:
+          event_state_max_abs: 0.0005000265082344413
+          graded_state_max_abs: 0.5859318375587463
+        finite_state: true
+        inactive_state_exactly_zero_or_rest: true
+        elapsed_seconds: 0.4879155999988143
+        steps_per_second: 196.75534047329762
+        peak_gpu_bytes: 216192000
+  all_reached_as_event_candidate:
+    node_counts:
+      inactive: 269
+      event: 166431
+      graded: 0
+    arms:
+      explicit_silence_control:
+        source_port_counts:
+          event: 6041
+          graded: 0
+          total: 6041
+        rate_hz_summary:
+          minimum: 0.0
+          maximum: 0.0
+          sum: 0.0
+        max_event_presence_probability_per_step: 0.0
+        graded_drive_summary:
+          minimum: 0.0
+          maximum: 0.0
+          nonzero_sources: 0
+        steps: 96
+        simulated_ms: 9.600000000000001
+        seed: 1729
+        candidate_event_schedule_sha256: 61db86aca723f5a7f4334a0367ebe733e362a22fcb5e20e788f8591eb8793317
+        forced_source_events: 0
+        distinct_event_sources_emitting: 0
+        delivered_source_events: 0
+        generated_internal_events: 0
+        state_maxima:
+          event_state_max_abs: 0.0
+          graded_state_max_abs: 0.0
+        finite_state: true
+        inactive_state_exactly_zero_or_rest: true
+        elapsed_seconds: 0.28271549999772105
+        steps_per_second: 339.5639786314293
+        peak_gpu_bytes: 216856064
+      uniform_per_terminal:
+        source_port_counts:
+          event: 6041
+          graded: 0
+          total: 6041
+        rate_hz_summary:
+          minimum: 20.0
+          maximum: 20.0
+          sum: 120820.0
+        max_event_presence_probability_per_step: 0.001998001332666933
+        graded_drive_summary:
+          minimum: 0.1666666716337204
+          maximum: 0.1666666716337204
+          nonzero_sources: 0
+        steps: 96
+        simulated_ms: 9.600000000000001
+        seed: 2718
+        candidate_event_schedule_sha256: 45c880c1cc4d36100ba1f1c3e4e268fa9ca51e4fdb2639c180593cbd8da5069b
+        forced_source_events: 1171
+        distinct_event_sources_emitting: 1057
+        delivered_source_events: 965
+        generated_internal_events: 0
+        state_maxima:
+          event_state_max_abs: 0.05000000074505806
+          graded_state_max_abs: 0.0
+        finite_state: true
+        inactive_state_exactly_zero_or_rest: true
+        elapsed_seconds: 0.4811656999991101
+        steps_per_second: 199.5154683722833
+        peak_gpu_bytes: 217533440
+      equal_family_mass:
+        source_port_counts:
+          event: 6041
+          graded: 0
+          total: 6041
+        rate_hz_summary:
+          minimum: 1.8946570670708602
+          maximum: 454.54545454545456
+          sum: 30000.0
+        max_event_presence_probability_per_step: 0.044436963731715746
+        graded_drive_summary:
+          minimum: 0.018594272434711456
+          maximum: 0.8196721076965332
+          nonzero_sources: 0
+        steps: 96
+        simulated_ms: 9.600000000000001
+        seed: 3141
+        candidate_event_schedule_sha256: bfefae224a90d46bba9537153626a744df913acf57b2936f34bbd1ab638de56f
+        forced_source_events: 247
+        distinct_event_sources_emitting: 197
+        delivered_source_events: 207
+        generated_internal_events: 0
+        state_maxima:
+          event_state_max_abs: 0.03333333507180214
+          graded_state_max_abs: 0.0
+        finite_state: true
+        inactive_state_exactly_zero_or_rest: true
+        elapsed_seconds: 0.4925664999973378
+        steps_per_second: 194.89754175429886
+        peak_gpu_bytes: 217533440
+checks:
+  all_6041_sources_accounted_once: true
+  all_six_families_accounted: true
+  all_three_preregistered_arms_executed_in_both_profiles: true
+  equal_family_mass_conserved: true
+  event_presence_alias_bound_pass: true
+  seeded_candidate_schedules_match_across_assignment_profiles: true
+  event_process_exercised: true
+  graded_conversion_exercised: true
+  silence_control_is_zero: true
+  all_runs_finite: true
+  inactive_269_neurons_remain_quiescent: true
+  population_assignments_promoted: false
+  parameter_values_promoted: false
+  named_behavior_exposed: false
+scientific_boundary:
+  source_bridge_forms_implemented: 2
+  sensitivity_arms_executed: 3
+  assignment_profiles_executed: 2
+  population_assignments_promoted: 0
+  parameter_values_promoted: 0
+  physiological_basal_values_selected: 0
+  behavior_targets_exposed: 0
+reproducibility_boundary:
+  semantic_hash_includes:
+  - frozen_input_hashes
+  - complete_source_and_family_accounting
+  - rate_shape_summaries
+  - seeded_candidate_event_schedule_hashes
+  - source_port_counts_and_runtime_gates
+  - promotion_and_behavior_exposure_gates
+  semantic_hash_excludes:
+  - elapsed_seconds
+  - steps_per_second
+  - peak_gpu_bytes
+  - raw_cuda_state_bytes
+  - raw_runtime_state_magnitudes
+semantic_result_sha256: 020ed37aea853cb8f8a05d59a899c435ca190f80596b2199adf1ff9e1d3ee572
+next_action: Replace diagnostic source-scale fixtures with independently sourced or
+  bounded parameter ensembles per basal family, retain both event and graded candidates
+  where assignment remains dual-unresolved, then propagate the finite ensemble into
+  the first local sensor-CNS-motor chain.

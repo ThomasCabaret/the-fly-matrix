@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter_family_inventory.v0
 status: complete_inventory_values_unfitted
-updated: 2026-10-11
+updated: 2026-10-14
 scope_statement: >-
   Exhaustive inventory of parameter families currently exposed or required by
   the accepted wiring-v0 embodied runtime. Completeness means every known family
@@ -15,6 +15,8 @@ family_ids:
   - parameter.residual_sensory.chemosensory_nominal.v0
   - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
   - parameter.residual_sensory.unknown_nominal.v0
+  - parameter.bridge.basal_event_process.v0
+  - parameter.bridge.basal_hz_to_graded.v0
   - parameter.vision.routing.v0
   - parameter.vision.transfer.v0
   - parameter.proprioception.routing.v0
@@ -30,14 +32,14 @@ family_ids:
   - parameter.technical.motor_command_envelope.v0
 
 accounting:
-  total_families: 19
-  by_kind: {basal: 6, routing: 4, transfer: 4, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
-  by_claim_role: {biological: 11, surrogate: 7, technical: 1}
+  total_families: 21
+  by_kind: {basal: 6, routing: 4, transfer: 6, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
+  by_claim_role: {biological: 11, surrogate: 9, technical: 1}
   frozen_external: 1
   accepted_parameter_sets: 1
   fitted_families: 0
   frozen_parameter_families: 2
-  unresolved_or_unfrozen_families: 17
+  unresolved_or_unfrozen_families: 19
 
 known_runtime_couplings:
   - families: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0]
@@ -64,8 +66,6 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  The factorized front-leg chain and its unresolved propagation policy are
-  complete without selecting a value. Freeze the neutral embodied measurement
-  contract, then declare a bounded schedule over the accepted FeCO set, the
-  50-profile intermediate diagnostic panel and the partially executable motor
-  ensemble. No local physiological parameter is promoted yet.
+  Source or bound the two explicit basal bridge families without promoting their
+  diagnostic fixtures, then propagate finite event/graded alternatives into the
+  first local sensor-CNS-motor chain. No local physiological value is promoted.

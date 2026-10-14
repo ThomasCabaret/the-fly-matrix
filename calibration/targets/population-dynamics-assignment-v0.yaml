@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.population_dynamics_assignment.v0
 title: Assign defensible dynamics classes to bounded MaleCNS populations
-status: active_front_leg_conversion_contracts_executable_full_graph_typed_hybrid_execution_mechanics_accepted_assignments_and_source_bridges_unresolved
+status: active_front_leg_conversion_contracts_executable_full_graph_typed_hybrid_mechanics_accepted_source_bridge_forms_executable_values_and_assignments_unresolved
 primary_class: technical
 optimization_exposure: diagnostic_only
 claim_label: population_model_assignment_no_behavior_claim
@@ -64,7 +64,7 @@ provenance:
     - One circuit cannot promote its model class over all MaleCNS.
     - A conversion rule can carry calibration freedom but may not carry behavior policy.
 
-validation: partial_pass_166431_basal_reached_bodies_accounted_12_event_required_166419_dual_unresolved_sparse_runtime_two_extremes_four_boundaries_executed_zero_assignment_or_value_promoted_source_bridges_unresolved
+validation: partial_pass_166431_basal_reached_bodies_accounted_12_event_required_166419_dual_unresolved_two_runtime_extremes_and_all_6041_event_or_graded_source_bridge_candidates_executed_zero_assignment_or_value_promoted
 blocked_reason: null
 next_action: >-
   The first local chain and its three exact member-conditioned technical bundles
@@ -74,6 +74,9 @@ next_action: >-
   has executed two explicit diagnostic extremes; the mixed extreme exercises all
   four event/graded boundaries and the event extreme preserves the declared delay.
   Neither profile covers the 2^166419 scientific assignment space or promotes a
-  class or value. Define bounded source event-process and Hz-to-graded conversion
-  families next, then execute the preregistered basal sensitivity shapes through
-  this engine without choosing assignments from numerical convenience.
+  class or value. Explicit candidate event-process and bounded Hz-to-graded
+  bridge families now compile all 6041 terminals; all three preregistered input
+  shapes execute under both extremes with unpromotable fixtures. Source or bound
+  finite basal-rate and conversion-scale ensembles next, then propagate both
+  native alternatives into the first local chain without choosing assignments
+  from numerical convenience or a named behavior.

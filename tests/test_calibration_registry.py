@@ -116,8 +116,8 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(self.state["readiness"]["held_out_protocol_locked"])
 
     def test_parameter_family_inventory_is_exhaustive_and_acyclic(self) -> None:
-        self.assertEqual(len(self.inventory.families), 19)
-        self.assertEqual(len(self.inventory.topological_order), 19)
+        self.assertEqual(len(self.inventory.families), 21)
+        self.assertEqual(len(self.inventory.topological_order), 21)
         self.assertEqual(
             set(self.inventory.topological_order), set(self.inventory.families)
         )

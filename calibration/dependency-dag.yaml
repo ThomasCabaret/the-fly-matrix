@@ -1,7 +1,7 @@
 schema_version: 1
 id: calibration.parameter_dependency_dag.v0
 status: complete_structure_values_unfitted
-updated: 2026-09-30
+updated: 2026-10-14
 inventory_id: parameter_family_inventory.v0
 node_ids:
   - parameter.baseline.olfaction.v0
@@ -10,6 +10,8 @@ node_ids:
   - parameter.residual_sensory.chemosensory_nominal.v0
   - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
   - parameter.residual_sensory.unknown_nominal.v0
+  - parameter.bridge.basal_event_process.v0
+  - parameter.bridge.basal_hz_to_graded.v0
   - parameter.vision.routing.v0
   - parameter.vision.transfer.v0
   - parameter.proprioception.routing.v0
@@ -24,6 +26,18 @@ node_ids:
   - parameter.body.flybody_mechanics.v0
   - parameter.technical.motor_command_envelope.v0
 edges:
+  - {upstream: parameter.baseline.olfaction.v0, downstream: parameter.bridge.basal_event_process.v0, reason: A source rate family precedes its event-process realization.}
+  - {upstream: parameter.baseline.gustation.v0, downstream: parameter.bridge.basal_event_process.v0, reason: A source rate family precedes its event-process realization.}
+  - {upstream: parameter.baseline.thermohygro.v0, downstream: parameter.bridge.basal_event_process.v0, reason: A source rate family precedes its event-process realization.}
+  - {upstream: parameter.residual_sensory.chemosensory_nominal.v0, downstream: parameter.bridge.basal_event_process.v0, reason: A source-rate hypothesis precedes its event-process realization.}
+  - {upstream: parameter.residual_sensory.mechanosensory_tbc_nominal.v0, downstream: parameter.bridge.basal_event_process.v0, reason: A source-rate hypothesis precedes its event-process realization.}
+  - {upstream: parameter.residual_sensory.unknown_nominal.v0, downstream: parameter.bridge.basal_event_process.v0, reason: A source-rate hypothesis precedes its event-process realization.}
+  - {upstream: parameter.baseline.olfaction.v0, downstream: parameter.bridge.basal_hz_to_graded.v0, reason: A source rate family precedes its explicit graded-unit conversion.}
+  - {upstream: parameter.baseline.gustation.v0, downstream: parameter.bridge.basal_hz_to_graded.v0, reason: A source rate family precedes its explicit graded-unit conversion.}
+  - {upstream: parameter.baseline.thermohygro.v0, downstream: parameter.bridge.basal_hz_to_graded.v0, reason: A source rate family precedes its explicit graded-unit conversion.}
+  - {upstream: parameter.residual_sensory.chemosensory_nominal.v0, downstream: parameter.bridge.basal_hz_to_graded.v0, reason: A source-rate hypothesis precedes its explicit graded-unit conversion.}
+  - {upstream: parameter.residual_sensory.mechanosensory_tbc_nominal.v0, downstream: parameter.bridge.basal_hz_to_graded.v0, reason: A source-rate hypothesis precedes its explicit graded-unit conversion.}
+  - {upstream: parameter.residual_sensory.unknown_nominal.v0, downstream: parameter.bridge.basal_hz_to_graded.v0, reason: A source-rate hypothesis precedes its explicit graded-unit conversion.}
   - {upstream: parameter.vision.routing.v0, downstream: parameter.vision.transfer.v0, reason: Freeze admissible registration before fitting response gains.}
   - {upstream: parameter.proprioception.routing.v0, downstream: parameter.proprioception.transfer.v0, reason: Separate local route selection from sensor transfer.}
   - {upstream: parameter.mechanosensation.routing.v0, downstream: parameter.mechanosensation.transfer.v0, reason: Separate local route selection from sensor transfer.}
@@ -49,5 +63,5 @@ notes:
   - This DAG orders parameter-family acceptance; targets and campaigns add their own dependency edges.
   - Independent roots may be processed in parallel.
   - A joint campaign may replace an edge only with a versioned non-identifiability reason.
-  - Basal families remain roots; the embodied stability campaign consumes them without turning that use into a family dependency.
+  - Basal families remain roots; their two explicit source bridge families are downstream conversion capacity, not accepted values.
 next_action: Add campaign nodes and frozen parameter-set edges when the runner is implemented.

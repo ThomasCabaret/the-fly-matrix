@@ -1,0 +1,44 @@
+schema_version: 1
+id: evaluation.basal_source_bridge_mechanics.v0
+campaign_id: campaign.basal_source_bridge_mechanics.v0
+status: accepted_mechanics_only_basal_values_and_population_assignments_unresolved
+conclusion: All 6,041 basal terminals now compile through explicit event-process and
+  bounded Hz-to-graded candidate bridges. All three preregistered low-capacity shapes
+  execute under both diagnostic assignment extremes with complete accounting, finite
+  state and no named behavior. The fixture rates, saturation scale and neuronal assignments
+  are unpromotable engineering probes, so this does not calibrate basal activity or
+  select population dynamics.
+accepted_claims:
+- All 6,041 basal terminals have executable candidate bridges for event and graded
+  ports.
+- All three preregistered low-capacity input shapes execute under both diagnostic
+  assignment extremes.
+- Event sampling is seeded and collision risk is bounded by an explicit per-step presence
+  limit.
+- The graded conversion is explicit, zero-preserving, monotone and bounded.
+forbidden_claims:
+- Any diagnostic rate, scale, seed or time course is physiological, fitted or accepted.
+- Either assignment extreme identifies native dynamics for any dual-unresolved population.
+- Independent Poisson sources or the saturating conversion are biologically validated.
+- Finite execution calibrates a basal family, central dynamics, stability or behavior.
+- Any named behavior has been trained, evaluated or visually selected.
+checks:
+  all_6041_sources_accounted_once: true
+  all_six_families_accounted: true
+  all_three_preregistered_arms_executed_in_both_profiles: true
+  equal_family_mass_conserved: true
+  event_presence_alias_bound_pass: true
+  seeded_candidate_schedules_match_across_assignment_profiles: true
+  event_process_exercised: true
+  graded_conversion_exercised: true
+  silence_control_is_zero: true
+  all_runs_finite: true
+  inactive_269_neurons_remain_quiescent: true
+  population_assignments_promoted: false
+  parameter_values_promoted: false
+  named_behavior_exposed: false
+runner_semantic_sha256: 020ed37aea853cb8f8a05d59a899c435ca190f80596b2199adf1ff9e1d3ee572
+next_action: Replace diagnostic source-scale fixtures with independently sourced or
+  bounded parameter ensembles per basal family, retain both event and graded candidates
+  where assignment remains dual-unresolved, then propagate the finite ensemble into
+  the first local sensor-CNS-motor chain.

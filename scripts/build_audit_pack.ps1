@@ -82,8 +82,8 @@ $RepresentativeAuditFiles = @(
     "calibration/model-risks.yaml",
     "calibration/state.yaml",
     "calibration/campaigns/actuator-causal-attribution-v1.yaml",
-    "calibration/campaigns/basal-reachable-population-accounting-v0.yaml",
     "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
+    "calibration/campaigns/basal-source-bridge-mechanics-v0.yaml",
     "calibration/campaigns/front-leg-local-conversion-contract-v0.yaml",
     "calibration/campaigns/neural-model-class-brian2-conformance-v1.yaml",
     "calibration/campaigns/population-dynamics-front-leg-accounting-v0.yaml",
@@ -92,13 +92,11 @@ $RepresentativeAuditFiles = @(
     "calibration/evidence/front-leg-local-source-subsets-v0.yaml",
     "calibration/evidence/front-leg-motor-class-ensemble-v0.yaml",
     "calibration/evidence/front-leg-population-dynamics-v0.yaml",
-    "calibration/evaluations/basal-reachable-population-accounting-v0.yaml",
-    "calibration/evaluations/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
+    "calibration/evaluations/basal-source-bridge-mechanics-v0.yaml",
     "calibration/evaluations/front-leg-local-conversion-contract-v0.yaml",
     "calibration/evaluations/neural-model-class-gate-v0.yaml",
     "calibration/evaluations/population-dynamics-front-leg-accounting-v0.yaml",
-    "calibration/runner/basal-reachable-population-accounting-v0.yaml",
-    "calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
+    "calibration/runner/basal-source-bridge-mechanics-v0.yaml",
     "calibration/runner/front-leg-local-conversion-contract-v0.yaml",
     "calibration/runner/front-leg-local-source-data-v0.yaml",
     "calibration/runner/neural-model-class-brian2-conformance-v1.yaml",
@@ -140,6 +138,7 @@ $RepresentativeAuditFiles = @(
 
 $PriorityLaunchers = @(
     "build_audit_pack.bat",
+    "basal_source_bridges.bat",
     "basal_typed_hybrid_runtime_sentinel.bat",
     "calibration_status.bat",
     "download_data.bat",
@@ -174,11 +173,10 @@ $RequiredAuditPaths = @(
     "calibration/model-risks.yaml",
     "calibration/state.yaml",
     "calibration/targets/population-dynamics-assignment-v0.yaml",
-    "calibration/campaigns/basal-reachable-population-accounting-v0.yaml",
-    "calibration/evaluations/basal-reachable-population-accounting-v0.yaml",
     "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
-    "calibration/evaluations/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
-    "calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
+    "calibration/campaigns/basal-source-bridge-mechanics-v0.yaml",
+    "calibration/evaluations/basal-source-bridge-mechanics-v0.yaml",
+    "calibration/runner/basal-source-bridge-mechanics-v0.yaml",
     "decisions/0016-event-capable-typed-hybrid-neural-runtime.md",
     "ledger/README.md",
     "scripts/build_audit_pack.ps1"
@@ -219,6 +217,21 @@ function Get-LineCount([string]$Path) {
     return $Count
 }
 
+function Get-Sha256([string]$Path) {
+    # Windows PowerShell installations can lack the Microsoft.PowerShell.Utility
+    # Get-FileHash cmdlet. Use the framework implementation so the double-click
+    # audit builder remains portable across the supported Windows hosts.
+    $Stream = [System.IO.File]::OpenRead($Path)
+    $Hasher = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $Bytes = $Hasher.ComputeHash($Stream)
+        return ([System.BitConverter]::ToString($Bytes)).Replace("-", "").ToLowerInvariant()
+    } finally {
+        $Hasher.Dispose()
+        $Stream.Dispose()
+    }
+}
+
 function Copy-AuditFile([string]$RelativePath, [string]$Category) {
     $Source = Join-Path $ProjectRoot ($RelativePath.Replace("/", "\"))
     $Destination = Join-Path $PackRoot ($RelativePath.Replace("/", "\"))
@@ -229,7 +242,7 @@ function Copy-AuditFile([string]$RelativePath, [string]$Category) {
     Copy-Item -LiteralPath $Source -Destination $Destination -Force
     $Item = Get-Item -LiteralPath $Source
     $Lines = Get-LineCount $Source
-    $Hash = (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash.ToLowerInvariant()
+    $Hash = Get-Sha256 $Source
     $script:Included.Add([pscustomobject]@{
         path = $RelativePath
         category = $Category

@@ -1,0 +1,74 @@
+schema_version: 1
+id: parameter.bridge.basal_event_process.v0
+title: Basal Hz-to-event source process
+status: executable_candidate_family_unfitted
+primary_class: local_interface
+parameter_kind: transfer
+claim_role: surrogate
+meaning:
+  biological_or_technical_role: Convert a declared non-negative source intensity in spikes per second into timestamped event presence at an event-capable population port.
+  units: input_spikes_per_second_output_event_presence_per_timestep
+  applicability_limits:
+    - The v0 port collapses multiple arrivals from one source within one timestep to presence.
+    - A campaign must bound the per-step presence probability and declare dt.
+scope:
+  owner_ids:
+    - clamp.olfaction
+    - clamp.gustation
+    - clamp.thermohygro
+    - source.sensory.residual.chemosensory
+    - source.sensory.residual.mechanosensory_tbc
+    - source.sensory.residual.unknown
+  parameter_names: [source_rate_hz, optional_shared_modulation_or_refractory_model]
+  dimension:
+    terminal_candidates: 6041
+    candidate_sharing_levels: [one_global_rate, six_basal_families, evidence_supported_partitions]
+    selected_free_parameters: unresolved
+  topology_snapshot:
+    semantic_topology_sha256: inherited_from_basal_source_routes
+    candidate_envelope_sha256: all_6041_terminals_only
+    ruleset_sha256: campaign.basal_source_bridge_mechanics.v0
+    exception_table_sha256: none
+sharing:
+  candidate_hierarchy: [one_global_rate, six_basal_families, evidence_supported_partitions]
+  selected_level: unresolved
+  justification: Start with the least flexible source process and refine only from independent local evidence or residuals.
+  individual_parameters_require_evidence: true
+origin_policy:
+  preferred_order: [measured, evidence_transfer, shared_family_ensemble, explicit_surrogate_sensitivity]
+  current_origin: executable_mechanics_no_value
+  prior_or_bounds: unresolved
+  fallback: explicit_surrogate_ensemble_only
+identifiability:
+  status: mechanics_accepted_values_blocked_by_basal_evidence_and_population_assignment
+  allowed_dataset_ids: []
+  local_held_out_dataset_ids: []
+  forbidden_behavior_ids: [all_named_behaviors]
+  jointly_identified_with: []
+  joint_calibration_reason: null
+dependencies:
+  upstream_family_ids:
+    - parameter.baseline.olfaction.v0
+    - parameter.baseline.gustation.v0
+    - parameter.baseline.thermohygro.v0
+    - parameter.residual_sensory.chemosensory_nominal.v0
+    - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+    - parameter.residual_sensory.unknown_nominal.v0
+  downstream_family_ids: []
+uncertainty:
+  representation: finite_source_rate_and_process_ensemble
+  admissible_set_criteria:
+    - event probabilities are finite and remain below the preregistered alias limit
+    - every terminal is accounted exactly once
+    - seeds and temporal process are explicit
+  reference_selection_rule: unresolved
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources:
+  - ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+    supports: Event-capable source ports and explicit conversion boundaries are required.
+  - ref: calibration/evaluations/basal-source-bridge-mechanics-v0.yaml
+    supports: The seeded Poisson-presence implementation and guards execute over all basal terminals; no source rate is accepted.
+assumptions:
+  - Independent homogeneous Poisson sources are a candidate family, not a biological fact.
+  - Presence-per-step is valid only under an explicit bounded collision probability.
+next_action: Transfer or bound source-rate ensembles independently per basal family and retain the event-process alternative only for populations whose native assignment permits it.

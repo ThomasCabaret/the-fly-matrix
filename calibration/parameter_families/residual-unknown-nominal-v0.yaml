@@ -14,7 +14,7 @@ scope:
 sharing: {candidate_hierarchy: [one_global_value, annotation_cluster, terminal_channel], selected_level: unresolved, audit_partition_only: class_superclass_subclass_type_77_partitions, justification: annotation clusters preserve uncertainty but cannot establish shared physiology across unknown modalities, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: evidence_audited_no_value, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
 identifiability: {status: blocked_unknown_modality, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [], joint_calibration_reason: null}
-dependencies: {upstream_family_ids: [], downstream_family_ids: []}
+dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.bridge.basal_event_process.v0, parameter.bridge.basal_hz_to_graded.v0]}
 uncertainty: {representation: interval_or_shared_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: decisions/0004-residual-sensory-nominal-sources.md, supports: surrogate ownership and non-claim contract}, {ref: calibration/evidence/basal-source-readiness-v0.yaml, supports: exhaustive evidence accounting and explicit absence of modality-level transfer evidence}]

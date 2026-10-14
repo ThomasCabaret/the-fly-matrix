@@ -14,7 +14,7 @@ scope:
 sharing: {candidate_hierarchy: [one_global_rate, annotated_orn_type, receptor_class, terminal_channel], selected_level: unresolved, evidence_partition_candidate: annotated_orn_type_54_partitions, justification: adult ORN spontaneous activity is class-dependent but the complete value mapping is absent, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: evidence_audited_no_value, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
 identifiability: {status: blocked_missing_complete_type_value_table_and_central_model_class, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [locomotion, odor_approach, odor_avoidance], jointly_identified_with: [], joint_calibration_reason: null}
-dependencies: {upstream_family_ids: [], downstream_family_ids: []}
+dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.bridge.basal_event_process.v0, parameter.bridge.basal_hz_to_graded.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/derived/wiring/basal-clamp-routing.json, supports: 147 exact fan-out channels covering 2639 terminals}, {ref: calibration/evidence/basal-source-readiness-v0.yaml, supports: adult ORN class heterogeneity and exhaustive transfer-readiness accounting; no value transferred}]

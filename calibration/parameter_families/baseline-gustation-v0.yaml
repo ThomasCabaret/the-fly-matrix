@@ -14,7 +14,7 @@ scope:
 sharing: {candidate_hierarchy: [one_global_rate, annotated_subclass_and_type, receptor_class, terminal_channel], selected_level: unresolved, evidence_partition_candidate: annotated_subclass_and_type_66_partitions, justification: measured GRN baseline differs by functional cell class but MaleCNS labels do not yet identify those cells one-to-one, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector], current_origin: evidence_audited_no_value, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
 identifiability: {status: blocked_missing_functional_cell_mapping_and_central_model_class, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [feeding, proboscis_extension, taste_approach], jointly_identified_with: [], joint_calibration_reason: null}
-dependencies: {upstream_family_ids: [], downstream_family_ids: []}
+dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.bridge.basal_event_process.v0, parameter.bridge.basal_hz_to_graded.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: data/derived/wiring/basal-clamp-routing.json, supports: 166 exact fan-out channels covering 1428 terminals}, {ref: calibration/evidence/basal-source-readiness-v0.yaml, supports: labellar GRN spontaneous-rate measurements and their explicit mapping limits; no value transferred}]

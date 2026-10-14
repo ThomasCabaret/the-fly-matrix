@@ -1,0 +1,74 @@
+schema_version: 1
+id: parameter.bridge.basal_hz_to_graded.v0
+title: Basal Hz-to-graded source conversion
+status: executable_candidate_family_unfitted
+primary_class: local_interface
+parameter_kind: transfer
+claim_role: surrogate
+meaning:
+  biological_or_technical_role: Convert a declared non-negative source rate in spikes per second into a bounded dimensionless drive at a graded population port.
+  units: input_spikes_per_second_output_dimensionless_graded_drive
+  applicability_limits:
+    - The monotone saturating v0 family is a candidate conversion, not accepted physiology.
+    - Its half-saturation scale must be explicit and separately calibrated or bounded.
+scope:
+  owner_ids:
+    - clamp.olfaction
+    - clamp.gustation
+    - clamp.thermohygro
+    - source.sensory.residual.chemosensory
+    - source.sensory.residual.mechanosensory_tbc
+    - source.sensory.residual.unknown
+  parameter_names: [source_rate_hz, half_saturation_hz, optional_shared_temporal_filter]
+  dimension:
+    terminal_candidates: 6041
+    candidate_sharing_levels: [one_global_conversion, six_basal_families, evidence_supported_partitions]
+    selected_free_parameters: unresolved
+  topology_snapshot:
+    semantic_topology_sha256: inherited_from_basal_source_routes
+    candidate_envelope_sha256: all_6041_terminals_only
+    ruleset_sha256: campaign.basal_source_bridge_mechanics.v0
+    exception_table_sha256: none
+sharing:
+  candidate_hierarchy: [one_global_conversion, six_basal_families, evidence_supported_partitions]
+  selected_level: unresolved
+  justification: Prevent the source bridge from becoming a high-capacity controller while allowing evidence-backed family differences.
+  individual_parameters_require_evidence: true
+origin_policy:
+  preferred_order: [measured, evidence_transfer, shared_family_ensemble, explicit_surrogate_sensitivity]
+  current_origin: executable_mechanics_no_value
+  prior_or_bounds: unresolved
+  fallback: explicit_surrogate_ensemble_only
+identifiability:
+  status: mechanics_accepted_values_blocked_by_basal_evidence_and_population_assignment
+  allowed_dataset_ids: []
+  local_held_out_dataset_ids: []
+  forbidden_behavior_ids: [all_named_behaviors]
+  jointly_identified_with: []
+  joint_calibration_reason: null
+dependencies:
+  upstream_family_ids:
+    - parameter.baseline.olfaction.v0
+    - parameter.baseline.gustation.v0
+    - parameter.baseline.thermohygro.v0
+    - parameter.residual_sensory.chemosensory_nominal.v0
+    - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
+    - parameter.residual_sensory.unknown_nominal.v0
+  downstream_family_ids: []
+uncertainty:
+  representation: finite_conversion_form_scale_and_source_rate_ensemble
+  admissible_set_criteria:
+    - zero input maps exactly to zero
+    - conversion is finite monotone and bounded
+    - every terminal is accounted exactly once
+  reference_selection_rule: unresolved
+freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+sources:
+  - ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+    supports: Graded source ports and explicit event/graded unit conversions are required.
+  - ref: calibration/evaluations/basal-source-bridge-mechanics-v0.yaml
+    supports: The bounded monotone implementation and guards execute over all basal terminals; no conversion scale is accepted.
+assumptions:
+  - A saturating monotone map is a low-capacity candidate family, not a biological fact.
+  - No normalized activity value is inferred silently from a rate in Hz.
+next_action: Source or bound conversion-scale ensembles independently and retain the graded alternative only for populations whose native assignment permits it.

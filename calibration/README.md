@@ -17,7 +17,7 @@ rerun every historical campaign.
   objectives;
 - `_templates/`: minimum schemas for parameter families, scopes, campaigns,
   parameter sets, and evaluations;
-- `parameter_families/`: 19 versioned family records plus an exhaustive index;
+- `parameter_families/`: 21 versioned family records plus an exhaustive index;
 - `dependency-dag.yaml`: the validated partial order between those families;
 - `model-risks.yaml`: explicit high-impact capacity hypotheses, evidence,
   escalation triggers and next review points;
@@ -526,8 +526,8 @@ exact downstream accounting. The latter reaches 166,431/166,700 canonical
 neurons, preserves only twelve previously accepted exact event requirements and
 marks the other 166,419 as `dual_unresolved`. It also counts all four internal
 event/dual boundary classes and gives each of the 6,041 source terminals an
-explicit bridge disposition. This is not an executable basal model: event
-processes, Hz-to-graded conversions and absolute values remain blocked.
+explicit bridge disposition. This is not yet a calibrated basal model: native
+assignments and absolute values remain blocked.
 
 Run `basal_typed_hybrid_runtime_sentinel.bat` for the next implementation gate.
 It loads the same 166,431-neuron scope into one sparse engine whose per-neuron
@@ -538,3 +538,12 @@ instantiates every reached neuron as an event candidate and preserves the fixed
 1.8 ms comparator delay. Both runs are finite on CUDA and keep the 269 inactive
 neurons quiescent. They are two mechanics probes, not coverage of `2^166419`, a
 population census, a source bridge, calibration, fitness or stability.
+
+Run `basal_source_bridges.bat` next. It compiles every one of the 6,041 terminals
+through both explicit candidate families: seeded Poisson event presence with a
+per-step alias guard, and a zero-preserving bounded Hz-to-graded conversion. It
+executes silence, uniform-per-terminal and equal-family-mass inputs under both
+diagnostic assignment extremes. All six CUDA runs are finite and keep the 269
+inactive neurons quiescent. The fixture rates, seeds and half-saturation scale
+are deliberately non-physiological and unpromotable; success closes source-port
+mechanics only, not basal values, native assignments, stability or behavior.
