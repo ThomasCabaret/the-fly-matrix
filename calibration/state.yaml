@@ -21,9 +21,9 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.basal_source_envelope_propagation.v0
-last_preregistered_campaign_id: campaign.basal_source_envelope_propagation.v0
-last_executed_campaign_id: campaign.basal_source_envelope_propagation.v0
+last_completed_campaign_id: campaign.basal_event_scale_compatibility.v0
+last_preregistered_campaign_id: campaign.basal_event_scale_compatibility.v0
+last_executed_campaign_id: campaign.basal_event_scale_compatibility.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
@@ -92,6 +92,7 @@ readiness:
   basal_reached_typed_hybrid_runtime: accepted_execution_mechanics_166431_reached_neurons_two_explicit_extremes_four_boundaries_cuda_12_exact_event_requirements_166419_scientifically_dual_unresolved_zero_assignment_value_or_source_bridge_promoted
   basal_source_bridge_mechanics: accepted_6041_event_and_graded_candidate_bridges_3_shapes_2_assignment_extremes_6_finite_cuda_runs_seeded_alias_bounded_zero_values_assignments_or_behavior_promoted
   basal_source_technical_envelope: accepted_39_unranked_members_12_family_ablations_196_local_probes_both_assignment_profiles_event_long_horizon_reaches_probe_subthreshold_zero_values_assignments_or_behavior_promoted
+  basal_event_scale_compatibility: accepted_fixed_13_member_paired_grid_11_nonzero_subthreshold_1_threshold_crossing_only_at_320hz_3_2mv_first_crossing_26_2ms_zero_values_assignments_or_behavior_promoted
   front_leg_member_physical_preview: completed_3_of_3_controller_independent_replays_complete_FlyBody_physics_local_front_leg_chain_only_no_basal_not_whole_MaleCNS_human_checkpoint_open
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: high_priority_under_mixed_reference_fixture_unknown_family_ablation_changes_motor_probe_about_89_percent_all_values_unpromotable_native_assignments_unresolved
@@ -164,10 +165,12 @@ blocked_by:
 
 next_action: >-
   Preserve the visual checkpoint, source-bridge mechanics and the complete
-  39-member technical envelope as non-selecting evidence. Treat unknown-modality
-  basal input and event-threshold/scale compatibility as priority risks. Source
-  or justify scientific bounds first for the dominant families; otherwise carry
-  the finite technical uncertainty, both native alternatives and all three exact
-  local bundles into a bounded whole-body typed/hybrid sentinel. Never select a
-  class, rate, conversion scale or bridge value from numerical convenience,
-  fixture magnitude, body motion or a named behavior.
+  39-member technical envelope plus the fixed 13-member event compatibility map
+  as non-selecting evidence. Treat unknown-modality basal input as the dominant
+  fixture sensitivity and source-intensity/synaptic-scale coupling as a priority
+  risk. Source or justify scientific bounds first for the dominant families and
+  local synaptic efficacy; otherwise carry the finite technical uncertainty,
+  both native alternatives and all three exact local bundles into a bounded
+  whole-body typed/hybrid sentinel. Never select a class, rate, conversion scale
+  or bridge value from threshold crossing, numerical convenience, fixture
+  magnitude, body motion or a named behavior.

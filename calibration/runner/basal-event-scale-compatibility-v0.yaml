@@ -1,0 +1,241 @@
+schema_version: 1
+id: runner_result.basal_event_scale_compatibility.v0
+campaign_id: campaign.basal_event_scale_compatibility.v0
+status: accepted_technical_compatibility_map_no_value_promoted
+backend: cuda
+graph:
+  nodes: 166700
+  edges: 25582938
+source_terminals: 6041
+local_probe_populations:
+  sensory: 36
+  intermediate: 150
+  motor: 10
+members:
+- member_id: silence_control
+  uniform_rate_hz: 0.0
+  event_to_event_mV: 0.05
+  steps: 960
+  seed: 43017
+  forced_source_events: 0
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups: []
+  first_generated_time_ms: null
+  semantic_sha256: 6d5e64d301c4aafb62344cf3efb520d489099170cd21bf620b705c2b32134387
+- member_id: rate_20hz__scale_0.05mv
+  uniform_rate_hz: 20.0
+  event_to_event_mV: 0.05
+  steps: 960
+  seed: 43018
+  forced_source_events: 11651
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: 8eebe9781fbcca35e279211e2e7ceed5e6fbec150286de3f360fdab5254fbd33
+- member_id: rate_20hz__scale_0.2mv
+  uniform_rate_hz: 20.0
+  event_to_event_mV: 0.2
+  steps: 960
+  seed: 43018
+  forced_source_events: 11651
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: f1febd08a7d7acc0d4c6309d3fdf5f308b206193deb44b3749c6304bccb19fb8
+- member_id: rate_20hz__scale_0.8mv
+  uniform_rate_hz: 20.0
+  event_to_event_mV: 0.8
+  steps: 960
+  seed: 43018
+  forced_source_events: 11651
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: 4d7a9e32b26e229b8c6ef201f5c36523a5325912658a010942758854ec24e826
+- member_id: rate_20hz__scale_3.2mv
+  uniform_rate_hz: 20.0
+  event_to_event_mV: 3.2
+  steps: 960
+  seed: 43018
+  forced_source_events: 11651
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: e3e4fcd190a640f0c66de96b94937a73068cca118db1bfcf56f36164c297beec
+- member_id: rate_80hz__scale_0.05mv
+  uniform_rate_hz: 80.0
+  event_to_event_mV: 0.05
+  steps: 960
+  seed: 43019
+  forced_source_events: 46017
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: 9d93590f49e1bd3a8b3f8f913cc776fde72e729a0d062f1f8fcf37cc43ff1745
+- member_id: rate_80hz__scale_0.2mv
+  uniform_rate_hz: 80.0
+  event_to_event_mV: 0.2
+  steps: 960
+  seed: 43019
+  forced_source_events: 46017
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: 8f5770cf258f0dfc587cbac8ca66ad153827359ea4fa9034b39f0a4ea5832285
+- member_id: rate_80hz__scale_0.8mv
+  uniform_rate_hz: 80.0
+  event_to_event_mV: 0.8
+  steps: 960
+  seed: 43019
+  forced_source_events: 46017
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: e74f5b02841b0a9d816dd21e2fa0ab6e9465b9855605224d1ab5eeaa35f158ed
+- member_id: rate_80hz__scale_3.2mv
+  uniform_rate_hz: 80.0
+  event_to_event_mV: 3.2
+  steps: 960
+  seed: 43019
+  forced_source_events: 46017
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: 930ecb288196bfb76e4488250f98cdf3e2cac0ae4a03e1c304004523fcbcf3f9
+- member_id: rate_320hz__scale_0.05mv
+  uniform_rate_hz: 320.0
+  event_to_event_mV: 0.05
+  steps: 960
+  seed: 43020
+  forced_source_events: 183077
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: 26035cfb3f52603321233c05dfb9fc36c200ec590c5d390e32f741c6e985b5b2
+- member_id: rate_320hz__scale_0.2mv
+  uniform_rate_hz: 320.0
+  event_to_event_mV: 0.2
+  steps: 960
+  seed: 43020
+  forced_source_events: 183077
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: 6cd3403b2ffef152e8c865d4c0b2b969d56fc0360304cab92612b4367af1c0f3
+- member_id: rate_320hz__scale_0.8mv
+  uniform_rate_hz: 320.0
+  event_to_event_mV: 0.8
+  steps: 960
+  seed: 43020
+  forced_source_events: 183077
+  generated_internal_events: 0
+  first_generated_step: null
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: null
+  semantic_sha256: d20847d75343b5a09d56583fa34a8ca58ba2477888c71de5f416df6ad621998c
+- member_id: rate_320hz__scale_3.2mv
+  uniform_rate_hz: 320.0
+  event_to_event_mV: 3.2
+  steps: 960
+  seed: 43020
+  forced_source_events: 183077
+  generated_internal_events: 6
+  first_generated_step: 262
+  finite_state: true
+  reached_probe_groups:
+  - sensory_36
+  - intermediate_150
+  - motor_10
+  first_generated_time_ms: 26.2
+  semantic_sha256: ce4b0de2a920e48324427b5602316190303157c87228915497bed16e7165c7c3
+diagnostic_findings:
+  threshold_crossing_members: 1
+  subthreshold_members: 11
+  onset_scale_mV_by_rate:
+    20_hz: null
+    80_hz: null
+    320_hz: 3.2
+  interpretation: The fixed technical grid straddles internally silent and threshold-crossing
+    regimes, so source intensity and event-to-event scale are a coupled compatibility
+    gate. These coordinates are engineering probes, not physiological bounds.
+checks:
+  all_6041_sources_accounted_once: true
+  all_sources_are_event_ports: true
+  complete_grid_executed: true
+  identical_event_draw_seed_across_scales_at_fixed_rate: true
+  event_alias_bound_pass: true
+  all_runs_finite: true
+  silence_generates_no_events: true
+  grid_contains_subthreshold_member: true
+  grid_contains_threshold_crossing_member: true
+  grid_straddles_threshold_compatibility: true
+  parameter_values_promoted: false
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+scientific_boundary:
+  physiological_values_promoted: 0
+  selected_reference_member_id: null
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+semantic_result_sha256: f0df0953b3c1ccdec9cd555dfbac5734ed3db251c262b1aed5d0a8c11ef08d46
+next_action: Keep the entire compatibility map unselected. Source or justify scientific
+  bounds independently for dominant basal families and local synaptic efficacy. If
+  such bounds remain unavailable, carry the technical alternatives into the bounded
+  whole-body typed/hybrid sentinel; never choose a coordinate because it crosses threshold,
+  moves the body or resembles a named behavior.

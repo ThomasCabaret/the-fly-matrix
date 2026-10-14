@@ -1,0 +1,127 @@
+schema_version: 1
+id: campaign.basal_event_scale_compatibility.v0
+title: Basal event-intensity and event-to-event scale technical compatibility map
+status: preregistered_runnable
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: EVENT SOURCE/SYNAPTIC SCALE COMPATIBILITY ONLY / ZERO PHYSIOLOGY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+population_assignments_promoted: 0
+
+purpose: >-
+  Determine whether the previously silent all-event diagnostic is explained by
+  incompatibility between event-source intensity and the event-to-event boundary
+  scale. Execute a fixed paired grid on the complete basal-reached graph and retain
+  every member without ranking. This maps numerical compatibility only; it does
+  not estimate a firing rate, synaptic efficacy or physiological range.
+
+scientific_boundary:
+  values_are_physiological_bounds: false
+  members_may_be_ranked: false
+  members_may_be_selected: false
+  post_hoc_extension_allowed: false
+  named_behavior_may_be_observed: false
+  rationale: >-
+    The source-rate and synaptic-scale coordinates are explicit engineering probes.
+    A threshold crossing proves only that the two fixtures can jointly activate the
+    comparator. Silence proves only incompatibility inside this frozen grid. Neither
+    outcome supports promotion or retrospective movement of the grid limits.
+
+frozen_inputs:
+  gate_runtime:
+    path: src/the_fly_matrix/basal_event_scale_gate.py
+    sha256: 363c646bff672875b3c2634a740ef462640a84a390ce49cdb890aff92ca2e926
+  typed_hybrid_runtime:
+    path: src/the_fly_matrix/typed_hybrid_runtime.py
+    sha256: 2060f71624efe2019c75be349bda08a61a65fc49fb378d72868143c16e1e1195
+  runtime_campaign:
+    path: calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml
+    sha256: fd2f56f3c4e27083318b5ecd7d3dae69469e620f6b664d10c6b3dbea50a5a401
+  reached_populations:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/reached-populations.parquet
+    sha256: 4116604700ec2bf383432f1474af616daa867e40be3a63f00da74e131ed064f4
+  source_terminals:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/source-terminals.csv
+    sha256: a27adeae0ec523507867498abf24482a7fd2ab66562b9611e9f8018ac8ebd97a
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+  local_members:
+    path: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    sha256: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  local_intermediates:
+    path: data/derived/calibration/front-leg-sensor-cns-motor-chain-v0/intermediate-populations.csv
+    sha256: 026240510f1dbc87d3e7464c223562e5581ac35ee4630683bad79ba6cd2596f0
+
+technical_grid:
+  status: UNPROMOTABLE_ENGINEERING_COMPATIBILITY_COORDINATES
+  assignment_profile: all_reached_as_event_candidate
+  source_shape: uniform_per_terminal
+  silence_control: true
+  uniform_rate_hz: [20.0, 80.0, 320.0]
+  event_to_event_mV: [0.05, 0.2, 0.8, 3.2]
+  dt_ms: 0.1
+  steps: 960
+  duration_ms: 96.0
+  seed: 43017
+  pairing: same_source_event_draws_across_scales_at_fixed_rate
+  members_may_be_ranked: false
+  members_may_be_selected: false
+  post_hoc_extension_allowed: false
+  restriction: >-
+    These coordinates are not estimates, priors or admissible physiological bounds.
+    The complete grid remains a technical sensitivity record even if it straddles a
+    threshold. Any later scientifically bounded grid requires a new sourced campaign.
+
+local_probe:
+  scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+  populations:
+    sensory: 36
+    intermediate: 150
+    motor: 10
+  interpretation: reachability_and_threshold_compatibility_only
+
+acceptance:
+  expected_members: 13
+  expected_terminals: 6041
+  max_event_presence_probability_per_step: 0.05
+  require_complete_grid: true
+  require_identical_event_draws_across_scales_at_fixed_rate: true
+  require_finite_state: true
+  require_silence_control_quiescent: true
+  threshold_straddling_is_diagnostic_not_required_for_execution_acceptance: true
+  require_zero_parameter_and_assignment_promotion: true
+  require_zero_member_ranking_or_selection: true
+  require_zero_named_behavior_exposure: true
+
+accepted_claims:
+  - The complete fixed technical grid executes on the all-event basal-reached graph.
+  - At fixed source intensity, every boundary scale receives identical source-event draws.
+  - The grid can reveal whether the declared fixtures jointly remain subthreshold or cross the event comparator.
+  - A straddled boundary establishes numerical compatibility sensitivity only.
+forbidden_claims:
+  - Any grid coordinate is a physiological firing rate, synaptic efficacy or accepted bound.
+  - The first threshold-crossing coordinate is a selected or preferred parameter.
+  - Silence or threshold crossing validates a population assignment, stability or behavior.
+  - The grid can be extended after inspection and still be described as this preregistered campaign.
+
+outputs:
+  compact_result: calibration/runner/basal-event-scale-compatibility-v0.yaml
+  evaluation: calibration/evaluations/basal-event-scale-compatibility-v0.yaml
+  parameter_set_index: calibration/parameter_sets/basal-event-scale-technical-grid-v0.yaml
+  ignored_diagnostics: data/derived/calibration/basal-event-scale-compatibility-v0/
+
+next_action: >-
+  Keep the entire compatibility map unselected. Source or justify scientific
+  bounds independently for dominant basal families and local synaptic efficacy.
+  If such bounds remain unavailable, carry the technical alternatives into the
+  bounded whole-body typed/hybrid sentinel; never choose a coordinate because it
+  crosses threshold, moves the body or resembles a named behavior.

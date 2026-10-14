@@ -1,0 +1,51 @@
+schema_version: 1
+id: evaluation.basal_event_scale_compatibility.v0
+campaign_id: campaign.basal_event_scale_compatibility.v0
+status: accepted_technical_compatibility_map_no_value_promoted
+conclusion: The fixed technical grid straddles internally silent and threshold-crossing
+  regimes, so source intensity and event-to-event scale are a coupled compatibility
+  gate.
+diagnostic_findings:
+  threshold_crossing_members: 1
+  subthreshold_members: 11
+  onset_scale_mV_by_rate:
+    20_hz: null
+    80_hz: null
+    320_hz: 3.2
+  interpretation: The fixed technical grid straddles internally silent and threshold-crossing
+    regimes, so source intensity and event-to-event scale are a coupled compatibility
+    gate. These coordinates are engineering probes, not physiological bounds.
+checks:
+  all_6041_sources_accounted_once: true
+  all_sources_are_event_ports: true
+  complete_grid_executed: true
+  identical_event_draw_seed_across_scales_at_fixed_rate: true
+  event_alias_bound_pass: true
+  all_runs_finite: true
+  silence_generates_no_events: true
+  grid_contains_subthreshold_member: true
+  grid_contains_threshold_crossing_member: true
+  grid_straddles_threshold_compatibility: true
+  parameter_values_promoted: false
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+runner_semantic_sha256: f0df0953b3c1ccdec9cd555dfbac5734ed3db251c262b1aed5d0a8c11ef08d46
+accepted_claims:
+- The complete fixed technical grid executes on the all-event basal-reached graph.
+- At fixed source intensity, every boundary scale receives identical source-event
+  draws.
+- The grid can reveal whether the declared fixtures jointly remain subthreshold or
+  cross the event comparator.
+- A straddled boundary establishes numerical compatibility sensitivity only.
+forbidden_claims:
+- Any grid coordinate is a physiological firing rate, synaptic efficacy or accepted
+  bound.
+- The first threshold-crossing coordinate is a selected or preferred parameter.
+- Silence or threshold crossing validates a population assignment, stability or behavior.
+- The grid can be extended after inspection and still be described as this preregistered
+  campaign.
+next_action: Keep the entire compatibility map unselected. Source or justify scientific
+  bounds independently for dominant basal families and local synaptic efficacy. If
+  such bounds remain unavailable, carry the technical alternatives into the bounded
+  whole-body typed/hybrid sentinel; never choose a coordinate because it crosses threshold,
+  moves the body or resembles a named behavior.

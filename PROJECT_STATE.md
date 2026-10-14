@@ -1187,6 +1187,16 @@ les 36+150+10 neurones locaux au contrôle long mais reste sous le seuil de gén
 d'événements internes. Ce résultat pointe un gate d'échelle/seuil, sans invalider
 ni sélectionner le modèle event.
 
+Ce gate est maintenant cartographié par une grille technique appariée et figée,
+sans sélectionner de valeur. Un silence et douze croisements entre 20/80/320 Hz
+par terminal et 0,05/0,2/0,8/3,2 mV ont exécuté 96 ms sur les 166 700 neurones ;
+les quatre échelles d'une même intensité ont reçu exactement les mêmes événements
+sources. Onze membres non nuls restent sous le seuil ; seul le coin 320 Hz / 3,2
+mV génère six événements runtime, le premier à 26,2 ms. Le résultat confirme que
+l'intensité source et l'échelle synaptique sont un risque couplé. Il ne transforme
+pas ce coin en valeur physiologique, ne valide pas l'affectation tout-event et
+n'autorise pas à étendre cette grille après observation.
+
 En parallèle, le gate d'actionneurs est maintenant terminé sans attendre le choix
 rate/LIF, car ses probes sont physiques et comportement-naïfs. Le prochain front
 indépendant doit figer une chaîne sensorielle locale minimale et une chaîne motrice
@@ -1249,6 +1259,7 @@ basal_population_reachability.bat # 6 familles -> 166431 neurones ; dispositions
 basal_typed_hybrid_runtime_sentinel.bat # 2 extrêmes plein graphe ; 4 frontières, zéro affectation/valeur promue
 basal_source_bridges.bat # 6041 sources x 2 ponts candidats ; 3 formes x 2 extrêmes, fixtures non promouvables
 basal_source_envelope.bat # 39 membres, 12 ablations, probe local 196 neurones ; sensibilité technique sans promotion
+basal_event_scale_gate.bat # silence + grille 3x4 appariée ; compatibilité event seulement, aucune valeur promue
 front_leg_member_physical_preview.bat # génère 3 replays physiques : FlyBody complet, contrôleur local seulement
 front_leg_member_preview_replay.bat [129|141|238] # ouvre un replay ; aucun membre n'est une référence scientifique
 cycle_topology.bat        # topologie cyclique structurelle du vrai MaleCNS

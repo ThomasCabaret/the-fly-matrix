@@ -394,6 +394,20 @@ after this command is independent evidence or bounded ensembles for basal rates
 and conversion scales, propagated together with unresolved event/graded native
 assignments — not another hidden normalized-rate input.
 
+Then run `basal_source_envelope.bat`. It propagates the finite technical source
+ensemble through the complete graph and frozen 196-neuron local probe, including
+all six leave-one-family-out diagnostics under both assignment extremes. Its
+versioned compact result retains all 39 members and exposes the dominant fixture
+sensitivity to unknown-modality afferents without ranking or promotion.
+
+Then run `basal_event_scale_gate.bat`. This is a separate paired compatibility
+scan over the all-event diagnostic profile: one silence plus three source rates
+crossed with four event-to-event scales, all at the same 0.1 ms step for 96 ms.
+The same random source events are reused across scales at each rate. The command
+records both silent and threshold-crossing regimes, but no grid coordinate is a
+physiological bound or selected value. The grid is immutable after inspection;
+a scientifically bounded continuation requires a new sourced campaign.
+
 ### Historical neural-model gate
 
 The rate/LIF global gate is closed with `revise` and is not a prerequisite to

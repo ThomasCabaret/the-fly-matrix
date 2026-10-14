@@ -351,6 +351,15 @@ Hz-to-graded conversion for graded inputs, and numerical values with explicit
 units. A large directed closure must be reported as such; it cannot be described
 as a local basal experiment merely because the source families are local.
 
+Source intensity and synaptic efficacy form a coupled compatibility problem in
+an event scope. A silent run cannot distinguish an insufficient source process
+from an insufficient boundary scale, and a threshold crossing validates neither
+quantity biologically. Diagnose this with a fixed paired grid: reuse identical
+source-event draws across scale values, retain silence and every grid member,
+record both subthreshold and crossing regimes, and forbid post-hoc extension of
+the same campaign. Such a map may identify a numerical gate or motivate a new
+sourced campaign; its first active coordinate is never a parameter estimate.
+
 ### Embodied causal attribution and actuator semantics
 
 The current embodied path instantiates all 102 FlyBody channels as classical

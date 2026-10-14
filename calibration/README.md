@@ -559,3 +559,13 @@ the all-event profile reaches the probe only on the longer horizon and remains
 subthreshold for internally generated events. These findings prioritize future
 evidence and scale tests. They do not rank members or promote rates, conversion
 scales, population assignments, stability or behavior.
+
+Run `basal_event_scale_gate.bat` to reproduce the paired event compatibility
+map. It executes one silence control and a fixed 3-rate × 4-event-to-event-scale
+grid for 96 ms on the complete all-event diagnostic graph. At fixed rate, all
+four scales receive exactly the same seeded source-event draws. The accepted run
+contains eleven subthreshold members and one threshold-crossing member; only the
+320 Hz / 3.2 mV engineering corner crosses, six times, beginning at 26.2 ms.
+This establishes that source intensity and synaptic scale are coupled numerical
+risks. It does not select that corner, make either axis physiological, validate
+the all-event assignment, or authorize extending the inspected grid in place.

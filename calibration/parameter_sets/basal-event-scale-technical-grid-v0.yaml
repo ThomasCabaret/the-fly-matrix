@@ -1,0 +1,30 @@
+schema_version: 1
+id: parameters.basal_event_scale_technical_grid.v0
+title: Unselected basal event intensity and synaptic-scale compatibility grid
+status: technical_sensitivity_set_unpromotable_as_physiology
+campaign_id: campaign.basal_event_scale_compatibility.v0
+runner_semantic_sha256: f0df0953b3c1ccdec9cd555dfbac5734ed3db251c262b1aed5d0a8c11ef08d46
+member_count: 13
+member_ids:
+- silence_control
+- rate_20hz__scale_0.05mv
+- rate_20hz__scale_0.2mv
+- rate_20hz__scale_0.8mv
+- rate_20hz__scale_3.2mv
+- rate_80hz__scale_0.05mv
+- rate_80hz__scale_0.2mv
+- rate_80hz__scale_0.8mv
+- rate_80hz__scale_3.2mv
+- rate_320hz__scale_0.05mv
+- rate_320hz__scale_0.2mv
+- rate_320hz__scale_0.8mv
+- rate_320hz__scale_3.2mv
+members_ranked: false
+selected_reference_member_id: null
+values_are_physiological_bounds: false
+reopening_policy: new_campaign_required_no_post_hoc_grid_extension
+next_action: Keep the entire compatibility map unselected. Source or justify scientific
+  bounds independently for dominant basal families and local synaptic efficacy. If
+  such bounds remain unavailable, carry the technical alternatives into the bounded
+  whole-body typed/hybrid sentinel; never choose a coordinate because it crosses threshold,
+  moves the body or resembles a named behavior.
