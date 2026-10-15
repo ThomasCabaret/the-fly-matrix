@@ -44,7 +44,9 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
    familles de paramètres, l'ADR 0013 pour capacité/ensembles et l'ADR 0014 pour
    la fidélité de la dynamique neuronale et les hypothèses critiques. Lire l'ADR
    0015 avant toute calibration incarnée ou interprétation d'un mouvement : il
-   fixe l'attribution causale aux interfaces et actionneurs.
+   fixe l'attribution causale aux interfaces et actionneurs. Lire l'ADR 0017 dès
+   qu'une frontière interne event/graded, une efficacité ou un seuil est modifié :
+   il fixe leur propriété séparée et leur gate d'identifiabilité.
 7. `docs/rules-first-automation.md` lorsqu'un lot répète une décision sur de
    nombreux objets, construit un pipeline ou lance une campagne hors ligne.
 
@@ -126,6 +128,16 @@ contrat accepté, mais aucune affectation de population ni valeur n'est promue p
 ce seul choix. Un succès sur un circuit n'autorise pas une classe homogène sur tout
 MaleCNS. L'approximation point-neuron devient prioritaire seulement si plusieurs
 circuits indépendants échouent après exclusion des erreurs plus simples.
+
+Les conversions internes event→graded et graded→event sont une famille de
+paramètres distincte sous l'ADR 0017. Les constantes des sentinelles globales ne
+sont ni des défauts, ni des priors, ni des bornes. Event→event et graded→graded
+restent possédés par l'efficacité synaptique dans leurs unités natives ; seuils et
+temps restent possédés par la dynamique neuronale. Toute campagne conjointe garde
+ces propriétaires visibles et teste leur compensation avec les sources basales.
+Une exécution sur deux extrêmes ne couvre pas les 166 419 affectations
+`dual_unresolved` : borner le cône causal du claim local avant de propager un
+ensemble d'affectations.
 
 ## Attribution causale incarnée
 
@@ -214,6 +226,13 @@ tailles d'ensembles candidats et les degrés de liberté, pas seulement leur nom
 - Les afférences de modalité inconnue sont soumises à une petite analyse de
   sensibilité basale préenregistrée ; ne jamais choisir leur hypothèse en fonction
   d'un comportement nommé.
+- L'intensité basale, l'efficacité synaptique, les conversions internes et les
+  seuils/dynamiques constituent un bloc d'identifiabilité. Une simple traversée de
+  seuil, une activité non nulle ou un mouvement ne choisit aucun de ces facteurs.
+- Pour la chaîne motrice T1 actuelle, conserver les 58 025 affectations contenant
+  une classe lente comme bloquées tant qu'un noyau lent ou une correspondance
+  bodyId/classe indépendante n'existe pas ; ne jamais emprunter le noyau d'une
+  autre classe pour rendre le chemin exécutable.
 
 ## Capacité du modèle central et propagation d'ensemble
 
@@ -260,7 +279,9 @@ calibration.
 
 La préférence prospective actuelle est une réponse tactile localisée et
 latéralisée d'une patte, sous réserve d'un audit de résolution du stimulus, du gate
-d'actionneurs et d'une source biologique. Ce choix n'est pas un protocole verrouillé.
+d'actionneurs, d'une source biologique et d'une chaîne mécanoréceptrice minimale
+acceptée. La chaîne FeCO, plus mature, ne remplace pas ce prérequis. Ce choix n'est
+pas un protocole verrouillé.
 L'optomoteur attend l'enregistrement visuel ; le looming/décollage reste plus tardif
 car les mécanismes électriques et la mécanique de vol pourraient rendre un échec
 ininterprétable. Le grooming antennaire n'est pas held-out pour une lignée qui a

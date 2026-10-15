@@ -5,7 +5,7 @@ status: typed_hybrid_architecture_accepted_explicit_incoming_l1_coordinate_syste
 primary_class: technical
 parameter_kind: neural_dynamics
 claim_role: biological
-meaning: {biological_or_technical_role: Convert structural synapse counts and sign priors into dynamical coupling strengths, units: model_dependent, applicability_limits: [Structural counts are not conductances]}
+meaning: {biological_or_technical_role: Convert structural synapse counts and sign priors into same-native event-to-event or graded-to-graded coupling strengths, units: native_pre_post_model_dependent, applicability_limits: [Structural counts are not conductances, Cross-native event-to-graded and graded-to-event conversion is owned separately by parameter.central.native_boundary_conversion.v0]}
 scope:
   owner_ids: [cns.malecns]
   parameter_names: [class_gain, connection_family_gain, optional_edge_residual]
@@ -13,7 +13,7 @@ scope:
   topology_snapshot: {semantic_topology_sha256: canonical_malecns_runtime_graph, candidate_envelope_sha256: fixed_runtime_edges, ruleset_sha256: not_applicable, exception_table_sha256: none}
 sharing: {candidate_hierarchy: [one_global_scale, transmitter_class, connection_family, local_vector, individual_edge], selected_level: transmitter_class_candidate_v0, justification: the minimal signed candidate uses one explicit efficacy for each frozen effective-transmitter class and forbids edge residuals, individual_parameters_require_evidence: true}
 origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual], current_origin: unknown, prior_or_bounds: unresolved, fallback: unresolved_or_explicit_only}
-identifiability: {status: blocked_pending_population_assignment_and_native_units, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.neuron_dynamics.v0], joint_calibration_reason: event or graded efficacy units and temporal response compensate without local activity constraints}
+identifiability: {status: blocked_pending_population_assignment_native_units_and_scale_separation, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [all_named_behaviors], jointly_identified_with: [parameter.central.neuron_dynamics.v0, parameter.central.native_boundary_conversion.v0, parameter.bridge.basal_event_process.v0, parameter.bridge.basal_hz_to_graded.v0], joint_calibration_reason: source intensity same-native efficacy cross-native conversion threshold and temporal response compensate without independent local constraints}
 dependencies: {upstream_family_ids: [parameter.central.transmitter_sign_prior.v0], downstream_family_ids: [parameter.central.neuron_dynamics.v0]}
 uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteria: [no_runaway_activity, no_absorbing_silence], reference_selection_rule: unresolved}
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [evaluation.central_timestep_convergence.v1], reopen_reason: null, stale_descendant_ids: []}

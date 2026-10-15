@@ -116,10 +116,26 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(self.state["readiness"]["held_out_protocol_locked"])
 
     def test_parameter_family_inventory_is_exhaustive_and_acyclic(self) -> None:
-        self.assertEqual(len(self.inventory.families), 21)
-        self.assertEqual(len(self.inventory.topological_order), 21)
+        self.assertEqual(len(self.inventory.families), 22)
+        self.assertEqual(len(self.inventory.topological_order), 22)
         self.assertEqual(
             set(self.inventory.topological_order), set(self.inventory.families)
+        )
+
+    def test_internal_native_boundary_capacity_is_explicit_and_unfrozen(self) -> None:
+        family = self.inventory.families[
+            "parameter.central.native_boundary_conversion.v0"
+        ]
+        self.assertEqual(family["freeze"]["status"], "not_frozen")
+        self.assertEqual(
+            family["dependencies"]["upstream_family_ids"],
+            ["parameter.central.neuron_dynamics.v0"],
+        )
+        central = self.inventory.families["parameter.central.neuron_dynamics.v0"]
+        self.assertEqual(central["scope"]["dimension"]["event_required_neurons"], 12)
+        self.assertEqual(
+            central["scope"]["dimension"]["dual_unresolved_basal_reached_neurons"],
+            166419,
         )
 
     def test_routing_families_freeze_accepted_topology_hashes(self) -> None:
@@ -638,6 +654,10 @@ class CalibrationRegistryTests(unittest.TestCase):
         registry = validate_model_risk_references(CALIBRATION_ROOT)
         self.assertIn("risk.central_event_model_fidelity.v0", registry.risks)
         self.assertIn("risk.flybody_actuator_abstraction.v0", registry.risks)
+        self.assertIn("risk.internal_native_boundary_conversion.v0", registry.risks)
+        self.assertIn("risk.population_native_dynamics_assignment.v0", registry.risks)
+        self.assertIn("risk.basal_source_synaptic_threshold_coupling.v0", registry.risks)
+        self.assertIn("risk.motor_slow_kernel_and_bodyid_assignment.v0", registry.risks)
         self.assertEqual(
             set(registry.model_references["model.malecns_lif_fixed_delay.v0"]),
             {

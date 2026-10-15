@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.held_out_stimulus_response.v0
 title: Held-out bounded and stimulus-specific embodied response
-status: proposed
+status: proposed_not_locked_mechanosensory_readiness_open
 primary_class: evaluation_only
 optimization_exposure: evaluation_only
 claim_label: held_out_system_evaluation
@@ -58,6 +58,8 @@ dependencies:
   - accepted technical neural and embodied stability targets
   - accepted actuator semantics and mechanism-coverage statements
   - locked scenario generator and seeds
+  - accepted local sensory chain for the selected stimulus modality
+  - accepted local motor readout chain for the selected response scope
 
 provenance:
   sources:
@@ -66,12 +68,19 @@ provenance:
   assumptions:
     - Stimulus family, intensity, duration, and thresholds remain to be fixed.
     - Candidate behavior names are project suggestions and do not yet have attached biological numerical expectations.
+    - Completing the FeCO proprioceptive chain alone does not make localized tactile contact runnable; mechanosensory routing and transfer readiness are separate gates.
 
 validation: not_run
-blocked_reason: Protocol cannot be locked before a runnable calibrated system exists.
+blocked_reason: >-
+  Protocol cannot be locked before a runnable calibrated lineage exists. The
+  preferred localized-contact variant additionally requires a calibrated minimal
+  mechanosensory chain; its 323 groups, 2108 route candidates and transfer family
+  are currently unfitted and have no admitted local calibration dataset.
 next_action: >-
   Keep every catalog outcome unavailable during calibration. After a runnable
   parameter lineage is frozen, audit whether mirrored localized leg contact has
-  adequate stimulus and readout resolution. If so, source and preregister that
-  candidate first; otherwise record the failure and choose the next lowest-confound
-  candidate before creating a locked evaluation protocol.
+  adequate stimulus/readout resolution and an accepted minimal mechanosensory
+  chain. Source the stimulus, intensity and metrics independently before any
+  outcome is viewed. If readiness fails, record it and compare lower-confound
+  candidates, including a sourced proprioceptive perturbation, before creating a
+  locked evaluation protocol.

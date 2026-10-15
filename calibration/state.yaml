@@ -1,6 +1,6 @@
 schema_version: 1
 phase: population_typed_dynamics_assignment_and_local_chain_calibration
-updated: 2026-10-14
+updated: 2026-10-15
 
 wiring_baseline:
   terminal_coverage: complete
@@ -42,8 +42,8 @@ readiness:
   controller_independent_physical_replay: integration_pass
   calibration_runner: fit_and_diagnostic_runner_validated
   baseline_characterization: one_second_closed_loop_trace_recorded_no_behavior_claim
-  parameter_family_inventory: complete_21_families_values_unfitted
-  parameter_dependency_dag: complete_acyclic_20_edges
+  parameter_family_inventory: complete_22_families_values_unfitted_internal_native_boundary_family_added
+  parameter_dependency_dag: complete_acyclic_21_edges
   local_interface_parameter_inventory: complete_runtime_dimensions_and_couplings_declared
   peripheral_parameter_compiler: structure_validated_three_families_values_unfitted
   scientific_wiring_revalidation: independently_validated_zero_blocked_families
@@ -58,12 +58,16 @@ readiness:
   central_model_capacity: open_high_impact_risk_twelve_shared_parameters_not_validated
   central_model_class: global_gate_resolved_revise_event_capable_typed_hybrid_architecture_population_assignments_open
   population_dynamics_assignment: front_leg_chain_196_of_196_accounted_12_event_required_184_dual_unresolved_rules_complete_values_unfitted
+  basal_reached_population_assignment_risk: open_166419_dual_unresolved_runtime_extremes_are_not_scientific_coverage_causal_cone_required
+  internal_native_boundary_conversion: inventoried_cross_native_family_unfitted_current_0_5_and_0_05_scales_diagnostic_fixtures_only
+  basal_source_synaptic_threshold_identifiability: open_high_impact_13_member_grid_shows_coupling_only_320hz_3_2mv_corner_crosses_zero_values_selected
   local_conversion_contract: feco_graded_and_event_candidates_executable_motor_event_to_force_to_direct_motor_stages_separate_zero_values
   local_source_subsets: feco_2MB_and_motor_860357945B_exact_size_sha256_verified
   feco_calcium_observation: source_fidelity_pass_seven_candidates_86_of_86_animal_held_out_folds_complete_zero_blocked_candidate_ensemble_unpromoted_native_units_unresolved
   motor_spike_force_pilot: source_fidelity_pass_23_cells_194_selected_trials_11_excluded_183_usable_22_aggregate_rows_59049_assignment_upper_bound_kernel_open
   motor_spike_force_fit: completed_three_classes_one_source_reproduction_two_diagnostic_extensions_ordering_consistent_zero_values
   motor_twitch_temporal_diagnostic: completed_33_single_spike_traces_fast_supported_intermediate_weak_slow_unidentified_zero_values
+  motor_slow_kernel_and_bodyid_assignment: open_local_chain_blocker_59049_total_1024_fast_intermediate_executable_58025_slow_containing_blocked
   motor_actuator_bridge: completed_198_tethered_trials_22_of_22_scoped_actuators_detectable_three_conditional_gains_no_reference_or_biological_conversion
   front_leg_sensor_cns_motor_chain: completed_factorized_envelope_360_of_360_endpoint_pairs_reachable_within_three_hops_150_new_intermediates_dual_unresolved_24_sensory_alternatives_990_motor_basis_probes_zero_selection
   front_leg_intermediate_dynamics: completed_rules_first_150_of_150_accounted_2_tibia_extensor_event_required_148_dual_unresolved_zero_values
@@ -98,6 +102,7 @@ readiness:
   unknown_afferent_sensitivity: high_priority_under_mixed_reference_fixture_unknown_family_ablation_changes_motor_probe_about_89_percent_all_values_unpromotable_native_assignments_unresolved
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
   prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
+  preferred_tactile_evaluation_readiness: open_mechanosensation_323_groups_2108_routes_up_to_1785_routing_dimensions_transfer_unfitted_no_admitted_local_dataset_feco_not_a_substitute
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: false
 
@@ -107,10 +112,15 @@ behavior_exposure:
 
 blocked_by:
   - The global homogeneous rate-versus-LIF choice is closed as revise. Twelve exact bodies in the accepted front-leg scopes have an event requirement; the 166,419 other basal-reached neurons remain dual_unresolved. The sparse engine can execute explicit candidate vectors but neither diagnostic extreme is a scientific assignment, and all constants remain unresolved.
+  - Internal event-to-graded and graded-to-event conversion is now an explicit parameter family under ADR 0017. The current 0.5 and 0.05 engineering scales remain diagnostic fixtures, not defaults, priors, bounds or accepted values; same-native efficacy, conversion and neuron dynamics must remain separately owned even when estimated jointly.
+  - Basal source intensity, same-native synaptic efficacy, internal conversion and neuron threshold/dynamics are not separately identified. Eleven nonzero members of the fixed grid remain subthreshold and only the 320 Hz by 3.2 mV engineering corner crosses; this finding selects nothing.
+  - A first local scientific claim must compile and account its causal population cone rather than pretend that the two runtime extremes cover the 2^166419 native-assignment space.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 31 surviving central candidates cannot be treated as interchangeable downstream.
+  - The ten scoped motor bodies retain 59,049 fast/intermediate/slow assignments. Only 1,024 fast/intermediate assignments have diagnostic kernels; 58,025 slow-containing assignments remain blocked until bodyId/class evidence or a defensible slow temporal representation exists.
+  - The prospective localized-contact evaluation is not ready merely because the FeCO chain runs. Its separate mechanosensory front has 323 groups, 2,108 route candidates, up to 1,785 routing dimensions, unfitted transfer and no admitted local calibration dataset.
   - Numerical portability does not distinguish the 31 rate survivors biologically; they remain an engineering ensemble and may be propagated only inside an explicit graded population assignment or unresolved local comparison.
   - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; bridges must now target a declared event, graded, or typed conversion contract rather than one global model unit.
   - The full antennal-grooming circuit maps exactly for aBN1, aDN1 and aDN2 but one of three pinned aBN2 FlyWire types (CB3129) has no resolved MaleCNS match; complete-circuit use remains blocked.
@@ -164,13 +174,11 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Preserve the visual checkpoint, source-bridge mechanics and the complete
-  39-member technical envelope plus the fixed 13-member event compatibility map
-  as non-selecting evidence. Treat unknown-modality basal input as the dominant
-  fixture sensitivity and source-intensity/synaptic-scale coupling as a priority
-  risk. Source or justify scientific bounds first for the dominant families and
-  local synaptic efficacy; otherwise carry the finite technical uncertainty,
-  both native alternatives and all three exact local bundles into a bounded
-  whole-body typed/hybrid sentinel. Never select a class, rate, conversion scale
-  or bridge value from threshold crossing, numerical convenience, fixture
-  magnitude, body motion or a named behavior.
+  Preserve the existing sentinels as non-selecting evidence. First compile the
+  bounded causal population cone needed by the next local claim, then constrain
+  or propagate the coupled basal source, same-native efficacy, internal
+  event/graded conversion and neuron-dynamics families. In parallel, seek
+  independent slow-kernel/bodyId evidence and audit the mechanosensory readiness
+  required by the prospective tactile evaluation. Never select a class, rate,
+  conversion scale, bridge value or behavior candidate from threshold crossing,
+  numerical convenience, fixture magnitude or body motion.

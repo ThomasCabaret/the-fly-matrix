@@ -1,6 +1,6 @@
 schema_version: 1
 id: calibration.model_risks.v0
-updated: 2026-10-06
+updated: 2026-10-15
 status: active
 
 risks:
@@ -182,6 +182,129 @@ risks:
     decision_ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
     next_review: during_population_dynamics_assignment_v0_or_repeated_local_failure
 
+  - id: risk.internal_native_boundary_conversion.v0
+    title: Internal event/graded conversion may dominate typed-hybrid computation
+    status: open_high_impact_parameter_family_now_explicit
+    affected_model_id: model.malecns_event_capable_typed_hybrid.v0
+    affected_parameter_family_ids:
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+      - parameter.central.native_boundary_conversion.v0
+    hypothesis_under_test: >-
+      A low-capacity, direction-specific event-to-graded and graded-to-event
+      conversion family can preserve the local computations needed by the first
+      causal chain without becoming hidden global control capacity.
+    evidence_supporting:
+      - The full-graph runtime explicitly exposes and exercises all four native boundary directions.
+      - The mixed diagnostic profile counts 119 event-to-graded and 2280 graded-to-event edges, so the boundary is measurable rather than implicit.
+    evidence_against_or_unresolved:
+      - Current cross-native scales are engineering fixtures with no biological bounds or promoted values.
+      - Conversion scale, temporal kernel, synaptic efficacy and neuron threshold can compensate for one another.
+      - A single conversion scale per direction is a capacity hypothesis, not established biological sharing.
+    consequence_if_true: A small explicit boundary family can be propagated through bounded causal cones.
+    consequence_if_false: Introduce a versioned class-pair or local conversion model and revalidate dependent bundles.
+    current_mitigation: >-
+      ADR 0017 gives cross-native conversion its own parameter family and keeps
+      same-native efficacy and neuron dynamics separate. Existing constants remain
+      unpromotable campaign fixtures, and descendants cannot freeze independently
+      while materially sensitive to this family.
+    cheapest_discriminating_experiment: >-
+      On one bounded causal cone, cross a small source-intensity ensemble with
+      same-native efficacy, conversion direction/scale and neuron dynamics; use
+      local non-behavioral observations and report compensation rather than select
+      the first threshold-crossing member.
+    escalation_triggers:
+      - local residuals require incompatible conversions across population classes
+      - conclusions change qualitatively over a defensible low-capacity boundary ensemble
+      - a conversion block acquires enough freedom to encode a named response
+    forbidden_shortcuts:
+      - retaining diagnostic constants as runtime defaults during calibration
+      - hiding cross-native conversion inside synaptic efficacy or source intensity
+      - selecting a scale because it creates activity or attractive body motion
+    decision_ref: decisions/0017-internal-native-boundary-parameter-ownership.md
+    next_review: before_first_boundary_dependent_family_freeze
+
+  - id: risk.population_native_dynamics_assignment.v0
+    title: Native event/graded assignment remains unresolved over most basal-reached MaleCNS
+    status: open_high_impact_causal_cone_reduction_required
+    affected_model_id: model.malecns_event_capable_typed_hybrid.v0
+    affected_parameter_family_ids:
+      - parameter.central.neuron_dynamics.v0
+      - parameter.central.native_boundary_conversion.v0
+    hypothesis_under_test: >-
+      The first interpretable result can be supported by evidence and bounded
+      uncertainty on its causal population cone without globally resolving all
+      166419 dual-unresolved basal-reached neurons.
+    evidence_supporting:
+      - Twelve scoped neurons have an accepted event requirement and local work can retain explicit dual alternatives elsewhere.
+      - The runtime accepts per-neuron assignments and therefore does not require a silent homogeneous default.
+    evidence_against_or_unresolved:
+      - 166419 of 166431 basal-reached neurons remain dual_unresolved.
+      - The all-event and nearly-all-graded extremes are technical sentinels and do not cover the combinatorial scientific space.
+      - Changing assignment also changes which internal edges require cross-native conversion.
+    consequence_if_true: Work can proceed on a bounded chain while the remaining CNS uncertainty stays explicit.
+    consequence_if_false: The first result requires broader biological classification or a compressed assignment model before calibration can be interpreted.
+    current_mitigation: >-
+      Require causal-cone accounting, evidence-backed assignments or explicit
+      finite alternatives, boundary-count lineage and exclusion of every
+      out-of-scope population from the claim.
+    cheapest_discriminating_experiment: >-
+      Compile the shortest stimulus-to-readout cone for the selected local chain,
+      propagate a low-capacity assignment ensemble there and measure whether the
+      scientific conclusion is robust without inspecting a named behavior.
+    escalation_triggers:
+      - the causal cone expands to most of MaleCNS
+      - local conclusions depend on unsampled higher-order assignment interactions
+      - population evidence cannot reduce or structure the local alternatives
+    forbidden_shortcuts:
+      - treating either diagnostic extreme as a population census
+      - claiming runtime flexibility resolves biological uncertainty
+      - selecting assignments from held-out body motion
+    decision_ref: decisions/0017-internal-native-boundary-parameter-ownership.md
+    next_review: when_the_first_behavior_candidate_causal_cone_is_compiled
+
+  - id: risk.basal_source_synaptic_threshold_coupling.v0
+    title: Basal source intensity, synaptic scale and neuron threshold are not separately identified
+    status: open_high_impact_observed_scale_coupling
+    affected_model_id: model.malecns_event_capable_typed_hybrid.v0
+    affected_parameter_family_ids:
+      - parameter.bridge.basal_event_process.v0
+      - parameter.bridge.basal_hz_to_graded.v0
+      - parameter.central.synaptic_efficacy.v0
+      - parameter.central.neuron_dynamics.v0
+      - parameter.central.native_boundary_conversion.v0
+    hypothesis_under_test: >-
+      Independent evidence or deliberately crossed local measurements can bound
+      source statistics and internal response scales tightly enough that they do
+      not compensate arbitrarily.
+    evidence_supporting:
+      - The fixed event-compatibility grid makes source rate and event-to-event scale independently visible axes.
+      - Basal source, conversion, efficacy and dynamics are separate versioned families.
+    evidence_against_or_unresolved:
+      - Eleven nonzero grid members remain subthreshold and only the 320 Hz by 3.2 mV engineering corner creates internal events.
+      - Threshold crossing alone cannot identify which factor is wrong or biologically plausible.
+      - Unknown-modality source ablation changes mixed-profile motor-probe metrics by about 89 percent under current fixtures.
+    consequence_if_true: A finite behavior-naive uncertainty ensemble can enter local and embodied gates.
+    consequence_if_false: Relevant families remain composite or unresolved; no stability or held-out claim can be attributed uniquely.
+    current_mitigation: >-
+      Preserve the 13-member grid as non-selecting evidence, seek independent
+      bounds for dominant source families and local efficacy, use crossed designs,
+      and retain member-conditioned bundles when separation is not identifiable.
+    cheapest_discriminating_experiment: >-
+      Cross independently sourced basal-rate intervals with local efficacy,
+      threshold/dynamics and boundary-conversion ensembles on a bounded causal
+      chain, reporting the admissible set and compensation structure.
+    escalation_triggers:
+      - all admissible members are silent or runaway under independent bounds
+      - multiple compensating blocks fit local evidence equally well
+      - unknown-afferent policy changes the selected local conclusion
+    forbidden_shortcuts:
+      - promoting the only threshold-crossing engineering corner
+      - widening one factor until a desired response appears
+      - selecting a basal policy using named behavior
+    decision_ref: decisions/0017-internal-native-boundary-parameter-ownership.md
+    next_review: before_first_basal_dependent_local_family_freeze
+
   - id: risk.flybody_actuator_abstraction.v0
     title: Direct FlyBody joint actuation may supply or hide part of motor control
     status: bounded_accepted_surrogate_reopen_on_semantics_change
@@ -266,8 +389,8 @@ risks:
 
   - id: risk.unknown_afferent_sensitivity.v0
     title: Unresolved afferent basal policy may dominate central dynamics
-    status: open_bounded_sensitivity_required
-    affected_model_id: model.malecns_lif_fixed_delay.v0
+    status: observed_high_fixture_sensitivity_scientific_bounds_required
+    affected_model_id: model.malecns_event_capable_typed_hybrid.v0
     affected_parameter_family_ids:
       - parameter.residual_sensory.unknown_nominal.v0
       - parameter.residual_sensory.mechanosensory_tbc_nominal.v0
@@ -279,10 +402,11 @@ risks:
       - Every residual source remains explicit, counted and parameterized rather than dropped.
     evidence_against_or_unresolved:
       - 1815 channels retain unknown modality and no accepted biological values.
-      - Their effect under zero, low tonic and stochastic hypotheses has not been measured.
+      - Under the mixed diagnostic fixture, removing this family changes motor-probe event-conductance and maximum-state metrics by about 89 percent.
+      - This large effect does not establish biological dominance because source rates, conversion scales and native assignments are unpromoted.
     consequence_if_true: Propagate the tested basal uncertainty without blocking unrelated local work.
     consequence_if_false: Promote annotation or measurement of these afferents to a priority gate.
-    current_mitigation: Pre-register a small hypothesis grid and report sensitivity without using behavior to choose a member.
+    current_mitigation: Preserve the completed ablation as a high-priority scale warning, source or bound poor behavior-naive alternatives, and report sensitivity without using behavior to choose a member.
     cheapest_discriminating_experiment: Compare technical central and local metrics under zero, bounded tonic and matched stochastic source families.
     escalation_triggers:
       - material changes in selected model class or local transfer residuals
@@ -291,7 +415,47 @@ risks:
       - choosing the basal policy that improves a named behavior
       - relabelling unknown sources as measured physiology
     decision_ref: decisions/0015-embodied-causal-attribution-gates.md
-    next_review: after_central_model_class_units_are_selected
+    next_review: before_first_basal_dependent_local_family_freeze
+
+  - id: risk.motor_slow_kernel_and_bodyid_assignment.v0
+    title: Slow motor-unit kernel and ten-body class assignment block most front-leg motor alternatives
+    status: open_local_chain_blocker
+    affected_model_id: model.malecns_event_capable_typed_hybrid.v0
+    affected_parameter_family_ids:
+      - parameter.motor.routing.v0
+      - parameter.motor.transfer.v0
+    hypothesis_under_test: >-
+      Independent anatomical or physiological evidence can reduce the ten-body
+      fast/intermediate/slow assignment space or define a defensible slow temporal
+      representation without choosing from body motion.
+    evidence_supporting:
+      - Source data distinguish fast, intermediate and slow motor-unit classes.
+      - Diagnostic temporal kernels exist for 18 fast and 15 intermediate single-spike traces.
+      - The factorized registry preserves all assignments rather than selecting a convenient crosswalk.
+    evidence_against_or_unresolved:
+      - No source-backed bodyId-to-class crosswalk exists for the ten selected motor neurons.
+      - The upper bound is 59049 joint assignments; only 1024 fast/intermediate assignments have diagnostic kernels.
+      - All 58025 slow-containing assignments are blocked because no isolated slow twitch kernel is identified.
+    consequence_if_true: A bounded motor ensemble can support the first local causal chain.
+    consequence_if_false: The chosen chain cannot support an interpretable motor readout without new data or a different local scope.
+    current_mitigation: >-
+      Keep slow branches blocked, retain the factorized class ensemble, and seek
+      bodyId/class evidence or a source-backed slow representation. Never borrow a
+      fast or intermediate kernel for slow merely to execute the branch.
+    cheapest_discriminating_experiment: >-
+      Audit available anatomy and source trials for a bodyId/class crosswalk and
+      slow temporal evidence before commissioning a new motor experiment or
+      changing the first local chain.
+    escalation_triggers:
+      - no independent evidence reduces the class space
+      - the first causal readout requires slow-containing members
+      - fast/intermediate-only conclusions are not robust to plausible slow dynamics
+    forbidden_shortcuts:
+      - borrowing another class kernel for slow
+      - selecting class assignments from body movement
+      - reporting the 1024 executable members as the complete scientific set
+    decision_ref: decisions/0012-hierarchical-reconstructible-calibration.md
+    next_review: before_first_motor_transfer_freeze_or_tactile_protocol_lock
 
   - id: risk.missing_mechanism_coverage.v0
     title: Absent electrical, muscular or compartmental mechanisms can confound behavior failures
@@ -323,4 +487,8 @@ risks:
     decision_ref: decisions/0015-embodied-causal-attribution-gates.md
     next_review: before_locking_each_evaluation_only_protocol
 
-next_action: Execute target.population_dynamics_assignment.v0 on one minimal local sensory chain and one minimal motor chain before model-dependent basal, broad joint or neutral embodied campaigns.
+next_action: >-
+  Bound internal native-boundary conversion and the basal-source/efficacy/threshold
+  coupling on a causal local scope. In parallel, seek independent slow-kernel or
+  bodyId/class evidence and audit mechanosensory readiness for the prospective
+  tactile evaluation. Do not select any member from named behavior or body motion.

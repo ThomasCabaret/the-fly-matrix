@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-14. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-15. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -24,6 +24,17 @@ environ 2 Mo, tandis qu'un pilote moteur d'une cellule par classe fait environ
 860 Mo au lieu des 48,76 Go complets. Les trois archives pilotes exactes sont
 maintenant acquises et vérifiées (860 357 945 octets) ; le téléchargement reste
 strictement opt-in et les données lourdes restent ignorées par Git.
+
+La revue méthodologique du 15 octobre a rendu explicites quatre risques qui ne
+doivent plus rester dispersés dans les résultats. Les conversions internes
+event→graded et graded→event ont désormais leur propre famille de paramètres sous
+l'ADR 0017 ; les constantes `0.5` et `0.05` des sentinelles restent des fixtures,
+pas des valeurs par défaut. Les 166 419 populations `dual_unresolved` doivent être
+réduites à un cône causal compté pour le premier claim local, pas masquées par les
+deux extrêmes runtime. Le couplage source basale×efficacité×conversion×seuil est un
+risque d'identifiabilité autonome. Enfin, la chaîne motrice reste bloquée pour
+58 025 affectations contenant une classe lente, et le futur test tactile dépend
+d'une chaîne mécanoréceptrice distincte de FeCO encore non calibrée.
 
 Le petit code source moteur public est désormais lui aussi un contrat exécutable
 hash-verrouillé : il comptabilise 23 cellules actives (7 rapides, 7 intermédiaires,
@@ -377,8 +388,9 @@ Les douze corps déjà acceptés localement restent `event_required`; les 166 41
 autres sont conservés `dual_unresolved`. Les 25 582 574 arêtes internes à cette
 portée sont toutes réparties entre les quatre classes de frontière event/dual, et
 chaque terminal source possède une disposition de pont event/graded. Zéro valeur,
-générateur d'événements ou conversion Hz→activité graduée n'est choisi : les ponts
-restent non exécutables.
+générateur d'événements ou conversion Hz→activité graduée n'est choisi. Les formes
+de pont ont depuis été rendues exécutables par des fixtures diagnostiques, sans
+qu'aucune valeur ne soit acceptée.
 
 Le gate d'**exécution typée/hybride globale** est maintenant fermé au niveau
 logiciel, sans résoudre la physiologie. `basal_typed_hybrid_runtime_sentinel.bat`
@@ -619,11 +631,11 @@ code ; il ne ferme pas le gate scientifique de classe de modèle.
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
-21 familles : six sources basales, quatre routages, six transferts — dont les
-deux ponts basaux event et Hz→gradué —, trois
+22 familles : six sources basales, quatre routages, sept transferts — dont les
+deux ponts basaux event et Hz→gradué et le pont interne event↔graded —, trois
 familles de dynamique centrale, la mécanique FlyBody conservée comme dépendance
 externe gelée et l'enveloppe numérique motrice isolée comme nuisance technique.
-Le [`DAG`](calibration/dependency-dag.yaml) contient vingt dépendances et est validé
+Le [`DAG`](calibration/dependency-dag.yaml) contient vingt-et-une dépendances et est validé
 acyclique. Les dimensions maximales exécutables sont séparées des degrés de
 liberté scientifiques encore à choisir. Le couplage historique entre routage et
 gain en proprioception, mécanoréception et sortie motrice est désormais résolu à
@@ -1007,7 +1019,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire/DAG, compilateur périphérique et runner validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; la portée atteinte par les six familles basales est exhaustivement comptée à 166 431/166 700 neurones, dont 12 `event_required` et 166 419 `dual_unresolved` ; le noyau sparse exécute deux extrêmes explicites et les quatre frontières sur CUDA ; les deux formes de pont source compilent désormais les 6 041 terminaux et les trois formes de sensibilité s'exécutent sous les deux extrêmes, mais toutes les valeurs utilisées restent des fixtures non physiologiques et aucun extrême n'est une affectation scientifique ; le gate causal local compte 650 épisodes et conserve sans classement 3/65 composites actifs non amplifiants sous quatre perturbations miroir ; 61 sont mixtes/amplifiants, 1 non identifiable, 172 silencieux et 3 bloqués ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
+- Calibration : **inventaire de 22 familles et DAG de 21 dépendances validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais la conversion interne event↔graded est désormais une famille distincte non ajustée et toutes les constantes restent des fixtures ; le couplage source×efficacité×conversion×seuil et l'ablation à ~89 % de la famille inconnue sont des risques prioritaires ; côté moteur, 58 025 affectations lentes restent bloquées ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1101,6 +1113,14 @@ intermédiaires tibia-extenseurs est acceptée, tandis que les 36 afférences Fe
 148 autres intermédiaires restent `dual_unresolved`. Les 31
 survivants rate et le LIF source-aligné restent des comparateurs, et la suffisance
 des douze paramètres partagés demeure un risque ouvert.
+
+Le front ne consiste donc plus à construire une nouvelle mécanique globale. Il
+doit fermer ou propager quatre incertitudes concentrées : le propriétaire et les
+bornes de la conversion interne event↔graded, le couplage non identifiable entre
+sources basales/efficacité/seuils, le cône causal réellement requis parmi les
+166 419 affectations inconnues, et la dépendance motrice lente/bodyId. L'ADR 0017
+interdit de traiter les échelles diagnostiques comme des valeurs par défaut et de
+geler indépendamment un descendant qui en dépend matériellement.
 
 Le premier audit local est terminé sans choisir de valeur : les partitions de
 preuve basales sont exhaustives et les limites des publications sont enregistrées.
@@ -1215,6 +1235,14 @@ qui remplace les constantes, signes et projections diagnostiques par des famille
 déclarées et des valeurs sourcées ou techniquement bornées. Les mécanismes
 physiques restent gelés et aucun candidat d'interface ne peut être sélectionné à
 partir de la trajectoire corporelle.
+
+La préférence prospective tactile reste conditionnelle. La chaîne FeCO avancée
+est proprioceptive et ne remplace pas la chaîne mécanoréceptrice : celle-ci compte
+323 groupes, 2 108 routes candidates et jusqu'à 1 785 dimensions de routage, avec
+transfert non ajusté et aucun dataset local admis. Avant de verrouiller un
+protocole de contact, il faut accepter une chaîne mécanoréceptrice minimale ou
+documenter son échec et enregistrer, avant observation, une alternative
+proprioceptive biologiquement sourcée.
 
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.

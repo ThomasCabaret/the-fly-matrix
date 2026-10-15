@@ -53,6 +53,10 @@ conversion_boundary_contract:
   semantics:
     event_to_graded: explicit_kernel_window_units_and_uncertainty
     graded_to_event: explicit_intensity_or_event_generation_rule_units_and_uncertainty
+    event_to_event: owned_by_parameter.central.synaptic_efficacy.v0_in_event_native_units
+    graded_to_graded: owned_by_parameter.central.synaptic_efficacy.v0_in_graded_native_units
+  cross_native_parameter_family_id: parameter.central.native_boundary_conversion.v0
+  current_numeric_status: diagnostic_campaign_fixtures_only_not_defaults_or_priors
   hidden_binning: forbidden
   behavior_policy_capacity: forbidden
 
@@ -69,7 +73,9 @@ execution_contract:
     assignment vector and has executed two declared diagnostic extremes over the
     166,431-neuron basal-reached scope. One extreme exercises all four boundary
     directions. This closes runtime mechanics only: it does not choose any of the
-    166,419 unresolved assignments or execute basal unit bridges.
+    166,419 unresolved assignments. The two external basal bridge forms now
+    execute over all 6,041 terminals with diagnostic fixtures, but neither their
+    values nor the distinct internal native-boundary conversion is fitted.
   implementation_ref: calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml
 
 accepted_claims:
@@ -84,7 +90,8 @@ accepted_claims:
 forbidden_claims:
   - The two diagnostic extremes cover the 2^166419 unresolved assignment space.
   - Runtime executability identifies a native population class.
-  - The source event-process and Hz-to-graded bridges are calibrated or executable.
+  - The source event-process and Hz-to-graded bridge values are calibrated.
+  - Internal event-to-graded or graded-to-event diagnostic constants are accepted defaults, priors or bounds.
   - Every canonical motor or sensory population shares the scoped front-leg assignment.
   - Existing LIF constants or rate-ensemble values are accepted physiology.
   - A typed architecture by itself predicts a fly behavior.
@@ -93,10 +100,14 @@ critical_risk_refs:
   - risk.central_delay_fidelity.v0
   - risk.central_twelve_parameter_capacity.v0
   - risk.central_event_model_fidelity.v0
+  - risk.internal_native_boundary_conversion.v0
+  - risk.population_native_dynamics_assignment.v0
+  - risk.basal_source_synaptic_threshold_coupling.v0
 
 decision_ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
 next_action: >-
-  Define bounded source event-process and Hz-to-graded conversion families, then
-  execute the preregistered basal sensitivity shapes through the sparse engine.
-  Keep all 166419 unresolved scientific assignments explicit; neither diagnostic
-  extreme is a promoted population census.
+  Keep all 166419 unresolved scientific assignments explicit and compile a
+  bounded causal cone for the first local claim. Constrain or propagate the
+  separate external source bridges, same-native synaptic efficacy, internal
+  cross-native conversion and neuron dynamics; no diagnostic extreme or scale is
+  a promoted population census or value.

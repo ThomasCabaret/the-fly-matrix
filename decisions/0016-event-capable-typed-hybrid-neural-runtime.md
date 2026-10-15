@@ -82,6 +82,12 @@ class by itself.
   risks. They are reopened by repeated independent residuals, not by default.
 - No named behavior was fitted, inspected or used to make this decision.
 
+ADR 0017 refines parameter ownership inside this accepted architecture. It keeps
+same-native synaptic efficacy distinct from cross-native event↔graded conversion,
+makes the latter an explicit family, and requires causal-cone accounting for the
+166,419 basal-reached populations that remain `dual_unresolved`. It does not
+change the typed/hybrid decision or promote any runtime constant.
+
 ## Evidence used
 
 - `calibration/runner/neural-model-class-source-fidelity-v1.yaml`

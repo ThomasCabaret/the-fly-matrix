@@ -1,0 +1,96 @@
+schema_version: 1
+id: parameter.central.native_boundary_conversion.v0
+title: Internal event/graded native-boundary conversion
+status: inventoried_diagnostic_fixtures_only_unfitted
+primary_class: local_interface
+parameter_kind: transfer
+claim_role: surrogate
+meaning:
+  biological_or_technical_role: >-
+    Convert causal activity across internal MaleCNS edges whose pre- and
+    postsynaptic populations use different native event or graded semantics.
+  units: direction_specific_event_to_graded_and_graded_to_event
+  applicability_limits:
+    - Same-native event-to-event and graded-to-graded efficacy remains owned by parameter.central.synaptic_efficacy.v0.
+    - Current full-graph constants are diagnostic fixtures and are not priors or accepted values.
+scope:
+  owner_ids: [cns.malecns]
+  parameter_names:
+    - event_to_graded_kernel_and_scale
+    - graded_to_event_generation_rule_and_scale
+  dimension:
+    basal_reached_neurons: 166431
+    dual_unresolved_reached_neurons: 166419
+    diagnostic_mixed_boundary_edges:
+      event_to_graded: 119
+      graded_to_event: 2280
+    candidate_sharing_levels:
+      - one_scale_per_direction
+      - pre_post_population_class_pair
+      - connection_family
+      - bounded_local_vector
+    selected_free_parameters: unresolved
+  topology_snapshot:
+    semantic_topology_sha256: canonical_malecns_runtime_graph
+    candidate_envelope_sha256: fixed_runtime_edges_and_explicit_population_assignment
+    ruleset_sha256: decisions/0017-internal-native-boundary-parameter-ownership.md
+    exception_table_sha256: none
+sharing:
+  candidate_hierarchy:
+    - one_scale_per_direction
+    - pre_post_population_class_pair
+    - connection_family
+    - bounded_local_vector
+  selected_level: unresolved
+  justification: >-
+    Begin with the lowest-capacity direction-specific family and add class or
+    local capacity only from independent residual evidence.
+  individual_parameters_require_evidence: true
+origin_policy:
+  preferred_order: [measured, evidence_transfer, shared_class, bounded_local_ensemble]
+  current_origin: diagnostic_engineering_fixtures_only
+  prior_or_bounds: unresolved
+  fallback: unresolved_or_explicit_member_conditioned_bundle
+identifiability:
+  status: open_high_impact_coupled_with_efficacy_and_neuron_dynamics
+  allowed_dataset_ids: []
+  local_held_out_dataset_ids: []
+  forbidden_behavior_ids: [all_named_behaviors]
+  jointly_identified_with:
+    - parameter.central.synaptic_efficacy.v0
+    - parameter.central.neuron_dynamics.v0
+  joint_calibration_reason: >-
+    Source intensity, same-native efficacy, cross-native scale, temporal kernel,
+    threshold and neuron dynamics can compensate for one another.
+dependencies:
+  upstream_family_ids:
+    - parameter.central.neuron_dynamics.v0
+  downstream_family_ids: []
+uncertainty:
+  representation: finite_direction_specific_model_and_scale_ensemble
+  admissible_set_criteria:
+    - units and temporal semantics are explicit in both directions
+    - zero causal input cannot create an undeclared event or graded drive
+    - every exercised cross-native edge belongs to exactly one declared conversion scope
+    - conclusions remain valid across the retained local population alternatives
+  reference_selection_rule: unresolved
+freeze:
+  status: not_frozen
+  parameter_set_id: null
+  acceptance_evaluation_ids: []
+  reopen_reason: null
+  stale_descendant_ids: []
+sources:
+  - ref: decisions/0016-event-capable-typed-hybrid-neural-runtime.md
+    supports: Cross-native boundaries require explicit units kernels and uncertainty.
+  - ref: decisions/0017-internal-native-boundary-parameter-ownership.md
+    supports: Ownership separation and coupled-identifiability policy.
+  - ref: calibration/runner/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml
+    supports: The mixed diagnostic profile exercises 119 event-to-graded and 2280 graded-to-event edges with unpromoted fixtures.
+assumptions:
+  - A single scale per direction is only the minimum-capacity candidate, not accepted biological sharing.
+  - Population assignment changes which edges require this family and must remain in the lineage hash.
+next_action: >-
+  Define a bounded non-behavioral local comparison that varies source intensity,
+  same-native efficacy, cross-native conversion and neuron dynamics without
+  selecting a member from threshold crossing or body motion.

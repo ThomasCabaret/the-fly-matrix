@@ -17,7 +17,7 @@ rerun every historical campaign.
   objectives;
 - `_templates/`: minimum schemas for parameter families, scopes, campaigns,
   parameter sets, and evaluations;
-- `parameter_families/`: 21 versioned family records plus an exhaustive index;
+- `parameter_families/`: 22 versioned family records plus an exhaustive index;
 - `dependency-dag.yaml`: the validated partial order between those families;
 - `model-risks.yaml`: explicit high-impact capacity hypotheses, evidence,
   escalation triggers and next review points;
@@ -66,6 +66,10 @@ with a path plus checksum or stable content identifier when the result matters.
   scientific-risk reference is a registry error.
 - Embodied campaigns freeze actuator semantics and cannot use flexible peripheral
   layers to hide central or mechanical error without an identifiability plan.
+- External basal source bridges, same-native synaptic efficacy, internal
+  event/graded conversion and neuron dynamics remain distinct families even when
+  a joint campaign is required. ADR 0017 forbids promoting diagnostic boundary
+  constants as defaults or priors.
 
 Start from a template, assign a stable identifier, and link the new record from
 `state.yaml` or its parent object. Unknown cases should be represented honestly
@@ -138,9 +142,10 @@ result accepts evidence coverage only: 286 channels have qualitative partition
 support, 31 labellar channels have partial numerical evidence that cannot yet be
 mapped to functional MaleCNS cells, and every residual source remains unresolved.
 It emits exactly zero parameter values. Published baselines are in spikes per
-second, whereas the current runtime consumes a whole-input normalized activity;
-the missing explicit unit bridge is therefore a blocking result, not a reason to
-copy rates into the model.
+second, whereas the historical rate runtime consumed a whole-input normalized
+activity. That gate motivated the two explicit basal bridge families now present:
+their mechanics execute, but their rates and conversion values remain unfitted
+and no publication value may be copied directly into the model.
 
 The twelve-parameter central model and its 31-member surviving ensemble remain a
 reproducible engineering result under ADR 0013, but ADR 0014 now places a more
@@ -539,7 +544,7 @@ instantiates every reached neuron as an event candidate and preserves the fixed
 neurons quiescent. They are two mechanics probes, not coverage of `2^166419`, a
 population census, a source bridge, calibration, fitness or stability.
 
-Run `basal_source_bridges.bat` next. It compiles every one of the 6,041 terminals
+Run `basal_source_bridges.bat` to reproduce the accepted mechanics result. It compiles every one of the 6,041 terminals
 through both explicit candidate families: seeded Poisson event presence with a
 per-step alias guard, and a zero-preserving bounded Hz-to-graded conversion. It
 executes silence, uniform-per-terminal and equal-family-mass inputs under both

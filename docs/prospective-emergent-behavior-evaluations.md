@@ -29,6 +29,22 @@ sequence or takeoff. This priority is advisory: it is not a protocol lock and ma
 be rejected by the required audit of tactile stimulus/readout resolution,
 actuator semantics, biological sources and represented mechanisms.
 
+The current FeCO→front-leg work is a useful chain for implementation and
+proprioceptive calibration, but it does not by itself satisfy this tactile
+readiness gate. The localized-contact candidate also depends on the separate
+mechanosensory families: 323 groups, 2,108 local route candidates and up to 1,785
+routing dimensions are structurally bounded, while their routing weights,
+transfer functions and local calibration dataset remain unresolved. This gap must
+be closed or the tactile candidate deferred; it must not be bridged by treating
+proprioception as contact.
+
+A short proprioceptive perturbation may later be added as an alternative candidate
+if an independent biological source defines a specific observation. It is not a
+current eighth candidate and must be registered before simulated outcomes are
+inspected. Candidate choice, stimulus intensity and metrics must come from that
+source and preregistered feasibility criteria, never from whichever trajectory
+the current simulator appears able to produce.
+
 The alternatives remain valuable but currently carry larger confounds. Grooming
 requires finer tactile resolution and a sequence interpretation; antennal grooming
 is also exposed for any lineage that uses the antennal circuit reference to select

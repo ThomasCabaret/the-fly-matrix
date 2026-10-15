@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter_family_inventory.v0
 status: complete_inventory_values_unfitted
-updated: 2026-10-14
+updated: 2026-10-15
 scope_statement: >-
   Exhaustive inventory of parameter families currently exposed or required by
   the accepted wiring-v0 embodied runtime. Completeness means every known family
@@ -28,20 +28,24 @@ family_ids:
   - parameter.central.transmitter_sign_prior.v0
   - parameter.central.synaptic_efficacy.v0
   - parameter.central.neuron_dynamics.v0
+  - parameter.central.native_boundary_conversion.v0
   - parameter.body.flybody_mechanics.v0
   - parameter.technical.motor_command_envelope.v0
 
 accounting:
-  total_families: 21
-  by_kind: {basal: 6, routing: 4, transfer: 6, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
-  by_claim_role: {biological: 11, surrogate: 9, technical: 1}
+  total_families: 22
+  by_kind: {basal: 6, routing: 4, transfer: 7, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
+  by_claim_role: {biological: 11, surrogate: 10, technical: 1}
   frozen_external: 1
   accepted_parameter_sets: 1
   fitted_families: 0
   frozen_parameter_families: 2
-  unresolved_or_unfrozen_families: 19
+  unresolved_or_unfrozen_families: 20
 
 known_runtime_couplings:
+  - families: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0, parameter.central.native_boundary_conversion.v0]
+    issue: Full-graph sentinels currently pass four boundary scales in one runtime constants object.
+    required_resolution: Keep same-native efficacy, cross-native conversion and neuron dynamics as separate lineage owners even when one joint campaign identifies them.
   - families: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0]
     issue: One executable coefficient vector currently combines route weighting and transfer gain.
     required_resolution: Compile distinct logical families into the existing runtime vector.
@@ -66,6 +70,7 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  Source or bound the two explicit basal bridge families without promoting their
-  diagnostic fixtures, then propagate finite event/graded alternatives into the
-  first local sensor-CNS-motor chain. No local physiological value is promoted.
+  Source or bound the two external basal bridge families and the distinct
+  internal native-boundary conversion family without promoting their diagnostic
+  fixtures. Propagate finite event/graded alternatives through a bounded causal
+  chain; no local physiological value is promoted.

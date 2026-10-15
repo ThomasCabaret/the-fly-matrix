@@ -1,7 +1,7 @@
 schema_version: 1
 id: calibration.parameter_dependency_dag.v0
 status: complete_structure_values_unfitted
-updated: 2026-10-14
+updated: 2026-10-15
 inventory_id: parameter_family_inventory.v0
 node_ids:
   - parameter.baseline.olfaction.v0
@@ -23,6 +23,7 @@ node_ids:
   - parameter.central.transmitter_sign_prior.v0
   - parameter.central.synaptic_efficacy.v0
   - parameter.central.neuron_dynamics.v0
+  - parameter.central.native_boundary_conversion.v0
   - parameter.body.flybody_mechanics.v0
   - parameter.technical.motor_command_envelope.v0
 edges:
@@ -46,6 +47,7 @@ edges:
   - {upstream: parameter.motor.transfer.v0, downstream: parameter.technical.motor_command_envelope.v0, reason: The technical guard must not absorb an unidentified motor transfer.}
   - {upstream: parameter.central.transmitter_sign_prior.v0, downstream: parameter.central.synaptic_efficacy.v0, reason: Preserve sign confidence and unknown masks before fitting efficacy.}
   - {upstream: parameter.central.synaptic_efficacy.v0, downstream: parameter.central.neuron_dynamics.v0, reason: Characterize temporal dynamics against a declared signed coupling model.}
+  - {upstream: parameter.central.neuron_dynamics.v0, downstream: parameter.central.native_boundary_conversion.v0, reason: Cross-native conversion units and kernels depend on declared event and graded state semantics.}
 root_ids:
   - parameter.baseline.olfaction.v0
   - parameter.baseline.gustation.v0
@@ -64,4 +66,9 @@ notes:
   - Independent roots may be processed in parallel.
   - A joint campaign may replace an edge only with a versioned non-identifiability reason.
   - Basal families remain roots; their two explicit source bridge families are downstream conversion capacity, not accepted values.
-next_action: Add campaign nodes and frozen parameter-set edges when the runner is implemented.
+  - Same-native event-to-event and graded-to-graded efficacy remains in the central synaptic-efficacy family; only cross-native conversion is a separate family.
+next_action: >-
+  Keep campaign and accepted parameter-set lineage in their existing registries;
+  use this DAG for family acceptance. Bound the new internal native-boundary
+  family jointly with central efficacy and neuron dynamics before any descendant
+  is independently frozen.

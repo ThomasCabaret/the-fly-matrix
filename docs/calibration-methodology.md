@@ -153,6 +153,9 @@ fixed by [`ADR 0014`](../decisions/0014-neural-dynamics-fidelity-gate.md).
 Embodied causal attribution, actuator semantics and the gate sequence toward the
 first held-out observation are fixed by
 [`ADR 0015`](../decisions/0015-embodied-causal-attribution-gates.md).
+Internal event/graded boundary ownership and its coupled-identifiability gate are
+fixed by
+[`ADR 0017`](../decisions/0017-internal-native-boundary-parameter-ownership.md).
 
 ## Parameter-family inventory and dependency DAG
 
@@ -305,6 +308,25 @@ point-neuron approximation becomes an active gate only after cheaper sign, delay
 unit and local-interface explanations have been tested on multiple independent
 circuits.
 
+Internal native-boundary conversion is a parameter family, not a runtime detail.
+Under ADR 0017, event→event and graded→graded effective coupling belongs to
+`parameter.central.synaptic_efficacy.v0`, while event→graded and graded→event
+conversion belongs to `parameter.central.native_boundary_conversion.v0`.
+Thresholds, time constants, refractoriness and native state semantics remain in
+the neuron-dynamics family. A joint campaign may be necessary, but it must keep
+these owners visible and report compensation. Diagnostic constants exercised by
+a sentinel are neither defaults, priors nor scientific bounds.
+
+Full-graph executability also does not close population assignment. The 166,419
+basal-reached `dual_unresolved` neurons define a scientific uncertainty problem,
+not a requirement to enumerate every binary assignment before local work. For a
+first interpretable result, compile the bounded causal population cone from the
+declared stimulus interface to the declared readout, account every population and
+cross-native boundary in that cone, and propagate a finite evidence-justified
+assignment ensemble. Populations outside the cone remain explicit exclusions
+from the claim. If the cone or its unresolved interactions cannot be bounded,
+that is a gate failure rather than permission to choose a homogeneous default.
+
 Basal afferent sources and persistent efferent tone are explicit parameter
 families, never anonymous offsets inserted for convenience. Basal inputs should
 prefer measured or transferable neutral-condition statistics. If maintaining a
@@ -341,6 +363,15 @@ are transformed; how visual, proprioceptive and mechanosensory signals share the
 same input domain; and how the result behaves across the complete central
 ensemble. A hidden normalization constant or a convenient per-run rescaling is
 not evidence transfer.
+
+Source intensity, same-native synaptic efficacy, internal native-boundary
+conversion and neuron threshold/dynamics form a coupled identifiability block.
+The current paired engineering grid demonstrates the coupling: eleven nonzero
+members remain subthreshold and only the 320 Hz × 3.2 mV corner generates
+internal events. That observation selects no value. Future campaigns should use
+independently sourced bounds or crossed local measurements, preserve the
+admissible composite ensemble when separation fails, and never promote the first
+member that merely crosses threshold.
 
 Reachability accounting and bridge executability are separate gates. A reached
 population may be exhaustively recorded as `dual_unresolved`, and every possible
@@ -675,6 +706,14 @@ capacity. Basal-source fitting belongs here and does not wait for a unique CNS.
 Use the residual unknown-afferent family for the bounded sensitivity grid above;
 do not silently merge it into a fitted global offset.
 
+Motor transfer has an additional explicit readiness gate in the current front-leg
+chain. The ten scoped bodies admit a factorized 3^10 fast/intermediate/slow class
+space. Only 1,024 fast/intermediate assignments have diagnostic temporal kernels;
+58,025 slow-containing assignments remain blocked by the missing slow kernel.
+Obtain independent bodyId/class or slow-kernel evidence, retain the blocked
+branches, or change the declared local scope. Never borrow another class kernel
+or select a bodyId assignment from body motion.
+
 ### Stage 2 — Technical neural dynamics
 
 Establish finite, bounded and recoverable temporal activity under basal input and
@@ -769,6 +808,14 @@ opening the entire catalog, and retain negative or ambiguous outcomes.
 The current planning preference is a mirrored localized tactile response of one
 leg, conditional on a stimulus-resolution audit and biological sourcing. It asks
 for spatial specificity without requiring a complete grooming sequence or flight.
+This preference is not opened by completing the FeCO proprioceptive chain alone.
+The mechanosensory front remains a separate prerequisite: 323 groups and 2,108
+local route candidates are structurally bounded, but routing weights and transfer
+functions are unfitted and no local calibration dataset is currently admitted.
+The protocol may remain tactile only after that minimal chain is accepted. A
+sourced short proprioceptive perturbation may be considered as a lower-readiness
+alternative, but must be registered as a distinct prospective candidate before
+its simulated outcome is inspected.
 Optomotor tests remain downstream of visual registration. Looming/takeoff is a
 later integration target because absent electrical coupling and flight mechanics
 can make failure ambiguous. Antennal grooming is not cleanly held out for a model

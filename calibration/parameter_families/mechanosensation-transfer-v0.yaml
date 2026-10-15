@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.mechanosensation.transfer.v0
 title: Mechanosensation local transfer
-status: compiler_ready_unfitted
+status: compiler_ready_unfitted_first_tactile_evaluation_dependency_open
 primary_class: local_interface
 parameter_kind: transfer
 claim_role: biological
@@ -19,4 +19,4 @@ uncertainty: {representation: interval_or_class_ensemble, admissible_set_criteri
 freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
 sources: [{ref: src/the_fly_matrix/runtime.py, supports: current 2108-coefficient compiled execution}, {ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: expanded relation upper bound}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: explicit routing-transfer factorization and exact expansion}]
 assumptions: [compiler.peripheral_routing_transfer.v0 can multiply explicit routing weights by an explicit transfer-sharing assignment while preserving runtime shape; it does not choose either one.]
-next_action: Define an evidence-backed transfer-sharing assignment and local calibration scope; keep offsets and temporal filters separate from the scalar compiler.
+next_action: Before locking localized-contact evaluation, define an evidence-backed transfer-sharing assignment, admitted local dataset and calibration scope; keep offsets and temporal filters separate from the scalar compiler and do not tune them from the held-out contact response.
