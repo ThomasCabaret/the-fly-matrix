@@ -135,7 +135,6 @@ $PriorityLaunchers = @(
     "motor_actuator_bridge_envelope.bat",
     "population_dynamics_assignment.bat",
     "prepare_local_source_data.bat",
-    "run_analysis.bat",
     "setup.bat",
     "wiring_revalidation.bat"
 )
@@ -144,10 +143,7 @@ $PriorityLaunchers = @(
 # from crowding out policy. Update this short list only when a new subsystem is
 # important enough that an external reviewer needs to inspect its implementation.
 $PriorityCodeSamples = @(
-    "src/the_fly_matrix/basal_event_scale_gate.py",
-    "src/the_fly_matrix/calibration_registry.py",
     "src/the_fly_matrix/typed_hybrid_runtime.py",
-    "tests/test_basal_event_scale_gate.py",
     "scripts/build_audit_pack.ps1"
 )
 
@@ -162,6 +158,7 @@ $RequiredAuditPaths = @(
     "calibration/dependency-dag.yaml",
     "calibration/model-risks.yaml",
     "calibration/state.yaml",
+    "calibration/parameter_families/central-native-boundary-conversion-v0.yaml",
     "calibration/targets/population-dynamics-assignment-v0.yaml",
     "calibration/campaigns/basal-event-scale-compatibility-v0.yaml",
     "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
@@ -171,6 +168,7 @@ $RequiredAuditPaths = @(
     "calibration/runner/basal-event-scale-compatibility-v0.yaml",
     "calibration/runner/basal-source-envelope-propagation-v0.yaml",
     "decisions/0016-event-capable-typed-hybrid-neural-runtime.md",
+    "decisions/0017-internal-native-boundary-parameter-ownership.md",
     "ledger/README.md",
     "scripts/build_audit_pack.ps1"
 )
