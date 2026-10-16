@@ -1,6 +1,6 @@
 schema_version: 1
 phase: population_typed_dynamics_assignment_and_local_chain_calibration
-updated: 2026-10-15
+updated: 2026-10-16
 
 wiring_baseline:
   terminal_coverage: complete
@@ -32,6 +32,8 @@ accepted_dependency_parameter_set_ids:
   - parameters.front_leg_member_conditioned_bundles.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
 parameter_dependency_dag_id: calibration.parameter_dependency_dag.v0
+active_roadmap_id: roadmap.first_held_out_evaluation.v0
+active_roadmap_path: calibration/roadmaps/first-held-out-evaluation-v0.yaml
 
 readiness:
   governance_and_registry: hierarchical_reconstructible_policy_documented
@@ -174,11 +176,10 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Preserve the existing sentinels as non-selecting evidence. First compile the
-  bounded causal population cone needed by the next local claim, then constrain
-  or propagate the coupled basal source, same-native efficacy, internal
-  event/graded conversion and neuron-dynamics families. In parallel, seek
-  independent slow-kernel/bodyId evidence and audit the mechanosensory readiness
-  required by the prospective tactile evaluation. Never select a class, rate,
-  conversion scale, bridge value or behavior candidate from threshold crossing,
-  numerical convenience, fixture magnitude or body motion.
+  Follow roadmap.first_held_out_evaluation.v0. Begin with FH-01: audit tactile
+  stimulus, mechanism and evidence readiness and prospectively select either the
+  tactile path or a separately sourced proprioceptive candidate without observing
+  an outcome. Then compile FH-02's bounded causal cone. Preserve existing
+  sentinels as non-selecting evidence, and never select a class, rate, conversion
+  scale, bridge value or behavior candidate from threshold crossing, numerical
+  convenience, fixture magnitude or body motion.

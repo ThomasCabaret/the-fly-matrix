@@ -1,0 +1,190 @@
+schema_version: 1
+id: roadmap.first_held_out_evaluation.v0
+revision: 0
+updated: 2026-10-16
+status: active
+
+milestone:
+  title: First end-to-end behavior-naive held-out evaluation
+  objective: >-
+    Freeze one runnable MaleCNS lineage calibrated without the evaluated response,
+    then execute one immutable evaluation-only stimulus/sham protocol with the
+    declared topology controls.
+  definition_of_done:
+    - one runnable lineage is frozen with topology, parameter, mechanism and exposure hashes
+    - one independently sourced evaluation-only protocol is locked before outcomes are viewed
+    - stimulus, sham and relevant mirrored trials execute end to end
+    - frozen-parameter and same-recipe recalibrated topology controls execute
+    - the result is reported as positive, negative or ambiguous without tuning the lineage afterward
+  not_required_for_completion:
+    - a positive or naturalistic behavior result
+    - global assignment of all dual-unresolved MaleCNS populations
+    - calibration of every sensory modality or every motor branch
+  forbidden_shortcuts:
+    - selecting any calibration member from the held-out response or attractive body motion
+    - treating FeCO proprioception as a calibrated tactile interface
+    - borrowing a fast or intermediate motor kernel for an unresolved slow class
+    - promoting diagnostic event/graded conversion constants
+
+estimate_contract:
+  unit: substantial_agent_delivery_batch
+  unit_definition: >-
+    One coherent implementation, evidence, campaign, or gate delivery with status,
+    tests and a local commit. It is not one shell command, one compute run or one
+    calendar day.
+  open_items: 9
+  base_work_batches: {min: 11, max: 16}
+  contingency_batches: {min: 2, max: 4}
+  planning_forecast_batches: {min: 13, max: 20}
+  confidence: low_to_medium
+  estimate_scope: >-
+    First interpretable held-out attempt, not a guaranteed positive behavior and
+    not total calibration of MaleCNS.
+  assumptions:
+    - one existing candidate modality becomes defensible without commissioning a new biological experiment
+    - current GPU, MuJoCo and source repositories remain available
+    - the bounded causal cone does not expand to most of MaleCNS
+    - accepted wiring and actuator semantics remain valid
+  excluded_from_batch_forecast:
+    - elapsed offline compute time once an existing runner can execute autonomously
+    - waiting for credentials or inaccessible external archives
+    - commissioning or producing new experimental biology
+    - a post-evaluation scientific revision after the first result
+
+items:
+  - id: FH-01
+    title: Select and justify the first evaluable local channel
+    nature: evidence_and_readiness_gate
+    status: ready
+    depends_on: []
+    estimated_batches: {min: 1, max: 1}
+    exit_criteria:
+      - tactile stimulus resolution, mechanism coverage and admitted evidence are audited
+      - tactile remains preferred or a sourced proprioceptive candidate is prospectively registered
+      - the choice uses readiness and biology, never a simulated outcome
+    replan_if: no candidate has sufficient independent local evidence
+
+  - id: FH-02
+    title: Compile the bounded stimulus-to-readout causal population cone
+    nature: rules_first_scope_compilation
+    status: planned
+    depends_on: [FH-01]
+    estimated_batches: {min: 1, max: 1}
+    exit_criteria:
+      - every included population and internal native boundary is accounted
+      - exclusions and the relationship to the 166419 dual-unresolved neurons are explicit
+      - topology and exception hashes are frozen
+    replan_if: the cone is not materially smaller or cannot be bounded without outcome inspection
+
+  - id: FH-03
+    title: Calibrate and freeze the minimal sensory chain
+    nature: local_interface_calibration
+    status: planned
+    depends_on: [FH-01, FH-02]
+    estimated_batches: {min: 2, max: 3}
+    exit_criteria:
+      - routing and transfer capacity are independently justified and versioned
+      - local train/validation evidence is admitted with units and uncertainty
+      - the retained parameter set or ensemble is frozen without held-out behavior exposure
+    replan_if: the selected modality lacks usable evidence or requires a higher-capacity interface than preregistered
+
+  - id: FH-04
+    title: Close the scoped motor slow-kernel and bodyId/class uncertainty
+    nature: evidence_transfer_and_local_motor_gate
+    status: planned
+    depends_on: [FH-01, FH-02]
+    estimated_batches: {min: 1, max: 2}
+    exit_criteria:
+      - slow-containing branches are independently represented, excluded with scope justification, or propagated as a bounded ensemble
+      - no motor class is selected from body motion
+      - event-to-force and force-to-direct-MOTOR stages remain separate
+    replan_if: every admissible readout requires an unidentifiable slow branch
+
+  - id: FH-05
+    title: Bound typed central, basal and native-boundary identifiability on the cone
+    nature: coupled_nonbehavioral_calibration
+    status: planned
+    depends_on: [FH-02]
+    estimated_batches: {min: 2, max: 3}
+    exit_criteria:
+      - population alternatives are evidence-backed or explicitly propagated
+      - source intensity, same-native efficacy, cross-native conversion and neuron dynamics remain separate owners
+      - unknown-afferent sensitivity and compensation are reported
+      - one finite admissible local ensemble exists without threshold-only selection
+    replan_if: conclusions depend on unsampled assignment interactions or require a new central model capacity version
+
+  - id: FH-06
+    title: Compile and freeze an integrated runnable lineage
+    nature: lineage_integration_and_causal_attribution
+    status: planned
+    depends_on: [FH-03, FH-04, FH-05]
+    estimated_batches: {min: 1, max: 1}
+    exit_criteria:
+      - all member-conditioned dependencies and exposure labels are reconstructible
+      - topology, actuator, mechanism and parameter hashes are frozen
+      - full causal execution and replay agree on the scoped loop
+    replan_if: a flexible interface can compensate for central or mechanical error without detection
+
+  - id: FH-07
+    title: Establish short-horizon neutral embodied technical stability
+    nature: technical_embodied_calibration
+    status: planned
+    depends_on: [FH-06]
+    estimated_batches: {min: 1, max: 2}
+    exit_criteria:
+      - every retained lineage is finite, bounded and recoverable under preregistered generic perturbations
+      - no named action, stance sequence or held-out outcome enters selection
+      - failures and any surviving ensemble remain explicit
+    replan_if: no admissible member passes without jointly freeing central, sensory, motor and physical capacity
+
+  - id: FH-08
+    title: Lock the evaluation-only protocol and topology controls
+    nature: prospective_protocol_lock
+    status: planned
+    depends_on: [FH-06, FH-07]
+    estimated_batches: {min: 1, max: 1}
+    exit_criteria:
+      - stimulus, sham, mirrors, seeds, metrics, thresholds and analysis are sourced and immutable
+      - frozen rewires and same-recipe recalibrated rewires are scheduled
+      - mechanism coverage and contamination rules are attached
+    replan_if: the candidate cannot yield an interpretable negative result with represented mechanisms
+
+  - id: FH-09
+    title: Execute and report the first held-out end-to-end evaluation
+    nature: evaluation_only_execution
+    status: planned
+    depends_on: [FH-08]
+    estimated_batches: {min: 1, max: 2}
+    exit_criteria:
+      - all scheduled normal, sham, mirrored and topology-control trials are accounted
+      - the frozen protocol receives a positive, negative or ambiguous disposition
+      - no inspected result feeds back into the same lineage or protocol version
+    replan_if: execution reveals an unrepresented mechanism or invalid measurement contract
+
+replanning_policy:
+  statuses: [planned, ready, in_progress, complete, blocked, superseded]
+  triggers:
+    - the milestone definition changes
+    - a new scientific gate adds at least one expected batch
+    - an accepted prerequisite is invalidated
+    - the selected modality or dependency path changes
+    - the forecast minimum or maximum increases
+  required_record:
+    - increment revision and preserve the prior estimate in history
+    - name the discovery or mistake rather than silently replacing the number
+    - record old and new item counts and batch ranges
+    - identify reusable, invalidated, added and removed work
+    - update calibration/state.yaml and PROJECT_STATE.md in the same delivery
+  batch_report_accounting: after_equals_before_minus_closed_plus_newly_discovered
+  proportionality: >-
+    This roadmap is a lightweight planning aid. Small reversible work may proceed
+    without creating sub-items; discoveries with scientific or schedule impact
+    must not be hidden inside an unchanged forecast.
+
+history:
+  - revision: 0
+    date: 2026-10-16
+    reason: initial_itemized_inventory_after_estimation_retrospective
+    open_items: 9
+    base_work_batches: {min: 11, max: 16}
+    planning_forecast_batches: {min: 13, max: 20}

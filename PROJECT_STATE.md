@@ -1244,6 +1244,25 @@ protocole de contact, il faut accepter une chaîne mécanoréceptrice minimale o
 documenter son échec et enregistrer, avant observation, une alternative
 proprioceptive biologiquement sourcée.
 
+La route vers le premier essai comportemental tenu à l'écart est maintenant
+inventoriée dans
+[`calibration/roadmaps/first-held-out-evaluation-v0.yaml`](calibration/roadmaps/first-held-out-evaluation-v0.yaml).
+Elle contient neuf items ouverts. Le plan de base représente 11 à 16 fournées
+substantielles ; une réserve explicite de 2 à 4 porte la prévision de pilotage à
+13--20. Cette fourchette vise le **premier essai interprétable**, positif, négatif
+ou ambigu, et non un comportement réussi ni la calibration totale de MaleCNS. Les
+deux incertitudes externes les plus fortes sont l'absence actuelle de données
+locales mécanoréceptrices admises et l'absence de noyau lent/correspondance
+bodyId-classe indépendante. Produire de nouvelles données expérimentales n'est
+pas compté comme une simple fournée.
+
+Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
+estimation plate ou croissante doit suivre la règle
+`après = avant - fermé + nouvellement découvert` et déclencher une révision
+historisée si elle augmente une borne, change le chemin sensoriel ou invalide un
+prérequis. Les pourcentages et réestimations conversationnelles ne remplacent pas
+ce registre.
+
 Les `next_action` du registre et le tableau de bord déterminent l'ordre concret du
 prochain lot ; cette liste ne remplace pas ces sources de vérité.
 

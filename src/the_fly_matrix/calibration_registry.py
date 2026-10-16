@@ -261,20 +261,126 @@ def validate_model_risk_references(
     return CalibrationRiskRegistry(risks=risks, model_references=model_references)
 
 
+def validate_active_milestone_roadmap(
+    root: Path = CALIBRATION_ROOT,
+) -> Mapping[str, Any]:
+    state = _load_mapping(root / "state.yaml")
+    roadmap_id = state.get("active_roadmap_id")
+    roadmap_ref = state.get("active_roadmap_path")
+    if not isinstance(roadmap_id, str) or not roadmap_id:
+        raise CalibrationRegistryError("state.yaml: active_roadmap_id is required")
+    if not isinstance(roadmap_ref, str) or not roadmap_ref.startswith("calibration/roadmaps/"):
+        raise CalibrationRegistryError(
+            "state.yaml: active_roadmap_path must reference calibration/roadmaps/"
+        )
+
+    roadmap_path = ROOT / roadmap_ref
+    roadmap = _load_mapping(roadmap_path)
+    if roadmap.get("id") != roadmap_id:
+        raise CalibrationRegistryError(
+            f"{roadmap_path}: id differs from state.yaml active_roadmap_id"
+        )
+    if roadmap.get("status") != "active":
+        raise CalibrationRegistryError(f"{roadmap_path}: active roadmap must have status active")
+
+    policy = _require_mapping(roadmap, "replanning_policy", roadmap_path)
+    statuses = policy.get("statuses")
+    if not isinstance(statuses, list) or not all(isinstance(item, str) for item in statuses):
+        raise CalibrationRegistryError(f"{roadmap_path}: replanning statuses must be a list")
+    allowed_statuses = set(statuses)
+
+    items = roadmap.get("items")
+    if not isinstance(items, list) or not items or not all(isinstance(item, dict) for item in items):
+        raise CalibrationRegistryError(f"{roadmap_path}: items must be a non-empty mapping list")
+    item_ids = [item.get("id") for item in items]
+    if not all(isinstance(item_id, str) and item_id for item_id in item_ids):
+        raise CalibrationRegistryError(f"{roadmap_path}: every item needs a stable id")
+    if len(item_ids) != len(set(item_ids)):
+        raise CalibrationRegistryError(f"{roadmap_path}: duplicate item ids")
+
+    seen_ids: set[str] = set()
+    open_items: list[Mapping[str, Any]] = []
+    for item in items:
+        item_id = str(item["id"])
+        status = item.get("status")
+        if status not in allowed_statuses:
+            raise CalibrationRegistryError(f"{roadmap_path}: {item_id} has invalid status")
+        dependencies = item.get("depends_on")
+        if not isinstance(dependencies, list) or not all(
+            isinstance(dependency, str) for dependency in dependencies
+        ):
+            raise CalibrationRegistryError(f"{roadmap_path}: {item_id} dependencies must be a list")
+        if not set(dependencies).issubset(seen_ids):
+            raise CalibrationRegistryError(
+                f"{roadmap_path}: {item_id} has unknown or forward dependencies"
+            )
+        criteria = item.get("exit_criteria")
+        if not isinstance(criteria, list) or not criteria:
+            raise CalibrationRegistryError(f"{roadmap_path}: {item_id} needs exit criteria")
+        seen_ids.add(item_id)
+        if status not in {"complete", "superseded"}:
+            open_items.append(item)
+
+    contract = _require_mapping(roadmap, "estimate_contract", roadmap_path)
+    if contract.get("open_items") != len(open_items):
+        raise CalibrationRegistryError(f"{roadmap_path}: estimate_contract.open_items is stale")
+
+    def estimate_pair(record: Mapping[str, Any], label: str) -> tuple[int | float, int | float]:
+        pair = _require_mapping(record, label, roadmap_path)
+        minimum = pair.get("min")
+        maximum = pair.get("max")
+        numeric = (int, float)
+        if (
+            isinstance(minimum, bool)
+            or isinstance(maximum, bool)
+            or not isinstance(minimum, numeric)
+            or not isinstance(maximum, numeric)
+            or minimum < 0
+            or maximum < minimum
+        ):
+            raise CalibrationRegistryError(f"{roadmap_path}: invalid {label} range")
+        return minimum, maximum
+
+    item_estimates = [estimate_pair(item, "estimated_batches") for item in open_items]
+    base = estimate_pair(contract, "base_work_batches")
+    contingency = estimate_pair(contract, "contingency_batches")
+    forecast = estimate_pair(contract, "planning_forecast_batches")
+    if base != (
+        sum(pair[0] for pair in item_estimates),
+        sum(pair[1] for pair in item_estimates),
+    ):
+        raise CalibrationRegistryError(f"{roadmap_path}: base batch range is stale")
+    if forecast != (base[0] + contingency[0], base[1] + contingency[1]):
+        raise CalibrationRegistryError(f"{roadmap_path}: forecast does not include contingency")
+    return roadmap
+
+
 def main() -> int:
-    print("[1/4] Chargement de l'inventaire versionne...")
+    print("[1/5] Chargement de l'inventaire versionne...")
     inventory = load_calibration_inventory()
     print(f"[OK] {len(inventory.families)} familles, index exhaustif")
-    print("[2/4] Validation du DAG et des declarations reciproques...")
+    print("[2/5] Validation du DAG et des declarations reciproques...")
     print(f"[OK] DAG acyclique, {len(inventory.dag['edges'])} dependances")
-    print("[3/4] Validation des risques et references de modeles...")
+    print("[3/5] Validation des risques et references de modeles...")
     risk_registry = validate_model_risk_references()
     reference_count = sum(len(refs) for refs in risk_registry.model_references.values())
     print(
         f"[OK] {len(risk_registry.risks)} risques, "
         f"{reference_count} references de modeles resolues"
     )
-    print("[4/4] Resume de maturite...")
+    print("[4/5] Validation de la roadmap active...")
+    roadmap = validate_active_milestone_roadmap()
+    estimate = roadmap["estimate_contract"]
+    base = estimate["base_work_batches"]
+    contingency = estimate["contingency_batches"]
+    forecast = estimate["planning_forecast_batches"]
+    print(
+        f"[OK] {roadmap['id']}: {estimate['open_items']} items ouverts, "
+        f"base {base['min']}-{base['max']}, reserve "
+        f"{contingency['min']}-{contingency['max']}, "
+        f"prevision {forecast['min']}-{forecast['max']} lots"
+    )
+    print("[5/5] Resume de maturite...")
     status_counts = Counter(record["status"] for record in inventory.families.values())
     for status, count in sorted(status_counts.items()):
         print(f"  {status:38} {count:2}")

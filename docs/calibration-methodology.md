@@ -635,6 +635,36 @@ and fitting/validation jobs reject held-out scenario identifiers before executio
 A passed runner-validation job proves only this infrastructure. It does not accept
 the scientific parameters exercised by a synthetic probe.
 
+## Milestone roadmaps and replanning
+
+When the project is moving toward a concrete milestone and the inventory is cheap
+to maintain, prefer a small versioned roadmap over a free-running estimate in chat.
+This is a planning aid, not a mandatory framework for exploratory or reversible
+work. The active first-held-out roadmap is
+`calibration/roadmaps/first-held-out-evaluation-v0.yaml`.
+
+A useful roadmap records a finish definition, finite item IDs, dependencies,
+status, exit criteria, an estimate range and the assumptions excluded from that
+range. Estimates use **substantial delivery batches**: a coherent evidence,
+implementation, campaign or gate result with tests and status, not a shell
+command, offline compute duration or calendar day. Separate the base work from a
+visible contingency reserve. Never turn the range into a calibration percentage.
+
+At the end of a delivery, report item dispositions and use the accounting
+identity `after = before - closed + newly_discovered`. A flat or rising estimate
+therefore needs a named cause. Replan explicitly when the milestone changes, a
+new scientific gate adds material work, an accepted prerequisite is invalidated,
+the active dependency path changes, or either forecast bound increases. A replan
+increments the roadmap revision, preserves the old range and records added,
+removed, invalidated and reusable work; it updates `calibration/state.yaml` and
+`PROJECT_STATE.md` in the same delivery.
+
+This rule does not require simulating the entire future project in advance.
+Unknown experimental data acquisition, credentials and unattended compute can be
+declared outside the agent-batch estimate. A gate may legitimately end in
+`blocked` or `revise`; discovering that early is progress, while silently adding
+its consequences to the next estimate is not.
+
 ## Recommended staged program
 
 These stages are milestones over the dependency DAG, not an obligation to finish

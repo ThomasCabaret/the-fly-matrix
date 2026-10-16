@@ -49,6 +49,10 @@ Avant une modification structurelle ou de calibration, consulter au minimum :
    il fixe leur propriété séparée et leur gate d'identifiabilité.
 7. `docs/rules-first-automation.md` lorsqu'un lot répète une décision sur de
    nombreux objets, construit un pipeline ou lance une campagne hors ligne.
+8. la roadmap active référencée par `calibration/state.yaml` lorsqu'un travail
+   contribue à un milestone itemisé. Pour le premier essai tenu à l'écart, lire
+   `calibration/roadmaps/first-held-out-evaluation-v0.yaml` et fermer ses IDs ou
+   enregistrer explicitement toute découverte qui impose une replanification.
 
 Le registre reste canonique pour les statuts, propriétaires, claims, validations
 et prochaines actions. Pour la topologie relationnelle générée, les sources
@@ -174,6 +178,12 @@ directement. Les décisions directes conservent la même traçabilité. Ne jamai
 masquer une surprise par un défaut silencieux ; une exception acceptée garde une
 raison et une prochaine action. La politique complète est définie par l'ADR 0009
 et `docs/rules-first-automation.md`.
+
+Pour un objectif concret, une roadmap légère est recommandée si elle est peu
+coûteuse : items finis, dépendances, critères de sortie et fourchettes de fournées.
+À chaque livraison, appliquer `après = avant - fermé + nouvellement découvert`.
+Une borne qui augmente, un prérequis invalidé ou un changement de chemin exige une
+révision historisée et motivée, jamais une nouvelle estimation silencieuse.
 
 Une famille déclarée `independently_validated` doit pouvoir être reconstruite
 dans une destination vide depuis les sources, règles et exceptions, sans lire son

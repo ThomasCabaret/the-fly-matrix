@@ -21,6 +21,9 @@ rerun every historical campaign.
 - `dependency-dag.yaml`: the validated partial order between those families;
 - `model-risks.yaml`: explicit high-impact capacity hypotheses, evidence,
   escalation triggers and next review points;
+- `roadmaps/`: lightweight milestone inventories with item status, exit criteria,
+  batch ranges and explicit replan history; they do not replace targets or the
+  dependency DAG;
 - `evaluation_candidates/`: prospective observation catalogs that are neither
   locked held-out protocols nor runnable evaluations;
 - `evidence/`: deterministic evidence-transfer recipes;
@@ -70,6 +73,9 @@ with a path plus checksum or stable content identifier when the result matters.
   event/graded conversion and neuron dynamics remain distinct families even when
   a joint campaign is required. ADR 0017 forbids promoting diagnostic boundary
   constants as defaults or priors.
+- A rising milestone estimate is a versioned replan, not an unexplained rewrite:
+  preserve the previous range and name newly discovered, invalidated and reusable
+  work.
 
 Start from a template, assign a stable identifier, and link the new record from
 `state.yaml` or its parent object. Unknown cases should be represented honestly
@@ -78,7 +84,7 @@ The dependency and reopening contract is in ADR 0012.
 
 Run `calibration_status.bat` to validate that the family files, inventory counts,
 reciprocal dependency declarations, acyclic DAG, risk identifiers, decision
-references and model-risk references agree. A successful result
+references, model-risk references and active-roadmap accounting agree. A successful result
 means that the unknowns are accounted for; it does **not** mean any value has been
 fitted or accepted.
 

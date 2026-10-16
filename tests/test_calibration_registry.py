@@ -7,6 +7,7 @@ import yaml
 
 from the_fly_matrix.calibration_registry import (
     load_calibration_inventory,
+    validate_active_milestone_roadmap,
     validate_model_risk_references,
 )
 
@@ -44,6 +45,38 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertEqual(len(referenced), len(set(referenced)))
         self.assertEqual(set(referenced), set(self.targets))
+
+    def test_active_milestone_roadmap_is_itemized_and_accounted(self) -> None:
+        roadmap = validate_active_milestone_roadmap(CALIBRATION_ROOT)
+        self.assertEqual(roadmap["id"], self.state["active_roadmap_id"])
+        self.assertEqual(roadmap["status"], "active")
+
+        items = roadmap["items"]
+        item_ids = [item["id"] for item in items]
+        self.assertEqual(len(items), roadmap["estimate_contract"]["open_items"])
+        self.assertEqual(len(item_ids), len(set(item_ids)))
+        self.assertEqual(item_ids, [f"FH-{index:02d}" for index in range(1, 10)])
+
+        allowed_statuses = set(roadmap["replanning_policy"]["statuses"])
+        known_ids: set[str] = set()
+        for item in items:
+            with self.subTest(item=item["id"]):
+                self.assertIn(item["status"], allowed_statuses)
+                self.assertTrue(item["exit_criteria"])
+                self.assertLessEqual(
+                    item["estimated_batches"]["min"],
+                    item["estimated_batches"]["max"],
+                )
+                self.assertTrue(set(item["depends_on"]).issubset(known_ids))
+                known_ids.add(item["id"])
+
+        base = roadmap["estimate_contract"]["base_work_batches"]
+        contingency = roadmap["estimate_contract"]["contingency_batches"]
+        forecast = roadmap["estimate_contract"]["planning_forecast_batches"]
+        self.assertEqual(base["min"], sum(item["estimated_batches"]["min"] for item in items))
+        self.assertEqual(base["max"], sum(item["estimated_batches"]["max"] for item in items))
+        self.assertEqual(forecast["min"], base["min"] + contingency["min"])
+        self.assertEqual(forecast["max"], base["max"] + contingency["max"])
 
     def test_target_class_and_exposure_are_compatible(self) -> None:
         allowed_classes = {
