@@ -21,29 +21,31 @@ ready; this catalog must not be mistaken for that lock.
 
 ## Current planning priority and confounds
 
-The current preferred first candidate is a **mirrored localized tactile response
-of one leg**, a constrained variant of sensorimotor lateralization. It can test
-whether stimulus side and location organize motor output rather than merely raise
-global activity, while requiring fewer uncertain components than a full grooming
-sequence or takeoff. This priority is advisory: it is not a protocol lock and may
-be rejected by the required audit of tactile stimulus/readout resolution,
-actuator semantics, biological sources and represented mechanisms.
+FH-01 has now selected a **front-leg proprioceptive resistance-reflex candidate**
+for planning, before any simulated response was generated or inspected. The
+future stimulus is a bounded passive displacement of one front tibia, with sham
+and matched left/right trials. The source-backed observation is a time-locked
+motor response tending to oppose the imposed displacement; exact waveform,
+intensity, timing and acceptance statistics remain to be sourced and locked.
+This is still only a prospective catalog item, not a runnable protocol or a
+prediction that the response will be positive.
 
-The current FeCO→front-leg work is a useful chain for implementation and
-proprioceptive calibration, but it does not by itself satisfy this tactile
-readiness gate. The localized-contact candidate also depends on the separate
-mechanosensory families: 323 groups, 2,108 local route candidates and up to 1,785
-routing dimensions are structurally bounded, while their routing weights,
-transfer functions and local calibration dataset remain unresolved. This gap must
-be closed or the tactile candidate deferred; it must not be bridged by treating
-proprioception as contact.
+The decision is recorded in
+`calibration/evaluations/first-held-out-channel-readiness-v0.yaml`. It relies on
+independent Drosophila evidence for the tibial resistance reflex and on the
+existing bounded FeCO→front-leg chain. The motor paper also supports local
+spike-to-force and event-capability claims used elsewhere; therefore the reflex
+direction, timing, spatial specificity and body response are explicitly withheld
+from fitting and model selection. A shared publication does not make those
+held-out observations calibration data.
 
-A short proprioceptive perturbation may later be added as an alternative candidate
-if an independent biological source defines a specific observation. It is not a
-current eighth candidate and must be registered before simulated outcomes are
-inspected. Candidate choice, stimulus intensity and metrics must come from that
-source and preregistered feasibility criteria, never from whichever trajectory
-the current simulator appears able to produce.
+The mirrored localized tactile response remains scientifically attractive but is
+deferred as the first attempt. Its separate mechanosensory families contain 323
+groups, 2,108 local route candidates and up to 1,785 routing dimensions. Their
+routing weights, transfer functions and local calibration dataset remain
+unresolved, while FlyBody supplies only six leg-level aggregate contact sensors
+plus coarse head/thorax force channels. Treating FeCO proprioception as contact
+would still be forbidden.
 
 The alternatives remain valuable but currently carry larger confounds. Grooming
 requires finer tactile resolution and a sequence interpretation; antennal grooming
@@ -86,6 +88,20 @@ response distributions transform under mirror symmetry in a biologically
 coherent way. Candidate metrics include mirrored-output equivariance, ipsilateral
 and contralateral recruitment, directional specificity and paired effect size
 relative to sham. This is more discriminating than a global activity increase.
+
+### Front-leg proprioceptive resistance reflex
+
+Apply a bounded passive extension or flexion to one front tibia and compare the
+scoped motor and physical response with sham. Adult Drosophila recordings report
+a resistance-reflex response of tibia-flexor motor neurons to passive extension
+([Azevedo et al., 2020](https://doi.org/10.7554/eLife.56754)); FeCO populations
+encode joint position and movement direction
+([Mamiya et al., 2018](https://doi.org/10.1016/j.neuron.2018.09.009)). Candidate
+future metrics include response direction relative to displacement, latency,
+boundedness/recovery, scoped motor-population specificity and left/right
+equivariance. The source does not yet fix the simulator waveform or numerical
+thresholds, and missing muscle/compliance fidelity can make a physical negative
+result ambiguous. None of these response properties may enter calibration.
 
 ### Optomotor response
 

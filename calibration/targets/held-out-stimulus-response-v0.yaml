@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.held_out_stimulus_response.v0
 title: Held-out bounded and stimulus-specific embodied response
-status: proposed_not_locked_mechanosensory_readiness_open
+status: proprioceptive_resistance_reflex_selected_for_planning_not_locked
 primary_class: evaluation_only
 optimization_exposure: evaluation_only
 claim_label: held_out_system_evaluation
@@ -18,6 +18,7 @@ scope:
     - a prescribed jump, gait, grooming sequence, or exact trajectory
 
 candidate_stimulus_families:
+  - passive_front_leg_femur_tibia_displacement
   - localized_contact
   - simultaneous_multi_region_contact
   - looming_visual_object
@@ -65,22 +66,27 @@ provenance:
   sources:
     - docs/prospective-emergent-behavior-evaluations.md
     - calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
+    - calibration/evaluations/first-held-out-channel-readiness-v0.yaml
+    - https://doi.org/10.7554/eLife.56754
+    - https://doi.org/10.1016/j.neuron.2018.09.009
   assumptions:
     - Stimulus family, intensity, duration, and thresholds remain to be fixed.
     - Candidate behavior names are project suggestions and do not yet have attached biological numerical expectations.
     - Completing the FeCO proprioceptive chain alone does not make localized tactile contact runnable; mechanosensory routing and transfer readiness are separate gates.
+    - FH-01 selected a proprioceptive resistance-reflex candidate from evidence and readiness before any simulated outcome was viewed.
+    - The selected candidate is not a protocol lock and its response properties remain forbidden during fitting and model selection.
 
 validation: not_run
 blocked_reason: >-
-  Protocol cannot be locked before a runnable calibrated lineage exists. The
-  preferred localized-contact variant additionally requires a calibrated minimal
-  mechanosensory chain; its 323 groups, 2108 route candidates and transfer family
-  are currently unfitted and have no admitted local calibration dataset.
+  Protocol cannot be locked before a runnable calibrated lineage exists. FH-01
+  deferred localized contact because its 323 groups, 2108 route candidates and
+  transfer family are unfitted and have no admitted local calibration dataset.
+  The selected proprioceptive resistance-reflex path still requires a frozen
+  minimal FeCO interface ensemble, a bounded 196-neuron causal cone, explicit
+  motor slow/bodyId treatment and source-backed stimulus numerics.
 next_action: >-
-  Keep every catalog outcome unavailable during calibration. After a runnable
-  parameter lineage is frozen, audit whether mirrored localized leg contact has
-  adequate stimulus/readout resolution and an accepted minimal mechanosensory
-  chain. Source the stimulus, intensity and metrics independently before any
-  outcome is viewed. If readiness fails, record it and compare lower-confound
-  candidates, including a sourced proprioceptive perturbation, before creating a
-  locked evaluation protocol.
+  Execute roadmap FH-02 by compiling an immutable held-out-specific view of the
+  existing front-leg FeCO-to-tibia-flexor cone. Keep resistance-reflex direction,
+  timing, spatial specificity and body motion inaccessible to all calibration
+  stages. Lock stimulus numerics and metrics only after the runnable lineage is
+  frozen.

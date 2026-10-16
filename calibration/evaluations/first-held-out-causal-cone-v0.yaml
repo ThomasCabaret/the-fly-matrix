@@ -1,0 +1,41 @@
+schema_version: 1
+id: evaluation.first_held_out_causal_cone.v0
+campaign_id: campaign.first_held_out_causal_cone.v0
+runner_result_id: runner_result.first_held_out_causal_cone.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+status: accepted_scope_compilation_FH_02_complete
+acceptance_result: pass
+checks:
+  FH_01_candidate_matches: true
+  no_simulated_outcomes_consumed: true
+  all_196_neurons_accounted: true
+  event_plus_dual_plus_graded_equals_cone: true
+  all_native_boundary_kinds_owned: true
+  outside_cone_accounted: true
+  no_path_selected: true
+  zero_parameter_values_promoted: true
+  zero_topology_changes: true
+population_accounting:
+  sensory_neurons: 36
+  intermediate_neurons: 150
+  motor_neurons: 10
+  unique_cone_neurons: 196
+  event_required_neurons: 12
+  dual_unresolved_neurons: 184
+  graded_required_neurons: 0
+  reachable_endpoint_pairs: 360
+  direct_edges: 10
+  bounded_path_records: 692
+  canonical_neurons_outside_cone: 166504
+  basal_reached_neurons_outside_cone: 166235
+  dual_unresolved_basal_reached_neurons_outside_cone: 166235
+  canonical_neurons_outside_basal_reach: 269
+semantic_scope_sha256: dc1ef3588061dab7c31396b941281b6f13362b0d980cc9b13614aebf8a6b9055
+protocol_locked: false
+behavior_outcomes_consumed: 0
+parameter_values_promoted: 0
+interpretation: FH-02 closes scope accounting only. The 184 dual-unresolved assignments,
+  all conversion values and all local interface values remain open for FH-03 to FH-05.
+next_action: Use this immutable cone as the scope for FH-03, FH-04 and FH-05. Calibrate
+  or propagate each family without changing the cone or consuming the eventual resistance-reflex
+  outcome.

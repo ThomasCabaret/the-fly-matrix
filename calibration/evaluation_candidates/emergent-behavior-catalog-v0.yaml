@@ -26,8 +26,8 @@ catalog_exposure_policy:
 
 planning_priority:
   status: advisory_not_protocol_lock
-  preferred_first_candidate: evaluation_candidate.sensorimotor_lateralization.v0
-  preferred_variant: mirrored_localized_leg_contact
+  preferred_first_candidate: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+  preferred_variant: mirrored_passive_front_tibia_displacement
   prerequisites:
     - adequate localized tactile stimulus and readout resolution
     - accepted minimal mechanosensory routing and transfer chain
@@ -35,18 +35,22 @@ planning_priority:
     - mechanism-coverage statement
     - independent biological source and immutable protocol
   rationale: >-
-    Tests spatially specific left/right sensorimotor organization with fewer
-    simultaneous uncertain subsystems than full grooming, optomotor behavior or
-    looming/takeoff.
+    FH-01 selected a separately sourced proprioceptive resistance-reflex
+    candidate before any simulated outcome was generated. It reuses an already
+    bounded front-leg FeCO-to-motor envelope and has fewer unbounded interface
+    degrees of freedom than localized contact.
   current_readiness_gap: >-
-    FeCO proprioception is substantially more mature but cannot substitute for
-    localized contact. Mechanosensation has 323 groups and 2108 bounded route
-    candidates, while routing weights, transfer values and an admitted local
-    calibration dataset remain unresolved.
+    The selected candidate is not runnable science yet: FeCO routing/transfer
+    remains an unpromoted ensemble, motor slow/bodyId uncertainty is open, and
+    native-boundary conversions on the 196-neuron cone remain unfitted. The
+    tactile candidate is deferred, not rejected: its 323 groups, 2108 bounded
+    route candidates, up to 1785 routing dimensions and absent admitted local
+    dataset still prevent an interpretable first negative result.
+  selection_record: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
   alternative_policy: >-
-    A sourced short proprioceptive perturbation may be registered as a distinct
-    future candidate before any simulated outcome is inspected; it is not part of
-    the current catalog merely because its chain is easier to execute.
+    Reopening tactile or selecting another modality requires a roadmap revision
+    based on independent evidence and mechanism coverage before any outcome is
+    inspected.
   deferred_confounders:
     localized_grooming: current tactile resolution and full action-sequence interpretation
     optomotor: unresolved visual registration
@@ -76,9 +80,28 @@ candidates:
     stimulus_family: mirrored_tactile_or_visual_stimuli
     observation: mirror-equivariant and anatomically coherent motor-response distributions
     status: prospective_not_locked
-    planning_priority: preferred_first_if_prerequisites_pass
+    planning_priority: deferred_until_mechanosensory_local_evidence_exists
     preferred_variant: mirrored_localized_leg_contact
     suggested_metrics: [mirrored_output_equivariance, ipsilateral_contralateral_specificity, paired_effect_size]
+  - id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+    stimulus_family: passive_front_leg_femur_tibia_displacement
+    observation: >-
+      A bounded time-locked motor and physical response that tends to oppose a
+      passive tibia displacement, differs from sham and preserves declared
+      left/right organization.
+    status: prospective_selected_for_planning_not_locked_not_run
+    planning_priority: preferred_first_after_FH_01
+    source_refs:
+      - https://doi.org/10.7554/eLife.56754
+      - https://doi.org/10.1016/j.neuron.2018.09.009
+    calibration_exclusion: >-
+      Perturbation-response direction, latency, spatial specificity and body
+      motion may not select any parameter or candidate in this lineage.
+    shared_source_warning: >-
+      The motor publication also supports spike-to-force and event-capability
+      evidence elsewhere. Only those local claims may enter calibration; its
+      resistance-reflex observations remain evaluation-only.
+    suggested_metrics: [response_opposition_to_displacement, latency_relative_to_sham, boundedness_and_recovery, mirrored_side_equivariance, scoped_motor_population_specificity]
   - id: evaluation_candidate.optomotor_response.v0
     stimulus_family: directional_visual_field_motion
     observation: coherent yaw or turning tendency related to motion direction

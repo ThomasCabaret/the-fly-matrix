@@ -835,17 +835,22 @@ temporal dynamics, and structured spontaneous motor motifs. These remain
 prospective and unlocked. Start by locking one tractable protocol rather than
 opening the entire catalog, and retain negative or ambiguous outcomes.
 
-The current planning preference is a mirrored localized tactile response of one
-leg, conditional on a stimulus-resolution audit and biological sourcing. It asks
-for spatial specificity without requiring a complete grooming sequence or flight.
-This preference is not opened by completing the FeCO proprioceptive chain alone.
-The mechanosensory front remains a separate prerequisite: 323 groups and 2,108
-local route candidates are structurally bounded, but routing weights and transfer
-functions are unfitted and no local calibration dataset is currently admitted.
-The protocol may remain tactile only after that minimal chain is accepted. A
-sourced short proprioceptive perturbation may be considered as a lower-readiness
-alternative, but must be registered as a distinct prospective candidate before
-its simulated outcome is inspected.
+FH-01 selected a front-leg proprioceptive resistance-reflex candidate for the
+first planning path before any simulated outcome was generated or inspected. The
+selection is recorded in
+`calibration/evaluations/first-held-out-channel-readiness-v0.yaml`: a bounded
+passive front-tibia displacement, sham and matched left/right trials will later
+measure a time-locked scoped motor and physical response. The source-backed
+response direction, timing and spatial specificity are evaluation-only and may
+not choose FeCO, central, motor, bridge or physical parameters. This is neither a
+protocol lock nor a positive prediction.
+
+The earlier mirrored localized tactile preference remains in the catalog but is
+deferred. Its mechanosensory front has 323 groups, 2,108 bounded route candidates,
+up to 1,785 routing dimensions, unfitted transfer and no admitted local
+calibration dataset. Completing FeCO never substitutes for that missing tactile
+chain. Reopening tactile as the first path is a roadmap revision, not a silent
+fallback.
 Optomotor tests remain downstream of visual registration. Looming/takeoff is a
 later integration target because absent electrical coupling and flight mechanics
 can make failure ambiguous. Antennal grooming is not cleanly held out for a model

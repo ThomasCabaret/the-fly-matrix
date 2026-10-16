@@ -17,6 +17,7 @@ prospective_evaluation_candidates:
     - evaluation_candidate.grooming_hierarchy.v0
     - evaluation_candidate.looming_escape.v0
     - evaluation_candidate.sensorimotor_lateralization.v0
+    - evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
     - evaluation_candidate.optomotor_response.v0
     - evaluation_candidate.optomotor_temporal_dynamics.v0
     - evaluation_candidate.structured_spontaneous_motor_activity.v0
@@ -25,4 +26,5 @@ notes:
   - No named behavior is assigned until a locked protocol fixes the calibration/evaluation split.
   - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.
   - Prospective names are not locked held-out protocols; any behavior-specific design or tuning decision contaminates that candidate for the affected lineage.
-  - The preferred first candidate is mirrored localized leg contact only after stimulus-resolution, actuator-attribution and mechanism-coverage gates pass; this priority is not a protocol lock.
+  - FH-01 selected the front-leg proprioceptive resistance-reflex candidate for planning before any simulated outcome was viewed; this priority is not a protocol lock and its response properties remain forbidden to calibration.
+  - Mirrored localized leg contact remains prospective but is deferred until independent mechanosensory routing/transfer evidence makes a negative result interpretable.

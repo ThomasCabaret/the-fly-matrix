@@ -53,7 +53,12 @@ class CalibrationRegistryTests(unittest.TestCase):
 
         items = roadmap["items"]
         item_ids = [item["id"] for item in items]
-        self.assertEqual(len(items), roadmap["estimate_contract"]["open_items"])
+        open_items = [
+            item for item in items if item["status"] not in {"complete", "superseded"}
+        ]
+        self.assertEqual(
+            len(open_items), roadmap["estimate_contract"]["open_items"]
+        )
         self.assertEqual(len(item_ids), len(set(item_ids)))
         self.assertEqual(item_ids, [f"FH-{index:02d}" for index in range(1, 10)])
 
@@ -73,8 +78,14 @@ class CalibrationRegistryTests(unittest.TestCase):
         base = roadmap["estimate_contract"]["base_work_batches"]
         contingency = roadmap["estimate_contract"]["contingency_batches"]
         forecast = roadmap["estimate_contract"]["planning_forecast_batches"]
-        self.assertEqual(base["min"], sum(item["estimated_batches"]["min"] for item in items))
-        self.assertEqual(base["max"], sum(item["estimated_batches"]["max"] for item in items))
+        self.assertEqual(
+            base["min"],
+            sum(item["estimated_batches"]["min"] for item in open_items),
+        )
+        self.assertEqual(
+            base["max"],
+            sum(item["estimated_batches"]["max"] for item in open_items),
+        )
         self.assertEqual(forecast["min"], base["min"] + contingency["min"])
         self.assertEqual(forecast["max"], base["max"] + contingency["max"])
 
@@ -134,7 +145,11 @@ class CalibrationRegistryTests(unittest.TestCase):
 
         self.assertEqual(catalog["status"], "prospective_only_not_locked_not_run")
         self.assertEqual(catalog["optimization_exposure"], "forbidden")
-        self.assertEqual(len(catalog["candidates"]), 7)
+        self.assertEqual(len(catalog["candidates"]), 8)
+        self.assertEqual(
+            catalog["planning_priority"]["preferred_first_candidate"],
+            "evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0",
+        )
         self.assertFalse(
             catalog["catalog_exposure_policy"][
                 "catalog_registration_is_protocol_lock"
@@ -147,6 +162,64 @@ class CalibrationRegistryTests(unittest.TestCase):
             "catalog_only_not_locked_not_run",
         )
         self.assertFalse(self.state["readiness"]["held_out_protocol_locked"])
+
+    def test_first_held_out_channel_choice_is_evidence_based_and_unlocked(self) -> None:
+        readiness = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluations"
+            / "first-held-out-channel-readiness-v0.yaml"
+        )
+        catalog = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluation_candidates"
+            / "emergent-behavior-catalog-v0.yaml"
+        )
+        roadmap = validate_active_milestone_roadmap(CALIBRATION_ROOT)
+
+        self.assertFalse(readiness["selection_rules"]["simulated_outcomes_inspected"])
+        self.assertFalse(readiness["selection_rules"]["protocol_locked"])
+        self.assertEqual(readiness["selection_rules"]["parameter_values_promoted"], 0)
+        self.assertEqual(
+            readiness["tactile_audit"]["calibration_readiness"][
+                "admitted_local_dataset_ids"
+            ],
+            [],
+        )
+        selected_id = readiness["decision"]["selected_candidate_id"]
+        self.assertIn(selected_id, {item["id"] for item in catalog["candidates"]})
+        self.assertEqual(roadmap["revision"], 1)
+        self.assertEqual(roadmap["items"][0]["status"], "complete")
+        self.assertEqual(roadmap["items"][1]["status"], "complete")
+        self.assertEqual(roadmap["items"][2]["status"], "ready")
+        self.assertEqual(roadmap["estimate_contract"]["open_items"], 7)
+
+    def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:
+        scope = load_yaml(
+            CALIBRATION_ROOT
+            / "scopes"
+            / "first-held-out-proprioceptive-resistance-reflex-v0.yaml"
+        )
+        result = load_yaml(
+            CALIBRATION_ROOT / "runner" / "first-held-out-causal-cone-v0.yaml"
+        )
+        evaluation = load_yaml(
+            CALIBRATION_ROOT
+            / "evaluations"
+            / "first-held-out-causal-cone-v0.yaml"
+        )
+
+        accounting = scope["population_accounting"]
+        self.assertEqual(accounting["unique_cone_neurons"], 196)
+        self.assertEqual(accounting["event_required_neurons"], 12)
+        self.assertEqual(accounting["dual_unresolved_neurons"], 184)
+        self.assertEqual(accounting["canonical_neurons_outside_cone"], 166_504)
+        self.assertFalse(scope["selection_policy"]["central_path_selected"])
+        self.assertFalse(scope["selection_policy"]["simulated_outcome_inspected"])
+        self.assertEqual(result["promoted_parameter_values"], 0)
+        self.assertEqual(result["behavior_outcomes_consumed"], 0)
+        self.assertEqual(result["semantic_result_sha256"], scope["semantic_scope_sha256"])
+        self.assertEqual(evaluation["acceptance_result"], "pass")
+        self.assertFalse(evaluation["protocol_locked"])
 
     def test_parameter_family_inventory_is_exhaustive_and_acyclic(self) -> None:
         self.assertEqual(len(self.inventory.families), 22)

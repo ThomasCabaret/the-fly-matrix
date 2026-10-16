@@ -103,8 +103,10 @@ readiness:
   peripheral_interface_identifiability: open_compensation_risk_local_freeze_and_ablations_required
   unknown_afferent_sensitivity: high_priority_under_mixed_reference_fixture_unknown_family_ablation_changes_motor_probe_about_89_percent_all_values_unpromotable_native_assignments_unresolved
   represented_mechanisms: chemical_connectome_primary_electrical_and_compartmental_mechanisms_unresolved
-  prospective_behavior_evaluation_catalog: documented_7_candidates_not_locked_not_run
-  preferred_tactile_evaluation_readiness: open_mechanosensation_323_groups_2108_routes_up_to_1785_routing_dimensions_transfer_unfitted_no_admitted_local_dataset_feco_not_a_substitute
+  prospective_behavior_evaluation_catalog: documented_8_candidates_not_locked_not_run
+  tactile_evaluation_readiness: deferred_as_first_candidate_mechanosensation_323_groups_2108_routes_up_to_1785_routing_dimensions_transfer_unfitted_no_admitted_local_dataset_feco_not_a_substitute
+  first_held_out_channel_selection: FH_01_complete_proprioceptive_resistance_reflex_selected_from_sources_and_readiness_zero_simulated_outcomes_protocol_not_locked
+  first_held_out_causal_cone: FH_02_complete_196_neurons_12_event_required_184_dual_unresolved_166504_canonical_outside_claim_topology_and_exceptions_frozen_zero_outcomes_or_values
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: false
 
@@ -122,7 +124,8 @@ blocked_by:
   - Routing values, transfer-sharing assignments, local datasets and bounds remain unselected for proprioception, mechanosensation and motor output; the compiler now preserves their separation but does not infer them.
   - The preregistered motor-terminal sensitivity study is high for pattern and amplitude, so the 31 surviving central candidates cannot be treated as interchangeable downstream.
   - The ten scoped motor bodies retain 59,049 fast/intermediate/slow assignments. Only 1,024 fast/intermediate assignments have diagnostic kernels; 58,025 slow-containing assignments remain blocked until bodyId/class evidence or a defensible slow temporal representation exists.
-  - The prospective localized-contact evaluation is not ready merely because the FeCO chain runs. Its separate mechanosensory front has 323 groups, 2,108 route candidates, up to 1,785 routing dimensions, unfitted transfer and no admitted local calibration dataset.
+  - FH-01 defers prospective localized contact as the first evaluation: its separate mechanosensory front has 323 groups, 2,108 route candidates, up to 1,785 routing dimensions, unfitted transfer and no admitted local calibration dataset. The candidate remains in the catalog.
+  - FH-01 selected a separately sourced front-leg proprioceptive resistance-reflex candidate before any simulated outcome was generated or viewed. This is planning only, not a protocol lock: response direction, latency, spatial specificity and body motion remain forbidden to fitting, while FeCO freeze, the 196-neuron causal cone, motor slow/bodyId treatment and stimulus numerics remain open.
   - Numerical portability does not distinguish the 31 rate survivors biologically; they remain an engineering ensemble and may be propagated only inside an explicit graded population assignment or unresolved local comparison.
   - Published basal measurements use spikes per second while the current embodied input uses whole-vector normalized model activity; bridges must now target a declared event, graded, or typed conversion contract rather than one global model unit.
   - The full antennal-grooming circuit maps exactly for aBN1, aDN1 and aDN2 but one of three pinned aBN2 FlyWire types (CB3129) has no resolved MaleCNS match; complete-circuit use remains blocked.
@@ -176,10 +179,12 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Follow roadmap.first_held_out_evaluation.v0. Begin with FH-01: audit tactile
-  stimulus, mechanism and evidence readiness and prospectively select either the
-  tactile path or a separately sourced proprioceptive candidate without observing
-  an outcome. Then compile FH-02's bounded causal cone. Preserve existing
-  sentinels as non-selecting evidence, and never select a class, rate, conversion
-  scale, bridge value or behavior candidate from threshold crossing, numerical
-  convenience, fixture magnitude or body motion.
+  Follow roadmap.first_held_out_evaluation.v0 revision 1. FH-01 is complete:
+  localized tactile contact is deferred and the independently sourced front-leg
+  proprioceptive resistance-reflex candidate is selected for planning without a
+  viewed outcome. FH-02 is also complete: the held-out-specific cone freezes 196
+  neurons, twelve event requirements, 184 dual-unresolved assignments, every
+  native-boundary owner and 166,504 canonical exclusions. Begin FH-03 by making a
+  source-path acceptance decision and freezing the minimum-capacity FeCO sensory
+  ensemble without using resistance-reflex direction, latency, spatial specificity
+  or body motion.

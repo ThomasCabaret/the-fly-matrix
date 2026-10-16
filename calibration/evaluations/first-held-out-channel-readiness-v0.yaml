@@ -1,0 +1,132 @@
+schema_version: 1
+id: evaluation.first_held_out_channel_readiness.v0
+title: Evidence and readiness gate for the first held-out channel
+status: accepted_select_proprioceptive_resistance_reflex_candidate_tactile_deferred
+decision_date: 2026-10-16
+primary_class: evaluation_only
+optimization_exposure: evaluation_only
+claim_label: PLANNING DECISION / NOT A LOCKED PROTOCOL / NOT RUN
+
+decision_question: >-
+  Which already represented local sensorimotor channel can support the first
+  behavior-naive held-out attempt with an interpretable negative result, without
+  selecting the channel from simulated motion or neural output?
+
+selection_rules:
+  simulated_outcomes_inspected: false
+  candidate_selected_from_body_motion: false
+  candidate_selected_from_threshold_crossing: false
+  named_response_allowed_in_calibration: false
+  protocol_locked: false
+  parameter_values_promoted: 0
+  topology_changes: 0
+
+tactile_audit:
+  candidate_id: evaluation_candidate.sensorimotor_lateralization.v0
+  variant: mirrored_localized_leg_contact
+  structural_readiness:
+    status: complete_bounded_envelope_only
+    physical_observables:
+      aggregate_leg_contact_sensors: 6
+      scalars: 96
+      additional_local_body_force_channels: 2
+    mechanosensory_groups: 323
+    candidate_routes: 2108
+    routing_simplex_dimensions_upper_bound: 1785
+    terminal_relations_upper_bound: 28514
+    semantic_topology_sha256: 70e71d9a5c36edcc8ce5f01e367c7a5349f8d1942ea3b1a72e0e0a9868cc9fd2
+  calibration_readiness:
+    admitted_local_dataset_ids: []
+    routing_status: unresolved
+    transfer_status: unresolved
+    transfer_sharing_status: unresolved
+  mechanism_coverage:
+    represented:
+      - leg-level aggregate ground contact and load observables
+      - exact bounded routes from mechanosensory afferents to MaleCNS body IDs
+      - direct-MOTOR actuator surrogate with accepted short-horizon semantics
+    missing_or_ambiguous:
+      - receptor-level contact localization within a leg
+      - evidence-backed routing weights and transfer functions
+      - detailed muscle tendon compliance and local reflex physiology
+  disposition: defer_as_first_candidate
+  reason: >-
+    The structural envelope is reproducible, but no admitted local dataset or
+    minimum-capacity transfer/routing representation identifies the contact
+    interface. A negative response could therefore be caused by the interface
+    rather than MaleCNS, and fitting that interface from the held-out response
+    would contaminate the test.
+
+selected_candidate:
+  id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+  status: prospectively_registered_not_locked_not_run
+  stimulus_family: passive_front_leg_femur_tibia_displacement
+  planning_scope:
+    stimulus: bounded passive extension or flexion of one front tibia
+    controls: [sham_displacement, matched_left_right_trials]
+    neural_readout: scoped_T1_tibia_flexor_motor_population
+    physical_readout: direction_and_boundedness_of_front_leg_response
+  independent_sources:
+    - ref: https://doi.org/10.7554/eLife.56754
+      supports:
+        - Passive tibia extension evokes a resistance-reflex response in the three recorded tibia-flexor motor-neuron classes.
+        - The response is time locked and class dependent; slow firing is modulated, while fast and intermediate units usually remain subthreshold under ordinary ramps.
+      already_used_elsewhere:
+        - spike-to-force evidence for the motor transfer family
+        - event-capable requirement for the selected tibia-flexor motor population
+      held_out_boundary: >-
+        The perturbation-to-response direction, timing and spatial specificity may
+        be used only by the future evaluation protocol. They may not select FeCO,
+        central, motor, bridge or mechanical parameters.
+    - ref: https://doi.org/10.1016/j.neuron.2018.09.009
+      supports:
+        - FeCO claw, hook and club populations encode tibia position, movement direction and vibration.
+      held_out_boundary: >-
+        Existing calcium tables may constrain the local sensory observation model,
+        but the eventual resistance-reflex response remains unavailable to fitting.
+  readiness_advantages:
+    - exact FlyBody front-knee position and velocity observables already exist
+    - a 36-FeCO to 150-intermediate to 10-motor bounded envelope already exists
+    - the FeCO observation dataset and local candidate comparison are present
+    - the direct-MOTOR semantics gate and controller-independent replay path are accepted
+  open_dependencies:
+    - accept and freeze a minimum-capacity FeCO routing and transfer ensemble
+    - close or explicitly propagate the slow-kernel and bodyId/class motor uncertainty
+    - bound event/graded conversions and population alternatives on the 196-neuron cone
+    - define source-backed displacement waveform, intensity, duration and analysis before protocol lock
+    - attach a mechanism-coverage warning for missing muscles and compliance
+  interpretation_limit: >-
+    This selection says only that the proprioceptive path has the best current
+    evidence/readiness ratio. It neither predicts a positive response nor makes a
+    held-out claim. A physical failure can remain ambiguous if the direct-MOTOR
+    surrogate or unresolved slow branch dominates.
+
+decision:
+  outcome: select_proprioceptive_candidate_and_defer_tactile
+  selected_candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+  tactile_candidate_removed: false
+  rationale: >-
+    The proprioceptive candidate reuses a source-backed, already bounded local
+    chain and exposes fewer currently unconstrained interface degrees of freedom.
+    The choice was made from evidence and mechanism readiness before any outcome
+    was generated or viewed.
+  roadmap_effect:
+    closes: [FH-01]
+    opens: [FH-02]
+    path_change_requires_revision: true
+
+accepted_claims:
+  - The tactile candidate is structurally wired but is not currently ready as the first interpretable held-out evaluation.
+  - A front-leg proprioceptive resistance-reflex candidate is independently sourced and may guide planning without becoming a fitting target.
+  - No held-out protocol is locked and no response has been simulated or inspected for this decision.
+
+forbidden_claims:
+  - The resistance reflex has emerged in the simulation.
+  - The FeCO, central, motor or physical parameter families are calibrated.
+  - Left-right equivalence, response amplitude, latency or class hierarchy is accepted before an immutable sourced protocol is locked.
+  - Reusing the motor article permits its perturbation-response observations to enter calibration.
+
+next_action: >-
+  Compile FH-02 as a held-out-specific immutable view of the existing 196-neuron
+  front-leg envelope. Account every population, boundary and exclusion, and freeze
+  topology plus exception hashes without pruning from simulated outcomes.

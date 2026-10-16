@@ -1,6 +1,6 @@
 schema_version: 1
 id: roadmap.first_held_out_evaluation.v0
-revision: 0
+revision: 1
 updated: 2026-10-16
 status: active
 
@@ -26,16 +26,28 @@ milestone:
     - borrowing a fast or intermediate motor kernel for an unresolved slow class
     - promoting diagnostic event/graded conversion constants
 
+selected_planning_path:
+  candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+  decision_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
+  status: prospective_not_locked_not_run
+  selection_basis: independent_biology_and_current_mechanism_readiness
+  simulated_outcomes_inspected_for_selection: false
+  displaced_preference:
+    candidate_id: evaluation_candidate.sensorimotor_lateralization.v0
+    variant: mirrored_localized_leg_contact
+    disposition: deferred_not_rejected
+    reason: no_admitted_local_mechanosensory_calibration_dataset_or_transfer_representation
+
 estimate_contract:
   unit: substantial_agent_delivery_batch
   unit_definition: >-
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 9
-  base_work_batches: {min: 11, max: 16}
+  open_items: 7
+  base_work_batches: {min: 8, max: 13}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 13, max: 20}
+  planning_forecast_batches: {min: 10, max: 17}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -55,7 +67,7 @@ items:
   - id: FH-01
     title: Select and justify the first evaluable local channel
     nature: evidence_and_readiness_gate
-    status: ready
+    status: complete
     depends_on: []
     estimated_batches: {min: 1, max: 1}
     exit_criteria:
@@ -63,11 +75,15 @@ items:
       - tactile remains preferred or a sourced proprioceptive candidate is prospectively registered
       - the choice uses readiness and biology, never a simulated outcome
     replan_if: no candidate has sufficient independent local evidence
+    completion_record:
+      evaluation_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
+      outcome: proprioceptive_resistance_reflex_selected_tactile_deferred
+      simulated_outcomes_inspected: false
 
   - id: FH-02
     title: Compile the bounded stimulus-to-readout causal population cone
     nature: rules_first_scope_compilation
-    status: planned
+    status: complete
     depends_on: [FH-01]
     estimated_batches: {min: 1, max: 1}
     exit_criteria:
@@ -75,13 +91,19 @@ items:
       - exclusions and the relationship to the 166419 dual-unresolved neurons are explicit
       - topology and exception hashes are frozen
     replan_if: the cone is not materially smaller or cannot be bounded without outcome inspection
+    completion_record:
+      scope_ref: calibration/scopes/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+      evaluation_ref: calibration/evaluations/first-held-out-causal-cone-v0.yaml
+      population_accounting: 196_total_12_event_required_184_dual_unresolved
+      canonical_neurons_outside_local_claim: 166504
+      simulated_outcomes_consumed: false
 
   - id: FH-03
     title: Calibrate and freeze the minimal sensory chain
     nature: local_interface_calibration
-    status: planned
+    status: ready
     depends_on: [FH-01, FH-02]
-    estimated_batches: {min: 2, max: 3}
+    estimated_batches: {min: 1, max: 2}
     exit_criteria:
       - routing and transfer capacity are independently justified and versioned
       - local train/validation evidence is admitted with units and uncertainty
@@ -181,6 +203,28 @@ replanning_policy:
     without creating sub-items; discoveries with scientific or schedule impact
     must not be hidden inside an unchanged forecast.
 
+progress:
+  - date: 2026-10-16
+    batch: first_post_roadmap_delivery
+    before:
+      open_items: 9
+      base_work_batches: {min: 11, max: 16}
+      planning_forecast_batches: {min: 13, max: 20}
+    closed: [FH-01, FH-02]
+    newly_discovered_items: []
+    estimate_change_from_path_selection:
+      item_id: FH-03
+      old_estimated_batches: {min: 2, max: 3}
+      new_estimated_batches: {min: 1, max: 2}
+      reason: >-
+        The selected proprioceptive path already has a bounded FeCO observation
+        ensemble and local source payload; the deferred tactile path would have
+        required new mechanosensory evidence acquisition and capacity selection.
+    after:
+      open_items: 7
+      base_work_batches: {min: 8, max: 13}
+      planning_forecast_batches: {min: 10, max: 17}
+
 history:
   - revision: 0
     date: 2026-10-16
@@ -188,3 +232,27 @@ history:
     open_items: 9
     base_work_batches: {min: 11, max: 16}
     planning_forecast_batches: {min: 13, max: 20}
+  - revision: 1
+    date: 2026-10-16
+    reason: >-
+      FH-01 closed from evidence/readiness rather than simulation. Localized
+      tactile contact was deferred because no admitted mechanosensory calibration
+      dataset or transfer/routing representation makes a negative result
+      interpretable. A separately sourced front-leg proprioceptive resistance
+      reflex candidate was prospectively registered. This is a dependency-path
+      change and therefore a recorded replan, even though it reduces the forecast.
+    old_open_items: 9
+    new_open_items: 8
+    old_base_work_batches: {min: 11, max: 16}
+    new_base_work_batches: {min: 9, max: 14}
+    old_planning_forecast_batches: {min: 13, max: 20}
+    new_planning_forecast_batches: {min: 11, max: 18}
+    closed: [FH-01]
+    newly_discovered_items: []
+    reusable_work:
+      - existing 196-neuron front-leg chain envelope
+      - FeCO local observation evidence and candidate ensemble
+      - motor and actuator evidence already scoped to the same front leg
+    invalidated_work: []
+    removed_or_deferred_work:
+      - mechanosensory local-chain calibration is deferred from the first attempt but remains required for future tactile evaluation

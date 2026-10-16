@@ -1,0 +1,87 @@
+schema_version: 1
+id: runner_result.first_held_out_causal_cone.v0
+campaign_id: campaign.first_held_out_causal_cone.v0
+status: pass_bounded_cone_accounting_no_selection
+command: first_held_out_causal_cone.bat
+claim_label: CAUSAL SCOPE COMPILATION / NO VALUES / NO BEHAVIOR OUTCOME
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+population_accounting:
+  sensory_neurons: 36
+  intermediate_neurons: 150
+  motor_neurons: 10
+  unique_cone_neurons: 196
+  event_required_neurons: 12
+  dual_unresolved_neurons: 184
+  graded_required_neurons: 0
+  reachable_endpoint_pairs: 360
+  direct_edges: 10
+  bounded_path_records: 692
+  canonical_neurons_outside_cone: 166504
+  basal_reached_neurons_outside_cone: 166235
+  dual_unresolved_basal_reached_neurons_outside_cone: 166235
+  canonical_neurons_outside_basal_reach: 269
+boundary_ownership:
+  kinematics_to_feco:
+    alternatives:
+    - graded_activity
+    - event_intensity
+    owner_family_ids:
+    - parameter.proprioception.routing.v0
+    - parameter.proprioception.transfer.v0
+  central_event_to_event:
+    owner_family_ids:
+    - parameter.central.synaptic_efficacy.v0
+    - parameter.central.neuron_dynamics.v0
+  central_graded_to_graded:
+    owner_family_ids:
+    - parameter.central.synaptic_efficacy.v0
+    - parameter.central.neuron_dynamics.v0
+  central_event_to_graded:
+    owner_family_ids:
+    - parameter.central.native_boundary_conversion.v0
+  central_graded_to_event:
+    owner_family_ids:
+    - parameter.central.native_boundary_conversion.v0
+  motor_event_to_force:
+    owner_family_ids:
+    - parameter.motor.transfer.v0
+  force_to_direct_motor:
+    owner_family_ids:
+    - parameter.motor.routing.v0
+    - parameter.technical.motor_command_envelope.v0
+topology_boundary:
+  central_body_id_sha256: 6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5
+  central_dataset_sha256: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+  semantic_topology_hashes:
+    proprioception: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    motor_output: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  topology_changes_allowed: false
+frozen_source_bundle_sha256: de0ea45d02d850e6067c844ba35b5d0b00eba8033fab224f851051ac4fcef6c7
+exception_semantics_sha256: 5a1bf755b034461124a2ebd4637ee495c63096b60c81e1e2d3b3c4f4334171ca
+checks:
+  FH_01_candidate_matches: true
+  no_simulated_outcomes_consumed: true
+  all_196_neurons_accounted: true
+  event_plus_dual_plus_graded_equals_cone: true
+  all_native_boundary_kinds_owned: true
+  outside_cone_accounted: true
+  no_path_selected: true
+  zero_parameter_values_promoted: true
+  zero_topology_changes: true
+optimized_parameters: 0
+promoted_parameter_values: 0
+behavior_outcomes_consumed: 0
+accepted_claims:
+- The prospective first path has a bounded and reproducible 196-neuron cone.
+- All scoped dynamics dispositions, native-boundary owners and outside-cone populations
+  are explicit.
+- No path, population assignment, parameter value or response outcome was selected.
+forbidden_claims:
+- The cone is the unique functional route for the resistance reflex.
+- The 184 dual-unresolved populations have accepted native dynamics.
+- A diagnostic conversion constant or motor branch is promoted.
+- The future held-out response was executed, inspected or used to prune the cone.
+next_action: Use this immutable cone as the scope for FH-03, FH-04 and FH-05. Calibrate
+  or propagate each family without changing the cone or consuming the eventual resistance-reflex
+  outcome.
+semantic_result_sha256: dc1ef3588061dab7c31396b941281b6f13362b0d980cc9b13614aebf8a6b9055

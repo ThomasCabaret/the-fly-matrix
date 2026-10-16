@@ -1,0 +1,91 @@
+schema_version: 1
+id: campaign.first_held_out_causal_cone.v0
+title: Compile the bounded causal cone for the first held-out planning path
+status: completed_pass
+target_id: target.population_dynamics_assignment.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: CAUSAL SCOPE COMPILATION / NO VALUES / NO BEHAVIOR OUTCOME
+behavior_targets: []
+topology_changes_allowed: false
+optimized_parameters: 0
+
+selected_candidate:
+  id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+  readiness_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
+  readiness_sha256: 7727b617c19a7e41701e9b919bc4de26db49e19f89cc0a8da9a3e63dfcf21edb
+  protocol_locked: false
+  simulated_outcomes_available_to_compiler: false
+
+frozen_inputs:
+  source_scope:
+    ref: calibration/scopes/front-leg-sensor-cns-motor-chain-v0.yaml
+    sha256: a7dc4af94efa1ab9178289e15fc69d27d3355be54741211ed7f0cd6a6e0f1059
+  chain_result:
+    ref: calibration/runner/front-leg-sensor-cns-motor-chain-v0.yaml
+    sha256: 4158d599f24815a7e45ca57f63c0df2c1091262cfe607e5ce6e1ee3979f19460
+    semantic_sha256: 5c320bb9febf20d360413f654c764744d7197cfbd8acd5391b0226264027053b
+  intermediate_result:
+    ref: calibration/runner/front-leg-intermediate-dynamics-accounting-v0.yaml
+    sha256: 8961dec444a45533fe55b438ad9301fd054b164ea2e9d902c5950604702cb6a6
+    semantic_sha256: 614bf3075051de600df68ddc0e3e96f708329311f9893c8d286ba1c3d0ba6f42
+  uncertainty_result:
+    ref: calibration/runner/front-leg-uncertainty-propagation-v0.yaml
+    sha256: 421b8d50804b3ed0ac25e67fbbfcf706e0538339cebca89609b8ff1ff54f4cd0
+
+expected_scope:
+  canonical_neurons_total: 166700
+  basal_reached_neurons: 166431
+  canonical_neurons_outside_basal_reach: 269
+  sensory_neurons: 36
+  intermediate_neurons: 150
+  motor_neurons: 10
+  unique_cone_neurons: 196
+  event_required_neurons: 12
+  dual_unresolved_neurons: 184
+  graded_required_neurons: 0
+  reachable_endpoint_pairs: 360
+  direct_edges: 10
+  bounded_path_records: 692
+
+boundary_ownership:
+  kinematics_to_feco:
+    alternatives: [graded_activity, event_intensity]
+    owner_family_ids: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0]
+  central_event_to_event:
+    owner_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+  central_graded_to_graded:
+    owner_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+  central_event_to_graded:
+    owner_family_ids: [parameter.central.native_boundary_conversion.v0]
+  central_graded_to_event:
+    owner_family_ids: [parameter.central.native_boundary_conversion.v0]
+  motor_event_to_force:
+    owner_family_ids: [parameter.motor.transfer.v0]
+  force_to_direct_motor:
+    owner_family_ids: [parameter.motor.routing.v0, parameter.technical.motor_command_envelope.v0]
+
+acceptance:
+  - every source, intermediate and motor population is counted exactly once
+  - every dynamics disposition is event_required or dual_unresolved with no silent default
+  - all native-boundary kinds have a separate parameter owner
+  - topology, source-result and exception hashes are frozen
+  - all canonical and basal-reached populations outside the cone are counted as excluded from this local claim
+  - no route, path, assignment, value or candidate is selected
+  - no held-out response, body motion or threshold crossing is consumed
+
+forbidden_claims:
+  - The cone is the unique functional route for the resistance reflex.
+  - The 184 dual-unresolved populations have accepted native dynamics.
+  - A diagnostic conversion constant or motor branch is promoted.
+  - The future held-out response was executed, inspected or used to prune the cone.
+
+outputs:
+  scope_ref: calibration/scopes/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+  runner_ref: calibration/runner/first-held-out-causal-cone-v0.yaml
+  evaluation_ref: calibration/evaluations/first-held-out-causal-cone-v0.yaml
+
+next_action: >-
+  Use this immutable cone as the scope for FH-03, FH-04 and FH-05. Calibrate or
+  propagate each family without changing the cone or consuming the eventual
+  resistance-reflex outcome.

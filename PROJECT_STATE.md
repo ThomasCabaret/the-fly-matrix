@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-15. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-16. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -35,6 +35,24 @@ deux extrêmes runtime. Le couplage source basale×efficacité×conversion×seui
 risque d'identifiabilité autonome. Enfin, la chaîne motrice reste bloquée pour
 58 025 affectations contenant une classe lente, et le futur test tactile dépend
 d'une chaîne mécanoréceptrice distincte de FeCO encore non calibrée.
+
+La première étape de la roadmap vers une évaluation tenue à l'écart est désormais
+fermée sans regarder de sortie simulée. Le contact tactile localisé reste au
+catalogue mais est différé comme premier essai : ses 323 groupes, 2 108 routes,
+jusqu'à 1 785 dimensions de routage et l'absence de jeu local admis rendent un
+échec actuellement ambigu. La voie sélectionnée pour la planification est un
+réflexe de résistance proprioceptif de la patte antérieure : déplacement passif
+borné du tibia, sham et essais gauche/droite, avec réponse motrice et physique
+tenue à l'écart de toute calibration. La décision et ses limites sont dans
+`calibration/evaluations/first-held-out-channel-readiness-v0.yaml`. Ce n'est ni
+un protocole verrouillé ni une prédiction positive. La roadmap passe en révision
+1. FH-01 et FH-02 sont terminés : le cône spécifique réutilise les 36 FeCO, 150
+intermédiaires et dix motoneurones, soit 196 neurones dont douze `event_required`
+et 184 `dual_unresolved`. Les 166 504 autres neurones canoniques sont explicitement
+hors du claim local ; tous les propriétaires de frontière, hashes topologiques et
+exceptions sont gelés sans sélectionner de chemin, valeur ou réponse. FH-03 est
+prêt, sept items restent ouverts et la prévision explicite devient 10–17 fournées,
+contingence comprise.
 
 Le petit code source moteur public est désormais lui aussi un contrat exécutable
 hash-verrouillé : il comptabilise 23 cellules actives (7 rapides, 7 intermédiaires,
