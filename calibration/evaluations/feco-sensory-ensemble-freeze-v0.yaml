@@ -1,0 +1,26 @@
+schema_version: 1
+id: evaluation.feco_sensory_ensemble_freeze.v0
+title: Scoped FeCO sensory ensemble freeze result
+status: pass_partial_fh03_native_scale_open
+campaign_id: campaign.feco_sensory_ensemble_freeze.v0
+target_id: target.population_dynamics_assignment.v0
+primary_class: local_interface
+behavior_targets: []
+acceptance_result: pass_routing_and_observation_shape_ensemble_frozen
+accounting:
+  routing_profiles: 27
+  joint_source_paths: 8
+  native_representations: 2
+  factorized_members: 432
+scientific_boundary:
+  mapped_bodies: 26
+  unresolved_bodies: 10
+  unresolved_types: 3
+  candidate_paths_retained: 6
+  candidate_paths_excluded: 1
+  cross_validation_folds_verified: 86
+  native_runtime_amplitude_identified: false
+  fh03_complete: false
+semantic_parameter_set_sha256: 4c109b75ef859003a32d50a84bf772d90b2f0365f74148f64fbb05bbc5db1ab6
+next_action: Bound the native-unit/amplitude bridge without behavior exposure to close
+  FH-03.

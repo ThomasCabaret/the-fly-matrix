@@ -1,6 +1,6 @@
 schema_version: 1
 phase: population_typed_dynamics_assignment_and_local_chain_calibration
-updated: 2026-10-16
+updated: 2026-10-17
 
 wiring_baseline:
   terminal_coverage: complete
@@ -21,15 +21,16 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.basal_event_scale_compatibility.v0
-last_preregistered_campaign_id: campaign.basal_event_scale_compatibility.v0
-last_executed_campaign_id: campaign.basal_event_scale_compatibility.v0
+last_completed_campaign_id: campaign.feco_sensory_ensemble_freeze.v0
+last_preregistered_campaign_id: campaign.feco_sensory_ensemble_freeze.v0
+last_executed_campaign_id: campaign.feco_sensory_ensemble_freeze.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
   - parameters.front_leg_local_feedback_nonamplifying_ensemble.v0
   - parameters.front_leg_member_conditioned_bundles.v0
+  - parameters.front_leg_feco_sensory_ensemble.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
 parameter_dependency_dag_id: calibration.parameter_dependency_dag.v0
 active_roadmap_id: roadmap.first_held_out_evaluation.v0
@@ -107,6 +108,7 @@ readiness:
   tactile_evaluation_readiness: deferred_as_first_candidate_mechanosensation_323_groups_2108_routes_up_to_1785_routing_dimensions_transfer_unfitted_no_admitted_local_dataset_feco_not_a_substitute
   first_held_out_channel_selection: FH_01_complete_proprioceptive_resistance_reflex_selected_from_sources_and_readiness_zero_simulated_outcomes_protocol_not_locked
   first_held_out_causal_cone: FH_02_complete_196_neurons_12_event_required_184_dual_unresolved_166504_canonical_outside_claim_topology_and_exceptions_frozen_zero_outcomes_or_values
+  first_held_out_sensory_chain: FH_03_in_progress_26_of_36_exact_type_aliases_10_bodies_in_3_type_shared_unknowns_27_routes_6_shapes_8_joint_paths_2_native_representations_432_factorized_members_native_scale_open_zero_outcomes
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: false
 
@@ -168,6 +170,7 @@ blocked_by:
   - Flexible peripheral transfers could compensate for central or mechanical error; local evidence, sharing limits and family-wise ablations are required before any broad joint campaign.
   - The 2 MB processed FeCO calcium payload is locally acquired and exact size/SHA-256 verified: three tables, 64,300 rows, plus documentation and pinned public source. The source paths still expose unresolved 80/90-degree and 5/50-degree discrepancies.
   - The FeCO local fitting procedure completed all 86 leave-one-animal-out folds across seven source/boundary candidates on 33,766 retained rows, with zero blocked folds. It preserves both the public claw concatenation artifact and a boundary-safe port; no filter crosses train/held-out animals. The complete candidate ensemble remains unpromoted, no runtime parameter set is selected, and the comparison does not identify native event-versus-graded dynamics.
+  - The FH-03 scoped freeze now maps 26/36 FeCO bodies by exact MaleCNS type aliases and carries the other ten as three shared unknown type variables, giving 27 routing profiles rather than independent per-body guesses. The cross-trial concatenated claw path is rejected solely for violating the causal trial-boundary contract; six boundary-valid shapes remain, yielding eight joint source paths and 432 members after retaining both native representations. No reference is selected. Native runtime units and amplitude remain open, so FH-03 is not complete.
   - Calcium constrains a kinematics-to-observation proxy but does not by itself identify native spikes, membrane voltage, CNS model units or the graded-versus-event assignment.
   - The motor publication and code distinguish fast, intermediate and slow tibia-flexor units, but no source-backed crosswalk assigns those classes to the ten selected MaleCNS body IDs. Class membership must remain an ensemble until resolved.
   - The motor source contract hash-locks five public files and the exact one-cell-per-class pilot archives are now acquired and verified (860,357,945 bytes). The full public Git history recovered the two table-construction scripts deleted from the current branch; the Python port accounts for all 194 declared trials as 183 usable plus 11 source-excluded and emits 22 aggregate rows. MATLAB cross-runtime bitwise equivalence has not been run, and no temporal twitch kernel is defined. The ten-body class uncertainty remains a factorized 3^10 upper bound (59,049 joint assignments), with no probability, symmetry or class-count prior and no selected crosswalk.
@@ -184,7 +187,8 @@ next_action: >-
   proprioceptive resistance-reflex candidate is selected for planning without a
   viewed outcome. FH-02 is also complete: the held-out-specific cone freezes 196
   neurons, twelve event requirements, 184 dual-unresolved assignments, every
-  native-boundary owner and 166,504 canonical exclusions. Begin FH-03 by making a
-  source-path acceptance decision and freezing the minimum-capacity FeCO sensory
-  ensemble without using resistance-reflex direction, latency, spatial specificity
-  or body motion.
+  native-boundary owner and 166,504 canonical exclusions. FH-03 is in progress:
+  its 27 type-shared routing profiles and six boundary-valid observation shapes
+  are frozen as a 432-member factorized set with no reference selection. Finish
+  FH-03 by bounding the native-unit/amplitude bridge without using resistance-reflex
+  direction, latency, spatial specificity or body motion.

@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter.proprioception.routing.v0
 title: Proprioception local routing
-status: compiler_ready_81_profile_channel_group_candidate_panel_unselected
+status: front_leg_feco_scoped_type_shared_ensemble_frozen_global_family_open
 primary_class: local_interface
 parameter_kind: routing
 claim_role: biological
@@ -16,7 +16,9 @@ origin_policy: {preferred_order: [measured, evidence_transfer, shared_class, loc
 identifiability: {status: unresolved, allowed_dataset_ids: [], local_held_out_dataset_ids: [], forbidden_behavior_ids: [walking, grooming, stance], jointly_identified_with: [], joint_calibration_reason: null}
 dependencies: {upstream_family_ids: [], downstream_family_ids: [parameter.proprioception.transfer.v0]}
 uncertainty: {representation: admissible_routing_set, admissible_set_criteria: [same_side, same_appendage, FeCO_partition, direct_proxy_partition], reference_selection_rule: unresolved}
-freeze: {status: not_frozen, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
-sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: exact route-key and runtime expansion contract}]
+freeze: {status: not_frozen_globally, parameter_set_id: null, acceptance_evaluation_ids: [], reopen_reason: null, stale_descendant_ids: []}
+scoped_freezes:
+  - {scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0, parameter_set_id: parameters.front_leg_feco_sensory_ensemble.v0, evaluation_id: evaluation.feco_sensory_ensemble_freeze.v0, status: frozen_27_type_shared_profiles_no_reference_selected}
+sources: [{ref: data/derived/wiring-revalidation/wiring-revalidation-20260929T182220Z/summary.json, supports: candidate edges and topology hash}, {ref: calibration/compilers/peripheral-routing-transfer-v0.yaml, supports: exact route-key and runtime expansion contract}, {ref: calibration/evidence/front-leg-feco-type-crosswalk-v0.yaml, supports: scoped exact aliases and three type-shared unresolved variables}]
 assumptions: [The current runtime weight vector couples route selection and gain and must be compiled from two logical families.]
-next_action: Execute the 81-profile channel-group candidate panel from campaign.neutral_embodied_declared_envelope.v0; retain it as deliberately overinclusive until local evidence identifies FeCO functional classes.
+next_action: Propagate the frozen 27-profile scoped FeCO set for the first held-out cone; keep the global family open and acquire independent evidence for SApp23, SNpp43 and SNpp59 rather than selecting from behavior.

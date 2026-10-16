@@ -367,6 +367,15 @@ event/graded representation. Its synthetic tests validate accounting and leakage
 barriers only; the biological residual summary lives in
 `evaluations/feco-calcium-held-out-fit-v0.yaml`.
 
+Run `feco_sensory_freeze.bat` to reconstruct the first scoped FH-03 freeze. The
+MaleCNS catalogue supplies exact FeCO aliases for 26/36 bodies; the ten remaining
+bodies stay tied within three unresolved types, producing 27 routing profiles.
+The cross-trial concatenated claw path is rejected by the trial-boundary contract,
+not its score. Six retained shapes form eight joint source paths and are crossed
+with both unresolved native representations for 432 factorized members. The
+parameter set freezes this finite uncertainty but explicitly leaves native units
+and amplitude open, so it does not complete FH-03 or promote a reference member.
+
 Do not bulk-download the 48.76 GB motor repository or infer defaults from article
 prose. The ten selected MaleCNS tibia-flexor motor body IDs still lack a
 source-backed fast/intermediate/slow crosswalk, so class assignments remain an

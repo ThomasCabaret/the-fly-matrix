@@ -1,0 +1,68 @@
+schema_version: 1
+id: campaign.feco_sensory_ensemble_freeze.v0
+title: Freeze the scoped FeCO routing and observation-shape ensemble
+status: preregistered_runnable
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: local_interface
+optimization_exposure: allowed
+behavior_targets: []
+topology_changes_allowed: false
+
+inputs:
+  crosswalk: calibration/evidence/front-leg-feco-type-crosswalk-v0.yaml
+  source_fit_campaign: calibration/campaigns/feco-calcium-held-out-fit-v0.yaml
+  source_fit_result: calibration/runner/feco-calcium-held-out-fit-v0.yaml
+  source_fit_evaluation: calibration/evaluations/feco-calcium-held-out-fit-v0.yaml
+  annotations: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  expected_annotation_sha256: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2
+  expected_topology_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+
+acceptance_policy:
+  excluded_candidates:
+    claw_fit_recipe_exact_concatenated:
+      reason: cross_trial_observation_kernel_leakage
+      selection_basis: causal_trial_boundary_contract_independent_of_residual
+  retained_candidates:
+    claw: [claw_published_predictor_center_80_gcamp, claw_fit_recipe_boundary_safe]
+    club: [club_fit_recipe_threshold_5_deg_s, club_documented_application_threshold_50_deg_s]
+    hook: [hook_fit_recipe_threshold_minus_5_deg_s, hook_documented_application_threshold_minus_50_deg_s]
+  choose_residual_winner: false
+  choose_native_representation: false
+  native_representations: [graded_activity, event_intensity]
+  prohibited_selection_inputs: [body_motion, named_behavior, future_resistance_reflex_outcome]
+
+materialization:
+  refit_retained_candidates_on_all_local_observation_rows: true
+  purpose: reproducible_observation_shape_materialization_not_candidate_ranking
+  expected_cross_validation_folds_verified: 86
+  expected_routing_profiles: 27
+  expected_joint_source_paths: 8
+  expected_native_representations: 2
+  expected_factorized_members: 432
+  factorization: routing_profile_x_claw_path_x_club_path_x_hook_path_x_native_representation
+
+scientific_boundary:
+  frozen_here:
+    - exact type-to-class aliases for 26 scoped bodies
+    - 27 type-shared alternatives for the ten unresolved bodies
+    - six boundary-valid observation-shape candidates
+    - both unresolved native representations
+  remains_open:
+    - native runtime amplitude and unit bridge
+    - native event versus graded assignment
+    - source intensity jointly identifiable with synaptic efficacy and thresholds
+  forbidden_claims:
+    - calcium amplitude is a native CNS runtime unit
+    - the lowest residual candidate is biologically correct
+    - the 432 factorized members are 432 independently fitted biological models
+    - this campaign closes FH-03 by itself
+
+outputs:
+  parameter_set: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v0.yaml
+  runner_result: calibration/runner/feco-sensory-ensemble-freeze-v0.yaml
+  evaluation: calibration/evaluations/feco-sensory-ensemble-freeze-v0.yaml
+  detailed_summary: data/derived/calibration/feco-sensory-ensemble-freeze-v0/summary.json
+
+next_action: Materialize the factorized ensemble, then close the native-unit/amplitude bridge in a distinct nonbehavioral FH-03 delivery.
+replan_if: Independent evidence shows that an unresolved type needs a functional class outside the admitted claw, club and hook capacity.

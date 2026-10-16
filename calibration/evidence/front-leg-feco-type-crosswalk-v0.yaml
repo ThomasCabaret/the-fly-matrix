@@ -1,0 +1,73 @@
+schema_version: 1
+id: evidence.front_leg_feco_type_crosswalk.v0
+title: MaleCNS type to FeCO functional-class crosswalk for the first held-out cone
+status: accepted_partial_crosswalk_three_type_shared_unknowns
+updated: 2026-10-17
+
+scope:
+  scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+  selector:
+    class: mechanosensory_proprioceptive
+    entryNerve: ProLN
+    subclass: chordotonal organ
+  annotation_path: data/raw/malecns/v1.0/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  annotation_sha256: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2
+  scoped_bodies: 36
+  scoped_types: 11
+
+source_contract:
+  source: Male CNS Cell Type Explorer v1.0 type pages
+  base_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types.html
+  accessed: 2026-10-17
+  supports:
+    - exact published AKA labels for the named MaleCNS types
+    - class-level assignment of scoped bodies sharing those exact type labels
+  does_not_support:
+    - native event versus graded representation
+    - numerical activation amplitude or runtime units
+    - an AKA for a type whose page displays none
+    - choosing among the retained FeCO observation candidates
+
+type_assignments:
+  - {type: SApp23, scoped_bodies: 6, functional_class: null, status: unresolved_no_published_aka, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SApp23.html}
+  - {type: SNpp39, scoped_bodies: 8, functional_class: hook, status: accepted_exact_aka, published_aka: FeCO hook, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp39.html}
+  - {type: SNpp40, scoped_bodies: 2, functional_class: club, status: accepted_exact_aka, published_aka: FeCO club, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp40.html}
+  - {type: SNpp41, scoped_bodies: 2, functional_class: hook, status: accepted_exact_aka, published_aka: FeCO hook, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp41.html}
+  - {type: SNpp43, scoped_bodies: 2, functional_class: null, status: unresolved_no_published_aka, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp43.html}
+  - {type: SNpp47, scoped_bodies: 4, functional_class: club, status: accepted_exact_aka, published_aka: FeCO club, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp47.html}
+  - {type: SNpp50, scoped_bodies: 1, functional_class: claw, status: accepted_exact_aka, published_aka: FeCO claw, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp50.html}
+  - {type: SNpp51, scoped_bodies: 4, functional_class: claw, status: accepted_exact_aka, published_aka: FeCO claw, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp51.html}
+  - {type: SNpp57, scoped_bodies: 2, functional_class: club, status: accepted_exact_aka, published_aka: FeCO club, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp57.html}
+  - {type: SNpp59, scoped_bodies: 2, functional_class: null, status: unresolved_no_published_aka, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp59.html}
+  - {type: SNpp60, scoped_bodies: 3, functional_class: club, status: accepted_exact_aka, published_aka: FeCO club, source_url: https://reiserlab.github.io/celltype-explorer-drosophila-male-cns/types/SNpp60.html}
+
+accounting:
+  mapped_types: 8
+  mapped_bodies: 26
+  mapped_bodies_by_class: {claw: 5, club: 11, hook: 10}
+  unresolved_types: 3
+  unresolved_bodies: 10
+  unresolved_type_ids: [SApp23, SNpp43, SNpp59]
+  missing_or_excluded_bodies: 0
+
+uncertainty_policy:
+  sharing_level: MaleCNS_type
+  admissible_classes_per_unresolved_type: [claw, club, hook]
+  independent_type_variables: 3
+  routing_profiles: 27
+  individual_body_assignments_allowed: false
+  probability_or_reference_profile_selected: false
+  rationale: >-
+    Bodies with the same published MaleCNS type remain tied. The absence of an
+    AKA is propagated as a finite type-level alternative, never filled from
+    calcium residuals or the future embodied response.
+
+capacity_gate:
+  hypothesis: the scoped unknown types are representable by the three admitted broad FeCO classes
+  status: explicit_bounded_risk_not_global_biology_claim
+  replan_if: independent evidence supports a response class absent from claw club and hook
+  reusable_if_revised: [exact_26_body_aliases, source_hashes, six_boundary_valid_observation_paths]
+
+behavior_exposure: none
+topology_changes: 0
+next_action: Propagate all 27 type-shared profiles until independent evidence resolves one of the three unknown types.

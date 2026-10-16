@@ -1,0 +1,23 @@
+schema_version: 1
+id: runner_result.feco_sensory_ensemble_freeze.v0
+generated_at: '2026-10-16T22:31:13.045161+00:00'
+campaign_id: campaign.feco_sensory_ensemble_freeze.v0
+status: completed_scoped_shapes_frozen_native_scale_open
+semantic_result_sha256: 4c109b75ef859003a32d50a84bf772d90b2f0365f74148f64fbb05bbc5db1ab6
+accounting:
+  mapped_bodies: 26
+  unresolved_bodies: 10
+  unresolved_types: 3
+  candidate_paths_retained: 6
+  candidate_paths_excluded: 1
+  cross_validation_folds_verified: 86
+  native_runtime_amplitude_identified: false
+  fh03_complete: false
+  routing_profiles: 27
+  joint_source_paths: 8
+  native_representations: 2
+  factorized_members: 432
+outputs:
+  parameter_set: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v0.yaml
+  evaluation: calibration/evaluations/feco-sensory-ensemble-freeze-v0.yaml
+  detailed_summary: data/derived/calibration/feco-sensory-ensemble-freeze-v0/summary.json

@@ -1,6 +1,6 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-16. L'inventaire/DAG, le compilateur périphérique et le
+Mise à jour : 2026-10-17. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;
@@ -51,8 +51,16 @@ intermédiaires et dix motoneurones, soit 196 neurones dont douze `event_require
 et 184 `dual_unresolved`. Les 166 504 autres neurones canoniques sont explicitement
 hors du claim local ; tous les propriétaires de frontière, hashes topologiques et
 exceptions sont gelés sans sélectionner de chemin, valeur ou réponse. FH-03 est
-prêt, sept items restent ouverts et la prévision explicite devient 10–17 fournées,
-contingence comprise.
+en cours, sept items restent ouverts et la prévision explicite devient 10–16
+fournées, contingence comprise. Sa première livraison relie exactement 26 des 36
+corps FeCO à `claw`, `club` ou `hook` par les alias publiés du catalogue MaleCNS.
+Les dix autres restent regroupés en trois types inconnus, soit 27 profils de
+routage plutôt que des choix arbitraires corps par corps. Le chemin claw qui
+convolue à travers des frontières d'essais est exclu pour cette violation causale,
+pas pour son score. Six formes d'observation, huit combinaisons fonctionnelles et
+deux représentations natives forment donc 432 membres factorisés sans référence
+sélectionnée. Les unités et l'amplitude natives restent ouvertes : FH-03 n'est pas
+encore terminé.
 
 Le petit code source moteur public est désormais lui aussi un contrat exécutable
 hash-verrouillé : il comptabilise 23 cellules actives (7 rapides, 7 intermédiaires,
@@ -1353,6 +1361,7 @@ actuator_attribution_gate.bat # attribution passif/ouvert/fermé + symétrie tet
 prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pilote moteur opt-in
 feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
 fit_feco_calcium_observation.bat # 7 chemins FeCO, 86 folds leave-one-animal-out ; ensemble non promu
+feco_sensory_freeze.bat          # 27 routages typés x 8 chemins x 2 représentations ; échelle native ouverte
 inspect_motor_pilot.bat # 3 archives exactes vérifiées, 1 022 membres inventoriés sans extraction
 motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit et aucun noyau temporel
 parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git

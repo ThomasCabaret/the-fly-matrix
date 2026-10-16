@@ -1,7 +1,7 @@
 schema_version: 1
 id: roadmap.first_held_out_evaluation.v0
 revision: 1
-updated: 2026-10-16
+updated: 2026-10-17
 status: active
 
 milestone:
@@ -45,9 +45,9 @@ estimate_contract:
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
   open_items: 7
-  base_work_batches: {min: 8, max: 13}
+  base_work_batches: {min: 8, max: 12}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 10, max: 17}
+  planning_forecast_batches: {min: 10, max: 16}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -101,14 +101,26 @@ items:
   - id: FH-03
     title: Calibrate and freeze the minimal sensory chain
     nature: local_interface_calibration
-    status: ready
+    status: in_progress
     depends_on: [FH-01, FH-02]
-    estimated_batches: {min: 1, max: 2}
+    estimated_batches: {min: 1, max: 1}
+    remaining_estimated_batches: {min: 1, max: 1}
     exit_criteria:
       - routing and transfer capacity are independently justified and versioned
       - local train/validation evidence is admitted with units and uncertainty
       - the retained parameter set or ensemble is frozen without held-out behavior exposure
     replan_if: the selected modality lacks usable evidence or requires a higher-capacity interface than preregistered
+    progress_record:
+      date: 2026-10-17
+      parameter_set_id: parameters.front_leg_feco_sensory_ensemble.v0
+      outcome: >-
+        Twenty-six of 36 scoped bodies have exact published type aliases. The ten
+        remaining bodies are propagated as three type-shared variables, yielding
+        27 routing profiles. Six boundary-valid observation paths, eight joint
+        source combinations and both native representations form 432 factorized
+        members without a reference selection.
+      remaining_blocker: native runtime units and amplitude are not identified by calcium
+      simulated_outcomes_inspected: false
 
   - id: FH-04
     title: Close the scoped motor slow-kernel and bodyId/class uncertainty
@@ -204,6 +216,24 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-17
+    batch: fh03_scoped_routing_and_observation_shape_freeze
+    before:
+      open_items: 7
+      base_work_batches: {min: 8, max: 13}
+      planning_forecast_batches: {min: 10, max: 17}
+    closed: []
+    advanced: [FH-03]
+    newly_discovered_items: []
+    consumed_batches: 1
+    after:
+      open_items: 7
+      base_work_batches: {min: 8, max: 12}
+      planning_forecast_batches: {min: 10, max: 16}
+    reason_no_item_closed: >-
+      Routing and observation-shape uncertainty are now finite and frozen, but
+      calcium cannot identify the native-unit/amplitude bridge required by the
+      existing FH-03 exit criteria.
   - date: 2026-10-16
     batch: first_post_roadmap_delivery
     before:

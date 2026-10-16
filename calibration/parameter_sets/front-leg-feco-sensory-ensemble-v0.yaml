@@ -1,0 +1,333 @@
+schema_version: 1
+id: parameters.front_leg_feco_sensory_ensemble.v0
+title: Frozen scoped FeCO routing and observation-shape ensemble
+status: frozen_scoped_shapes_native_scale_open
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+campaign_id: campaign.feco_sensory_ensemble_freeze.v0
+primary_class: local_interface
+behavior_targets: []
+topology_changes: 0
+semantic_parameter_set_sha256: 4c109b75ef859003a32d50a84bf772d90b2f0365f74148f64fbb05bbc5db1ab6
+factorization:
+  routing_profiles: 27
+  joint_source_paths: 8
+  native_representations: 2
+  factorized_members: 432
+routing:
+  mapped_body_counts_by_class:
+    claw: 5
+    club: 11
+    hook: 10
+  unknown_types:
+  - SApp23
+  - SNpp43
+  - SNpp59
+  profiles:
+  - profile_id: routing_00
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: claw
+      SNpp59: claw
+  - profile_id: routing_01
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: claw
+      SNpp59: club
+  - profile_id: routing_02
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: claw
+      SNpp59: hook
+  - profile_id: routing_03
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: club
+      SNpp59: claw
+  - profile_id: routing_04
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: club
+      SNpp59: club
+  - profile_id: routing_05
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: club
+      SNpp59: hook
+  - profile_id: routing_06
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: hook
+      SNpp59: claw
+  - profile_id: routing_07
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: hook
+      SNpp59: club
+  - profile_id: routing_08
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: hook
+      SNpp59: hook
+  - profile_id: routing_09
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: claw
+      SNpp59: claw
+  - profile_id: routing_10
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: claw
+      SNpp59: club
+  - profile_id: routing_11
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: claw
+      SNpp59: hook
+  - profile_id: routing_12
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: club
+      SNpp59: claw
+  - profile_id: routing_13
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: club
+      SNpp59: club
+  - profile_id: routing_14
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: club
+      SNpp59: hook
+  - profile_id: routing_15
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: hook
+      SNpp59: claw
+  - profile_id: routing_16
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: hook
+      SNpp59: club
+  - profile_id: routing_17
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: hook
+      SNpp59: hook
+  - profile_id: routing_18
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: claw
+      SNpp59: claw
+  - profile_id: routing_19
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: claw
+      SNpp59: club
+  - profile_id: routing_20
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: claw
+      SNpp59: hook
+  - profile_id: routing_21
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: club
+      SNpp59: claw
+  - profile_id: routing_22
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: club
+      SNpp59: club
+  - profile_id: routing_23
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: club
+      SNpp59: hook
+  - profile_id: routing_24
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: hook
+      SNpp59: claw
+  - profile_id: routing_25
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: hook
+      SNpp59: club
+  - profile_id: routing_26
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: hook
+      SNpp59: hook
+transfer_shape:
+  source_paths:
+  - source_path_id: source_00
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_01
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  - source_path_id: source_02
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_03
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  - source_path_id: source_04
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_05
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  - source_path_id: source_06
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_07
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  full_data_observation_fits:
+  - candidate_id: claw_fit_recipe_boundary_safe
+    functional_class: claw_position
+    fit_kind: quartic_gcamp_padded
+    sampling_policy: fixed_8_01_hz_from_imaging_poly_fun
+    grouping_policy: per_animal_trial_roi
+    source_activation_parameters:
+      threshold_deg_s: null
+      claw_center_deg: 90.0
+      pad_first_sample: 1000
+    observation_space_fit:
+      degree_4: -3.6114026185219155e-07
+      degree_3: -1.3506521153163148e-05
+      degree_2: 0.007595276690485322
+      degree_1: 0.04848176874085149
+      offset: -2.0400495355968817
+    observation_space_metrics:
+      samples: 9000
+      rmse_raw_calcium: 7.032392674334896
+      mae_raw_calcium: 5.135975656808231
+      pearson_r: 0.843743798613396
+    native_runtime_amplitude_identified: false
+  - candidate_id: claw_published_predictor_center_80_gcamp
+    functional_class: claw_position
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    source_activation_parameters:
+      threshold_deg_s: null
+      claw_center_deg: 80.0
+      pad_first_sample: 0
+    observation_space_fit:
+      scale: 57.30942265628051
+      offset: 0.629406165958777
+    observation_space_metrics:
+      samples: 9000
+      rmse_raw_calcium: 7.613948536991758
+      mae_raw_calcium: 5.700390112430786
+      pearson_r: 0.8138084045178735
+    native_runtime_amplitude_identified: false
+  - candidate_id: club_documented_application_threshold_50_deg_s
+    functional_class: club_vibration_and_speed
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    source_activation_parameters:
+      threshold_deg_s: 50.0
+      claw_center_deg: 80.0
+      pad_first_sample: 0
+    observation_space_fit:
+      scale: 32.40854422209413
+      offset: 5.0856013628043835
+    observation_space_metrics:
+      samples: 12208
+      rmse_raw_calcium: 6.96150616027478
+      mae_raw_calcium: 5.23866268637145
+      pearson_r: 0.4447464155533201
+    native_runtime_amplitude_identified: false
+  - candidate_id: club_fit_recipe_threshold_5_deg_s
+    functional_class: club_vibration_and_speed
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    source_activation_parameters:
+      threshold_deg_s: 5.0
+      claw_center_deg: 80.0
+      pad_first_sample: 0
+    observation_space_fit:
+      scale: 21.378929762520997
+      offset: 4.762689046760896
+    observation_space_metrics:
+      samples: 12208
+      rmse_raw_calcium: 6.909032110723709
+      mae_raw_calcium: 5.1755493344753765
+      pearson_r: 0.4580909959345936
+    native_runtime_amplitude_identified: false
+  - candidate_id: hook_documented_application_threshold_minus_50_deg_s
+    functional_class: hook_flexion_direction
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    source_activation_parameters:
+      threshold_deg_s: -50.0
+      claw_center_deg: 80.0
+      pad_first_sample: 0
+    observation_space_fit:
+      scale: 72.34812087703118
+      offset: 1.2880880429137782
+    observation_space_metrics:
+      samples: 12558
+      rmse_raw_calcium: 6.353751371779399
+      mae_raw_calcium: 3.1915644633193487
+      pearson_r: 0.6814474671718223
+    native_runtime_amplitude_identified: false
+  - candidate_id: hook_fit_recipe_threshold_minus_5_deg_s
+    functional_class: hook_flexion_direction
+    fit_kind: affine_on_fixed_prediction
+    sampling_policy: source_ceil_second_time_sample
+    grouping_policy: per_animal_trial_roi
+    source_activation_parameters:
+      threshold_deg_s: -5.0
+      claw_center_deg: 80.0
+      pad_first_sample: 0
+    observation_space_fit:
+      scale: 50.7313603684367
+      offset: 0.802775948528576
+    observation_space_metrics:
+      samples: 12558
+      rmse_raw_calcium: 5.713320585316479
+      mae_raw_calcium: 2.8060208614060618
+      pearson_r: 0.7529322968434986
+    native_runtime_amplitude_identified: false
+  excluded_candidates:
+    claw_fit_recipe_exact_concatenated:
+      reason: cross_trial_observation_kernel_leakage
+      selection_basis: causal_trial_boundary_contract_independent_of_residual
+native_boundary:
+  representations:
+  - graded_activity
+  - event_intensity
+  representation_selected: false
+  runtime_amplitude_identified: false
+  blocker: native_unit_and_amplitude_bridge_not_identified_by_calcium
+selection:
+  reference_member_selected: false
+  candidate_winner_selected: false
+  future_held_out_outcome_inspected: false
+reproducibility:
+  command: feco_sensory_freeze.bat
+next_action: Bound the native-unit/amplitude bridge without behavior exposure to close
+  FH-03.

@@ -211,6 +211,7 @@ local_conversion_contract.bat
 feco_observation_contract.bat
 prepare_local_source_data.bat
 fit_feco_calcium_observation.bat
+feco_sensory_freeze.bat
 
 motor_source_contract.bat
 prepare_local_source_data.bat --include-large-motor-pilot
@@ -231,6 +232,13 @@ The blank lines denote partly independent branches, not required pauses. The
 tracked compact records show that these v0 commands have already been executed in
 the current project history. Their current products remain candidate ensembles
 or technical diagnostics; they are not a promoted end-to-end parameter set.
+
+`feco_sensory_freeze.bat` consumes the completed 86-fold FeCO comparison and the
+exact MaleCNS type annotations. It reconstructs the scoped 27-profile routing set,
+refits six boundary-valid observation shapes on all admitted local rows and emits
+the factorized 432-member sensory ensemble. It deliberately leaves native neural
+units and amplitude open; success is a partial FH-03 freeze, not a calibrated
+sensory interface or a behavior result.
 
 The factorized local-chain step is reproducible with
 `front_leg_chain_envelope.bat`. Its downstream rules-first pass,
