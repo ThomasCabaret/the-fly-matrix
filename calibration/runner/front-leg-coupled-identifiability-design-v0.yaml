@@ -1,0 +1,158 @@
+schema_version: 1
+id: runner_result.front_leg_coupled_identifiability_design.v0
+campaign_id: campaign.front_leg_coupled_identifiability_design.v0
+status: pass_FH05_owner_separated_design_compiled_execution_pending
+claim_label: FH-05 IDENTIFIABILITY DESIGN / ENGINEERING COORDINATES / NO VALUES /
+  NO BEHAVIOR
+command: front_leg_coupled_identifiability_design.bat
+campaign_sha256: 75c02865b039a1f7488451823b277f525f4eea02470d30ec799a493c7b731c86
+semantic_result_sha256: 708d65e345a9a25d92a9b608d2e05cc6ce3d760c392b580574ffd9f5f8a0b206
+structural_design:
+  cone_neurons: 196
+  cone_edges: 4873
+  structural_rows: 599
+  routing_profiles: 27
+  native_profiles: 8
+  intermediate_profiles: 50
+  routing_native_pairs_covered: 216
+  routing_native_pairs_expected: 216
+  intermediate_native_pairs_covered: 400
+  intermediate_native_pairs_expected: 400
+  all_four_boundary_rows: 598
+  boundary_edge_ranges:
+    event_to_event:
+      min: 5
+      max: 4873
+    event_to_graded:
+      min: 0
+      max: 1253
+    graded_to_event:
+      min: 0
+      max: 1501
+    graded_to_graded:
+      min: 0
+      max: 4362
+  event_node_range:
+    min: 12
+    max: 196
+  graded_node_range:
+    min: 0
+    max: 184
+owner_design:
+  runs: 27
+  factors: 6
+  levels_per_factor: 3
+  factor_pairs: 15
+  all_factor_pairs_cover_nine_combinations: true
+  all_pair_combinations_repeated_three_times: true
+  pair_coverage:
+    feco_native_amplitude__x__basal_source_intensity:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    feco_native_amplitude__x__same_native_efficacy:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    feco_native_amplitude__x__cross_native_conversion:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    feco_native_amplitude__x__threshold_distance:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    feco_native_amplitude__x__unknown_afferent_policy:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    basal_source_intensity__x__same_native_efficacy:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    basal_source_intensity__x__cross_native_conversion:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    basal_source_intensity__x__threshold_distance:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    basal_source_intensity__x__unknown_afferent_policy:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    same_native_efficacy__x__cross_native_conversion:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    same_native_efficacy__x__threshold_distance:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    same_native_efficacy__x__unknown_afferent_policy:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    cross_native_conversion__x__threshold_distance:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    cross_native_conversion__x__unknown_afferent_policy:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+    threshold_distance__x__unknown_afferent_policy:
+      combinations: 9
+      minimum_repeats: 3
+      maximum_repeats: 3
+execution_anchor_rows: 81
+unknown_afferent_prior_diagnostic:
+  event_g_l1_absolute_fraction: 0.893
+  state_max_absolute_fraction: 0.889
+  scientific_interpretation: fixture_sensitivity_only_not_biological_dominance
+checks:
+  cone_population_accounting_exact: true
+  structural_row_count_exact: true
+  routing_native_pairs_complete: true
+  intermediate_native_pairs_complete: true
+  owner_pairwise_design_complete: true
+  execution_anchor_rows_complete: true
+  cross_native_boundaries_exercisable: true
+  no_parameter_value_promoted: true
+  no_behavior_outcome_consumed: true
+  no_topology_change: true
+scientific_boundary:
+  parameter_values_promoted: 0
+  population_assignments_promoted: 0
+  routing_profiles_selected: 0
+  native_profiles_selected: 0
+  intermediate_profiles_selected: 0
+  behavior_outcomes_consumed: 0
+  topology_changes: 0
+  numeric_owner_levels_are_engineering_coordinates_not_bounds: true
+  full_higher_order_interaction_coverage_claimed: false
+  finite_admissible_local_ensemble_established: false
+artifact_ref: data/derived/calibration/front-leg-coupled-identifiability-design-v0/summary.json
+accepted_claims:
+- The frozen 196-neuron induced graph supports explicit accounting of all four native-boundary
+  kinds over the retained assignment profiles.
+- Every routing/native pair and every intermediate/native pair is scheduled at least
+  once without claiming full three-way coverage.
+- A 27-run owner design crosses every pair among six separate parameter owners in
+  all nine level combinations.
+- Three structural anchors and all 27 owner rows define 81 preregistered dynamic sentinels
+  for the next FH-05 delivery.
+- Existing unknown-afferent ablation sensitivity is carried as a warning and a design
+  axis, not as a biological conclusion.
+forbidden_claims:
+- Any engineering coordinate is a physiological value, prior, bound or preferred member.
+- Pairwise coverage represents all higher-order interactions or the 2^184 scientific
+  assignment space.
+- A structural anchor is a native population census or a selected routing profile.
+- Threshold crossing, bounded activity or future body motion may select an owner coordinate.
+- This static design establishes the finite admissible FH-05 local ensemble.
+next_action: Execute the 81 preregistered dynamic sentinels with one explicit unpromotable
+  fixture, quantify factor compensation and local observability, then derive or explicitly
+  retain a finite owner-separated admissible ensemble. Escalate only if unsampled
+  higher-order assignment interactions change the conclusion.

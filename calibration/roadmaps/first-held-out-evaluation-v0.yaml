@@ -45,9 +45,9 @@ estimate_contract:
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
   open_items: 5
-  base_work_batches: {min: 6, max: 9}
+  base_work_batches: {min: 5, max: 8}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 8, max: 13}
+  planning_forecast_batches: {min: 7, max: 12}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -162,9 +162,9 @@ items:
   - id: FH-05
     title: Bound typed central, basal and native-boundary identifiability on the cone
     nature: coupled_nonbehavioral_calibration
-    status: planned
+    status: in_progress
     depends_on: [FH-02]
-    estimated_batches: {min: 2, max: 3}
+    estimated_batches: {min: 1, max: 2}
     exit_criteria:
       - population alternatives are evidence-backed or explicitly propagated
       - the class-shared FeCO native bridge is crossed with the local efficacy and threshold ensemble without using the future response
@@ -242,6 +242,40 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-17
+    batch: fh05_owner_separated_static_design
+    before:
+      open_items: 5
+      base_work_batches: {min: 6, max: 9}
+      planning_forecast_batches: {min: 8, max: 13}
+    closed: []
+    advanced: [FH-05]
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      cone_neurons: 196
+      induced_edges: 4873
+      structural_profiles: 599
+      routing_native_pairs: 216
+      intermediate_native_pairs: 400
+      owner_design_rows: 27
+      owner_factor_pairs: 15
+      dynamic_sentinels_preregistered: 81
+    scientific_boundary: >-
+      Static topology and factor coverage are complete, but no dynamic sentinel
+      has yet been executed and no value, assignment or admissible FH-05 ensemble
+      is selected. Higher-order structural interactions remain explicitly outside
+      the pairwise design.
+    after:
+      open_items: 5
+      base_work_batches: {min: 5, max: 8}
+      planning_forecast_batches: {min: 7, max: 12}
+    accounting_note: >-
+      No roadmap item closes because FH-05 requires dynamic execution and a finite
+      admissible ensemble. Its remaining range falls from two-to-three to
+      one-to-two batches because the owner-separation design, real-cone boundary
+      accounting and execution schedule are now complete; no new work item was
+      discovered.
   - date: 2026-10-17
     batch: fh04_motor_slow_tonic_and_factorized_transfer_propagation
     before:

@@ -229,6 +229,7 @@ motor_actuator_bridge_envelope.bat
 front_leg_chain_envelope.bat
 front_leg_intermediate_dynamics.bat
 front_leg_uncertainty_panel.bat
+front_leg_coupled_identifiability_design.bat
 ```
 
 The blank lines denote partly independent branches, not required pauses. The
@@ -272,6 +273,15 @@ FH-04 by making all 59,049 body-class assignments executable as a factorized,
 unranked ensemble while keeping event→force separate from force→direct-MOTOR. A
 fresh clone must reproduce that frontier rather than inventing a global rate/LIF
 default, a preferred candidate, a bodyId/class crosswalk or a borrowed slow twitch.
+
+`front_leg_coupled_identifiability_design.bat` starts FH-05 without executing or
+selecting a response. It reconstructs the real 196-neuron induced graph, covers
+all 216 routing/native and 400 intermediate/native pairs with 599 structural
+profiles, and builds a 27-run strength-two design across six separately owned
+factors. It emits 81 preregistered dynamic anchors for the next delivery. The
+ratios in that design are engineering perturbation coordinates, not biological
+priors or bounds; successful compilation does not establish an admissible
+parameter ensemble.
 
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and

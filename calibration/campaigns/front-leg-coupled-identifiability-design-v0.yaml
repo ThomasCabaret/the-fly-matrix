@@ -1,0 +1,163 @@
+schema_version: 1
+id: campaign.front_leg_coupled_identifiability_design.v0
+title: FH-05 owner-separated coupled-identifiability design on the front-leg cone
+status: completed_static_design_dynamic_execution_pending
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_neural_dynamics.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FH-05 IDENTIFIABILITY DESIGN / ENGINEERING COORDINATES / NO VALUES / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+population_assignments_promoted: 0
+
+purpose: >-
+  Compile the smallest explicit design that can expose compensation among FeCO
+  native amplitude, basal source intensity, same-native synaptic efficacy,
+  cross-native conversion, neuronal threshold distance and unknown-afferent
+  policy on the frozen 196-neuron cone. This delivery verifies topology and
+  factor coverage only. A later execution must run the preregistered anchors;
+  neither this design nor a threshold crossing can select a value.
+
+frozen_inputs:
+  population_members:
+    path: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    sha256: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  classified_intermediates:
+    path: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
+    sha256: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+  intermediate_panel:
+    path: data/derived/calibration/front-leg-uncertainty-propagation-v0/intermediate-assignment-panel.csv
+    sha256: 4557f1bf7a999b4e3f71a6fd2d2f8d26b3b83ab1a654d46e2e20165d77f7cdc2
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+  feco_parameter_set:
+    path: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v1.yaml
+    sha256: eebecfc99d5c1206858f1b2821572ba554e05701c1539cb5f8500b9bb9be1a46
+  feco_crosswalk:
+    path: calibration/evidence/front-leg-feco-type-crosswalk-v0.yaml
+    sha256: 89b818647e0126e3a9d5c2c3be43a87ccb2a00bd3cd67be76312ead532e72241
+  unknown_afferent_evaluation:
+    path: calibration/evaluations/basal-source-envelope-propagation-v0.yaml
+    sha256: c6717e9923f9e16f618b81eaccfd6148a77788b13265709e3607a86f9dd54dd7
+
+parameter_ownership:
+  feco_native_amplitude:
+    family_id: parameter.proprioception.native_bridge.v0
+    meaning: baseline_and_dynamic_range_per_claw_club_hook_class
+  basal_source_intensity:
+    family_ids:
+      - parameter.bridge.basal_event_process.v0
+      - parameter.bridge.basal_hz_to_graded.v0
+    meaning: external_neutral_source_statistics_not_FeCO_stimulus_shape
+  same_native_efficacy:
+    family_id: parameter.central.synaptic_efficacy.v0
+    meaning: event_to_event_and_graded_to_graded_coupling_in_native_units
+  cross_native_conversion:
+    family_id: parameter.central.native_boundary_conversion.v0
+    meaning: event_to_graded_and_graded_to_event_conversion
+  threshold_distance:
+    family_id: parameter.central.neuron_dynamics.v0
+    meaning: threshold_rest_distance_and_other_native_dynamics_remain_separate
+  unknown_afferent_policy:
+    family_id: parameter.residual_sensory.unknown_nominal.v0
+    meaning: zero_tonic_or_matched_stochastic_behavior_naive_source_policy
+
+structural_design:
+  routing_native_coverage: complete_27_by_8
+  intermediate_native_coverage: complete_50_by_8
+  full_cartesian_product: false
+  reason: >-
+    Cover every routing/native and intermediate/native pair while avoiding the
+    10,800-member three-axis product. Interactions involving all three axes remain
+    explicitly unsampled and can trigger a versioned extension after the anchor run.
+
+owner_design:
+  design: orthogonal_array_27_runs_6_factors_3_levels_strength_2
+  scientific_status: UNPROMOTABLE_ENGINEERING_COORDINATES_NOT_PRIORS_OR_BOUNDS
+  levels:
+    feco_native_amplitude: [ratio_0p5, ratio_1p0, ratio_2p0]
+    basal_source_intensity: [ratio_0p5, ratio_1p0, ratio_2p0]
+    same_native_efficacy: [ratio_0p5, ratio_1p0, ratio_2p0]
+    cross_native_conversion: [ratio_0p5, ratio_1p0, ratio_2p0]
+    threshold_distance: [ratio_0p75, ratio_1p0, ratio_1p25]
+    unknown_afferent_policy: [zero, bounded_tonic_fixture, matched_stochastic_fixture]
+  interpretation: >-
+    Ratios are dimensionless perturbations around a future declared execution
+    fixture. They measure aliases and interactions; they are not biological ranges.
+  compensation_probes:
+    - feco_native_amplitude_x_same_native_efficacy
+    - basal_source_intensity_x_same_native_efficacy
+    - same_native_efficacy_x_cross_native_conversion
+    - source_scales_x_threshold_distance
+    - unknown_afferent_policy_x_every_numeric_owner
+
+execution_anchors:
+  - anchor_id: all_event_boundary_extreme
+    routing_profile_id: routing_00
+    native_profile_id: native_07
+    intermediate_profile_id: extreme_all_event
+    role: same_native_event_sentinel
+  - anchor_id: graded_heavy_boundary_extreme
+    routing_profile_id: routing_26
+    native_profile_id: native_00
+    intermediate_profile_id: extreme_all_graded
+    role: graded_and_cross_native_sentinel_with_fixed_event_required_motor_pool
+  - anchor_id: mixed_pairwise_profile
+    routing_profile_id: routing_13
+    native_profile_id: native_03
+    intermediate_profile_id: hash_00
+    role: all_four_internal_boundary_kinds_expected
+
+unknown_afferent_prior_result:
+  source_ref: calibration/evaluations/basal-source-envelope-propagation-v0.yaml
+  status: high_fixture_sensitivity_requires_crossed_retest
+  motor_event_g_l1_absolute_fraction: 0.893
+  motor_state_max_absolute_fraction: 0.889
+  interpretation: >-
+    These values justify keeping unknown-afferent policy as a first-class axis.
+    They do not show biological dominance and cannot rank its three planned modes.
+
+acceptance:
+  expected_cone_neurons: 196
+  expected_structural_rows: 599
+  expected_routing_native_pairs: 216
+  expected_intermediate_native_pairs: 400
+  expected_owner_design_rows: 27
+  expected_owner_factor_pairs: 15
+  expected_execution_anchor_rows: 81
+  require_all_four_boundary_kinds_exercisable: true
+  require_zero_parameter_and_assignment_promotion: true
+  require_zero_behavior_outcome_consumption: true
+  require_zero_topology_changes: true
+
+accepted_claims:
+  - The frozen 196-neuron induced graph supports explicit accounting of all four native-boundary kinds over the retained assignment profiles.
+  - Every routing/native pair and every intermediate/native pair is scheduled at least once without claiming full three-way coverage.
+  - A 27-run owner design crosses every pair among six separate parameter owners in all nine level combinations.
+  - Three structural anchors and all 27 owner rows define 81 preregistered dynamic sentinels for the next FH-05 delivery.
+  - Existing unknown-afferent ablation sensitivity is carried as a warning and a design axis, not as a biological conclusion.
+forbidden_claims:
+  - Any engineering coordinate is a physiological value, prior, bound or preferred member.
+  - Pairwise coverage represents all higher-order interactions or the 2^184 scientific assignment space.
+  - A structural anchor is a native population census or a selected routing profile.
+  - Threshold crossing, bounded activity or future body motion may select an owner coordinate.
+  - This static design establishes the finite admissible FH-05 local ensemble.
+
+outputs:
+  compact_result: calibration/runner/front-leg-coupled-identifiability-design-v0.yaml
+  evaluation: calibration/evaluations/front-leg-coupled-identifiability-design-v0.yaml
+  ignored_artifacts: data/derived/calibration/front-leg-coupled-identifiability-design-v0/
+
+next_action: >-
+  Execute the 81 preregistered dynamic sentinels with one explicit unpromotable
+  fixture, quantify factor compensation and local observability, then derive or
+  explicitly retain a finite owner-separated admissible ensemble. Escalate only
+  if unsampled higher-order assignment interactions change the conclusion.

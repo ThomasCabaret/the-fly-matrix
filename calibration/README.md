@@ -296,6 +296,17 @@ diagnostic kernels and 58,025 slow-containing assignments that remain blocked.
 This is the reproducible historical frontier before FH-04. No value, route,
 representation or behavior is selected.
 
+Run `front_leg_coupled_identifiability_design.bat` for the first FH-05 delivery.
+It slices the frozen 196-neuron cone from the canonical graph (4,873 induced
+edges), then compiles 599 structural profiles covering all 216 FeCO
+routing/native pairs and all 400 intermediate/native pairs. A separate 27-run
+orthogonal array covers every 3×3 pair among FeCO native amplitude, basal source
+intensity, same-native efficacy, cross-native conversion, threshold distance and
+unknown-afferent policy. Three structural anchors produce 81 preregistered
+dynamic sentinels. This command only validates design and ownership: it promotes
+zero values or assignments, consumes no held-out response and does not yet close
+FH-05.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

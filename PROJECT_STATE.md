@@ -48,6 +48,20 @@ twitch rapide/intermédiaire, et 58 025 avec classe lente conservent l'enveloppe
 tonique complète. La conversion force→`MOTOR` reste une étape surrogate séparée.
 Zéro classe, valeur, route ou gain n'est sélectionné.
 
+FH-05 est maintenant engagé avec un design statique propriétaire-séparé sur le
+cône gelé. Le sous-graphe induit contient 196 neurones et 4 873 arêtes. Un plan
+de 599 profils couvre les 216/216 couples routage FeCO×profil natif et les
+400/400 couples affectation intermédiaire×profil natif ; 598 profils exercent les
+quatre directions event/graded, l'extrême entièrement événementiel étant
+l'exception attendue. Une matrice orthogonale de 27 lignes couvre les neuf
+combinaisons de niveaux pour chacune des 15 paires entre six propriétaires :
+amplitude native FeCO, intensité basale, efficacité même-native, conversion
+croisée, distance au seuil et politique des afférences inconnues. Les niveaux
+sont des coordonnées techniques, jamais des bornes physiologiques. Trois ancres
+structurelles donnent 81 sentinelles dynamiques préenregistrées pour le prochain
+lot. Aucune n'a encore été exécutée, aucune valeur ou affectation n'est choisie
+et l'ensemble admissible FH-05 n'existe donc pas encore.
+
 La première étape de la roadmap vers une évaluation tenue à l'écart est désormais
 fermée sans regarder de sortie simulée. Le contact tactile localisé reste au
 catalogue mais est différé comme premier essai : ses 323 groupes, 2 108 routes,
@@ -58,12 +72,12 @@ borné du tibia, sham et essais gauche/droite, avec réponse motrice et physique
 tenue à l'écart de toute calibration. La décision et ses limites sont dans
 `calibration/evaluations/first-held-out-channel-readiness-v0.yaml`. Ce n'est ni
 un protocole verrouillé ni une prédiction positive. La roadmap passe en révision
-1. FH-01 à FH-03 sont terminés : le cône spécifique réutilise les 36 FeCO, 150
+1. FH-01 à FH-04 sont terminés : le cône spécifique réutilise les 36 FeCO, 150
 intermédiaires et dix motoneurones, soit 196 neurones dont douze `event_required`
 et 184 `dual_unresolved`. Les 166 504 autres neurones canoniques sont explicitement
 hors du claim local ; tous les propriétaires de frontière, hashes topologiques et
 exceptions sont gelés sans sélectionner de chemin, valeur ou réponse. Cinq items
-restent ouverts et la prévision explicite devient 8–13 fournées, contingence
+restent ouverts et la prévision explicite devient 7–12 fournées, contingence
 comprise. FH-03 relie exactement 26 des 36
 corps FeCO à `claw`, `club` ou `hook` par les alias publiés du catalogue MaleCNS.
 Les dix autres restent regroupés en trois types inconnus, soit 27 profils de
@@ -1066,7 +1080,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés et FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, dont 58 025 branches lentes via 338 candidats toniques ; leur amplitude native et leur identification restent des dépendances explicites de FH-05 ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais la conversion interne event↔graded reste non ajustée et toutes les constantes restent des fixtures ; le couplage source×efficacité×conversion×seuil et l'ablation à ~89 % de la famille inconnue sont des risques prioritaires ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
+- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés et FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, dont 58 025 branches lentes via 338 candidats toniques ; FH-05 est en cours avec 599 profils structurels du cône et un plan orthogonal de 27 lignes/6 propriétaires, puis 81 sentinelles dynamiques encore à exécuter ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais la conversion interne event↔graded reste non ajustée et toutes les constantes restent des fixtures ; le couplage source×efficacité×conversion×seuil et l'ablation à ~89 % de la famille inconnue sont des risques prioritaires ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1295,9 +1309,9 @@ proprioceptive biologiquement sourcée.
 La route vers le premier essai comportemental tenu à l'écart est maintenant
 inventoriée dans
 [`calibration/roadmaps/first-held-out-evaluation-v0.yaml`](calibration/roadmaps/first-held-out-evaluation-v0.yaml).
-FH-01 à FH-04 sont fermés et cinq items restent ouverts. Le plan de base représente
-6 à 9 fournées substantielles ; une réserve explicite de 2 à 4 porte la prévision
-de pilotage à 8--13. Cette fourchette vise le **premier essai interprétable**,
+FH-01 à FH-04 sont fermés et FH-05 est en cours ; cinq items restent ouverts. Le
+plan de base représente 5 à 8 fournées substantielles ; une réserve explicite de
+2 à 4 porte la prévision de pilotage à 7--12. Cette fourchette vise le **premier essai interprétable**,
 positif, négatif ou ambigu, et non un comportement réussi ni la calibration totale
 de MaleCNS. Le risque principal est maintenant le gate couplé FH-05 : dynamique
 typée locale, sources, efficacité, conversions, seuils et amplitude native FeCO
@@ -1384,6 +1398,7 @@ feco_observation_contract.bat # fidélité du modèle calcium public, divergence
 fit_feco_calcium_observation.bat # 7 chemins FeCO, 86 folds leave-one-animal-out ; ensemble non promu
 feco_sensory_freeze.bat          # 27 routages typés x 8 chemins x 2 représentations ; échelle native ouverte
 feco_native_bridge_factorization.bat # 6 coordonnées x 8 profils natifs de classe ; FH-03 fermé, amplitude remise à FH-05
+front_leg_coupled_identifiability_design.bat # FH-05 : 599 profils du cône + plan orthogonal 6 propriétaires ; aucune valeur
 inspect_motor_pilot.bat # 3 archives exactes vérifiées, 1 022 membres inventoriés sans extraction
 motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit et aucun noyau temporel
 parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git

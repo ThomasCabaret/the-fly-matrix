@@ -21,9 +21,9 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.front_leg_motor_transfer_propagation.v1
-last_preregistered_campaign_id: campaign.front_leg_motor_transfer_propagation.v1
-last_executed_campaign_id: campaign.front_leg_motor_transfer_propagation.v1
+last_completed_campaign_id: campaign.front_leg_coupled_identifiability_design.v0
+last_preregistered_campaign_id: campaign.front_leg_coupled_identifiability_design.v0
+last_executed_campaign_id: campaign.front_leg_coupled_identifiability_design.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
@@ -111,6 +111,7 @@ readiness:
   first_held_out_causal_cone: FH_02_complete_196_neurons_12_event_required_184_dual_unresolved_166504_canonical_outside_claim_topology_and_exceptions_frozen_zero_outcomes_or_values
   first_held_out_sensory_chain: FH_03_complete_26_of_36_exact_type_aliases_10_bodies_in_3_type_shared_unknowns_27_routes_6_shapes_8_joint_paths_8_class_shared_native_profiles_1728_factorized_members_native_scale_open_for_FH05_zero_outcomes
   first_held_out_motor_chain: FH_04_complete_59049_factorized_body_class_assignments_338_slow_tonic_candidates_fast_and_intermediate_twitches_distinct_three_actuator_bridge_gains_zero_reference_or_body_motion
+  first_held_out_coupled_identifiability: FH_05_in_progress_static_design_complete_196_neurons_4873_induced_edges_599_structural_profiles_216_of_216_routing_native_pairs_400_of_400_intermediate_native_pairs_27_run_six_owner_strength_two_array_81_dynamic_sentinels_pending_zero_values_or_assignments
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: false
 
@@ -122,6 +123,7 @@ blocked_by:
   - The global homogeneous rate-versus-LIF choice is closed as revise. Twelve exact bodies in the accepted front-leg scopes have an event requirement; the 166,419 other basal-reached neurons remain dual_unresolved. The sparse engine can execute explicit candidate vectors but neither diagnostic extreme is a scientific assignment, and all constants remain unresolved.
   - Internal event-to-graded and graded-to-event conversion is now an explicit parameter family under ADR 0017. The current 0.5 and 0.05 engineering scales remain diagnostic fixtures, not defaults, priors, bounds or accepted values; same-native efficacy, conversion and neuron dynamics must remain separately owned even when estimated jointly.
   - Basal source intensity, same-native synaptic efficacy, internal conversion and neuron threshold/dynamics are not separately identified. Eleven nonzero members of the fixed grid remain subthreshold and only the 320 Hz by 3.2 mV engineering corner crosses; this finding selects nothing.
+  - FH-05 now has an owner-separated static design on the frozen 196-neuron cone. Its 599 structural profiles cover every routing/native and intermediate/native pair, and its 27-run orthogonal array covers every pair among six owners. This closes design coverage only: the 81 preregistered dynamic sentinels are not yet executed, higher-order interactions remain unsampled, and no finite admissible local ensemble exists yet.
   - A first local scientific claim must compile and account its causal population cone rather than pretend that the two runtime extremes cover the 2^166419 native-assignment space.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
@@ -185,8 +187,7 @@ blocked_by:
 
 next_action: >-
   Follow roadmap.first_held_out_evaluation.v0 revision 1. FH-01 through FH-04 are
-  complete without a viewed body outcome and with zero selected motor reference.
-  Start FH-05: bound typed central, basal and native-boundary identifiability on
-  the 196-neuron cone while keeping source intensity, same-native efficacy,
-  cross-native conversion, neuron dynamics, FeCO native amplitude and the full
-  factorized motor-transfer uncertainty visibly separate.
+  complete and FH-05 is in progress without a viewed body outcome or selected
+  parameter. Execute the 81 preregistered owner-separated dynamic sentinels on
+  the 196-neuron cone, quantify compensation and local observability, and retain
+  or derive a finite admissible ensemble without threshold-only selection.
