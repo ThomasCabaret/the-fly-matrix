@@ -1,0 +1,1877 @@
+schema_version: 1
+id: runner_result.motor_slow_tonic_envelope.v0
+campaign_id: campaign.motor_slow_tonic_envelope.v0
+target_id: target.population_dynamics_assignment.v0
+status: completed_finite_diagnostic_envelope_boundary_contact_zero_promoted
+claim_label: SLOW MOTOR TONIC ENVELOPE / ONE CELL / MULTI-SPIKE / NO BODY CROSSWALK
+  / NO PROMOTION
+command: fit_motor_slow_tonic_envelope.bat
+campaign_sha256: 017e4637db471e8654a94e868a55bbf51eb5df11906ac73799d30efed9e894f5
+semantic_result_sha256: 25534ef2b6784df4b570f6ce3c07324825c8dfac417f0f8298c80a3a1ca49717
+artifact_ref: data/derived/calibration/motor-slow-tonic-envelope-v0/summary.json
+trial_dispositions:
+  declared: 38
+  source_excluded: 3
+  unexpected_current_step: 0
+  missing_baseline: 0
+  missing_fit_window: 0
+  selected: 35
+  selected_by_current_step_pA:
+    '31.25': 7
+    '62.5': 10
+    '-31.25': 18
+slow_result:
+  selected_trial_count: 35
+  selected_trial_ids:
+  - 5
+  - 6
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
+  - 32
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  current_step_counts_pA:
+    '-31.25': 18
+    '31.25': 7
+    '62.5': 10
+  fold_count: 5
+  candidate_count: 495
+  held_out_rmse_uN: 0.6474486659187012
+  held_out_energy_fraction_explained: 0.30884656738718996
+  fold_results:
+  - fold: 0
+    held_out_trials:
+    - 5
+    - 6
+    - 11
+    - 16
+    - 25
+    - 26
+    - 32
+    - 39
+    tau_s: 0.18012560404225575
+    delay_s: 0.05
+    training_gain_uN_per_hz: 0.015317027492835915
+    held_out_rmse_uN: 0.6318224434210304
+    held_out_energy_fraction_explained: 0.1620791249051492
+  - fold: 1
+    held_out_trials:
+    - 8
+    - 10
+    - 15
+    - 17
+    - 27
+    - 30
+    - 33
+    - 40
+    tau_s: 0.16222616615793747
+    delay_s: 0.05
+    training_gain_uN_per_hz: 0.012483363297856553
+    held_out_rmse_uN: 0.5753093838755995
+    held_out_energy_fraction_explained: 0.47130508690826
+  - fold: 2
+    held_out_trials:
+    - 9
+    - 14
+    - 19
+    - 28
+    - 34
+    - 35
+    - 41
+    tau_s: 0.18012560404225575
+    delay_s: 0.05
+    training_gain_uN_per_hz: 0.015461916394254448
+    held_out_rmse_uN: 0.5566094255894928
+    held_out_energy_fraction_explained: 0.1483207980357747
+  - fold: 3
+    held_out_trials:
+    - 12
+    - 18
+    - 23
+    - 29
+    - 36
+    - 38
+    tau_s: 0.18012560404225575
+    delay_s: 0.05
+    training_gain_uN_per_hz: 0.014927708487355142
+    held_out_rmse_uN: 0.2936917974357531
+    held_out_energy_fraction_explained: 0.5114152864794381
+  - fold: 4
+    held_out_trials:
+    - 13
+    - 22
+    - 24
+    - 31
+    - 37
+    - 42
+    tau_s: 0.16222616615793747
+    delay_s: 0.05
+    training_gain_uN_per_hz: 0.01244175694995897
+    held_out_rmse_uN: 1.0119264324081938
+    held_out_energy_fraction_explained: 0.3020228464463113
+  all_data_best_candidate:
+    tau_s: 0.18012560404225575
+    delay_s: 0.05
+    gain_uN_per_hz: 0.014259037652837297
+    rmse_uN: 0.6365643350778004
+  near_optimal_envelope:
+    relative_rmse_tolerance: 0.05
+    candidate_count: 338
+    tau_s:
+    - 0.056960717368716045
+    - 2.0
+    delay_s:
+    - 0.0
+    - 0.05
+    gain_uN_per_hz:
+    - 0.010668109573037623
+    - 0.05725586398137489
+    retained_candidates:
+    - grid_index: 120
+      tau_s: 0.056960717368716045
+      delay_s: 0.05
+      gain_uN_per_hz: 0.010668109573037623
+      rmse_uN: 0.666858291749272
+    - grid_index: 130
+      tau_s: 0.0632455532033676
+      delay_s: 0.045
+      gain_uN_per_hz: 0.010844531649878975
+      rmse_uN: 0.6664683066720197
+    - grid_index: 131
+      tau_s: 0.0632455532033676
+      delay_s: 0.05
+      gain_uN_per_hz: 0.010995493523499903
+      rmse_uN: 0.6622636635203974
+    - grid_index: 140
+      tau_s: 0.07022383468430263
+      delay_s: 0.04
+      gain_uN_per_hz: 0.01103939566058181
+      rmse_uN: 0.665590682385011
+    - grid_index: 141
+      tau_s: 0.07022383468430263
+      delay_s: 0.045
+      gain_uN_per_hz: 0.011182941346625935
+      rmse_uN: 0.661782820301699
+    - grid_index: 142
+      tau_s: 0.07022383468430263
+      delay_s: 0.05
+      gain_uN_per_hz: 0.01132288309844575
+      rmse_uN: 0.6577977702907586
+    - grid_index: 150
+      tau_s: 0.07797207405098144
+      delay_s: 0.035
+      gain_uN_per_hz: 0.01125170317168726
+      rmse_uN: 0.6636494509801592
+    - grid_index: 151
+      tau_s: 0.07797207405098144
+      delay_s: 0.04
+      gain_uN_per_hz: 0.01138819003313583
+      rmse_uN: 0.6608764620572711
+    - grid_index: 152
+      tau_s: 0.07797207405098144
+      delay_s: 0.045
+      gain_uN_per_hz: 0.011521104288287953
+      rmse_uN: 0.6572769999697502
+    - grid_index: 153
+      tau_s: 0.07797207405098144
+      delay_s: 0.05
+      gain_uN_per_hz: 0.011648650692019197
+      rmse_uN: 0.6535523414055737
+    - grid_index: 159
+      tau_s: 0.08657522562166116
+      delay_s: 0.025
+      gain_uN_per_hz: 0.011227202578077597
+      rmse_uN: 0.6679456458512222
+    - grid_index: 160
+      tau_s: 0.08657522562166116
+      delay_s: 0.03
+      gain_uN_per_hz: 0.011352995813089769
+      rmse_uN: 0.6642518965811122
+    - grid_index: 161
+      tau_s: 0.08657522562166116
+      delay_s: 0.035
+      gain_uN_per_hz: 0.011610193054675321
+      rmse_uN: 0.6590158947093997
+    - grid_index: 162
+      tau_s: 0.08657522562166116
+      delay_s: 0.04
+      gain_uN_per_hz: 0.011736702089209627
+      rmse_uN: 0.6563968004531245
+    - grid_index: 163
+      tau_s: 0.08657522562166116
+      delay_s: 0.045
+      gain_uN_per_hz: 0.011857708486693928
+      rmse_uN: 0.6530467186032596
+    - grid_index: 164
+      tau_s: 0.08657522562166116
+      delay_s: 0.05
+      gain_uN_per_hz: 0.011971572113060547
+      rmse_uN: 0.6496225639920602
+    - grid_index: 169
+      tau_s: 0.09612761726128784
+      delay_s: 0.02
+      gain_uN_per_hz: 0.011451826308366267
+      rmse_uN: 0.6665095656275186
+    - grid_index: 170
+      tau_s: 0.09612761726128784
+      delay_s: 0.025
+      gain_uN_per_hz: 0.011618334167736825
+      rmse_uN: 0.6630136838504384
+    - grid_index: 171
+      tau_s: 0.09612761726128784
+      delay_s: 0.03
+      gain_uN_per_hz: 0.01173269844824495
+      rmse_uN: 0.6595551414830578
+    - grid_index: 172
+      tau_s: 0.09612761726128784
+      delay_s: 0.035
+      gain_uN_per_hz: 0.011969440987648888
+      rmse_uN: 0.6546638940406639
+    - grid_index: 173
+      tau_s: 0.09612761726128784
+      delay_s: 0.04
+      gain_uN_per_hz: 0.012084159483496537
+      rmse_uN: 0.6522485419776334
+    - grid_index: 174
+      tau_s: 0.09612761726128784
+      delay_s: 0.045
+      gain_uN_per_hz: 0.012192076156438006
+      rmse_uN: 0.6491871335983307
+    - grid_index: 175
+      tau_s: 0.09612761726128784
+      delay_s: 0.05
+      gain_uN_per_hz: 0.012291129696752905
+      rmse_uN: 0.6461004702738511
+    - grid_index: 179
+      tau_s: 0.10673398462412621
+      delay_s: 0.015
+      gain_uN_per_hz: 0.011715737820677126
+      rmse_uN: 0.6643433615998952
+    - grid_index: 180
+      tau_s: 0.10673398462412621
+      delay_s: 0.02
+      gain_uN_per_hz: 0.011860094018071128
+      rmse_uN: 0.6616322450867531
+    - grid_index: 181
+      tau_s: 0.10673398462412621
+      delay_s: 0.025
+      gain_uN_per_hz: 0.01201208976564063
+      rmse_uN: 0.658378001158805
+    - grid_index: 182
+      tau_s: 0.10673398462412621
+      delay_s: 0.03
+      gain_uN_per_hz: 0.012113722906914919
+      rmse_uN: 0.6551957391161548
+    - grid_index: 183
+      tau_s: 0.10673398462412621
+      delay_s: 0.035
+      gain_uN_per_hz: 0.012329244006298387
+      rmse_uN: 0.6506896761227989
+    - grid_index: 184
+      tau_s: 0.10673398462412621
+      delay_s: 0.04
+      gain_uN_per_hz: 0.012430629412041792
+      rmse_uN: 0.6485232401998514
+    - grid_index: 185
+      tau_s: 0.10673398462412621
+      delay_s: 0.045
+      gain_uN_per_hz: 0.012524452795309426
+      rmse_uN: 0.645785466349107
+    - grid_index: 186
+      tau_s: 0.10673398462412621
+      delay_s: 0.05
+      gain_uN_per_hz: 0.012607803203922123
+      rmse_uN: 0.6430675375299648
+    - grid_index: 188
+      tau_s: 0.11851061951091357
+      delay_s: 0.005
+      gain_uN_per_hz: 0.011824716821554077
+      rmse_uN: 0.6667086771990072
+    - grid_index: 189
+      tau_s: 0.11851061951091357
+      delay_s: 0.01
+      gain_uN_per_hz: 0.011910702967655068
+      rmse_uN: 0.6642479790159552
+    - grid_index: 190
+      tau_s: 0.11851061951091357
+      delay_s: 0.015
+      gain_uN_per_hz: 0.012140529771706985
+      rmse_uN: 0.6596114815627615
+    - grid_index: 191
+      tau_s: 0.11851061951091357
+      delay_s: 0.02
+      gain_uN_per_hz: 0.012272252600194093
+      rmse_uN: 0.657108680801304
+    - grid_index: 192
+      tau_s: 0.11851061951091357
+      delay_s: 0.025
+      gain_uN_per_hz: 0.012408731424241965
+      rmse_uN: 0.6541364833483437
+    - grid_index: 193
+      tau_s: 0.11851061951091357
+      delay_s: 0.03
+      gain_uN_per_hz: 0.012496602112290447
+      rmse_uN: 0.6512662935296248
+    - grid_index: 194
+      tau_s: 0.11851061951091357
+      delay_s: 0.035
+      gain_uN_per_hz: 0.012690423559069844
+      rmse_uN: 0.6471793533338814
+    - grid_index: 195
+      tau_s: 0.11851061951091357
+      delay_s: 0.04
+      gain_uN_per_hz: 0.012777279348208602
+      rmse_uN: 0.6452996666132657
+    - grid_index: 196
+      tau_s: 0.11851061951091357
+      delay_s: 0.045
+      gain_uN_per_hz: 0.012856263353010643
+      rmse_uN: 0.6429135258120354
+    - grid_index: 197
+      tau_s: 0.11851061951091357
+      delay_s: 0.05
+      gain_uN_per_hz: 0.012923318210094192
+      rmse_uN: 0.6405873631110093
+    - grid_index: 198
+      tau_s: 0.13158664493151362
+      delay_s: 0.0
+      gain_uN_per_hz: 0.012116198981015501
+      rmse_uN: 0.6652168943501744
+    - grid_index: 199
+      tau_s: 0.13158664493151362
+      delay_s: 0.005
+      gain_uN_per_hz: 0.012287220054783764
+      rmse_uN: 0.6617957111912742
+    - grid_index: 200
+      tau_s: 0.13158664493151362
+      delay_s: 0.01
+      gain_uN_per_hz: 0.012362452322915746
+      rmse_uN: 0.6595525389983534
+    - grid_index: 201
+      tau_s: 0.13158664493151362
+      delay_s: 0.015
+      gain_uN_per_hz: 0.012571535167287737
+      rmse_uN: 0.6552845164959233
+    - grid_index: 202
+      tau_s: 0.13158664493151362
+      delay_s: 0.02
+      gain_uN_per_hz: 0.012689354725851717
+      rmse_uN: 0.6530315858662592
+    - grid_index: 203
+      tau_s: 0.13158664493151362
+      delay_s: 0.025
+      gain_uN_per_hz: 0.012809636057793772
+      rmse_uN: 0.6503747484574173
+    - grid_index: 204
+      tau_s: 0.13158664493151362
+      delay_s: 0.03
+      gain_uN_per_hz: 0.012883048563856433
+      rmse_uN: 0.647844610822228
+    - grid_index: 205
+      tau_s: 0.13158664493151362
+      delay_s: 0.035
+      gain_uN_per_hz: 0.013055051013582057
+      rmse_uN: 0.6442015248656453
+    - grid_index: 206
+      tau_s: 0.13158664493151362
+      delay_s: 0.04
+      gain_uN_per_hz: 0.013126586548839119
+      rmse_uN: 0.6426367365510911
+    - grid_index: 207
+      tau_s: 0.13158664493151362
+      delay_s: 0.045
+      gain_uN_per_hz: 0.013190306250372819
+      rmse_uN: 0.6406210244544328
+    - grid_index: 208
+      tau_s: 0.13158664493151362
+      delay_s: 0.05
+      gain_uN_per_hz: 0.013240822305853987
+      rmse_uN: 0.6386995042265182
+    - grid_index: 209
+      tau_s: 0.14610543085328911
+      delay_s: 0.0
+      gain_uN_per_hz: 0.012604527562172176
+      rmse_uN: 0.6604371082834326
+    - grid_index: 210
+      tau_s: 0.14610543085328911
+      delay_s: 0.005
+      gain_uN_per_hz: 0.012758788636245752
+      rmse_uN: 0.6573117075167297
+    - grid_index: 211
+      tau_s: 0.14610543085328911
+      delay_s: 0.01
+      gain_uN_per_hz: 0.01282229266165203
+      rmse_uN: 0.6553191144597948
+    - grid_index: 212
+      tau_s: 0.14610543085328911
+      delay_s: 0.015
+      gain_uN_per_hz: 0.013010629809698833
+      rmse_uN: 0.6514470104431728
+    - grid_index: 213
+      tau_s: 0.14610543085328911
+      delay_s: 0.02
+      gain_uN_per_hz: 0.013113717793537713
+      rmse_uN: 0.6494763227816698
+    - grid_index: 214
+      tau_s: 0.14610543085328911
+      delay_s: 0.025
+      gain_uN_per_hz: 0.013217499718807946
+      rmse_uN: 0.6471587671365953
+    - grid_index: 215
+      tau_s: 0.14610543085328911
+      delay_s: 0.03
+      gain_uN_per_hz: 0.01327613768396939
+      rmse_uN: 0.6449868270679212
+    - grid_index: 216
+      tau_s: 0.14610543085328911
+      delay_s: 0.035
+      gain_uN_per_hz: 0.013426604806490538
+      rmse_uN: 0.6418010761956935
+    - grid_index: 217
+      tau_s: 0.14610543085328911
+      delay_s: 0.04
+      gain_uN_per_hz: 0.013482469399588535
+      rmse_uN: 0.6405680087018146
+    - grid_index: 218
+      tau_s: 0.14610543085328911
+      delay_s: 0.045
+      gain_uN_per_hz: 0.013530859903683924
+      rmse_uN: 0.638930825074357
+    - grid_index: 219
+      tau_s: 0.14610543085328911
+      delay_s: 0.05
+      gain_uN_per_hz: 0.013564965798541464
+      rmse_uN: 0.6374155745896224
+    - grid_index: 220
+      tau_s: 0.16222616615793747
+      delay_s: 0.0
+      gain_uN_per_hz: 0.013104449260455163
+      rmse_uN: 0.6561432485618878
+    - grid_index: 221
+      tau_s: 0.16222616615793747
+      delay_s: 0.005
+      gain_uN_per_hz: 0.013241860941086226
+      rmse_uN: 0.6533390337698705
+    - grid_index: 222
+      tau_s: 0.16222616615793747
+      delay_s: 0.01
+      gain_uN_per_hz: 0.013293082311309221
+      rmse_uN: 0.6516208050940592
+    - grid_index: 223
+      tau_s: 0.16222616615793747
+      delay_s: 0.015
+      gain_uN_per_hz: 0.013461079012286341
+      rmse_uN: 0.6481614913230452
+    - grid_index: 224
+      tau_s: 0.16222616615793747
+      delay_s: 0.02
+      gain_uN_per_hz: 0.013549078655646722
+      rmse_uN: 0.646494439969231
+    - grid_index: 225
+      tau_s: 0.16222616615793747
+      delay_s: 0.025
+      gain_uN_per_hz: 0.013636464367828739
+      rmse_uN: 0.6445291607637131
+    - grid_index: 226
+      tau_s: 0.16222616615793747
+      delay_s: 0.03
+      gain_uN_per_hz: 0.0136804067459777
+      rmse_uN: 0.642722539010591
+    - grid_index: 227
+      tau_s: 0.16222616615793747
+      delay_s: 0.035
+      gain_uN_per_hz: 0.013810036772722053
+      rmse_uN: 0.6399953084254528
+    - grid_index: 228
+      tau_s: 0.16222616615793747
+      delay_s: 0.04
+      gain_uN_per_hz: 0.013850322185711385
+      rmse_uN: 0.6390987921574601
+    - grid_index: 229
+      tau_s: 0.16222616615793747
+      delay_s: 0.045
+      gain_uN_per_hz: 0.013883687301537669
+      rmse_uN: 0.6378370409485579
+    - grid_index: 230
+      tau_s: 0.16222616615793747
+      delay_s: 0.05
+      gain_uN_per_hz: 0.013901876705667648
+      rmse_uN: 0.6367183841193232
+    - grid_index: 231
+      tau_s: 0.18012560404225575
+      delay_s: 0.0
+      gain_uN_per_hz: 0.013619460057149186
+      rmse_uN: 0.652403659746111
+    - grid_index: 232
+      tau_s: 0.18012560404225575
+      delay_s: 0.005
+      gain_uN_per_hz: 0.013740347187829877
+      rmse_uN: 0.6499354755079374
+    - grid_index: 233
+      tau_s: 0.18012560404225575
+      delay_s: 0.01
+      gain_uN_per_hz: 0.013779160951803798
+      rmse_uN: 0.6485048783903223
+    - grid_index: 234
+      tau_s: 0.18012560404225575
+      delay_s: 0.015
+      gain_uN_per_hz: 0.013927632730029874
+      rmse_uN: 0.6454635399615051
+    - grid_index: 235
+      tau_s: 0.18012560404225575
+      delay_s: 0.02
+      gain_uN_per_hz: 0.014000655525526136
+      rmse_uN: 0.6441097124859654
+    - grid_index: 236
+      tau_s: 0.18012560404225575
+      delay_s: 0.025
+      gain_uN_per_hz: 0.01407214825722506
+      rmse_uN: 0.6424982455986802
+    - grid_index: 237
+      tau_s: 0.18012560404225575
+      delay_s: 0.03
+      gain_uN_per_hz: 0.014101855258468727
+      rmse_uN: 0.6410528689296379
+    - grid_index: 238
+      tau_s: 0.18012560404225575
+      delay_s: 0.035
+      gain_uN_per_hz: 0.014211739052334572
+      rmse_uN: 0.6387731591386421
+    - grid_index: 239
+      tau_s: 0.18012560404225575
+      delay_s: 0.04
+      gain_uN_per_hz: 0.014236950232394886
+      rmse_uN: 0.6382064474424626
+    - grid_index: 240
+      tau_s: 0.18012560404225575
+      delay_s: 0.045
+      gain_uN_per_hz: 0.01425594093222663
+      rmse_uN: 0.6373063948785922
+    - grid_index: 241
+      tau_s: 0.18012560404225575
+      delay_s: 0.05
+      gain_uN_per_hz: 0.014259037652837297
+      rmse_uN: 0.6365643350778004
+    - grid_index: 242
+      tau_s: 0.20000000000000004
+      delay_s: 0.0
+      gain_uN_per_hz: 0.014154599594681124
+      rmse_uN: 0.6492587524888659
+    - grid_index: 243
+      tau_s: 0.20000000000000004
+      delay_s: 0.005
+      gain_uN_per_hz: 0.014259686415350109
+      rmse_uN: 0.6471303166445036
+    - grid_index: 244
+      tau_s: 0.20000000000000004
+      delay_s: 0.01
+      gain_uN_per_hz: 0.014286375785025448
+      rmse_uN: 0.645989839605956
+    - grid_index: 245
+      tau_s: 0.20000000000000004
+      delay_s: 0.015
+      gain_uN_per_hz: 0.014416520026042491
+      rmse_uN: 0.6433599731221438
+    - grid_index: 246
+      tau_s: 0.20000000000000004
+      delay_s: 0.02
+      gain_uN_per_hz: 0.014475110427786349
+      rmse_uN: 0.6423174049837784
+    - grid_index: 247
+      tau_s: 0.20000000000000004
+      delay_s: 0.025
+      gain_uN_per_hz: 0.014531578807686974
+      rmse_uN: 0.6410503575155003
+    - grid_index: 248
+      tau_s: 0.20000000000000004
+      delay_s: 0.03
+      gain_uN_per_hz: 0.014547850955697958
+      rmse_uN: 0.6399518094706217
+    - grid_index: 249
+      tau_s: 0.20000000000000004
+      delay_s: 0.035
+      gain_uN_per_hz: 0.014639421428636114
+      rmse_uN: 0.6380976476682719
+    - grid_index: 250
+      tau_s: 0.20000000000000004
+      delay_s: 0.04
+      gain_uN_per_hz: 0.01465042075852912
+      rmse_uN: 0.6378438124684025
+    - grid_index: 251
+      tau_s: 0.20000000000000004
+      delay_s: 0.045
+      gain_uN_per_hz: 0.014655988612496052
+      rmse_uN: 0.6372825714270755
+    - grid_index: 252
+      tau_s: 0.20000000000000004
+      delay_s: 0.05
+      gain_uN_per_hz: 0.014645090038911545
+      rmse_uN: 0.6368886192921017
+    - grid_index: 253
+      tau_s: 0.2220672636335276
+      delay_s: 0.0
+      gain_uN_per_hz: 0.014716433062144272
+      rmse_uN: 0.646719437984413
+    - grid_index: 254
+      tau_s: 0.2220672636335276
+      delay_s: 0.005
+      gain_uN_per_hz: 0.014806800679515628
+      rmse_uN: 0.6449238162710441
+    - grid_index: 255
+      tau_s: 0.2220672636335276
+      delay_s: 0.01
+      gain_uN_per_hz: 0.01482200945379734
+      rmse_uN: 0.6440658942573698
+    - grid_index: 256
+      tau_s: 0.2220672636335276
+      delay_s: 0.015
+      gain_uN_per_hz: 0.01493535122940057
+      rmse_uN: 0.6418303658254902
+    - grid_index: 257
+      tau_s: 0.2220672636335276
+      delay_s: 0.02
+      gain_uN_per_hz: 0.014980425833590995
+      rmse_uN: 0.6410867815208988
+    - grid_index: 258
+      tau_s: 0.2220672636335276
+      delay_s: 0.025
+      gain_uN_per_hz: 0.015023046464055638
+      rmse_uN: 0.640145286873683
+    - grid_index: 259
+      tau_s: 0.2220672636335276
+      delay_s: 0.03
+      gain_uN_per_hz: 0.015026964167287833
+      rmse_uN: 0.6393704945122584
+    - grid_index: 260
+      tau_s: 0.2220672636335276
+      delay_s: 0.035
+      gain_uN_per_hz: 0.015101926179739314
+      rmse_uN: 0.6379109992749257
+    - grid_index: 261
+      tau_s: 0.2220672636335276
+      delay_s: 0.04
+      gain_uN_per_hz: 0.015099860446319464
+      rmse_uN: 0.6379450407712448
+    - grid_index: 262
+      tau_s: 0.2220672636335276
+      delay_s: 0.045
+      gain_uN_per_hz: 0.01509319483204142
+      rmse_uN: 0.6376926971430907
+    - grid_index: 263
+      tau_s: 0.2220672636335276
+      delay_s: 0.05
+      gain_uN_per_hz: 0.015069603054913049
+      rmse_uN: 0.6376122211106935
+    - grid_index: 264
+      tau_s: 0.24656934788841323
+      delay_s: 0.0
+      gain_uN_per_hz: 0.015312942020219033
+      rmse_uN: 0.6447689692807526
+    - grid_index: 265
+      tau_s: 0.24656934788841323
+      delay_s: 0.005
+      gain_uN_per_hz: 0.01538996609089335
+      rmse_uN: 0.6432899501839386
+    - grid_index: 266
+      tau_s: 0.24656934788841323
+      delay_s: 0.01
+      gain_uN_per_hz: 0.015394633199285933
+      rmse_uN: 0.6426984958835967
+    - grid_index: 267
+      tau_s: 0.24656934788841323
+      delay_s: 0.015
+      gain_uN_per_hz: 0.015492954859784254
+      rmse_uN: 0.6408314241606333
+    - grid_index: 268
+      tau_s: 0.24656934788841323
+      delay_s: 0.02
+      gain_uN_per_hz: 0.015525725977844077
+      rmse_uN: 0.6403662082043563
+    - grid_index: 269
+      tau_s: 0.24656934788841323
+      delay_s: 0.025
+      gain_uN_per_hz: 0.015555912932692432
+      rmse_uN: 0.6397240215145441
+    - grid_index: 270
+      tau_s: 0.24656934788841323
+      delay_s: 0.03
+      gain_uN_per_hz: 0.015548766198596858
+      rmse_uN: 0.6392434695340928
+    - grid_index: 271
+      tau_s: 0.24656934788841323
+      delay_s: 0.035
+      gain_uN_per_hz: 0.015609017975882274
+      rmse_uN: 0.6381414056358538
+    - grid_index: 272
+      tau_s: 0.24656934788841323
+      delay_s: 0.04
+      gain_uN_per_hz: 0.015595238741004382
+      rmse_uN: 0.6384327222609574
+    - grid_index: 273
+      tau_s: 0.24656934788841323
+      delay_s: 0.045
+      gain_uN_per_hz: 0.01557769787418164
+      rmse_uN: 0.6384547499597331
+    - grid_index: 274
+      tau_s: 0.24656934788841323
+      delay_s: 0.05
+      gain_uN_per_hz: 0.015542848379669221
+      rmse_uN: 0.638649487082523
+    - grid_index: 275
+      tau_s: 0.2737749019074163
+      delay_s: 0.0
+      gain_uN_per_hz: 0.015953357112228603
+      rmse_uN: 0.6433675435325228
+    - grid_index: 276
+      tau_s: 0.2737749019074163
+      delay_s: 0.005
+      gain_uN_per_hz: 0.01601863578052731
+      rmse_uN: 0.6421816321673094
+    - grid_index: 277
+      tau_s: 0.2737749019074163
+      delay_s: 0.01
+      gain_uN_per_hz: 0.01601392195928289
+      rmse_uN: 0.6418340783332749
+    - grid_index: 278
+      tau_s: 0.2737749019074163
+      delay_s: 0.015
+      gain_uN_per_hz: 0.016099187188392056
+      rmse_uN: 0.6403031995621702
+    - grid_index: 279
+      tau_s: 0.2737749019074163
+      delay_s: 0.02
+      gain_uN_per_hz: 0.016121081635883806
+      rmse_uN: 0.6400897532285117
+    - grid_index: 280
+      tau_s: 0.2737749019074163
+      delay_s: 0.025
+      gain_uN_per_hz: 0.016140413056269082
+      rmse_uN: 0.639715637983524
+    - grid_index: 281
+      tau_s: 0.2737749019074163
+      delay_s: 0.03
+      gain_uN_per_hz: 0.01612363088376158
+      rmse_uN: 0.6394957633101713
+    - grid_index: 282
+      tau_s: 0.2737749019074163
+      delay_s: 0.035
+      gain_uN_per_hz: 0.016171187366059825
+      rmse_uN: 0.6387102044658819
+    - grid_index: 283
+      tau_s: 0.2737749019074163
+      delay_s: 0.04
+      gain_uN_per_hz: 0.016147174502977934
+      rmse_uN: 0.6392250735876764
+    - grid_index: 284
+      tau_s: 0.2737749019074163
+      delay_s: 0.045
+      gain_uN_per_hz: 0.01612021932612639
+      rmse_uN: 0.6394847042102477
+    - grid_index: 285
+      tau_s: 0.2737749019074163
+      delay_s: 0.05
+      gain_uN_per_hz: 0.016075615621557432
+      rmse_uN: 0.6399151134179681
+    - grid_index: 286
+      tau_s: 0.30398221659058683
+      delay_s: 0.0
+      gain_uN_per_hz: 0.01664797317793785
+      rmse_uN: 0.6424585728117157
+    - grid_index: 287
+      tau_s: 0.30398221659058683
+      delay_s: 0.005
+      gain_uN_per_hz: 0.01670325508341826
+      rmse_uN: 0.641537266038333
+    - grid_index: 288
+      tau_s: 0.30398221659058683
+      delay_s: 0.01
+      gain_uN_per_hz: 0.01669047104131163
+      rmse_uN: 0.6414067906078085
+    - grid_index: 289
+      tau_s: 0.30398221659058683
+      delay_s: 0.015
+      gain_uN_per_hz: 0.016764752939360944
+      rmse_uN: 0.6401759458406204
+    - grid_index: 290
+      tau_s: 0.30398221659058683
+      delay_s: 0.02
+      gain_uN_per_hz: 0.016777335500420314
+      rmse_uN: 0.640184088061824
+    - grid_index: 291
+      tau_s: 0.30398221659058683
+      delay_s: 0.025
+      gain_uN_per_hz: 0.016787485873208923
+      rmse_uN: 0.6400441661464006
+    - grid_index: 292
+      tau_s: 0.30398221659058683
+      delay_s: 0.03
+      gain_uN_per_hz: 0.016762572943052244
+      rmse_uN: 0.6400496277685187
+    - grid_index: 293
+      tau_s: 0.30398221659058683
+      delay_s: 0.035
+      gain_uN_per_hz: 0.01679949902478307
+      rmse_uN: 0.6395384086686612
+    - grid_index: 294
+      tau_s: 0.30398221659058683
+      delay_s: 0.04
+      gain_uN_per_hz: 0.016766794613524313
+      rmse_uN: 0.6402422034733106
+    - grid_index: 295
+      tau_s: 0.30398221659058683
+      delay_s: 0.045
+      gain_uN_per_hz: 0.016731932086489924
+      rmse_uN: 0.6407024994190035
+    - grid_index: 296
+      tau_s: 0.30398221659058683
+      delay_s: 0.05
+      gain_uN_per_hz: 0.01667909183919326
+      rmse_uN: 0.6413297374213647
+    - grid_index: 297
+      tau_s: 0.3375224951576296
+      delay_s: 0.0
+      gain_uN_per_hz: 0.01740798441638115
+      rmse_uN: 0.6419754310296956
+    - grid_index: 298
+      tau_s: 0.3375224951576296
+      delay_s: 0.005
+      gain_uN_per_hz: 0.017455104547759392
+      rmse_uN: 0.6412874607856253
+    - grid_index: 299
+      tau_s: 0.3375224951576296
+      delay_s: 0.01
+      gain_uN_per_hz: 0.017435647719808104
+      rmse_uN: 0.6413451079735765
+    - grid_index: 300
+      tau_s: 0.3375224951576296
+      delay_s: 0.015
+      gain_uN_per_hz: 0.017501067840022512
+      rmse_uN: 0.6403765523308474
+    - grid_index: 301
+      tau_s: 0.3375224951576296
+      delay_s: 0.02
+      gain_uN_per_hz: 0.017505976090028783
+      rmse_uN: 0.6405746937843539
+    - grid_index: 302
+      tau_s: 0.3375224951576296
+      delay_s: 0.025
+      gain_uN_per_hz: 0.017508660010938433
+      rmse_uN: 0.6406345128832126
+    - grid_index: 303
+      tau_s: 0.3375224951576296
+      delay_s: 0.03
+      gain_uN_per_hz: 0.01747714546771382
+      rmse_uN: 0.6408301232570742
+    - grid_index: 304
+      tau_s: 0.3375224951576296
+      delay_s: 0.035
+      gain_uN_per_hz: 0.017505503820294335
+      rmse_uN: 0.6405518716477103
+    - grid_index: 305
+      tau_s: 0.3375224951576296
+      delay_s: 0.04
+      gain_uN_per_hz: 0.017465660409687077
+      rmse_uN: 0.6414108479462196
+    - grid_index: 306
+      tau_s: 0.3375224951576296
+      delay_s: 0.045
+      gain_uN_per_hz: 0.017424399755390448
+      rmse_uN: 0.6420363363385778
+    - grid_index: 307
+      tau_s: 0.3375224951576296
+      delay_s: 0.05
+      gain_uN_per_hz: 0.01736481500884403
+      rmse_uN: 0.6428237488715097
+    - grid_index: 308
+      tau_s: 0.37476348457207687
+      delay_s: 0.0
+      gain_uN_per_hz: 0.01824536712840045
+      rmse_uN: 0.6418476794693708
+    - grid_index: 309
+      tau_s: 0.37476348457207687
+      delay_s: 0.005
+      gain_uN_per_hz: 0.018286195392132876
+      rmse_uN: 0.641360991213021
+    - grid_index: 310
+      tau_s: 0.37476348457207687
+      delay_s: 0.01
+      gain_uN_per_hz: 0.01826149946558627
+      rmse_uN: 0.6415774881416164
+    - grid_index: 311
+      tau_s: 0.37476348457207687
+      delay_s: 0.015
+      gain_uN_per_hz: 0.018320181581898905
+      rmse_uN: 0.6408338233462142
+    - grid_index: 312
+      tau_s: 0.37476348457207687
+      delay_s: 0.02
+      gain_uN_per_hz: 0.018319075577727436
+      rmse_uN: 0.6411907457379694
+    - grid_index: 313
+      tau_s: 0.37476348457207687
+      delay_s: 0.025
+      gain_uN_per_hz: 0.01831600579496923
+      rmse_uN: 0.6414169233285708
+    - grid_index: 314
+      tau_s: 0.37476348457207687
+      delay_s: 0.03
+      gain_uN_per_hz: 0.01827940607493782
+      rmse_uN: 0.6417691328660753
+    - grid_index: 315
+      tau_s: 0.37476348457207687
+      delay_s: 0.035
+      gain_uN_per_hz: 0.018301221137505964
+      rmse_uN: 0.641684788296211
+    - grid_index: 316
+      tau_s: 0.37476348457207687
+      delay_s: 0.04
+      gain_uN_per_hz: 0.018255765464896632
+      rmse_uN: 0.642667381083647
+    - grid_index: 317
+      tau_s: 0.37476348457207687
+      delay_s: 0.045
+      gain_uN_per_hz: 0.018209588248999948
+      rmse_uN: 0.6434252068430618
+    - grid_index: 318
+      tau_s: 0.37476348457207687
+      delay_s: 0.05
+      gain_uN_per_hz: 0.01814469975900822
+      rmse_uN: 0.644339324457685
+    - grid_index: 319
+      tau_s: 0.41611350764343413
+      delay_s: 0.0
+      gain_uN_per_hz: 0.01917282479850035
+      rmse_uN: 0.642006128928647
+    - grid_index: 320
+      tau_s: 0.41611350764343413
+      delay_s: 0.005
+      gain_uN_per_hz: 0.01920922928872404
+      rmse_uN: 0.641689462257504
+    - grid_index: 321
+      tau_s: 0.41611350764343413
+      delay_s: 0.01
+      gain_uN_per_hz: 0.019180727947866422
+      rmse_uN: 0.6420366284101336
+    - grid_index: 322
+      tau_s: 0.41611350764343413
+      delay_s: 0.015
+      gain_uN_per_hz: 0.01923476751062591
+      rmse_uN: 0.6414822668712417
+    - grid_index: 323
+      tau_s: 0.41611350764343413
+      delay_s: 0.02
+      gain_uN_per_hz: 0.019229295086207573
+      rmse_uN: 0.6419684409898992
+    - grid_index: 324
+      tau_s: 0.41611350764343413
+      delay_s: 0.025
+      gain_uN_per_hz: 0.019222155099046404
+      rmse_uN: 0.6423298416384812
+    - grid_index: 325
+      tau_s: 0.41611350764343413
+      delay_s: 0.03
+      gain_uN_per_hz: 0.019181950507688623
+      rmse_uN: 0.6428077585721415
+    - grid_index: 326
+      tau_s: 0.41611350764343413
+      delay_s: 0.035
+      gain_uN_per_hz: 0.01919918786873905
+      rmse_uN: 0.6428815789909514
+    - grid_index: 327
+      tau_s: 0.41611350764343413
+      delay_s: 0.04
+      gain_uN_per_hz: 0.019149598993685926
+      rmse_uN: 0.6439592299021051
+    - grid_index: 328
+      tau_s: 0.41611350764343413
+      delay_s: 0.045
+      gain_uN_per_hz: 0.0190999420031255
+      rmse_uN: 0.6448198604399735
+    - grid_index: 329
+      tau_s: 0.41611350764343413
+      delay_s: 0.05
+      gain_uN_per_hz: 0.019031126061017044
+      rmse_uN: 0.6458309534181487
+    - grid_index: 330
+      tau_s: 0.46202594001663216
+      delay_s: 0.0
+      gain_uN_per_hz: 0.02020379876138315
+      rmse_uN: 0.6423864713284655
+    - grid_index: 331
+      tau_s: 0.46202594001663216
+      delay_s: 0.005
+      gain_uN_per_hz: 0.020237623449522842
+      rmse_uN: 0.6422105014002951
+    - grid_index: 332
+      tau_s: 0.46202594001663216
+      delay_s: 0.01
+      gain_uN_per_hz: 0.020206727722608057
+      rmse_uN: 0.6426622320005652
+    - grid_index: 333
+      tau_s: 0.46202594001663216
+      delay_s: 0.015
+      gain_uN_per_hz: 0.020258175920663788
+      rmse_uN: 0.6422643883201196
+    - grid_index: 334
+      tau_s: 0.46202594001663216
+      delay_s: 0.02
+      gain_uN_per_hz: 0.020249952370743545
+      rmse_uN: 0.6428528432560742
+    - grid_index: 335
+      tau_s: 0.46202594001663216
+      delay_s: 0.025
+      gain_uN_per_hz: 0.02024038215438436
+      rmse_uN: 0.643321317623484
+    - grid_index: 336
+      tau_s: 0.46202594001663216
+      delay_s: 0.03
+      gain_uN_per_hz: 0.020198005472152187
+      rmse_uN: 0.643897308054345
+    - grid_index: 337
+      tau_s: 0.46202594001663216
+      delay_s: 0.035
+      gain_uN_per_hz: 0.020212564445510877
+      rmse_uN: 0.6440974268713836
+    - grid_index: 338
+      tau_s: 0.46202594001663216
+      delay_s: 0.04
+      gain_uN_per_hz: 0.020160264032047147
+      rmse_uN: 0.6452450127104821
+    - grid_index: 339
+      tau_s: 0.46202594001663216
+      delay_s: 0.045
+      gain_uN_per_hz: 0.020108512855646663
+      rmse_uN: 0.64618256900435
+    - grid_index: 340
+      tau_s: 0.46202594001663216
+      delay_s: 0.05
+      gain_uN_per_hz: 0.020037078146404826
+      rmse_uN: 0.6472648489798821
+    - grid_index: 341
+      tau_s: 0.5130041811360092
+      delay_s: 0.0
+      gain_uN_per_hz: 0.021352539622340575
+      rmse_uN: 0.6429315117070332
+    - grid_index: 342
+      tau_s: 0.5130041811360092
+      delay_s: 0.005
+      gain_uN_per_hz: 0.02138559474946007
+      rmse_uN: 0.6428695771039065
+    - grid_index: 343
+      tau_s: 0.5130041811360092
+      delay_s: 0.01
+      gain_uN_per_hz: 0.021353682101000703
+      rmse_uN: 0.643402439259296
+    - grid_index: 344
+      tau_s: 0.5130041811360092
+      delay_s: 0.015
+      gain_uN_per_hz: 0.021404542295287363
+      rmse_uN: 0.643131702601009
+    - grid_index: 345
+      tau_s: 0.5130041811360092
+      delay_s: 0.02
+      gain_uN_per_hz: 0.021395142156112445
+      rmse_uN: 0.64379850728624
+    - grid_index: 346
+      tau_s: 0.5130041811360092
+      delay_s: 0.025
+      gain_uN_per_hz: 0.02138473471169151
+      rmse_uN: 0.6443492627096651
+    - grid_index: 347
+      tau_s: 0.5130041811360092
+      delay_s: 0.03
+      gain_uN_per_hz: 0.021341569458155296
+      rmse_uN: 0.6449992085157978
+    - grid_index: 348
+      tau_s: 0.5130041811360092
+      delay_s: 0.035
+      gain_uN_per_hz: 0.02135528608118875
+      rmse_uN: 0.6452978340627574
+    - grid_index: 349
+      tau_s: 0.5130041811360092
+      delay_s: 0.04
+      gain_uN_per_hz: 0.021301638124941263
+      rmse_uN: 0.6464937867161344
+    - grid_index: 350
+      tau_s: 0.5130041811360092
+      delay_s: 0.045
+      gain_uN_per_hz: 0.02124912898937293
+      rmse_uN: 0.6474860907022824
+    - grid_index: 351
+      tau_s: 0.5130041811360092
+      delay_s: 0.05
+      gain_uN_per_hz: 0.02117632088217172
+      rmse_uN: 0.6486176540943962
+    - grid_index: 352
+      tau_s: 0.5696071736871604
+      delay_s: 0.0
+      gain_uN_per_hz: 0.02263423041854214
+      rmse_uN: 0.6435922153610253
+    - grid_index: 353
+      tau_s: 0.5696071736871604
+      delay_s: 0.005
+      gain_uN_per_hz: 0.022668293214583437
+      rmse_uN: 0.6436206968821677
+    - grid_index: 354
+      tau_s: 0.5696071736871604
+      delay_s: 0.01
+      gain_uN_per_hz: 0.02263670601295586
+      rmse_uN: 0.6442142080443348
+    - grid_index: 355
+      tau_s: 0.5696071736871604
+      delay_s: 0.015
+      gain_uN_per_hz: 0.022688939901129173
+      rmse_uN: 0.6440447772173242
+    - grid_index: 356
+      tau_s: 0.5696071736871604
+      delay_s: 0.02
+      gain_uN_per_hz: 0.022679898187122238
+      rmse_uN: 0.6447692169586011
+    - grid_index: 357
+      tau_s: 0.5696071736871604
+      delay_s: 0.025
+      gain_uN_per_hz: 0.022670204398127298
+      rmse_uN: 0.6453809051659686
+    - grid_index: 358
+      tau_s: 0.5696071736871604
+      delay_s: 0.03
+      gain_uN_per_hz: 0.02262759031573154
+      rmse_uN: 0.6460842067167608
+    - grid_index: 359
+      tau_s: 0.5696071736871604
+      delay_s: 0.035
+      gain_uN_per_hz: 0.02264224802759492
+      rmse_uN: 0.6464575611505049
+    - grid_index: 360
+      tau_s: 0.5696071736871604
+      delay_s: 0.04
+      gain_uN_per_hz: 0.02258856542652044
+      rmse_uN: 0.6476837688506473
+    - grid_index: 361
+      tau_s: 0.5696071736871604
+      delay_s: 0.045
+      gain_uN_per_hz: 0.022536592970140063
+      rmse_uN: 0.6487121938394387
+    - grid_index: 362
+      tau_s: 0.5696071736871604
+      delay_s: 0.05
+      gain_uN_per_hz: 0.022463602907133333
+      rmse_uN: 0.6498747937511942
+    - grid_index: 363
+      tau_s: 0.632455532033676
+      delay_s: 0.0
+      gain_uN_per_hz: 0.02406515154944032
+      rmse_uN: 0.6443278620639975
+    - grid_index: 364
+      tau_s: 0.632455532033676
+      delay_s: 0.005
+      gain_uN_per_hz: 0.024101974822731662
+      rmse_uN: 0.6444262919322992
+    - grid_index: 365
+      tau_s: 0.632455532033676
+      delay_s: 0.01
+      gain_uN_per_hz: 0.0240720258182519
+      rmse_uN: 0.6450629594402142
+    - grid_index: 366
+      tau_s: 0.632455532033676
+      delay_s: 0.015
+      gain_uN_per_hz: 0.024127566797839707
+      rmse_uN: 0.6449726287647042
+    - grid_index: 367
+      tau_s: 0.632455532033676
+      delay_s: 0.02
+      gain_uN_per_hz: 0.02412038718945639
+      rmse_uN: 0.6457371612887516
+    - grid_index: 368
+      tau_s: 0.632455532033676
+      delay_s: 0.025
+      gain_uN_per_hz: 0.024112926669435774
+      rmse_uN: 0.6463917668228177
+    - grid_index: 369
+      tau_s: 0.632455532033676
+      delay_s: 0.03
+      gain_uN_per_hz: 0.024072170268735055
+      rmse_uN: 0.6471311715229446
+    - grid_index: 370
+      tau_s: 0.632455532033676
+      delay_s: 0.035
+      gain_uN_per_hz: 0.024089515905341932
+      rmse_uN: 0.6475592565709529
+    - grid_index: 371
+      tau_s: 0.632455532033676
+      delay_s: 0.04
+      gain_uN_per_hz: 0.02403707167176733
+      rmse_uN: 0.6488008245856427
+    - grid_index: 372
+      tau_s: 0.632455532033676
+      delay_s: 0.045
+      gain_uN_per_hz: 0.023986900722041692
+      rmse_uN: 0.6498500223296699
+    - grid_index: 373
+      tau_s: 0.632455532033676
+      delay_s: 0.05
+      gain_uN_per_hz: 0.02391487883625594
+      rmse_uN: 0.6510287395482661
+    - grid_index: 374
+      tau_s: 0.7022383468430263
+      delay_s: 0.0
+      gain_uN_per_hz: 0.025662878659290646
+      rmse_uN: 0.64510559967652
+    - grid_index: 375
+      tau_s: 0.7022383468430263
+      delay_s: 0.005
+      gain_uN_per_hz: 0.02570420507068254
+      rmse_uN: 0.6452565792589757
+    - grid_index: 376
+      tau_s: 0.7022383468430263
+      delay_s: 0.01
+      gain_uN_per_hz: 0.025677187824554033
+      rmse_uN: 0.6459217750129652
+    - grid_index: 377
+      tau_s: 0.7022383468430263
+      delay_s: 0.015
+      gain_uN_per_hz: 0.025737959412622805
+      rmse_uN: 0.6458917514769916
+    - grid_index: 378
+      tau_s: 0.7022383468430263
+      delay_s: 0.02
+      gain_uN_per_hz: 0.02573412728636737
+      rmse_uN: 0.6466818173503557
+    - grid_index: 379
+      tau_s: 0.7022383468430263
+      delay_s: 0.025
+      gain_uN_per_hz: 0.025730403317077967
+      rmse_uN: 0.6473644186054809
+    - grid_index: 380
+      tau_s: 0.7022383468430263
+      delay_s: 0.03
+      gain_uN_per_hz: 0.02569279176266802
+      rmse_uN: 0.6481257427586212
+    - grid_index: 381
+      tau_s: 0.7022383468430263
+      delay_s: 0.035
+      gain_uN_per_hz: 0.02571455502636263
+      rmse_uN: 0.6485920033306384
+    - grid_index: 382
+      tau_s: 0.7022383468430263
+      delay_s: 0.04
+      gain_uN_per_hz: 0.025664596444497083
+      rmse_uN: 0.6498369357106839
+    - grid_index: 383
+      tau_s: 0.7022383468430263
+      delay_s: 0.045
+      gain_uN_per_hz: 0.02561747633224539
+      rmse_uN: 0.650894497278055
+    - grid_index: 384
+      tau_s: 0.7022383468430263
+      delay_s: 0.05
+      gain_uN_per_hz: 0.025547545930104613
+      rmse_uN: 0.6520773633198258
+    - grid_index: 385
+      tau_s: 0.7797207405098149
+      delay_s: 0.0
+      gain_uN_per_hz: 0.027446506863959517
+      rmse_uN: 0.6458996465527137
+    - grid_index: 386
+      tau_s: 0.7797207405098149
+      delay_s: 0.005
+      gain_uN_per_hz: 0.02749408713316452
+      rmse_uN: 0.646088640217387
+    - grid_index: 387
+      tau_s: 0.7797207405098149
+      delay_s: 0.01
+      gain_uN_per_hz: 0.027471289768867924
+      rmse_uN: 0.6467703726823756
+    - grid_index: 388
+      tau_s: 0.7797207405098149
+      delay_s: 0.015
+      gain_uN_per_hz: 0.02753922743211684
+      rmse_uN: 0.6467849907434998
+    - grid_index: 389
+      tau_s: 0.7797207405098149
+      delay_s: 0.02
+      gain_uN_per_hz: 0.027540226109750376
+      rmse_uN: 0.6475887384208308
+    - grid_index: 390
+      tau_s: 0.7797207405098149
+      delay_s: 0.025
+      gain_uN_per_hz: 0.027541743242708555
+      rmse_uN: 0.6482871978847726
+    - grid_index: 391
+      tau_s: 0.7797207405098149
+      delay_s: 0.03
+      gain_uN_per_hz: 0.02750856032164668
+      rmse_uN: 0.6490589936313205
+    - grid_index: 392
+      tau_s: 0.7797207405098149
+      delay_s: 0.035
+      gain_uN_per_hz: 0.027536475411403156
+      rmse_uN: 0.6495499326415602
+    - grid_index: 393
+      tau_s: 0.7797207405098149
+      delay_s: 0.04
+      gain_uN_per_hz: 0.027490239938984397
+      rmse_uN: 0.650788780148687
+    - grid_index: 394
+      tau_s: 0.7797207405098149
+      delay_s: 0.045
+      gain_uN_per_hz: 0.027447420329917708
+      rmse_uN: 0.6518448718213857
+    - grid_index: 395
+      tau_s: 0.7797207405098149
+      delay_s: 0.05
+      gain_uN_per_hz: 0.027380693328348454
+      rmse_uN: 0.653022480917993
+    - grid_index: 396
+      tau_s: 0.865752256216612
+      delay_s: 0.0
+      gain_uN_per_hz: 0.029436897199706418
+      rmse_uN: 0.6466903327694268
+    - grid_index: 397
+      tau_s: 0.865752256216612
+      delay_s: 0.005
+      gain_uN_per_hz: 0.029492510957006026
+      rmse_uN: 0.6469053914815536
+    - grid_index: 398
+      tau_s: 0.865752256216612
+      delay_s: 0.01
+      gain_uN_per_hz: 0.029475232048300756
+      rmse_uN: 0.6475940231271571
+    - grid_index: 399
+      tau_s: 0.865752256216612
+      delay_s: 0.015
+      gain_uN_per_hz: 0.029552307286256713
+      rmse_uN: 0.6476404077268686
+    - grid_index: 400
+      tau_s: 0.865752256216612
+      delay_s: 0.02
+      gain_uN_per_hz: 0.029559636351503066
+      rmse_uN: 0.6484483782232662
+    - grid_index: 401
+      tau_s: 0.865752256216612
+      delay_s: 0.025
+      gain_uN_per_hz: 0.02956791968938222
+      rmse_uN: 0.6491530033603669
+    - grid_index: 402
+      tau_s: 0.865752256216612
+      delay_s: 0.03
+      gain_uN_per_hz: 0.029540463018466134
+      rmse_uN: 0.6499262076870411
+    - grid_index: 403
+      tau_s: 0.865752256216612
+      delay_s: 0.035
+      gain_uN_per_hz: 0.02957629156842208
+      rmse_uN: 0.6504309894726972
+    - grid_index: 404
+      tau_s: 0.865752256216612
+      delay_s: 0.04
+      gain_uN_per_hz: 0.029535023703326342
+      rmse_uN: 0.6516564945189636
+    - grid_index: 405
+      tau_s: 0.865752256216612
+      delay_s: 0.045
+      gain_uN_per_hz: 0.029497771303664395
+      rmse_uN: 0.6527034964595172
+    - grid_index: 406
+      tau_s: 0.865752256216612
+      delay_s: 0.05
+      gain_uN_per_hz: 0.029435364077715676
+      rmse_uN: 0.6538686303819344
+    - grid_index: 407
+      tau_s: 0.9612761726128785
+      delay_s: 0.0
+      gain_uN_per_hz: 0.03165694347374565
+      rmse_uN: 0.6474631115042254
+    - grid_index: 408
+      tau_s: 0.9612761726128785
+      delay_s: 0.005
+      gain_uN_per_hz: 0.03172242189450263
+      rmse_uN: 0.6476945657151779
+    - grid_index: 409
+      tau_s: 0.9612761726128785
+      delay_s: 0.01
+      gain_uN_per_hz: 0.03171198769647986
+      rmse_uN: 0.6483825105940413
+    - grid_index: 410
+      tau_s: 0.9612761726128785
+      delay_s: 0.015
+      gain_uN_per_hz: 0.03180023364427865
+      rmse_uN: 0.6484502243853058
+    - grid_index: 411
+      tau_s: 0.9612761726128785
+      delay_s: 0.02
+      gain_uN_per_hz: 0.031815428579447025
+      rmse_uN: 0.649255026986149
+    - grid_index: 412
+      tau_s: 0.9612761726128785
+      delay_s: 0.025
+      gain_uN_per_hz: 0.031832044125164015
+      rmse_uN: 0.6499582301167728
+    - grid_index: 413
+      tau_s: 0.9612761726128785
+      delay_s: 0.03
+      gain_uN_per_hz: 0.03181164308990282
+      rmse_uN: 0.6507258206229654
+    - grid_index: 414
+      tau_s: 0.9612761726128785
+      delay_s: 0.035
+      gain_uN_per_hz: 0.031857197933220914
+      rmse_uN: 0.6512358873649738
+    - grid_index: 415
+      tau_s: 0.9612761726128785
+      delay_s: 0.04
+      gain_uN_per_hz: 0.03182216659622822
+      rmse_uN: 0.6524426455222269
+    - grid_index: 416
+      tau_s: 0.9612761726128785
+      delay_s: 0.045
+      gain_uN_per_hz: 0.03179178238002389
+      rmse_uN: 0.6534748104944177
+    - grid_index: 417
+      tau_s: 0.9612761726128785
+      delay_s: 0.05
+      gain_uN_per_hz: 0.03173483174915625
+      rmse_uN: 0.6546220903671872
+    - grid_index: 418
+      tau_s: 1.0673398462412622
+      delay_s: 0.0
+      gain_uN_per_hz: 0.034131859611694466
+      rmse_uN: 0.6482076224887229
+    - grid_index: 419
+      tau_s: 1.0673398462412622
+      delay_s: 0.005
+      gain_uN_per_hz: 0.034209109322223756
+      rmse_uN: 0.6484477716168546
+    - grid_index: 420
+      tau_s: 1.0673398462412622
+      delay_s: 0.01
+      gain_uN_per_hz: 0.03420689186966178
+      rmse_uN: 0.6491291964580624
+    - grid_index: 421
+      tau_s: 1.0673398462412622
+      delay_s: 0.015
+      gain_uN_per_hz: 0.03430843002581356
+      rmse_uN: 0.649209895172525
+    - grid_index: 422
+      tau_s: 1.0673398462412622
+      delay_s: 0.02
+      gain_uN_per_hz: 0.03433308274098295
+      rmse_uN: 0.6500058946131894
+    - grid_index: 423
+      tau_s: 1.0673398462412622
+      delay_s: 0.025
+      gain_uN_per_hz: 0.03435965849122863
+      rmse_uN: 0.6507018697940037
+    - grid_index: 424
+      tau_s: 1.0673398462412622
+      delay_s: 0.03
+      gain_uN_per_hz: 0.03434769266422725
+      rmse_uN: 0.6514585423982804
+    - grid_index: 425
+      tau_s: 1.0673398462412622
+      delay_s: 0.035
+      gain_uN_per_hz: 0.03440486221594363
+      rmse_uN: 0.6519672581324896
+    - grid_index: 426
+      tau_s: 1.0673398462412622
+      delay_s: 0.04
+      gain_uN_per_hz: 0.03437737844341698
+      rmse_uN: 0.6531514074553596
+    - grid_index: 427
+      tau_s: 1.0673398462412622
+      delay_s: 0.045
+      gain_uN_per_hz: 0.034355215260420895
+      rmse_uN: 0.6541645492720237
+    - grid_index: 428
+      tau_s: 1.0673398462412622
+      delay_s: 0.05
+      gain_uN_per_hz: 0.03430489453173401
+      rmse_uN: 0.6552901216556616
+    - grid_index: 429
+      tau_s: 1.1851061951091357
+      delay_s: 0.0
+      gain_uN_per_hz: 0.03688948908912503
+      rmse_uN: 0.6489168520975039
+    - grid_index: 430
+      tau_s: 1.1851061951091357
+      delay_s: 0.005
+      gain_uN_per_hz: 0.036980517104824834
+      rmse_uN: 0.6491596681073569
+    - grid_index: 431
+      tau_s: 1.1851061951091357
+      delay_s: 0.01
+      gain_uN_per_hz: 0.036987952943995456
+      rmse_uN: 0.6498302114648428
+    - grid_index: 432
+      tau_s: 1.1851061951091357
+      delay_s: 0.015
+      gain_uN_per_hz: 0.03710502088467829
+      rmse_uN: 0.6499173220514638
+    - grid_index: 433
+      tau_s: 1.1851061951091357
+      delay_s: 0.02
+      gain_uN_per_hz: 0.03714080095200696
+      rmse_uN: 0.6507003493103183
+    - grid_index: 434
+      tau_s: 1.1851061951091357
+      delay_s: 0.025
+      gain_uN_per_hz: 0.037179048625068094
+      rmse_uN: 0.65138477654002
+    - grid_index: 435
+      tau_s: 1.1851061951091357
+      delay_s: 0.03
+      gain_uN_per_hz: 0.03717696659493957
+      rmse_uN: 0.6521266534049669
+    - grid_index: 436
+      tau_s: 1.1851061951091357
+      delay_s: 0.035
+      gain_uN_per_hz: 0.037247739845089466
+      rmse_uN: 0.652628983200044
+    - grid_index: 437
+      tau_s: 1.1851061951091357
+      delay_s: 0.04
+      gain_uN_per_hz: 0.03722917475481009
+      rmse_uN: 0.6537879267997225
+    - grid_index: 438
+      tau_s: 1.1851061951091357
+      delay_s: 0.045
+      gain_uN_per_hz: 0.03721665532385324
+      rmse_uN: 0.6547791429151516
+    - grid_index: 439
+      tau_s: 1.1851061951091357
+      delay_s: 0.05
+      gain_uN_per_hz: 0.03717419043643054
+      rmse_uN: 0.6558804028342589
+    - grid_index: 440
+      tau_s: 1.3158664493151366
+      delay_s: 0.0
+      gain_uN_per_hz: 0.03996063915587602
+      rmse_uN: 0.6495864086990205
+    - grid_index: 441
+      tau_s: 1.3158664493151366
+      delay_s: 0.005
+      gain_uN_per_hz: 0.040067578814285326
+      rmse_uN: 0.6498272639513697
+    - grid_index: 442
+      tau_s: 1.3158664493151366
+      delay_s: 0.01
+      gain_uN_per_hz: 0.04008618831017065
+      rmse_uN: 0.6504837814592368
+    - grid_index: 443
+      tau_s: 1.3158664493151366
+      delay_s: 0.015
+      gain_uN_per_hz: 0.04022116843755957
+      rmse_uN: 0.6505722108750964
+    - grid_index: 444
+      tau_s: 1.3158664493151366
+      delay_s: 0.02
+      gain_uN_per_hz: 0.040269845015772465
+      rmse_uN: 0.6513393038048932
+    - grid_index: 445
+      tau_s: 1.3158664493151366
+      delay_s: 0.025
+      gain_uN_per_hz: 0.04032158245463391
+      rmse_uN: 0.6520090854792321
+    - grid_index: 446
+      tau_s: 1.3158664493151366
+      delay_s: 0.03
+      gain_uN_per_hz: 0.040330921123433124
+      rmse_uN: 0.6527334566687509
+    - grid_index: 447
+      tau_s: 1.3158664493151366
+      delay_s: 0.035
+      gain_uN_per_hz: 0.040417413368070754
+      rmse_uN: 0.6532256837903195
+    - grid_index: 448
+      tau_s: 1.3158664493151366
+      delay_s: 0.04
+      gain_uN_per_hz: 0.04040921647535402
+      rmse_uN: 0.6543578472426527
+    - grid_index: 449
+      tau_s: 1.3158664493151366
+      delay_s: 0.045
+      gain_uN_per_hz: 0.04040785186574736
+      rmse_uN: 0.6553252764561511
+    - grid_index: 450
+      tau_s: 1.3158664493151366
+      delay_s: 0.05
+      gain_uN_per_hz: 0.040374537759990586
+      rmse_uN: 0.6564006271315839
+    - grid_index: 451
+      tau_s: 1.4610543085328915
+      delay_s: 0.0
+      gain_uN_per_hz: 0.0433794433996757
+      rmse_uN: 0.6502139153280014
+    - grid_index: 452
+      tau_s: 1.4610543085328915
+      delay_s: 0.005
+      gain_uN_per_hz: 0.04350458139596303
+      rmse_uN: 0.6504493396715925
+    - grid_index: 453
+      tau_s: 1.4610543085328915
+      delay_s: 0.01
+      gain_uN_per_hz: 0.04353598868034432
+      rmse_uN: 0.6510896789418127
+    - grid_index: 454
+      tau_s: 1.4610543085328915
+      delay_s: 0.015
+      gain_uN_per_hz: 0.043691438184036084
+      rmse_uN: 0.6511755568206969
+    - grid_index: 455
+      tau_s: 1.4610543085328915
+      delay_s: 0.02
+      gain_uN_per_hz: 0.043754902738613606
+      rmse_uN: 0.6519247328294248
+    - grid_index: 456
+      tau_s: 1.4610543085328915
+      delay_s: 0.025
+      gain_uN_per_hz: 0.04382207713475087
+      rmse_uN: 0.6525777637615202
+    - grid_index: 457
+      tau_s: 1.4610543085328915
+      delay_s: 0.03
+      gain_uN_per_hz: 0.043844481627338935
+      rmse_uN: 0.6532828630242888
+    - grid_index: 458
+      tau_s: 1.4610543085328915
+      delay_s: 0.035
+      gain_uN_per_hz: 0.04394896115717776
+      rmse_uN: 0.6537623438454495
+    - grid_index: 459
+      tau_s: 1.4610543085328915
+      delay_s: 0.04
+      gain_uN_per_hz: 0.04395267919281412
+      rmse_uN: 0.6548669665960138
+    - grid_index: 460
+      tau_s: 1.4610543085328915
+      delay_s: 0.045
+      gain_uN_per_hz: 0.043964087959938315
+      rmse_uN: 0.6558095806898899
+    - grid_index: 461
+      tau_s: 1.4610543085328915
+      delay_s: 0.05
+      gain_uN_per_hz: 0.043941305344489166
+      rmse_uN: 0.6568582279954175
+    - grid_index: 462
+      tau_s: 1.6222616615793748
+      delay_s: 0.0
+      gain_uN_per_hz: 0.04718375684022267
+      rmse_uN: 0.6507985121421515
+    - grid_index: 463
+      tau_s: 1.6222616615793748
+      delay_s: 0.005
+      gain_uN_per_hz: 0.047329561574856786
+      rmse_uN: 0.6510259807167468
+    - grid_index: 464
+      tau_s: 1.6222616615793748
+      delay_s: 0.01
+      gain_uN_per_hz: 0.04737551528561968
+      rmse_uN: 0.6516487864345785
+    - grid_index: 465
+      tau_s: 1.6222616615793748
+      delay_s: 0.015
+      gain_uN_per_hz: 0.04755419758841105
+      rmse_uN: 0.6517292418165971
+    - grid_index: 466
+      tau_s: 1.6222616615793748
+      delay_s: 0.02
+      gain_uN_per_hz: 0.04763448759588215
+      rmse_uN: 0.6524593022322478
+    - grid_index: 467
+      tau_s: 1.6222616615793748
+      delay_s: 0.025
+      gain_uN_per_hz: 0.04771919975055335
+      rmse_uN: 0.6530942722787624
+    - grid_index: 468
+      tau_s: 1.6222616615793748
+      delay_s: 0.03
+      gain_uN_per_hz: 0.04775644413615406
+      rmse_uN: 0.6537790854296266
+    - grid_index: 469
+      tau_s: 1.6222616615793748
+      delay_s: 0.035
+      gain_uN_per_hz: 0.047881360164783844
+      rmse_uN: 0.6542440400063511
+    - grid_index: 470
+      tau_s: 1.6222616615793748
+      delay_s: 0.04
+      gain_uN_per_hz: 0.0478986565944566
+      rmse_uN: 0.6553209985202252
+    - grid_index: 471
+      tau_s: 1.6222616615793748
+      delay_s: 0.045
+      gain_uN_per_hz: 0.04792458477735672
+      rmse_uN: 0.6562384254210999
+    - grid_index: 472
+      tau_s: 1.6222616615793748
+      delay_s: 0.05
+      gain_uN_per_hz: 0.04791381749564176
+      rmse_uN: 0.657260204144861
+    - grid_index: 473
+      tau_s: 1.8012560404225575
+      delay_s: 0.0
+      gain_uN_per_hz: 0.05141558827462055
+      rmse_uN: 0.6513404563387741
+    - grid_index: 474
+      tau_s: 1.8012560404225575
+      delay_s: 0.005
+      gain_uN_per_hz: 0.05158473979534319
+      rmse_uN: 0.6515582073363505
+    - grid_index: 475
+      tau_s: 1.8012560404225575
+      delay_s: 0.01
+      gain_uN_per_hz: 0.05164713481536702
+      rmse_uN: 0.6521627552631116
+    - grid_index: 476
+      tau_s: 1.8012560404225575
+      delay_s: 0.015
+      gain_uN_per_hz: 0.05185205284017507
+      rmse_uN: 0.6522357257059284
+    - grid_index: 477
+      tau_s: 1.8012560404225575
+      delay_s: 0.02
+      gain_uN_per_hz: 0.051951376722192695
+      rmse_uN: 0.6529460899181004
+    - grid_index: 478
+      tau_s: 1.8012560404225575
+      delay_s: 0.025
+      gain_uN_per_hz: 0.052055906611511535
+      rmse_uN: 0.653562316923812
+    - grid_index: 479
+      tau_s: 1.8012560404225575
+      delay_s: 0.03
+      gain_uN_per_hz: 0.05210991567611925
+      rmse_uN: 0.6542264202116072
+    - grid_index: 480
+      tau_s: 1.8012560404225575
+      delay_s: 0.035
+      gain_uN_per_hz: 0.05225792783318202
+      rmse_uN: 0.6546757554395348
+    - grid_index: 481
+      tau_s: 1.8012560404225575
+      delay_s: 0.04
+      gain_uN_per_hz: 0.05229060330971753
+      rmse_uN: 0.6557254151092019
+    - grid_index: 482
+      tau_s: 1.8012560404225575
+      delay_s: 0.045
+      gain_uN_per_hz: 0.05233294552688647
+      rmse_uN: 0.6566177905373708
+    - grid_index: 483
+      tau_s: 1.8012560404225575
+      delay_s: 0.05
+      gain_uN_per_hz: 0.052335798743809864
+      rmse_uN: 0.6576130191090405
+    - grid_index: 484
+      tau_s: 2.0
+      delay_s: 0.0
+      gain_uN_per_hz: 0.05612157507200541
+      rmse_uN: 0.651840805515736
+    - grid_index: 485
+      tau_s: 2.0
+      delay_s: 0.005
+      gain_uN_per_hz: 0.056316996944997186
+      rmse_uN: 0.6520476858417131
+    - grid_index: 486
+      tau_s: 2.0
+      delay_s: 0.01
+      gain_uN_per_hz: 0.05639789738946728
+      rmse_uN: 0.65263374339064
+    - grid_index: 487
+      tau_s: 2.0
+      delay_s: 0.015
+      gain_uN_per_hz: 0.05663232903295526
+      rmse_uN: 0.6526978137477537
+    - grid_index: 488
+      tau_s: 2.0
+      delay_s: 0.02
+      gain_uN_per_hz: 0.056753092606781554
+      rmse_uN: 0.6533883803936296
+    - grid_index: 489
+      tau_s: 2.0
+      delay_s: 0.025
+      gain_uN_per_hz: 0.05687992655282186
+      rmse_uN: 0.6539856704872452
+    - grid_index: 490
+      tau_s: 2.0
+      delay_s: 0.03
+      gain_uN_per_hz: 0.05695279888851836
+      rmse_uN: 0.6546290958199619
+    - grid_index: 491
+      tau_s: 2.0
+      delay_s: 0.035
+      gain_uN_per_hz: 0.0571268086359395
+      rmse_uN: 0.655062257645596
+    - grid_index: 492
+      tau_s: 2.0
+      delay_s: 0.04
+      gain_uN_per_hz: 0.05717682263812042
+      rmse_uN: 0.656085350181072
+    - grid_index: 493
+      tau_s: 2.0
+      delay_s: 0.045
+      gain_uN_per_hz: 0.05723764453889763
+      rmse_uN: 0.656953194524974
+    - grid_index: 494
+      tau_s: 2.0
+      delay_s: 0.05
+      gain_uN_per_hz: 0.05725586398137489
+      rmse_uN: 0.657922554778791
+  grid_boundary_contact:
+    tau_minimum: false
+    tau_maximum: true
+    delay_minimum: true
+    delay_maximum: true
+accounting:
+  promoted_parameter_values: 0
+  selected_body_class_assignments: 0
+  behavior_targets_exposed: 0
+  topology_changes: 0
+accepted_claims:
+- The exact slow-cell multi-spike trials can test a causal tonic event-to-force family
+  without borrowing a fast or intermediate twitch.
+- A finite trial-held-out candidate envelope may unblock execution of slow-containing
+  branches while retaining diagnostic provenance.
+- Fast, intermediate and slow transfer representations remain distinct and the ten
+  body classes remain factorized uncertainty.
+forbidden_claims:
+- This post-inspection design independently validates or promotes a biological slow
+  population kernel.
+- One recorded cell identifies the distribution of slow motor units.
+- A best grid member is a runtime default or unique physiological value.
+- The ten MaleCNS body IDs are assigned to fast, intermediate or slow classes.
+- Body motion or the future resistance-reflex response selected any parameter.
+next_action: If the finite envelope predicts held-out current-step trials without
+  an invalid value, propagate every retained slow candidate alongside the existing
+  fast and intermediate diagnostic envelopes and all 59,049 factorized body-class
+  assignments. Keep zero reference selection and hand amplitude uncertainty to the
+  integrated local lineage. If the envelope is numerically invalid, retain all slow-containing
+  branches as blocked and replan FH-04.

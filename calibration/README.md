@@ -293,7 +293,8 @@ sensitivity coverage, not exhaustive higher-order coverage or a probability
 prior. The same gate accepts all 24 FeCO alternatives as an unselected set and
 partitions the motor ensemble into 1,024 fast/intermediate assignments with
 diagnostic kernels and 58,025 slow-containing assignments that remain blocked.
-No value, route, representation or behavior is selected.
+This is the reproducible historical frontier before FH-04. No value, route,
+representation or behavior is selected.
 
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
@@ -391,6 +392,17 @@ prose. The ten selected MaleCNS tibia-flexor motor body IDs still lack a
 source-backed fast/intermediate/slow crosswalk, so class assignments remain an
 explicit ensemble rather than a silent per-neuron label.
 
+Run `fit_motor_slow_tonic_envelope.bat` to reconstruct the FH-04 slow diagnostic.
+It uses 35 admitted multi-spike current-step trials from the exact slow-cell
+archive and evaluates a causal first-order event-rate-to-force family under
+current-step-stratified held-out folds. Its 338 near-optimal candidates touch the
+tau maximum and both delay bounds; the best point is therefore not a reference.
+Run `propagate_motor_transfer_ensemble.bat` next. It retains the fast and
+intermediate twitch families, the complete slow tonic envelope, all 59,049
+body-class assignments and the separate three-member force-to-direct-MOTOR
+surrogate. FH-04 completion means complete factorized execution coverage, not a
+calibrated motor population or bodyId/class crosswalk.
+
 Run `embodied_measurement_contract_v1.bat` to reproduce the complete
 short-horizon measurement contract before any neutral embodied fit. It executes
 two identical passive baselines and one paired generic perturbation, then records
@@ -405,9 +417,10 @@ Run `neutral_embodied_pilot_schedule.bat` to reconstruct the immutable first
 readiness panel. The versioned CSV has 120 tuples and 240 paired physical
 episodes. It covers all 50 intermediate profiles, 24 FeCO alternatives, 110 route
 basis edges and three gains, plus a deterministic balanced sample of 120/1,024
-fast/intermediate motor assignments. The other 904 executable assignments and
-all 58,025 slow-containing blocked assignments remain counted. This command does
-not run physics, fit a value or select a candidate.
+fast/intermediate motor assignments. The other 904 then-executable assignments and
+all 58,025 then-blocked slow-containing assignments remain counted in that
+historical schedule; FH-04 does not rewrite it. This command does not run physics,
+fit a value or select a candidate.
 
 Run `neutral_embodied_adapter_sentinel.bat` for the first bounded execution gate.
 Its four tuple IDs are preregistered and account for eight paired physical

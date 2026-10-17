@@ -248,10 +248,13 @@ tailles d'ensembles candidats et les degrés de liberté, pas seulement leur nom
 - L'intensité basale, l'efficacité synaptique, les conversions internes et les
   seuils/dynamiques constituent un bloc d'identifiabilité. Une simple traversée de
   seuil, une activité non nulle ou un mouvement ne choisit aucun de ces facteurs.
-- Pour la chaîne motrice T1 actuelle, conserver les 58 025 affectations contenant
-  une classe lente comme bloquées tant qu'un noyau lent ou une correspondance
-  bodyId/classe indépendante n'existe pas ; ne jamais emprunter le noyau d'une
-  autre classe pour rendre le chemin exécutable.
+- Pour la chaîne motrice T1 actuelle, conserver les 59 049 affectations bodyId/
+  classe comme un ensemble factorisé sans référence. Les 58 025 affectations
+  contenant une classe lente sont désormais exécutables par l'enveloppe tonique
+  distincte de 338 candidats de FH-04, jamais par emprunt d'un noyau rapide ou
+  intermédiaire. Cette enveloppe une-cellule, post-inspection et en contact avec
+  les bornes ferme la couverture d'exécution, pas l'identification biologique :
+  ne choisir ni son meilleur point ni une classe par bodyId à partir du mouvement.
 
 ## Capacité du modèle central et propagation d'ensemble
 

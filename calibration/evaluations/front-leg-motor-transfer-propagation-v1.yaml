@@ -1,0 +1,50 @@
+schema_version: 1
+id: evaluation.front_leg_motor_transfer_propagation.v1
+campaign_id: campaign.front_leg_motor_transfer_propagation.v1
+parameter_set_id: parameters.front_leg_motor_transfer_ensemble.v1
+acceptance_result: pass_complete_factorized_execution_boundary_contact_no_reference
+runtime_probes:
+- retained_index: 0
+  grid_index: 120
+  peak_force_uN: 0.5271970113102764
+  final_force_uN: 3.0445620655054926e-12
+  finite: true
+- retained_index: 169
+  grid_index: 326
+  peak_force_uN: 0.7697509852395181
+  final_force_uN: 0.021492768166459307
+  finite: true
+- retained_index: 337
+  grid_index: 494
+  peak_force_uN: 1.2159726171442014
+  final_force_uN: 0.5819005422228671
+  finite: true
+accounting:
+  body_class_assignments: 59049
+  previously_executable_assignments: 1024
+  newly_executable_slow_containing_assignments: 58025
+  remaining_blocked_assignments: 0
+  slow_candidates_propagated: 338
+  selected_members: 0
+limitations:
+- The slow envelope is post-inspection, one-cell and touches the tau and delay grid
+  boundaries.
+- Fast and intermediate envelopes are also one-cell diagnostics and the intermediate
+  fit is weak.
+- No individual MaleCNS body has an experimental motor-class crosswalk.
+- Execution completeness is not physiological validation or motor calibration.
+accepted_claims:
+- Every one of the 59,049 factorized ten-body class assignments now has a class-distinct
+  executable event-to-force representation.
+- The 58,025 slow-containing assignments are propagated through the exact finite 338-member
+  diagnostic slow envelope rather than a borrowed twitch or zero.
+- Body class, temporal candidate, actuator route and force-to-MuJoCo gain remain separate
+  unselected axes.
+forbidden_claims:
+- The slow envelope is an independently validated biological population kernel.
+- A best candidate, body-class assignment, route or actuator gain is a runtime default
+  or reference.
+- Motor transfer is calibrated from body motion or from the future held-out response.
+next_action: Hand the complete factorized motor-transfer envelope to FH-05 and keep
+  it fixed while the coupled central, basal and native-boundary identifiability gate
+  is evaluated.

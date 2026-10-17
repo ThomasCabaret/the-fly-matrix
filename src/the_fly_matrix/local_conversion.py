@@ -59,6 +59,22 @@ class MotorTwitchParameters:
 
 
 @dataclass(frozen=True)
+class MotorTonicParameters:
+    """Per-channel causal event-rate to force parameters for tonic motor units.
+
+    This representation is intentionally distinct from an isolated twitch.  The
+    filtered state has units of events/second and implements the same sampled
+    continuous exponential impulse response used by the fitting campaign.
+    ``initial_filtered_rate_hz`` is an explicit state initialization, never an
+    implicit basal source.
+    """
+
+    force_per_rate_uN_per_hz: np.ndarray
+    time_constant_s: np.ndarray
+    delay_s: np.ndarray
+
+
+@dataclass(frozen=True)
 class ActuatorBridgeParameters:
     """Separate biological-force to MuJoCo direct-motor surrogate bridge."""
 
@@ -175,6 +191,79 @@ def motor_events_to_force_uN(
         force[sample_index] = (
             (decay_state - rise_state) / peak * force_per_event
         )
+    return force
+
+
+def motor_events_to_tonic_force_uN(
+    event_counts: np.ndarray,
+    parameters: MotorTonicParameters,
+    *,
+    timestep_s: float,
+    initial_filtered_rate_hz: np.ndarray | None = None,
+) -> np.ndarray:
+    """Filter integer events into a delayed tonic rate, then scale to force.
+
+    Delays must be an integer number of simulation samples so the implementation
+    cannot silently round a scientifically owned temporal parameter.  The
+    recurrence is the exact uniform-sample form of ``exp(-age/tau) / tau`` used
+    by :mod:`motor_slow_tonic_envelope`, rather than a separately normalized
+    discrete filter.
+    """
+
+    events = np.asarray(event_counts)
+    if events.ndim != 2:
+        raise LocalConversionError("event_counts must have shape (time, channels)")
+    if not np.issubdtype(events.dtype, np.integer):
+        raise LocalConversionError("event_counts must be integer-valued")
+    if (events < 0).any():
+        raise LocalConversionError("event_counts cannot be negative")
+    if not np.isfinite(timestep_s) or timestep_s <= 0.0:
+        raise LocalConversionError("timestep_s must be finite and strictly positive")
+
+    channel_count = events.shape[1]
+    gain = _as_vector(
+        "force_per_rate_uN_per_hz",
+        parameters.force_per_rate_uN_per_hz,
+        channel_count,
+    )
+    tau = _as_vector("time_constant_s", parameters.time_constant_s, channel_count)
+    delay = _as_vector("delay_s", parameters.delay_s, channel_count)
+    if (gain < 0.0).any():
+        raise LocalConversionError("force_per_rate_uN_per_hz cannot be negative")
+    if (tau <= 0.0).any():
+        raise LocalConversionError("time_constant_s must be strictly positive")
+    if (delay < 0.0).any():
+        raise LocalConversionError("delay_s cannot be negative")
+
+    delay_samples_float = delay / float(timestep_s)
+    delay_samples = np.rint(delay_samples_float).astype(np.int64)
+    if not np.allclose(delay_samples_float, delay_samples, rtol=0.0, atol=1e-9):
+        raise LocalConversionError(
+            "delay_s must be an integer multiple of timestep_s; resampling must be explicit"
+        )
+
+    if initial_filtered_rate_hz is None:
+        state = np.zeros(channel_count, dtype=np.float64)
+    else:
+        state = _as_vector(
+            "initial_filtered_rate_hz", initial_filtered_rate_hz, channel_count
+        ).copy()
+        if (state < 0.0).any():
+            raise LocalConversionError("initial_filtered_rate_hz cannot be negative")
+
+    decay_factor = np.exp(-float(timestep_s) / tau)
+    event_increment_hz = 1.0 / tau
+    force = np.zeros(events.shape, dtype=np.float64)
+    for sample_index in range(events.shape[0]):
+        if sample_index > 0:
+            state = state * decay_factor
+        delivered = np.zeros(channel_count, dtype=np.float64)
+        for channel_index, channel_delay in enumerate(delay_samples):
+            source_index = sample_index - int(channel_delay)
+            if source_index >= 0:
+                delivered[channel_index] = events[source_index, channel_index]
+        state = state + delivered * event_increment_hz
+        force[sample_index] = state * gain
     return force
 
 

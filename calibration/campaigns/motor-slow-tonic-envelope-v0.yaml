@@ -1,0 +1,90 @@
+schema_version: 1
+id: campaign.motor_slow_tonic_envelope.v0
+title: Slow tibia-flexor tonic event-to-force envelope
+status: preregistered_diagnostic_after_source_inspection
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: local_interface
+optimization_exposure: diagnostic_only
+claim_label: SLOW MOTOR TONIC ENVELOPE / ONE CELL / MULTI-SPIKE / NO BODY CROSSWALK / NO PROMOTION
+behavior_targets: []
+topology_changes_allowed: false
+
+design_provenance:
+  preregistered_before_any_raw_trace_inspection: false
+  note: >-
+    The absence of isolated slow-cell spikes and the current-step trial structure
+    were already inspected in v0. This campaign can bound an executable tonic
+    representation and test prediction on held-out trials, but cannot independently
+    promote a population kernel or a bodyId/class crosswalk.
+
+inputs:
+  parser_contract: calibration/evidence/motor-spike-force-parser-v0.yaml
+  source_article:
+    citation: Azevedo et al. 2020, A size principle for recruitment of Drosophila leg motor neurons
+    doi: 10.7554/eLife.56754
+    supports:
+      - slow tibia-flexor neurons spike tonically near rest
+      - positive and negative rate changes respectively increase and decrease probe force
+      - slow force changes are gradual and are not isolated single-spike twitches
+    does_not_support:
+      - one universal time constant or delay
+      - a MaleCNS bodyId to driver-class crosswalk
+  recovered_source_script:
+    repository: https://github.com/tony-azevedo/FlyAnalysis
+    commit: ebe1e5008fc5f76954cea3973aa30b103ec3fa9a
+    path: Records/Records_SlowInterFastScripts/Dataset3_ForcePerSpike/Script_tableOfForcePerSpike.m
+    supports: current-step grouping, pre-stimulus baseline and stimulus window
+  source_archive:
+    functional_class: slow_35C09
+    path: data/raw/calibration/front-leg-local-v0/motor/180111_F2_C1.zip
+    expected_bytes: 291303979
+    sha256: 59efa2e5a071d561e4b47691c0753924ee26f041a9ceec2becd1d722572ddc8c
+
+trace_selection:
+  declared_trials: 38
+  allowed_current_steps_pA: [-31.25, 31.25, 62.5]
+  baseline_window_s: [-0.2, 0.0]
+  rest_rate_window_s: [-0.4, 0.0]
+  fit_window_s: [0.0, 0.75]
+  force_smoothing_frames: 5
+  spring_constant_uN_per_source_displacement: 0.2234
+  force_transform: smooth_each_trial_then_convert_and_subtract_own_pre_stimulus_mean
+  spike_transform: causal_first_order_event_filter_initialized_from_own_pre_stimulus_rate
+
+fit:
+  model: causal_first_order_tonic_event_rate_to_force
+  sharing: one_tau_one_delay_one_nonnegative_gain_for_the_selected_slow_cell
+  candidate_grid:
+    tau_s: {scale: logarithmic, minimum: 0.02, maximum: 2.0, count: 45}
+    delay_s: {scale: linear, minimum: 0.0, maximum: 0.05, count: 11}
+  fold_count: 5
+  split: current_step_stratified_sorted_trial_numbers_round_robin
+  objective: raw_uN_sum_squared_error_after_pre_stimulus_baseline_subtraction
+  fold_policy: select_tau_delay_and_fit_nonnegative_gain_on_training_trials_report_only_on_held_out_trials
+  near_optimal_relative_rmse: 0.05
+
+selection_policy:
+  promote_values: false
+  choose_body_class_assignment: false
+  choose_population_distribution: false
+  choose_single_slow_kernel: false
+  body_motion_allowed_for_selection: false
+
+accepted_claims:
+  - The exact slow-cell multi-spike trials can test a causal tonic event-to-force family without borrowing a fast or intermediate twitch.
+  - A finite trial-held-out candidate envelope may unblock execution of slow-containing branches while retaining diagnostic provenance.
+  - Fast, intermediate and slow transfer representations remain distinct and the ten body classes remain factorized uncertainty.
+forbidden_claims:
+  - This post-inspection design independently validates or promotes a biological slow population kernel.
+  - One recorded cell identifies the distribution of slow motor units.
+  - A best grid member is a runtime default or unique physiological value.
+  - The ten MaleCNS body IDs are assigned to fast, intermediate or slow classes.
+  - Body motion or the future resistance-reflex response selected any parameter.
+next_action: >-
+  If the finite envelope predicts held-out current-step trials without an invalid
+  value, propagate every retained slow candidate alongside the existing fast and
+  intermediate diagnostic envelopes and all 59,049 factorized body-class
+  assignments. Keep zero reference selection and hand amplitude uncertainty to the
+  integrated local lineage. If the envelope is numerically invalid, retain all
+  slow-containing branches as blocked and replan FH-04.

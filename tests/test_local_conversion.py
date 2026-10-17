@@ -10,11 +10,13 @@ from the_fly_matrix.local_conversion import (
     ActuatorBridgeParameters,
     FeCOTransferParameters,
     LocalConversionError,
+    MotorTonicParameters,
     MotorTwitchParameters,
     event_intensity_to_counts,
     feco_kinematics_to_native_output,
     force_uN_to_actuator_command,
     motor_events_to_force_uN,
+    motor_events_to_tonic_force_uN,
     run_local_conversion_contract,
 )
 
@@ -89,6 +91,54 @@ class LocalConversionTests(unittest.TestCase):
         np.testing.assert_allclose(
             commands, force * np.asarray([0.1, -0.2]) + np.asarray([1.0, 2.0])
         )
+
+    def test_tonic_motor_filter_is_delayed_causal_and_superposes(self) -> None:
+        events = np.zeros((80, 2), dtype=np.int64)
+        events[10:30:5, :] = 1
+        parameters = MotorTonicParameters(
+            force_per_rate_uN_per_hz=np.asarray([0.5, 0.5]),
+            time_constant_s=np.asarray([0.02, 0.02]),
+            delay_s=np.asarray([0.0, 0.005]),
+        )
+        force = motor_events_to_tonic_force_uN(
+            events, parameters, timestep_s=0.001
+        )
+        self.assertTrue(np.all(force[:10, 0] == 0.0))
+        self.assertTrue(np.all(force[:15, 1] == 0.0))
+        self.assertGreater(float(force[10, 0]), 0.0)
+        self.assertGreater(float(force[15, 1]), 0.0)
+        self.assertLess(float(force[-1, 0]), float(force[25, 0]))
+
+        doubled = motor_events_to_tonic_force_uN(
+            events * 2, parameters, timestep_s=0.001
+        )
+        np.testing.assert_allclose(doubled, 2.0 * force)
+
+    def test_tonic_motor_initial_state_is_explicit_and_decays(self) -> None:
+        force = motor_events_to_tonic_force_uN(
+            np.zeros((10, 1), dtype=np.int64),
+            MotorTonicParameters(
+                force_per_rate_uN_per_hz=np.asarray([2.0]),
+                time_constant_s=np.asarray([0.01]),
+                delay_s=np.asarray([0.0]),
+            ),
+            timestep_s=0.001,
+            initial_filtered_rate_hz=np.asarray([5.0]),
+        )
+        self.assertGreater(float(force[0, 0]), float(force[-1, 0]))
+        self.assertGreater(float(force[-1, 0]), 0.0)
+
+    def test_tonic_motor_rejects_hidden_delay_rounding(self) -> None:
+        with self.assertRaisesRegex(LocalConversionError, "integer multiple"):
+            motor_events_to_tonic_force_uN(
+                np.zeros((10, 1), dtype=np.int64),
+                MotorTonicParameters(
+                    force_per_rate_uN_per_hz=np.asarray([1.0]),
+                    time_constant_s=np.asarray([0.01]),
+                    delay_s=np.asarray([0.0015]),
+                ),
+                timestep_s=0.001,
+            )
 
     def test_shape_units_and_kernel_misuse_fail_loudly(self) -> None:
         with self.assertRaisesRegex(LocalConversionError, "shapes must match"):

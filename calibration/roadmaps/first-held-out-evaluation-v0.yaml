@@ -44,10 +44,10 @@ estimate_contract:
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 6
-  base_work_batches: {min: 7, max: 11}
+  open_items: 5
+  base_work_batches: {min: 6, max: 9}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 9, max: 15}
+  planning_forecast_batches: {min: 8, max: 13}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -132,7 +132,7 @@ items:
   - id: FH-04
     title: Close the scoped motor slow-kernel and bodyId/class uncertainty
     nature: evidence_transfer_and_local_motor_gate
-    status: planned
+    status: complete
     depends_on: [FH-01, FH-02]
     estimated_batches: {min: 1, max: 2}
     exit_criteria:
@@ -140,6 +140,24 @@ items:
       - no motor class is selected from body motion
       - event-to-force and force-to-direct-MOTOR stages remain separate
     replan_if: every admissible readout requires an unidentifiable slow branch
+    completion_record:
+      date: 2026-10-17
+      parameter_set_id: parameters.front_leg_motor_transfer_ensemble.v1
+      evaluation_ref: calibration/evaluations/front-leg-motor-transfer-propagation-v1.yaml
+      outcome: >-
+        The exact slow-cell archive supports a distinct causal tonic event-rate to
+        force representation with modest held-out signal but a broad 338-member
+        near-optimal envelope that touches tau and delay grid boundaries. All
+        58,025 slow-containing body-class assignments are now executable through
+        this finite diagnostic envelope; the 1,024 fast/intermediate-only
+        assignments retain their separate twitch representations. All 59,049
+        body-class assignments remain factorized, unranked and unselected. The
+        force-to-direct-MOTOR surrogate remains a separate three-member axis.
+      local_family_id: parameter.motor.transfer.v0
+      retained_uncertainty: broad_boundary_contact_one_cell_diagnostic_envelopes_and_no_bodyid_class_crosswalk
+      promoted_parameter_values: 0
+      selected_body_class_assignments: 0
+      simulated_body_outcomes_inspected: false
 
   - id: FH-05
     title: Bound typed central, basal and native-boundary identifiability on the cone
@@ -224,6 +242,32 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-17
+    batch: fh04_motor_slow_tonic_and_factorized_transfer_propagation
+    before:
+      open_items: 6
+      base_work_batches: {min: 7, max: 11}
+      planning_forecast_batches: {min: 9, max: 15}
+    closed: [FH-04]
+    advanced: []
+    newly_discovered_items: []
+    consumed_batches: 1
+    scientific_discovery:
+      finding: >-
+        The slow tonic fit has modest held-out predictive content but its
+        338-member near-optimal set reaches the maximum tau and both delay bounds.
+      disposition: >-
+        Preserve the complete finite candidate set as uncertainty. Do not widen
+        the grid merely to manufacture a preferred value, and do not promote the
+        all-data best point.
+      schedule_effect: no_new_item_the_existing_FH05_gate_already_owns_joint_identifiability
+    after:
+      open_items: 5
+      base_work_batches: {min: 6, max: 9}
+      planning_forecast_batches: {min: 8, max: 13}
+    accounting_note: >-
+      One planned FH-04 batch closed the item. The maximum falls by two because
+      FH-04 had a one-to-two-batch range and no second batch is now required.
   - date: 2026-10-17
     batch: fh03_native_bridge_factorization_and_handoff
     before:

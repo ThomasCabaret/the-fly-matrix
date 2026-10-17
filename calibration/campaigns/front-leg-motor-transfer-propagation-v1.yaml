@@ -1,0 +1,65 @@
+schema_version: 1
+id: campaign.front_leg_motor_transfer_propagation.v1
+title: Propagate the three motor-class transfer representations without selecting a body class or kernel
+target_id: target.population_dynamics_assignment.v0
+classification: evidence_transfer
+optimization_exposure: diagnostic_only
+claim_label: MOTOR TRANSFER FACTORIZED ENVELOPE / NO REFERENCE / NO BODY MOTION
+behavior_targets: []
+topology_changes_allowed: false
+
+inputs:
+  motor_class_ensemble:
+    path: calibration/evidence/front-leg-motor-class-ensemble-v0.yaml
+    sha256: 3595b0420bb815887d2d892ad5f9088e5af61a53ba38a7ef43c28277ac2304fa
+  fast_intermediate_temporal_diagnostic:
+    path: calibration/runner/motor-twitch-temporal-diagnostic-v0.yaml
+    sha256: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+  slow_tonic_diagnostic:
+    path: calibration/runner/motor-slow-tonic-envelope-v0.yaml
+    sha256: 7bee1dcf15511fa8d8f70ef9e29c7b456454df9f98de0765c909b07e80618f02
+  actuator_bridge_diagnostic:
+    path: calibration/runner/motor-actuator-bridge-envelope-v0.yaml
+    sha256: a464d4a8f8611a978c2045b8c2cf1734f6cc0668dc422a0176c2b816a45a2dfd
+
+propagation_policy:
+  class_sharing: one_candidate_per_experimental_class_shared_across_scoped_bodies_assigned_to_that_class
+  body_class_variables: 10
+  admissible_classes_per_body: 3
+  expected_body_class_assignments: 59049
+  expected_assignments_without_slow: 1024
+  expected_assignments_with_slow: 58025
+  expected_slow_candidates: 338
+  reference_selection: forbidden
+  probability_prior: none
+  enumerate_cartesian_product: false
+  body_motion_may_select_member: false
+  slow_representation: causal_delayed_first_order_event_rate_to_force
+  fast_intermediate_representation: causal_peak_normalized_biexponential_event_twitch
+  force_to_direct_motor_stage: separate_conditional_three_gain_engineering_envelope
+
+runtime_probe:
+  timestep_s: 0.001
+  samples: 3000
+  event_period_samples: 25
+  candidates: [first, middle, last]
+  accepted_invariants:
+    - finite_nonnegative_force
+    - delay_is_causal
+    - force_decays_after_events_stop
+    - zero_hidden_baseline
+
+outputs:
+  parameter_set: calibration/parameter_sets/front-leg-motor-transfer-ensemble-v1.yaml
+  evaluation: calibration/evaluations/front-leg-motor-transfer-propagation-v1.yaml
+  runner: calibration/runner/front-leg-motor-transfer-propagation-v1.yaml
+
+accepted_claims:
+  - Every one of the 59,049 factorized ten-body class assignments now has a class-distinct executable event-to-force representation.
+  - The 58,025 slow-containing assignments are propagated through the exact finite 338-member diagnostic slow envelope rather than a borrowed twitch or zero.
+  - Body class, temporal candidate, actuator route and force-to-MuJoCo gain remain separate unselected axes.
+forbidden_claims:
+  - The slow envelope is an independently validated biological population kernel.
+  - A best candidate, body-class assignment, route or actuator gain is a runtime default or reference.
+  - Motor transfer is calibrated from body motion or from the future held-out response.
+next_action: Hand the complete factorized motor-transfer envelope to FH-05 and keep it fixed while the coupled central, basal and native-boundary identifiability gate is evaluated.

@@ -421,8 +421,8 @@ risks:
     next_review: before_first_basal_dependent_local_family_freeze
 
   - id: risk.motor_slow_kernel_and_bodyid_assignment.v0
-    title: Slow motor-unit kernel and ten-body class assignment block most front-leg motor alternatives
-    status: open_local_chain_blocker
+    title: Slow motor-unit representation and ten-body class assignment remain biologically unidentified
+    status: execution_blocker_mitigated_biological_identification_open
     affected_model_id: model.malecns_event_capable_typed_hybrid.v0
     affected_parameter_family_ids:
       - parameter.motor.routing.v0
@@ -435,20 +435,26 @@ risks:
       - Source data distinguish fast, intermediate and slow motor-unit classes.
       - Diagnostic temporal kernels exist for 18 fast and 15 intermediate single-spike traces.
       - The factorized registry preserves all assignments rather than selecting a convenient crosswalk.
+      - Thirty-five admitted slow multi-spike trials support a distinct causal tonic event-rate-to-force diagnostic with held-out energy fraction explained 0.3088.
+      - A finite 338-member slow envelope now makes all 58025 slow-containing assignments executable without borrowing another class kernel.
     evidence_against_or_unresolved:
       - No source-backed bodyId-to-class crosswalk exists for the ten selected motor neurons.
-      - The upper bound is 59049 joint assignments; only 1024 fast/intermediate assignments have diagnostic kernels.
-      - All 58025 slow-containing assignments are blocked because no isolated slow twitch kernel is identified.
+      - The upper bound remains 59049 unranked joint assignments with no probability prior.
+      - The slow result uses one cell, follows exploratory inspection and its near-optimal envelope touches the tau maximum and both delay bounds.
+      - Fast and intermediate are also one-cell diagnostics; the intermediate temporal fit is weak and broad.
     consequence_if_true: A bounded motor ensemble can support the first local causal chain.
     consequence_if_false: The chosen chain cannot support an interpretable motor readout without new data or a different local scope.
     current_mitigation: >-
-      Keep slow branches blocked, retain the factorized class ensemble, and seek
-      bodyId/class evidence or a source-backed slow representation. Never borrow a
-      fast or intermediate kernel for slow merely to execute the branch.
+      Freeze parameters.front_leg_motor_transfer_ensemble.v1 as an unselected
+      factorized diagnostic ensemble: retain all body-class assignments and all
+      338 slow tonic candidates, keep class representations distinct and keep the
+      force-to-direct-MOTOR surrogate separate. Seek independent bodyId/class and
+      population evidence before any promotion.
     cheapest_discriminating_experiment: >-
-      Audit available anatomy and source trials for a bodyId/class crosswalk and
-      slow temporal evidence before commissioning a new motor experiment or
-      changing the first local chain.
+      Propagate the complete fixed motor ensemble through FH-05 and test whether
+      the future technical conclusions are robust across body-class and slow
+      candidate axes. In parallel, audit independent anatomy or broader motor-unit
+      recordings for a bodyId/class crosswalk and population-level constraints.
     escalation_triggers:
       - no independent evidence reduces the class space
       - the first causal readout requires slow-containing members
@@ -458,7 +464,7 @@ risks:
       - selecting class assignments from body movement
       - reporting the 1024 executable members as the complete scientific set
     decision_ref: decisions/0012-hierarchical-reconstructible-calibration.md
-    next_review: before_first_motor_transfer_freeze_or_tactile_protocol_lock
+    next_review: during_FH05_and_before_any_motor_reference_promotion_or_protocol_lock
 
   - id: risk.missing_mechanism_coverage.v0
     title: Absent electrical, muscular or compartmental mechanisms can confound behavior failures

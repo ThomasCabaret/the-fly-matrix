@@ -220,6 +220,8 @@ inspect_motor_pilot.bat
 parse_motor_spike_force_pilot.bat
 fit_motor_spike_force_pilot.bat
 fit_motor_twitch_temporal_pilot.bat
+fit_motor_slow_tonic_envelope.bat
+propagate_motor_transfer_ensemble.bat
 
 actuator_semantics_gate.bat
 actuator_attribution_gate.bat
@@ -257,14 +259,19 @@ The factorized local-chain step is reproducible with
 intermediates. Two annotated tibia-extensor motor bodies acquire a source-backed
 event requirement; 148 remain explicit `dual_unresolved` alternatives. The
 transmitter prior is joined only for audit and never selects native dynamics.
-`front_leg_uncertainty_panel.bat` then rebuilds the accepted tractable propagation
+`front_leg_uncertainty_panel.bat` rebuilds the historical tractable propagation
 policy without reducing the scientific uncertainty. It emits 50 deterministic,
 balanced profiles covering all pairwise binary states, accepts all 24 FeCO
-alternatives as an unselected set, and preserves the motor split between 1,024
-fast/intermediate assignments with diagnostic kernels and 58,025 slow-containing
-blocked assignments. A fresh clone must stop at that same frontier rather than
-inventing a global rate/LIF default, a preferred hash profile or a slow motor
-kernel.
+alternatives as an unselected set, and reproduces the then-current motor split of
+1,024 executable fast/intermediate assignments and 58,025 blocked slow-containing
+assignments. `fit_motor_slow_tonic_envelope.bat` then verifies the exact slow-cell
+archive and reconstructs a distinct 338-member causal tonic envelope from 35
+admitted multi-spike trials. The broad set touches tau and delay grid boundaries,
+so its best point is not promoted. `propagate_motor_transfer_ensemble.bat` closes
+FH-04 by making all 59,049 body-class assignments executable as a factorized,
+unranked ensemble while keeping event→force separate from force→direct-MOTOR. A
+fresh clone must reproduce that frontier rather than inventing a global rate/LIF
+default, a preferred candidate, a bodyId/class crosswalk or a borrowed slow twitch.
 
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and
