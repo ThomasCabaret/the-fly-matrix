@@ -1,0 +1,112 @@
+schema_version: 1
+id: parameters.front_leg_coupled_technical_ensemble.v0
+title: FH-05 finite owner-separated technical execution ensemble
+status: accepted_for_member_conditioned_execution_not_physiological_promotion
+primary_class: technical
+campaign_id: campaign.front_leg_coupled_identifiability_execution.v0
+runner_result_id: runner_result.front_leg_coupled_identifiability_execution.v0
+runner_semantic_sha256: 19ba0e4f19c59d186ea6e73ee371df2cd63afafb8940654de709665ff465fc30
+member_count: 81
+member_ids:
+- all_event_boundary_extreme__owner_00
+- all_event_boundary_extreme__owner_01
+- all_event_boundary_extreme__owner_02
+- all_event_boundary_extreme__owner_03
+- all_event_boundary_extreme__owner_04
+- all_event_boundary_extreme__owner_05
+- all_event_boundary_extreme__owner_06
+- all_event_boundary_extreme__owner_07
+- all_event_boundary_extreme__owner_08
+- all_event_boundary_extreme__owner_09
+- all_event_boundary_extreme__owner_10
+- all_event_boundary_extreme__owner_11
+- all_event_boundary_extreme__owner_12
+- all_event_boundary_extreme__owner_13
+- all_event_boundary_extreme__owner_14
+- all_event_boundary_extreme__owner_15
+- all_event_boundary_extreme__owner_16
+- all_event_boundary_extreme__owner_17
+- all_event_boundary_extreme__owner_18
+- all_event_boundary_extreme__owner_19
+- all_event_boundary_extreme__owner_20
+- all_event_boundary_extreme__owner_21
+- all_event_boundary_extreme__owner_22
+- all_event_boundary_extreme__owner_23
+- all_event_boundary_extreme__owner_24
+- all_event_boundary_extreme__owner_25
+- all_event_boundary_extreme__owner_26
+- graded_heavy_boundary_extreme__owner_00
+- graded_heavy_boundary_extreme__owner_01
+- graded_heavy_boundary_extreme__owner_02
+- graded_heavy_boundary_extreme__owner_03
+- graded_heavy_boundary_extreme__owner_04
+- graded_heavy_boundary_extreme__owner_05
+- graded_heavy_boundary_extreme__owner_06
+- graded_heavy_boundary_extreme__owner_07
+- graded_heavy_boundary_extreme__owner_08
+- graded_heavy_boundary_extreme__owner_09
+- graded_heavy_boundary_extreme__owner_10
+- graded_heavy_boundary_extreme__owner_11
+- graded_heavy_boundary_extreme__owner_12
+- graded_heavy_boundary_extreme__owner_13
+- graded_heavy_boundary_extreme__owner_14
+- graded_heavy_boundary_extreme__owner_15
+- graded_heavy_boundary_extreme__owner_16
+- graded_heavy_boundary_extreme__owner_17
+- graded_heavy_boundary_extreme__owner_18
+- graded_heavy_boundary_extreme__owner_19
+- graded_heavy_boundary_extreme__owner_20
+- graded_heavy_boundary_extreme__owner_21
+- graded_heavy_boundary_extreme__owner_22
+- graded_heavy_boundary_extreme__owner_23
+- graded_heavy_boundary_extreme__owner_24
+- graded_heavy_boundary_extreme__owner_25
+- graded_heavy_boundary_extreme__owner_26
+- mixed_pairwise_profile__owner_00
+- mixed_pairwise_profile__owner_01
+- mixed_pairwise_profile__owner_02
+- mixed_pairwise_profile__owner_03
+- mixed_pairwise_profile__owner_04
+- mixed_pairwise_profile__owner_05
+- mixed_pairwise_profile__owner_06
+- mixed_pairwise_profile__owner_07
+- mixed_pairwise_profile__owner_08
+- mixed_pairwise_profile__owner_09
+- mixed_pairwise_profile__owner_10
+- mixed_pairwise_profile__owner_11
+- mixed_pairwise_profile__owner_12
+- mixed_pairwise_profile__owner_13
+- mixed_pairwise_profile__owner_14
+- mixed_pairwise_profile__owner_15
+- mixed_pairwise_profile__owner_16
+- mixed_pairwise_profile__owner_17
+- mixed_pairwise_profile__owner_18
+- mixed_pairwise_profile__owner_19
+- mixed_pairwise_profile__owner_20
+- mixed_pairwise_profile__owner_21
+- mixed_pairwise_profile__owner_22
+- mixed_pairwise_profile__owner_23
+- mixed_pairwise_profile__owner_24
+- mixed_pairwise_profile__owner_25
+- mixed_pairwise_profile__owner_26
+source_port_profiles:
+- all_graded_candidate
+- all_event_candidate
+members_ranked: false
+selected_reference_member_id: null
+values_are_physiological_bounds: false
+parameter_ownership:
+  feco_native_amplitude: parameter.proprioception.native_bridge.v0
+  basal_source_intensity:
+  - parameter.bridge.basal_event_process.v0
+  - parameter.bridge.basal_hz_to_graded.v0
+  same_native_efficacy: parameter.central.synaptic_efficacy.v0
+  cross_native_conversion: parameter.central.native_boundary_conversion.v0
+  threshold_distance: parameter.central.neuron_dynamics.v0
+  unknown_afferent_policy: parameter.residual_sensory.unknown_nominal.v0
+propagation_contract: all_members_and_both_source_native_mirrors_remain_conditioned_and_unranked
+reopening_policy: new_campaign_required_no_silent_selection_or_promotion
+next_action: Compile FH-06 as a reconstructible member-conditioned lineage over the
+  complete FH-03 sensory, FH-04 motor, and FH-05 central/basal technical ensembles.
+  Keep every family and source-native mirror explicit; select no member from body
+  motion.

@@ -44,10 +44,10 @@ estimate_contract:
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 5
-  base_work_batches: {min: 5, max: 8}
+  open_items: 4
+  base_work_batches: {min: 4, max: 6}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 7, max: 12}
+  planning_forecast_batches: {min: 6, max: 10}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -162,7 +162,7 @@ items:
   - id: FH-05
     title: Bound typed central, basal and native-boundary identifiability on the cone
     nature: coupled_nonbehavioral_calibration
-    status: in_progress
+    status: complete
     depends_on: [FH-02]
     estimated_batches: {min: 1, max: 2}
     exit_criteria:
@@ -172,6 +172,27 @@ items:
       - unknown-afferent sensitivity and compensation are reported
       - one finite admissible local ensemble exists without threshold-only selection
     replan_if: conclusions depend on unsampled assignment interactions or require a new central model capacity version
+    completion_record:
+      date: 2026-10-17
+      parameter_set_id: parameters.front_leg_coupled_technical_ensemble.v0
+      evaluation_ref: calibration/evaluations/front-leg-coupled-identifiability-execution-v0.yaml
+      outcome: >-
+        All 81 preregistered owner-separated members execute as paired FeCO
+        stimulus/sham comparisons under both all-graded and all-event basal port
+        mirrors, for 162 paired branches and 324 runtime instances. The bounded
+        graph contains 6,041 explicit source ports, all 590 published direct
+        source-to-cone edges and all 4,873 induced cone edges, while excluding
+        outside recurrence. Every run is finite and all six owner axes alter an
+        executed input. Main-effect signatures reveal no pair above the locked
+        0.95 similarity warning, but unknown-afferent policy is weakly observable
+        locally and no stimulus surplus of generated internal events occurs under
+        these fixtures. All members remain unranked and unselected; zero value,
+        population assignment, route or behavior is promoted.
+      retained_uncertainty: >-
+        81 owner-separated technical members times two source-native mirrors;
+        unsampled higher-order population assignments and outside-cone recurrence
+        remain outside the claim.
+      simulated_body_outcomes_inspected: false
 
   - id: FH-06
     title: Compile and freeze an integrated runnable lineage
@@ -242,6 +263,44 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-17
+    batch: fh05_paired_dynamic_execution_and_finite_technical_ensemble
+    before:
+      open_items: 5
+      base_work_batches: {min: 5, max: 8}
+      planning_forecast_batches: {min: 7, max: 12}
+    closed: [FH-05]
+    advanced: []
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      sentinel_members: 81
+      source_native_mirrors: 2
+      paired_runtime_branches: 162
+      individual_runtime_instances: 324
+      explicit_basal_source_ports: 6041
+      direct_basal_to_cone_edges: 590
+      cone_recurrent_edges: 4873
+      finite_runs: 162
+    scientific_findings:
+      - all six owner axes are dynamically consumed and observable in at least one declared local metric
+      - no pair of main-effect signatures exceeds the preregistered 0.95 similarity warning
+      - unknown-afferent policy has a weak local direct-boundary signature and requires member-conditioned propagation
+      - no stimulus surplus of generated internal events appears under the unpromotable fixtures
+    scientific_boundary: >-
+      The retained ensemble is finite and admissible for technical execution only.
+      It supplies no physiological bounds, reference member, population census,
+      whole-MaleCNS context, embodied stability result or behavior claim.
+    after:
+      open_items: 4
+      base_work_batches: {min: 4, max: 6}
+      planning_forecast_batches: {min: 6, max: 10}
+    accounting_note: >-
+      One planned FH-05 batch closed the item and no new roadmap item was
+      discovered. The base minimum falls by one; the base maximum falls by two
+      because the one-to-two-batch FH-05 range closed in one delivery. The
+      contingency reserve remains unchanged because higher-order assignment and
+      outside-cone-context risks are retained rather than declared solved.
   - date: 2026-10-17
     batch: fh05_owner_separated_static_design
     before:

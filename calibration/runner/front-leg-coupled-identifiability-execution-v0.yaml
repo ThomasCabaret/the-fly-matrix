@@ -1,0 +1,1582 @@
+schema_version: 1
+id: runner_result.front_leg_coupled_identifiability_execution.v0
+campaign_id: campaign.front_leg_coupled_identifiability_execution.v0
+status: accepted_finite_technical_execution_ensemble_FH05_complete_zero_scientific_selection
+completed_at: '2026-10-17T17:53:54.098680+00:00'
+command: front_leg_coupled_identifiability_execution.bat
+backend: cuda
+graph_boundary:
+  source_ports: 6041
+  cone_neurons: 196
+  direct_source_to_cone_edges: 590
+  direct_source_targets: 105
+  direct_sources_with_edges: 315
+  cone_recurrent_edges: 4873
+  total_edges: 5463
+accounting:
+  sentinel_members: 81
+  source_native_mirrors_per_member: 2
+  paired_stimulus_sham_runtime_branches: 162
+  individual_runtime_instances: 324
+owner_observability:
+  metrics:
+  - sensory_delta_peak_l1
+  - intermediate_delta_peak_l1
+  - motor_delta_peak_l1
+  - motor_delta_integral_l1
+  - generated_event_delta
+  factors:
+    feco_native_amplitude:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 0.8980077557485513
+        - 0.5976897377618733
+        - 0.07963044760105724
+        - 0.3902232449113676
+        - 0.0
+        ratio_1p0:
+        - 1.276646787935348
+        - 0.860094197585633
+        - 0.13666578096270485
+        - 0.594247108793158
+        - 0.0
+        ratio_2p0:
+        - 1.6528644035548234
+        - 1.2223903249560508
+        - 0.21724462992997312
+        - 0.841394974335716
+        - 0.0
+      signature_l2: 0.7702875123520885
+      dynamically_observable_in_declared_metrics: true
+    basal_source_intensity:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 1.2766232592581372
+        - 0.9117647827854687
+        - 0.1662016575977988
+        - 0.6503878257513942
+        - 0.0
+        ratio_1p0:
+        - 1.275609447748757
+        - 0.885766496493201
+        - 0.1344594321222593
+        - 0.5886935756656863
+        - 0.0
+        ratio_2p0:
+        - 1.2752862402318281
+        - 0.8826429810248873
+        - 0.13287976877367716
+        - 0.5867839266231611
+        - 0.0
+      signature_l2: 0.06194718772258156
+      dynamically_observable_in_declared_metrics: true
+    same_native_efficacy:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 1.127181534125491
+        - 0.5906446041658412
+        - 0.05938183387532641
+        - 0.4017729374752874
+        - 0.0
+        ratio_1p0:
+        - 1.2440960599193078
+        - 0.8124716030046275
+        - 0.10838840225659821
+        - 0.5530599984339534
+        - 0.0
+        ratio_2p0:
+        - 1.4562413531939238
+        - 1.2770580531330882
+        - 0.26577062236181065
+        - 0.8710323921310009
+        - 0.0
+      signature_l2: 0.662603953861532
+      dynamically_observable_in_declared_metrics: true
+    cross_native_conversion:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 1.270923627947587
+        - 0.7641329919593178
+        - 0.07388576042372735
+        - 0.37377781891835943
+        - 0.0
+        ratio_1p0:
+        - 1.273327881865762
+        - 0.8795385149102097
+        - 0.132100864757618
+        - 0.5839810449123584
+        - 0.0
+        ratio_2p0:
+        - 1.2832674374253736
+        - 1.0365027534340294
+        - 0.22755423331238991
+        - 0.8681064642095239
+        - 0.0
+      signature_l2: 0.4154460421716386
+      dynamically_observable_in_declared_metrics: true
+    threshold_distance:
+      levels:
+      - ratio_0p75
+      - ratio_1p0
+      - ratio_1p25
+      replicates_per_level:
+        ratio_0p75: 54
+        ratio_1p0: 54
+        ratio_1p25: 54
+      log1p_metric_means:
+        ratio_0p75:
+        - 1.2913044117284367
+        - 0.9146853050969844
+        - 0.15209629680548442
+        - 0.6248639227789292
+        - 0.0
+        ratio_1p0:
+        - 1.2779023460781351
+        - 0.9198601129903894
+        - 0.16421258871082087
+        - 0.6249704438812566
+        - 0.0
+        ratio_1p25:
+        - 1.2583121894321505
+        - 0.8456288422161827
+        - 0.11723197297742996
+        - 0.5760309613800558
+        - 0.0
+      signature_l2: 0.08227388785772653
+      dynamically_observable_in_declared_metrics: true
+    unknown_afferent_policy:
+      levels:
+      - bounded_tonic_fixture
+      - matched_stochastic_fixture
+      - zero
+      replicates_per_level:
+        bounded_tonic_fixture: 54
+        matched_stochastic_fixture: 54
+        zero: 54
+      log1p_metric_means:
+        bounded_tonic_fixture:
+        - 1.2751217599916045
+        - 0.8924250174605042
+        - 0.14367460246686775
+        - 0.6091191735753609
+        - 0.0
+        matched_stochastic_fixture:
+        - 1.2758597705161232
+        - 0.8920281290356945
+        - 0.14889684924531796
+        - 0.6061169647338718
+        - 0.0
+        zero:
+        - 1.2765374167309946
+        - 0.8957211138073581
+        - 0.1409694067815495
+        - 0.6106291897310091
+        - 0.0
+      signature_l2: 0.007228548177749193
+      dynamically_observable_in_declared_metrics: true
+  pairwise_signature_similarity:
+    feco_native_amplitude__x__basal_source_intensity:
+      absolute_cosine: 0.5304833964115991
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__same_native_efficacy:
+      absolute_cosine: 0.909654688521948
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__cross_native_conversion:
+      absolute_cosine: 0.6661824951534566
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__threshold_distance:
+      absolute_cosine: 0.7785593820275609
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__unknown_afferent_policy:
+      absolute_cosine: 0.32127395064622627
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__same_native_efficacy:
+      absolute_cosine: 0.6196545218255988
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__cross_native_conversion:
+      absolute_cosine: 0.8226700412631266
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__threshold_distance:
+      absolute_cosine: 0.4065830858798241
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__unknown_afferent_policy:
+      absolute_cosine: 0.06149216052646001
+      high_signature_similarity_over_0p95: false
+    same_native_efficacy__x__cross_native_conversion:
+      absolute_cosine: 0.8423514022432345
+      high_signature_similarity_over_0p95: false
+    same_native_efficacy__x__threshold_distance:
+      absolute_cosine: 0.915808099462015
+      high_signature_similarity_over_0p95: false
+    same_native_efficacy__x__unknown_afferent_policy:
+      absolute_cosine: 0.32884384428243807
+      high_signature_similarity_over_0p95: false
+    cross_native_conversion__x__threshold_distance:
+      absolute_cosine: 0.7573187083422934
+      high_signature_similarity_over_0p95: false
+    cross_native_conversion__x__unknown_afferent_policy:
+      absolute_cosine: 0.22051001822161803
+      high_signature_similarity_over_0p95: false
+    threshold_distance__x__unknown_afferent_policy:
+      absolute_cosine: 0.18974526979366696
+      high_signature_similarity_over_0p95: false
+  interpretation: Main-effect signatures are descriptive under a strength-two design.
+    They expose non-observability or possible compensation but do not identify a physiological
+    value or exclude unsampled higher-order interactions.
+runtime_branches:
+- execution_id: all_event_boundary_extreme__owner_00
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 509d221fad9d5c22667bc03f700fe040917a3fe8f63b9232006dcaadadb8d33a
+- execution_id: all_event_boundary_extreme__owner_00
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 0eaa54fb24910e3d988f9e73b1dc4871c0defa611cedb802085d141d0e439f5e
+- execution_id: all_event_boundary_extreme__owner_01
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 0926aaba96539415e4ca51fab401162f90506f8718b9dd8790f7e09772bd9223
+- execution_id: all_event_boundary_extreme__owner_01
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: c03939b3d17510be56c552de4163196f157e7ed95c8091b5784550383bc08bc8
+- execution_id: all_event_boundary_extreme__owner_02
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 3722e08091c0725d85840655787d3e45b794c604b1162667638b806f3453edb0
+- execution_id: all_event_boundary_extreme__owner_02
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 9d6de3f62da49358a3bf2a8ed4100ffa68ff16311a5766999ac830f023c12cf8
+- execution_id: all_event_boundary_extreme__owner_03
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 59aadf4dde4299ee9f0c25f9c6e6aaec84808679221fc4e9a05357743d290da1
+- execution_id: all_event_boundary_extreme__owner_03
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 3f7f6eeb230663a356c58fd7bb89cb02f149f580ff509bc14aaf7af4abde245b
+- execution_id: all_event_boundary_extreme__owner_04
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e3c51daf7dc38a0a09f419eada462fa72b1c1ff9e61a85d763ea2790b51d087f
+- execution_id: all_event_boundary_extreme__owner_04
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 794f1a71ae1c5cad5fcc62cfa369bdd0044140c032b040d9c7000ea2c4fe1e3c
+- execution_id: all_event_boundary_extreme__owner_05
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: cb9f5a47949f85e722f41b5e6f049372b6cdf493c2fa0ed20a5ba049da41f7a0
+- execution_id: all_event_boundary_extreme__owner_05
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: ae8fae22e1107026e4fd80061a8ed02442a6640f532c3e312ace584e59e3bc14
+- execution_id: all_event_boundary_extreme__owner_06
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: cd89d197cb2f1c0031066d4179cd1d48305ca057980ebc2743083997936e1417
+- execution_id: all_event_boundary_extreme__owner_06
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 5f16eb9d981200c09741543cb49f0dcd494ad783f6ded626f1a00ec69d29ed8f
+- execution_id: all_event_boundary_extreme__owner_07
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f1deeb1a376a911512931c466e70f674bcdcde611b8d609757af91c34550b274
+- execution_id: all_event_boundary_extreme__owner_07
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 44cebccc43d164b710f801ac97dc0d6720c1fc783fca4c4e5fa791d243aa530d
+- execution_id: all_event_boundary_extreme__owner_08
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e48decab54736b182bfa04b9483eca06fb90d86ee26b92a9db473107b01dd3d9
+- execution_id: all_event_boundary_extreme__owner_08
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 5f0a984c01c3b7f11e2a376e4f9e8c3181f268ae61b87f2d05f8c8926af51ef2
+- execution_id: all_event_boundary_extreme__owner_09
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f1eca695e75e12cde6808ca6eef26033d103899413404c2fbcbe6ad5e062ca10
+- execution_id: all_event_boundary_extreme__owner_09
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 627bec5b3e5f6af3b8ff6615b4d5b053fe754f62adf6efbbdefbe51365fbd714
+- execution_id: all_event_boundary_extreme__owner_10
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 191f6d6ebda4e412d979a036808967cc3f50201159c757fde1a020f0d17af361
+- execution_id: all_event_boundary_extreme__owner_10
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 1a671c176c8b16145072c7410b5b5fd5551eb4d17ad328d7392751888b9bb0a5
+- execution_id: all_event_boundary_extreme__owner_11
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: abce23996a23deca284cb24df113efd1269b0fe2adfbf7b3e37836ad89d389d8
+- execution_id: all_event_boundary_extreme__owner_11
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: bb836d74289355dc52fb5a0269ff45d035c44fb880a80b9ede2cbcc6387417fa
+- execution_id: all_event_boundary_extreme__owner_12
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 4d0a580e4e898e2ab0f0453a636bd2cd0052e6f9c41632ac02f89d8bf0c0173d
+- execution_id: all_event_boundary_extreme__owner_12
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 1e4de7eff0cf08e901988e290c44daf1b595a15bbeefaaac17effb1b1f9a7ae9
+- execution_id: all_event_boundary_extreme__owner_13
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 094864ef9580295ad649ec7ca14b69531d83249a709ac9701cdd7bceb0261a48
+- execution_id: all_event_boundary_extreme__owner_13
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e935cd4b1053bfb4962684e4a915b864febe60722124b8b87273208e66a4806c
+- execution_id: all_event_boundary_extreme__owner_14
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: c0cf995d3d556b1bfc864307f71a6c76b145b8f0f46e0d1839f09b80ecd310a2
+- execution_id: all_event_boundary_extreme__owner_14
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 26f3900ec6612870556d000bf3a650697a6d11cf5c08e83c0c8b19df4b693d32
+- execution_id: all_event_boundary_extreme__owner_15
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: bfc584243ccc432a49393bb81e3eefbeef64cf694d18dac3ca28e0ba6a7fbf40
+- execution_id: all_event_boundary_extreme__owner_15
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 712ed993ba8d80b3448b51ddc2927bf2327a027ed053ffa40967eb87138d96da
+- execution_id: all_event_boundary_extreme__owner_16
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 8b27f3a1e820852390467a3264b9c9d8e083dff4ef0478e8b2c2d1734c7a3047
+- execution_id: all_event_boundary_extreme__owner_16
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 1ca918570cd55a47e956bb43df18f48d963391fc528cef2cb2eeb20fd73e62f5
+- execution_id: all_event_boundary_extreme__owner_17
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e20245a1a94b2f8bba3f69400cdf9493ad67120ad907f68e18ea96b85ea19162
+- execution_id: all_event_boundary_extreme__owner_17
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a58a658e7845e154f210765f0ebe990e577d25609e6618e6043f57e3fdffecf3
+- execution_id: all_event_boundary_extreme__owner_18
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 6f4b8f83d15740f12e995af753b91fe0c3caceadd471fd171f7e2a5c48a1159c
+- execution_id: all_event_boundary_extreme__owner_18
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: b4e3d4e94741b49177296a58682bb0f5c4b172f2d5b29de223b58cc0b32d2372
+- execution_id: all_event_boundary_extreme__owner_19
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 566172bdfa0a63b454917d378815c1b9cff191e5e2fa64a33109204fbd27a926
+- execution_id: all_event_boundary_extreme__owner_19
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e9a3b693ab17fb209d66244d0bce083e9876ad0fdc2c4e27ce59ba7718bf9175
+- execution_id: all_event_boundary_extreme__owner_20
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 244833ee3991456f18ce7e57c83ca884afc24cdf29bf6f90d1fb06269fa666dd
+- execution_id: all_event_boundary_extreme__owner_20
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 82452e20d88e40209b008f098fdbdcca83ffe21223a258b8e8bd5d437a7dca09
+- execution_id: all_event_boundary_extreme__owner_21
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e7e2edd96e9b3dc2df03f0eb9443ce14a042c076f474cc4767796c9d03284978
+- execution_id: all_event_boundary_extreme__owner_21
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: cfa5b287d70df4fbef9cbd4d1f58054b7e301f055906c835fbba0126a61834c9
+- execution_id: all_event_boundary_extreme__owner_22
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f26582e2d1a1022ee3fd03218f9f233837d8b570714d27a9c84a1b460a60ae91
+- execution_id: all_event_boundary_extreme__owner_22
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f5193d6299db2095cf328805202b914d1f9a3d6a199f001a7ab31ba2c726540e
+- execution_id: all_event_boundary_extreme__owner_23
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e05cb92e127ac192541c74a422eac602aa772d03fe8f8fe5b1a3a837c883bd9f
+- execution_id: all_event_boundary_extreme__owner_23
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f45c26b211aebcded26850efb0aac25f803441ec2fe56a2528a289f888d8c359
+- execution_id: all_event_boundary_extreme__owner_24
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 07d505ff9235d5b2af01ccca2823f54f59678660a8bd91955f93e85f00444eb7
+- execution_id: all_event_boundary_extreme__owner_24
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 09b95f3e6b5d6a4dd2d82e06100f8433d1b5d97ae4246b78c44608f8d5ec3528
+- execution_id: all_event_boundary_extreme__owner_25
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 8dbfd5b17dec41aac9ab250895a70fd46af5ba0c10a6e312ee04642010123597
+- execution_id: all_event_boundary_extreme__owner_25
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f4644a38aafeea0ea671e0e3618981b7264ba047f6a55972229dd813dbbbe283
+- execution_id: all_event_boundary_extreme__owner_26
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 7f6c3b6e9c910111bcd9dfe36cc61b7294983acd68aa584573978fbef5b8019d
+- execution_id: all_event_boundary_extreme__owner_26
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 58638c3120f688a87b24dbef2174028330073bce0212460c5355959bbbafb522
+- execution_id: graded_heavy_boundary_extreme__owner_00
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 4bbfbf62332ac137e59d3776bb2cfdbef235a16c37b835766513defa343ee24c
+- execution_id: graded_heavy_boundary_extreme__owner_00
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 35836b25a38be53b4399ce48fc06410af82012b3e15b3ff7405605b0812e1635
+- execution_id: graded_heavy_boundary_extreme__owner_01
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: d747ba994f3c652c2693add74cccdadec81ae9648bd73505c0d5c269a25b7fa2
+- execution_id: graded_heavy_boundary_extreme__owner_01
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: cd8ab1d3da50a62bcdeb9207d30c9e85769731659237f51813fbc609696ddcf3
+- execution_id: graded_heavy_boundary_extreme__owner_02
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: da6722b67983ac377dcb2ee2c61a85648b18198c7c9e8f22d5cfd7e4e60598f3
+- execution_id: graded_heavy_boundary_extreme__owner_02
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 44a5cf1004cd3ba43a28f063b3df9272404f615f3666cec6f99c5312b9a44a98
+- execution_id: graded_heavy_boundary_extreme__owner_03
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 669009a1e805b692eeb7b1b81568458c81a0b0ef317a24f3f9a6d26344397ce8
+- execution_id: graded_heavy_boundary_extreme__owner_03
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: b4fdde90dcd0673543d0372a500505f70f2bab4b4b9d1bb44ad8e305da3959de
+- execution_id: graded_heavy_boundary_extreme__owner_04
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: bead41587928e57e502358ff331f77e16f83fce75a535aa1759cca52d83baa84
+- execution_id: graded_heavy_boundary_extreme__owner_04
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: efaad099b9c3206a0ce96160971285ef53a5a530ee87978ce9b9ec5804320305
+- execution_id: graded_heavy_boundary_extreme__owner_05
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 4867dd4ebfb5a06f475b1ef6690e4bb5eb820f43c1ad51867c7c2154e6335bb9
+- execution_id: graded_heavy_boundary_extreme__owner_05
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: cd1abe3686b620add1cbd4476cc5185338e76b2e7a6bf88e578380b05270db88
+- execution_id: graded_heavy_boundary_extreme__owner_06
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 48d11db26edda0f4c7e5ad9c277d15eb8cbc633e4d1a0e930ecc2024a250fce2
+- execution_id: graded_heavy_boundary_extreme__owner_06
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 46311bcbe7eb8a4d7fe1caebf5c92041502b226a369746e2870778a02adfb9e4
+- execution_id: graded_heavy_boundary_extreme__owner_07
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 03dc467cba930cef9732d2dbe9f372a88b4f042c69a2b1c3705600b6bead7bec
+- execution_id: graded_heavy_boundary_extreme__owner_07
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 60db2cef27aaeb0558d9a10549d9364dfcfbf980cd73b67afdcccc9112f0b81f
+- execution_id: graded_heavy_boundary_extreme__owner_08
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 299c0471cd1fd5ecf00a9591dd3ccb967e964cd4ff05a3f173b32a0d1ee40b5b
+- execution_id: graded_heavy_boundary_extreme__owner_08
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a1d238e6cac30b7569b1b1ad8355232a30e746fbb5d72dd848c5c2e8e3e72802
+- execution_id: graded_heavy_boundary_extreme__owner_09
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 29191a5be4f6d79cb7077f566fd50cf3c5e47e71fc679d2df01b869691b98c83
+- execution_id: graded_heavy_boundary_extreme__owner_09
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: b044ce3d3ad53173ff067de48750fab7f43456b094a7ef0c9714a37f5a61675d
+- execution_id: graded_heavy_boundary_extreme__owner_10
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 9ba5a4ba92825ed999cb01239cfcc2427682f5b6764fe3650a6a9d9a31781b0c
+- execution_id: graded_heavy_boundary_extreme__owner_10
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 6ddac38bd64c704529437e931f4439c88135b478d7cf0bbb90ce5e077f9f2ee6
+- execution_id: graded_heavy_boundary_extreme__owner_11
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 48084b076cb1d145b0f6205d58fc0eb7267fef880e975c68cd174d2410f835f8
+- execution_id: graded_heavy_boundary_extreme__owner_11
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: dbe995314f5d5655c7860b74801ad1886d446065073b6afc15acbba2bb58e545
+- execution_id: graded_heavy_boundary_extreme__owner_12
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 878fcf919c80733c75d8954a6a6449e559e529cc2b4db3de571d50ff9b173d8b
+- execution_id: graded_heavy_boundary_extreme__owner_12
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 03dadd5e721deedd89c91f34779ba3d1e7ddbe2c427f6416d93507108da5dea6
+- execution_id: graded_heavy_boundary_extreme__owner_13
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 3b09f0b7cc5f62c5802e7eb5e15eb42bded5d31804b8f31e414d60b7a2555a8e
+- execution_id: graded_heavy_boundary_extreme__owner_13
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: ed07bee0ae149bebecac21a4345274d0d50caf366e3f5c70d23ec33418d47c2d
+- execution_id: graded_heavy_boundary_extreme__owner_14
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 20e153bc6af07f6d250ad556d00f253887fb7c7777905582a8e0269f7bc52a12
+- execution_id: graded_heavy_boundary_extreme__owner_14
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: ca1bfdacdf96d195078929a69ff6e07dbe4a27d685dcf037c1863e81257be901
+- execution_id: graded_heavy_boundary_extreme__owner_15
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 8e772650376ca8f6f153098b1e6d0c46e113afa1db9a866fa069be2b8a757a09
+- execution_id: graded_heavy_boundary_extreme__owner_15
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: fa32c3b4bd8dcac899750f94586d78d4c0c192cd6ec5a65f4321d4de78d81e94
+- execution_id: graded_heavy_boundary_extreme__owner_16
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 1769a9c0a77bd2a2516344e6569193c588710d41536dcd7d01d8e031a583d2c7
+- execution_id: graded_heavy_boundary_extreme__owner_16
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: d57af89f14c467cb72e9b8c2c690d3c25340d8ce036e02abf7900254c1857fde
+- execution_id: graded_heavy_boundary_extreme__owner_17
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 4839d0ce6011c3fff7cf8ccf66caba81cbd6a2b6c3ec7914d83013667921e8c7
+- execution_id: graded_heavy_boundary_extreme__owner_17
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 97ed0764a7269b8fbaba43bd97c274446a63ef39bb422f77d96f680db8c9c927
+- execution_id: graded_heavy_boundary_extreme__owner_18
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: ae473dd081b891bb796606f5709b180010fdc1258b72c086e33c2b79e69222a4
+- execution_id: graded_heavy_boundary_extreme__owner_18
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 7d91c4eb74c947e69c581de434b1578f3403020404c5e757c8c95164de6a6309
+- execution_id: graded_heavy_boundary_extreme__owner_19
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 662f913e67479e522ba6589f77996c57f67f8cf345272fe8487ee7a2e203d38b
+- execution_id: graded_heavy_boundary_extreme__owner_19
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: bfd110f113451e522a7a02b723939ce34b25d3400c54f00b83cadfcb48f0b790
+- execution_id: graded_heavy_boundary_extreme__owner_20
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 3a27df3c8d940671f2b249a3a6c9008498ea55d6f26749b82990f2653ccb14d2
+- execution_id: graded_heavy_boundary_extreme__owner_20
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 5f39899e424b768c88825282dbc7c3efda85d5b7f7674fa2fe83d908982f8b02
+- execution_id: graded_heavy_boundary_extreme__owner_21
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 1d8c928e7f12c342e9c7d634c6b92ee6009c11bb6ec751a17630351c5470d53b
+- execution_id: graded_heavy_boundary_extreme__owner_21
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 552cbed299b45d52a4801269ebc9d391668954e90dac936badb853960ccb440c
+- execution_id: graded_heavy_boundary_extreme__owner_22
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 0ca62554f08f1dd2478e12565d2a9c100b242d72f0a6238599a95440bbb7a7a4
+- execution_id: graded_heavy_boundary_extreme__owner_22
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a4be3e74b5a730c31881c72e300d026f524b1e191a7d0fc7062e37d12e3ac512
+- execution_id: graded_heavy_boundary_extreme__owner_23
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 7153606b123c59fd13e29deebb5b5b8a8c0fc5a5c3154f55c8b971e0091b5aa3
+- execution_id: graded_heavy_boundary_extreme__owner_23
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a2fae0a4813d04cb9e87244c5b5980995a1d1ffdd8dd444cfb49ec3145bf56d3
+- execution_id: graded_heavy_boundary_extreme__owner_24
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: bbf061435f2a82be613bbbc994b65fc3b94ba3d410b9a0e8f625b02a4896f714
+- execution_id: graded_heavy_boundary_extreme__owner_24
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 4705a8fd93ec4ce0f8a31d6dec1c054fe16101462672dd596a06f3c72822930d
+- execution_id: graded_heavy_boundary_extreme__owner_25
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 636c0364b49918fbfd6d5e511b9a3e70356b590a58c1e4ca4a79a37da0d19db4
+- execution_id: graded_heavy_boundary_extreme__owner_25
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e8ca1c900f1fb6ffaa1b01075d98a00ca00267fcbf60f364b3af0637c455e95a
+- execution_id: graded_heavy_boundary_extreme__owner_26
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: b5b95046390412f046ec73d0036c5f7648def63c0789219b09327a34ec6938e6
+- execution_id: graded_heavy_boundary_extreme__owner_26
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 803820097b89dd347bf1fb7f5231512c551e8ade82bbc9ffc62d2092ab3c7d7c
+- execution_id: mixed_pairwise_profile__owner_00
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 9880780fc4f64bb010c0c98ce69f5568f27e6895eec415e6a1551c752b410569
+- execution_id: mixed_pairwise_profile__owner_00
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 672bb9c7f8060ed5470f67bbbc3e240bd6e6aee67cad4088c3c846fc550aa18f
+- execution_id: mixed_pairwise_profile__owner_01
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: d836adf847999b28003b8accf80cc6d874830f0f216c041d85d4a74a8ea91371
+- execution_id: mixed_pairwise_profile__owner_01
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 8bf3768f37ec2b75a13376de1e5a96793443ae2435add8b810e47c2007b0eca2
+- execution_id: mixed_pairwise_profile__owner_02
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: d2698a43ab6d44d503ab3cddeacd204a3ccfd2c2c6eaab85fd4adb336aeba66e
+- execution_id: mixed_pairwise_profile__owner_02
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e743248081de8d5324ab33e91a0900ed9c821303f03b6ceb386dc2839d1a0940
+- execution_id: mixed_pairwise_profile__owner_03
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: cbd1ca583a9a7ec51eb09d00237bce0f4f58f4a62eeef60ae0204ac48f36fbb9
+- execution_id: mixed_pairwise_profile__owner_03
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 4f91bdc43580c5accfc20702c2050e613690e5438f37f6ddea21058218549479
+- execution_id: mixed_pairwise_profile__owner_04
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 283e6e951a71b4a3dffa1e78bea3091f80b68f06182d480ddb601e4679fdfab0
+- execution_id: mixed_pairwise_profile__owner_04
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 18c173abae848cdd6ba3819f0c534e5d2b446ce4bd0e85432dc0f7b518a1e390
+- execution_id: mixed_pairwise_profile__owner_05
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 6ecb20b6320d436bd84754be459d1fd7da607756b9fe02501886bb5b69031ab8
+- execution_id: mixed_pairwise_profile__owner_05
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: b65dafd72f28fb03c0d7aa3ee7c7e4cc97939d6470a2c5987167af130eae3ccb
+- execution_id: mixed_pairwise_profile__owner_06
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: d07bf051ea896e10e7793bd6b152e2b04f4924dd166e66c9c0573600639f3a42
+- execution_id: mixed_pairwise_profile__owner_06
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 0c12a67494a4d6e66e05c5976070dfaf69908a2b1ce3abbdf5cb97bc9c1c53cf
+- execution_id: mixed_pairwise_profile__owner_07
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 1d7fe7b6f991915e5f5d37b56853617a486ea660fcecae11239ef126b0b7fbd9
+- execution_id: mixed_pairwise_profile__owner_07
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 33c89d4f229ebbab8beebfedb5046c02546128c3032de6cc5cd11887025ccc34
+- execution_id: mixed_pairwise_profile__owner_08
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f67c71b0df6dcefb8e34763067040b00effa5996b21169771e02187931547f7c
+- execution_id: mixed_pairwise_profile__owner_08
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a6f9163416ccc971a76c4c36abf9fc80eb6f7b13890b86f4ffe68ab35b4e525f
+- execution_id: mixed_pairwise_profile__owner_09
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: fd1ac6c630d4ec74e1c8bef2782d0020a748f79c9a9a39c595233de9e7ddf965
+- execution_id: mixed_pairwise_profile__owner_09
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 7b9c3d3fc45e1035dc785514666715a35dc62381d56cc32638d6805cf364afe0
+- execution_id: mixed_pairwise_profile__owner_10
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f0190710e6d987efc4d596b3d18956dffdf6ddd297d324071db15edb7af1ec0d
+- execution_id: mixed_pairwise_profile__owner_10
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f6625172c52465d9874e779c6e6c22d5c99531865659f5c101b0deed842cadd0
+- execution_id: mixed_pairwise_profile__owner_11
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a53268d8287d41438c09c715f30fc6ea9ce0f4529bb5fb67713ddee24eece4fd
+- execution_id: mixed_pairwise_profile__owner_11
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 74282cc8f59dace0f0a49ab17362b7502b796639c059f3e593851b70c17603e7
+- execution_id: mixed_pairwise_profile__owner_12
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a0f48d3321e13aedc5360c94e225f7155c55805bf3adda3aa34808b32bd142c8
+- execution_id: mixed_pairwise_profile__owner_12
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 49026b5b9d737052d1574b6427d9897943ba95662d0e142a084a9e08c3ed9c1e
+- execution_id: mixed_pairwise_profile__owner_13
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 455ed1457ddbfeaec5a271ee54363501ca46fee28bcd57facd7a3eeed1d79496
+- execution_id: mixed_pairwise_profile__owner_13
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 992da2e6a617c81b399b67b711929905b9e37b428ee4e6097bd0b2ae0a2d79f1
+- execution_id: mixed_pairwise_profile__owner_14
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: cfd1d54d3e5446dbf0ebd9e8f8606a15c31e1f9e047069638b0aea3917771a3c
+- execution_id: mixed_pairwise_profile__owner_14
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 5ad586560c13e9b7bacb7fb9a85dfa7b5269b97f164fe17183cdc45f4bf7107e
+- execution_id: mixed_pairwise_profile__owner_15
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 534815d3007f971fb8e152c39d50b9692f06f5dc86825e830d8980d66243b9fe
+- execution_id: mixed_pairwise_profile__owner_15
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: c8c38fd320cc39697af9ee1a292502becc42dbe45de09473e64f9a4e29ccc25a
+- execution_id: mixed_pairwise_profile__owner_16
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 49446ef78a888593d00e84b2cad350f4b212791163b40eef4dd89bd53c6a0430
+- execution_id: mixed_pairwise_profile__owner_16
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 3c2af89f84e65643350a716f70607cf38673e3de27f0bdc2c03f0048e3d66a50
+- execution_id: mixed_pairwise_profile__owner_17
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 2bd71686304f4b976daf48c7dff116915522bcf1dc285cbd02dc1164aec0f900
+- execution_id: mixed_pairwise_profile__owner_17
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: e17424cfde8162d4792a30dbfd97e939570e21500c020e02ee48de1e8e89308b
+- execution_id: mixed_pairwise_profile__owner_18
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: f162ee083a14183e4a4455eb7fdcd71b17c98e8c314e84a44c8d97a76ebb731a
+- execution_id: mixed_pairwise_profile__owner_18
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 9154054be42abf86191f86d71f0c370b7945ad5b0aca6738ce290ce4f3f6cb4f
+- execution_id: mixed_pairwise_profile__owner_19
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 18859e6da3f664617f2b33d7234f1c6c8eabb60a8c2e4e34b786c9e62c8b3ea0
+- execution_id: mixed_pairwise_profile__owner_19
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 10c611b0621e4a21fa3fb227615f7a24ffd6d26ba5a43808e0c1971aad6c0394
+- execution_id: mixed_pairwise_profile__owner_20
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a76fb1d1afe008b40d1deeac1a06bf6aeb21a27491d1077468bd265661695735
+- execution_id: mixed_pairwise_profile__owner_20
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 1c1e543b8b91370c912927501e1529c6d4ad389361f66e7e87ad99ba1d06b78c
+- execution_id: mixed_pairwise_profile__owner_21
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 129abd695d32c88fd7a6fe4cf434286ca7ea5bf27caa71d29f0b789ea2d29fd3
+- execution_id: mixed_pairwise_profile__owner_21
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: eaf24915add83b2fb3c80e2def5fc89e64c96a589aaae6785cec686e2826a74e
+- execution_id: mixed_pairwise_profile__owner_22
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 814dbbbbf77cd223946bff4f1f31d7ee8bf93c0639faf871e156a6e5d58209cc
+- execution_id: mixed_pairwise_profile__owner_22
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 15bc7142283bf6240201e4ef5b5dc23269e554ad10debfd19996e8fbd6dae624
+- execution_id: mixed_pairwise_profile__owner_23
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 7f480836f5c5510c148a1d3cb54a671265f0ae5b3eb0fd04b2cfb3fd6fa6a289
+- execution_id: mixed_pairwise_profile__owner_23
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 9cebfdf51bd42fa861572ec1d4617c9b3a745c509896eff21890010a0237e0b2
+- execution_id: mixed_pairwise_profile__owner_24
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: a5bcc57a40399af15d3acb676327726fd4de1cab4830222f42ac058a66a6e7ff
+- execution_id: mixed_pairwise_profile__owner_24
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 5a87d5f5b8e55428f219ef1bd6fb121e14cc73543b0530e6adf7d8e9e4194781
+- execution_id: mixed_pairwise_profile__owner_25
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: bff5b55c7d842b20475de6c99f44bfb742a073de17f3f7a23c93114e978736e9
+- execution_id: mixed_pairwise_profile__owner_25
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: d6a3d2b603db9f0e1c3c20128074f90d515fba150a6e4c51c898a427e3d100e1
+- execution_id: mixed_pairwise_profile__owner_26
+  source_profile: all_graded_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: dba2d3be6c733b05b95ee060b02b85a4c78ed8c92db0e3bfcfc9e5d5dc10eeac
+- execution_id: mixed_pairwise_profile__owner_26
+  source_profile: all_event_candidate
+  finite: true
+  stimulus_reaches_groups:
+    sensory_36: true
+    intermediate_150: true
+    motor_10: true
+  semantic_sha256: 4e94d7e845b2b72c15d8c04ad383f04d3da26d646aa35c2e114f29b47542ed3f
+checks:
+  cone_and_source_accounting_exact: true
+  real_direct_boundary_edges_present: true
+  outside_recurrence_excluded: true
+  owner_pairwise_design_preserved: true
+  all_sentinels_and_native_mirrors_executed: true
+  all_runs_finite: true
+  every_stimulus_differs_from_sham_at_declared_input: true
+  every_stimulus_reaches_all_three_local_probe_groups: true
+  all_six_owner_axes_change_runtime_inputs: true
+  parameter_values_promoted: false
+  population_assignments_promoted: false
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+scientific_boundary:
+  technical_execution_admissible_members: 81
+  runtime_branches: 162
+  physiological_values_promoted: 0
+  population_assignments_promoted: 0
+  members_ranked_or_selected: false
+  higher_order_assignment_coverage_claimed: false
+  outside_cone_recurrence_claimed: false
+  behavior_outcomes_consumed: 0
+semantic_result_sha256: 19ba0e4f19c59d186ea6e73ee371df2cd63afafb8940654de709665ff465fc30
+next_action: Compile FH-06 as a reconstructible member-conditioned lineage over the
+  complete FH-03 sensory, FH-04 motor, and FH-05 central/basal technical ensembles.
+  Keep every family and source-native mirror explicit; select no member from body
+  motion.

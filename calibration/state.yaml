@@ -21,9 +21,9 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.front_leg_coupled_identifiability_design.v0
-last_preregistered_campaign_id: campaign.front_leg_coupled_identifiability_design.v0
-last_executed_campaign_id: campaign.front_leg_coupled_identifiability_design.v0
+last_completed_campaign_id: campaign.front_leg_coupled_identifiability_execution.v0
+last_preregistered_campaign_id: campaign.front_leg_coupled_identifiability_execution.v0
+last_executed_campaign_id: campaign.front_leg_coupled_identifiability_execution.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
@@ -32,6 +32,7 @@ accepted_dependency_parameter_set_ids:
   - parameters.front_leg_member_conditioned_bundles.v0
   - parameters.front_leg_feco_sensory_ensemble.v1
   - parameters.front_leg_motor_transfer_ensemble.v1
+  - parameters.front_leg_coupled_technical_ensemble.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
 parameter_dependency_dag_id: calibration.parameter_dependency_dag.v0
 active_roadmap_id: roadmap.first_held_out_evaluation.v0
@@ -64,10 +65,10 @@ readiness:
   population_dynamics_assignment: front_leg_chain_196_of_196_accounted_12_event_required_184_dual_unresolved_rules_complete_values_unfitted
   basal_reached_population_assignment_risk: open_166419_dual_unresolved_runtime_extremes_are_not_scientific_coverage_causal_cone_required
   internal_native_boundary_conversion: inventoried_cross_native_family_unfitted_current_0_5_and_0_05_scales_diagnostic_fixtures_only
-  basal_source_synaptic_threshold_identifiability: open_high_impact_13_member_grid_shows_coupling_only_320hz_3_2mv_corner_crosses_zero_values_selected
+  basal_source_synaptic_threshold_identifiability: FH05_local_direct_boundary_bounded_81_members_162_branches_all_six_owners_consumed_no_reference_global_and_physiological_identification_open
   local_conversion_contract: feco_graded_and_event_candidates_executable_motor_event_to_force_to_direct_motor_stages_separate_zero_values
   local_source_subsets: feco_2MB_and_motor_860357945B_exact_size_sha256_verified
-  feco_calcium_observation: FH03_complete_six_boundary_valid_coordinates_27_routing_profiles_8_source_paths_8_class_shared_native_profiles_1728_members_zero_native_amplitude_values_FH05_dependency_open
+  feco_calcium_observation: FH03_complete_six_boundary_valid_coordinates_27_routing_profiles_8_source_paths_8_class_shared_native_profiles_1728_members_zero_native_amplitude_values_FH05_technical_crossing_complete_no_physiological_amplitude_selected
   motor_spike_force_pilot: source_fidelity_pass_23_cells_194_selected_trials_11_excluded_183_usable_22_aggregate_rows_59049_assignment_upper_bound_kernel_open
   motor_spike_force_fit: completed_three_classes_one_source_reproduction_two_diagnostic_extensions_ordering_consistent_zero_values
   motor_twitch_temporal_diagnostic: completed_33_single_spike_traces_fast_supported_intermediate_weak_slow_unidentified_zero_values
@@ -111,7 +112,7 @@ readiness:
   first_held_out_causal_cone: FH_02_complete_196_neurons_12_event_required_184_dual_unresolved_166504_canonical_outside_claim_topology_and_exceptions_frozen_zero_outcomes_or_values
   first_held_out_sensory_chain: FH_03_complete_26_of_36_exact_type_aliases_10_bodies_in_3_type_shared_unknowns_27_routes_6_shapes_8_joint_paths_8_class_shared_native_profiles_1728_factorized_members_native_scale_open_for_FH05_zero_outcomes
   first_held_out_motor_chain: FH_04_complete_59049_factorized_body_class_assignments_338_slow_tonic_candidates_fast_and_intermediate_twitches_distinct_three_actuator_bridge_gains_zero_reference_or_body_motion
-  first_held_out_coupled_identifiability: FH_05_in_progress_static_design_complete_196_neurons_4873_induced_edges_599_structural_profiles_216_of_216_routing_native_pairs_400_of_400_intermediate_native_pairs_27_run_six_owner_strength_two_array_81_dynamic_sentinels_pending_zero_values_or_assignments
+  first_held_out_coupled_identifiability: FH_05_complete_81_owner_members_2_basal_native_mirrors_162_paired_branches_324_runtime_instances_6041_explicit_ports_590_direct_source_edges_4873_cone_edges_all_finite_zero_values_assignments_routes_or_behavior_selected
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: false
 
@@ -123,7 +124,7 @@ blocked_by:
   - The global homogeneous rate-versus-LIF choice is closed as revise. Twelve exact bodies in the accepted front-leg scopes have an event requirement; the 166,419 other basal-reached neurons remain dual_unresolved. The sparse engine can execute explicit candidate vectors but neither diagnostic extreme is a scientific assignment, and all constants remain unresolved.
   - Internal event-to-graded and graded-to-event conversion is now an explicit parameter family under ADR 0017. The current 0.5 and 0.05 engineering scales remain diagnostic fixtures, not defaults, priors, bounds or accepted values; same-native efficacy, conversion and neuron dynamics must remain separately owned even when estimated jointly.
   - Basal source intensity, same-native synaptic efficacy, internal conversion and neuron threshold/dynamics are not separately identified. Eleven nonzero members of the fixed grid remain subthreshold and only the 320 Hz by 3.2 mV engineering corner crosses; this finding selects nothing.
-  - FH-05 now has an owner-separated static design on the frozen 196-neuron cone. Its 599 structural profiles cover every routing/native and intermediate/native pair, and its 27-run orthogonal array covers every pair among six owners. This closes design coverage only: the 81 preregistered dynamic sentinels are not yet executed, higher-order interactions remain unsampled, and no finite admissible local ensemble exists yet.
+  - FH-05 is complete as a finite technical execution ensemble, not as physiological identification. All 81 owner-separated members execute as paired stimulus/sham runs under both all-graded and all-event basal source-port mirrors: 162 paired branches and 324 runtime instances are finite. The bounded graph contains 6,041 explicit source ports, the 590 published direct source-to-cone edges and 4,873 induced cone edges; recurrence outside the cone is excluded and not approximated. Every owner axis changes an executed input. No pair of descriptive main-effect signatures exceeds the locked 0.95 similarity warning, but unknown-afferent policy is only weakly observable in this direct-boundary scope and no stimulus surplus of internally generated events appears under the fixtures. All 81 members and both mirrors remain unranked; zero value, assignment, route or behavior is selected. Higher-order assignments and whole-MaleCNS context remain outside the claim and are propagated to FH-06.
   - A first local scientific claim must compile and account its causal population cone rather than pretend that the two runtime extremes cover the 2^166419 native-assignment space.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
@@ -186,8 +187,8 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Follow roadmap.first_held_out_evaluation.v0 revision 1. FH-01 through FH-04 are
-  complete and FH-05 is in progress without a viewed body outcome or selected
-  parameter. Execute the 81 preregistered owner-separated dynamic sentinels on
-  the 196-neuron cone, quantify compensation and local observability, and retain
-  or derive a finite admissible ensemble without threshold-only selection.
+  Follow roadmap.first_held_out_evaluation.v0 revision 1. FH-01 through FH-05 are
+  complete without a viewed body outcome or selected reference member. Compile
+  FH-06 as a reconstructible member-conditioned lineage over the complete FH-03
+  sensory, FH-04 motor and FH-05 central/basal ensembles. Keep both basal
+  source-native mirrors and every owner explicit; select nothing from body motion.

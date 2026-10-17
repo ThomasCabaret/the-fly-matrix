@@ -194,7 +194,9 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(roadmap["items"][2]["completion_record"]["simulated_outcomes_inspected"])
         self.assertEqual(roadmap["items"][3]["status"], "complete")
         self.assertFalse(roadmap["items"][3]["completion_record"]["simulated_body_outcomes_inspected"])
-        self.assertEqual(roadmap["estimate_contract"]["open_items"], 5)
+        self.assertEqual(roadmap["items"][4]["status"], "complete")
+        self.assertFalse(roadmap["items"][4]["completion_record"]["simulated_body_outcomes_inspected"])
+        self.assertEqual(roadmap["estimate_contract"]["open_items"], 4)
 
     def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:
         scope = load_yaml(

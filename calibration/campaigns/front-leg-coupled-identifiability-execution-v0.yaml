@@ -1,0 +1,189 @@
+schema_version: 1
+id: campaign.front_leg_coupled_identifiability_execution.v0
+title: FH-05 paired dynamic execution on the bounded front-leg cone
+status: preregistered_runnable
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_neural_dynamics.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FH-05 TECHNICAL EXECUTION ENSEMBLE / NO PHYSIOLOGY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+population_assignments_promoted: 0
+
+purpose: >-
+  Execute the 81 owner-separated sentinels preregistered by the static FH-05
+  design. Every sentinel is a paired FeCO stimulus/sham comparison under both
+  explicit basal source-native mirrors. The runtime keeps the 196-neuron induced
+  cone and only the real one-hop basal boundary edges entering it; recurrence
+  outside the cone is excluded rather than replaced by a hidden surrogate.
+
+frozen_inputs:
+  execution_runtime:
+    path: src/the_fly_matrix/front_leg_coupled_identifiability_execution.py
+    sha256: 1b9688f7cb27c5485aa4723ffa9786b00bd8d3aea9035f735831e974122d80a2
+  design_runtime:
+    path: src/the_fly_matrix/front_leg_coupled_identifiability.py
+    sha256: 0e650ab66afe142079bffd8ea70ad1dcc944bfdf0de86f1c54e4da95fff4c220
+  typed_runtime:
+    path: src/the_fly_matrix/typed_hybrid_runtime.py
+    sha256: 2060f71624efe2019c75be349bda08a61a65fc49fb378d72868143c16e1e1195
+  source_bridge_runtime:
+    path: src/the_fly_matrix/basal_source_bridges.py
+    sha256: 6ee48585c18ee215a6c867e1bdaa419d4e73fb036b1f616cbf7f2224d12e6b62
+  static_design_campaign:
+    path: calibration/campaigns/front-leg-coupled-identifiability-design-v0.yaml
+    sha256: 75c02865b039a1f7488451823b277f525f4eea02470d30ec799a493c7b731c86
+  static_design_result:
+    path: calibration/runner/front-leg-coupled-identifiability-design-v0.yaml
+    sha256: bc34293e69b8d7f7cd79185fa897bc04e29261e53a1b499f00818d7ce777d801
+  population_members:
+    path: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    sha256: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  classified_intermediates:
+    path: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
+    sha256: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+  intermediate_panel:
+    path: data/derived/calibration/front-leg-uncertainty-propagation-v0/intermediate-assignment-panel.csv
+    sha256: 4557f1bf7a999b4e3f71a6fd2d2f8d26b3b83ab1a654d46e2e20165d77f7cdc2
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+  source_terminals:
+    path: data/derived/calibration/basal-reachable-population-accounting-v0/source-terminals.csv
+    sha256: a27adeae0ec523507867498abf24482a7fd2ab66562b9611e9f8018ac8ebd97a
+  feco_parameter_set:
+    path: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v1.yaml
+    sha256: eebecfc99d5c1206858f1b2821572ba554e05701c1539cb5f8500b9bb9be1a46
+  feco_crosswalk:
+    path: calibration/evidence/front-leg-feco-type-crosswalk-v0.yaml
+    sha256: 89b818647e0126e3a9d5c2c3be43a87ccb2a00bd3cd67be76312ead532e72241
+
+parameter_ownership:
+  feco_native_amplitude: parameter.proprioception.native_bridge.v0
+  basal_source_intensity:
+    - parameter.bridge.basal_event_process.v0
+    - parameter.bridge.basal_hz_to_graded.v0
+  same_native_efficacy: parameter.central.synaptic_efficacy.v0
+  cross_native_conversion: parameter.central.native_boundary_conversion.v0
+  threshold_distance: parameter.central.neuron_dynamics.v0
+  unknown_afferent_policy: parameter.residual_sensory.unknown_nominal.v0
+
+owner_design_levels:
+  feco_native_amplitude: [ratio_0p5, ratio_1p0, ratio_2p0]
+  basal_source_intensity: [ratio_0p5, ratio_1p0, ratio_2p0]
+  same_native_efficacy: [ratio_0p5, ratio_1p0, ratio_2p0]
+  cross_native_conversion: [ratio_0p5, ratio_1p0, ratio_2p0]
+  threshold_distance: [ratio_0p75, ratio_1p0, ratio_1p25]
+  unknown_afferent_policy: [zero, bounded_tonic_fixture, matched_stochastic_fixture]
+
+execution_anchors:
+  - anchor_id: all_event_boundary_extreme
+    routing_profile_id: routing_00
+    native_profile_id: native_07
+    intermediate_profile_id: extreme_all_event
+  - anchor_id: graded_heavy_boundary_extreme
+    routing_profile_id: routing_26
+    native_profile_id: native_00
+    intermediate_profile_id: extreme_all_graded
+  - anchor_id: mixed_pairwise_profile
+    routing_profile_id: routing_13
+    native_profile_id: native_03
+    intermediate_profile_id: hash_00
+
+source_port_profiles:
+  - all_graded_candidate
+  - all_event_candidate
+
+execution_fixture:
+  status: UNPROMOTABLE_ENGINEERING_COORDINATES_NOT_PRIORS_OR_BOUNDS
+  dt_ms: 0.1
+  steps: 240
+  stimulus_start_step: 60
+  stimulus_stop_step: 180
+  seed: 42017
+  basal_rate_hz: 20.0
+  graded_half_saturation_hz: 100.0
+  feco_event_rate_hz: 80.0
+  feco_graded_drive: 0.25
+  unknown_family_id: parameter.residual_sensory.unknown_nominal.v0
+  unknown_matched_stochastic_definition: >-
+    Event ports use independent Bernoulli presence with the same per-step mean as
+    the regular train. Graded ports use bounded independent zero-or-double drive
+    with the same mean as the tonic drive. This is a diagnostic nuisance shape,
+    not a biological process model.
+  event_comparator:
+    v_rest_mV: -52.0
+    reset_mV: -52.0
+    threshold_mV: -45.0
+    tau_membrane_ms: 20.0
+    tau_syn_ms: 5.0
+    refractory_ms: 2.2
+    fixed_delay_ms: 1.8
+  boundary_scales:
+    event_to_event_mV: 0.05
+    event_to_graded: 0.5
+    graded_to_event_mV: 0.05
+    graded_to_graded: 0.5
+  graded_tau_ms: 5.0
+  restriction: >-
+    Every number is inherited from an earlier implementation probe or introduced
+    as a bounded engineering coordinate. None is a physiological estimate,
+    accepted bound, prior, default, or candidate for promotion.
+
+boundary_model:
+  retained_nodes: 6041_source_ports_plus_196_cone_neurons
+  retained_edges:
+    - all 4,873 recurrent edges induced by the cone
+    - all 590 published edges from basal source terminals directly into the cone
+  excluded_edges:
+    - every recurrent path outside the 196-neuron cone
+    - feedback from the cone into external source ports
+  interpretation: >-
+    The source ports are an explicit boundary condition. Failure to include
+    multi-hop outside-cone context remains a limitation, not an implicit zero
+    physiology or a whole-MaleCNS claim.
+
+acceptance:
+  expected_sentinels: 81
+  expected_runtime_branches: 162
+  expected_direct_source_edges: 590
+  require_paired_stimulus_and_sham: true
+  require_both_source_native_mirrors: true
+  require_every_owner_level_consumed: true
+  require_every_stimulus_to_reach_all_three_local_probe_groups: true
+  require_all_runs_finite: true
+  require_zero_threshold_only_member_selection: true
+  require_zero_parameter_and_assignment_promotion: true
+  require_zero_named_behavior_exposure: true
+
+accepted_claims:
+  - All 81 preregistered owner rows execute under paired stimulus and sham conditions.
+  - Both all-graded and all-event basal port mirrors execute for every row.
+  - The bounded graph contains the real direct basal boundary and recurrent cone edges and no outside recurrence.
+  - Main-effect signatures expose local observability and possible compensation under the declared fixtures.
+  - The complete finite technical execution ensemble can be propagated member-conditionally without selecting a reference.
+forbidden_claims:
+  - Any owner level is a physiological value, prior, accepted bound, or preferred member.
+  - The finite technical ensemble covers the 2^184 population assignment space or higher-order interactions.
+  - Direct basal boundary edges reproduce recurrent outside-cone context.
+  - A nonzero response, threshold crossing, or bounded trace identifies a parameter.
+  - This campaign establishes embodied stability, a behavior, or a biological reference lineage.
+
+outputs:
+  compact_result: calibration/runner/front-leg-coupled-identifiability-execution-v0.yaml
+  evaluation: calibration/evaluations/front-leg-coupled-identifiability-execution-v0.yaml
+  parameter_set_index: calibration/parameter_sets/front-leg-coupled-technical-ensemble-v0.yaml
+  ignored_diagnostics: data/derived/calibration/front-leg-coupled-identifiability-execution-v0/
+
+next_action: >-
+  Compile FH-06 as a reconstructible member-conditioned lineage over the complete
+  FH-03 sensory, FH-04 motor, and FH-05 central/basal technical ensembles. Keep
+  every family and source-native mirror explicit; select no member from body motion.
+

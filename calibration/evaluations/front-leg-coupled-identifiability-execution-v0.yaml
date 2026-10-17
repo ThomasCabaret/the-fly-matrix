@@ -1,0 +1,303 @@
+schema_version: 1
+id: evaluation.front_leg_coupled_identifiability_execution.v0
+campaign_id: campaign.front_leg_coupled_identifiability_execution.v0
+status: accepted_FH05_complete_finite_unranked_technical_ensemble
+conclusion: 'All 81 preregistered owner-separated sentinels execute as paired stimulus/sham
+  runs under both explicit basal source-native mirrors. The retained set is finite
+  and mechanically admissible without threshold-only selection. It is not a physiological
+  parameter set: no value, population assignment, route, member, or behavior is selected.'
+graph_boundary:
+  source_ports: 6041
+  cone_neurons: 196
+  direct_source_to_cone_edges: 590
+  direct_source_targets: 105
+  direct_sources_with_edges: 315
+  cone_recurrent_edges: 4873
+  total_edges: 5463
+accounting:
+  sentinel_members: 81
+  source_native_mirrors_per_member: 2
+  paired_stimulus_sham_runtime_branches: 162
+  individual_runtime_instances: 324
+owner_observability:
+  metrics:
+  - sensory_delta_peak_l1
+  - intermediate_delta_peak_l1
+  - motor_delta_peak_l1
+  - motor_delta_integral_l1
+  - generated_event_delta
+  factors:
+    feco_native_amplitude:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 0.8980077557485513
+        - 0.5976897377618733
+        - 0.07963044760105724
+        - 0.3902232449113676
+        - 0.0
+        ratio_1p0:
+        - 1.276646787935348
+        - 0.860094197585633
+        - 0.13666578096270485
+        - 0.594247108793158
+        - 0.0
+        ratio_2p0:
+        - 1.6528644035548234
+        - 1.2223903249560508
+        - 0.21724462992997312
+        - 0.841394974335716
+        - 0.0
+      signature_l2: 0.7702875123520885
+      dynamically_observable_in_declared_metrics: true
+    basal_source_intensity:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 1.2766232592581372
+        - 0.9117647827854687
+        - 0.1662016575977988
+        - 0.6503878257513942
+        - 0.0
+        ratio_1p0:
+        - 1.275609447748757
+        - 0.885766496493201
+        - 0.1344594321222593
+        - 0.5886935756656863
+        - 0.0
+        ratio_2p0:
+        - 1.2752862402318281
+        - 0.8826429810248873
+        - 0.13287976877367716
+        - 0.5867839266231611
+        - 0.0
+      signature_l2: 0.06194718772258156
+      dynamically_observable_in_declared_metrics: true
+    same_native_efficacy:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 1.127181534125491
+        - 0.5906446041658412
+        - 0.05938183387532641
+        - 0.4017729374752874
+        - 0.0
+        ratio_1p0:
+        - 1.2440960599193078
+        - 0.8124716030046275
+        - 0.10838840225659821
+        - 0.5530599984339534
+        - 0.0
+        ratio_2p0:
+        - 1.4562413531939238
+        - 1.2770580531330882
+        - 0.26577062236181065
+        - 0.8710323921310009
+        - 0.0
+      signature_l2: 0.662603953861532
+      dynamically_observable_in_declared_metrics: true
+    cross_native_conversion:
+      levels:
+      - ratio_0p5
+      - ratio_1p0
+      - ratio_2p0
+      replicates_per_level:
+        ratio_0p5: 54
+        ratio_1p0: 54
+        ratio_2p0: 54
+      log1p_metric_means:
+        ratio_0p5:
+        - 1.270923627947587
+        - 0.7641329919593178
+        - 0.07388576042372735
+        - 0.37377781891835943
+        - 0.0
+        ratio_1p0:
+        - 1.273327881865762
+        - 0.8795385149102097
+        - 0.132100864757618
+        - 0.5839810449123584
+        - 0.0
+        ratio_2p0:
+        - 1.2832674374253736
+        - 1.0365027534340294
+        - 0.22755423331238991
+        - 0.8681064642095239
+        - 0.0
+      signature_l2: 0.4154460421716386
+      dynamically_observable_in_declared_metrics: true
+    threshold_distance:
+      levels:
+      - ratio_0p75
+      - ratio_1p0
+      - ratio_1p25
+      replicates_per_level:
+        ratio_0p75: 54
+        ratio_1p0: 54
+        ratio_1p25: 54
+      log1p_metric_means:
+        ratio_0p75:
+        - 1.2913044117284367
+        - 0.9146853050969844
+        - 0.15209629680548442
+        - 0.6248639227789292
+        - 0.0
+        ratio_1p0:
+        - 1.2779023460781351
+        - 0.9198601129903894
+        - 0.16421258871082087
+        - 0.6249704438812566
+        - 0.0
+        ratio_1p25:
+        - 1.2583121894321505
+        - 0.8456288422161827
+        - 0.11723197297742996
+        - 0.5760309613800558
+        - 0.0
+      signature_l2: 0.08227388785772653
+      dynamically_observable_in_declared_metrics: true
+    unknown_afferent_policy:
+      levels:
+      - bounded_tonic_fixture
+      - matched_stochastic_fixture
+      - zero
+      replicates_per_level:
+        bounded_tonic_fixture: 54
+        matched_stochastic_fixture: 54
+        zero: 54
+      log1p_metric_means:
+        bounded_tonic_fixture:
+        - 1.2751217599916045
+        - 0.8924250174605042
+        - 0.14367460246686775
+        - 0.6091191735753609
+        - 0.0
+        matched_stochastic_fixture:
+        - 1.2758597705161232
+        - 0.8920281290356945
+        - 0.14889684924531796
+        - 0.6061169647338718
+        - 0.0
+        zero:
+        - 1.2765374167309946
+        - 0.8957211138073581
+        - 0.1409694067815495
+        - 0.6106291897310091
+        - 0.0
+      signature_l2: 0.007228548177749193
+      dynamically_observable_in_declared_metrics: true
+  pairwise_signature_similarity:
+    feco_native_amplitude__x__basal_source_intensity:
+      absolute_cosine: 0.5304833964115991
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__same_native_efficacy:
+      absolute_cosine: 0.909654688521948
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__cross_native_conversion:
+      absolute_cosine: 0.6661824951534566
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__threshold_distance:
+      absolute_cosine: 0.7785593820275609
+      high_signature_similarity_over_0p95: false
+    feco_native_amplitude__x__unknown_afferent_policy:
+      absolute_cosine: 0.32127395064622627
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__same_native_efficacy:
+      absolute_cosine: 0.6196545218255988
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__cross_native_conversion:
+      absolute_cosine: 0.8226700412631266
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__threshold_distance:
+      absolute_cosine: 0.4065830858798241
+      high_signature_similarity_over_0p95: false
+    basal_source_intensity__x__unknown_afferent_policy:
+      absolute_cosine: 0.06149216052646001
+      high_signature_similarity_over_0p95: false
+    same_native_efficacy__x__cross_native_conversion:
+      absolute_cosine: 0.8423514022432345
+      high_signature_similarity_over_0p95: false
+    same_native_efficacy__x__threshold_distance:
+      absolute_cosine: 0.915808099462015
+      high_signature_similarity_over_0p95: false
+    same_native_efficacy__x__unknown_afferent_policy:
+      absolute_cosine: 0.32884384428243807
+      high_signature_similarity_over_0p95: false
+    cross_native_conversion__x__threshold_distance:
+      absolute_cosine: 0.7573187083422934
+      high_signature_similarity_over_0p95: false
+    cross_native_conversion__x__unknown_afferent_policy:
+      absolute_cosine: 0.22051001822161803
+      high_signature_similarity_over_0p95: false
+    threshold_distance__x__unknown_afferent_policy:
+      absolute_cosine: 0.18974526979366696
+      high_signature_similarity_over_0p95: false
+  interpretation: Main-effect signatures are descriptive under a strength-two design.
+    They expose non-observability or possible compensation but do not identify a physiological
+    value or exclude unsampled higher-order interactions.
+checks:
+  cone_and_source_accounting_exact: true
+  real_direct_boundary_edges_present: true
+  outside_recurrence_excluded: true
+  owner_pairwise_design_preserved: true
+  all_sentinels_and_native_mirrors_executed: true
+  all_runs_finite: true
+  every_stimulus_differs_from_sham_at_declared_input: true
+  every_stimulus_reaches_all_three_local_probe_groups: true
+  all_six_owner_axes_change_runtime_inputs: true
+  parameter_values_promoted: false
+  population_assignments_promoted: false
+  members_ranked_or_selected: false
+  named_behavior_exposed: false
+scientific_boundary:
+  technical_execution_admissible_members: 81
+  runtime_branches: 162
+  physiological_values_promoted: 0
+  population_assignments_promoted: 0
+  members_ranked_or_selected: false
+  higher_order_assignment_coverage_claimed: false
+  outside_cone_recurrence_claimed: false
+  behavior_outcomes_consumed: 0
+runner_semantic_sha256: 19ba0e4f19c59d186ea6e73ee371df2cd63afafb8940654de709665ff465fc30
+accepted_claims:
+- All 81 preregistered owner rows execute under paired stimulus and sham conditions.
+- Both all-graded and all-event basal port mirrors execute for every row.
+- The bounded graph contains the real direct basal boundary and recurrent cone edges
+  and no outside recurrence.
+- Main-effect signatures expose local observability and possible compensation under
+  the declared fixtures.
+- The complete finite technical execution ensemble can be propagated member-conditionally
+  without selecting a reference.
+forbidden_claims:
+- Any owner level is a physiological value, prior, accepted bound, or preferred member.
+- The finite technical ensemble covers the 2^184 population assignment space or higher-order
+  interactions.
+- Direct basal boundary edges reproduce recurrent outside-cone context.
+- A nonzero response, threshold crossing, or bounded trace identifies a parameter.
+- This campaign establishes embodied stability, a behavior, or a biological reference
+  lineage.
+next_action: Compile FH-06 as a reconstructible member-conditioned lineage over the
+  complete FH-03 sensory, FH-04 motor, and FH-05 central/basal technical ensembles.
+  Keep every family and source-native mirror explicit; select no member from body
+  motion.

@@ -283,6 +283,14 @@ ratios in that design are engineering perturbation coordinates, not biological
 priors or bounds; successful compilation does not establish an admissible
 parameter ensemble.
 
+`front_leg_coupled_identifiability_execution.bat` completes the FH-05 execution
+gate. It reconstructs the 6,041 basal source ports as an explicit boundary around
+the same cone, retains exactly the 590 direct published source-to-cone edges, and
+executes the 81 owner rows under two source-native mirrors. Every row is paired
+with a sham using the same background schedule. The resulting 81-member finite
+technical ensemble is retained whole and unranked; it is reproducible input to
+FH-06, not a physiological parameter set or a selected lineage.
+
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and
 validates true COM, joint limits, physical jerk, contacts/forces, a declared
