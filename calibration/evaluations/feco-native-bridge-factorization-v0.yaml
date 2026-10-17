@@ -1,0 +1,32 @@
+schema_version: 1
+id: evaluation.feco_native_bridge_factorization.v0
+campaign_id: campaign.feco_native_bridge_factorization.v0
+runner_result_id: runner_result.feco_native_bridge_factorization.v0
+parameter_set_id: parameters.front_leg_feco_sensory_ensemble.v1
+status: accepted_local_factorization_FH03_complete_FH05_scale_dependency_open
+acceptance_result: pass
+fh03_complete: true
+fh05_native_amplitude_dependency_open: true
+accounting:
+  activation_coordinates: 6
+  routing_profiles: 27
+  joint_source_paths: 8
+  native_profiles: 8
+  factorized_members: 1728
+  native_amplitude_values_selected: 0
+  behavior_outcomes_consumed: 0
+  topology_changes: 0
+checks:
+  all_source_coordinates_finite_nonconstant: true
+  all_admitted_coordinates_in_closed_unit_interval: true
+  all_class_shared_native_profiles_materialized: true
+  native_amplitude_has_separate_owner: true
+  native_amplitude_values_remain_unresolved: true
+  future_held_out_outcome_not_consumed: true
+semantic_parameter_set_sha256: 2d3e7a916220105902dd0a548176ce232eecf22de7a2a7061165dd2cbb054792
+behavior_outcomes_consumed: 0
+parameter_values_promoted: 0
+interpretation: FH-03 is complete for locally identifiable sensory structure and shape.
+  The native amplitude is deliberately not guessed; its named family is an FH-05 dependency.
+next_action: Start FH-04 motor uncertainty closure independently, then consume the
+  explicit native-amplitude family in the FH-05 coupled nonbehavioral gate.

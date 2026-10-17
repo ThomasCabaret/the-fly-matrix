@@ -143,6 +143,15 @@ Une exécution sur deux extrêmes ne couvre pas les 166 419 affectations
 `dual_unresolved` : borner le cône causal du claim local avant de propager un
 ensemble d'affectations.
 
+Pour la chaîne FeCO du premier essai, séparer aussi la forme sensorielle locale
+de son amplitude native. `parameter.proprioception.transfer.v0` possède les
+coordonnées d'activation sans dimension admises sur le support mesuré ;
+`parameter.proprioception.native_bridge.v0` possède représentation event/graded,
+baseline, plage dynamique et processus événementiel. Les huit profils partagés
+par classes claw/club/hook restent propagés. Le calcium ne fixe aucune amplitude
+native : celle-ci appartient au gate couplé FH-05 avec efficacité, conversions et
+seuils, et ne doit jamais devenir une constante runtime implicite.
+
 ## Attribution causale incarnée
 
 Le runtime courant instancie 102 actionneurs MuJoCo `MOTOR`, pas des servos de

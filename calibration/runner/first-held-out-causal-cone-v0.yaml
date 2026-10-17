@@ -28,6 +28,7 @@ boundary_ownership:
     owner_family_ids:
     - parameter.proprioception.routing.v0
     - parameter.proprioception.transfer.v0
+    - parameter.proprioception.native_bridge.v0
   central_event_to_event:
     owner_family_ids:
     - parameter.central.synaptic_efficacy.v0
@@ -84,4 +85,4 @@ forbidden_claims:
 next_action: Use this immutable cone as the scope for FH-03, FH-04 and FH-05. Calibrate
   or propagate each family without changing the cone or consuming the eventual resistance-reflex
   outcome.
-semantic_result_sha256: dc1ef3588061dab7c31396b941281b6f13362b0d980cc9b13614aebf8a6b9055
+semantic_result_sha256: f2035ff78507ae6f6c260f47ea524cd0fc8bf09264d59b9462f435f0d8163090

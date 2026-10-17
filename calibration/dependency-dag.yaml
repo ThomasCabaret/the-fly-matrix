@@ -1,7 +1,7 @@
 schema_version: 1
 id: calibration.parameter_dependency_dag.v0
 status: complete_structure_values_unfitted
-updated: 2026-10-15
+updated: 2026-10-17
 inventory_id: parameter_family_inventory.v0
 node_ids:
   - parameter.baseline.olfaction.v0
@@ -16,6 +16,7 @@ node_ids:
   - parameter.vision.transfer.v0
   - parameter.proprioception.routing.v0
   - parameter.proprioception.transfer.v0
+  - parameter.proprioception.native_bridge.v0
   - parameter.mechanosensation.routing.v0
   - parameter.mechanosensation.transfer.v0
   - parameter.motor.routing.v0
@@ -41,6 +42,7 @@ edges:
   - {upstream: parameter.residual_sensory.unknown_nominal.v0, downstream: parameter.bridge.basal_hz_to_graded.v0, reason: A source-rate hypothesis precedes its explicit graded-unit conversion.}
   - {upstream: parameter.vision.routing.v0, downstream: parameter.vision.transfer.v0, reason: Freeze admissible registration before fitting response gains.}
   - {upstream: parameter.proprioception.routing.v0, downstream: parameter.proprioception.transfer.v0, reason: Separate local route selection from sensor transfer.}
+  - {upstream: parameter.proprioception.transfer.v0, downstream: parameter.proprioception.native_bridge.v0, reason: Freeze the dimensionless local activation shape before assigning event or graded native units and amplitude.}
   - {upstream: parameter.mechanosensation.routing.v0, downstream: parameter.mechanosensation.transfer.v0, reason: Separate local route selection from sensor transfer.}
   - {upstream: parameter.motor.routing.v0, downstream: parameter.motor.transfer.v0, reason: Separate actuator assignment from activation gain.}
   - {upstream: parameter.body.flybody_mechanics.v0, downstream: parameter.motor.transfer.v0, reason: Interpret actuator transfer against a frozen mechanical plant.}
@@ -67,8 +69,9 @@ notes:
   - A joint campaign may replace an edge only with a versioned non-identifiability reason.
   - Basal families remain roots; their two explicit source bridge families are downstream conversion capacity, not accepted values.
   - Same-native event-to-event and graded-to-graded efficacy remains in the central synaptic-efficacy family; only cross-native conversion is a separate family.
+  - The FeCO native bridge is a separate external sensory boundary. Its joint-identifiability declaration does not merge it with central efficacy or internal cross-native conversion.
 next_action: >-
   Keep campaign and accepted parameter-set lineage in their existing registries;
   use this DAG for family acceptance. Bound the new internal native-boundary
-  family jointly with central efficacy and neuron dynamics before any descendant
-  is independently frozen.
+  family and the explicit proprioception native bridge jointly with central
+  efficacy and neuron dynamics before any descendant is independently frozen.

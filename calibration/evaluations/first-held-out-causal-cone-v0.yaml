@@ -30,7 +30,7 @@ population_accounting:
   basal_reached_neurons_outside_cone: 166235
   dual_unresolved_basal_reached_neurons_outside_cone: 166235
   canonical_neurons_outside_basal_reach: 269
-semantic_scope_sha256: dc1ef3588061dab7c31396b941281b6f13362b0d980cc9b13614aebf8a6b9055
+semantic_scope_sha256: f2035ff78507ae6f6c260f47ea524cd0fc8bf09264d59b9462f435f0d8163090
 protocol_locked: false
 behavior_outcomes_consumed: 0
 parameter_values_promoted: 0

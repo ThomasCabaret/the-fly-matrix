@@ -1,0 +1,71 @@
+schema_version: 1
+id: campaign.feco_native_bridge_factorization.v0
+title: Freeze the FeCO activation coordinate and native-bridge capacity
+status: preregistered_runnable
+target_id: target.population_dynamics_assignment.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: local_interface
+optimization_exposure: allowed
+claim_label: FECO LOCAL SHAPE FACTORIZATION / NATIVE VALUES DEFERRED / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+optimized_native_amplitudes: 0
+
+inputs:
+  parent_parameter_set: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v0.yaml
+  expected_parent_file_sha256: 7ac70eb4d18d136b3dfcf681fde5f7766ac2823f8a3a4da2101599a32f81f938
+  source_fit_campaign: calibration/campaigns/feco-calcium-held-out-fit-v0.yaml
+  evidence_boundary: calibration/evidence/front-leg-feco-native-bridge-v0.yaml
+  bridge_model: calibration/models/feco-native-bridge-factorization-v0.yaml
+
+activation_coordinate_policy:
+  support: finite_analyze_1_rows_matching_each_preregistered_FeCO_ROI
+  quotient: subtract_raw_activation_minimum_then_divide_by_raw_activation_range
+  expected_range: [0.0, 1.0]
+  outside_support: invalid_for_scientific_claim
+  clip_outside_support: false
+
+capacity_policy:
+  representation_sharing_key: FeCO_functional_class
+  functional_classes: [claw, club, hook]
+  expected_native_profiles: 8
+  per_body_representation_variables: 0
+  amplitude_sharing_key: FeCO_functional_class
+  amplitude_parameters_per_class: [baseline, dynamic_range]
+  expected_continuous_amplitude_parameters_per_member: 6
+  amplitude_values_selected_here: 0
+  event_process_selected_here: false
+
+selection_policy:
+  choose_native_profile: false
+  choose_source_path: false
+  choose_routing_profile: false
+  choose_amplitude: false
+  prohibited_inputs:
+    - body_motion
+    - threshold_crossing
+    - future_resistance_reflex_direction
+    - future_resistance_reflex_latency
+    - future_resistance_reflex_spatial_specificity
+
+acceptance:
+  - every retained source candidate has a finite nonconstant activation coordinate over admitted support
+  - all normalized coordinates remain in the closed unit interval on admitted rows
+  - all eight class-shared event/graded profiles are materialized
+  - native baseline, dynamic range and event-process values remain unresolved and explicitly owned
+  - no behavior, body motion or CNS threshold crossing is consumed
+  - the parent routing and source-path ensemble remains unselected
+
+outputs:
+  parameter_set: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v1.yaml
+  runner_result: calibration/runner/feco-native-bridge-factorization-v0.yaml
+  evaluation: calibration/evaluations/feco-native-bridge-factorization-v0.yaml
+  detailed_summary: data/derived/calibration/feco-native-bridge-factorization-v0/summary.json
+
+next_action: >-
+  Treat FH-03 as complete for all locally identifiable sensory components. Pass
+  the explicit unresolved native-amplitude family to FH-05, where it must remain
+  coupled to efficacy, cross-native conversion and neuron dynamics.
+replan_if: >-
+  Any retained source activation is constant on its admitted evidence support or
+  independent evidence rejects functional-class sharing.

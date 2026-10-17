@@ -374,7 +374,17 @@ The cross-trial concatenated claw path is rejected by the trial-boundary contrac
 not its score. Six retained shapes form eight joint source paths and are crossed
 with both unresolved native representations for 432 factorized members. The
 parameter set freezes this finite uncertainty but explicitly leaves native units
-and amplitude open, so it does not complete FH-03 or promote a reference member.
+and amplitude open, so this first campaign alone does not complete FH-03 or
+promote a reference member.
+
+Run `feco_native_bridge_factorization.bat` for the second and final FH-03
+delivery. It preserves the 27 routing and eight source-path alternatives, creates
+six dimensionless activation coordinates over admitted source support, and
+materializes all eight class-shared event/graded profiles. The resulting 1,728
+members remain unranked. No native amplitude is invented: a separate
+`parameter.proprioception.native_bridge.v0` family owns class-shared baseline and
+dynamic range and is handed to the existing FH-05 coupled-identifiability gate.
+FH-03 is complete only for locally identifiable sensory structure and shape.
 
 Do not bulk-download the 48.76 GB motor repository or infer defaults from article
 prose. The ten selected MaleCNS tibia-flexor motor body IDs still lack a

@@ -1,0 +1,61 @@
+schema_version: 1
+id: model.feco_native_bridge_factorization.v0
+title: Factorized FeCO activation-coordinate to native-unit boundary
+status: accepted_parameterization_values_open
+scientific_role: local_interface_capacity_not_a_parameter_value
+behavior_targets: []
+
+activation_coordinate:
+  symbol: q_class_t
+  units: dimensionless_activation_coordinate
+  construction: >-
+    Apply a retained class-specific source activation function, then quotient its
+    affine offset and scale over the admitted local measurement support. The
+    resulting coordinate is zero at the observed-support minimum and one at its
+    maximum. This preserves source shape while refusing to treat calcium scale as
+    a native neural unit.
+  admitted_support: finite_analyze_1_rows_of_the_three_hash_locked_FeCO_tables
+  outside_support_policy: invalid_for_scientific_claim_until_a_new_scope_or_explicit_surrogate_is_versioned
+  clipping_allowed_for_claim: false
+
+native_alternatives:
+  event:
+    equation: lambda_class_t = baseline_hz_class + dynamic_range_hz_class * q_class_t
+    input_units: dimensionless_activation_coordinate
+    output_units: event_intensity_hz
+    constraints: [baseline_hz_class >= 0, dynamic_range_hz_class >= 0]
+    event_process: unresolved_explicit_candidate_required
+  graded:
+    equation: g_class_t = baseline_native_class + dynamic_range_native_class * q_class_t
+    input_units: dimensionless_activation_coordinate
+    output_units: consuming_population_native_graded_unit
+    constraints: [baseline_native_class_is_explicit, dynamic_range_native_class_is_explicit]
+    unit_contract: unresolved_until_the_consuming_graded_population_semantics_are_declared
+
+sharing_capacity:
+  key: FeCO_functional_class
+  classes: [claw, club, hook]
+  homologous_sides_share_by_default: true
+  representation_variables: 3
+  representation_profiles: 8
+  continuous_amplitude_parameters_per_profile: 6
+  per_body_parameters: 0
+  reopen_if: independent_local_residuals_reject_class_sharing
+
+ownership:
+  activation_shape_family: parameter.proprioception.transfer.v0
+  native_bridge_family: parameter.proprioception.native_bridge.v0
+  coupled_fh05_families:
+    - parameter.central.synaptic_efficacy.v0
+    - parameter.central.native_boundary_conversion.v0
+    - parameter.central.neuron_dynamics.v0
+
+forbidden_interpretations:
+  - The normalized activation coordinate is a firing probability, firing rate or voltage.
+  - One of the eight class-shared representation profiles is preferred.
+  - Native amplitude can be identified from calcium residuals.
+  - A convenient numerical runtime fixture is a prior or bound.
+
+next_action: >-
+  Materialize the eight class-shared native profiles and keep every baseline and
+  dynamic-range parameter unresolved for the FH-05 coupled nonbehavioral gate.

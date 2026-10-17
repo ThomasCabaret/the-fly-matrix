@@ -391,6 +391,31 @@ record both subthreshold and crossing regimes, and forbid post-hoc extension of
 the same campaign. Such a map may identify a numerical gate or motivate a new
 sourced campaign; its first active coordinate is never a parameter estimate.
 
+### Peripheral activation shape versus native amplitude
+
+An observation-space fit may identify a local response **shape** without
+identifying the unit consumed by the CNS. Preserve that distinction as separate
+parameter ownership. For the scoped FeCO chain, the retained claw, club and hook
+functions are quotiented into dimensionless activation coordinates on their
+hash-locked measurement support. Outside that support, a scientific claim is
+invalid until a new scope or explicit surrogate policy is versioned; silent
+clipping is forbidden.
+
+`parameter.proprioception.transfer.v0` owns this local activation shape, while
+`parameter.proprioception.native_bridge.v0` owns event/graded representation,
+baseline, dynamic range and event-process semantics. Calcium scale cannot fill
+the latter family. The minimum v0 capacity shares one representation and two
+amplitude parameters within each of the three FeCO functional classes, retaining
+all eight class-level event/graded profiles. This sharing is a capacity
+hypothesis, not proof of homogeneous dynamics within a class.
+
+When native amplitude compensates with same-native efficacy, cross-native
+conversion or neuron threshold, freeze the locally identifiable shape and carry
+the native bridge into the explicit coupled gate. This is preferable to either
+inventing a standalone prior or leaving the scale as an unnamed runtime constant.
+Closing the local-shape item does not mean the conditional native bridge is
+numerically calibrated or scientifically executable.
+
 ### Embodied causal attribution and actuator semantics
 
 The current embodied path instantiates all 102 FlyBody channels as classical

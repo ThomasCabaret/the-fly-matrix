@@ -45,7 +45,6 @@ $CalibrationContractPrefixes = @(
     "calibration/evaluation_candidates/",
     "calibration/models/",
     "calibration/parameter_families/",
-    "calibration/parameter_sets/",
     "calibration/roadmaps/",
     "calibration/scopes/",
     "calibration/targets/"
@@ -83,12 +82,19 @@ $RepresentativeAuditFiles = @(
     "calibration/model-risks.yaml",
     "calibration/state.yaml",
     "calibration/roadmaps/first-held-out-evaluation-v0.yaml",
-    "calibration/campaigns/basal-event-scale-compatibility-v0.yaml",
-    "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
+    # Parameter sets are generated lineage snapshots and can grow quickly. Keep
+    # the active sensory set plus representative central, basal and motor sets;
+    # MANIFEST/OMISSIONS makes this sampling explicit.
+    "calibration/parameter_sets/front-leg-feco-sensory-ensemble-v1.yaml",
+    "calibration/parameter_sets/central-timestep-convergent-ensemble-v1.yaml",
+    "calibration/parameter_sets/basal-source-technical-envelope-v0.yaml",
+    "calibration/parameter_sets/front-leg-member-conditioned-bundles-v0.yaml",
     "calibration/campaigns/basal-source-envelope-propagation-v0.yaml",
+    "calibration/campaigns/feco-native-bridge-factorization-v0.yaml",
+    "calibration/evidence/front-leg-feco-native-bridge-v0.yaml",
     "calibration/evaluations/basal-source-envelope-propagation-v0.yaml",
-    "calibration/evaluations/basal-event-scale-compatibility-v0.yaml",
-    "calibration/runner/basal-event-scale-compatibility-v0.yaml",
+    "calibration/evaluations/feco-native-bridge-factorization-v0.yaml",
+    "calibration/runner/feco-native-bridge-factorization-v0.yaml",
     "ledger/README.md",
     "ledger/behaviors.yaml",
     "ledger/datasets.yaml",
@@ -132,9 +138,9 @@ $PriorityLaunchers = @(
     "calibration_status.bat",
     "download_data.bat",
     "fit_feco_calcium_observation.bat",
+    "feco_native_bridge_factorization.bat",
     "local_conversion_contract.bat",
     "motor_actuator_bridge_envelope.bat",
-    "population_dynamics_assignment.bat",
     "prepare_local_source_data.bat",
     "setup.bat",
     "wiring_revalidation.bat"
@@ -144,7 +150,7 @@ $PriorityLaunchers = @(
 # from crowding out policy. Update this short list only when a new subsystem is
 # important enough that an external reviewer needs to inspect its implementation.
 $PriorityCodeSamples = @(
-    "src/the_fly_matrix/typed_hybrid_runtime.py",
+    "src/the_fly_matrix/feco_native_bridge.py",
     "scripts/build_audit_pack.ps1"
 )
 
@@ -159,14 +165,15 @@ $RequiredAuditPaths = @(
     "calibration/dependency-dag.yaml",
     "calibration/model-risks.yaml",
     "calibration/state.yaml",
+    "calibration/parameter_sets/front-leg-feco-sensory-ensemble-v1.yaml",
     "calibration/parameter_families/central-native-boundary-conversion-v0.yaml",
     "calibration/targets/population-dynamics-assignment-v0.yaml",
-    "calibration/campaigns/basal-event-scale-compatibility-v0.yaml",
-    "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml",
     "calibration/campaigns/basal-source-envelope-propagation-v0.yaml",
-    "calibration/evaluations/basal-event-scale-compatibility-v0.yaml",
+    "calibration/campaigns/feco-native-bridge-factorization-v0.yaml",
+    "calibration/evidence/front-leg-feco-native-bridge-v0.yaml",
     "calibration/evaluations/basal-source-envelope-propagation-v0.yaml",
-    "calibration/runner/basal-event-scale-compatibility-v0.yaml",
+    "calibration/evaluations/feco-native-bridge-factorization-v0.yaml",
+    "calibration/runner/feco-native-bridge-factorization-v0.yaml",
     "decisions/0016-event-capable-typed-hybrid-neural-runtime.md",
     "decisions/0017-internal-native-boundary-parameter-ownership.md",
     "ledger/README.md",

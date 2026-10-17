@@ -1,7 +1,7 @@
 schema_version: 1
 id: parameter_family_inventory.v0
 status: complete_inventory_values_unfitted
-updated: 2026-10-15
+updated: 2026-10-17
 scope_statement: >-
   Exhaustive inventory of parameter families currently exposed or required by
   the accepted wiring-v0 embodied runtime. Completeness means every known family
@@ -21,6 +21,7 @@ family_ids:
   - parameter.vision.transfer.v0
   - parameter.proprioception.routing.v0
   - parameter.proprioception.transfer.v0
+  - parameter.proprioception.native_bridge.v0
   - parameter.mechanosensation.routing.v0
   - parameter.mechanosensation.transfer.v0
   - parameter.motor.routing.v0
@@ -33,14 +34,14 @@ family_ids:
   - parameter.technical.motor_command_envelope.v0
 
 accounting:
-  total_families: 22
-  by_kind: {basal: 6, routing: 4, transfer: 7, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
-  by_claim_role: {biological: 11, surrogate: 10, technical: 1}
+  total_families: 23
+  by_kind: {basal: 6, routing: 4, transfer: 8, neural_dynamics: 3, mechanical: 1, technical_nuisance: 1}
+  by_claim_role: {biological: 12, surrogate: 10, technical: 1}
   frozen_external: 1
   accepted_parameter_sets: 1
   fitted_families: 0
   frozen_parameter_families: 2
-  unresolved_or_unfrozen_families: 20
+  unresolved_or_unfrozen_families: 21
 
 known_runtime_couplings:
   - families: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0, parameter.central.native_boundary_conversion.v0]
@@ -49,6 +50,9 @@ known_runtime_couplings:
   - families: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0]
     issue: One executable coefficient vector currently combines route weighting and transfer gain.
     required_resolution: Compile distinct logical families into the existing runtime vector.
+  - families: [parameter.proprioception.transfer.v0, parameter.proprioception.native_bridge.v0, parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
+    issue: Calcium constrains local activation shape, while native amplitude can compensate with efficacy and threshold.
+    required_resolution: Freeze the shape coordinate separately and identify or propagate native amplitude only in the explicit FH-05 coupled gate.
   - families: [parameter.mechanosensation.routing.v0, parameter.mechanosensation.transfer.v0]
     issue: One executable coefficient vector currently combines route weighting and transfer gain.
     required_resolution: Compile distinct logical families into the existing runtime vector.
@@ -70,7 +74,6 @@ milestone_boundary:
     - Recalibration of FlyBody mechanical constants.
 
 next_action: >-
-  Source or bound the two external basal bridge families and the distinct
-  internal native-boundary conversion family without promoting their diagnostic
-  fixtures. Propagate finite event/graded alternatives through a bounded causal
-  chain; no local physiological value is promoted.
+  Propagate the explicit proprioception native bridge together with source
+  intensity, central efficacy, internal native-boundary conversion and neuron
+  dynamics in FH-05. No local physiological value is promoted by the inventory.

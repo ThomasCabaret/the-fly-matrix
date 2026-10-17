@@ -46,21 +46,28 @@ borné du tibia, sham et essais gauche/droite, avec réponse motrice et physique
 tenue à l'écart de toute calibration. La décision et ses limites sont dans
 `calibration/evaluations/first-held-out-channel-readiness-v0.yaml`. Ce n'est ni
 un protocole verrouillé ni une prédiction positive. La roadmap passe en révision
-1. FH-01 et FH-02 sont terminés : le cône spécifique réutilise les 36 FeCO, 150
+1. FH-01 à FH-03 sont terminés : le cône spécifique réutilise les 36 FeCO, 150
 intermédiaires et dix motoneurones, soit 196 neurones dont douze `event_required`
 et 184 `dual_unresolved`. Les 166 504 autres neurones canoniques sont explicitement
 hors du claim local ; tous les propriétaires de frontière, hashes topologiques et
-exceptions sont gelés sans sélectionner de chemin, valeur ou réponse. FH-03 est
-en cours, sept items restent ouverts et la prévision explicite devient 10–16
-fournées, contingence comprise. Sa première livraison relie exactement 26 des 36
+exceptions sont gelés sans sélectionner de chemin, valeur ou réponse. Six items
+restent ouverts et la prévision explicite devient 9–15 fournées, contingence
+comprise. FH-03 relie exactement 26 des 36
 corps FeCO à `claw`, `club` ou `hook` par les alias publiés du catalogue MaleCNS.
 Les dix autres restent regroupés en trois types inconnus, soit 27 profils de
 routage plutôt que des choix arbitraires corps par corps. Le chemin claw qui
 convolue à travers des frontières d'essais est exclu pour cette violation causale,
 pas pour son score. Six formes d'observation, huit combinaisons fonctionnelles et
-deux représentations natives forment donc 432 membres factorisés sans référence
-sélectionnée. Les unités et l'amplitude natives restent ouvertes : FH-03 n'est pas
-encore terminé.
+représentations natives ne sont plus réduites à un choix global artificiel : les
+trois classes `claw`, `club` et `hook` portent trois variables partagées, donc les
+huit profils event/graded possibles. Les formes sont quotientées en coordonnées
+d'activation sans dimension sur le support mesuré. Avec 27 routages et huit
+combinaisons de formes, cela donne 1 728 membres factorisés sans référence
+sélectionnée. Le calcium ne fixe toujours aucune amplitude native : baseline et
+plage dynamique appartiennent désormais à la famille explicite
+`parameter.proprioception.native_bridge.v0`, transmise au gate couplé FH-05 avec
+efficacité, conversions et seuils. FH-03 est donc fermé pour tout ce qui est
+localement identifiable, sans prétendre que cette amplitude est calibrée.
 
 Le petit code source moteur public est désormais lui aussi un contrat exécutable
 hash-verrouillé : il comptabilise 23 cellules actives (7 rapides, 7 intermédiaires,
@@ -657,11 +664,11 @@ code ; il ne ferme pas le gate scientifique de classe de modèle.
 
 Le premier jalon de cette infrastructure est franchi. Le registre
 [`calibration/parameter_families/`](calibration/parameter_families/) inventorie
-22 familles : six sources basales, quatre routages, sept transferts — dont les
-deux ponts basaux event et Hz→gradué et le pont interne event↔graded —, trois
+23 familles : six sources basales, quatre routages, huit transferts — dont les
+deux ponts basaux event et Hz→gradué, le pont FeCO activation→unité native et le pont interne event↔graded —, trois
 familles de dynamique centrale, la mécanique FlyBody conservée comme dépendance
 externe gelée et l'enveloppe numérique motrice isolée comme nuisance technique.
-Le [`DAG`](calibration/dependency-dag.yaml) contient vingt-et-une dépendances et est validé
+Le [`DAG`](calibration/dependency-dag.yaml) contient vingt-deux dépendances et est validé
 acyclique. Les dimensions maximales exécutables sont séparées des degrés de
 liberté scientifiques encore à choisir. Le couplage historique entre routage et
 gain en proprioception, mécanoréception et sortie motrice est désormais résolu à
@@ -1045,7 +1052,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire de 22 familles et DAG de 21 dépendances validés ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais la conversion interne event↔graded est désormais une famille distincte non ajustée et toutes les constantes restent des fixtures ; le couplage source×efficacité×conversion×seuil et l'ablation à ~89 % de la famille inconnue sont des risques prioritaires ; côté moteur, 58 025 affectations lentes restent bloquées ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
+- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés sans sélection, tandis que leur amplitude native reste une famille explicite de FH-05 ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais la conversion interne event↔graded reste non ajustée et toutes les constantes restent des fixtures ; le couplage source×efficacité×conversion×seuil et l'ablation à ~89 % de la famille inconnue sont des risques prioritaires ; côté moteur, 58 025 affectations lentes restent bloquées ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1362,6 +1369,7 @@ prepare_local_source_data.bat # sources FeCO/moteur checksum-lockées ; gros pil
 feco_observation_contract.bat # fidélité du modèle calcium public, divergences conservées, zéro valeur promue
 fit_feco_calcium_observation.bat # 7 chemins FeCO, 86 folds leave-one-animal-out ; ensemble non promu
 feco_sensory_freeze.bat          # 27 routages typés x 8 chemins x 2 représentations ; échelle native ouverte
+feco_native_bridge_factorization.bat # 6 coordonnées x 8 profils natifs de classe ; FH-03 fermé, amplitude remise à FH-05
 inspect_motor_pilot.bat # 3 archives exactes vérifiées, 1 022 membres inventoriés sans extraction
 motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit et aucun noyau temporel
 parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git

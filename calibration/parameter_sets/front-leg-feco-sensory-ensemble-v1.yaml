@@ -1,0 +1,397 @@
+schema_version: 1
+id: parameters.front_leg_feco_sensory_ensemble.v1
+title: Frozen scoped FeCO routing, activation-shape and native-capacity ensemble
+status: frozen_locally_identifiable_components_native_amplitude_conditional_on_FH05
+parent_ids:
+- parameters.front_leg_feco_sensory_ensemble.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+campaign_id: campaign.feco_native_bridge_factorization.v0
+primary_class: local_interface
+behavior_targets: []
+topology_changes: 0
+factorization:
+  routing_profiles: 27
+  joint_source_paths: 8
+  class_shared_native_profiles: 8
+  factorized_members: 1728
+  continuous_native_amplitude_parameters_per_member: 6
+  continuous_native_amplitude_values_selected: 0
+routing:
+  mapped_body_counts_by_class:
+    claw: 5
+    club: 11
+    hook: 10
+  unknown_types:
+  - SApp23
+  - SNpp43
+  - SNpp59
+  profiles:
+  - profile_id: routing_00
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: claw
+      SNpp59: claw
+  - profile_id: routing_01
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: claw
+      SNpp59: club
+  - profile_id: routing_02
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: claw
+      SNpp59: hook
+  - profile_id: routing_03
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: club
+      SNpp59: claw
+  - profile_id: routing_04
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: club
+      SNpp59: club
+  - profile_id: routing_05
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: club
+      SNpp59: hook
+  - profile_id: routing_06
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: hook
+      SNpp59: claw
+  - profile_id: routing_07
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: hook
+      SNpp59: club
+  - profile_id: routing_08
+    unknown_type_assignments:
+      SApp23: claw
+      SNpp43: hook
+      SNpp59: hook
+  - profile_id: routing_09
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: claw
+      SNpp59: claw
+  - profile_id: routing_10
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: claw
+      SNpp59: club
+  - profile_id: routing_11
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: claw
+      SNpp59: hook
+  - profile_id: routing_12
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: club
+      SNpp59: claw
+  - profile_id: routing_13
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: club
+      SNpp59: club
+  - profile_id: routing_14
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: club
+      SNpp59: hook
+  - profile_id: routing_15
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: hook
+      SNpp59: claw
+  - profile_id: routing_16
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: hook
+      SNpp59: club
+  - profile_id: routing_17
+    unknown_type_assignments:
+      SApp23: club
+      SNpp43: hook
+      SNpp59: hook
+  - profile_id: routing_18
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: claw
+      SNpp59: claw
+  - profile_id: routing_19
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: claw
+      SNpp59: club
+  - profile_id: routing_20
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: claw
+      SNpp59: hook
+  - profile_id: routing_21
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: club
+      SNpp59: claw
+  - profile_id: routing_22
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: club
+      SNpp59: club
+  - profile_id: routing_23
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: club
+      SNpp59: hook
+  - profile_id: routing_24
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: hook
+      SNpp59: claw
+  - profile_id: routing_25
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: hook
+      SNpp59: club
+  - profile_id: routing_26
+    unknown_type_assignments:
+      SApp23: hook
+      SNpp43: hook
+      SNpp59: hook
+transfer_shape:
+  source_paths:
+  - source_path_id: source_00
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_01
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  - source_path_id: source_02
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_03
+    candidate_by_class:
+      claw: claw_published_predictor_center_80_gcamp
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  - source_path_id: source_04
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_05
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_fit_recipe_threshold_5_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  - source_path_id: source_06
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_fit_recipe_threshold_minus_5_deg_s
+  - source_path_id: source_07
+    candidate_by_class:
+      claw: claw_fit_recipe_boundary_safe
+      club: club_documented_application_threshold_50_deg_s
+      hook: hook_documented_application_threshold_minus_50_deg_s
+  activation_coordinates:
+  - candidate_id: claw_fit_recipe_boundary_safe
+    functional_class: claw
+    dataset_id: feco-mamiya2018-claw-calcium-adapted-2025
+    retained_rows: 9000
+    evidence_support:
+      position_deg:
+        minimum: 10.751691340440834
+        maximum: 182.67881908410308
+      velocity_deg_s:
+        minimum: -128.52341116574596
+        maximum: 130.32772742116555
+    affine_quotient:
+      raw_activation_minimum: -2.116962533526958
+      raw_activation_maximum: 34.29652872001882
+      raw_activation_range: 36.41349125354578
+      normalized_minimum: 0.0
+      normalized_maximum: 1.0
+    native_units_identified: false
+    outside_support_scientific_claim_allowed: false
+  - candidate_id: claw_published_predictor_center_80_gcamp
+    functional_class: claw
+    dataset_id: feco-mamiya2018-claw-calcium-adapted-2025
+    retained_rows: 9000
+    evidence_support:
+      position_deg:
+        minimum: 10.751691340440834
+        maximum: 182.67881908410308
+      velocity_deg_s:
+        minimum: -128.36295746890983
+        maximum: 130.16502114473462
+    affine_quotient:
+      raw_activation_minimum: -0.03622916328512423
+      raw_activation_maximum: 0.5286678204490429
+      raw_activation_range: 0.5648969837341672
+      normalized_minimum: 0.0
+      normalized_maximum: 1.0
+    native_units_identified: false
+    outside_support_scientific_claim_allowed: false
+  - candidate_id: club_documented_application_threshold_50_deg_s
+    functional_class: club
+    dataset_id: feco-mamiya2018-club-calcium-adapted-2025
+    retained_rows: 12208
+    evidence_support:
+      position_deg:
+        minimum: 7.279274779583879
+        maximum: 181.22227448836566
+      velocity_deg_s:
+        minimum: -133.0798777338265
+        maximum: 130.77155788689595
+    affine_quotient:
+      raw_activation_minimum: 0.0
+      raw_activation_maximum: 1.0
+      raw_activation_range: 1.0
+      normalized_minimum: 0.0
+      normalized_maximum: 1.0
+    native_units_identified: false
+    outside_support_scientific_claim_allowed: false
+  - candidate_id: club_fit_recipe_threshold_5_deg_s
+    functional_class: club
+    dataset_id: feco-mamiya2018-club-calcium-adapted-2025
+    retained_rows: 12208
+    evidence_support:
+      position_deg:
+        minimum: 7.279274779583879
+        maximum: 181.22227448836566
+      velocity_deg_s:
+        minimum: -133.0798777338265
+        maximum: 130.77155788689595
+    affine_quotient:
+      raw_activation_minimum: 0.0
+      raw_activation_maximum: 1.0
+      raw_activation_range: 1.0
+      normalized_minimum: 0.0
+      normalized_maximum: 1.0
+    native_units_identified: false
+    outside_support_scientific_claim_allowed: false
+  - candidate_id: hook_documented_application_threshold_minus_50_deg_s
+    functional_class: hook
+    dataset_id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
+    retained_rows: 12558
+    evidence_support:
+      position_deg:
+        minimum: 17.978382504714453
+        maximum: 189.91455759172618
+      velocity_deg_s:
+        minimum: -129.021780431073
+        maximum: 124.50192788028517
+    affine_quotient:
+      raw_activation_minimum: 0.0
+      raw_activation_maximum: 1.0
+      raw_activation_range: 1.0
+      normalized_minimum: 0.0
+      normalized_maximum: 1.0
+    native_units_identified: false
+    outside_support_scientific_claim_allowed: false
+  - candidate_id: hook_fit_recipe_threshold_minus_5_deg_s
+    functional_class: hook
+    dataset_id: feco-mamiya2018-hook-flexion-calcium-adapted-2025
+    retained_rows: 12558
+    evidence_support:
+      position_deg:
+        minimum: 17.978382504714453
+        maximum: 189.91455759172618
+      velocity_deg_s:
+        minimum: -129.021780431073
+        maximum: 124.50192788028517
+    affine_quotient:
+      raw_activation_minimum: 0.0
+      raw_activation_maximum: 1.0
+      raw_activation_range: 1.0
+      normalized_minimum: 0.0
+      normalized_maximum: 1.0
+    native_units_identified: false
+    outside_support_scientific_claim_allowed: false
+  coordinate_units: dimensionless_activation_coordinate
+  outside_support_policy: invalid_for_scientific_claim
+  source_observation_fits_parent_ref: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v0.yaml
+native_boundary_capacity:
+  model_id: model.feco_native_bridge_factorization.v0
+  owner_family_id: parameter.proprioception.native_bridge.v0
+  profiles:
+  - profile_id: native_00
+    representation_by_class:
+      claw: graded_activity
+      club: graded_activity
+      hook: graded_activity
+  - profile_id: native_01
+    representation_by_class:
+      claw: graded_activity
+      club: graded_activity
+      hook: event_intensity_hz
+  - profile_id: native_02
+    representation_by_class:
+      claw: graded_activity
+      club: event_intensity_hz
+      hook: graded_activity
+  - profile_id: native_03
+    representation_by_class:
+      claw: graded_activity
+      club: event_intensity_hz
+      hook: event_intensity_hz
+  - profile_id: native_04
+    representation_by_class:
+      claw: event_intensity_hz
+      club: graded_activity
+      hook: graded_activity
+  - profile_id: native_05
+    representation_by_class:
+      claw: event_intensity_hz
+      club: graded_activity
+      hook: event_intensity_hz
+  - profile_id: native_06
+    representation_by_class:
+      claw: event_intensity_hz
+      club: event_intensity_hz
+      hook: graded_activity
+  - profile_id: native_07
+    representation_by_class:
+      claw: event_intensity_hz
+      club: event_intensity_hz
+      hook: event_intensity_hz
+  profile_selected: false
+  amplitude_parameters:
+    per_functional_class:
+    - baseline
+    - dynamic_range
+    values: null
+    identified: false
+    joint_gate_item: FH-05
+  event_process_selected: false
+  runtime_ready_without_FH05_values: false
+selection:
+  reference_member_selected: false
+  routing_profile_selected: false
+  source_path_selected: false
+  native_profile_selected: false
+  native_amplitude_selected: false
+  future_held_out_outcome_inspected: false
+freeze_boundary:
+  locally_frozen_family_ids:
+  - parameter.proprioception.routing.v0
+  - parameter.proprioception.transfer.v0
+  conditionally_open_family_ids:
+  - parameter.proprioception.native_bridge.v0
+  interpretation: FH-03 freezes every component identifiable from local FeCO evidence.
+    Native scale is not a missing silent default; it is an explicit FH-05 joint parameter.
+reproducibility:
+  command: feco_native_bridge_factorization.bat
+next_action: Start FH-04 motor uncertainty closure independently, then consume the
+  explicit native-amplitude family in the FH-05 coupled nonbehavioral gate.
+semantic_parameter_set_sha256: 2d3e7a916220105902dd0a548176ce232eecf22de7a2a7061165dd2cbb054792

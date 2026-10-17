@@ -44,10 +44,10 @@ estimate_contract:
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 7
-  base_work_batches: {min: 8, max: 12}
+  open_items: 6
+  base_work_batches: {min: 7, max: 11}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 10, max: 16}
+  planning_forecast_batches: {min: 9, max: 15}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -101,25 +101,32 @@ items:
   - id: FH-03
     title: Calibrate and freeze the minimal sensory chain
     nature: local_interface_calibration
-    status: in_progress
+    status: complete
     depends_on: [FH-01, FH-02]
     estimated_batches: {min: 1, max: 1}
-    remaining_estimated_batches: {min: 1, max: 1}
     exit_criteria:
       - routing and transfer capacity are independently justified and versioned
       - local train/validation evidence is admitted with units and uncertainty
       - the retained parameter set or ensemble is frozen without held-out behavior exposure
     replan_if: the selected modality lacks usable evidence or requires a higher-capacity interface than preregistered
-    progress_record:
+    completion_record:
       date: 2026-10-17
-      parameter_set_id: parameters.front_leg_feco_sensory_ensemble.v0
+      parameter_set_id: parameters.front_leg_feco_sensory_ensemble.v1
+      evaluation_ref: calibration/evaluations/feco-native-bridge-factorization-v0.yaml
       outcome: >-
         Twenty-six of 36 scoped bodies have exact published type aliases. The ten
         remaining bodies are propagated as three type-shared variables, yielding
-        27 routing profiles. Six boundary-valid observation paths, eight joint
-        source combinations and both native representations form 432 factorized
-        members without a reference selection.
-      remaining_blocker: native runtime units and amplitude are not identified by calcium
+        27 routing profiles. Six boundary-valid activation shapes and eight joint
+        source combinations are frozen. Native representation capacity is widened
+        from one global binary choice to all eight class-shared claw/club/hook
+        profiles, yielding 1,728 factorized members without a reference selection.
+        Calcium cannot identify native amplitude, so that capacity is a separate
+        named family handed to the already planned FH-05 coupled gate rather than
+        a hidden default or an invented standalone prior.
+      locally_frozen_family_ids:
+        - parameter.proprioception.routing.v0
+        - parameter.proprioception.transfer.v0
+      conditional_open_family_id: parameter.proprioception.native_bridge.v0
       simulated_outcomes_inspected: false
 
   - id: FH-04
@@ -142,6 +149,7 @@ items:
     estimated_batches: {min: 2, max: 3}
     exit_criteria:
       - population alternatives are evidence-backed or explicitly propagated
+      - the class-shared FeCO native bridge is crossed with the local efficacy and threshold ensemble without using the future response
       - source intensity, same-native efficacy, cross-native conversion and neuron dynamics remain separate owners
       - unknown-afferent sensitivity and compensation are reported
       - one finite admissible local ensemble exists without threshold-only selection
@@ -216,6 +224,32 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-17
+    batch: fh03_native_bridge_factorization_and_handoff
+    before:
+      open_items: 7
+      base_work_batches: {min: 8, max: 12}
+      planning_forecast_batches: {min: 10, max: 16}
+    closed: [FH-03]
+    advanced: []
+    newly_discovered_items: []
+    consumed_batches: 1
+    capacity_correction:
+      old_native_profiles: 2
+      new_native_profiles: 8
+      reason: >-
+        The former two-member axis forced one representation across claw, club and
+        hook without evidence. Functional-class sharing is the smallest bounded
+        defensible v0 capacity and remains only a hypothesis.
+      schedule_effect: no_additional_batch_the_correction_is_closed_in_this_delivery
+    after:
+      open_items: 6
+      base_work_batches: {min: 7, max: 11}
+      planning_forecast_batches: {min: 9, max: 15}
+    accounting_note: >-
+      Native amplitude is not declared solved. Its new explicit family is part of
+      the pre-existing FH-05 coupled-identifiability work, so no item or batch was
+      silently added.
   - date: 2026-10-17
     batch: fh03_scoped_routing_and_observation_shape_freeze
     before:

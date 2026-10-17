@@ -51,7 +51,7 @@ expected_scope:
 boundary_ownership:
   kinematics_to_feco:
     alternatives: [graded_activity, event_intensity]
-    owner_family_ids: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0]
+    owner_family_ids: [parameter.proprioception.routing.v0, parameter.proprioception.transfer.v0, parameter.proprioception.native_bridge.v0]
   central_event_to_event:
     owner_family_ids: [parameter.central.synaptic_efficacy.v0, parameter.central.neuron_dynamics.v0]
   central_graded_to_graded:

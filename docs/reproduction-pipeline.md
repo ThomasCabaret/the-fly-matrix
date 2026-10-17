@@ -212,6 +212,7 @@ feco_observation_contract.bat
 prepare_local_source_data.bat
 fit_feco_calcium_observation.bat
 feco_sensory_freeze.bat
+feco_native_bridge_factorization.bat
 
 motor_source_contract.bat
 prepare_local_source_data.bat --include-large-motor-pilot
@@ -237,8 +238,18 @@ or technical diagnostics; they are not a promoted end-to-end parameter set.
 exact MaleCNS type annotations. It reconstructs the scoped 27-profile routing set,
 refits six boundary-valid observation shapes on all admitted local rows and emits
 the factorized 432-member sensory ensemble. It deliberately leaves native neural
-units and amplitude open; success is a partial FH-03 freeze, not a calibrated
-sensory interface or a behavior result.
+units and amplitude open; success is the first partial FH-03 freeze, not a
+calibrated sensory interface or a behavior result.
+
+`feco_native_bridge_factorization.bat` then closes FH-03 at the honest local
+boundary. It quotients each retained source shape into a dimensionless activation
+coordinate only on its hash-locked measurement support, expands the former global
+event/graded choice into all eight class-shared claw/club/hook profiles and emits
+1,728 factorized members. It selects no representation or native value. Baseline
+and dynamic range are owned by `parameter.proprioception.native_bridge.v0` and
+remain an explicit FH-05 coupled dependency with efficacy, conversion and neuron
+dynamics. Thus FH-03 completion means all locally identifiable sensory components
+are frozen; it does not mean native amplitude is known or executable scientifically.
 
 The factorized local-chain step is reproducible with
 `front_leg_chain_envelope.bat`. Its downstream rules-first pass,

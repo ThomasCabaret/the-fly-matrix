@@ -1,0 +1,42 @@
+schema_version: 1
+id: runner_result.feco_native_bridge_factorization.v0
+campaign_id: campaign.feco_native_bridge_factorization.v0
+status: pass_FH03_complete_native_amplitude_explicitly_handed_to_FH05
+command: feco_native_bridge_factorization.bat
+claim_label: FECO LOCAL SHAPE FACTORIZATION / NATIVE VALUES DEFERRED / NO BEHAVIOR
+parameter_set_id: parameters.front_leg_feco_sensory_ensemble.v1
+semantic_parameter_set_sha256: 2d3e7a916220105902dd0a548176ce232eecf22de7a2a7061165dd2cbb054792
+semantic_result_sha256: a28f3256e490792bda0331bfcf82c519a73242555deb2ee57e31c4bdeaf1b99e
+accounting:
+  activation_coordinates: 6
+  routing_profiles: 27
+  joint_source_paths: 8
+  native_profiles: 8
+  factorized_members: 1728
+  native_amplitude_values_selected: 0
+  behavior_outcomes_consumed: 0
+  topology_changes: 0
+checks:
+  all_source_coordinates_finite_nonconstant: true
+  all_admitted_coordinates_in_closed_unit_interval: true
+  all_class_shared_native_profiles_materialized: true
+  native_amplitude_has_separate_owner: true
+  native_amplitude_values_remain_unresolved: true
+  future_held_out_outcome_not_consumed: true
+accepted_claims:
+- All locally identifiable FeCO routing and activation-shape components are frozen
+  as an unselected ensemble.
+- Native representation capacity is bounded by eight class-shared profiles rather
+  than one silent global choice.
+- Native amplitude is explicitly owned and deferred to the coupled FH-05 gate because
+  current local evidence cannot identify it.
+- No behavior, body motion, threshold crossing or native runtime fixture selected
+  a member.
+forbidden_claims:
+- A native representation or amplitude has been calibrated.
+- The class-sharing capacity is proven sufficient.
+- The 1,728 factorized members are independent fitted biological models.
+- The sensory chain can execute scientifically before FH-05 supplies a conditional
+  native scale.
+next_action: Start FH-04 motor uncertainty closure independently, then consume the
+  explicit native-amplitude family in the FH-05 coupled nonbehavioral gate.

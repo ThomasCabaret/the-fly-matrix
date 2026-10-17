@@ -361,6 +361,7 @@ risks:
     affected_parameter_family_ids:
       - parameter.vision.transfer.v0
       - parameter.proprioception.transfer.v0
+      - parameter.proprioception.native_bridge.v0
       - parameter.mechanosensation.transfer.v0
       - parameter.motor.transfer.v0
     hypothesis_under_test: >-
@@ -369,8 +370,10 @@ risks:
     evidence_supporting:
       - Candidate envelopes are independently validated, local and finite.
       - Routing and transfer families are compiled separately with explicit sharing.
+      - The scoped FeCO shape is now factored into a dimensionless coordinate and a separately owned native-amplitude bridge.
     evidence_against_or_unresolved:
       - Transfer-sharing levels and local datasets remain unresolved.
+      - FeCO calcium does not identify native amplitude; its class-shared bridge remains coupled to efficacy and threshold in FH-05.
       - A global stability loss could admit compensating central, sensory, motor and physical parameter blocks.
     consequence_if_true: Locally frozen interfaces can support interpretable central and embodied calibration.
     consequence_if_false: Retain an ensemble or redesign local measurements; do not resolve ambiguity with more global capacity.

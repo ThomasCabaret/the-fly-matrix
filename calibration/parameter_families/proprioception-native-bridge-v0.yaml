@@ -1,0 +1,85 @@
+schema_version: 1
+id: parameter.proprioception.native_bridge.v0
+title: Proprioception activation-to-native-unit bridge
+status: scoped_parameterization_frozen_values_jointly_unresolved
+primary_class: local_interface
+parameter_kind: transfer
+claim_role: biological
+meaning:
+  biological_or_technical_role: Convert a dimensionless proprioceptor activation coordinate into an explicit event intensity or graded native drive.
+  units: event_intensity_hz_or_consuming_population_native_graded_unit
+  applicability_limits:
+    - Native amplitude is not identified by calcium.
+    - The v0 class-sharing capacity applies only to the bounded front-leg FeCO scope.
+scope:
+  owner_ids: [adapter.proprioception.native_boundary]
+  parameter_names:
+    - representation_by_functional_class
+    - baseline_by_functional_class
+    - dynamic_range_by_functional_class
+    - event_process_contract
+  dimension:
+    scoped_functional_classes: 3
+    scoped_discrete_representation_variables: 3
+    scoped_representation_profiles: 8
+    scoped_continuous_amplitude_parameters_per_profile: 6
+    selected_free_parameters: unresolved
+  topology_snapshot:
+    semantic_topology_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    candidate_envelope_sha256: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    ruleset_sha256: d249cb7a1ddcf1f97b53aa57727f1c34a9f5057e15a1b042317d56f316d78bed
+    exception_table_sha256: none
+sharing:
+  candidate_hierarchy: [FeCO_functional_class, homologous_left_right_class, local_type, individual]
+  selected_level: FeCO_functional_class_capacity_only
+  justification: Three source-backed functional classes are the smallest currently justified shared v0 capacity; no numeric value or representation is selected.
+  individual_parameters_require_evidence: true
+origin_policy:
+  preferred_order: [measured, evidence_transfer, shared_class, local_vector, individual]
+  current_origin: unknown
+  prior_or_bounds: unresolved_no_direct_adult_FeCO_native_amplitude
+  fallback: unresolved_or_explicit_technical_sensitivity_only
+identifiability:
+  status: jointly_unresolved_with_central_ingress_and_threshold_block
+  allowed_dataset_ids: []
+  local_held_out_dataset_ids: []
+  forbidden_behavior_ids: [front_leg_proprioceptive_resistance_reflex, walking, grooming, stance]
+  jointly_identified_with:
+    - parameter.central.synaptic_efficacy.v0
+    - parameter.central.native_boundary_conversion.v0
+    - parameter.central.neuron_dynamics.v0
+  joint_calibration_reason: >-
+    Source amplitude, same-native efficacy, cross-native conversion and threshold
+    can compensate. Calcium constrains the upstream shape but cannot separate this
+    block numerically.
+dependencies:
+  upstream_family_ids: [parameter.proprioception.transfer.v0]
+  downstream_family_ids: []
+uncertainty:
+  representation: eight_class_shared_native_profiles_times_conditional_amplitude_set
+  admissible_set_criteria:
+    - both event and graded remain available per functional class
+    - all native baselines and dynamic ranges are explicit
+    - no candidate is selected from threshold crossing or body motion
+  reference_selection_rule: unresolved_FH05_nonbehavioral_coupled_gate
+freeze:
+  status: not_frozen
+  parameter_set_id: null
+  acceptance_evaluation_ids: []
+  reopen_reason: null
+  stale_descendant_ids: []
+scoped_parameterizations:
+  - scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+    model_id: model.feco_native_bridge_factorization.v0
+    status: capacity_frozen_values_open
+sources:
+  - {ref: calibration/evidence/front-leg-feco-native-bridge-v0.yaml, supports: direct evidence boundary and rejected numerical transfers}
+  - {ref: calibration/models/feco-native-bridge-factorization-v0.yaml, supports: unit-explicit class-shared capacity}
+  - {ref: src/the_fly_matrix/local_conversion.py, supports: separate executable graded and event output contracts}
+assumptions:
+  - Class sharing is a minimum-capacity v0 hypothesis and can be reopened by independent local residuals.
+  - Event-process statistics remain distinct from event intensity.
+next_action: >-
+  In FH-05, cross this class-shared bridge with the bounded cone's population,
+  efficacy, conversion and threshold ensemble using only nonbehavioral local or
+  technical evidence.

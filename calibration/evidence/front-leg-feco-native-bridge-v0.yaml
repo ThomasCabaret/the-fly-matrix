@@ -1,0 +1,68 @@
+schema_version: 1
+id: evidence.front_leg_feco_native_bridge.v0
+title: Evidence boundary for the scoped FeCO activation-to-native-unit bridge
+status: evidence_inventory_complete_no_direct_adult_feco_native_amplitude
+updated: 2026-10-17
+
+scope:
+  population_id: population.front_leg_feco.v0
+  scoped_bodies: 36
+  functional_classes: [claw, club, hook]
+  behavior_targets: []
+  topology_changes_allowed: false
+
+sources:
+  - ref: https://doi.org/10.1016/j.neuron.2018.09.009
+    biological_scope: adult_Drosophila_front_leg_FeCO
+    supports:
+      - class-specific kinematic response shapes for claw, club and hook neurons
+      - calcium observation data and source activation functions
+    does_not_support:
+      - native spike intensity in hertz
+      - native graded-state amplitude or membrane voltage
+      - one event-versus-graded assignment for the 36 MaleCNS bodies
+  - ref: https://doi.org/10.1038/s41467-025-59302-3
+    biological_scope: adult_Drosophila_FeCO_connectomic_subtypes
+    supports:
+      - adult FeCO axons are cholinergic excitatory sensory neurons
+      - claw, hook and club are biologically meaningful sharing classes
+    does_not_support:
+      - native temporal amplitude for the MaleCNS bodies
+      - a numerical event or graded transfer
+  - ref: https://doi.org/10.1152/jn.00339.2002
+    biological_scope: stick_insect_femoral_chordotonal_afferents
+    supports:
+      - an event-capable afferent model is biologically plausible in a homologous organ
+      - adaptation and functional heterogeneity can matter
+    transfer_limit: different_species_and_no_MaleCNS_body_crosswalk
+    numerical_transfer_allowed: false
+  - ref: https://doi.org/10.1242/jeb.246197
+    biological_scope: larval_Drosophila_lch5_chordotonal_organ
+    supports:
+      - Drosophila chordotonal sensory output can be observed as spikes
+    transfer_limit: different_developmental_stage_and_different_chordotonal_organ
+    numerical_transfer_allowed: false
+
+admitted_conclusions:
+  - The calcium source constrains dimensionless class-local activation shape after an explicit affine quotient; it does not set native amplitude.
+  - Event and graded outputs remain admissible for each functional class until direct evidence or a nonbehavioral coupled gate distinguishes them.
+  - Native baseline and dynamic range must remain visible parameters rather than being absorbed into calcium scale, synaptic efficacy or neuron threshold.
+  - A class-shared representation profile is the minimum bounded v0 capacity; it is a capacity hypothesis, not proof that every member of a class has identical dynamics.
+
+rejected_transfers:
+  - copy calcium fluorescence scale into event_intensity_hz
+  - copy calcium fluorescence scale into membrane voltage or graded CNS state
+  - copy a stick-insect firing rate into adult Drosophila FeCO
+  - use a threshold crossing, body motion or the future resistance-reflex response to select native amplitude
+
+remaining_unknowns:
+  - event baseline and dynamic range by functional class
+  - graded baseline, dynamic range and native output unit by functional class
+  - event-process variability model
+  - class-specific event-versus-graded assignment
+  - whether class sharing is sufficient
+
+next_action: >-
+  Freeze the locally identifiable activation-coordinate ensemble and hand the
+  explicit native-amplitude family to the FH-05 source/efficacy/threshold
+  identifiability gate. Do not invent a standalone numerical prior.

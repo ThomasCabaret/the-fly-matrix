@@ -190,10 +190,9 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(roadmap["revision"], 1)
         self.assertEqual(roadmap["items"][0]["status"], "complete")
         self.assertEqual(roadmap["items"][1]["status"], "complete")
-        self.assertEqual(roadmap["items"][2]["status"], "in_progress")
-        self.assertEqual(roadmap["items"][2]["remaining_estimated_batches"], {"min": 1, "max": 1})
-        self.assertFalse(roadmap["items"][2]["progress_record"]["simulated_outcomes_inspected"])
-        self.assertEqual(roadmap["estimate_contract"]["open_items"], 7)
+        self.assertEqual(roadmap["items"][2]["status"], "complete")
+        self.assertFalse(roadmap["items"][2]["completion_record"]["simulated_outcomes_inspected"])
+        self.assertEqual(roadmap["estimate_contract"]["open_items"], 6)
 
     def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:
         scope = load_yaml(
@@ -224,8 +223,8 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(evaluation["protocol_locked"])
 
     def test_parameter_family_inventory_is_exhaustive_and_acyclic(self) -> None:
-        self.assertEqual(len(self.inventory.families), 22)
-        self.assertEqual(len(self.inventory.topological_order), 22)
+        self.assertEqual(len(self.inventory.families), 23)
+        self.assertEqual(len(self.inventory.topological_order), 23)
         self.assertEqual(
             set(self.inventory.topological_order), set(self.inventory.families)
         )
@@ -244,6 +243,20 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(
             central["scope"]["dimension"]["dual_unresolved_basal_reached_neurons"],
             166419,
+        )
+
+    def test_proprioception_native_bridge_is_separate_and_unfrozen(self) -> None:
+        shape = self.inventory.families["parameter.proprioception.transfer.v0"]
+        bridge = self.inventory.families["parameter.proprioception.native_bridge.v0"]
+        self.assertEqual(
+            shape["dependencies"]["downstream_family_ids"],
+            ["parameter.proprioception.native_bridge.v0"],
+        )
+        self.assertEqual(bridge["freeze"]["status"], "not_frozen")
+        self.assertEqual(bridge["scope"]["dimension"]["scoped_representation_profiles"], 8)
+        self.assertIn(
+            "parameter.central.synaptic_efficacy.v0",
+            bridge["identifiability"]["jointly_identified_with"],
         )
 
     def test_routing_families_freeze_accepted_topology_hashes(self) -> None:
