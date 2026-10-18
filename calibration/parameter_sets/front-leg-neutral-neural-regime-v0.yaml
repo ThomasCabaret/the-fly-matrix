@@ -1,0 +1,37 @@
+schema_version: 1
+id: parameters.front_leg_neutral_neural_regime.v0
+title: FH-07a non-ranked short-horizon neural technical regime ensemble
+status: accepted_nonempty_neural_technical_ensemble_FH07_physics_open
+primary_class: technical
+campaign_id: campaign.front_leg_neutral_neural_regime.v0
+runner_result_id: runner_result.front_leg_neutral_neural_regime.v0
+runner_semantic_sha256: e9791cca61f362ddfb88734711420b5ec87b81a0ce668a4e897d03ae617520a0
+member_count: 18
+member_ids:
+- graded_heavy_boundary_extreme__all_graded_candidate__regime_001
+- graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+- graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+- graded_heavy_boundary_extreme__all_event_candidate__regime_007
+- graded_heavy_boundary_extreme__all_event_candidate__regime_014
+- graded_heavy_boundary_extreme__all_event_candidate__regime_020
+- mixed_pairwise_profile__all_graded_candidate__regime_005
+- mixed_pairwise_profile__all_graded_candidate__regime_006
+- mixed_pairwise_profile__all_graded_candidate__regime_007
+- mixed_pairwise_profile__all_graded_candidate__regime_013
+- mixed_pairwise_profile__all_graded_candidate__regime_014
+- mixed_pairwise_profile__all_graded_candidate__regime_018
+- mixed_pairwise_profile__all_graded_candidate__regime_020
+- mixed_pairwise_profile__all_event_candidate__regime_002
+- mixed_pairwise_profile__all_event_candidate__regime_006
+- mixed_pairwise_profile__all_event_candidate__regime_007
+- mixed_pairwise_profile__all_event_candidate__regime_014
+- mixed_pairwise_profile__all_event_candidate__regime_020
+members_ranked: false
+selected_reference_member_id: null
+values_are_physiological_bounds: false
+body_outcomes_consumed: 0
+reopening_policy: new_campaign_required_on_parent_hash_or_gate_change
+next_action: Run every retained exact neural row through FH-07b paired generic physical
+  perturbations, while preregistering a cost-bounded outcome-blind cover of the still-factorized
+  sensory and motor axes. Keep mechanics frozen, admit no named action or posture
+  target, and retain all failures and survivors without ranking.

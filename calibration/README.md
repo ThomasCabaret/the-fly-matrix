@@ -327,6 +327,18 @@ spikes and zero commands; this is retained rather than used to select another
 member. FH-06 therefore closes reconstructibility and runtime composition only.
 FH-07 owns neutral technical-regime calibration.
 
+Run `front_leg_neutral_neural_regime.bat` to reproduce FH-07a. Before execution,
+the campaign fixes a 23-profile deterministic pairwise cover over FeCO native
+amplitude, basal intensity, same-native efficacy, cross-native conversion,
+threshold distance and unknown-afferent policy. Crossing the three FH-05
+population anchors and both basal-native mirrors yields 138 generic-pulse/sham
+rows (276 runtime instances). The current result is finite for every row and
+retains 18 exact rows that pass locked motor-response, event-occupancy and
+post-pulse-recovery checks. They are not ranked, are not physiological bounds and
+consume no body pose, trajectory or behavior. FH-07 remains open until FH-07b
+executes all 18 retained rows under generic physical perturbations with frozen
+mechanics and outcome-blind coverage of the remaining sensory/motor axes.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

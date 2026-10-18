@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: local_feedback_nonamplification_pass_3_member_conditioned_bundles_compiled_zero_independent_family_freezes_6_basal_not_exercised_whole_body_stability_open
+status: FH07a_neural_regime_gate_pass_18_unranked_exact_rows_FH07b_physical_stability_open
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -318,6 +318,27 @@ member_conditioned_freeze_boundary:
   human_checkpoint_required_after_first_whole_body_preview: true
   whole_body_stability_accepted: false
 
+fh07_neural_regime_gate:
+  campaign_id: campaign.front_leg_neutral_neural_regime.v0
+  evaluation_id: evaluation.front_leg_neutral_neural_regime.v0
+  runner_result_id: runner_result.front_leg_neutral_neural_regime.v0
+  parameter_set_id: parameters.front_leg_neutral_neural_regime.v0
+  runner_semantic_sha256: e9791cca61f362ddfb88734711420b5ec87b81a0ce668a4e897d03ae617520a0
+  status: accepted_nonempty_neural_technical_ensemble_FH07_physics_open
+  pairwise_factor_profiles: 23
+  population_anchors: 3
+  source_native_mirrors: 2
+  paired_schedule_rows: 138
+  runtime_instances: 276
+  finite_rows: 138
+  retained_exact_rows: 18
+  rows_without_motor_event_response: 108
+  rows_failing_post_pulse_recovery: 14
+  body_outcomes_consumed: 0
+  members_ranked: false
+  physiological_values_promoted: 0
+  whole_body_stability_accepted: false
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -336,7 +357,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: measurement_contract_pass_neural_240_pass_causal_sentinel_exact_policy_237_admitted_3_blocked_feedback_gate_65_active_64_physical_1_not_identifiable_nonamplification_3_member_unranked_local_ensemble_reconstructed_zero_independent_family_freezes_6_basal_not_exercised_whole_body_stability_unresolved
+validation: FH07a_138_of_138_finite_18_unranked_neural_technical_survivors_zero_body_outcomes_FH07b_physical_gate_open
 blocked_reason: >-
   The complete measurement contract, exact schedule, earlier implementation
   sentinels and the full
@@ -386,9 +407,16 @@ blocked_reason: >-
   but deliberately freezes no marginal family: sensory, central and motor factors
   remain coupled by member, while all six basal families are marked not exercised.
   This closes reproducibility of propagation, not local or global calibration.
+  FH-07a now supersedes that historical readiness path for the active roadmap:
+  23 behavior-naive pairwise profiles crossed with three population anchors and
+  two basal-native mirrors produce 138 paired neural rows. All are finite and 18
+  exact rows pass locked motor-response, occupancy and post-pulse recovery checks.
+  No body observable was computed. These rows remain coupled, unranked technical
+  coordinates; physical boundedness, recovery and complete FH-07 acceptance are
+  still open.
 next_action: >-
-  Preregister a low-capacity basal hypothesis grid and execute every exact
-  member-conditioned bundle in the first bounded whole-body technical sentinel.
-  Preserve the 172 silent rows, row 028 and the three command-contract blocks as
-  unresolved strata. Produce a replay/viewable preview, then stop for the required
-  user checkpoint before any inspection-driven tuning or stability claim.
+  Execute FH-07b over all 18 retained exact neural rows with the complete v1
+  measurement contract, frozen mechanics and preregistered generic physical
+  perturbations. Cover remaining sensory and motor axes by an outcome-blind,
+  cost-bounded schedule. Retain failures and survivors without ranking; do not
+  inspect or optimize a named action, pose, attractive motion or held-out result.

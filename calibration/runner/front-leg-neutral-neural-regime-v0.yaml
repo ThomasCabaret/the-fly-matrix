@@ -1,0 +1,5279 @@
+schema_version: 1
+id: runner_result.front_leg_neutral_neural_regime.v0
+campaign_id: campaign.front_leg_neutral_neural_regime.v0
+status: accepted_nonempty_neural_technical_ensemble_FH07_physics_open
+completed_at: '2026-10-18T06:47:08.973722+00:00'
+command: front_leg_neutral_neural_regime.bat
+claim_label: FH-07A TECHNICAL NEURAL REGIME / NO PHYSIOLOGY / NO BODY OUTCOME / NO
+  BEHAVIOR
+frozen_input_sha256:
+  runtime: a0a9b82f2dbd387e727a4904a737fdd9dbf3353bf7756a751c45328ece284624
+  fh06_campaign: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  fh06_result: 9c1ba5018e119a75acac28e95f54754dfb7878a1fd4196ce3c54828360a5544c
+  measurement_contract: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+  actuator_contract: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+design:
+  factor_profiles: 23
+  anchors: 3
+  source_native_mirrors: 2
+  paired_schedule_rows: 138
+  runtime_instances: 276
+  pairwise_coverage:
+    complete: true
+    pairs:
+      feco_native_amplitude_ratio__x__basal_source_intensity_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      feco_native_amplitude_ratio__x__same_native_efficacy_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      feco_native_amplitude_ratio__x__cross_native_conversion_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      feco_native_amplitude_ratio__x__threshold_distance_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      feco_native_amplitude_ratio__x__unknown_afferent_policy:
+        observed: 12
+        expected: 12
+        complete: true
+      basal_source_intensity_ratio__x__same_native_efficacy_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      basal_source_intensity_ratio__x__cross_native_conversion_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      basal_source_intensity_ratio__x__threshold_distance_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      basal_source_intensity_ratio__x__unknown_afferent_policy:
+        observed: 12
+        expected: 12
+        complete: true
+      same_native_efficacy_ratio__x__cross_native_conversion_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      same_native_efficacy_ratio__x__threshold_distance_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      same_native_efficacy_ratio__x__unknown_afferent_policy:
+        observed: 12
+        expected: 12
+        complete: true
+      cross_native_conversion_ratio__x__threshold_distance_ratio:
+        observed: 16
+        expected: 16
+        complete: true
+      cross_native_conversion_ratio__x__unknown_afferent_policy:
+        observed: 12
+        expected: 12
+        complete: true
+      threshold_distance_ratio__x__unknown_afferent_policy:
+        observed: 12
+        expected: 12
+        complete: true
+execution_fixture:
+  status: PREREGISTERED_ENGINEERING_COORDINATES_NOT_PHYSIOLOGICAL_VALUES
+  device: cpu
+  seed: 731027
+  dt_ms: 0.1
+  steps: 800
+  pulse_start_step: 100
+  pulse_stop_step: 300
+  recovery_tail_steps: 100
+  basal_rate_hz: 20.0
+  graded_half_saturation_hz: 100.0
+  feco_event_rate_hz: 80.0
+  feco_graded_drive: 0.25
+  unknown_family_id: parameter.residual_sensory.unknown_nominal.v0
+  event_comparator:
+    v_rest_mV: -52.0
+    reset_mV: -52.0
+    threshold_mV: -45.0
+    tau_membrane_ms: 20.0
+    tau_syn_ms: 5.0
+    refractory_ms: 2.2
+    fixed_delay_ms: 1.8
+  boundary_scales:
+    event_to_event_mV: 0.05
+    event_to_graded: 0.5
+    graded_to_event_mV: 0.05
+    graded_to_graded: 0.5
+  graded_tau_ms: 5.0
+acceptance:
+  generated_event_occupancy_max: 0.1
+  motor_event_occupancy_max: 0.1
+  motor_event_count_difference_min: 1
+  motor_state_delta_peak_l1_min: 0.0
+  motor_state_post_pulse_ratio_max: 0.5
+  interpretation: These are technical non-silence, non-saturation and recovery criteria.
+    They do not encode a posture, action, response direction or biological firing-rate
+    target. Passing retains an exact engineering row; it does not identify any owner
+    independently or promote a physiological value.
+rows:
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_000
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id001
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 1.0
+    cross_native_conversion_ratio: 1.0
+    threshold_distance_ratio: 1.0
+    unknown_afferent_policy: zero
+    profile_id: regime_000
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0030230951961129904
+    motor_state_post_pulse_tail_l1: 2.0454723866691894e-07
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.31944984197616577
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_001
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id002
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 4.0
+    same_native_efficacy_ratio: 4.0
+    cross_native_conversion_ratio: 4.0
+    threshold_distance_ratio: 0.5
+    unknown_afferent_policy: bounded_tonic_fixture
+    profile_id: regime_001
+  metrics:
+    finite: true
+    stimulus_generated_events: 2
+    sham_generated_events: 2
+    stimulus_generated_event_occupancy: 1.2755102040816327e-05
+    sham_generated_event_occupancy: 1.2755102040816327e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.012092389166355133
+    motor_state_post_pulse_tail_l1: 8.027996740622712e-07
+    motor_state_post_pulse_ratio: 6.638883871649738e-05
+    max_abs_internal_state: 4.21204137802124
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_002
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id003
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 16.0
+    same_native_efficacy_ratio: 16.0
+    cross_native_conversion_ratio: 16.0
+    threshold_distance_ratio: 0.25
+    unknown_afferent_policy: matched_stochastic_fixture
+    profile_id: regime_002
+  metrics:
+    finite: true
+    stimulus_generated_events: 149
+    sham_generated_events: 149
+    stimulus_generated_event_occupancy: 0.0009502551020408163
+    sham_generated_event_occupancy: 0.0009502551020408163
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.4950230121612549
+    motor_state_post_pulse_tail_l1: 0.00575798761099577
+    motor_state_post_pulse_ratio: 0.011631757452762806
+    max_abs_internal_state: 15.516436576843262
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_003
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id004
+    feco_native_amplitude_ratio: 4.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 4.0
+    cross_native_conversion_ratio: 64.0
+    threshold_distance_ratio: 0.125
+    unknown_afferent_policy: matched_stochastic_fixture
+    profile_id: regime_003
+  metrics:
+    finite: true
+    stimulus_generated_events: 382
+    sham_generated_events: 382
+    stimulus_generated_event_occupancy: 0.0024362244897959185
+    sham_generated_event_occupancy: 0.0024362244897959185
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.14594432711601257
+    motor_state_post_pulse_tail_l1: 0.01008605127921328
+    motor_state_post_pulse_ratio: 0.06910889569003788
+    max_abs_internal_state: 15.921242713928223
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_004
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id005
+    feco_native_amplitude_ratio: 4.0
+    basal_source_intensity_ratio: 64.0
+    same_native_efficacy_ratio: 64.0
+    cross_native_conversion_ratio: 1.0
+    threshold_distance_ratio: 0.25
+    unknown_afferent_policy: bounded_tonic_fixture
+    profile_id: regime_004
+  metrics:
+    finite: true
+    stimulus_generated_events: 26
+    sham_generated_events: 1
+    stimulus_generated_event_occupancy: 0.00016581632653061225
+    sham_generated_event_occupancy: 6.3775510204081635e-06
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.6101157665252686
+    motor_state_post_pulse_tail_l1: 0.00012065459897712571
+    motor_state_post_pulse_ratio: 0.0001977568940141931
+    max_abs_internal_state: 8.040887832641602
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_005
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id006
+    feco_native_amplitude_ratio: 16.0
+    basal_source_intensity_ratio: 4.0
+    same_native_efficacy_ratio: 64.0
+    cross_native_conversion_ratio: 16.0
+    threshold_distance_ratio: 0.125
+    unknown_afferent_policy: zero
+    profile_id: regime_005
+  metrics:
+    finite: true
+    stimulus_generated_events: 269
+    sham_generated_events: 39
+    stimulus_generated_event_occupancy: 0.0017155612244897959
+    sham_generated_event_occupancy: 0.00024872448979591837
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 7.241802215576172
+    motor_state_post_pulse_tail_l1: 0.0745583968795836
+    motor_state_post_pulse_ratio: 0.010295558296140457
+    max_abs_internal_state: 15.796321868896484
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_006
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id007
+    feco_native_amplitude_ratio: 64.0
+    basal_source_intensity_ratio: 64.0
+    same_native_efficacy_ratio: 16.0
+    cross_native_conversion_ratio: 64.0
+    threshold_distance_ratio: 0.5
+    unknown_afferent_policy: zero
+    profile_id: regime_006
+  metrics:
+    finite: true
+    stimulus_generated_events: 104
+    sham_generated_events: 60
+    stimulus_generated_event_occupancy: 0.000663265306122449
+    sham_generated_event_occupancy: 0.0003826530612244898
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 1.421154499053955
+    motor_state_post_pulse_tail_l1: 0.012311200578697026
+    motor_state_post_pulse_ratio: 0.00866281645443366
+    max_abs_internal_state: 52.8746223449707
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_007
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id008
+    feco_native_amplitude_ratio: 16.0
+    basal_source_intensity_ratio: 16.0
+    same_native_efficacy_ratio: 1.0
+    cross_native_conversion_ratio: 64.0
+    threshold_distance_ratio: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    profile_id: regime_007
+  metrics:
+    finite: true
+    stimulus_generated_events: 202
+    sham_generated_events: 202
+    stimulus_generated_event_occupancy: 0.001288265306122449
+    sham_generated_event_occupancy: 0.001288265306122449
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.052109893411397934
+    motor_state_post_pulse_tail_l1: 0.0005970805062679574
+    motor_state_post_pulse_ratio: 0.011458102620823222
+    max_abs_internal_state: 68.96019744873047
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_008
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id009
+    feco_native_amplitude_ratio: 64.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 64.0
+    cross_native_conversion_ratio: 4.0
+    threshold_distance_ratio: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    profile_id: regime_008
+  metrics:
+    finite: true
+    stimulus_generated_events: 82
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0005229591836734694
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 5.947199821472168
+    motor_state_post_pulse_tail_l1: 0.0015456913888920098
+    motor_state_post_pulse_ratio: 0.00025990238016071737
+    max_abs_internal_state: 49.97521209716797
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_009
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id010
+    feco_native_amplitude_ratio: 4.0
+    basal_source_intensity_ratio: 4.0
+    same_native_efficacy_ratio: 1.0
+    cross_native_conversion_ratio: 1.0
+    threshold_distance_ratio: 0.5
+    unknown_afferent_policy: matched_stochastic_fixture
+    profile_id: regime_009
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.00740951020270586
+    motor_state_post_pulse_tail_l1: 1.4046275705936751e-06
+    motor_state_post_pulse_ratio: 0.00018957090714049127
+    max_abs_internal_state: 1.0360350608825684
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_010
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id011
+    feco_native_amplitude_ratio: 4.0
+    basal_source_intensity_ratio: 16.0
+    same_native_efficacy_ratio: 4.0
+    cross_native_conversion_ratio: 4.0
+    threshold_distance_ratio: 0.25
+    unknown_afferent_policy: zero
+    profile_id: regime_010
+  metrics:
+    finite: true
+    stimulus_generated_events: 5
+    sham_generated_events: 5
+    stimulus_generated_event_occupancy: 3.188775510204082e-05
+    sham_generated_event_occupancy: 3.188775510204082e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0296380203217268
+    motor_state_post_pulse_tail_l1: 5.630727765719712e-06
+    motor_state_post_pulse_ratio: 0.00018998326152006798
+    max_abs_internal_state: 4.698965072631836
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_011
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id012
+    feco_native_amplitude_ratio: 64.0
+    basal_source_intensity_ratio: 16.0
+    same_native_efficacy_ratio: 16.0
+    cross_native_conversion_ratio: 1.0
+    threshold_distance_ratio: 0.125
+    unknown_afferent_policy: bounded_tonic_fixture
+    profile_id: regime_011
+  metrics:
+    finite: true
+    stimulus_generated_events: 177
+    sham_generated_events: 8
+    stimulus_generated_event_occupancy: 0.001128826530612245
+    sham_generated_event_occupancy: 5.102040816326531e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 1.9457192420959473
+    motor_state_post_pulse_tail_l1: 0.0026146928645903243
+    motor_state_post_pulse_ratio: 0.0013438181665787262
+    max_abs_internal_state: 10.796908378601074
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_012
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id013
+    feco_native_amplitude_ratio: 16.0
+    basal_source_intensity_ratio: 64.0
+    same_native_efficacy_ratio: 1.0
+    cross_native_conversion_ratio: 4.0
+    threshold_distance_ratio: 0.125
+    unknown_afferent_policy: matched_stochastic_fixture
+    profile_id: regime_012
+  metrics:
+    finite: true
+    stimulus_generated_events: 70
+    sham_generated_events: 70
+    stimulus_generated_event_occupancy: 0.0004464285714285714
+    sham_generated_event_occupancy: 0.0004464285714285714
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.02433571219444275
+    motor_state_post_pulse_tail_l1: 5.929713592195185e-05
+    motor_state_post_pulse_ratio: 0.0024366303910962925
+    max_abs_internal_state: 4.993626117706299
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_013
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id014
+    feco_native_amplitude_ratio: 4.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 16.0
+    cross_native_conversion_ratio: 16.0
+    threshold_distance_ratio: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    profile_id: regime_013
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.11855208873748779
+    motor_state_post_pulse_tail_l1: 2.2538470025210698e-05
+    motor_state_post_pulse_ratio: 0.0001901144911509579
+    max_abs_internal_state: 6.671868324279785
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_014
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id015
+    feco_native_amplitude_ratio: 64.0
+    basal_source_intensity_ratio: 4.0
+    same_native_efficacy_ratio: 1.0
+    cross_native_conversion_ratio: 16.0
+    threshold_distance_ratio: 0.25
+    unknown_afferent_policy: zero
+    profile_id: regime_014
+  metrics:
+    finite: true
+    stimulus_generated_events: 11
+    sham_generated_events: 11
+    stimulus_generated_event_occupancy: 7.01530612244898e-05
+    sham_generated_event_occupancy: 7.01530612244898e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.07820384949445724
+    motor_state_post_pulse_tail_l1: 1.5993464126040634e-05
+    motor_state_post_pulse_ratio: 0.0002045099343501522
+    max_abs_internal_state: 10.125394821166992
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_015
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id016
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 16.0
+    same_native_efficacy_ratio: 64.0
+    cross_native_conversion_ratio: 64.0
+    threshold_distance_ratio: 0.5
+    unknown_afferent_policy: zero
+    profile_id: regime_015
+  metrics:
+    finite: true
+    stimulus_generated_events: 52
+    sham_generated_events: 52
+    stimulus_generated_event_occupancy: 0.0003316326530612245
+    sham_generated_event_occupancy: 0.0003316326530612245
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.25912413001060486
+    motor_state_post_pulse_tail_l1: 0.006205406432272866
+    motor_state_post_pulse_ratio: 0.023947620902842606
+    max_abs_internal_state: 47.58146286010742
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_016
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id017
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 64.0
+    same_native_efficacy_ratio: 4.0
+    cross_native_conversion_ratio: 16.0
+    threshold_distance_ratio: 1.0
+    unknown_afferent_policy: zero
+    profile_id: regime_016
+  metrics:
+    finite: true
+    stimulus_generated_events: 6
+    sham_generated_events: 6
+    stimulus_generated_event_occupancy: 3.826530612244898e-05
+    sham_generated_event_occupancy: 3.826530612244898e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.012092379853129387
+    motor_state_post_pulse_tail_l1: 8.181779355709296e-07
+    motor_state_post_pulse_ratio: 6.766062144162577e-05
+    max_abs_internal_state: 20.951828002929688
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_017
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id018
+    feco_native_amplitude_ratio: 16.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 4.0
+    cross_native_conversion_ratio: 1.0
+    threshold_distance_ratio: 0.5
+    unknown_afferent_policy: zero
+    profile_id: regime_017
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0973612442612648
+    motor_state_post_pulse_tail_l1: 1.8822823803930078e-05
+    motor_state_post_pulse_ratio: 0.0001933297375844933
+    max_abs_internal_state: 1.292580246925354
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_018
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id019
+    feco_native_amplitude_ratio: 16.0
+    basal_source_intensity_ratio: 4.0
+    same_native_efficacy_ratio: 16.0
+    cross_native_conversion_ratio: 64.0
+    threshold_distance_ratio: 0.25
+    unknown_afferent_policy: zero
+    profile_id: regime_018
+  metrics:
+    finite: true
+    stimulus_generated_events: 91
+    sham_generated_events: 68
+    stimulus_generated_event_occupancy: 0.0005803571428571429
+    sham_generated_event_occupancy: 0.0004336734693877551
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.3969430923461914
+    motor_state_post_pulse_tail_l1: 0.00454039980773814
+    motor_state_post_pulse_ratio: 0.011438414964980066
+    max_abs_internal_state: 29.63509178161621
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_019
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id020
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 16.0
+    cross_native_conversion_ratio: 4.0
+    threshold_distance_ratio: 0.25
+    unknown_afferent_policy: zero
+    profile_id: regime_019
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.048369523137807846
+    motor_state_post_pulse_tail_l1: 3.272755818670703e-06
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 1.277799367904663
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_020
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id021
+    feco_native_amplitude_ratio: 64.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 4.0
+    cross_native_conversion_ratio: 16.0
+    threshold_distance_ratio: 0.5
+    unknown_afferent_policy: zero
+    profile_id: regime_020
+  metrics:
+    finite: true
+    stimulus_generated_events: 2
+    sham_generated_events: 2
+    stimulus_generated_event_occupancy: 1.2755102040816327e-05
+    sham_generated_event_occupancy: 1.2755102040816327e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.312815397977829
+    motor_state_post_pulse_tail_l1: 6.343204031509231e-05
+    motor_state_post_pulse_ratio: 0.00020277787067114934
+    max_abs_internal_state: 5.097846031188965
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_021
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id022
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 1.0
+    same_native_efficacy_ratio: 1.0
+    cross_native_conversion_ratio: 1.0
+    threshold_distance_ratio: 0.125
+    unknown_afferent_policy: zero
+    profile_id: regime_021
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0030230951961129904
+    motor_state_post_pulse_tail_l1: 2.0454723866691894e-07
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.31944984197616577
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_graded_candidate__regime_022
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: &id023
+    feco_native_amplitude_ratio: 1.0
+    basal_source_intensity_ratio: 4.0
+    same_native_efficacy_ratio: 1.0
+    cross_native_conversion_ratio: 1.0
+    threshold_distance_ratio: 1.0
+    unknown_afferent_policy: zero
+    profile_id: regime_022
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0030230951961129904
+    motor_state_post_pulse_tail_l1: 2.0454723866691894e-07
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.8072746396064758
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_000
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id001
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0030230951961129904
+    motor_state_post_pulse_tail_l1: 2.0454723866691894e-07
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.05410425364971161
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_001
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id002
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.012092381715774536
+    motor_state_post_pulse_tail_l1: 8.183620022350624e-07
+    motor_state_post_pulse_ratio: 6.767583272429347e-05
+    max_abs_internal_state: 0.2178550809621811
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_002
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id003
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.04836951941251755
+    motor_state_post_pulse_tail_l1: 3.283115426029326e-06
+    motor_state_post_pulse_ratio: 6.787570903960002e-05
+    max_abs_internal_state: 3.2662346363067627
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_003
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id004
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.029638024047017097
+    motor_state_post_pulse_tail_l1: 5.630732071040256e-06
+    motor_state_post_pulse_ratio: 0.00018998338290392736
+    max_abs_internal_state: 0.4184919595718384
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_004
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id005
+  metrics:
+    finite: true
+    stimulus_generated_events: 193
+    sham_generated_events: 166
+    stimulus_generated_event_occupancy: 3.868045534712202e-05
+    sham_generated_event_occupancy: 3.3269199935866606e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 2.4193177223205566
+    motor_state_post_pulse_tail_l1: 0.8911212809383869
+    motor_state_post_pulse_ratio: 0.3683357802561141
+    max_abs_internal_state: 15.414015769958496
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_005
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id006
+  metrics:
+    finite: true
+    stimulus_generated_events: 217
+    sham_generated_events: 1
+    stimulus_generated_event_occupancy: 4.3490460157126825e-05
+    sham_generated_event_occupancy: 2.0041686708353376e-07
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 7.047896385192871
+    motor_state_post_pulse_tail_l1: 0.004799784013302996
+    motor_state_post_pulse_ratio: 0.0006810236347099258
+    max_abs_internal_state: 15.796321868896484
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_006
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id007
+  metrics:
+    finite: true
+    stimulus_generated_events: 45
+    sham_generated_events: 1
+    stimulus_generated_event_occupancy: 9.018759018759019e-06
+    sham_generated_event_occupancy: 2.0041686708353376e-07
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 1.4138805866241455
+    motor_state_post_pulse_tail_l1: 0.0002332961697538849
+    motor_state_post_pulse_ratio: 0.00016500415378848572
+    max_abs_internal_state: 14.391651153564453
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_007
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id008
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.02434031292796135
+    motor_state_post_pulse_tail_l1: 4.705822250343772e-06
+    motor_state_post_pulse_ratio: 0.00019333450084521624
+    max_abs_internal_state: 0.3231450617313385
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_008
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id009
+  metrics:
+    finite: true
+    stimulus_generated_events: 82
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 1.6434183100849768e-05
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 5.947200298309326
+    motor_state_post_pulse_tail_l1: 0.0015458455873886123
+    motor_state_post_pulse_ratio: 0.0002599282872359396
+    max_abs_internal_state: 49.97521209716797
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_009
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id010
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0074095050804317
+    motor_state_post_pulse_tail_l1: 1.4075391359824607e-06
+    motor_state_post_pulse_ratio: 0.00018996398824257954
+    max_abs_internal_state: 0.1046229898929596
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_010
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id011
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.029638024047017097
+    motor_state_post_pulse_tail_l1: 5.6307324484805575e-06
+    motor_state_post_pulse_ratio: 0.00018998339563892956
+    max_abs_internal_state: 0.4184919595718384
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_011
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id012
+  metrics:
+    finite: true
+    stimulus_generated_events: 173
+    sham_generated_events: 4
+    stimulus_generated_event_occupancy: 3.467211800545134e-05
+    sham_generated_event_occupancy: 8.01667468334135e-07
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 1.9514236450195312
+    motor_state_post_pulse_tail_l1: 0.0008005016398965381
+    motor_state_post_pulse_ratio: 0.00041021417463070974
+    max_abs_internal_state: 10.796908378601074
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_012
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id013
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0243403147906065
+    motor_state_post_pulse_tail_l1: 4.7057621509338784e-06
+    motor_state_post_pulse_ratio: 0.00019333201691992672
+    max_abs_internal_state: 0.5147778987884521
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_013
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id014
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.1185520812869072
+    motor_state_post_pulse_tail_l1: 2.2522875538015798e-05
+    motor_state_post_pulse_ratio: 0.00018998296186389439
+    max_abs_internal_state: 1.6739678382873535
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 225
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_014
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id015
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.07820384949445724
+    motor_state_post_pulse_tail_l1: 1.6094873235488194e-05
+    motor_state_post_pulse_ratio: 0.00020580666219798975
+    max_abs_internal_state: 1.0164387226104736
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_015
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id016
+  metrics:
+    finite: true
+    stimulus_generated_events: 1
+    sham_generated_events: 1
+    stimulus_generated_event_occupancy: 2.0041686708353376e-07
+    sham_generated_event_occupancy: 2.0041686708353376e-07
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.19347809255123138
+    motor_state_post_pulse_tail_l1: 1.3091038399579701e-05
+    motor_state_post_pulse_ratio: 6.766160564723008e-05
+    max_abs_internal_state: 4.091382026672363
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_016
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id017
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.012092380784451962
+    motor_state_post_pulse_tail_l1: 8.181889546676757e-07
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.9404533505439758
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_017
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id018
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0973612442612648
+    motor_state_post_pulse_tail_l1: 1.8822823803930078e-05
+    motor_state_post_pulse_ratio: 0.0001933297375844933
+    max_abs_internal_state: 1.292580246925354
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_018
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id019
+  metrics:
+    finite: true
+    stimulus_generated_events: 21
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 4.2087542087542085e-06
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.40055131912231445
+    motor_state_post_pulse_tail_l1: 8.47695325683162e-05
+    motor_state_post_pulse_ratio: 0.0002116321393075491
+    max_abs_internal_state: 4.946561813354492
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 864
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_019
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id020
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.048369523137807846
+    motor_state_post_pulse_tail_l1: 3.272755818670703e-06
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.8656680583953857
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_020
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id021
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.312815397977829
+    motor_state_post_pulse_tail_l1: 6.437949294195277e-05
+    motor_state_post_pulse_ratio: 0.00020580666219798975
+    max_abs_internal_state: 4.0657548904418945
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2884
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_021
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id022
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0030230951961129904
+    motor_state_post_pulse_tail_l1: 2.0454723866691894e-07
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.05410425364971161
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: all_event_boundary_extreme__all_event_candidate__regime_022
+  anchor_id: all_event_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id023
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0030230951961129904
+    motor_state_post_pulse_tail_l1: 2.0454723866691894e-07
+    motor_state_post_pulse_ratio: 6.76615274735377e-05
+    max_abs_internal_state: 0.05410425364971161
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 57
+    stimulus_graded_integral: 0.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_000
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id001
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.3582285940647125
+    motor_state_post_pulse_tail_l1: 0.026109207309782504
+    motor_state_post_pulse_ratio: 0.07288420785602051
+    max_abs_internal_state: 0.39377561211586
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_001
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id002
+  metrics:
+    finite: true
+    stimulus_generated_events: 48
+    sham_generated_events: 46
+    stimulus_generated_event_occupancy: 0.005
+    sham_generated_event_occupancy: 0.004791666666666666
+    stimulus_motor_events: 40
+    sham_motor_events: 38
+    stimulus_motor_event_occupancy: 0.005
+    sham_motor_event_occupancy: 0.00475
+    motor_state_delta_peak_l1: 43.38990783691406
+    motor_state_post_pulse_tail_l1: 10.464763367176056
+    motor_state_post_pulse_ratio: 0.24117966340258357
+    max_abs_internal_state: 9.134458541870117
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_002
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id003
+  metrics:
+    finite: true
+    stimulus_generated_events: 226
+    sham_generated_events: 226
+    stimulus_generated_event_occupancy: 0.023541666666666666
+    sham_generated_event_occupancy: 0.023541666666666666
+    stimulus_motor_events: 188
+    sham_motor_events: 188
+    stimulus_motor_event_occupancy: 0.0235
+    sham_motor_event_occupancy: 0.0235
+    motor_state_delta_peak_l1: 0.03424501419067383
+    motor_state_post_pulse_tail_l1: 3.4219026565551756e-06
+    motor_state_post_pulse_ratio: 9.992411267527186e-05
+    max_abs_internal_state: 24.171998977661133
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_003
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id004
+  metrics:
+    finite: true
+    stimulus_generated_events: 327
+    sham_generated_events: 322
+    stimulus_generated_event_occupancy: 0.0340625
+    sham_generated_event_occupancy: 0.033541666666666664
+    stimulus_motor_events: 271
+    sham_motor_events: 268
+    stimulus_motor_event_occupancy: 0.033875
+    sham_motor_event_occupancy: 0.0335
+    motor_state_delta_peak_l1: 388.54296875
+    motor_state_post_pulse_tail_l1: 272.18768844604494
+    motor_state_post_pulse_ratio: 0.7005343304029227
+    max_abs_internal_state: 70.29385375976562
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_004
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id005
+  metrics:
+    finite: true
+    stimulus_generated_events: 24
+    sham_generated_events: 24
+    stimulus_generated_event_occupancy: 0.0025
+    sham_generated_event_occupancy: 0.0025
+    stimulus_motor_events: 20
+    sham_motor_events: 20
+    stimulus_motor_event_occupancy: 0.0025
+    sham_motor_event_occupancy: 0.0025
+    motor_state_delta_peak_l1: 2.4430735111236572
+    motor_state_post_pulse_tail_l1: 0.009785333871841431
+    motor_state_post_pulse_ratio: 0.00400533746826996
+    max_abs_internal_state: 2.519227981567383
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_005
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id006
+  metrics:
+    finite: true
+    stimulus_generated_events: 288
+    sham_generated_events: 288
+    stimulus_generated_event_occupancy: 0.03
+    sham_generated_event_occupancy: 0.03
+    stimulus_motor_events: 240
+    sham_motor_events: 240
+    stimulus_motor_event_occupancy: 0.03
+    sham_motor_event_occupancy: 0.03
+    motor_state_delta_peak_l1: 0.12303543090820312
+    motor_state_post_pulse_tail_l1: 1.2896060943603516e-05
+    motor_state_post_pulse_ratio: 0.00010481583108548043
+    max_abs_internal_state: 21.35603904724121
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_006
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id007
+  metrics:
+    finite: true
+    stimulus_generated_events: 276
+    sham_generated_events: 276
+    stimulus_generated_event_occupancy: 0.02875
+    sham_generated_event_occupancy: 0.02875
+    stimulus_motor_events: 230
+    sham_motor_events: 230
+    stimulus_motor_event_occupancy: 0.02875
+    sham_motor_event_occupancy: 0.02875
+    motor_state_delta_peak_l1: 0.5014746189117432
+    motor_state_post_pulse_tail_l1: 6.710529327392578e-05
+    motor_state_post_pulse_ratio: 0.0001338159315411653
+    max_abs_internal_state: 85.42414093017578
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id008
+  metrics:
+    finite: true
+    stimulus_generated_events: 11
+    sham_generated_events: 1
+    stimulus_generated_event_occupancy: 0.0011458333333333333
+    sham_generated_event_occupancy: 0.00010416666666666667
+    stimulus_motor_events: 8
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.001
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 80.25045776367188
+    motor_state_post_pulse_tail_l1: 5.521807050704956
+    motor_state_post_pulse_ratio: 0.06880717200350465
+    max_abs_internal_state: 15.792486190795898
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_008
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id009
+  metrics:
+    finite: true
+    stimulus_generated_events: 24
+    sham_generated_events: 24
+    stimulus_generated_event_occupancy: 0.0025
+    sham_generated_event_occupancy: 0.0025
+    stimulus_motor_events: 20
+    sham_motor_events: 20
+    stimulus_motor_event_occupancy: 0.0025
+    sham_motor_event_occupancy: 0.0025
+    motor_state_delta_peak_l1: 9.6740083694458
+    motor_state_post_pulse_tail_l1: 0.10277395009994507
+    motor_state_post_pulse_ratio: 0.010623719369991895
+    max_abs_internal_state: 10.076910018920898
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_009
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id010
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 1.0241999626159668
+    motor_state_post_pulse_tail_l1: 0.07149640832096338
+    motor_state_post_pulse_ratio: 0.06980707960421163
+    max_abs_internal_state: 0.8694658875465393
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_010
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id011
+  metrics:
+    finite: true
+    stimulus_generated_events: 72
+    sham_generated_events: 68
+    stimulus_generated_event_occupancy: 0.0075
+    sham_generated_event_occupancy: 0.007083333333333333
+    stimulus_motor_events: 60
+    sham_motor_events: 56
+    stimulus_motor_event_occupancy: 0.0075
+    sham_motor_event_occupancy: 0.007
+    motor_state_delta_peak_l1: 43.00468063354492
+    motor_state_post_pulse_tail_l1: 26.022745971679687
+    motor_state_post_pulse_ratio: 0.6051142710121925
+    max_abs_internal_state: 8.02004337310791
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_011
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id012
+  metrics:
+    finite: true
+    stimulus_generated_events: 60
+    sham_generated_events: 60
+    stimulus_generated_event_occupancy: 0.00625
+    sham_generated_event_occupancy: 0.00625
+    stimulus_motor_events: 50
+    sham_motor_events: 50
+    stimulus_motor_event_occupancy: 0.00625
+    sham_motor_event_occupancy: 0.00625
+    motor_state_delta_peak_l1: 0.01250910758972168
+    motor_state_post_pulse_tail_l1: 3.2949820160865784e-06
+    motor_state_post_pulse_ratio: 0.0002634066413173995
+    max_abs_internal_state: 2.3822038173675537
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_012
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id013
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 5.107306480407715
+    motor_state_post_pulse_tail_l1: 0.34934913128614425
+    motor_state_post_pulse_ratio: 0.06840183424008182
+    max_abs_internal_state: 0.9839962720870972
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_013
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id014
+  metrics:
+    finite: true
+    stimulus_generated_events: 96
+    sham_generated_events: 96
+    stimulus_generated_event_occupancy: 0.01
+    sham_generated_event_occupancy: 0.01
+    stimulus_motor_events: 80
+    sham_motor_events: 80
+    stimulus_motor_event_occupancy: 0.01
+    sham_motor_event_occupancy: 0.01
+    motor_state_delta_peak_l1: 32.14176559448242
+    motor_state_post_pulse_tail_l1: 0.6828635489940643
+    motor_state_post_pulse_ratio: 0.02124536522384717
+    max_abs_internal_state: 33.41889190673828
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id015
+  metrics:
+    finite: true
+    stimulus_generated_events: 2
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.00020833333333333335
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 2
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.00025
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 20.889127731323242
+    motor_state_post_pulse_tail_l1: 1.4182483273744584
+    motor_state_post_pulse_ratio: 0.06789409043862542
+    max_abs_internal_state: 3.4265830516815186
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_015
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id016
+  metrics:
+    finite: true
+    stimulus_generated_events: 288
+    sham_generated_events: 288
+    stimulus_generated_event_occupancy: 0.03
+    sham_generated_event_occupancy: 0.03
+    stimulus_motor_events: 240
+    sham_motor_events: 240
+    stimulus_motor_event_occupancy: 0.03
+    sham_motor_event_occupancy: 0.03
+    motor_state_delta_peak_l1: 0.1205291748046875
+    motor_state_post_pulse_tail_l1: 8.192062377929687e-06
+    motor_state_post_pulse_ratio: 6.796746423597924e-05
+    max_abs_internal_state: 85.42415618896484
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_016
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id017
+  metrics:
+    finite: true
+    stimulus_generated_events: 72
+    sham_generated_events: 71
+    stimulus_generated_event_occupancy: 0.0075
+    sham_generated_event_occupancy: 0.007395833333333333
+    stimulus_motor_events: 60
+    sham_motor_events: 59
+    stimulus_motor_event_occupancy: 0.0075
+    sham_motor_event_occupancy: 0.007375
+    motor_state_delta_peak_l1: 186.764892578125
+    motor_state_post_pulse_tail_l1: 100.93280002593994
+    motor_state_post_pulse_ratio: 0.5404270504624903
+    max_abs_internal_state: 32.07273864746094
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_017
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id018
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 10.546650886535645
+    motor_state_post_pulse_tail_l1: 0.14655125379562378
+    motor_state_post_pulse_ratio: 0.013895525259371017
+    max_abs_internal_state: 2.3952934741973877
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_018
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id019
+  metrics:
+    finite: true
+    stimulus_generated_events: 336
+    sham_generated_events: 336
+    stimulus_generated_event_occupancy: 0.035
+    sham_generated_event_occupancy: 0.035
+    stimulus_motor_events: 280
+    sham_motor_events: 280
+    stimulus_motor_event_occupancy: 0.035
+    sham_motor_event_occupancy: 0.035
+    motor_state_delta_peak_l1: 73.4136962890625
+    motor_state_post_pulse_tail_l1: 5.6700891542434695
+    motor_state_post_pulse_ratio: 0.07723475919149742
+    max_abs_internal_state: 77.41210174560547
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_019
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id020
+  metrics:
+    finite: true
+    stimulus_generated_events: 96
+    sham_generated_events: 96
+    stimulus_generated_event_occupancy: 0.01
+    sham_generated_event_occupancy: 0.01
+    stimulus_motor_events: 80
+    sham_motor_events: 80
+    stimulus_motor_event_occupancy: 0.01
+    sham_motor_event_occupancy: 0.01
+    motor_state_delta_peak_l1: 0.01177409291267395
+    motor_state_post_pulse_tail_l1: 2.028048038482666e-06
+    motor_state_post_pulse_ratio: 0.00017224664808782175
+    max_abs_internal_state: 8.355058670043945
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_020
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id021
+  metrics:
+    finite: true
+    stimulus_generated_events: 120
+    sham_generated_events: 96
+    stimulus_generated_event_occupancy: 0.0125
+    sham_generated_event_occupancy: 0.01
+    stimulus_motor_events: 100
+    sham_motor_events: 80
+    stimulus_motor_event_occupancy: 0.0125
+    sham_motor_event_occupancy: 0.01
+    motor_state_delta_peak_l1: 149.67210388183594
+    motor_state_post_pulse_tail_l1: 98.47955871582032
+    motor_state_post_pulse_ratio: 0.6579686939763242
+    max_abs_internal_state: 27.350746154785156
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_021
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id022
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.3582285940647125
+    motor_state_post_pulse_tail_l1: 0.026109207309782504
+    motor_state_post_pulse_ratio: 0.07288420785602051
+    max_abs_internal_state: 0.39377561211586
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_022
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_graded_candidate
+  profile: *id023
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.3581080138683319
+    motor_state_post_pulse_tail_l1: 0.026092015635222197
+    motor_state_post_pulse_ratio: 0.07286074207994583
+    max_abs_internal_state: 0.4173213839530945
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_000
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id001
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.3583005368709564
+    motor_state_post_pulse_tail_l1: 0.026118759717792272
+    motor_state_post_pulse_ratio: 0.07289623383176527
+    max_abs_internal_state: 0.39377561211586
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_001
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id002
+  metrics:
+    finite: true
+    stimulus_generated_events: 36
+    sham_generated_events: 24
+    stimulus_generated_event_occupancy: 7.434330084255741e-06
+    sham_generated_event_occupancy: 4.956220056170494e-06
+    stimulus_motor_events: 30
+    sham_motor_events: 20
+    stimulus_motor_event_occupancy: 0.00375
+    sham_motor_event_occupancy: 0.0025
+    motor_state_delta_peak_l1: 55.093929290771484
+    motor_state_post_pulse_tail_l1: 30.163726778030394
+    motor_state_post_pulse_ratio: 0.547496378754074
+    max_abs_internal_state: 9.095827102661133
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_002
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id003
+  metrics:
+    finite: true
+    stimulus_generated_events: 216
+    sham_generated_events: 216
+    stimulus_generated_event_occupancy: 4.460598050553445e-05
+    sham_generated_event_occupancy: 4.460598050553445e-05
+    stimulus_motor_events: 180
+    sham_motor_events: 180
+    stimulus_motor_event_occupancy: 0.0225
+    sham_motor_event_occupancy: 0.0225
+    motor_state_delta_peak_l1: 0.03552687168121338
+    motor_state_post_pulse_tail_l1: 8.396506309509278e-06
+    motor_state_post_pulse_ratio: 0.0002363424054009617
+    max_abs_internal_state: 24.1719970703125
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_003
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id004
+  metrics:
+    finite: true
+    stimulus_generated_events: 312
+    sham_generated_events: 283
+    stimulus_generated_event_occupancy: 6.443086073021642e-05
+    sham_generated_event_occupancy: 5.844209482901041e-05
+    stimulus_motor_events: 260
+    sham_motor_events: 235
+    stimulus_motor_event_occupancy: 0.0325
+    sham_motor_event_occupancy: 0.029375
+    motor_state_delta_peak_l1: 408.8157958984375
+    motor_state_post_pulse_tail_l1: 221.91151901245118
+    motor_state_post_pulse_ratio: 0.542815422590914
+    max_abs_internal_state: 70.19805908203125
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_004
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id005
+  metrics:
+    finite: true
+    stimulus_generated_events: 24
+    sham_generated_events: 24
+    stimulus_generated_event_occupancy: 4.956220056170494e-06
+    sham_generated_event_occupancy: 4.956220056170494e-06
+    stimulus_motor_events: 20
+    sham_motor_events: 20
+    stimulus_motor_event_occupancy: 0.0025
+    sham_motor_event_occupancy: 0.0025
+    motor_state_delta_peak_l1: 2.755038022994995
+    motor_state_post_pulse_tail_l1: 0.0033963751792907716
+    motor_state_post_pulse_ratio: 0.0012327870435699397
+    max_abs_internal_state: 2.8182315826416016
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_005
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id006
+  metrics:
+    finite: true
+    stimulus_generated_events: 283
+    sham_generated_events: 283
+    stimulus_generated_event_occupancy: 5.844209482901041e-05
+    sham_generated_event_occupancy: 5.844209482901041e-05
+    stimulus_motor_events: 235
+    sham_motor_events: 235
+    stimulus_motor_event_occupancy: 0.029375
+    sham_motor_event_occupancy: 0.029375
+    motor_state_delta_peak_l1: 0.12318992614746094
+    motor_state_post_pulse_tail_l1: 1.153707504272461e-05
+    motor_state_post_pulse_ratio: 9.365274745691857e-05
+    max_abs_internal_state: 21.35603904724121
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_006
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id007
+  metrics:
+    finite: true
+    stimulus_generated_events: 276
+    sham_generated_events: 276
+    stimulus_generated_event_occupancy: 5.699653064596068e-05
+    sham_generated_event_occupancy: 5.699653064596068e-05
+    stimulus_motor_events: 230
+    sham_motor_events: 230
+    stimulus_motor_event_occupancy: 0.02875
+    sham_motor_event_occupancy: 0.02875
+    motor_state_delta_peak_l1: 0.505406379699707
+    motor_state_post_pulse_tail_l1: 7.316112518310547e-05
+    motor_state_post_pulse_ratio: 0.00014475702745694462
+    max_abs_internal_state: 85.42414093017578
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id008
+  metrics:
+    finite: true
+    stimulus_generated_events: 28
+    sham_generated_events: 12
+    stimulus_generated_event_occupancy: 5.7822567321989094e-06
+    sham_generated_event_occupancy: 2.478110028085247e-06
+    stimulus_motor_events: 22
+    sham_motor_events: 8
+    stimulus_motor_event_occupancy: 0.00275
+    sham_motor_event_occupancy: 0.001
+    motor_state_delta_peak_l1: 67.46371459960938
+    motor_state_post_pulse_tail_l1: 9.450867862701417
+    motor_state_post_pulse_ratio: 0.14008816322657897
+    max_abs_internal_state: 17.369873046875
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_008
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id009
+  metrics:
+    finite: true
+    stimulus_generated_events: 24
+    sham_generated_events: 24
+    stimulus_generated_event_occupancy: 4.956220056170494e-06
+    sham_generated_event_occupancy: 4.956220056170494e-06
+    stimulus_motor_events: 20
+    sham_motor_events: 20
+    stimulus_motor_event_occupancy: 0.0025
+    sham_motor_event_occupancy: 0.0025
+    motor_state_delta_peak_l1: 9.645811080932617
+    motor_state_post_pulse_tail_l1: 0.35413302928209306
+    motor_state_post_pulse_ratio: 0.03671366008630694
+    max_abs_internal_state: 10.076910972595215
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_009
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id010
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 1.0360459089279175
+    motor_state_post_pulse_tail_l1: 0.07221294477581978
+    motor_state_post_pulse_ratio: 0.06970052596466937
+    max_abs_internal_state: 0.8694658875465393
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id011
+  metrics:
+    finite: true
+    stimulus_generated_events: 72
+    sham_generated_events: 48
+    stimulus_generated_event_occupancy: 1.4868660168511482e-05
+    sham_generated_event_occupancy: 9.912440112340988e-06
+    stimulus_motor_events: 60
+    sham_motor_events: 40
+    stimulus_motor_event_occupancy: 0.0075
+    sham_motor_event_occupancy: 0.005
+    motor_state_delta_peak_l1: 45.576560974121094
+    motor_state_post_pulse_tail_l1: 25.600594654083253
+    motor_state_post_pulse_ratio: 0.5617052736519451
+    max_abs_internal_state: 8.013765335083008
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_011
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id012
+  metrics:
+    finite: true
+    stimulus_generated_events: 48
+    sham_generated_events: 48
+    stimulus_generated_event_occupancy: 9.912440112340988e-06
+    sham_generated_event_occupancy: 9.912440112340988e-06
+    stimulus_motor_events: 40
+    sham_motor_events: 40
+    stimulus_motor_event_occupancy: 0.005
+    sham_motor_event_occupancy: 0.005
+    motor_state_delta_peak_l1: 2.3016223907470703
+    motor_state_post_pulse_tail_l1: 0.014445046186447144
+    motor_state_post_pulse_ratio: 0.0062760278334616434
+    max_abs_internal_state: 2.3821613788604736
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_012
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id013
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 5.140172481536865
+    motor_state_post_pulse_tail_l1: 0.35053554132580755
+    motor_state_post_pulse_ratio: 0.06819528772330234
+    max_abs_internal_state: 0.9825575351715088
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_013
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id014
+  metrics:
+    finite: true
+    stimulus_generated_events: 96
+    sham_generated_events: 96
+    stimulus_generated_event_occupancy: 1.9824880224681977e-05
+    sham_generated_event_occupancy: 1.9824880224681977e-05
+    stimulus_motor_events: 80
+    sham_motor_events: 80
+    stimulus_motor_event_occupancy: 0.01
+    sham_motor_event_occupancy: 0.01
+    motor_state_delta_peak_l1: 0.151963472366333
+    motor_state_post_pulse_tail_l1: 1.8934011459350587e-05
+    motor_state_post_pulse_ratio: 0.0001245958069035632
+    max_abs_internal_state: 33.418941497802734
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 7200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id015
+  metrics:
+    finite: true
+    stimulus_generated_events: 2
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 4.1301833801420785e-07
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 2
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.00025
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 20.9033260345459
+    motor_state_post_pulse_tail_l1: 1.4197890055179596
+    motor_state_post_pulse_ratio: 0.06792167921849107
+    max_abs_internal_state: 3.409480571746826
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_015
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id016
+  metrics:
+    finite: true
+    stimulus_generated_events: 288
+    sham_generated_events: 288
+    stimulus_generated_event_occupancy: 5.947464067404593e-05
+    sham_generated_event_occupancy: 5.947464067404593e-05
+    stimulus_motor_events: 240
+    sham_motor_events: 240
+    stimulus_motor_event_occupancy: 0.03
+    sham_motor_event_occupancy: 0.03
+    motor_state_delta_peak_l1: 0.121795654296875
+    motor_state_post_pulse_tail_l1: 6.089210510253906e-06
+    motor_state_post_pulse_ratio: 4.999530192934102e-05
+    max_abs_internal_state: 85.42415618896484
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_016
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id017
+  metrics:
+    finite: true
+    stimulus_generated_events: 72
+    sham_generated_events: 69
+    stimulus_generated_event_occupancy: 1.4868660168511482e-05
+    sham_generated_event_occupancy: 1.424913266149017e-05
+    stimulus_motor_events: 60
+    sham_motor_events: 57
+    stimulus_motor_event_occupancy: 0.0075
+    sham_motor_event_occupancy: 0.007125
+    motor_state_delta_peak_l1: 180.0539093017578
+    motor_state_post_pulse_tail_l1: 104.27248710632324
+    motor_state_post_pulse_ratio: 0.5791181513952569
+    max_abs_internal_state: 32.06891632080078
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_017
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id018
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 22.147106170654297
+    motor_state_post_pulse_tail_l1: 8.376728663444519
+    motor_state_post_pulse_ratio: 0.37823129572313974
+    max_abs_internal_state: 2.3946375846862793
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_018
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id019
+  metrics:
+    finite: true
+    stimulus_generated_events: 324
+    sham_generated_events: 324
+    stimulus_generated_event_occupancy: 6.690897075830167e-05
+    sham_generated_event_occupancy: 6.690897075830167e-05
+    stimulus_motor_events: 270
+    sham_motor_events: 270
+    stimulus_motor_event_occupancy: 0.03375
+    sham_motor_event_occupancy: 0.03375
+    motor_state_delta_peak_l1: 73.41748046875
+    motor_state_post_pulse_tail_l1: 5.669963827133179
+    motor_state_post_pulse_ratio: 0.07722907120936393
+    max_abs_internal_state: 77.41210174560547
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 28800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_019
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id020
+  metrics:
+    finite: true
+    stimulus_generated_events: 95
+    sham_generated_events: 95
+    stimulus_generated_event_occupancy: 1.961837105567487e-05
+    sham_generated_event_occupancy: 1.961837105567487e-05
+    stimulus_motor_events: 79
+    sham_motor_events: 79
+    stimulus_motor_event_occupancy: 0.009875
+    sham_motor_event_occupancy: 0.009875
+    motor_state_delta_peak_l1: 8.020088195800781
+    motor_state_post_pulse_tail_l1: 0.16769904404878616
+    motor_state_post_pulse_ratio: 0.02090987529745512
+    max_abs_internal_state: 8.355059623718262
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id021
+  metrics:
+    finite: true
+    stimulus_generated_events: 119
+    sham_generated_events: 64
+    stimulus_generated_event_occupancy: 2.4574591111845367e-05
+    sham_generated_event_occupancy: 1.3216586816454651e-05
+    stimulus_motor_events: 99
+    sham_motor_events: 53
+    stimulus_motor_event_occupancy: 0.012375
+    sham_motor_event_occupancy: 0.006625
+    motor_state_delta_peak_l1: 177.85140991210938
+    motor_state_post_pulse_tail_l1: 57.4806143951416
+    motor_state_post_pulse_ratio: 0.3231945949911073
+    max_abs_internal_state: 27.348058700561523
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 115200.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_021
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id022
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.3583005368709564
+    motor_state_post_pulse_tail_l1: 0.026118759717792272
+    motor_state_post_pulse_ratio: 0.07289623383176527
+    max_abs_internal_state: 0.39377561211586
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_022
+  anchor_id: graded_heavy_boundary_extreme
+  source_native_mirror: all_event_candidate
+  profile: *id023
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.3582976162433624
+    motor_state_post_pulse_tail_l1: 0.02611842656508088
+    motor_state_post_pulse_ratio: 0.07289589821703073
+    max_abs_internal_state: 0.39377561211586
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 0
+    stimulus_graded_integral: 1800.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_000
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id001
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.07940337806940079
+    motor_state_post_pulse_tail_l1: 0.000772996889136266
+    motor_state_post_pulse_ratio: 0.009735063015337268
+    max_abs_internal_state: 0.31953704357147217
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_001
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id002
+  metrics:
+    finite: true
+    stimulus_generated_events: 4
+    sham_generated_events: 4
+    stimulus_generated_event_occupancy: 4.347826086956522e-05
+    sham_generated_event_occupancy: 4.347826086956522e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 1.5612773895263672
+    motor_state_post_pulse_tail_l1: 0.394391359090805
+    motor_state_post_pulse_ratio: 0.2526081282778639
+    max_abs_internal_state: 4.21204137802124
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_002
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id003
+  metrics:
+    finite: true
+    stimulus_generated_events: 1117
+    sham_generated_events: 1112
+    stimulus_generated_event_occupancy: 0.012141304347826088
+    sham_generated_event_occupancy: 0.01208695652173913
+    stimulus_motor_events: 143
+    sham_motor_events: 143
+    stimulus_motor_event_occupancy: 0.017875
+    sham_motor_event_occupancy: 0.017875
+    motor_state_delta_peak_l1: 17.698331832885742
+    motor_state_post_pulse_tail_l1: 1.3358048760890961
+    motor_state_post_pulse_ratio: 0.07547631543482541
+    max_abs_internal_state: 23.72039222717285
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_003
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id004
+  metrics:
+    finite: true
+    stimulus_generated_events: 1838
+    sham_generated_events: 1717
+    stimulus_generated_event_occupancy: 0.019978260869565216
+    sham_generated_event_occupancy: 0.01866304347826087
+    stimulus_motor_events: 216
+    sham_motor_events: 203
+    stimulus_motor_event_occupancy: 0.027
+    sham_motor_event_occupancy: 0.025375
+    motor_state_delta_peak_l1: 151.9373779296875
+    motor_state_post_pulse_tail_l1: 123.00106338500977
+    motor_state_post_pulse_ratio: 0.8095510470236713
+    max_abs_internal_state: 42.112220764160156
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_004
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id005
+  metrics:
+    finite: true
+    stimulus_generated_events: 53
+    sham_generated_events: 28
+    stimulus_generated_event_occupancy: 0.0005760869565217392
+    sham_generated_event_occupancy: 0.0003043478260869565
+    stimulus_motor_events: 2
+    sham_motor_events: 2
+    stimulus_motor_event_occupancy: 0.00025
+    sham_motor_event_occupancy: 0.00025
+    motor_state_delta_peak_l1: 1.2036669254302979
+    motor_state_post_pulse_tail_l1: 0.03668668746948242
+    motor_state_post_pulse_ratio: 0.030479102394848415
+    max_abs_internal_state: 7.945032119750977
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_005
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id006
+  metrics:
+    finite: true
+    stimulus_generated_events: 1762
+    sham_generated_events: 1613
+    stimulus_generated_event_occupancy: 0.01915217391304348
+    sham_generated_event_occupancy: 0.017532608695652173
+    stimulus_motor_events: 206
+    sham_motor_events: 207
+    stimulus_motor_event_occupancy: 0.02575
+    sham_motor_event_occupancy: 0.025875
+    motor_state_delta_peak_l1: 36.86201858520508
+    motor_state_post_pulse_tail_l1: 8.44487505197525
+    motor_state_post_pulse_ratio: 0.22909421068342364
+    max_abs_internal_state: 21.356035232543945
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_006
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id007
+  metrics:
+    finite: true
+    stimulus_generated_events: 1491
+    sham_generated_events: 1396
+    stimulus_generated_event_occupancy: 0.016206521739130435
+    sham_generated_event_occupancy: 0.015173913043478262
+    stimulus_motor_events: 185
+    sham_motor_events: 184
+    stimulus_motor_event_occupancy: 0.023125
+    sham_motor_event_occupancy: 0.023
+    motor_state_delta_peak_l1: 183.19491577148438
+    motor_state_post_pulse_tail_l1: 52.67497571945191
+    motor_state_post_pulse_ratio: 0.28753513981336787
+    max_abs_internal_state: 83.72081756591797
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_007
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id008
+  metrics:
+    finite: true
+    stimulus_generated_events: 254
+    sham_generated_events: 149
+    stimulus_generated_event_occupancy: 0.002760869565217391
+    sham_generated_event_occupancy: 0.0016195652173913043
+    stimulus_motor_events: 8
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.001
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 89.84481811523438
+    motor_state_post_pulse_tail_l1: 4.4624988496303555
+    motor_state_post_pulse_ratio: 0.04966896191950418
+    max_abs_internal_state: 68.96019744873047
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_008
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id009
+  metrics:
+    finite: true
+    stimulus_generated_events: 91
+    sham_generated_events: 24
+    stimulus_generated_event_occupancy: 0.0009891304347826087
+    sham_generated_event_occupancy: 0.0002608695652173913
+    stimulus_motor_events: 2
+    sham_motor_events: 2
+    stimulus_motor_event_occupancy: 0.00025
+    sham_motor_event_occupancy: 0.00025
+    motor_state_delta_peak_l1: 7.402917385101318
+    motor_state_post_pulse_tail_l1: 0.0814981234073639
+    motor_state_post_pulse_ratio: 0.011008919749851902
+    max_abs_internal_state: 50.200096130371094
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_009
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id010
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.23875832557678223
+    motor_state_post_pulse_tail_l1: 0.0023571189353242517
+    motor_state_post_pulse_ratio: 0.00987240520149412
+    max_abs_internal_state: 1.0724472999572754
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_010
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id011
+  metrics:
+    finite: true
+    stimulus_generated_events: 5
+    sham_generated_events: 5
+    stimulus_generated_event_occupancy: 5.4347826086956524e-05
+    sham_generated_event_occupancy: 5.4347826086956524e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 6.592024803161621
+    motor_state_post_pulse_tail_l1: 3.057722797393799
+    motor_state_post_pulse_ratio: 0.4638518344056101
+    max_abs_internal_state: 4.719816207885742
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_011
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id012
+  metrics:
+    finite: true
+    stimulus_generated_events: 310
+    sham_generated_events: 196
+    stimulus_generated_event_occupancy: 0.0033695652173913043
+    sham_generated_event_occupancy: 0.002130434782608696
+    stimulus_motor_events: 26
+    sham_motor_events: 26
+    stimulus_motor_event_occupancy: 0.00325
+    sham_motor_event_occupancy: 0.00325
+    motor_state_delta_peak_l1: 3.6302566528320312
+    motor_state_post_pulse_tail_l1: 0.6905038604140281
+    motor_state_post_pulse_ratio: 0.19020800082422634
+    max_abs_internal_state: 10.744182586669922
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_012
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id013
+  metrics:
+    finite: true
+    stimulus_generated_events: 60
+    sham_generated_events: 42
+    stimulus_generated_event_occupancy: 0.0006521739130434783
+    sham_generated_event_occupancy: 0.0004565217391304348
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 2.0374085903167725
+    motor_state_post_pulse_tail_l1: 0.021101844925433398
+    motor_state_post_pulse_ratio: 0.010357198367438179
+    max_abs_internal_state: 5.0111165046691895
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_013
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id014
+  metrics:
+    finite: true
+    stimulus_generated_events: 373
+    sham_generated_events: 367
+    stimulus_generated_event_occupancy: 0.0040543478260869565
+    sham_generated_event_occupancy: 0.003989130434782609
+    stimulus_motor_events: 54
+    sham_motor_events: 53
+    stimulus_motor_event_occupancy: 0.00675
+    sham_motor_event_occupancy: 0.006625
+    motor_state_delta_peak_l1: 43.91155242919922
+    motor_state_post_pulse_tail_l1: 3.7860427635908125
+    motor_state_post_pulse_ratio: 0.08621974296388718
+    max_abs_internal_state: 32.918548583984375
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_014
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id015
+  metrics:
+    finite: true
+    stimulus_generated_events: 89
+    sham_generated_events: 11
+    stimulus_generated_event_occupancy: 0.0009673913043478261
+    sham_generated_event_occupancy: 0.00011956521739130435
+    stimulus_motor_events: 5
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.000625
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 26.822729110717773
+    motor_state_post_pulse_tail_l1: 0.2992901736497879
+    motor_state_post_pulse_ratio: 0.01115808061194631
+    max_abs_internal_state: 18.889591217041016
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_015
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id016
+  metrics:
+    finite: true
+    stimulus_generated_events: 1578
+    sham_generated_events: 1569
+    stimulus_generated_event_occupancy: 0.017152173913043477
+    sham_generated_event_occupancy: 0.017054347826086957
+    stimulus_motor_events: 205
+    sham_motor_events: 205
+    stimulus_motor_event_occupancy: 0.025625
+    sham_motor_event_occupancy: 0.025625
+    motor_state_delta_peak_l1: 57.125648498535156
+    motor_state_post_pulse_tail_l1: 3.520706331729889
+    motor_state_post_pulse_ratio: 0.061630921035761524
+    max_abs_internal_state: 85.42414093017578
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_016
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id017
+  metrics:
+    finite: true
+    stimulus_generated_events: 6
+    sham_generated_events: 6
+    stimulus_generated_event_occupancy: 6.521739130434782e-05
+    sham_generated_event_occupancy: 6.521739130434782e-05
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 9.974349975585938
+    motor_state_post_pulse_tail_l1: 4.442728950977325
+    motor_state_post_pulse_ratio: 0.44541538665193464
+    max_abs_internal_state: 20.989789962768555
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_017
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id018
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 2.0694525241851807
+    motor_state_post_pulse_tail_l1: 0.9978830140829086
+    motor_state_post_pulse_ratio: 0.48219662080714404
+    max_abs_internal_state: 1.292580246925354
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_018
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id019
+  metrics:
+    finite: true
+    stimulus_generated_events: 1859
+    sham_generated_events: 1789
+    stimulus_generated_event_occupancy: 0.020206521739130436
+    sham_generated_event_occupancy: 0.019445652173913044
+    stimulus_motor_events: 229
+    sham_motor_events: 228
+    stimulus_motor_event_occupancy: 0.028625
+    sham_motor_event_occupancy: 0.0285
+    motor_state_delta_peak_l1: 110.1900634765625
+    motor_state_post_pulse_tail_l1: 34.304380598068235
+    motor_state_post_pulse_ratio: 0.311320091083937
+    max_abs_internal_state: 76.54851531982422
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_019
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id020
+  metrics:
+    finite: true
+    stimulus_generated_events: 333
+    sham_generated_events: 325
+    stimulus_generated_event_occupancy: 0.0036195652173913045
+    sham_generated_event_occupancy: 0.003532608695652174
+    stimulus_motor_events: 48
+    sham_motor_events: 48
+    stimulus_motor_event_occupancy: 0.006
+    sham_motor_event_occupancy: 0.006
+    motor_state_delta_peak_l1: 10.158060073852539
+    motor_state_post_pulse_tail_l1: 1.5000110918283462
+    motor_state_post_pulse_ratio: 0.14766708219116223
+    max_abs_internal_state: 8.22327995300293
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_020
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id021
+  metrics:
+    finite: true
+    stimulus_generated_events: 97
+    sham_generated_events: 2
+    stimulus_generated_event_occupancy: 0.0010543478260869566
+    sham_generated_event_occupancy: 2.173913043478261e-05
+    stimulus_motor_events: 15
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.001875
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 69.25950622558594
+    motor_state_post_pulse_tail_l1: 23.94718193054199
+    motor_state_post_pulse_ratio: 0.3457602174139583
+    max_abs_internal_state: 21.43924903869629
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_021
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id022
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.07940337806940079
+    motor_state_post_pulse_tail_l1: 0.000772996889136266
+    motor_state_post_pulse_ratio: 0.009735063015337268
+    max_abs_internal_state: 0.31953704357147217
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_graded_candidate__regime_022
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_graded_candidate
+  profile: *id023
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.07940288633108139
+    motor_state_post_pulse_tail_l1: 0.0007729847150039859
+    motor_state_post_pulse_ratio: 0.009734969983092536
+    max_abs_internal_state: 0.8074883222579956
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_000
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id001
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0794035941362381
+    motor_state_post_pulse_tail_l1: 0.0007730013428954407
+    motor_state_post_pulse_ratio: 0.009735092615192585
+    max_abs_internal_state: 0.2594093382358551
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_001
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id002
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 2.2340991497039795
+    motor_state_post_pulse_tail_l1: 1.1048002707958222
+    motor_state_post_pulse_ratio: 0.494517117085967
+    max_abs_internal_state: 0.9397517442703247
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_002
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id003
+  metrics:
+    finite: true
+    stimulus_generated_events: 963
+    sham_generated_events: 953
+    stimulus_generated_event_occupancy: 0.0001955409356725146
+    sham_generated_event_occupancy: 0.00019351039636127356
+    stimulus_motor_events: 133
+    sham_motor_events: 132
+    stimulus_motor_event_occupancy: 0.016625
+    sham_motor_event_occupancy: 0.0165
+    motor_state_delta_peak_l1: 30.226116180419922
+    motor_state_post_pulse_tail_l1: 3.861556198596954
+    motor_state_post_pulse_ratio: 0.1277556195293929
+    max_abs_internal_state: 23.809253692626953
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_003
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id004
+  metrics:
+    finite: true
+    stimulus_generated_events: 1575
+    sham_generated_events: 701
+    stimulus_generated_event_occupancy: 0.0003198099415204678
+    sham_generated_event_occupancy: 0.0001423408057179987
+    stimulus_motor_events: 196
+    sham_motor_events: 92
+    stimulus_motor_event_occupancy: 0.0245
+    sham_motor_event_occupancy: 0.0115
+    motor_state_delta_peak_l1: 151.40921020507812
+    motor_state_post_pulse_tail_l1: 79.79284851074219
+    motor_state_post_pulse_ratio: 0.5270012861348775
+    max_abs_internal_state: 37.49447250366211
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_004
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id005
+  metrics:
+    finite: true
+    stimulus_generated_events: 198
+    sham_generated_events: 171
+    stimulus_generated_event_occupancy: 4.02046783625731e-05
+    sham_generated_event_occupancy: 3.472222222222222e-05
+    stimulus_motor_events: 5
+    sham_motor_events: 5
+    stimulus_motor_event_occupancy: 0.000625
+    sham_motor_event_occupancy: 0.000625
+    motor_state_delta_peak_l1: 5.58308219909668
+    motor_state_post_pulse_tail_l1: 0.3492470721900463
+    motor_state_post_pulse_ratio: 0.06255452807887248
+    max_abs_internal_state: 15.414015769958496
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_005
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id006
+  metrics:
+    finite: true
+    stimulus_generated_events: 1679
+    sham_generated_events: 1526
+    stimulus_generated_event_occupancy: 0.00034092755035737495
+    sham_generated_event_occupancy: 0.0003098602988953866
+    stimulus_motor_events: 198
+    sham_motor_events: 198
+    stimulus_motor_event_occupancy: 0.02475
+    sham_motor_event_occupancy: 0.02475
+    motor_state_delta_peak_l1: 44.54145050048828
+    motor_state_post_pulse_tail_l1: 11.786912846565247
+    motor_state_post_pulse_ratio: 0.2646279524829582
+    max_abs_internal_state: 21.356035232543945
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_006
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id007
+  metrics:
+    finite: true
+    stimulus_generated_events: 1463
+    sham_generated_events: 1360
+    stimulus_generated_event_occupancy: 0.0002970679012345679
+    sham_generated_event_occupancy: 0.00027615334632878494
+    stimulus_motor_events: 184
+    sham_motor_events: 183
+    stimulus_motor_event_occupancy: 0.023
+    sham_motor_event_occupancy: 0.022875
+    motor_state_delta_peak_l1: 167.49221801757812
+    motor_state_post_pulse_tail_l1: 54.75259635925293
+    motor_state_post_pulse_ratio: 0.3268963597670353
+    max_abs_internal_state: 83.7150650024414
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_007
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id008
+  metrics:
+    finite: true
+    stimulus_generated_events: 103
+    sham_generated_events: 9
+    stimulus_generated_event_occupancy: 2.0914554905782975e-05
+    sham_generated_event_occupancy: 1.8274853801169591e-06
+    stimulus_motor_events: 4
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0005
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 88.84698486328125
+    motor_state_post_pulse_tail_l1: 1.9079255175590515
+    motor_state_post_pulse_ratio: 0.021474285486389764
+    max_abs_internal_state: 46.255027770996094
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_008
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id009
+  metrics:
+    finite: true
+    stimulus_generated_events: 88
+    sham_generated_events: 21
+    stimulus_generated_event_occupancy: 1.786874593892138e-05
+    sham_generated_event_occupancy: 4.264132553606238e-06
+    stimulus_motor_events: 2
+    sham_motor_events: 2
+    stimulus_motor_event_occupancy: 0.00025
+    sham_motor_event_occupancy: 0.00025
+    motor_state_delta_peak_l1: 7.400306224822998
+    motor_state_post_pulse_tail_l1: 0.1564544005692005
+    motor_state_post_pulse_ratio: 0.02114161168687889
+    max_abs_internal_state: 50.200096130371094
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_009
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id010
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.24522659182548523
+    motor_state_post_pulse_tail_l1: 0.002420140359317884
+    motor_state_post_pulse_ratio: 0.009868996430208391
+    max_abs_internal_state: 0.773811936378479
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_010
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id011
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 6.72896671295166
+    motor_state_post_pulse_tail_l1: 3.2454309344291685
+    motor_state_post_pulse_ratio: 0.48230747347620045
+    max_abs_internal_state: 2.6883771419525146
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_011
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id012
+  metrics:
+    finite: true
+    stimulus_generated_events: 272
+    sham_generated_events: 151
+    stimulus_generated_event_occupancy: 5.523066926575698e-05
+    sham_generated_event_occupancy: 3.0661143599740094e-05
+    stimulus_motor_events: 24
+    sham_motor_events: 24
+    stimulus_motor_event_occupancy: 0.003
+    sham_motor_event_occupancy: 0.003
+    motor_state_delta_peak_l1: 5.581547260284424
+    motor_state_post_pulse_tail_l1: 3.0944072127342226
+    motor_state_post_pulse_ratio: 0.5543995362634515
+    max_abs_internal_state: 10.744182586669922
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - motor_event_response_nonzero
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_012
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id013
+  metrics:
+    finite: true
+    stimulus_generated_events: 12
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 2.436647173489279e-06
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 2.0401363372802734
+    motor_state_post_pulse_tail_l1: 0.020199229214340447
+    motor_state_post_pulse_ratio: 0.009900921249835805
+    max_abs_internal_state: 2.398704767227173
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: matched_stochastic_fixture
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_013
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id014
+  metrics:
+    finite: true
+    stimulus_generated_events: 317
+    sham_generated_events: 305
+    stimulus_generated_event_occupancy: 6.436809616634178e-05
+    sham_generated_event_occupancy: 6.19314489928525e-05
+    stimulus_motor_events: 47
+    sham_motor_events: 47
+    stimulus_motor_event_occupancy: 0.005875
+    sham_motor_event_occupancy: 0.005875
+    motor_state_delta_peak_l1: 86.5985107421875
+    motor_state_post_pulse_tail_l1: 43.75726943969727
+    motor_state_post_pulse_ratio: 0.5052889370114814
+    max_abs_internal_state: 32.90214920043945
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - motor_event_response_nonzero
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 320.0
+    feco_graded_drive: 1.0
+    unknown_afferent_policy: bounded_tonic_fixture
+    stimulus_forced_event_count: 194
+    stimulus_graded_integral: 1000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_014
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id015
+  metrics:
+    finite: true
+    stimulus_generated_events: 74
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 1.5025990903183885e-05
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 5
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.000625
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 26.715303421020508
+    motor_state_post_pulse_tail_l1: 0.3063053885102272
+    motor_state_post_pulse_ratio: 0.011465540319082273
+    max_abs_internal_state: 18.901287078857422
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_015
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id016
+  metrics:
+    finite: true
+    stimulus_generated_events: 1513
+    sham_generated_events: 1502
+    stimulus_generated_event_occupancy: 0.00030722059779077324
+    sham_generated_event_occupancy: 0.00030498700454840804
+    stimulus_motor_events: 198
+    sham_motor_events: 198
+    stimulus_motor_event_occupancy: 0.02475
+    sham_motor_event_occupancy: 0.02475
+    motor_state_delta_peak_l1: 57.81467819213867
+    motor_state_post_pulse_tail_l1: 3.612546043395996
+    motor_state_post_pulse_ratio: 0.06248492867832326
+    max_abs_internal_state: 85.42414093017578
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 320.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_016
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id017
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 10.019739151000977
+    motor_state_post_pulse_tail_l1: 4.5315752124786375
+    motor_state_post_pulse_ratio: 0.45226478895170946
+    max_abs_internal_state: 3.8983731269836426
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 1280.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_017
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id018
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 2.08133602142334
+    motor_state_post_pulse_tail_l1: 1.0122913384437562
+    motor_state_post_pulse_ratio: 0.48636612638428844
+    max_abs_internal_state: 1.292580246925354
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_018
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id019
+  metrics:
+    finite: true
+    stimulus_generated_events: 1748
+    sham_generated_events: 1647
+    stimulus_generated_event_occupancy: 0.00035493827160493826
+    sham_generated_event_occupancy: 0.0003344298245614035
+    stimulus_motor_events: 217
+    sham_motor_events: 215
+    stimulus_motor_event_occupancy: 0.027125
+    sham_motor_event_occupancy: 0.026875
+    motor_state_delta_peak_l1: 295.68865966796875
+    motor_state_post_pulse_tail_l1: 215.1425164794922
+    motor_state_post_pulse_ratio: 0.7275981321741507
+    max_abs_internal_state: 76.37062072753906
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 1280.0
+    feco_graded_drive: 4.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 744
+    stimulus_graded_integral: 4000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_019
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id020
+  metrics:
+    finite: true
+    stimulus_generated_events: 293
+    sham_generated_events: 256
+    stimulus_generated_event_occupancy: 5.949480181936322e-05
+    sham_generated_event_occupancy: 5.198180636777128e-05
+    stimulus_motor_events: 45
+    sham_motor_events: 39
+    stimulus_motor_event_occupancy: 0.005625
+    sham_motor_event_occupancy: 0.004875
+    motor_state_delta_peak_l1: 31.794631958007812
+    motor_state_post_pulse_tail_l1: 22.69907464981079
+    motor_state_post_pulse_ratio: 0.7139278944882955
+    max_abs_internal_state: 8.220870971679688
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: false
+    failed_checks:
+    - post_pulse_recovery
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_020
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id021
+  metrics:
+    finite: true
+    stimulus_generated_events: 91
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 1.84779077322937e-05
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 15
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.001875
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 69.74015808105469
+    motor_state_post_pulse_tail_l1: 24.920688495635986
+    motor_state_post_pulse_ratio: 0.3573362777106442
+    max_abs_internal_state: 21.43924903869629
+  classification:
+    accepted: true
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: true
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks: []
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 5120.0
+    feco_graded_drive: 16.0
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 2484
+    stimulus_graded_integral: 16000.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_021
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id022
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0794035941362381
+    motor_state_post_pulse_tail_l1: 0.0007730013428954407
+    motor_state_post_pulse_ratio: 0.009735092615192585
+    max_abs_internal_state: 0.2594093382358551
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 20.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+- row_id: mixed_pairwise_profile__all_event_candidate__regime_022
+  anchor_id: mixed_pairwise_profile
+  source_native_mirror: all_event_candidate
+  profile: *id023
+  metrics:
+    finite: true
+    stimulus_generated_events: 0
+    sham_generated_events: 0
+    stimulus_generated_event_occupancy: 0.0
+    sham_generated_event_occupancy: 0.0
+    stimulus_motor_events: 0
+    sham_motor_events: 0
+    stimulus_motor_event_occupancy: 0.0
+    sham_motor_event_occupancy: 0.0
+    motor_state_delta_peak_l1: 0.0794035792350769
+    motor_state_post_pulse_tail_l1: 0.0007730011953390203
+    motor_state_post_pulse_ratio: 0.009735092583805635
+    max_abs_internal_state: 0.25940948724746704
+  classification:
+    accepted: false
+    checks:
+      finite: true
+      generated_event_occupancy_bounded: true
+      motor_event_occupancy_bounded: true
+      motor_event_response_nonzero: false
+      motor_state_response_nonzero: true
+      post_pulse_recovery: true
+    failed_checks:
+    - motor_event_response_nonzero
+  schedule_accounting:
+    basal_rate_hz: 80.0
+    feco_event_rate_hz: 80.0
+    feco_graded_drive: 0.25
+    unknown_afferent_policy: zero
+    stimulus_forced_event_count: 49
+    stimulus_graded_integral: 250.0
+accepted_row_ids:
+- graded_heavy_boundary_extreme__all_graded_candidate__regime_001
+- graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+- graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+- graded_heavy_boundary_extreme__all_event_candidate__regime_007
+- graded_heavy_boundary_extreme__all_event_candidate__regime_014
+- graded_heavy_boundary_extreme__all_event_candidate__regime_020
+- mixed_pairwise_profile__all_graded_candidate__regime_005
+- mixed_pairwise_profile__all_graded_candidate__regime_006
+- mixed_pairwise_profile__all_graded_candidate__regime_007
+- mixed_pairwise_profile__all_graded_candidate__regime_013
+- mixed_pairwise_profile__all_graded_candidate__regime_014
+- mixed_pairwise_profile__all_graded_candidate__regime_018
+- mixed_pairwise_profile__all_graded_candidate__regime_020
+- mixed_pairwise_profile__all_event_candidate__regime_002
+- mixed_pairwise_profile__all_event_candidate__regime_006
+- mixed_pairwise_profile__all_event_candidate__regime_007
+- mixed_pairwise_profile__all_event_candidate__regime_014
+- mixed_pairwise_profile__all_event_candidate__regime_020
+accepted_rows: 18
+failure_counts:
+  motor_event_response_nonzero: 108
+  post_pulse_recovery: 14
+checks:
+  pairwise_factor_coverage_complete: true
+  all_schedule_rows_accounted: true
+  all_runs_finite: true
+  all_anchors_executed: true
+  both_source_native_mirrors_executed: true
+  no_named_behavior_exposure: true
+  no_body_trajectory_or_posture_metric: true
+  zero_reference_selection: true
+members_ranked: false
+reference_member_selected: false
+parameter_values_promoted: 0
+named_behavior_exposed: false
+body_outcomes_consumed: 0
+whole_body_stability_accepted: false
+wall_seconds: 337.5708397999988
+semantic_result_sha256: e9791cca61f362ddfb88734711420b5ec87b81a0ce668a4e897d03ae617520a0
+next_action: Run every retained exact neural row through FH-07b paired generic physical
+  perturbations, while preregistering a cost-bounded outcome-blind cover of the still-factorized
+  sensory and motor axes. Keep mechanics frozen, admit no named action or posture
+  target, and retain all failures and survivors without ranking.

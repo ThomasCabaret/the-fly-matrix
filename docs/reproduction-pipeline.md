@@ -302,6 +302,16 @@ contains nonzero motor internal state but zero motor spikes and commands. Do not
 replace the witness or change a gain to make it move: reproducing that null output
 is the correct FH-06 result, and FH-07 owns subsequent neutral-regime calibration.
 
+`front_leg_neutral_neural_regime.bat` executes the neural FH-07a subgate. Its
+preregistered pairwise design has 23 factor profiles, three population anchors
+and two basal-native mirrors: 138 paired generic FeCO pulse/sham rows and 276
+runtime instances. The accepted compact result accounts every row as finite and
+retains 18 exact engineering rows under locked non-silence, occupancy and
+post-pulse recovery criteria. It never instantiates MuJoCo and cannot see a pose,
+trajectory, named action or held-out response. Reproducing 18 survivors does not
+promote physiology or complete FH-07; the next command must be the separately
+preregistered FH-07b physical gate over every retained row.
+
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and
 validates true COM, joint limits, physical jerk, contacts/forces, a declared

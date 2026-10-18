@@ -45,9 +45,9 @@ estimate_contract:
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
   open_items: 3
-  base_work_batches: {min: 3, max: 5}
+  base_work_batches: {min: 3, max: 4}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 5, max: 9}
+  planning_forecast_batches: {min: 5, max: 8}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -228,14 +228,40 @@ items:
   - id: FH-07
     title: Establish short-horizon neutral embodied technical stability
     nature: technical_embodied_calibration
-    status: planned
+    status: in_progress
     depends_on: [FH-06]
-    estimated_batches: {min: 1, max: 2}
+    original_estimated_batches: {min: 1, max: 2}
+    estimated_batches: {min: 1, max: 1}
+    remaining_estimated_batches: {min: 1, max: 1}
     exit_criteria:
       - every retained lineage is finite, bounded and recoverable under preregistered generic perturbations
       - no named action, stance sequence or held-out outcome enters selection
       - failures and any surviving ensemble remain explicit
     replan_if: no admissible member passes without jointly freeing central, sensory, motor and physical capacity
+    progress_record:
+      date: 2026-10-18
+      completed_subgate: FH-07a_behavior_naive_neural_regime
+      campaign_id: campaign.front_leg_neutral_neural_regime.v0
+      result_id: runner_result.front_leg_neutral_neural_regime.v0
+      parameter_set_id: parameters.front_leg_neutral_neural_regime.v0
+      semantic_result_sha256: e9791cca61f362ddfb88734711420b5ec87b81a0ce668a4e897d03ae617520a0
+      schedule:
+        pairwise_factor_profiles: 23
+        population_anchors: 3
+        basal_native_mirrors: 2
+        paired_rows: 138
+        runtime_instances: 276
+      result:
+        finite_rows: 138
+        retained_unranked_rows: 18
+        rows_without_motor_event_response: 108
+        rows_failing_post_pulse_recovery: 14
+        body_outcomes_consumed: 0
+      boundary: >-
+        The retained rows are exact engineering coordinates, not physiological
+        values or preferred lineages. Pairwise coverage does not cover higher-order
+        interactions, and unscheduled FH-06 addresses are untested rather than
+        rejected. Physical boundedness and recovery remain FH-07b work.
 
   - id: FH-08
     title: Lock the evaluation-only protocol and topology controls
@@ -282,6 +308,43 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-18
+    batch: fh07a_behavior_naive_neural_regime_gate
+    before:
+      open_items: 3
+      base_work_batches: {min: 3, max: 5}
+      planning_forecast_batches: {min: 5, max: 9}
+    closed: []
+    advanced: [FH-07]
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      pairwise_factor_profiles: 23
+      population_anchors: 3
+      source_native_mirrors: 2
+      paired_schedule_rows: 138
+      runtime_instances: 276
+      finite_rows: 138
+      retained_unranked_rows: 18
+      rows_without_motor_event_response: 108
+      rows_failing_post_pulse_recovery: 14
+      body_outcomes_consumed: 0
+    scientific_boundary: >-
+      The grid deliberately reopens six named technical owners but computes no
+      body pose or trajectory and sees no named or held-out response. Eighteen
+      exact rows pass locked non-silence, occupancy and post-pulse recovery checks.
+      They remain an unranked engineering ensemble; their coordinates are not
+      physiological bounds and their physical stability is still unknown.
+    after:
+      open_items: 3
+      base_work_batches: {min: 3, max: 4}
+      planning_forecast_batches: {min: 5, max: 8}
+    accounting_note: >-
+      FH-07 was originally one-to-two batches. This first batch completed the
+      neural subgate and leaves exactly one physical subgate, so no roadmap item
+      closes and the minimum remains three. The maximum falls by one because the
+      two-batch FH-07 path is now certain and half complete. No new item or replan
+      was discovered; the two-to-four contingency reserve is unchanged.
   - date: 2026-10-18
     batch: fh06_factorized_lineage_and_causal_replay_witness
     before:

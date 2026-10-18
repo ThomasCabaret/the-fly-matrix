@@ -1,0 +1,30 @@
+schema_version: 1
+id: evaluation.front_leg_neutral_neural_regime.v0
+campaign_id: campaign.front_leg_neutral_neural_regime.v0
+runner_result_id: runner_result.front_leg_neutral_neural_regime.v0
+runner_semantic_sha256: e9791cca61f362ddfb88734711420b5ec87b81a0ce668a4e897d03ae617520a0
+parameter_set_id: parameters.front_leg_neutral_neural_regime.v0
+status: accepted_nonempty_neural_technical_ensemble_FH07_physics_open
+checks:
+  pairwise_factor_coverage_complete: true
+  all_schedule_rows_accounted: true
+  all_runs_finite: true
+  all_anchors_executed: true
+  both_source_native_mirrors_executed: true
+  no_named_behavior_exposure: true
+  no_body_trajectory_or_posture_metric: true
+  zero_reference_selection: true
+accepted_rows: 18
+scheduled_rows: 138
+failure_counts:
+  motor_event_response_nonzero: 108
+  post_pulse_recovery: 14
+whole_body_stability_accepted: false
+named_behavior_exposed: false
+interpretation: This gate may retain a non-ranked engineering ensemble that is finite,
+  motor-responsive, bounded in event occupancy and recovering after a generic FeCO
+  pulse. It neither identifies physiology nor accepts embodied stability.
+next_action: Run every retained exact neural row through FH-07b paired generic physical
+  perturbations, while preregistering a cost-bounded outcome-blind cover of the still-factorized
+  sensory and motor axes. Keep mechanics frozen, admit no named action or posture
+  target, and retain all failures and survivors without ranking.

@@ -1,0 +1,156 @@
+schema_version: 1
+id: campaign.front_leg_neutral_neural_regime.v0
+title: FH-07a behavior-naive short-horizon neural regime gate
+status: preregistered_runnable
+target_ids:
+  - target.technical_neural_dynamics.v0
+  - target.technical_embodied_stability.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: allowed
+claim_label: FH-07A TECHNICAL NEURAL REGIME / NO PHYSIOLOGY / NO BODY OUTCOME / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+
+purpose: >-
+  Reopen only the already declared basal, native-boundary, efficacy and neuronal
+  threshold owners downstream of the frozen FH-06 lineage. Search a finite
+  pairwise-covered engineering grid for short regimes that are finite, produce a
+  nonzero motor-event response to a generic FeCO pulse, avoid event saturation and
+  relax after the pulse. No body pose, trajectory, named action or future held-out
+  response is computed or inspected. Every passing exact row is retained without
+  ranking; all other FH-06 addresses remain untested rather than rejected.
+
+frozen_inputs:
+  runtime:
+    path: src/the_fly_matrix/front_leg_neutral_neural_regime.py
+    sha256: a0a9b82f2dbd387e727a4904a737fdd9dbf3353bf7756a751c45328ece284624
+  fh06_campaign:
+    path: calibration/campaigns/front-leg-integrated-runnable-lineage-v0.yaml
+    sha256: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  fh06_result:
+    path: calibration/runner/front-leg-integrated-runnable-lineage-v0.yaml
+    sha256: 9c1ba5018e119a75acac28e95f54754dfb7878a1fd4196ce3c54828360a5544c
+    semantic_sha256: 21171879323f6f8d82bb518fb4f9d7848e0b87626199281d9494f8904afb7652
+  measurement_contract:
+    path: calibration/runner/embodied-measurement-contract-v1.yaml
+    sha256: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+  actuator_contract:
+    path: calibration/runner/actuator-causal-attribution-v1.yaml
+    sha256: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+
+parameter_ownership:
+  feco_native_amplitude_ratio: parameter.proprioception.native_bridge.v0
+  basal_source_intensity_ratio:
+    - parameter.bridge.basal_event_process.v0
+    - parameter.bridge.basal_hz_to_graded.v0
+  same_native_efficacy_ratio: parameter.central.synaptic_efficacy.v0
+  cross_native_conversion_ratio: parameter.central.native_boundary_conversion.v0
+  threshold_distance_ratio: parameter.central.neuron_dynamics.v0
+  unknown_afferent_policy: parameter.residual_sensory.unknown_nominal.v0
+
+technical_factor_levels:
+  feco_native_amplitude_ratio: [1.0, 4.0, 16.0, 64.0]
+  basal_source_intensity_ratio: [1.0, 4.0, 16.0, 64.0]
+  same_native_efficacy_ratio: [1.0, 4.0, 16.0, 64.0]
+  cross_native_conversion_ratio: [1.0, 4.0, 16.0, 64.0]
+  threshold_distance_ratio: [1.0, 0.5, 0.25, 0.125]
+  unknown_afferent_policy: [zero, bounded_tonic_fixture, matched_stochastic_fixture]
+
+design:
+  method: deterministic_greedy_pairwise_cover_all_declared_factor_level_pairs
+  population_anchors: all_three_FH05_execution_anchors
+  source_native_mirrors: both_FH05_mirrors
+  higher_order_coverage_claimed: false
+  unscheduled_FH06_addresses_rejected: false
+  values_are_physiological_bounds: false
+  reason_for_wide_log_grid: >-
+    FH-05 and FH-06 observed motor internal state but no generated motor event under
+    their unpromotable coordinates. FH-07 is explicitly allowed to fit technical
+    nondegeneracy. The 1/4/16/64 ratios and threshold-distance ladder are a finite
+    engineering search, not biological priors or accepted bounds.
+
+source_native_mirrors:
+  - all_graded_candidate
+  - all_event_candidate
+
+execution_fixture:
+  status: PREREGISTERED_ENGINEERING_COORDINATES_NOT_PHYSIOLOGICAL_VALUES
+  device: cpu
+  seed: 731027
+  dt_ms: 0.1
+  steps: 800
+  pulse_start_step: 100
+  pulse_stop_step: 300
+  recovery_tail_steps: 100
+  basal_rate_hz: 20.0
+  graded_half_saturation_hz: 100.0
+  feco_event_rate_hz: 80.0
+  feco_graded_drive: 0.25
+  unknown_family_id: parameter.residual_sensory.unknown_nominal.v0
+  event_comparator:
+    v_rest_mV: -52.0
+    reset_mV: -52.0
+    threshold_mV: -45.0
+    tau_membrane_ms: 20.0
+    tau_syn_ms: 5.0
+    refractory_ms: 2.2
+    fixed_delay_ms: 1.8
+  boundary_scales:
+    event_to_event_mV: 0.05
+    event_to_graded: 0.5
+    graded_to_event_mV: 0.05
+    graded_to_graded: 0.5
+  graded_tau_ms: 5.0
+
+acceptance:
+  generated_event_occupancy_max: 0.10
+  motor_event_occupancy_max: 0.10
+  motor_event_count_difference_min: 1
+  motor_state_delta_peak_l1_min: 0.0
+  motor_state_post_pulse_ratio_max: 0.50
+  interpretation: >-
+    These are technical non-silence, non-saturation and recovery criteria. They do
+    not encode a posture, action, response direction or biological firing-rate
+    target. Passing retains an exact engineering row; it does not identify any
+    owner independently or promote a physiological value.
+
+budget:
+  expected_pairwise_profiles: 23
+  expected_population_anchors: 3
+  expected_source_native_mirrors: 2
+  expected_paired_schedule_rows: 138
+  expected_runtime_instances: 276
+  max_schedule_rows: 144
+  stop_conditions:
+    - any nonfinite state raises a recorded row failure but does not relax criteria
+    - a dependency hash or schedule cardinality drift aborts the campaign
+    - no grid extension is permitted after observing this campaign
+
+forbidden_observables: [body_pose, body_trajectory, named_action, held_out_response]
+accepted_claims:
+  - The exact scheduled engineering rows are fully accounted under paired generic FeCO pulse and sham.
+  - A nonempty passing set, if present, is a behavior-naive neural technical ensemble for the bounded front-leg cone.
+  - Failure modes are attributed to the locked finitude, occupancy, motor-response and recovery checks.
+forbidden_claims:
+  - A passing row is physiological, preferred, globally stable or a reference lineage.
+  - A failing unscheduled FH-06 address has been rejected.
+  - A neural pass establishes physical recovery, stance, locomotion or any named behavior.
+  - Pairwise factor coverage resolves higher-order compensation or the complete recurrent MaleCNS.
+
+outputs:
+  compact_result: calibration/runner/front-leg-neutral-neural-regime-v0.yaml
+  evaluation: calibration/evaluations/front-leg-neutral-neural-regime-v0.yaml
+  parameter_set: calibration/parameter_sets/front-leg-neutral-neural-regime-v0.yaml
+
+next_action_if_nonempty: >-
+  Run every retained exact neural row through FH-07b paired generic physical
+  perturbations, while preregistering a cost-bounded outcome-blind cover of the
+  still-factorized sensory and motor axes. Keep mechanics frozen, admit no named
+  action or posture target, and retain all failures and survivors without ranking.
+next_action_if_empty: >-
+  Replan FH-07 before changing any family. Attribute which locked criterion made
+  the ensemble empty and test the smallest owner-isolated extension; do not widen
+  topology, jointly free mechanics, or inspect a named behavior.
+
