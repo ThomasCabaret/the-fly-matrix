@@ -21,9 +21,9 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.front_leg_neutral_neural_regime.v0
-last_preregistered_campaign_id: campaign.front_leg_neutral_neural_regime.v0
-last_executed_campaign_id: campaign.front_leg_neutral_neural_regime.v0
+last_completed_campaign_id: campaign.front_leg_neutral_embodied_regime.v0
+last_preregistered_campaign_id: campaign.front_leg_neutral_embodied_regime.v0
+last_executed_campaign_id: campaign.front_leg_neutral_embodied_regime.v0
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
 last_completed_gate_evaluation_id: evaluation.neural_model_class_gate.v0
 accepted_dependency_parameter_set_ids:
@@ -34,6 +34,7 @@ accepted_dependency_parameter_set_ids:
   - parameters.front_leg_motor_transfer_ensemble.v1
   - parameters.front_leg_coupled_technical_ensemble.v0
   - parameters.front_leg_neutral_neural_regime.v0
+  - parameters.front_leg_neutral_embodied_regime.v0
 parameter_family_inventory_id: parameter_family_inventory.v0
 parameter_dependency_dag_id: calibration.parameter_dependency_dag.v0
 active_roadmap_id: roadmap.first_held_out_evaluation.v0
@@ -116,6 +117,7 @@ readiness:
   first_held_out_coupled_identifiability: FH_05_complete_81_owner_members_2_basal_native_mirrors_162_paired_branches_324_runtime_instances_6041_explicit_ports_590_direct_source_edges_4873_cone_edges_all_finite_zero_values_assignments_routes_or_behavior_selected
   first_held_out_integrated_lineage: FH_06_complete_exact_factorization_4621555858189754880_discrete_addresses_one_outcome_blind_witness_body_drive_reaches_motor_state_zero_motor_events_zero_commands_exact_replay
   first_held_out_neutral_neural_regime: FH_07a_complete_23_pairwise_profiles_3_population_anchors_2_basal_native_mirrors_138_paired_rows_276_runtime_instances_all_finite_18_unranked_technical_survivors_zero_body_outcomes_physical_gate_open
+  first_held_out_neutral_embodied_regime: FH_07_complete_32_outcome_blind_pairwise_physical_composites_all_18_FH07a_parents_exercised_23_four_branch_composites_92_physical_episodes_9_preapplication_motor_guard_blocks_11_unranked_exact_technical_survivors_zero_named_behavior
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: false
 
@@ -129,7 +131,7 @@ blocked_by:
   - Basal source intensity, same-native synaptic efficacy, internal conversion and neuron threshold/dynamics are not separately identified. Eleven nonzero members of the fixed grid remain subthreshold and only the 320 Hz by 3.2 mV engineering corner crosses; this finding selects nothing.
   - FH-05 is complete as a finite technical execution ensemble, not as physiological identification. All 81 owner-separated members execute as paired stimulus/sham runs under both all-graded and all-event basal source-port mirrors: 162 paired branches and 324 runtime instances are finite. The bounded graph contains 6,041 explicit source ports, the 590 published direct source-to-cone edges and 4,873 induced cone edges; recurrence outside the cone is excluded and not approximated. Every owner axis changes an executed input. No pair of descriptive main-effect signatures exceeds the locked 0.95 similarity warning, but unknown-afferent policy is only weakly observable in this direct-boundary scope and no stimulus surplus of internally generated events appears under the fixtures. All 81 members and both mirrors remain unranked; zero value, assignment, route or behavior is selected. Higher-order assignments and whole-MaleCNS context remain outside the claim and are propagated to FH-06.
   - FH-06 is complete as a reconstructible integrated lineage, not as a reference model. The exact conditional factorization preserves 1,728 FH-03 sensory members, all 81 FH-05 technical members under both basal-native mirrors and the complete class-conditioned FH-04 motor envelope without materializing 4,621,555,858,189,754,880 discrete addresses; six native-amplitude dimensions per sensory member remain continuous and unselected. One predeclared lexicographic witness executed 480 physical/neural steps: body-derived FeCO drive was nonzero throughout, 32 FeCO events were forced by the declared phase-balanced process and motor internal state was nonzero for 95 steps. It generated zero motor events and zero commands; this was retained without retrying or selecting another member. The 48-frame trajectory round-trips exactly through the independent replay contract. This closes composition, hashes and replay transport only; FH-07 owns neutral-regime calibration.
-  - FH-07a has completed the behavior-naive neural half of the neutral gate. A deterministic 23-profile pairwise cover crosses all six named technical owners over the three FH-05 population anchors and both basal-native mirrors, yielding 138 paired generic-FeCO-pulse/sham rows and 276 runtime instances. All 138 rows are finite. Eighteen exact rows pass the locked motor-response, event-occupancy and post-pulse-recovery checks; they span two population anchors, both mirrors and nine factor profiles. The other rows remain explicitly accounted: 108 lack a motor-event difference and 14 fail recovery, with two rows failing both. No body pose, trajectory, named action or held-out response was computed. The 18 survivors are an unranked engineering ensemble, not physiological values or a reference lineage. Pairwise coverage does not resolve higher-order compensation and unscheduled FH-06 addresses are untested rather than rejected. FH-07b must now test every retained row under preregistered generic physical perturbations with frozen mechanics and outcome-blind coverage of the remaining sensory/motor factors.
+  - FH-07 is complete as a behavior-naive technical gate. FH-07a retained 18 exact neural rows without body observation. FH-07b then scheduled 32 outcome-blind pairwise physical composites covering all eight FeCO source paths, three motor classes, three temporal regions, three route strata, three bridge gains and four generic signed knee-velocity perturbations; every FH-07a parent was exercised. Twenty-three composites passed the preapplication direct-MOTOR guard and completed baseline live, exact frozen replay, perturbed frozen-open and perturbed live-feedback branches, for 92 physical episodes with zero replay error. Nine combinations exceeded the 0.01 direct-MOTOR envelope and remain blocked without clipping or application. Twelve admitted composites lacked feedback command/physics adaptation. Eleven exact composites pass the locked finite, feedback and non-amplification checks and remain unranked; they cover seven neural parents. No named action, pose preference, movement magnitude or held-out response entered selection. This closes short-horizon technical stability for the exact ensemble, not physiology, a reference lineage, higher-order identifiability or behavior.
   - A first local scientific claim must compile and account its causal population cone rather than pretend that the two runtime extremes cover the 2^166419 native-assignment space.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
@@ -192,10 +194,10 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Follow roadmap.first_held_out_evaluation.v0 revision 2. FH-07a retains 18 exact
-  unranked neural technical rows from 138 fully accounted paired rows, with zero
-  body outcome or named-behavior exposure. Run FH-07b over every retained row
-  using preregistered generic physical perturbations, frozen mechanics and an
-  outcome-blind cost-bounded cover of the still-factorized sensory and motor
-  axes. Keep every failure and survivor explicit; do not select from posture,
-  attractive motion or the future held-out response.
+  Follow roadmap.first_held_out_evaluation.v0 revision 2. FH-07 is complete with
+  11 exact unranked short-horizon embodied technical composites. Begin FH-08:
+  source and lock one immutable evaluation_only protocol for the prospective
+  proprioceptive resistance-reflex candidate, including sham, mirrors, seeds,
+  metrics, thresholds, mechanism coverage and frozen/recalibrated topology
+  controls before any held-out outcome is inspected. Do not rank the FH-07
+  ensemble from that future response.

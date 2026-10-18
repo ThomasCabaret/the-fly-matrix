@@ -1,7 +1,7 @@
 schema_version: 1
 id: target.technical_embodied_stability.v0
 title: Neutral embodied closed-loop stability on flat ground
-status: FH07a_neural_regime_gate_pass_18_unranked_exact_rows_FH07b_physical_stability_open
+status: FH07_complete_nonempty_unranked_short_horizon_embodied_technical_ensemble
 primary_class: technical
 optimization_exposure: allowed
 claim_label: trained_technical_stability
@@ -339,6 +339,30 @@ fh07_neural_regime_gate:
   physiological_values_promoted: 0
   whole_body_stability_accepted: false
 
+fh07_embodied_regime_gate:
+  campaign_id: campaign.front_leg_neutral_embodied_regime.v0
+  evaluation_id: evaluation.front_leg_neutral_embodied_regime.v0
+  runner_result_id: runner_result.front_leg_neutral_embodied_regime.v0
+  parameter_set_id: parameters.front_leg_neutral_embodied_regime.v0
+  runner_semantic_sha256: 035f378eca423f257f91ffec5cab33642bd6e8645fc36774c0e5450dd7a45d06
+  status: accepted_nonempty_neutral_embodied_technical_ensemble_FH07_complete
+  outcome_blind_pairwise_physical_profiles: 32
+  FH07a_parent_rows_exercised: 18
+  guard_admitted_four_branch_composites: 23
+  physical_episode_branches_completed: 92
+  blocked_preapplication_direct_motor_guard: 9
+  completed_without_feedback_adaptation: 12
+  retained_exact_composites: 11
+  retained_neural_parent_rows: 7
+  exact_replay_max_abs_error: 0.0
+  members_ranked: false
+  physiological_values_promoted: 0
+  named_behaviors_exposed: 0
+  interpretation: >-
+    This closes the scoped short-horizon technical gate only. The exact survivors
+    are coupled sensory-central-motor coordinates, not independent family values,
+    a preferred lineage, a physiological set or a behaviorally validated model.
+
 behavior_targets: []
 scenario_splits:
   train: []
@@ -357,7 +381,7 @@ provenance:
   assumptions:
     - Neutral stability is an engineering target, not an emergent-behavior claim.
 
-validation: FH07a_138_of_138_finite_18_unranked_neural_technical_survivors_zero_body_outcomes_FH07b_physical_gate_open
+validation: FH07_complete_32_physical_composites_all_18_parents_exercised_23_four_branch_92_episodes_9_guard_blocked_11_unranked_exact_survivors_zero_named_behavior
 blocked_reason: >-
   The complete measurement contract, exact schedule, earlier implementation
   sentinels and the full
@@ -407,16 +431,18 @@ blocked_reason: >-
   but deliberately freezes no marginal family: sensory, central and motor factors
   remain coupled by member, while all six basal families are marked not exercised.
   This closes reproducibility of propagation, not local or global calibration.
-  FH-07a now supersedes that historical readiness path for the active roadmap:
+  FH-07a superseded that historical readiness path for the active roadmap:
   23 behavior-naive pairwise profiles crossed with three population anchors and
   two basal-native mirrors produce 138 paired neural rows. All are finite and 18
   exact rows pass locked motor-response, occupancy and post-pulse recovery checks.
-  No body observable was computed. These rows remain coupled, unranked technical
-  coordinates; physical boundedness, recovery and complete FH-07 acceptance are
-  still open.
+  No body observable was computed. FH-07b then exercises every one of those 18
+  parents under 32 outcome-blind pairwise physical composites. Twenty-three
+  composites complete all four live/replay/open/closed branches (92 episodes),
+  nine stop before application at the direct-MOTOR guard, and eleven exact
+  composites pass the locked feedback and non-amplification checks. The survivors
+  remain coupled and unranked; this closes the scoped short-horizon technical gate,
+  not global stability, physiology or behavior.
 next_action: >-
-  Execute FH-07b over all 18 retained exact neural rows with the complete v1
-  measurement contract, frozen mechanics and preregistered generic physical
-  perturbations. Cover remaining sensory and motor axes by an outcome-blind,
-  cost-bounded schedule. Retain failures and survivors without ranking; do not
-  inspect or optimize a named action, pose, attractive motion or held-out result.
+  Freeze the FH-07 semantic ensemble and proceed to FH-08. Lock the separately
+  sourced evaluation_only protocol, sham, mirrors, seeds, metrics, thresholds,
+  mechanism coverage and topology controls before viewing any held-out response.

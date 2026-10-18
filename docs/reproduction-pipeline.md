@@ -312,6 +312,15 @@ trajectory, named action or held-out response. Reproducing 18 survivors does not
 promote physiology or complete FH-07; the next command must be the separately
 preregistered FH-07b physical gate over every retained row.
 
+`front_leg_neutral_embodied_regime.bat` executes that FH-07b gate. It reconstructs
+32 outcome-blind pairwise physical composites and covers every one of the 18
+FH-07a parents. The registered result contains 23 complete four-branch composites
+(92 physical episodes), nine preapplication direct-MOTOR guard blocks and 11
+exact unranked survivors. Reproduction must preserve those failures: do not clip
+commands, normalize convergent routes, rank body motion or substitute a visually
+attractive member. A successful rerun closes FH-07 only as short-horizon technical
+stability; the separately sourced FH-08 evaluation protocol is still not locked.
+
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and
 validates true COM, joint limits, physical jerk, contacts/forces, a declared

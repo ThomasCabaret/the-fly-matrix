@@ -335,9 +335,17 @@ population anchors and both basal-native mirrors yields 138 generic-pulse/sham
 rows (276 runtime instances). The current result is finite for every row and
 retains 18 exact rows that pass locked motor-response, event-occupancy and
 post-pulse-recovery checks. They are not ranked, are not physiological bounds and
-consume no body pose, trajectory or behavior. FH-07 remains open until FH-07b
-executes all 18 retained rows under generic physical perturbations with frozen
-mechanics and outcome-blind coverage of the remaining sensory/motor axes.
+consume no body pose, trajectory or behavior.
+
+Run `front_leg_neutral_embodied_regime.bat` to reproduce FH-07b. Its frozen
+32-profile design covers pairwise the eight source paths, three motor classes,
+three temporal regions, three routing strata, three bridge gains and four generic
+signed perturbations, while assigning all 18 FH-07a rows before body outcomes are
+seen. Twenty-three composites complete all four physical branches (92 episodes),
+nine are blocked before application by the direct-MOTOR guard, and 11 exact
+composites pass the locked feedback/non-amplification checks. They remain an
+unranked engineering ensemble; this closes scoped FH-07 technical stability, not
+physiology or behavior. FH-08 must lock the evaluation-only protocol before use.
 
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO

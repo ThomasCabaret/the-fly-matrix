@@ -1,0 +1,2701 @@
+schema_version: 1
+id: runner_result.front_leg_neutral_embodied_regime.v0
+campaign_id: campaign.front_leg_neutral_embodied_regime.v0
+status: accepted_nonempty_neutral_embodied_technical_ensemble_FH07_complete
+completed_at: '2026-10-18T11:35:57.274728+00:00'
+command: front_leg_neutral_embodied_regime.bat
+claim_label: FH-07B TECHNICAL EMBODIED REGIME / FROZEN MECHANICS / NO BEHAVIOR
+frozen_input_sha256:
+  runtime: aaaa9d8645bfe260f7bae2f91ec2decc5c372d7cb8861e39558a59a516964c93
+  fh06_campaign: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  fh07a_result: d99c8b820ab1e8ba077dbfe71f8bb575964e1383ea3461433fece436fddf0fd2
+  fh07a_parameter_set: 82a09d43a053c24d8586c3c34c0bf27b688e0385f8be5e0e67fcc6a8f8f41b21
+  measurement_contract: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+  actuator_contract: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  motor_temporal: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+  motor_slow: 7bee1dcf15511fa8d8f70ef9e29c7b456454df9f98de0765c909b07e80618f02
+  motor_bridge: a464d4a8f8611a978c2045b8c2cf1734f6cc0668dc422a0176c2b816a45a2dfd
+  motor_routes: a4ebad77da9ce2176d63824195eb017f0543090bdeeb1151ebb3f11d5e163352
+design:
+  physical_factor_profiles: 32
+  neural_parent_rows: 18
+  physical_composites: 32
+  physical_episode_branches_completed: 92
+  physical_composites_blocked_preapplication: 9
+  pairwise_coverage:
+    complete: true
+    pairs:
+      source_path_id__x__motor_class:
+        observed: 24
+        expected: 24
+        complete: true
+      source_path_id__x__temporal_selector:
+        observed: 24
+        expected: 24
+        complete: true
+      source_path_id__x__route_selector:
+        observed: 24
+        expected: 24
+        complete: true
+      source_path_id__x__bridge_selector:
+        observed: 24
+        expected: 24
+        complete: true
+      source_path_id__x__perturbation_id:
+        observed: 32
+        expected: 32
+        complete: true
+      motor_class__x__temporal_selector:
+        observed: 9
+        expected: 9
+        complete: true
+      motor_class__x__route_selector:
+        observed: 9
+        expected: 9
+        complete: true
+      motor_class__x__bridge_selector:
+        observed: 9
+        expected: 9
+        complete: true
+      motor_class__x__perturbation_id:
+        observed: 12
+        expected: 12
+        complete: true
+      temporal_selector__x__route_selector:
+        observed: 9
+        expected: 9
+        complete: true
+      temporal_selector__x__bridge_selector:
+        observed: 9
+        expected: 9
+        complete: true
+      temporal_selector__x__perturbation_id:
+        observed: 12
+        expected: 12
+        complete: true
+      route_selector__x__bridge_selector:
+        observed: 9
+        expected: 9
+        complete: true
+      route_selector__x__perturbation_id:
+        observed: 12
+        expected: 12
+        complete: true
+      bridge_selector__x__perturbation_id:
+        observed: 12
+        expected: 12
+        complete: true
+physical_protocol:
+  device: cpu
+  seed: 882103
+  steps: 800
+  timestep_s: 0.0001
+  duration_s: 0.08
+  record_stride: 20
+  recorded_frames: 40
+  perturbation_step: 200
+  direct_motor_abs_max: 0.01
+  mechanics_parameters_frozen: true
+  actuator_type_frozen: MOTOR
+  branches_per_composite:
+  - baseline_live
+  - unperturbed_frozen_command_replay
+  - perturbed_frozen_command_open_loop
+  - perturbed_live_feedback
+acceptance:
+  replay_max_abs_error: 1.0e-12
+  perturbation_qvel_peak_min: 1.0e-08
+  command_adaptation_abs_min: 1.0e-15
+  closed_open_state_gap_abs_min: 1.0e-15
+  closed_vs_open_relative_tolerance: 0.05
+  closed_vs_open_absolute_tolerance: 1.0e-09
+  allow_motion_magnitude_to_rank_candidate: false
+  allow_named_pose_or_action_metric: false
+  interpretation: A passing exact composite is finite, replayable, physically perturbed,
+    closes the body-to-FeCO feedback path and does not amplify final qpos/qvel deviation
+    or failure masks relative to its own frozen-command branch. These engineering
+    checks do not reward a direction, pose, movement amplitude or named response.
+rows:
+- row_id: physical_000__graded_heavy_boundary_extreme__all_graded_candidate__regime_001
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_001
+  physical_profile:
+    source_path_id: source_00
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: left_positive
+    profile_id: regime_000
+  perturbation: &id003
+    perturbation_id: left_positive
+    joint_name: flybody/lf_trochanterfemur-lf_tibia-pitch
+    delta_rad_s: 2.0
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 39
+    source_nonzero_steps: 800
+    command_nonzero_steps: 469
+    command_abs_max: 0.003569630400541909
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 39
+    source_nonzero_steps: 800
+    command_nonzero_steps: 469
+    command_abs_max: 0.003569630400541909
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.87862723385813
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008473940428943532
+        final_l2: 0.0008469194117752288
+        final_over_peak: 0.9994398932549688
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008682828567337224
+        final_l2: 0.0008591406141780949
+        final_over_peak: 0.9894708936324983
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.87862723385813
+        final_l2: 0.39746513269743705
+        final_over_peak: 0.10247572368589605
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008473940428943532
+        final_l2: 0.0008469194117752288
+        final_over_peak: 0.9994398932549688
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008682828567337224
+        final_l2: 0.0008591406141780949
+        final_over_peak: 0.9894708936324983
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.87862723385813
+        final_l2: 0.39746513269743705
+        final_over_peak: 0.10247572368589605
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  physical_profile:
+    source_path_id: source_00
+    motor_class: intermediate
+    temporal_selector: middle
+    route_selector: middle
+    bridge_selector: middle
+    perturbation_id: left_negative
+    profile_id: regime_001
+  perturbation: &id002
+    perturbation_id: left_negative
+    joint_name: flybody/lf_trochanterfemur-lf_tibia-pitch
+    delta_rad_s: -2.0
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 13
+    source_nonzero_steps: 800
+    command_nonzero_steps: 361
+    command_abs_max: 0.0013501950458067674
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  closed_chain:
+    motor_events: 13
+    source_nonzero_steps: 800
+    command_nonzero_steps: 360
+    command_abs_max: 0.0013512897542402298
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.3738729027076717
+    feedback_command_adaptation_abs_max: 1.1583452806348448e-05
+    closed_open_state_gap_abs_max: 1.508290924356892e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 7.089917529339846e-05
+        final_over_peak: 0.32183362178243435
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006896410779128129
+        final_l2: 0.0005630715119578319
+        final_over_peak: 0.8164703785655552
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.3738729027076717
+        final_l2: 0.5406840041614516
+        final_over_peak: 0.1602561862148187
+        stable_half_recovery_frame_after_perturbation: 20
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 7.094592111299325e-05
+        final_over_peak: 0.3220458157375984
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006896360520989102
+        final_l2: 0.0005630631363781434
+        final_over_peak: 0.8164641837741202
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.373872939781066
+        final_l2: 0.5406840890626006
+        final_over_peak: 0.16025620961816248
+        stable_half_recovery_frame_after_perturbation: 20
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_002__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  physical_profile:
+    source_path_id: source_00
+    motor_class: slow
+    temporal_selector: high
+    route_selector: high
+    bridge_selector: high
+    perturbation_id: right_positive
+    profile_id: regime_002
+  perturbation: &id004
+    perturbation_id: right_positive
+    joint_name: flybody/rf_trochanterfemur-rf_tibia-pitch
+    delta_rad_s: 2.0
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 6
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  closed_chain:
+    motor_events: 6
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 2.695601539597449
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_003__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  physical_profile:
+    source_path_id: source_01
+    motor_class: fast
+    temporal_selector: low
+    route_selector: middle
+    bridge_selector: high
+    perturbation_id: right_negative
+    profile_id: regime_003
+  perturbation: &id001
+    perturbation_id: right_negative
+    joint_name: flybody/rf_trochanterfemur-rf_tibia-pitch
+    delta_rad_s: -2.0
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010031621035115765
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  physical_profile:
+    source_path_id: source_02
+    motor_class: intermediate
+    temporal_selector: middle
+    route_selector: high
+    bridge_selector: low
+    perturbation_id: right_negative
+    profile_id: regime_004
+  perturbation: *id001
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 6
+    source_nonzero_steps: 800
+    command_nonzero_steps: 314
+    command_abs_max: 0.00016988641068003317
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  closed_chain:
+    motor_events: 6
+    source_nonzero_steps: 800
+    command_nonzero_steps: 313
+    command_abs_max: 0.00017015914620587566
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.8777357415700973
+    feedback_command_adaptation_abs_max: 3.2960347737466436e-06
+    closed_open_state_gap_abs_max: 1.0351314731218975e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008683983907890474
+        final_l2: 0.0008683983907890474
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0009884347427403881
+        final_l2: 0.0009721067194827126
+        final_over_peak: 0.9834809294416272
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8777357415700973
+        final_l2: 0.4082091535644245
+        final_over_peak: 0.10526997731906826
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008684009838196067
+        final_l2: 0.0008684009838196067
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0009884348008164087
+        final_l2: 0.0009721075270941611
+        final_over_peak: 0.9834816887175949
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8777357415700973
+        final_l2: 0.40820914474111225
+        final_over_peak: 0.10526997504369087
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_005__graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  physical_profile:
+    source_path_id: source_03
+    motor_class: slow
+    temporal_selector: high
+    route_selector: low
+    bridge_selector: middle
+    perturbation_id: right_negative
+    profile_id: regime_005
+  perturbation: *id001
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 100
+    source_nonzero_steps: 800
+    command_nonzero_steps: 55
+    command_abs_max: 3.064340739475985e-05
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 100
+    source_nonzero_steps: 800
+    command_nonzero_steps: 55
+    command_abs_max: 3.064340739475985e-05
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.8777357415700973
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008671619850864736
+        final_l2: 0.0008671619850864736
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.000988435843307965
+        final_l2: 0.0009732607129654897
+        final_over_peak: 0.9846473289640233
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8777357415700973
+        final_l2: 0.3770536638234925
+        final_over_peak: 0.09723552324141181
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008671619850864736
+        final_l2: 0.0008671619850864736
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.000988435843307965
+        final_l2: 0.0009732607129654897
+        final_over_peak: 0.9846473289640233
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8777357415700973
+        final_l2: 0.3770536638234925
+        final_over_peak: 0.09723552324141181
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_006__mixed_pairwise_profile__all_graded_candidate__regime_005
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_005
+  physical_profile:
+    source_path_id: source_04
+    motor_class: fast
+    temporal_selector: low
+    route_selector: high
+    bridge_selector: middle
+    perturbation_id: left_negative
+    profile_id: regime_006
+  perturbation: *id002
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010072780166351589
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_007__mixed_pairwise_profile__all_graded_candidate__regime_006
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_006
+  physical_profile:
+    source_path_id: source_04
+    motor_class: intermediate
+    temporal_selector: middle
+    route_selector: low
+    bridge_selector: high
+    perturbation_id: left_positive
+    profile_id: regime_007
+  perturbation: *id003
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.01010794049184168
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_008__mixed_pairwise_profile__all_graded_candidate__regime_007
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_007
+  physical_profile:
+    source_path_id: source_05
+    motor_class: slow
+    temporal_selector: high
+    route_selector: middle
+    bridge_selector: low
+    perturbation_id: left_positive
+    profile_id: regime_008
+  perturbation: *id003
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 17
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  closed_chain:
+    motor_events: 17
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.879613560982423
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008480946906092454
+        final_l2: 0.0008480946906092454
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008686862712679364
+        final_l2: 0.0008646188551467623
+        final_over_peak: 0.9953177386869055
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.879613560982423
+        final_l2: 0.44312129045199194
+        final_over_peak: 0.11421789399555085
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008480946906092454
+        final_l2: 0.0008480946906092454
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008686862712679364
+        final_l2: 0.0008646188551467623
+        final_over_peak: 0.9953177386869055
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.879613560982423
+        final_l2: 0.44312129045199194
+        final_over_peak: 0.11421789399555085
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_009__mixed_pairwise_profile__all_graded_candidate__regime_013
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_013
+  physical_profile:
+    source_path_id: source_03
+    motor_class: fast
+    temporal_selector: middle
+    route_selector: middle
+    bridge_selector: low
+    perturbation_id: right_positive
+    profile_id: regime_009
+  perturbation: *id004
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 53
+    source_nonzero_steps: 800
+    command_nonzero_steps: 594
+    command_abs_max: 0.005848941862420805
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  closed_chain:
+    motor_events: 53
+    source_nonzero_steps: 800
+    command_nonzero_steps: 594
+    command_abs_max: 0.005848941862420805
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.391623468109703
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00024909680001416356
+        final_l2: 0.00023816707673351764
+        final_over_peak: 0.9561225865606284
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0006794337291833697
+        final_l2: 0.0005571772246380029
+        final_over_peak: 0.820061178457669
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.391623468109703
+        final_l2: 0.09440686729959952
+        final_over_peak: 0.02783530311877943
+        stable_half_recovery_frame_after_perturbation: 20
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00024909680001416356
+        final_l2: 0.00023816707673351764
+        final_over_peak: 0.9561225865606284
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0006794337291833697
+        final_l2: 0.0005571772246380029
+        final_over_peak: 0.820061178457669
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.391623468109703
+        final_l2: 0.09440686729959952
+        final_over_peak: 0.02783530311877943
+        stable_half_recovery_frame_after_perturbation: 20
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_014
+  physical_profile:
+    source_path_id: source_05
+    motor_class: intermediate
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: middle
+    perturbation_id: right_positive
+    profile_id: regime_010
+  perturbation: *id004
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 20
+    source_nonzero_steps: 800
+    command_nonzero_steps: 482
+    command_abs_max: 0.0009422570327365243
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 20
+    source_nonzero_steps: 800
+    command_nonzero_steps: 481
+    command_abs_max: 0.0009458850631464933
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 2.6955990733689146
+    feedback_command_adaptation_abs_max: 4.169094756940775e-05
+    closed_open_state_gap_abs_max: 2.9185474165638325e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173928337940432
+        final_l2: 4.756097518428427e-05
+        final_over_peak: 0.2246204597710964
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281603254509033
+        final_l2: 0.0005136358087107376
+        final_over_peak: 0.8176826646000633
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.6955990733689146
+        final_l2: 0.45365021306532555
+        final_over_peak: 0.16829291030225837
+        stable_half_recovery_frame_after_perturbation: 19
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173980824057818
+        final_l2: 4.756667392433928e-05
+        final_over_peak: 0.22464681686258142
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281577226990732
+        final_l2: 0.0005136315163009555
+        final_over_peak: 0.8176792193113211
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.6955991407692097
+        final_l2: 0.45364970171702534
+        final_over_peak: 0.16829271639683524
+        stable_half_recovery_frame_after_perturbation: 19
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_011__mixed_pairwise_profile__all_graded_candidate__regime_018
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_018
+  physical_profile:
+    source_path_id: source_01
+    motor_class: intermediate
+    temporal_selector: high
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: left_negative
+    profile_id: regime_011
+  perturbation: *id002
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 235
+    source_nonzero_steps: 800
+    command_nonzero_steps: 691
+    command_abs_max: 0.0029253713915300553
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 235
+    source_nonzero_steps: 800
+    command_nonzero_steps: 691
+    command_abs_max: 0.0029253713915300553
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.38120590905327
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00022017366120345467
+        final_l2: 6.331428354891392e-05
+        final_over_peak: 0.28756520286233256
+        stable_half_recovery_frame_after_perturbation: 14
+      qpos:
+        peak_l2: 0.0006454489433596124
+        final_l2: 0.0005848379356248311
+        final_over_peak: 0.9060948067878208
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.38120590905327
+        final_l2: 0.17436251563353394
+        final_over_peak: 0.051568144716260436
+        stable_half_recovery_frame_after_perturbation: 20
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00022017366120345467
+        final_l2: 6.331428354891392e-05
+        final_over_peak: 0.28756520286233256
+        stable_half_recovery_frame_after_perturbation: 14
+      qpos:
+        peak_l2: 0.0006454489433596124
+        final_l2: 0.0005848379356248311
+        final_over_peak: 0.9060948067878208
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.38120590905327
+        final_l2: 0.17436251563353394
+        final_over_peak: 0.051568144716260436
+        stable_half_recovery_frame_after_perturbation: 20
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_020
+  physical_profile:
+    source_path_id: source_01
+    motor_class: slow
+    temporal_selector: middle
+    route_selector: high
+    bridge_selector: middle
+    perturbation_id: left_positive
+    profile_id: regime_012
+  perturbation: *id003
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 29
+    source_nonzero_steps: 800
+    command_nonzero_steps: 123
+    command_abs_max: 6.836613251618673e-05
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  closed_chain:
+    motor_events: 29
+    source_nonzero_steps: 800
+    command_nonzero_steps: 122
+    command_abs_max: 6.836613251618673e-05
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.879613560982423
+    feedback_command_adaptation_abs_max: 9.879401404817801e-06
+    closed_open_state_gap_abs_max: 8.082719127406462e-06
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.000848094707811176
+        final_l2: 0.000848094707811176
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008686862712679364
+        final_l2: 0.0008646188511911948
+        final_over_peak: 0.9953177341334003
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.879613560982423
+        final_l2: 0.44311745373302347
+        final_over_peak: 0.11421690505195939
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008480953600177104
+        final_l2: 0.0008480953600177104
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008686862712679364
+        final_l2: 0.0008646196390536563
+        final_over_peak: 0.9953186410919739
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.879613560982423
+        final_l2: 0.44311749788993526
+        final_over_peak: 0.11421691643374035
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_013__mixed_pairwise_profile__all_event_candidate__regime_002
+  neural_parent_row_id: mixed_pairwise_profile__all_event_candidate__regime_002
+  physical_profile:
+    source_path_id: source_02
+    motor_class: slow
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: high
+    perturbation_id: left_negative
+    profile_id: regime_013
+  perturbation: *id002
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 132
+    source_nonzero_steps: 800
+    command_nonzero_steps: 147
+    command_abs_max: 0.0027952766222144516
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 132
+    source_nonzero_steps: 800
+    command_nonzero_steps: 147
+    command_abs_max: 0.0027952766222144516
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.373859829929303
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 6.371556334488721e-05
+        final_over_peak: 0.28922495121184433
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006852896750789788
+        final_l2: 0.0005138554294934505
+        final_over_peak: 0.7498368181809091
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.373859829929303
+        final_l2: 0.36862199243007
+        final_over_peak: 0.10925824160211013
+        stable_half_recovery_frame_after_perturbation: 20
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 6.371556334488721e-05
+        final_over_peak: 0.28922495121184433
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006852896750789788
+        final_l2: 0.0005138554294934505
+        final_over_peak: 0.7498368181809091
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.373859829929303
+        final_l2: 0.36862199243007
+        final_over_peak: 0.10925824160211013
+        stable_half_recovery_frame_after_perturbation: 20
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_014__mixed_pairwise_profile__all_event_candidate__regime_006
+  neural_parent_row_id: mixed_pairwise_profile__all_event_candidate__regime_006
+  physical_profile:
+    source_path_id: source_02
+    motor_class: fast
+    temporal_selector: high
+    route_selector: middle
+    bridge_selector: middle
+    perturbation_id: left_positive
+    profile_id: regime_014
+  perturbation: *id003
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010077075154645187
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+  neural_parent_row_id: mixed_pairwise_profile__all_event_candidate__regime_007
+  physical_profile:
+    source_path_id: source_03
+    motor_class: intermediate
+    temporal_selector: low
+    route_selector: high
+    bridge_selector: high
+    perturbation_id: left_positive
+    profile_id: regime_015
+  perturbation: *id003
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 15
+    source_nonzero_steps: 800
+    command_nonzero_steps: 419
+    command_abs_max: 0.0033624457093018546
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  closed_chain:
+    motor_events: 15
+    source_nonzero_steps: 800
+    command_nonzero_steps: 419
+    command_abs_max: 0.0033111565498028317
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 4.175280881773969
+    feedback_command_adaptation_abs_max: 0.000485920837725564
+    closed_open_state_gap_abs_max: 0.0009448112208576467
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.000877124321820171
+        final_l2: 0.000877124321820171
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.000993265962577564
+        final_l2: 0.0009191854358763006
+        final_over_peak: 0.9254172301353994
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 4.175280881773969
+        final_l2: 0.533716696895269
+        final_over_peak: 0.12782773471003142
+        stable_half_recovery_frame_after_perturbation: 19
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008771296100651712
+        final_l2: 0.0008771296100651712
+        final_over_peak: 1.0
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.000993265962577564
+        final_l2: 0.0009191933587348215
+        final_over_peak: 0.9254252067084618
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 4.175280881773969
+        final_l2: 0.5337180101413266
+        final_over_peak: 0.12782804923882476
+        stable_half_recovery_frame_after_perturbation: 19
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_016__mixed_pairwise_profile__all_event_candidate__regime_014
+  neural_parent_row_id: mixed_pairwise_profile__all_event_candidate__regime_014
+  physical_profile:
+    source_path_id: source_04
+    motor_class: slow
+    temporal_selector: high
+    route_selector: middle
+    bridge_selector: low
+    perturbation_id: right_positive
+    profile_id: regime_016
+  perturbation: *id004
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 20
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  closed_chain:
+    motor_events: 20
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 2.695601539597449
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_017__mixed_pairwise_profile__all_event_candidate__regime_020
+  neural_parent_row_id: mixed_pairwise_profile__all_event_candidate__regime_020
+  physical_profile:
+    source_path_id: source_05
+    motor_class: fast
+    temporal_selector: middle
+    route_selector: high
+    bridge_selector: high
+    perturbation_id: left_negative
+    profile_id: regime_017
+  perturbation: *id002
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010124829764267186
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_018__graded_heavy_boundary_extreme__all_graded_candidate__regime_001
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_001
+  physical_profile:
+    source_path_id: source_06
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: left_positive
+    profile_id: regime_018
+  perturbation: *id003
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 39
+    source_nonzero_steps: 800
+    command_nonzero_steps: 468
+    command_abs_max: 0.003562649279118252
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 39
+    source_nonzero_steps: 800
+    command_nonzero_steps: 468
+    command_abs_max: 0.003562649279118252
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.878626263476931
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008473941481065265
+        final_l2: 0.0008469195059363396
+        final_over_peak: 0.9994398802832808
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008682829805088539
+        final_l2: 0.0008591408318423944
+        final_over_peak: 0.9894710032654311
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.878626263476931
+        final_l2: 0.39746503290131535
+        final_over_peak: 0.10247572359421253
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008473941481065265
+        final_l2: 0.0008469195059363396
+        final_over_peak: 0.9994398802832808
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008682829805088539
+        final_l2: 0.0008591408318423944
+        final_over_peak: 0.9894710032654311
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.878626263476931
+        final_l2: 0.39746503290131535
+        final_over_peak: 0.10247572359421253
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  physical_profile:
+    source_path_id: source_06
+    motor_class: intermediate
+    temporal_selector: middle
+    route_selector: middle
+    bridge_selector: middle
+    perturbation_id: left_negative
+    profile_id: regime_019
+  perturbation: *id002
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 12
+    source_nonzero_steps: 800
+    command_nonzero_steps: 352
+    command_abs_max: 0.0013657247380809649
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  closed_chain:
+    motor_events: 12
+    source_nonzero_steps: 800
+    command_nonzero_steps: 351
+    command_abs_max: 0.0013651424229895106
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.3738735569414686
+    feedback_command_adaptation_abs_max: 1.4713671973341032e-05
+    closed_open_state_gap_abs_max: 2.111793115122662e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 7.090566589187478e-05
+        final_over_peak: 0.3218630846472212
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006896452680415511
+        final_l2: 0.0005630795758507672
+        final_over_peak: 0.8164771106887979
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.3738735569414686
+        final_l2: 0.5406878524141816
+        final_over_peak: 0.16025729574297787
+        stable_half_recovery_frame_after_perturbation: 20
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 7.096846540004537e-05
+        final_over_peak: 0.3221481513363196
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006896392458803655
+        final_l2: 0.0005630520234663188
+        final_over_peak: 0.81644428856068
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.373873502032071
+        final_l2: 0.5406879125882053
+        final_over_peak: 0.16025731618644
+        stable_half_recovery_frame_after_perturbation: 20
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_020__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  physical_profile:
+    source_path_id: source_06
+    motor_class: slow
+    temporal_selector: high
+    route_selector: high
+    bridge_selector: high
+    perturbation_id: right_positive
+    profile_id: regime_020
+  perturbation: *id004
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 5
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  closed_chain:
+    motor_events: 5
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 2.695601539597449
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  physical_profile:
+    source_path_id: source_07
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: left_positive
+    profile_id: regime_021
+  perturbation: *id003
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 24
+    source_nonzero_steps: 800
+    command_nonzero_steps: 432
+    command_abs_max: 0.003101302740187475
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 24
+    source_nonzero_steps: 800
+    command_nonzero_steps: 431
+    command_abs_max: 0.0031070684773151754
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.878997478721225
+    feedback_command_adaptation_abs_max: 3.462757855009896e-05
+    closed_open_state_gap_abs_max: 2.9609578784450807e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008474121537027715
+        final_l2: 0.0008469024389010038
+        final_over_peak: 0.9993985042584762
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008684428386171583
+        final_l2: 0.0008591629765398879
+        final_over_peak: 0.9893143662833964
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.878997478721225
+        final_l2: 0.3974482039859396
+        final_over_peak: 0.10246157832434707
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008474206112889675
+        final_l2: 0.0008469084496977091
+        final_over_peak: 0.9993956229239229
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0008684505672830117
+        final_l2: 0.0008591753490215281
+        final_over_peak: 0.9893198086213456
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8789998850679925
+        final_l2: 0.39744831664931146
+        final_over_peak: 0.10246154380650228
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  physical_profile:
+    source_path_id: source_07
+    motor_class: intermediate
+    temporal_selector: middle
+    route_selector: middle
+    bridge_selector: middle
+    perturbation_id: left_negative
+    profile_id: regime_022
+  perturbation: *id002
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 5
+    source_nonzero_steps: 800
+    command_nonzero_steps: 303
+    command_abs_max: 0.0007719460969681031
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  closed_chain:
+    motor_events: 5
+    source_nonzero_steps: 800
+    command_nonzero_steps: 302
+    command_abs_max: 0.0007719460969681031
+    route_parameter_ids:
+    - parameter.motor.edge.6400c1b39d11e0b8
+    - parameter.motor.edge.53108f66a1491145
+    - parameter.motor.edge.0fec7fa81c6f4599
+    - parameter.motor.edge.f8c9bc92181ea55a
+    - parameter.motor.edge.d384174d945658c1
+    - parameter.motor.edge.e878e23e92f34ceb
+    - parameter.motor.edge.c72deac13a11ebfc
+    - parameter.motor.edge.246875eab7ab6eed
+    - parameter.motor.edge.98f4664645093edc
+    - parameter.motor.edge.9d7f55c2bf795426
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.373860256305164
+    feedback_command_adaptation_abs_max: 1.2562317347705873e-05
+    closed_open_state_gap_abs_max: 1.58950490704024e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 7.715583725161646e-05
+        final_over_peak: 0.35023457524837914
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006896728585948192
+        final_l2: 0.0005574236377713263
+        final_over_peak: 0.8082435473929693
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.373860256305164
+        final_l2: 0.3866020489743274
+        final_over_peak: 0.11458745164439894
+        stable_half_recovery_frame_after_perturbation: 20
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00022029760253367082
+        final_l2: 7.719046307192266e-05
+        final_over_peak: 0.35039175272061657
+        stable_half_recovery_frame_after_perturbation: 15
+      qpos:
+        peak_l2: 0.0006896703356642347
+        final_l2: 0.0005574081493577508
+        final_over_peak: 0.8082240463784779
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.373860196096302
+        final_l2: 0.38660197774987687
+        final_over_peak: 0.11458743257862065
+        stable_half_recovery_frame_after_perturbation: 20
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_023__graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  neural_parent_row_id: graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  physical_profile:
+    source_path_id: source_07
+    motor_class: slow
+    temporal_selector: high
+    route_selector: high
+    bridge_selector: high
+    perturbation_id: right_positive
+    profile_id: regime_023
+  perturbation: *id004
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 79
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  closed_chain:
+    motor_events: 79
+    source_nonzero_steps: 800
+    command_nonzero_steps: 0
+    command_abs_max: 0.0
+    route_parameter_ids:
+    - parameter.motor.edge.3d097f39873903df
+    - parameter.motor.edge.c6da75c16e87e977
+    - parameter.motor.edge.38f2e731862cc8db
+    - parameter.motor.edge.1e35b71dc0a640b5
+    - parameter.motor.edge.88b57e0cb9d5441e
+    - parameter.motor.edge.aa3b86fb486df41a
+    - parameter.motor.edge.673c2b863af37530
+    - parameter.motor.edge.98d140e76f20ac2b
+    - parameter.motor.edge.f36e6d301162a169
+    - parameter.motor.edge.0a9ad312e35f9a34
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 2.695601539597449
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.91364437312522e-05
+        final_over_peak: 0.23206150638025133
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281734943160989
+        final_l2: 0.0005159375984608223
+        final_over_peak: 0.821329780911133
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.695601539597449
+        final_l2: 0.3852950585784606
+        final_over_peak: 0.14293472270237653
+        stable_half_recovery_frame_after_perturbation: 19
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_024__mixed_pairwise_profile__all_graded_candidate__regime_005
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_005
+  physical_profile:
+    source_path_id: source_00
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: right_negative
+    profile_id: regime_024
+  perturbation: *id001
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010002267548828523
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_025__mixed_pairwise_profile__all_graded_candidate__regime_006
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_006
+  physical_profile:
+    source_path_id: source_01
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: right_positive
+    profile_id: regime_025
+  perturbation: *id004
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010033474713540737
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_007
+  physical_profile:
+    source_path_id: source_02
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: right_positive
+    profile_id: regime_026
+  perturbation: *id004
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 18
+    source_nonzero_steps: 800
+    command_nonzero_steps: 420
+    command_abs_max: 0.0028761265244906897
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 18
+    source_nonzero_steps: 800
+    command_nonzero_steps: 418
+    command_abs_max: 0.002883123884155636
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 2.6956031705031425
+    feedback_command_adaptation_abs_max: 0.00013614288504756812
+    closed_open_state_gap_abs_max: 0.00011343158481705307
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.9107726538810616e-05
+        final_over_peak: 0.23192588087643068
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281511886194421
+        final_l2: 0.0005159781983561033
+        final_over_peak: 0.8214235803487471
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.6956031705031425
+        final_l2: 0.38538787683736103
+        final_over_peak: 0.1429690694292466
+        stable_half_recovery_frame_after_perturbation: 19
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00021173888120306437
+        final_l2: 4.911263046727467e-05
+        final_over_peak: 0.23194904114079115
+        stable_half_recovery_frame_after_perturbation: 13
+      qpos:
+        peak_l2: 0.0006281347229745236
+        final_l2: 0.0005159314292850317
+        final_over_peak: 0.8213706557119551
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 2.6956032747803538
+        final_l2: 0.3853935619345419
+        final_over_peak: 0.1429711729245265
+        stable_half_recovery_frame_after_perturbation: 19
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_027__mixed_pairwise_profile__all_graded_candidate__regime_013
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_013
+  physical_profile:
+    source_path_id: source_03
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: left_negative
+    profile_id: regime_027
+  perturbation: *id002
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 53
+    source_nonzero_steps: 800
+    command_nonzero_steps: 594
+    command_abs_max: 0.0044648119211518015
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 53
+    source_nonzero_steps: 800
+    command_nonzero_steps: 594
+    command_abs_max: 0.0044648119211518015
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.3721266843930207
+    feedback_command_adaptation_abs_max: 0.0
+    closed_open_state_gap_abs_max: 0.0
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.00022020310047792503
+        final_l2: 6.341072158173638e-05
+        final_over_peak: 0.28796470823576437
+        stable_half_recovery_frame_after_perturbation: 14
+      qpos:
+        peak_l2: 0.000645440098025935
+        final_l2: 0.0005847766439753318
+        final_over_peak: 0.9060122632043762
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.3721266843930207
+        final_l2: 0.17415479156973612
+        final_over_peak: 0.05164538816876739
+        stable_half_recovery_frame_after_perturbation: 20
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.00022020310047792503
+        final_l2: 6.341072158173638e-05
+        final_over_peak: 0.28796470823576437
+        stable_half_recovery_frame_after_perturbation: 14
+      qpos:
+        peak_l2: 0.000645440098025935
+        final_l2: 0.0005847766439753318
+        final_over_peak: 0.9060122632043762
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.3721266843930207
+        final_l2: 0.17415479156973612
+        final_over_peak: 0.05164538816876739
+        stable_half_recovery_frame_after_perturbation: 20
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: false
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: false
+      feedback_changes_physics: false
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks:
+    - feedback_command_adapts
+    - feedback_changes_physics
+- row_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_014
+  physical_profile:
+    source_path_id: source_04
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: right_negative
+    profile_id: regime_028
+  perturbation: *id001
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 20
+    source_nonzero_steps: 800
+    command_nonzero_steps: 482
+    command_abs_max: 0.003988742339545985
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 20
+    source_nonzero_steps: 800
+    command_nonzero_steps: 481
+    command_abs_max: 0.003996931012306029
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.8771295959731003
+    feedback_command_adaptation_abs_max: 6.231712833484155e-05
+    closed_open_state_gap_abs_max: 4.80282020452541e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008679728480161864
+        final_l2: 0.0008671844270337968
+        final_over_peak: 0.9990916524817665
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0009881986075947267
+        final_l2: 0.0009678495601140769
+        final_over_peak: 0.9794079375094654
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8771295959731003
+        final_l2: 0.5398381619366939
+        final_over_peak: 0.13923655337633942
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008679598294605805
+        final_l2: 0.0008671695092476208
+        final_over_peak: 0.999089450702516
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.0009881716440172741
+        final_l2: 0.0009678207458539389
+        final_over_peak: 0.9794055027924081
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8771353028471727
+        final_l2: 0.5398383217108698
+        final_over_peak: 0.13923638963913376
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_029__mixed_pairwise_profile__all_graded_candidate__regime_018
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_018
+  physical_profile:
+    source_path_id: source_05
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: right_negative
+    profile_id: regime_029
+  perturbation: *id001
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010020494400297682
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+- row_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+  neural_parent_row_id: mixed_pairwise_profile__all_graded_candidate__regime_020
+  physical_profile:
+    source_path_id: source_06
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: right_negative
+    profile_id: regime_030
+  perturbation: *id001
+  disposition: completed_four_branch_physical_probe
+  baseline_chain:
+    motor_events: 24
+    source_nonzero_steps: 800
+    command_nonzero_steps: 459
+    command_abs_max: 0.004249148716741497
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  closed_chain:
+    motor_events: 24
+    source_nonzero_steps: 800
+    command_nonzero_steps: 458
+    command_abs_max: 0.004240675664721252
+    route_parameter_ids:
+    - parameter.motor.edge.970ba37f9d38bd08
+    - parameter.motor.edge.88545a0c8b67dbc9
+    - parameter.motor.edge.d72da15313cca292
+    - parameter.motor.edge.6a80230df421dae8
+    - parameter.motor.edge.a15b8f165fffe89b
+    - parameter.motor.edge.961b8265537bd2a9
+    - parameter.motor.edge.86aa697dd334c3b6
+    - parameter.motor.edge.889abb26bde5f921
+    - parameter.motor.edge.5d8219ea66a149d9
+    - parameter.motor.edge.d65e21bc62bebd10
+  metrics:
+    replay_max_abs_error: 0.0
+    perturbation_qvel_peak_l2: 3.8770601549395396
+    feedback_command_adaptation_abs_max: 4.347595843030643e-05
+    closed_open_state_gap_abs_max: 2.868963856550444e-05
+    open_recovery:
+      center_of_mass:
+        peak_l2: 0.0008677973501636941
+        final_l2: 0.0008669928342307043
+        final_over_peak: 0.999072921883389
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.000988197855217741
+        final_l2: 0.0009677176853750589
+        final_over_peak: 0.9792752334620587
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.8770601549395396
+        final_l2: 0.5398502054449545
+        final_over_peak: 0.13924215355729325
+        stable_half_recovery_frame_after_perturbation: 17
+    closed_recovery:
+      center_of_mass:
+        peak_l2: 0.0008678020970946297
+        final_l2: 0.0008669971836816887
+        final_over_peak: 0.9990724689239219
+        stable_half_recovery_frame_after_perturbation: null
+      qpos:
+        peak_l2: 0.000988182544873055
+        final_l2: 0.0009677177753083939
+        final_over_peak: 0.9792904968106979
+        stable_half_recovery_frame_after_perturbation: null
+      qvel:
+        peak_l2: 3.87706901119946
+        final_l2: 0.5398502226755613
+        final_over_peak: 0.13924183993530367
+        stable_half_recovery_frame_after_perturbation: 17
+    open_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+    closed_failure_masks:
+      numerical_failure_frames: 0
+      joint_limit_violation_frames: 0
+      gross_fall_proxy_frames: 0
+  classification:
+    accepted: true
+    checks:
+      all_finite: true
+      unperturbed_replay_exact: true
+      generic_perturbation_detected: true
+      feedback_command_adapts: true
+      feedback_changes_physics: true
+      closed_qpos_not_amplified: true
+      closed_qvel_not_amplified: true
+      closed_failure_masks_not_worse: true
+    failed_checks: []
+- row_id: physical_031__mixed_pairwise_profile__all_event_candidate__regime_002
+  neural_parent_row_id: mixed_pairwise_profile__all_event_candidate__regime_002
+  physical_profile:
+    source_path_id: source_07
+    motor_class: fast
+    temporal_selector: low
+    route_selector: low
+    bridge_selector: low
+    perturbation_id: right_negative
+    profile_id: regime_031
+  perturbation: *id001
+  disposition: blocked_preapplication_direct_motor_guard
+  metrics:
+    observed_command_abs_max: 0.010010686163964722
+    allowed_command_abs_max: 0.01
+  classification:
+    accepted: false
+    checks:
+      direct_motor_guard: false
+    failed_checks:
+    - direct_motor_guard
+accepted_row_ids:
+- physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+- physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+- physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+- physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+- physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+- physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+- physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+- physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+- physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+- physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+- physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+accepted_rows: 11
+failure_counts:
+  direct_motor_guard: 9
+  feedback_changes_physics: 12
+  feedback_command_adapts: 12
+checks:
+  pairwise_physical_factor_coverage_complete: true
+  all_neural_parent_rows_executed: true
+  all_composites_accounted: true
+  four_branches_per_guard_admitted_composite: true
+  mechanics_identical_across_branches: true
+  no_named_behavior_exposure: true
+  no_topology_change: true
+  no_reference_ranking: true
+members_ranked: false
+reference_member_selected: false
+parameter_values_promoted: 0
+named_behavior_exposed: false
+wall_seconds: 364.8828054999758
+semantic_result_sha256: 035f378eca423f257f91ffec5cab33642bd6e8645fc36774c0e5450dd7a45d06
+next_action: Close FH-07 with the exact unranked embodied technical ensemble, freeze
+  its semantic hash, then lock FH-08 as a separately sourced immutable evaluation-only
+  protocol before any held-out outcome is inspected.

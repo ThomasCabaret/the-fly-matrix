@@ -1,0 +1,186 @@
+schema_version: 1
+id: campaign.front_leg_neutral_embodied_regime.v0
+title: FH-07b behavior-naive short-horizon embodied technical regime gate
+status: preregistered_runnable
+target_ids:
+  - target.technical_embodied_stability.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: allowed
+claim_label: FH-07B TECHNICAL EMBODIED REGIME / FROZEN MECHANICS / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+
+purpose: >-
+  Propagate every exact FH-07a neural survivor through a short physical loop while
+  covering the remaining FeCO source, motor-class, temporal, route, bridge-gain
+  and generic-perturbation axes with a deterministic outcome-blind pairwise
+  schedule. Each composite executes a baseline live branch, an exact frozen-command
+  replay, a perturbed frozen-command branch and a perturbed live-feedback branch.
+  The body is used only for finite, bounded and non-amplifying technical checks;
+  no pose, direction, action, response identity or attractive movement is scored.
+
+frozen_inputs:
+  runtime:
+    path: src/the_fly_matrix/front_leg_neutral_embodied_regime.py
+    sha256: aaaa9d8645bfe260f7bae2f91ec2decc5c372d7cb8861e39558a59a516964c93
+  fh06_campaign:
+    path: calibration/campaigns/front-leg-integrated-runnable-lineage-v0.yaml
+    sha256: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  fh07a_result:
+    path: calibration/runner/front-leg-neutral-neural-regime-v0.yaml
+    sha256: d99c8b820ab1e8ba077dbfe71f8bb575964e1383ea3461433fece436fddf0fd2
+    semantic_sha256: e9791cca61f362ddfb88734711420b5ec87b81a0ce668a4e897d03ae617520a0
+  fh07a_parameter_set:
+    path: calibration/parameter_sets/front-leg-neutral-neural-regime-v0.yaml
+    sha256: 82a09d43a053c24d8586c3c34c0bf27b688e0385f8be5e0e67fcc6a8f8f41b21
+  measurement_contract:
+    path: calibration/runner/embodied-measurement-contract-v1.yaml
+    sha256: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+  actuator_contract:
+    path: calibration/runner/actuator-causal-attribution-v1.yaml
+    sha256: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  motor_temporal:
+    path: calibration/runner/motor-twitch-temporal-diagnostic-v0.yaml
+    sha256: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+  motor_slow:
+    path: calibration/runner/motor-slow-tonic-envelope-v0.yaml
+    sha256: 7bee1dcf15511fa8d8f70ef9e29c7b456454df9f98de0765c909b07e80618f02
+  motor_bridge:
+    path: calibration/runner/motor-actuator-bridge-envelope-v0.yaml
+    sha256: a464d4a8f8611a978c2045b8c2cf1734f6cc0668dc422a0176c2b816a45a2dfd
+  motor_routes:
+    path: data/derived/wiring/motor-actuator-candidates.parquet
+    sha256: a4ebad77da9ce2176d63824195eb017f0543090bdeeb1151ebb3f11d5e163352
+
+physical_factor_levels:
+  source_path_id: [source_00, source_01, source_02, source_03, source_04, source_05, source_06, source_07]
+  motor_class: [fast, intermediate, slow]
+  temporal_selector: [low, middle, high]
+  route_selector: [low, middle, high]
+  bridge_selector: [low, middle, high]
+  perturbation_id: [left_positive, left_negative, right_positive, right_negative]
+
+design:
+  method: deterministic_greedy_pairwise_cover_then_round_robin_all_FH07a_parents
+  pairwise_scope: remaining_sensory_motor_and_perturbation_axes_only
+  neural_parent_assignment: outcome_blind_round_robin_in_frozen_accepted_row_order
+  every_neural_parent_executed: true
+  higher_order_coverage_claimed: false
+  unscheduled_FH06_addresses_rejected: false
+  factor_values_are_physiological_bounds: false
+
+generic_perturbations:
+  - perturbation_id: left_positive
+    joint_name: flybody/lf_trochanterfemur-lf_tibia-pitch
+    delta_rad_s: 2.0
+  - perturbation_id: left_negative
+    joint_name: flybody/lf_trochanterfemur-lf_tibia-pitch
+    delta_rad_s: -2.0
+  - perturbation_id: right_positive
+    joint_name: flybody/rf_trochanterfemur-rf_tibia-pitch
+    delta_rad_s: 2.0
+  - perturbation_id: right_negative
+    joint_name: flybody/rf_trochanterfemur-rf_tibia-pitch
+    delta_rad_s: -2.0
+
+neural_execution_fixture:
+  status: FROZEN_FROM_FH07A_ENGINEERING_COORDINATES_NOT_PHYSIOLOGICAL_VALUES
+  device: cpu
+  seed: 731027
+  dt_ms: 0.1
+  steps: 800
+  pulse_start_step: 100
+  pulse_stop_step: 300
+  recovery_tail_steps: 100
+  basal_rate_hz: 20.0
+  graded_half_saturation_hz: 100.0
+  feco_event_rate_hz: 80.0
+  feco_graded_drive: 0.25
+  unknown_family_id: parameter.residual_sensory.unknown_nominal.v0
+  event_comparator:
+    v_rest_mV: -52.0
+    reset_mV: -52.0
+    threshold_mV: -45.0
+    tau_membrane_ms: 20.0
+    tau_syn_ms: 5.0
+    refractory_ms: 2.2
+    fixed_delay_ms: 1.8
+  boundary_scales:
+    event_to_event_mV: 0.05
+    event_to_graded: 0.5
+    graded_to_event_mV: 0.05
+    graded_to_graded: 0.5
+  graded_tau_ms: 5.0
+
+physical_protocol:
+  device: cpu
+  seed: 882103
+  steps: 800
+  timestep_s: 0.0001
+  duration_s: 0.08
+  record_stride: 20
+  recorded_frames: 40
+  perturbation_step: 200
+  direct_motor_abs_max: 0.01
+  mechanics_parameters_frozen: true
+  actuator_type_frozen: MOTOR
+  branches_per_composite:
+    - baseline_live
+    - unperturbed_frozen_command_replay
+    - perturbed_frozen_command_open_loop
+    - perturbed_live_feedback
+
+acceptance:
+  replay_max_abs_error: 1.0e-12
+  perturbation_qvel_peak_min: 1.0e-8
+  command_adaptation_abs_min: 1.0e-15
+  closed_open_state_gap_abs_min: 1.0e-15
+  closed_vs_open_relative_tolerance: 0.05
+  closed_vs_open_absolute_tolerance: 1.0e-9
+  allow_motion_magnitude_to_rank_candidate: false
+  allow_named_pose_or_action_metric: false
+  interpretation: >-
+    A passing exact composite is finite, replayable, physically perturbed, closes
+    the body-to-FeCO feedback path and does not amplify final qpos/qvel deviation
+    or failure masks relative to its own frozen-command branch. These engineering
+    checks do not reward a direction, pose, movement amplitude or named response.
+
+budget:
+  expected_neural_parent_rows: 18
+  expected_pairwise_profiles: 32
+  expected_physical_composites: 32
+  expected_physical_episode_branches: 128
+  max_physical_composites: 40
+  no_grid_extension_after_outcomes: true
+
+accepted_claims:
+  - Every FH-07a survivor was physically exercised at least once under a precomputed outcome-blind schedule.
+  - The remaining declared sensory, motor and perturbation factors have complete pairwise level coverage.
+  - Exact passing composites form an unranked short-horizon technical ensemble under frozen mechanics.
+forbidden_claims:
+  - A passing composite is physiological, preferred, globally stable or behaviorally valid.
+  - Pairwise coverage resolves higher-order compensation or all FH-06 addresses.
+  - Failure of one scheduled composite rejects its FH-07a parent under every motor or sensory address.
+  - A finite or non-amplifying body trajectory demonstrates stance, reflex, locomotion or emergence.
+
+parameter_set_interpretation: >-
+  Exact physical composites retained only by preregistered behavior-naive technical
+  checks. Body outcomes are legitimately consumed by this technical calibration,
+  but no named behavior, attractive motion or evaluation-only response was exposed.
+  Members remain unranked and no value becomes a physiological reference.
+
+outputs:
+  compact_result: calibration/runner/front-leg-neutral-embodied-regime-v0.yaml
+  evaluation: calibration/evaluations/front-leg-neutral-embodied-regime-v0.yaml
+  parameter_set: calibration/parameter_sets/front-leg-neutral-embodied-regime-v0.yaml
+
+next_action_if_nonempty: >-
+  Close FH-07 with the exact unranked embodied technical ensemble, freeze its
+  semantic hash, then lock FH-08 as a separately sourced immutable evaluation-only
+  protocol before any held-out outcome is inspected.
+next_action_if_empty: >-
+  Replan FH-07 explicitly. Attribute the locked failure checks and test the
+  smallest owner-isolated extension without freeing mechanics, widening topology,
+  inspecting a named behavior or silently extending this schedule.

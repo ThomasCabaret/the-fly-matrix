@@ -68,7 +68,8 @@ des avertissements de propagation, pas des motifs de sélectionner ou d'élargir
 des valeurs. Les 81 membres et les deux miroirs sont conservés sans classement :
 zéro valeur, affectation, route, comportement ou référence n'est choisi.
 
-FH-07a ferme maintenant la moitié neurale du gate de stabilité technique sans
+FH-07 est maintenant fermé comme gate technique comportement-naïf. FH-07a a
+fermé la moitié neurale sans
 observer le corps. Une grille d'ingénierie finie, déclarée avant exécution,
 construit 23 profils couvrant toutes les paires de niveaux des six propriétaires,
 puis les croise avec les trois ancres de population FH-05 et les deux miroirs
@@ -79,9 +80,17 @@ non saturée et relaxation après l'impulsion ; 108 lignes n'ont pas de différe
 d'événements moteurs et 14 ne récupèrent pas assez, avec deux recouvrements.
 Les 18 survivants couvrent deux ancres, les deux miroirs et neuf profils. Ils ne
 sont ni classés ni physiologiques, et aucune pose, trajectoire, action nommée ou
-réponse tenue à l'écart n'a été calculée. FH-07 reste ouvert : FH-07b doit mesurer
-chaque survivant sous perturbations physiques génériques, mécanique gelée et
-couverture indépendante des axes sensoriels/moteurs encore factorisés.
+réponse tenue à l'écart n'a été calculée. FH-07b a ensuite exercé chacun de ces
+18 parents dans 32 composites physiques construits avant observation : couverture
+pairwise des huit chemins FeCO, trois classes motrices, trois régions temporelles,
+trois routages, trois gains et quatre perturbations génériques signées. Vingt-trois
+composites passent la garde `MOTOR` et terminent les quatre branches live, replay,
+open perturbée et feedback perturbé, soit 92 épisodes physiques avec erreur de
+replay nulle. Neuf combinaisons dépassent l'enveloppe 0,01 avant application et
+restent bloquées sans écrêtage ; douze autres ne montrent pas d'adaptation du
+feedback. Onze composites exacts passent les critères verrouillés de finitude,
+feedback et non-amplification. Ils couvrent sept parents neuraux et restent un
+ensemble d'ingénierie non classé : ni physiologie, ni référence, ni comportement.
 
 La première étape de la roadmap vers une évaluation tenue à l'écart est désormais
 fermée sans regarder de sortie simulée. Le contact tactile localisé reste au
@@ -1101,7 +1110,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés, FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, FH-05 conserve 81 membres techniques sous deux miroirs basaux et FH-06 les compose dans une lignée conditionnelle exacte de 4 621 555 858 189 754 880 adresses discrètes sans matérialisation ni référence ; FH-07a exécute 138 lignes appariées sur un écran neural pairwise comportement-naïf et conserve 18 survivants techniques exacts, non classés, sans observer le corps ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais les coordonnées FH-07a ne sont pas des valeurs physiologiques ; zéro affectation physiologique est promue et la stabilité physique du corps entier reste à tester dans FH-07b**.
+- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés, FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, FH-05 conserve 81 membres techniques sous deux miroirs basaux et FH-06 les compose dans une lignée conditionnelle exacte de 4 621 555 858 189 754 880 adresses discrètes sans matérialisation ni référence ; FH-07a conserve 18 survivants neuraux exacts puis FH-07b exerce les 18 parents dans 32 composites physiques pairwise et conserve 11 composites techniques incarnés exacts, non classés, après 92 épisodes et neuf rejets préapplication `MOTOR` ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les valeurs restent des coordonnées d'ingénierie couplées, zéro affectation physiologique ou comportement n'est promu et FH-08 doit verrouiller le protocole tenu à l'écart**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1330,7 +1339,7 @@ proprioceptive biologiquement sourcée.
 La route vers le premier essai comportemental tenu à l'écart est maintenant
 inventoriée dans
 [`calibration/roadmaps/first-held-out-evaluation-v0.yaml`](calibration/roadmaps/first-held-out-evaluation-v0.yaml).
-FH-01 à FH-06 sont fermés et FH-07 est en cours ; trois items restent ouverts. FH-06 conserve exactement
+FH-01 à FH-07 sont fermés ; deux items restent ouverts. FH-06 conserve exactement
 les ensembles FH-03/FH-04/FH-05 sous une factorisation conditionnelle de
 4 621 555 858 189 754 880 adresses discrètes, sans les matérialiser ni sélectionner
 de référence. Son témoin lexicographique a exécuté les frontières corps/FeCO,
@@ -1338,16 +1347,18 @@ cône hybride, transfert moteur, `MOTOR` direct et replay : l'activité issue du
 corps atteint l'état interne moteur pendant 95 pas, mais produit zéro spike moteur
 et zéro commande, résultat conservé sans nouvelle tentative orientée par la sortie.
 
-FH-07a a depuis exécuté 138 lignes neurales appariées sans sortie corporelle et
-conserve 18 survivants techniques non classés. La moitié physique FH-07b reste à
-faire sur chacun de ces survivants.
+FH-07 conserve désormais 11 composites techniques incarnés exacts et non classés.
+Les 18 parents FH-07a ont tous été exercés ; 23 composites ont exécuté les quatre
+branches physiques, neuf ont été bloqués avant application par la garde `MOTOR`
+et 12 n'ont pas fermé le feedback sous leur perturbation assignée.
 
-Le plan de base représente maintenant 3 à 4 fournées substantielles ; une réserve
-explicite de 2 à 4 porte la prévision de pilotage à 5--8. Cette fourchette vise le **premier essai interprétable**,
+Le plan de base représente maintenant 2 à 3 fournées substantielles ; une réserve
+explicite de 2 à 4 porte la prévision de pilotage à 4--7. Cette fourchette vise le **premier essai interprétable**,
 positif, négatif ou ambigu, et non un comportement réussi ni la calibration totale
-de MaleCNS. Le prochain front est FH-07b : établir un régime technique incarné
-neutre, court, fini et récupérable physiquement à partir des 18 lignes FH-07a, sans action nommée ni sélection à partir du
-futur résultat tenu à l'écart.
+de MaleCNS. Le prochain front est FH-08 : sourcer puis verrouiller avant résultat
+le protocole `evaluation_only`, ses sham/miroirs/seeds/métriques/seuils, sa fiche
+de mécanismes absents et ses contrôles topologiques. Aucun résultat futur ne doit
+servir à classer les 11 survivants FH-07.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle
@@ -1434,6 +1445,7 @@ front_leg_coupled_identifiability_design.bat # FH-05 : 599 profils du cône + pl
 front_leg_coupled_identifiability_execution.bat # FH-05 : 81 membres x 2 miroirs basaux, stimulus/sham ; ensemble technique non classé
 front_leg_integrated_lineage.bat # FH-06 : factorisation exacte + témoin corps/FeCO/cône/moteur/replay, aucune sélection
 front_leg_neutral_neural_regime.bat # FH-07a : 138 lignes neurales pairwise, 18 survivants techniques non classés, zéro corps/comportement
+front_leg_neutral_embodied_regime.bat # FH-07b : 32 composites physiques, 11 survivants techniques non classés, zéro comportement nommé
 inspect_motor_pilot.bat # 3 archives exactes vérifiées, 1 022 membres inventoriés sans extraction
 motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit et aucun noyau temporel
 parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git

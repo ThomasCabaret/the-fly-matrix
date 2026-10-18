@@ -44,10 +44,10 @@ estimate_contract:
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 3
-  base_work_batches: {min: 3, max: 4}
+  open_items: 2
+  base_work_batches: {min: 2, max: 3}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 5, max: 8}
+  planning_forecast_batches: {min: 4, max: 7}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -228,11 +228,11 @@ items:
   - id: FH-07
     title: Establish short-horizon neutral embodied technical stability
     nature: technical_embodied_calibration
-    status: in_progress
+    status: complete
     depends_on: [FH-06]
     original_estimated_batches: {min: 1, max: 2}
     estimated_batches: {min: 1, max: 1}
-    remaining_estimated_batches: {min: 1, max: 1}
+    remaining_estimated_batches: {min: 0, max: 0}
     exit_criteria:
       - every retained lineage is finite, bounded and recoverable under preregistered generic perturbations
       - no named action, stance sequence or held-out outcome enters selection
@@ -262,6 +262,31 @@ items:
         values or preferred lineages. Pairwise coverage does not cover higher-order
         interactions, and unscheduled FH-06 addresses are untested rather than
         rejected. Physical boundedness and recovery remain FH-07b work.
+    completion_record:
+      date: 2026-10-18
+      campaign_id: campaign.front_leg_neutral_embodied_regime.v0
+      result_id: runner_result.front_leg_neutral_embodied_regime.v0
+      parameter_set_id: parameters.front_leg_neutral_embodied_regime.v0
+      semantic_result_sha256: 035f378eca423f257f91ffec5cab33642bd6e8645fc36774c0e5450dd7a45d06
+      schedule:
+        outcome_blind_pairwise_physical_profiles: 32
+        FH07a_parent_rows_exercised: 18
+        guard_admitted_four_branch_composites: 23
+        physical_episode_branches_completed: 92
+      result:
+        retained_unranked_exact_composites: 11
+        parent_rows_with_at_least_one_retained_composite: 7
+        blocked_preapplication_direct_motor_guard: 9
+        completed_without_feedback_adaptation: 12
+        exact_replay_max_abs_error: 0.0
+        named_behaviors_exposed: 0
+      boundary: >-
+        FH-07 closes with a nonempty exact technical ensemble, not a reference
+        lineage or physiological parameter set. The nine guard blocks were never
+        applied to MuJoCo and were neither clipped nor normalized. The twelve
+        guard-admitted composites without command adaptation remain explicit
+        failures. Pairwise physical coverage does not identify higher-order
+        interactions, and the 11 survivors are retained without ranking.
 
   - id: FH-08
     title: Lock the evaluation-only protocol and topology controls
@@ -308,6 +333,43 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-18
+    batch: fh07b_behavior_naive_embodied_technical_gate
+    before:
+      open_items: 3
+      base_work_batches: {min: 3, max: 4}
+      planning_forecast_batches: {min: 5, max: 8}
+    closed: [FH-07]
+    advanced: []
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      physical_pairwise_profiles: 32
+      FH07a_parent_rows_exercised: 18
+      completed_four_branch_composites: 23
+      completed_physical_episode_branches: 92
+      blocked_preapplication_direct_motor_guard: 9
+      retained_unranked_exact_composites: 11
+      retained_parent_rows: 7
+      zero_replay_error_composites: 23
+    scientific_findings:
+      - nine scheduled motor combinations exceed the frozen direct-MOTOR envelope before application and are retained as guard failures without clipping
+      - twelve guard-admitted composites do not change command or physics after perturbation and fail the locked feedback checks
+      - eleven exact composites close feedback and do not amplify final qpos/qvel deviation or failure masks relative to their own frozen-command branch
+    scientific_boundary: >-
+      Body outcomes are consumed only by generic technical finitude, feedback and
+      non-amplification checks. No direction, posture, movement amplitude, named
+      action or held-out response is rewarded. The surviving exact composites are
+      an unranked engineering ensemble, not physiological values or a preferred
+      member.
+    after:
+      open_items: 2
+      base_work_batches: {min: 2, max: 3}
+      planning_forecast_batches: {min: 4, max: 7}
+    accounting_note: >-
+      One planned FH-07b batch closed exactly FH-07 and discovered no new roadmap
+      item. Therefore after = before - one closed + zero discovered: both base
+      bounds fall by one. The two-to-four contingency reserve is unchanged.
   - date: 2026-10-18
     batch: fh07a_behavior_naive_neural_regime_gate
     before:

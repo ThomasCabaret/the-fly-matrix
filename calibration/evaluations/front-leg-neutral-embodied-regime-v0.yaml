@@ -1,0 +1,34 @@
+schema_version: 1
+id: evaluation.front_leg_neutral_embodied_regime.v0
+campaign_id: campaign.front_leg_neutral_embodied_regime.v0
+runner_result_id: runner_result.front_leg_neutral_embodied_regime.v0
+status: accepted_nonempty_neutral_embodied_technical_ensemble_FH07_complete
+claim_label: FH-07B TECHNICAL EMBODIED REGIME / FROZEN MECHANICS / NO BEHAVIOR
+accounting:
+  scheduled_composites: 32
+  accepted_composites: 11
+  rejected_composites: 21
+  all_fh07a_parents_covered: true
+  failure_counts:
+    direct_motor_guard: 9
+    feedback_changes_physics: 12
+    feedback_command_adapts: 12
+accepted_claims:
+- Every FH-07a survivor was physically exercised at least once under a precomputed
+  outcome-blind schedule.
+- The remaining declared sensory, motor and perturbation factors have complete pairwise
+  level coverage.
+- Exact passing composites form an unranked short-horizon technical ensemble under
+  frozen mechanics.
+forbidden_claims:
+- A passing composite is physiological, preferred, globally stable or behaviorally
+  valid.
+- Pairwise coverage resolves higher-order compensation or all FH-06 addresses.
+- Failure of one scheduled composite rejects its FH-07a parent under every motor or
+  sensory address.
+- A finite or non-amplifying body trajectory demonstrates stance, reflex, locomotion
+  or emergence.
+semantic_result_sha256: 035f378eca423f257f91ffec5cab33642bd6e8645fc36774c0e5450dd7a45d06
+next_action: Close FH-07 with the exact unranked embodied technical ensemble, freeze
+  its semantic hash, then lock FH-08 as a separately sourced immutable evaluation-only
+  protocol before any held-out outcome is inspected.
