@@ -1086,7 +1086,7 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés, FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, et FH-05 conserve maintenant 81 membres techniques exécutés sous deux miroirs basaux, soit 162 branches stimulus/sham toutes finies ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais la conversion interne event↔graded reste non ajustée et toutes les constantes restent des fixtures ; le couplage source×efficacité×conversion×seuil reste une incertitude propagée, sans référence sélectionnée ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
+- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés, FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, FH-05 conserve 81 membres techniques sous deux miroirs basaux et FH-06 les compose dans une lignée conditionnelle exacte de 4 621 555 858 189 754 880 adresses discrètes sans matérialisation ni référence ; le témoin FH-06 porte l'activité corporelle jusqu'à l'état interne moteur et passe le contrat de replay, mais ne produit ni spike moteur ni commande ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les ponts basaux externes et les quatre directions internes s'exécutent, mais la conversion interne event↔graded reste non ajustée et toutes les constantes restent des fixtures ; le couplage source×efficacité×conversion×seuil reste une incertitude propagée, sans référence sélectionnée ; zéro valeur individuelle ou affectation physiologique est promue et la stabilité du corps entier reste non calibrée**.
 - Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
@@ -1315,13 +1315,20 @@ proprioceptive biologiquement sourcée.
 La route vers le premier essai comportemental tenu à l'écart est maintenant
 inventoriée dans
 [`calibration/roadmaps/first-held-out-evaluation-v0.yaml`](calibration/roadmaps/first-held-out-evaluation-v0.yaml).
-FH-01 à FH-05 sont fermés ; quatre items restent ouverts. Le plan de base
-représente 4 à 6 fournées substantielles ; une réserve explicite de 2 à 4 porte
-la prévision de pilotage à 6--10. Cette fourchette vise le **premier essai interprétable**,
+FH-01 à FH-06 sont fermés ; trois items restent ouverts. FH-06 conserve exactement
+les ensembles FH-03/FH-04/FH-05 sous une factorisation conditionnelle de
+4 621 555 858 189 754 880 adresses discrètes, sans les matérialiser ni sélectionner
+de référence. Son témoin lexicographique a exécuté les frontières corps/FeCO,
+cône hybride, transfert moteur, `MOTOR` direct et replay : l'activité issue du
+corps atteint l'état interne moteur pendant 95 pas, mais produit zéro spike moteur
+et zéro commande, résultat conservé sans nouvelle tentative orientée par la sortie.
+
+Le plan de base représente maintenant 3 à 5 fournées substantielles ; une réserve
+explicite de 2 à 4 porte la prévision de pilotage à 5--9. Cette fourchette vise le **premier essai interprétable**,
 positif, négatif ou ambigu, et non un comportement réussi ni la calibration totale
-de MaleCNS. Le prochain front est FH-06 : compiler une lignée reconstructible et
-conditionnée par membre sur les ensembles FH-03/FH-04/FH-05, sans réduire leur
-incertitude à partir d'un mouvement corporel.
+de MaleCNS. Le prochain front est FH-07 : établir un régime technique incarné
+neutre, court, fini et récupérable, sans action nommée ni sélection à partir du
+futur résultat tenu à l'écart.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle
@@ -1406,6 +1413,7 @@ feco_sensory_freeze.bat          # 27 routages typés x 8 chemins x 2 représent
 feco_native_bridge_factorization.bat # 6 coordonnées x 8 profils natifs de classe ; FH-03 fermé, amplitude remise à FH-05
 front_leg_coupled_identifiability_design.bat # FH-05 : 599 profils du cône + plan orthogonal 6 propriétaires ; aucune valeur
 front_leg_coupled_identifiability_execution.bat # FH-05 : 81 membres x 2 miroirs basaux, stimulus/sham ; ensemble technique non classé
+front_leg_integrated_lineage.bat # FH-06 : factorisation exacte + témoin corps/FeCO/cône/moteur/replay, aucune sélection
 inspect_motor_pilot.bat # 3 archives exactes vérifiées, 1 022 membres inventoriés sans extraction
 motor_source_contract.bat # 5 sources publiques, cohorte/filtres/unités ; zéro fit et aucun noyau temporel
 parse_motor_spike_force_pilot.bat # port source retrouvé, 194 essais comptés, tables normalisées ignorées par Git

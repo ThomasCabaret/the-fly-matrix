@@ -1,0 +1,109 @@
+schema_version: 1
+id: parameters.front_leg_integrated_lineage.v0
+title: FH-06 reconstructible factorized front-leg integrated lineage
+status: frozen_factorized_lineage_no_reference_member
+campaign_id: campaign.front_leg_integrated_runnable_lineage.v0
+runner_result_id: runner_result.front_leg_integrated_runnable_lineage.v0
+runner_semantic_sha256: 21171879323f6f8d82bb518fb4f9d7848e0b87626199281d9494f8904afb7652
+primary_class: technical
+behavior_targets: []
+lineage:
+  representation: exact_factorized_conditional_product_not_materialized
+  parent_ids:
+  - parameters.front_leg_feco_sensory_ensemble.v1
+  - parameters.front_leg_motor_transfer_ensemble.v1
+  - parameters.front_leg_coupled_technical_ensemble.v0
+  parent_file_sha256:
+    sensory_ensemble: eebecfc99d5c1206858f1b2821572ba554e05701c1539cb5f8500b9bb9be1a46
+    motor_ensemble: 0e562c64805d6b030ac21e607e56b65238b603e969a2290c9f0cddb5f1f26eb2
+    coupled_ensemble: d5a405f060125841d45f40c99d2fa44babced444ef9da8fb06ffde44f5f47973
+    coupled_result: 3134073287b5143efcf2d50256cb2eebe5eb78646dbc978f5496c631301887a3
+    coupled_campaign: 95758524f7a50c7df9f78b6e9b435fb3af7d8f3a02a7f52da56e833e94a494fd
+    actuator_attribution: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+    motor_temporal_result: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+    motor_bridge_result: a464d4a8f8611a978c2045b8c2cf1734f6cc0668dc422a0176c2b816a45a2dfd
+    motor_route_table: a4ebad77da9ce2176d63824195eb017f0543090bdeeb1151ebb3f11d5e163352
+    chain_scope: a7dc4af94efa1ab9178289e15fc69d27d3355be54741211ed7f0cd6a6e0f1059
+    proprioception_wiring_validation: 208d7789d652bd94e3bd7d8aca11e3c80e85da02e6aa803934231f8db48e38a5
+    motor_wiring_validation: ca2002c18770fc726defbb86fe87f4139bc4d6cf4a693a791d94b4e30e936e18
+  semantic_dependencies:
+    FH03: 2d3e7a916220105902dd0a548176ce232eecf22de7a2a7061165dd2cbb054792
+    FH04: 2f68a339f953873ab5bae324570582a42afc40cd4296a5ec1806628017f80dcc
+    FH05: 19ba0e4f19c59d186ea6e73ee371df2cd63afafb8940654de709665ff465fc30
+    actuator_contract: b1b11acc2b6d82dbfa6e8a4170c4b53475fb7d627ecb5a9de892efd87081abc2
+  topology_hashes:
+    central_body_ids: 6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5
+    central_dataset: e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1
+    proprioception: 782b98d147b5ecd15861dca0241d7fabf2995b1b9b6ef5b9c50d8e94ea5dd665
+    motor_output: 0cd753e02283e42f3bf963e3fe223b7728b1a343da5b2db78e6414d4de8c5ca3
+  axes:
+    sensory:
+      routing_profiles: 27
+      joint_source_paths: 8
+      native_profiles: 8
+      discrete_members: 1728
+      continuous_native_amplitudes_per_member: 6
+      continuous_values_selected: 0
+    central_basal:
+      technical_members: 81
+      source_native_mirrors:
+      - all_graded_candidate
+      - all_event_candidate
+      conditioned_branches: 162
+    motor:
+      ten_body_class_assignments: 59049
+      assignments_per_exact_two_class_support: 1022
+      assignments_using_all_three_classes: 55980
+      class_conditioned_temporal_members: 50028273326
+      with_route_and_gain: 16509330197580
+      routes: 110
+      gains: 3
+      fast_temporal_candidates: 19
+      intermediate_temporal_candidates: 139
+      slow_temporal_candidates: 338
+  discrete_lineage_members: 4621555858189754880
+  continuous_dimensions_per_sensory_member: 6
+  member_ids_materialized: 0
+  selected_reference_member_id: null
+  members_ranked: false
+  behavior_targets_exposed: []
+  semantic_sha256: 633ad657e3e59f595aaa261f32211893fc9422cb7b969f760925119e0e26153b
+integration_witness_address:
+  selection_rule: lexicographically_first_compatible_address_before_execution
+  sensory:
+    routing_profile_id: routing_00
+    source_path_id: source_00
+    native_profile_id: native_07
+  central_basal:
+    member_id: all_event_boundary_extreme__owner_00
+    source_native_mirror: all_event_candidate
+  motor:
+    class_assignment: all_fast_81A07
+    temporal_candidate: parent_all_data_best_fast_candidate_integration_witness_only
+    route_selection: lowest_body_id_then_lowest_actuator_id
+    bridge_gain_index: 0
+  neural_steps: 480
+  record_stride: 10
+  physical_perturbation:
+    kind: prescribed_bidirectional_joint_velocity_sweep
+    joint_name: flybody/lf_trochanterfemur-lf_tibia-pitch
+    segments:
+    - start_step: 20
+      stop_step: 200
+      velocity_rad_s: 1.0
+    - start_step: 200
+      stop_step: 380
+      velocity_rad_s: -1.0
+    purpose: generic_local_path_excitation_not_behavior_or_calibration
+  require_nonzero_sensory_drive: true
+  require_nonzero_motor_internal_state: true
+  require_motor_spike_or_command: false
+  reason_motor_spike_not_required: FH-05 observed no generated internal event under
+    any unpromotable fixture. Requiring a spike here would select or alter parameters
+    by an output and would violate the no-selection boundary. FH-07 owns regime calibration.
+integration_witness_is_reference: false
+parameter_values_promoted: 0
+reopening_policy: new_campaign_required_on_parent_hash_topology_actuator_or_mechanism_drift
+next_action: Use the frozen factorized lineage in FH-07 short-horizon neutral technical
+  stability. Preserve all members or preregister any cost-bounded sampling, and select
+  nothing from a named action or the future held-out outcome.

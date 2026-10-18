@@ -1,0 +1,135 @@
+schema_version: 1
+id: campaign.front_leg_integrated_runnable_lineage.v0
+title: FH-06 factorized integrated lineage and causal replay witness
+status: preregistered_runnable
+target_ids:
+  - target.population_dynamics_assignment.v0
+  - target.technical_embodied_stability.v0
+scope_id: scope.front_leg_sensor_cns_motor_chain.v0
+primary_class: technical
+optimization_exposure: diagnostic_only
+claim_label: FH-06 INTEGRATED LINEAGE / TECHNICAL WITNESS / NO PHYSIOLOGY / NO BEHAVIOR
+behavior_targets: []
+topology_changes_allowed: false
+parameter_values_promoted: 0
+
+purpose: >-
+  Compile the complete FH-03 sensory, FH-04 motor and FH-05 central/basal
+  uncertainty into one reconstructible factorized lineage. Execute one
+  preregistered lexicographic witness through physical FeCO feedback, the typed
+  hybrid cone, motor transfer, direct MOTOR actuation, trajectory recording and
+  controller-independent replay. The witness tests composition only and cannot
+  rank, select or promote any member.
+
+frozen_inputs:
+  sensory_ensemble:
+    path: calibration/parameter_sets/front-leg-feco-sensory-ensemble-v1.yaml
+    sha256: eebecfc99d5c1206858f1b2821572ba554e05701c1539cb5f8500b9bb9be1a46
+  motor_ensemble:
+    path: calibration/parameter_sets/front-leg-motor-transfer-ensemble-v1.yaml
+    sha256: 0e562c64805d6b030ac21e607e56b65238b603e969a2290c9f0cddb5f1f26eb2
+  coupled_ensemble:
+    path: calibration/parameter_sets/front-leg-coupled-technical-ensemble-v0.yaml
+    sha256: d5a405f060125841d45f40c99d2fa44babced444ef9da8fb06ffde44f5f47973
+  coupled_result:
+    path: calibration/runner/front-leg-coupled-identifiability-execution-v0.yaml
+    sha256: 3134073287b5143efcf2d50256cb2eebe5eb78646dbc978f5496c631301887a3
+  coupled_campaign:
+    path: calibration/campaigns/front-leg-coupled-identifiability-execution-v0.yaml
+    sha256: 95758524f7a50c7df9f78b6e9b435fb3af7d8f3a02a7f52da56e833e94a494fd
+  actuator_attribution:
+    path: calibration/runner/actuator-causal-attribution-v1.yaml
+    sha256: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  motor_temporal_result:
+    path: calibration/runner/motor-twitch-temporal-diagnostic-v0.yaml
+    sha256: 7504de68154f7b6b602128849d9b3db946817678cad9fbedaf30cb61b7637478
+  motor_bridge_result:
+    path: calibration/runner/motor-actuator-bridge-envelope-v0.yaml
+    sha256: a464d4a8f8611a978c2045b8c2cf1734f6cc0668dc422a0176c2b816a45a2dfd
+  motor_route_table:
+    path: data/derived/wiring/motor-actuator-candidates.parquet
+    sha256: a4ebad77da9ce2176d63824195eb017f0543090bdeeb1151ebb3f11d5e163352
+  chain_scope:
+    path: calibration/scopes/front-leg-sensor-cns-motor-chain-v0.yaml
+    sha256: a7dc4af94efa1ab9178289e15fc69d27d3355be54741211ed7f0cd6a6e0f1059
+  proprioception_wiring_validation:
+    path: ledger/validations/proprioception-transduction-candidates.yaml
+    sha256: 208d7789d652bd94e3bd7d8aca11e3c80e85da02e6aa803934231f8db48e38a5
+  motor_wiring_validation:
+    path: ledger/validations/motor-transduction-candidates.yaml
+    sha256: ca2002c18770fc726defbb86fe87f4139bc4d6cf4a693a791d94b4e30e936e18
+
+factorized_axes:
+  sensory: [routing_profile, joint_source_path, class_shared_native_profile]
+  central_basal: [technical_member, basal_source_native_mirror]
+  motor:
+    - ten_body_class_assignment
+    - class_shared_temporal_candidate
+    - actuator_route
+    - actuator_bridge_gain
+  continuous_unselected:
+    - six_class_shared_native_amplitudes
+
+execution_witness:
+  selection_rule: lexicographically_first_compatible_address_before_execution
+  sensory:
+    routing_profile_id: routing_00
+    source_path_id: source_00
+    native_profile_id: native_07
+  central_basal:
+    member_id: all_event_boundary_extreme__owner_00
+    source_native_mirror: all_event_candidate
+  motor:
+    class_assignment: all_fast_81A07
+    temporal_candidate: parent_all_data_best_fast_candidate_integration_witness_only
+    route_selection: lowest_body_id_then_lowest_actuator_id
+    bridge_gain_index: 0
+  neural_steps: 480
+  record_stride: 10
+  physical_perturbation:
+    kind: prescribed_bidirectional_joint_velocity_sweep
+    joint_name: flybody/lf_trochanterfemur-lf_tibia-pitch
+    segments:
+      - {start_step: 20, stop_step: 200, velocity_rad_s: 1.0}
+      - {start_step: 200, stop_step: 380, velocity_rad_s: -1.0}
+    purpose: generic_local_path_excitation_not_behavior_or_calibration
+  require_nonzero_sensory_drive: true
+  require_nonzero_motor_internal_state: true
+  require_motor_spike_or_command: false
+  reason_motor_spike_not_required: >-
+    FH-05 observed no generated internal event under any unpromotable fixture.
+    Requiring a spike here would select or alter parameters by an output and
+    would violate the no-selection boundary. FH-07 owns regime calibration.
+
+acceptance:
+  require_all_parent_members_preserved: true
+  require_exact_hash_reconstruction: true
+  require_factorized_not_materialized: true
+  require_physical_sensor_read: true
+  require_typed_hybrid_runtime_step: true
+  require_motor_transfer_step: true
+  require_direct_motor_step: true
+  require_exact_trajectory_round_trip: true
+  require_headless_replay_model_contract: true
+  require_zero_member_ranking: true
+  require_zero_behavior_exposure: true
+
+outputs:
+  compact_result: calibration/runner/front-leg-integrated-runnable-lineage-v0.yaml
+  evaluation: calibration/evaluations/front-leg-integrated-runnable-lineage-v0.yaml
+  parameter_set: calibration/parameter_sets/front-leg-integrated-lineage-v0.yaml
+  ignored_run_root: runs/calibration/front-leg-integrated-runnable-lineage-v0/
+
+accepted_claims:
+  - The complete parent uncertainty is addressable and reconstructible without materializing its Cartesian product.
+  - One preregistered address executes every scoped runtime boundary, carries nonzero body-derived activity to motor internal state, and produces a portable physical trajectory.
+  - Saved and loaded arrays are exact and the independent player accepts the frozen FlyBody model contract.
+forbidden_claims:
+  - The witness is a preferred, physiological or reference member.
+  - A motor spike, nonzero command, neutral stability or named behavior is established.
+  - The bounded cone is the complete recurrent MaleCNS or the direct MOTOR surrogate is a muscle model.
+  - The integration witness reduces any parent uncertainty axis.
+next_action: >-
+  Use the frozen factorized lineage in FH-07 short-horizon neutral technical
+  stability. Preserve all members or preregister any cost-bounded sampling, and
+  select nothing from a named action or the future held-out outcome.

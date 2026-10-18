@@ -125,6 +125,7 @@ blocked_by:
   - Internal event-to-graded and graded-to-event conversion is now an explicit parameter family under ADR 0017. The current 0.5 and 0.05 engineering scales remain diagnostic fixtures, not defaults, priors, bounds or accepted values; same-native efficacy, conversion and neuron dynamics must remain separately owned even when estimated jointly.
   - Basal source intensity, same-native synaptic efficacy, internal conversion and neuron threshold/dynamics are not separately identified. Eleven nonzero members of the fixed grid remain subthreshold and only the 320 Hz by 3.2 mV engineering corner crosses; this finding selects nothing.
   - FH-05 is complete as a finite technical execution ensemble, not as physiological identification. All 81 owner-separated members execute as paired stimulus/sham runs under both all-graded and all-event basal source-port mirrors: 162 paired branches and 324 runtime instances are finite. The bounded graph contains 6,041 explicit source ports, the 590 published direct source-to-cone edges and 4,873 induced cone edges; recurrence outside the cone is excluded and not approximated. Every owner axis changes an executed input. No pair of descriptive main-effect signatures exceeds the locked 0.95 similarity warning, but unknown-afferent policy is only weakly observable in this direct-boundary scope and no stimulus surplus of internally generated events appears under the fixtures. All 81 members and both mirrors remain unranked; zero value, assignment, route or behavior is selected. Higher-order assignments and whole-MaleCNS context remain outside the claim and are propagated to FH-06.
+  - FH-06 is complete as a reconstructible integrated lineage, not as a reference model. The exact conditional factorization preserves 1,728 FH-03 sensory members, all 81 FH-05 technical members under both basal-native mirrors and the complete class-conditioned FH-04 motor envelope without materializing 4,621,555,858,189,754,880 discrete addresses; six native-amplitude dimensions per sensory member remain continuous and unselected. One predeclared lexicographic witness executed 480 physical/neural steps: body-derived FeCO drive was nonzero throughout, 32 FeCO events were forced by the declared phase-balanced process and motor internal state was nonzero for 95 steps. It generated zero motor events and zero commands; this was retained without retrying or selecting another member. The 48-frame trajectory round-trips exactly through the independent replay contract. This closes composition, hashes and replay transport only; FH-07 owns neutral-regime calibration.
   - A first local scientific claim must compile and account its causal population cone rather than pretend that the two runtime extremes cover the 2^166419 native-assignment space.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
@@ -187,8 +188,9 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Follow roadmap.first_held_out_evaluation.v0 revision 1. FH-01 through FH-05 are
-  complete without a viewed body outcome or selected reference member. Compile
-  FH-06 as a reconstructible member-conditioned lineage over the complete FH-03
-  sensory, FH-04 motor and FH-05 central/basal ensembles. Keep both basal
-  source-native mirrors and every owner explicit; select nothing from body motion.
+  Follow roadmap.first_held_out_evaluation.v0 revision 2. FH-01 through FH-06 are
+  complete without a selected reference member or named-behavior exposure. Run
+  FH-07 as a preregistered short-horizon neutral technical-stability gate over
+  the frozen factorized lineage. Preserve the complete member accounting or
+  preregister a cost-bounded sampling design; do not choose parameters from a
+  named action, attractive motion or the future held-out outcome.

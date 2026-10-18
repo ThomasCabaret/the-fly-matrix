@@ -291,6 +291,17 @@ with a sham using the same background schedule. The resulting 81-member finite
 technical ensemble is retained whole and unranked; it is reproducible input to
 FH-06, not a physiological parameter set or a selected lineage.
 
+`front_leg_integrated_lineage.bat` completes FH-06. It hash-locks the complete
+FH-03 sensory, FH-04 motor and FH-05 central/basal parents, represents their
+conditional product exactly without Cartesian materialization, and executes one
+lexicographic integration witness chosen before outcomes. The witness reads
+physical FeCO feedback during a generic bidirectional knee-velocity sweep, steps
+the typed/hybrid cone, executes motor transfer and direct `MOTOR`, saves 48
+physical frames and validates exact load/replay transport. Its registered result
+contains nonzero motor internal state but zero motor spikes and commands. Do not
+replace the witness or change a gain to make it move: reproducing that null output
+is the correct FH-06 result, and FH-07 owns subsequent neutral-regime calibration.
+
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and
 validates true COM, joint limits, physical jerk, contacts/forces, a declared

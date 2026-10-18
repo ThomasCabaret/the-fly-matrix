@@ -1,7 +1,7 @@
 schema_version: 1
 id: roadmap.first_held_out_evaluation.v0
-revision: 1
-updated: 2026-10-17
+revision: 2
+updated: 2026-10-18
 status: active
 
 milestone:
@@ -44,10 +44,10 @@ estimate_contract:
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 4
-  base_work_batches: {min: 4, max: 6}
+  open_items: 3
+  base_work_batches: {min: 3, max: 5}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 6, max: 10}
+  planning_forecast_batches: {min: 5, max: 9}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -197,7 +197,7 @@ items:
   - id: FH-06
     title: Compile and freeze an integrated runnable lineage
     nature: lineage_integration_and_causal_attribution
-    status: planned
+    status: complete
     depends_on: [FH-03, FH-04, FH-05]
     estimated_batches: {min: 1, max: 1}
     exit_criteria:
@@ -205,6 +205,25 @@ items:
       - topology, actuator, mechanism and parameter hashes are frozen
       - full causal execution and replay agree on the scoped loop
     replan_if: a flexible interface can compensate for central or mechanical error without detection
+    completion:
+      campaign_id: campaign.front_leg_integrated_runnable_lineage.v0
+      result_id: runner_result.front_leg_integrated_runnable_lineage.v0
+      parameter_set_id: parameters.front_leg_integrated_lineage.v0
+      semantic_result_sha256: 21171879323f6f8d82bb518fb4f9d7848e0b87626199281d9494f8904afb7652
+      discrete_lineage_addresses: 4621555858189754880
+      member_ids_materialized: 0
+      witness_rule: lexicographically_first_compatible_address_before_execution
+      witness_frames: 48
+      body_derived_source_nonzero_steps: 480
+      motor_internal_state_nonzero_steps: 95
+      motor_events: 0
+      nonzero_commands: 0
+      interpretation: >-
+        The complete parent uncertainty is hash-locked and reconstructible as a
+        conditional factorization. The integration witness executes every scoped
+        boundary and its physical trajectory round-trips exactly, but it does not
+        cross motor threshold under the unpromoted coordinates. FH-07 owns the
+        neutral-regime gate; no member was retried or selected from this outcome.
 
   - id: FH-07
     title: Establish short-horizon neutral embodied technical stability
@@ -263,6 +282,42 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-18
+    batch: fh06_factorized_lineage_and_causal_replay_witness
+    before:
+      open_items: 4
+      base_work_batches: {min: 4, max: 6}
+      planning_forecast_batches: {min: 6, max: 10}
+    closed: [FH-06]
+    advanced: []
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      factorized_discrete_addresses: 4621555858189754880
+      continuous_native_amplitude_dimensions_per_sensory_member: 6
+      materialized_member_ids: 0
+      witness_neural_steps: 480
+      witness_recorded_frames: 48
+      body_derived_source_nonzero_steps: 480
+      forced_feco_events: 32
+      motor_internal_state_nonzero_steps: 95
+      motor_events: 0
+      nonzero_commands: 0
+      exact_replay_round_trip: true
+    scientific_boundary: >-
+      The single lexicographic witness is an integration address, not a selected
+      reference. It reaches nonzero motor internal state but no motor spike or
+      command; no parameter was changed or alternative member tried in response.
+      This closes reconstructibility and executable composition, not neutral
+      stability, physiology, nonzero actuation or behavior.
+    after:
+      open_items: 3
+      base_work_batches: {min: 3, max: 5}
+      planning_forecast_batches: {min: 5, max: 9}
+    accounting_note: >-
+      One planned FH-06 batch closed exactly one roadmap item and discovered no
+      new item. The base and planning ranges therefore each fall by one at both
+      bounds; the two-to-four-batch contingency reserve is unchanged.
   - date: 2026-10-17
     batch: fh05_paired_dynamic_execution_and_finite_technical_ensemble
     before:

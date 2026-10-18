@@ -315,6 +315,18 @@ population assignment, route or behavior is promoted. This closes FH-05 for
 member-conditioned execution and hands the complete uncertainty set to FH-06;
 it does not establish physiological values or whole-MaleCNS context.
 
+Run `front_leg_integrated_lineage.bat` to reproduce FH-06. It verifies the
+FH-03/FH-04/FH-05, topology, wiring, actuator and mechanism hashes, then compiles
+their complete conditional product without materializing its
+4,621,555,858,189,754,880 discrete addresses. One lexicographically chosen,
+outcome-blind witness executes a bidirectional physical knee perturbation through
+FeCO, the typed/hybrid 196-neuron cone, the motor-transfer boundary, direct
+MuJoCo `MOTOR`, trajectory serialization and the independent replay player. The
+accepted witness reaches nonzero motor internal state but produces zero motor
+spikes and zero commands; this is retained rather than used to select another
+member. FH-06 therefore closes reconstructibility and runtime composition only.
+FH-07 owns neutral technical-regime calibration.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

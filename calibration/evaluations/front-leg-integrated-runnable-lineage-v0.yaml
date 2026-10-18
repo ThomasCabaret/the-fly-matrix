@@ -1,0 +1,31 @@
+schema_version: 1
+id: evaluation.front_leg_integrated_runnable_lineage.v0
+campaign_id: campaign.front_leg_integrated_runnable_lineage.v0
+runner_result_id: runner_result.front_leg_integrated_runnable_lineage.v0
+runner_semantic_sha256: 21171879323f6f8d82bb518fb4f9d7848e0b87626199281d9494f8904afb7652
+parameter_set_id: parameters.front_leg_integrated_lineage.v0
+status: accepted_FH06_complete_no_physiological_or_behavioral_claim
+checks:
+  all_parent_members_preserved: true
+  exact_hash_reconstruction: true
+  factorized_not_materialized: true
+  physical_sensor_read_nonzero: true
+  typed_hybrid_runtime_reaches_motor_state: true
+  motor_transfer_executed: true
+  direct_motor_executed: true
+  exact_trajectory_round_trip: true
+  headless_replay_model_contract: true
+  zero_member_ranking: true
+  zero_behavior_exposure: true
+  zero_parameter_promotion: true
+motor_event_count: 0
+command_nonzero_steps: 0
+interpretation: The complete parent uncertainty is preserved as an exact conditional
+  factorization. One outcome-blind lexicographic address executed physical FeCO sensing,
+  the typed hybrid cone, the motor-transfer and direct-MOTOR boundaries, carried nonzero
+  body-derived activity to motor internal state, then round-tripped through the independent
+  replay contract. Motor spikes and commands are reported, never required or used
+  to choose another member; FH-07 owns neutral-regime calibration.
+next_action: Use the frozen factorized lineage in FH-07 short-horizon neutral technical
+  stability. Preserve all members or preregister any cost-bounded sampling, and select
+  nothing from a named action or the future held-out outcome.

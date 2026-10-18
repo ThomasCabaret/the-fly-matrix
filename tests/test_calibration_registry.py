@@ -187,7 +187,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         selected_id = readiness["decision"]["selected_candidate_id"]
         self.assertIn(selected_id, {item["id"] for item in catalog["candidates"]})
-        self.assertEqual(roadmap["revision"], 1)
+        self.assertEqual(roadmap["revision"], 2)
         self.assertEqual(roadmap["items"][0]["status"], "complete")
         self.assertEqual(roadmap["items"][1]["status"], "complete")
         self.assertEqual(roadmap["items"][2]["status"], "complete")
@@ -196,7 +196,10 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertFalse(roadmap["items"][3]["completion_record"]["simulated_body_outcomes_inspected"])
         self.assertEqual(roadmap["items"][4]["status"], "complete")
         self.assertFalse(roadmap["items"][4]["completion_record"]["simulated_body_outcomes_inspected"])
-        self.assertEqual(roadmap["estimate_contract"]["open_items"], 4)
+        self.assertEqual(roadmap["items"][5]["status"], "complete")
+        self.assertEqual(roadmap["items"][5]["completion"]["motor_events"], 0)
+        self.assertEqual(roadmap["items"][5]["completion"]["nonzero_commands"], 0)
+        self.assertEqual(roadmap["estimate_contract"]["open_items"], 3)
 
     def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:
         scope = load_yaml(
