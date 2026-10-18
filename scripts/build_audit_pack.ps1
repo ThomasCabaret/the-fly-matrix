@@ -89,10 +89,13 @@ $RepresentativeAuditFiles = @(
     "calibration/parameter_sets/front-leg-motor-transfer-ensemble-v1.yaml",
     "calibration/parameter_sets/front-leg-integrated-lineage-v0.yaml",
     "calibration/parameter_sets/front-leg-neutral-embodied-regime-v0.yaml",
+    "calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml",
     "calibration/campaigns/front-leg-neutral-embodied-regime-v0.yaml",
+    "calibration/campaigns/first-held-out-protocol-lock-v0.yaml",
     "calibration/campaigns/motor-slow-tonic-envelope-v0.yaml",
-    "calibration/evaluations/basal-source-envelope-propagation-v0.yaml",
     "calibration/evaluations/front-leg-neutral-embodied-regime-v0.yaml",
+    "calibration/evaluations/first-held-out-protocol-lock-v0.yaml",
+    "calibration/runner/first-held-out-protocol-lock-v0.yaml",
     "ledger/README.md",
     "ledger/behaviors.yaml",
     "ledger/datasets.yaml",
@@ -139,6 +142,7 @@ $PriorityLaunchers = @(
     "front_leg_integrated_lineage.bat",
     "front_leg_neutral_neural_regime.bat",
     "front_leg_neutral_embodied_regime.bat",
+    "first_held_out_protocol_lock.bat",
     "prepare_local_source_data.bat",
     "setup.bat",
     "wiring_revalidation.bat"
@@ -148,7 +152,6 @@ $PriorityLaunchers = @(
 # from crowding out policy. Update this short list only when a new subsystem is
 # important enough that an external reviewer needs to inspect its implementation.
 $PriorityCodeSamples = @(
-    "src/the_fly_matrix/feco_native_bridge.py",
     "scripts/build_audit_pack.ps1"
 )
 
@@ -167,12 +170,15 @@ $RequiredAuditPaths = @(
     "calibration/parameter_sets/front-leg-motor-transfer-ensemble-v1.yaml",
     "calibration/parameter_sets/front-leg-integrated-lineage-v0.yaml",
     "calibration/parameter_sets/front-leg-neutral-embodied-regime-v0.yaml",
+    "calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml",
     "calibration/parameter_families/central-native-boundary-conversion-v0.yaml",
     "calibration/targets/population-dynamics-assignment-v0.yaml",
     "calibration/campaigns/front-leg-neutral-embodied-regime-v0.yaml",
+    "calibration/campaigns/first-held-out-protocol-lock-v0.yaml",
     "calibration/campaigns/motor-slow-tonic-envelope-v0.yaml",
-    "calibration/evaluations/basal-source-envelope-propagation-v0.yaml",
     "calibration/evaluations/front-leg-neutral-embodied-regime-v0.yaml",
+    "calibration/evaluations/first-held-out-protocol-lock-v0.yaml",
+    "calibration/runner/first-held-out-protocol-lock-v0.yaml",
     "decisions/0016-event-capable-typed-hybrid-neural-runtime.md",
     "decisions/0017-internal-native-boundary-parameter-ownership.md",
     "ledger/README.md",

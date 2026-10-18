@@ -1,0 +1,72 @@
+schema_version: 1
+id: campaign.first_held_out_protocol_lock.v0
+title: FH-08 immutable evaluation-only protocol lock
+status: preregistered_lock_compilation
+target_ids: [target.held_out_stimulus_response.v0]
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: evaluation_only
+optimization_exposure: forbidden
+claim_label: FH-08 PROTOCOL LOCK / OUTCOMES UNSEEN / NOT CALIBRATION
+
+purpose: >-
+  Verify and freeze the first end-to-end held-out protocol, its complete FH-07
+  ensemble, paired stimulus/sham schedule, mirrors, thresholds, mechanism limits
+  and both topology-control families before any held-out simulation is executed.
+
+frozen_inputs:
+  protocol:
+    path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+    sha256: 9976416a2b5b9c07f6bb4d60414b571889e5b4e482094416a9c32c201ef062a6
+  causal_scope:
+    path: calibration/scopes/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+    sha256: ad972e48b9dd6d7be9e41ecf6e04ef2476b369f5fc8318d9cb81becbd904955e
+    semantic_sha256: f2035ff78507ae6f6c260f47ea524cd0fc8bf09264d59b9462f435f0d8163090
+  fh07_result:
+    path: calibration/runner/front-leg-neutral-embodied-regime-v0.yaml
+    sha256: 1021b9659bb2f61c865abda3b82622c7043823528da8d2c6e3b7383c0ccd87e8
+    semantic_sha256: 035f378eca423f257f91ffec5cab33642bd6e8645fc36774c0e5450dd7a45d06
+  fh07_parameter_set:
+    path: calibration/parameter_sets/front-leg-neutral-embodied-regime-v0.yaml
+    sha256: dd1f696c29bcf3467d6cc93f18c55965fce5e5817cf6c94fa7718afcc1a9f68a
+    semantic_sha256: 035f378eca423f257f91ffec5cab33642bd6e8645fc36774c0e5450dd7a45d06
+  integrated_lineage:
+    path: calibration/campaigns/front-leg-integrated-runnable-lineage-v0.yaml
+    sha256: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  actuator_contract:
+    path: calibration/runner/actuator-causal-attribution-v1.yaml
+    sha256: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  measurement_contract:
+    path: calibration/runner/embodied-measurement-contract-v1.yaml
+    sha256: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+
+lock_checks:
+  expected_members: 11
+  expected_trial_seeds: 8
+  expected_rewire_seeds: 4
+  expected_total_topology_variants: 9
+  expected_canonical_episodes: 352
+  expected_topology_control_episodes: 2816
+  expected_total_episodes: 3168
+  expected_minimum_directionally_consistent_pairs: 7
+  expected_sign_test_p: 0.03515625
+  require_both_control_families: true
+  require_zero_outcome_rows: true
+  require_no_selected_reference_member: true
+  require_all_members_unranked: true
+  require_mechanism_limits: true
+  require_contamination_policy: true
+
+accepted_claims:
+  - Protocol inputs and decision rules are frozen before held-out execution.
+  - Every FH-07 survivor is scheduled without ranking or selection.
+  - Frozen-parameter and recipe-matched recalibrated rewires are both scheduled.
+forbidden_claims:
+  - This compilation executes or observes a held-out response.
+  - Protocol lock validates a biological behavior or a parameter member.
+
+outputs:
+  compact_result: calibration/runner/first-held-out-protocol-lock-v0.yaml
+  evaluation: calibration/evaluations/first-held-out-protocol-lock-v0.yaml
+
+next_action: Materialize the locked control topologies and execution schedule, validate them without outcomes, then run FH-09 exactly once.

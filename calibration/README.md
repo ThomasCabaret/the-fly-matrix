@@ -345,7 +345,16 @@ seen. Twenty-three composites complete all four physical branches (92 episodes),
 nine are blocked before application by the direct-MOTOR guard, and 11 exact
 composites pass the locked feedback/non-amplification checks. They remain an
 unranked engineering ensemble; this closes scoped FH-07 technical stability, not
-physiology or behavior. FH-08 must lock the evaluation-only protocol before use.
+physiology or behavior.
+
+Run `first_held_out_protocol_lock.bat` to reproduce FH-08. It validates the
+immutable passive-extension protocol, all eleven exact FH-07 members, eight paired
+trial seeds, bilateral stimulus/sham schedule, the preregistered 7-of-8 sign rule,
+mechanism limits and four seeds for both topology-control families. It schedules
+352 canonical and 2,816 control episodes but executes none of them. A green result
+therefore proves only that the held-out design was locked with zero outcomes and
+zero member selection. FH-09 must materialize/hash the controls before executing
+the 3,168 episodes exactly once.
 
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO

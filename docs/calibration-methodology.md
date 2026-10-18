@@ -157,6 +157,14 @@ Internal event/graded boundary ownership and its coupled-identifiability gate ar
 fixed by
 [`ADR 0017`](../decisions/0017-internal-native-boundary-parameter-ownership.md).
 
+The first concrete lock is
+`calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml`.
+It demonstrates the required separation in practice: all eleven calibration
+survivors are evaluated without ranking; the paired directional statistic is
+fixed without fitting a simulator-unit magnitude; frozen and recipe-matched
+recalibrated rewires are both scheduled; and missing mechanisms have explicit
+ambiguity dispositions. Compiling this file consumes zero held-out outcomes.
+
 ## Parameter-family inventory and dependency DAG
 
 Before fitting values, create one versioned record per parameter family. A family

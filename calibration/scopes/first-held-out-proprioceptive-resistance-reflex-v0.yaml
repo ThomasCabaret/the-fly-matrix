@@ -2,9 +2,10 @@ schema_version: 1
 id: scope.first_held_out_proprioceptive_resistance_reflex.v0
 title: Bounded front-leg cone for the prospective proprioceptive resistance-reflex
   evaluation
-status: compiled_196_neurons_topology_and_exceptions_frozen_values_open
+status: compiled_196_neurons_topology_frozen_FH08_protocol_locked_values_ensemble_propagated
 candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
-protocol_lock_status: not_locked
+protocol_lock_status: locked_execution_pending
+protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
 source_scope_id: scope.front_leg_sensor_cns_motor_chain.v0
 population_accounting:
   sensory_neurons: 36
@@ -105,7 +106,7 @@ selection_policy:
   population_assignment_selected: false
   parameter_value_selected: false
   simulated_outcome_inspected: false
-next_action: Use this immutable cone as the scope for FH-03, FH-04 and FH-05. Calibrate
-  or propagate each family without changing the cone or consuming the eventual resistance-reflex
-  outcome.
+next_action: Use this immutable cone and the complete unranked FH-07 ensemble in
+  the locked FH-09 evaluation. Materialize topology controls without changing
+  this cone; never rank or refit a member from the held-out response.
 semantic_scope_sha256: f2035ff78507ae6f6c260f47ea524cd0fc8bf09264d59b9462f435f0d8163090

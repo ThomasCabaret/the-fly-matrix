@@ -1,16 +1,17 @@
 schema_version: 1
 id: target.held_out_stimulus_response.v0
 title: Held-out bounded and stimulus-specific embodied response
-status: proprioceptive_resistance_reflex_selected_for_planning_not_locked
+status: proprioceptive_resistance_reflex_protocol_locked_execution_pending
 primary_class: evaluation_only
 optimization_exposure: evaluation_only
 claim_label: held_out_system_evaluation
 candidate_catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
-protocol_lock_status: not_locked
+protocol_lock_status: locked_execution_pending
+protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
 
 scope:
   includes:
-    - frozen reference parameter set
+    - complete frozen unranked 11-member FH-07 technical ensemble
     - short-horizon embodied simulation
     - stimulus, sham, and mirrored trials where meaningful
   excludes:
@@ -41,13 +42,17 @@ acceptance_policy:
   summary: >-
     Frozen parameters yield a repeatable time-locked response that differs from
     sham and remains bounded. The protocol does not require a named action.
-  thresholds: unresolved
+  thresholds: >-
+    For each member and side, at least seven of eight paired seeds must have the
+    source-consistent signed neural effect (exact one-sided sign-test tail
+    0.03515625). No simulator-unit magnitude threshold is introduced.
 
 scenario_splits:
   train: []
   validation: []
   diagnostic: []
-  held_out: []
+  held_out:
+    - heldout.proprio.resistance.v0/{topology_variant}/{member_id}/{side}/{condition}/seed-{seed}
 
 contamination_policy: >-
   Any parameter or model-selection change made after inspecting this protocol's
@@ -55,7 +60,7 @@ contamination_policy: >-
   protocol before a held-out claim.
 
 dependencies:
-  - promoted reference parameter set
+  - frozen exact unranked FH-07 technical ensemble
   - accepted technical neural and embodied stability targets
   - accepted actuator semantics and mechanism-coverage statements
   - locked scenario generator and seeds
@@ -70,23 +75,15 @@ provenance:
     - https://doi.org/10.7554/eLife.56754
     - https://doi.org/10.1016/j.neuron.2018.09.009
   assumptions:
-    - Stimulus family, intensity, duration, and thresholds remain to be fixed.
-    - Candidate behavior names are project suggestions and do not yet have attached biological numerical expectations.
+    - The 8 degree passive extension and 123 degree-per-second ramp are source-aligned assay coordinates, not a simulator optimum.
+    - Biological evidence fixes response direction but not a transferable simulator-unit magnitude threshold.
     - Completing the FeCO proprioceptive chain alone does not make localized tactile contact runnable; mechanosensory routing and transfer readiness are separate gates.
     - FH-01 selected a proprioceptive resistance-reflex candidate from evidence and readiness before any simulated outcome was viewed.
-    - The selected candidate is not a protocol lock and its response properties remain forbidden during fitting and model selection.
+    - FH-01 candidate selection was not a lock; FH-08 subsequently locked protocol v0 while keeping every response property forbidden during fitting and model selection.
 
-validation: not_run
-blocked_reason: >-
-  Protocol cannot be locked before a runnable calibrated lineage exists. FH-01
-  deferred localized contact because its 323 groups, 2108 route candidates and
-  transfer family are unfitted and have no admitted local calibration dataset.
-  The selected proprioceptive resistance-reflex path still requires a frozen
-  minimal FeCO interface ensemble, a bounded 196-neuron causal cone, explicit
-  motor slow/bodyId treatment and source-backed stimulus numerics.
+validation: locked_not_executed
+blocked_reason: null
 next_action: >-
-  Execute roadmap FH-02 by compiling an immutable held-out-specific view of the
-  existing front-leg FeCO-to-tibia-flexor cone. Keep resistance-reflex direction,
-  timing, spatial specificity and body motion inaccessible to all calibration
-  stages. Lock stimulus numerics and metrics only after the runnable lineage is
-  frozen.
+  Execute roadmap FH-09 exactly once from the immutable protocol. First
+  materialize and hash its topology controls and schedule without outcomes; then
+  account all 3,168 episodes. Never rank the eleven FH-07 members from the response.

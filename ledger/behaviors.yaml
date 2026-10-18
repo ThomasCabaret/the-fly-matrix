@@ -8,10 +8,18 @@ technical_targets:
   - target.technical_embodied_stability.v0
 evaluation_only_targets:
   - target.held_out_stimulus_response.v0
-held_out_behaviors: []
+held_out_behaviors:
+  - id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+    protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v0
+    status: locked_execution_pending
+    optimization_exposure: forbidden
+    outcomes_inspected: false
+    frozen_parameter_members: 11
+    members_ranked: false
+    selected_reference_member_id: null
 prospective_evaluation_candidates:
   catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
-  status: catalog_only_not_locked_not_run
+  status: catalog_retained_one_protocol_locked_not_run
   ids:
     - evaluation_candidate.localized_grooming.v0
     - evaluation_candidate.grooming_hierarchy.v0
@@ -23,8 +31,9 @@ prospective_evaluation_candidates:
     - evaluation_candidate.structured_spontaneous_motor_activity.v0
 notes:
   - Technical stability targets are not fly behaviors and cannot support an emergence claim.
-  - No named behavior is assigned until a locked protocol fixes the calibration/evaluation split.
+  - One named evaluation is now assigned only to immutable protocol v0; it remains unrun and cannot influence calibration or member selection.
   - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.
   - Prospective names are not locked held-out protocols; any behavior-specific design or tuning decision contaminates that candidate for the affected lineage.
-  - FH-01 selected the front-leg proprioceptive resistance-reflex candidate for planning before any simulated outcome was viewed; this priority is not a protocol lock and its response properties remain forbidden to calibration.
+  - FH-01 selected the front-leg proprioceptive resistance-reflex candidate before any simulated outcome; that selection was not a lock, while FH-08 now supplies the separate immutable protocol and keeps its response properties forbidden to calibration.
   - Mirrored localized leg contact remains prospective but is deferred until independent mechanosensory routing/transfer evidence makes a negative result interpretable.
+  - The locked proprioceptive protocol evaluates all eleven FH-07 members as an unranked ensemble; any mixed outcome remains member-conditioned uncertainty.

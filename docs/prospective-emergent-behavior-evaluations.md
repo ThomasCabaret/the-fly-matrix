@@ -4,8 +4,10 @@
 
 This document is a **prospective observation catalog**, not a runnable protocol,
 training objective, acceptance gate or claim that any behavior exists. None of
-the items below has been run, locked or inspected. They are candidate
-`evaluation_only` tests to prepare before final parameter freezing.
+the items below has been run or inspected. One item—the front-leg proprioceptive
+resistance reflex—was promoted on 2026-10-18 to the immutable `evaluation_only`
+protocol `calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml`.
+The other entries remain candidates rather than protocols.
 
 Their scientific value depends on the tested behavior not having influenced
 parameter fitting, model selection, early stopping, routing refinement, capacity
@@ -23,12 +25,13 @@ ready; this catalog must not be mistaken for that lock.
 
 FH-01 has now selected a **front-leg proprioceptive resistance-reflex candidate**
 for planning, before any simulated response was generated or inspected. The
-future stimulus is a bounded passive displacement of one front tibia, with sham
-and matched left/right trials. The source-backed observation is a time-locked
-motor response tending to oppose the imposed displacement; exact waveform,
-intensity, timing and acceptance statistics remain to be sourced and locked.
-This is still only a prospective catalog item, not a runnable protocol or a
-prediction that the response will be positive.
+locked stimulus is a passive 8° extension of one front tibia at 123°/s, with
+paired sham and matched left/right trials. Eight paired seeds, a 7-of-8
+directional sign rule, all eleven unranked FH-07 members and four seeds for each
+of two topology-control families were fixed before any outcome was inspected.
+No effect-magnitude threshold was invented because the sources do not supply one
+in transferable simulator units. The lock is not a prediction that the response
+will be positive.
 
 The decision is recorded in
 `calibration/evaluations/first-held-out-channel-readiness-v0.yaml`. It relies on
@@ -89,19 +92,19 @@ coherent way. Candidate metrics include mirrored-output equivariance, ipsilatera
 and contralateral recruitment, directional specificity and paired effect size
 relative to sham. This is more discriminating than a global activity increase.
 
-### Front-leg proprioceptive resistance reflex
+### Front-leg proprioceptive resistance reflex (protocol v0 locked, not run)
 
 Apply a bounded passive extension or flexion to one front tibia and compare the
 scoped motor and physical response with sham. Adult Drosophila recordings report
 a resistance-reflex response of tibia-flexor motor neurons to passive extension
 ([Azevedo et al., 2020](https://doi.org/10.7554/eLife.56754)); FeCO populations
 encode joint position and movement direction
-([Mamiya et al., 2018](https://doi.org/10.1016/j.neuron.2018.09.009)). Candidate
-future metrics include response direction relative to displacement, latency,
-boundedness/recovery, scoped motor-population specificity and left/right
-equivariance. The source does not yet fix the simulator waveform or numerical
-thresholds, and missing muscle/compliance fidelity can make a physical negative
-result ambiguous. None of these response properties may enter calibration.
+([Mamiya et al., 2018](https://doi.org/10.1016/j.neuron.2018.09.009)). Protocol v0
+fixes response direction relative to paired sham as the primary neural criterion
+and treats physical opposition, latency, recovery, motor-class detail and
+left/right symmetry as secondary or descriptive measurements. Missing
+muscle/compliance fidelity still makes a physical negative result ambiguous.
+None of these response properties may enter calibration or rank an FH-07 member.
 
 ### Optomotor response
 

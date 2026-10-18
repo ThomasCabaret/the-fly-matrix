@@ -1,0 +1,46 @@
+schema_version: 1
+id: runner_result.first_held_out_protocol_lock.v0
+campaign_id: campaign.first_held_out_protocol_lock.v0
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v0
+status: accepted_immutable_protocol_lock_FH08_complete
+completed_at: '2026-10-18T16:26:38.880684+00:00'
+command: first_held_out_protocol_lock.bat
+claim_label: FH-08 PROTOCOL LOCK / OUTCOMES UNSEEN / NOT CALIBRATION
+frozen_input_sha256:
+  protocol: 9976416a2b5b9c07f6bb4d60414b571889e5b4e482094416a9c32c201ef062a6
+  causal_scope: ad972e48b9dd6d7be9e41ecf6e04ef2476b369f5fc8318d9cb81becbd904955e
+  fh07_result: 1021b9659bb2f61c865abda3b82622c7043823528da8d2c6e3b7383c0ccd87e8
+  fh07_parameter_set: dd1f696c29bcf3467d6cc93f18c55965fce5e5817cf6c94fa7718afcc1a9f68a
+  integrated_lineage: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  actuator_contract: 27b6af1ccd641a21ac8761f791aaf203136e5357baf2549c4f9249591ddc07e9
+  measurement_contract: 1db63bb3187d38d8e1f72c2aed2270704e19817ee34b46a9ed2262e4b994991c
+checks:
+  held_out_outcomes_consumed: 0
+  all_11_members_exact_and_unranked: true
+  selected_reference_member_id: null
+  stimulus_sham_and_mirrors_locked: true
+  eight_paired_trial_seeds_locked: true
+  sign_test_threshold_locked: true
+  frozen_parameter_rewires_scheduled: true
+  same_recipe_recalibrated_rewires_scheduled: true
+  mechanism_coverage_attached: true
+  contamination_policy_attached: true
+schedule:
+  canonical_episodes: 352
+  topology_control_episodes: 2816
+  total_episodes: 3168
+  total_topology_variants: 9
+trial_seed_count: 8
+rewire_seed_count: 4
+minimum_directionally_consistent_pairs: 7
+exact_one_sided_sign_test_p_at_threshold: 0.03515625
+semantic_result_sha256: 27457d2eb93033181916d61fad0ffbd26fe82671f676a77f08aa117bf0691512
+accepted_claims:
+- Protocol inputs and decision rules are frozen before held-out execution.
+- Every FH-07 survivor is scheduled without ranking or selection.
+- Frozen-parameter and recipe-matched recalibrated rewires are both scheduled.
+forbidden_claims:
+- This compilation executes or observes a held-out response.
+- Protocol lock validates a biological behavior or a parameter member.
+next_action: Materialize the locked control topologies and execution schedule, validate
+  them without outcomes, then run FH-09 exactly once.

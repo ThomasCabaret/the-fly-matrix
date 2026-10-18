@@ -134,7 +134,7 @@ class CalibrationRegistryTests(unittest.TestCase):
             },
         )
 
-    def test_prospective_behavior_catalog_is_not_a_locked_protocol(self) -> None:
+    def test_prospective_catalog_and_single_locked_protocol_are_distinct(self) -> None:
         catalog = load_yaml(
             CALIBRATION_ROOT
             / "evaluation_candidates"
@@ -143,7 +143,10 @@ class CalibrationRegistryTests(unittest.TestCase):
         held_out_target = self.targets["target.held_out_stimulus_response.v0"]
         behavior_index = load_yaml(ROOT / "ledger" / "behaviors.yaml")
 
-        self.assertEqual(catalog["status"], "prospective_only_not_locked_not_run")
+        self.assertEqual(
+            catalog["status"],
+            "prospective_catalog_one_candidate_promoted_to_locked_protocol_not_run",
+        )
         self.assertEqual(catalog["optimization_exposure"], "forbidden")
         self.assertEqual(len(catalog["candidates"]), 8)
         self.assertEqual(
@@ -155,13 +158,16 @@ class CalibrationRegistryTests(unittest.TestCase):
                 "catalog_registration_is_protocol_lock"
             ]
         )
-        self.assertEqual(held_out_target["protocol_lock_status"], "not_locked")
-        self.assertEqual(behavior_index["held_out_behaviors"], [])
+        self.assertEqual(held_out_target["protocol_lock_status"], "locked_execution_pending")
+        self.assertEqual(len(behavior_index["held_out_behaviors"]), 1)
+        self.assertFalse(behavior_index["held_out_behaviors"][0]["outcomes_inspected"])
+        self.assertFalse(behavior_index["held_out_behaviors"][0]["members_ranked"])
         self.assertEqual(
             behavior_index["prospective_evaluation_candidates"]["status"],
-            "catalog_only_not_locked_not_run",
+            "catalog_retained_one_protocol_locked_not_run",
         )
-        self.assertFalse(self.state["readiness"]["held_out_protocol_locked"])
+        self.assertTrue(self.state["readiness"]["held_out_protocol_locked"])
+        self.assertFalse(self.state["readiness"]["held_out_protocol_executed"])
 
     def test_first_held_out_channel_choice_is_evidence_based_and_unlocked(self) -> None:
         readiness = load_yaml(
@@ -206,7 +212,9 @@ class CalibrationRegistryTests(unittest.TestCase):
             ],
             11,
         )
-        self.assertEqual(roadmap["estimate_contract"]["open_items"], 2)
+        self.assertEqual(roadmap["items"][7]["status"], "complete")
+        self.assertEqual(roadmap["items"][8]["status"], "ready")
+        self.assertEqual(roadmap["estimate_contract"]["open_items"], 1)
 
     def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:
         scope = load_yaml(

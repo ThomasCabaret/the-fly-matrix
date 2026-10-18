@@ -1110,8 +1110,8 @@ L'architecture, les invariants visuels et le contrat de traçabilité sont acté
 - Évaluation/fermeture de boucle : **20 %**.
 - Couverture terminale de la carte : **100 % sans disposition `blocked`**.
 - Revalidation scientifique : **`independently_validated` ; 4/4 familles fines, zéro exception et zéro famille bloquée**.
-- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés, FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, FH-05 conserve 81 membres techniques sous deux miroirs basaux et FH-06 les compose dans une lignée conditionnelle exacte de 4 621 555 858 189 754 880 adresses discrètes sans matérialisation ni référence ; FH-07a conserve 18 survivants neuraux exacts puis FH-07b exerce les 18 parents dans 32 composites physiques pairwise et conserve 11 composites techniques incarnés exacts, non classés, après 92 épisodes et neuf rejets préapplication `MOTOR` ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les valeurs restent des coordonnées d'ingénierie couplées, zéro affectation physiologique ou comportement n'est promu et FH-08 doit verrouiller le protocole tenu à l'écart**.
-- Évaluations émergentes : **7 candidats prospectifs documentés ; zéro protocole verrouillé, zéro comportement observé et zéro résultat exposé à la calibration**.
+- Calibration : **inventaire de 23 familles et DAG de 22 dépendances validés ; FH-03 est fermé sur 1 728 membres sensoriels FeCO factorisés, FH-04 rend exécutables les 59 049 affectations motrices sans en choisir une, FH-05 conserve 81 membres techniques sous deux miroirs basaux et FH-06 les compose dans une lignée conditionnelle exacte de 4 621 555 858 189 754 880 adresses discrètes sans matérialisation ni référence ; FH-07a conserve 18 survivants neuraux exacts puis FH-07b exerce les 18 parents dans 32 composites physiques pairwise et conserve 11 composites techniques incarnés exacts, non classés, après 92 épisodes et neuf rejets préapplication `MOTOR` ; FH-08 verrouille sur cet ensemble un protocole `evaluation_only` de 3 168 épisodes sans en exécuter aucun ; le gate global rate/LIF est fermé avec `revise` vers une architecture event-capable typée/hybride ; 12 neurones sont `event_required` et 166 419 restent `dual_unresolved` dans la portée basale ; les valeurs restent des coordonnées d'ingénierie couplées et zéro affectation physiologique ou comportement n'est promu**.
+- Évaluations émergentes : **8 candidats prospectifs documentés ; un protocole proprioceptif immuable est verrouillé mais non exécuté, zéro comportement observé et zéro résultat exposé à la calibration**.
 - Attribution incarnée : **gate ADR 0015 fermé comme surrogate borné : 102 actionneurs directs `MOTOR`, zéro servo, rejeu ouvert exact, séparation passif/ouvert/fermé et symétrie tethered ; feedback non calibré actuellement presque nul, aucune fidélité musculaire ni stabilité validée**.
 - Mesure de stabilité incarnée : **contrat court-horizon v1 complet (COM réel, 102 limites, jerk physique, 6 contacts/forces, proxy de travail déclaré, récupération appariée et masques) ; zéro seuil choisi et stabilité toujours non calibrée**.
 
@@ -1339,7 +1339,7 @@ proprioceptive biologiquement sourcée.
 La route vers le premier essai comportemental tenu à l'écart est maintenant
 inventoriée dans
 [`calibration/roadmaps/first-held-out-evaluation-v0.yaml`](calibration/roadmaps/first-held-out-evaluation-v0.yaml).
-FH-01 à FH-07 sont fermés ; deux items restent ouverts. FH-06 conserve exactement
+FH-01 à FH-08 sont fermés ; un item reste ouvert. FH-06 conserve exactement
 les ensembles FH-03/FH-04/FH-05 sous une factorisation conditionnelle de
 4 621 555 858 189 754 880 adresses discrètes, sans les matérialiser ni sélectionner
 de référence. Son témoin lexicographique a exécuté les frontières corps/FeCO,
@@ -1352,13 +1352,21 @@ Les 18 parents FH-07a ont tous été exercés ; 23 composites ont exécuté les 
 branches physiques, neuf ont été bloqués avant application par la garde `MOTOR`
 et 12 n'ont pas fermé le feedback sous leur perturbation assignée.
 
-Le plan de base représente maintenant 2 à 3 fournées substantielles ; une réserve
-explicite de 2 à 4 porte la prévision de pilotage à 4--7. Cette fourchette vise le **premier essai interprétable**,
-positif, négatif ou ambigu, et non un comportement réussi ni la calibration totale
-de MaleCNS. Le prochain front est FH-08 : sourcer puis verrouiller avant résultat
-le protocole `evaluation_only`, ses sham/miroirs/seeds/métriques/seuils, sa fiche
-de mécanismes absents et ses contrôles topologiques. Aucun résultat futur ne doit
-servir à classer les 11 survivants FH-07.
+FH-08 verrouille maintenant, avant tout résultat, une extension passive de 8° à
+123°/s, sham apparié, deux côtés, huit seeds et une règle directionnelle 7/8. Les
+11 membres restent tous évalués et non classés. Quatre seeds de rewire reçoivent
+chacun un contrôle à paramètres gelés et un contrôle recalibré par la même recette
+non comportementale : 352 épisodes canoniques et 2 816 contrôles sont prévus. Le
+protocole n'invente aucun seuil d'amplitude en unités simulateur ; l'absence de
+muscles/compliance détaillés rend une négation purement physique ambiguë.
+
+Le plan de base représente maintenant 1 à 2 fournées substantielles ; une réserve
+explicite de 2 à 4 porte la prévision de pilotage à 3--6. Cette fourchette vise le
+**premier essai interprétable**, positif, négatif ou ambigu, et non un comportement
+réussi ni la calibration totale de MaleCNS. Le prochain et dernier item est FH-09 :
+matérialiser et hasher le schedule et les huit contrôles topologiques sans résultats,
+puis exécuter une fois les 3 168 épisodes et tout comptabiliser. Aucun résultat ne
+doit servir à classer ou réajuster les 11 survivants FH-07.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle

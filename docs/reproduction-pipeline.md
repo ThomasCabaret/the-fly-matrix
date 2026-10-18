@@ -319,7 +319,15 @@ FH-07a parents. The registered result contains 23 complete four-branch composite
 exact unranked survivors. Reproduction must preserve those failures: do not clip
 commands, normalize convergent routes, rank body motion or substitute a visually
 attractive member. A successful rerun closes FH-07 only as short-horizon technical
-stability; the separately sourced FH-08 evaluation protocol is still not locked.
+stability.
+
+`first_held_out_protocol_lock.bat` reproduces FH-08 without running the held-out
+assay. It hash-checks the exact eleven-member FH-07 ensemble and causal cone, then
+validates the source-backed 8°/123°/s passive extension, paired sham, two sides,
+eight trial seeds, 7-of-8 directional rule and four seeds for each of the frozen
+and recipe-matched recalibrated rewire families. Its 3,168-episode total is a
+schedule, not an observed dataset. Do not run a manually edited scenario before
+the FH-09 schedule and topology hashes have been materialized from this lock.
 
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and

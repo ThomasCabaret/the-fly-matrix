@@ -1,7 +1,7 @@
 schema_version: 1
 id: catalog.prospective_emergent_behavior_evaluations.v0
 title: Prospective behavior-naive observation catalog
-status: prospective_only_not_locked_not_run
+status: prospective_catalog_one_candidate_promoted_to_locked_protocol_not_run
 created: 2026-10-03
 primary_class: evaluation_only_candidate_catalog
 optimization_exposure: forbidden
@@ -25,27 +25,26 @@ catalog_exposure_policy:
     - frozen parameter-set lineage
 
 planning_priority:
-  status: advisory_not_protocol_lock
+  status: promoted_to_protocol_v0_execution_pending
   preferred_first_candidate: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   preferred_variant: mirrored_passive_front_tibia_displacement
   prerequisites:
-    - adequate localized tactile stimulus and readout resolution
-    - accepted minimal mechanosensory routing and transfer chain
+    - accepted bounded FeCO-to-motor chain ensemble
     - accepted actuator semantics gate
     - mechanism-coverage statement
-    - independent biological source and immutable protocol
+    - independent biological sources and immutable protocol
   rationale: >-
     FH-01 selected a separately sourced proprioceptive resistance-reflex
     candidate before any simulated outcome was generated. It reuses an already
     bounded front-leg FeCO-to-motor envelope and has fewer unbounded interface
     degrees of freedom than localized contact.
   current_readiness_gap: >-
-    The selected candidate is not runnable science yet: FeCO routing/transfer
-    remains an unpromoted ensemble, motor slow/bodyId uncertainty is open, and
-    native-boundary conversions on the 196-neuron cone remain unfitted. The
-    tactile candidate is deferred, not rejected: its 323 groups, 2108 bounded
-    route candidates, up to 1785 routing dimensions and absent admitted local
-    dataset still prevent an interpretable first negative result.
+    Protocol v0 is locked over the complete eleven-member FH-07 ensemble but has
+    not been executed. FH-09 must materialize and hash the topology controls and
+    exact schedule before opening outcomes. The tactile candidate is deferred,
+    not rejected: its 323 groups, 2108 bounded route candidates, up to 1785
+    routing dimensions and absent admitted local dataset still prevent an
+    interpretable first negative result.
   selection_record: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
   alternative_policy: >-
     Reopening tactile or selecting another modality requires a roadmap revision
@@ -89,8 +88,9 @@ candidates:
       A bounded time-locked motor and physical response that tends to oppose a
       passive tibia displacement, differs from sham and preserves declared
       left/right organization.
-    status: prospective_selected_for_planning_not_locked_not_run
-    planning_priority: preferred_first_after_FH_01
+    status: promoted_to_locked_protocol_v0_not_run
+    protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+    planning_priority: selected_first_FH08_complete_FH09_pending
     source_refs:
       - https://doi.org/10.7554/eLife.56754
       - https://doi.org/10.1016/j.neuron.2018.09.009

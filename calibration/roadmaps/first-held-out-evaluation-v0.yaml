@@ -29,7 +29,8 @@ milestone:
 selected_planning_path:
   candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   decision_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
-  status: prospective_not_locked_not_run
+  protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+  status: protocol_locked_execution_pending
   selection_basis: independent_biology_and_current_mechanism_readiness
   simulated_outcomes_inspected_for_selection: false
   displaced_preference:
@@ -44,10 +45,10 @@ estimate_contract:
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 2
-  base_work_batches: {min: 2, max: 3}
+  open_items: 1
+  base_work_batches: {min: 1, max: 2}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 4, max: 7}
+  planning_forecast_batches: {min: 3, max: 6}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -291,7 +292,7 @@ items:
   - id: FH-08
     title: Lock the evaluation-only protocol and topology controls
     nature: prospective_protocol_lock
-    status: planned
+    status: complete
     depends_on: [FH-06, FH-07]
     estimated_batches: {min: 1, max: 1}
     exit_criteria:
@@ -299,11 +300,30 @@ items:
       - frozen rewires and same-recipe recalibrated rewires are scheduled
       - mechanism coverage and contamination rules are attached
     replan_if: the candidate cannot yield an interpretable negative result with represented mechanisms
+    completion_record:
+      protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+      campaign_ref: calibration/campaigns/first-held-out-protocol-lock-v0.yaml
+      result_ref: calibration/runner/first-held-out-protocol-lock-v0.yaml
+      evaluation_ref: calibration/evaluations/first-held-out-protocol-lock-v0.yaml
+      semantic_result_sha256: 27457d2eb93033181916d61fad0ffbd26fe82671f676a77f08aa117bf0691512
+      held_out_outcomes_consumed: 0
+      frozen_members: 11
+      members_ranked: false
+      selected_reference_member_id: null
+      paired_trial_seeds: 8
+      rewire_seeds: 4
+      topology_control_families: 2
+      scheduled_episodes: 3168
+      interpretation: >-
+        The 8 degree, 123 degree-per-second passive-extension protocol, paired
+        sham, bilateral mirrors, sign rule and topology-control recipes are now
+        immutable. Magnitude thresholds remain absent because the sources do not
+        provide transferable simulator units. This closes design, not execution.
 
   - id: FH-09
     title: Execute and report the first held-out end-to-end evaluation
     nature: evaluation_only_execution
-    status: planned
+    status: ready
     depends_on: [FH-08]
     estimated_batches: {min: 1, max: 2}
     exit_criteria:
@@ -333,6 +353,41 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-18
+    batch: fh08_immutable_evaluation_only_protocol_lock
+    before:
+      open_items: 2
+      base_work_batches: {min: 2, max: 3}
+      planning_forecast_batches: {min: 4, max: 7}
+    closed: [FH-08]
+    advanced: []
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      frozen_members: 11
+      paired_trial_seeds: 8
+      mirrored_sides: 2
+      stimulus_and_sham_conditions: 2
+      topology_rewire_seeds: 4
+      topology_control_families: 2
+      canonical_episodes_scheduled: 352
+      control_episodes_scheduled: 2816
+      total_episodes_scheduled: 3168
+      held_out_outcomes_consumed: 0
+    scientific_boundary: >-
+      Source evidence fixes passive-extension direction and an assay waveform,
+      but not a simulator-unit magnitude. All eleven FH-07 members remain exact,
+      unranked and unselected. Mixed outcomes will be reported as conditioned
+      uncertainty; physical failure alone remains ambiguous because detailed
+      muscle and compliance physiology are absent.
+    after:
+      open_items: 1
+      base_work_batches: {min: 1, max: 2}
+      planning_forecast_batches: {min: 3, max: 6}
+    accounting_note: >-
+      One planned FH-08 batch closed exactly FH-08 and discovered no new roadmap
+      item. Therefore after = before - one closed + zero discovered: both base
+      bounds fall by one. The two-to-four contingency reserve is unchanged.
   - date: 2026-10-18
     batch: fh07b_behavior_naive_embodied_technical_gate
     before:
