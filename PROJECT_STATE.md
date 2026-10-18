@@ -1339,7 +1339,7 @@ proprioceptive biologiquement sourcée.
 La route vers le premier essai comportemental tenu à l'écart est maintenant
 inventoriée dans
 [`calibration/roadmaps/first-held-out-evaluation-v0.yaml`](calibration/roadmaps/first-held-out-evaluation-v0.yaml).
-FH-01 à FH-08 sont fermés ; un item reste ouvert. FH-06 conserve exactement
+FH-01 à FH-08 sont fermés ; FH-09 reste l'unique item ouvert. FH-06 conserve exactement
 les ensembles FH-03/FH-04/FH-05 sous une factorisation conditionnelle de
 4 621 555 858 189 754 880 adresses discrètes, sans les matérialiser ni sélectionner
 de référence. Son témoin lexicographique a exécuté les frontières corps/FeCO,
@@ -1360,13 +1360,25 @@ non comportementale : 352 épisodes canoniques et 2 816 contrôles sont prévus.
 protocole n'invente aucun seuil d'amplitude en unités simulateur ; l'absence de
 muscles/compliance détaillés rend une négation purement physique ambiguë.
 
-Le plan de base représente maintenant 1 à 2 fournées substantielles ; une réserve
-explicite de 2 à 4 porte la prévision de pilotage à 3--6. Cette fourchette vise le
+Le préflight sans résultats de FH-09 a matérialisé les huit graphes de contrôle
+issus de quatre seeds (500 swaps dirigés acceptés par seed, degrés, strates
+transmetteur/poids et multiensemble des poids préservés) ainsi que les 3 168
+scénarios uniques. Les mesures event et graded restent séparées et le stockage
+des résultats refuse l'écrasement. Il a aussi détecté, avant tout outcome, une
+erreur de compilation du protocole : la rampe verrouillée de 65,040650 ms ne peut
+pas être représentée à 1 microseconde près par le pas MuJoCo gelé de 100
+microsecondes ; l'écart minimal est 40,650 microsecondes. Le protocole v0 ne sera
+donc pas arrondi silencieusement : il doit être remplacé par une version sourcée
+et représentable, ou par un changement de timebase séparément justifié.
+
+Le plan de base restant représente maintenant 2 à 3 fournées substantielles ; une réserve
+explicite de 2 à 4 porte la prévision de pilotage à 4--7. Cette fourchette vise le
 **premier essai interprétable**, positif, négatif ou ambigu, et non un comportement
-réussi ni la calibration totale de MaleCNS. Le prochain et dernier item est FH-09 :
-matérialiser et hasher le schedule et les huit contrôles topologiques sans résultats,
-puis exécuter une fois les 3 168 épisodes et tout comptabiliser. Aucun résultat ne
-doit servir à classer ou réajuster les 11 survivants FH-07.
+réussi ni la calibration totale de MaleCNS. FH-09 doit d'abord fermer ce défaut
+de timebase et régénérer ses hashes sans résultat, puis exécuter une fois les
+3 168 épisodes et tout comptabiliser. Aucun résultat ne doit servir à classer ou
+réajuster les 11 survivants FH-07. L'augmentation depuis 1--2 est explicitement
+causée par ce prérequis omis à FH-08 ; elle n'est pas une réestimation silencieuse.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle

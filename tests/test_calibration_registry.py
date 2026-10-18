@@ -193,7 +193,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         selected_id = readiness["decision"]["selected_candidate_id"]
         self.assertIn(selected_id, {item["id"] for item in catalog["candidates"]})
-        self.assertEqual(roadmap["revision"], 2)
+        self.assertEqual(roadmap["revision"], 3)
         self.assertEqual(roadmap["items"][0]["status"], "complete")
         self.assertEqual(roadmap["items"][1]["status"], "complete")
         self.assertEqual(roadmap["items"][2]["status"], "complete")
@@ -213,7 +213,17 @@ class CalibrationRegistryTests(unittest.TestCase):
             11,
         )
         self.assertEqual(roadmap["items"][7]["status"], "complete")
-        self.assertEqual(roadmap["items"][8]["status"], "ready")
+        self.assertEqual(roadmap["items"][8]["status"], "blocked")
+        self.assertEqual(
+            roadmap["items"][8]["blocking_substep"]["id"], "FH-09-timebase"
+        )
+        self.assertEqual(
+            roadmap["items"][8]["preflight_record"]["held_out_outcomes_consumed"],
+            0,
+        )
+        self.assertEqual(
+            roadmap["items"][8]["preflight_record"]["schedule_rows"], 3168
+        )
         self.assertEqual(roadmap["estimate_contract"]["open_items"], 1)
 
     def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:

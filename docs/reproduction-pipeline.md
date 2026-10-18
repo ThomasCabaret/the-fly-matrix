@@ -329,6 +329,17 @@ and recipe-matched recalibrated rewire families. Its 3,168-episode total is a
 schedule, not an observed dataset. Do not run a manually edited scenario before
 the FH-09 schedule and topology hashes have been materialized from this lock.
 
+`first_held_out_execution_preflight.bat` performs that outcome-blind FH-09
+materialization. It reconstructs the 196-neuron cone, emits eight deterministic
+control artifacts from four rewire seeds, verifies exact directed-degree and
+transmitter/weight-stratum preservation, and compiles all 3,168 unique scenario
+rows. It also exercises the native event/graded measurement split and an
+exclusive-create result writer. The current registered preflight intentionally
+stops execution: the locked 65.040650 ms ramp is 40.650 us away from the nearest
+100 us MuJoCo boundary, exceeding protocol v0's 1 us tolerance. On a fresh clone,
+reproduce this blocked result; do not round v0 or execute an outcome until a
+superseding source-consistent protocol/timebase decision is registered.
+
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and
 validates true COM, joint limits, physical jerk, contacts/forces, a declared

@@ -356,6 +356,15 @@ therefore proves only that the held-out design was locked with zero outcomes and
 zero member selection. FH-09 must materialize/hash the controls before executing
 the 3,168 episodes exactly once.
 
+Run `first_held_out_execution_preflight.bat` to reproduce the first FH-09 gate.
+It materializes all eight control artifacts, preserves the directed-degree and
+transmitter/weight invariants, compiles 3,168 unique scenario rows, separates
+native event and graded measurements, and verifies append-only outcome storage.
+It consumes zero held-out outcomes. The registered result is deliberately
+blocked before execution because protocol v0's 65.040650 ms ramp cannot satisfy
+its 1 us tolerance on the frozen 100 us physical step. Resolve that mismatch by
+a versioned protocol or timebase decision; never silently round the locked v0.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

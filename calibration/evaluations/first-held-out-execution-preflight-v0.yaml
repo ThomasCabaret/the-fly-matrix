@@ -1,0 +1,57 @@
+schema_version: 1
+id: evaluation.first_held_out_execution_preflight.v0
+title: Outcome-blind FH-09 execution readiness
+status: accepted_materialization_execution_blocked_by_locked_timebase_mismatch
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: evaluation_only
+outcome_rows_consumed: 0
+result_ref: calibration/runner/first-held-out-execution-preflight-v0.yaml
+semantic_result_sha256: 92c3cd54a68f446c6ea24093a8992cd03ff02b8a458ab4c8c1d168a14ffb84b6
+checks:
+  held_out_outcomes_consumed_zero: true
+  eight_topology_control_artifacts_materialized: true
+  all_rewires_have_at_least_ten_accepted_swaps: true
+  all_rewires_change_semantic_topology: true
+  seeded_control_pairs_share_exact_topology: true
+  directed_degrees_and_weight_multisets_preserved: true
+  no_new_self_loop_or_duplicate: true
+  schedule_exactly_3168_unique_rows: true
+  every_member_side_condition_seed_topology_accounted: true
+  native_representations_kept_separate: true
+  append_only_writer_refuses_overwrite: true
+  locked_timing_representable_on_frozen_timebase: false
+timebase:
+  physics_timestep_s: 0.0001
+  duration_tolerance_s: 1.0e-06
+  baseline_duration_s:
+    requested_s: 0.1
+    nearest_steps: 1000
+    represented_s: 0.1
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  ramp_duration_s:
+    requested_s: 0.06504065040650407
+    nearest_steps: 650
+    represented_s: 0.065
+    absolute_error_s: 4.06504065040697e-05
+    within_locked_tolerance: false
+  post_release_observation_s:
+    requested_s: 0.2
+    nearest_steps: 2000
+    represented_s: 0.2
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  total_duration_s:
+    requested_s: 0.3650406504065041
+    nearest_steps: 3650
+    represented_s: 0.365
+    absolute_error_s: 4.065040650408358e-05
+    within_locked_tolerance: false
+  all_locked_durations_representable: false
+interpretation: Topology controls, scenario accounting, native-measure separation
+  and append-only storage are ready. Execution remains blocked because the immutable
+  waveform timing is not representable within its own tolerance on the frozen physical
+  time step.
+next_action: Before any outcome, register a superseding protocol whose waveform is
+  exactly representable on the frozen physical timebase, or version an independently
+  justified timebase change; never round v0 silently.

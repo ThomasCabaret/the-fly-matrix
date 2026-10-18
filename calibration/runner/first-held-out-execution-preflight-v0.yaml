@@ -1,0 +1,229 @@
+schema_version: 1
+id: runner_result.first_held_out_execution_preflight.v0
+campaign_id: campaign.first_held_out_execution_preflight.v0
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v0
+status: accepted_materialization_execution_blocked_by_locked_timebase_mismatch
+completed_at: '2026-10-18T16:42:24.683785+00:00'
+command: first_held_out_execution_preflight.bat
+claim_label: FH-09 PREFLIGHT / NO HELD-OUT OUTCOME / NOT CALIBRATION
+frozen_input_sha256:
+  protocol: 9976416a2b5b9c07f6bb4d60414b571889e5b4e482094416a9c32c201ef062a6
+  protocol_lock_result: b0084e0ea9effcdbca89145708a958d8cb73951193e6e7d21251166dc925e9e3
+  fh07_result: 1021b9659bb2f61c865abda3b82622c7043823528da8d2c6e3b7383c0ccd87e8
+  population_members: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  classified_intermediates: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+  central_nodes: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+  transmitter_prior: f7f129585ba0e516c824fc5bb5b9e53f2a62c2203405b1fd8b01c7e5cee5162a
+held_out_outcomes_consumed: 0
+members_ranked: false
+selected_reference_member_id: null
+canonical_graph:
+  nodes: 196
+  edges: 4873
+  semantic_topology_sha256: 55253c54a0ad03cd00cb4d3de6ea03a97903739d3da08c5d57bfc73012b81b71
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/canonical-cone.npz
+  artifact_sha256: 9d3718dfe68da396941f79b4ac7dcd7bbd3f852006bd12822699ee66285907d1
+topology_controls:
+- topology_variant: rewire-81701-frozen
+  rewire_seed: 81701
+  control_family: frozen_parameter_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81701-frozen.npz
+  artifact_sha256: bbb2d59bd087af4bcd2768abb63b5edcccd1465bfe9794b533350e4956168f42
+  semantic_topology_sha256: 5495787f3eccb13a597412c144098f6cdea5a5eb0bdb9cd28b8a35cb6737b24a
+  seed: 81701
+  attempts: 1693
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 946
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+- topology_variant: rewire-81701-recalibrated
+  rewire_seed: 81701
+  control_family: same_recipe_recalibrated_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81701-recalibrated.npz
+  artifact_sha256: bbb2d59bd087af4bcd2768abb63b5edcccd1465bfe9794b533350e4956168f42
+  semantic_topology_sha256: 5495787f3eccb13a597412c144098f6cdea5a5eb0bdb9cd28b8a35cb6737b24a
+  seed: 81701
+  attempts: 1693
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 946
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+- topology_variant: rewire-81702-frozen
+  rewire_seed: 81702
+  control_family: frozen_parameter_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81702-frozen.npz
+  artifact_sha256: 3203060045138b55903faf7cad09e8747fbf1afbf434d77041aef06bb8886977
+  semantic_topology_sha256: 3d3466e125bb8768a73c0d48192e335b647520320ff411cd6331bfd170f19a88
+  seed: 81702
+  attempts: 1800
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 962
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+- topology_variant: rewire-81702-recalibrated
+  rewire_seed: 81702
+  control_family: same_recipe_recalibrated_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81702-recalibrated.npz
+  artifact_sha256: 3203060045138b55903faf7cad09e8747fbf1afbf434d77041aef06bb8886977
+  semantic_topology_sha256: 3d3466e125bb8768a73c0d48192e335b647520320ff411cd6331bfd170f19a88
+  seed: 81702
+  attempts: 1800
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 962
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+- topology_variant: rewire-81703-frozen
+  rewire_seed: 81703
+  control_family: frozen_parameter_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81703-frozen.npz
+  artifact_sha256: ca2bbccd418809e24b8361a7177d5aa7642df8fe39c5118378e97b81b76826f8
+  semantic_topology_sha256: 9bd8ce7ae4795208502799ee8b3d93bf9ac23e4bc675f81da0b3837ebb59d564
+  seed: 81703
+  attempts: 1673
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 954
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+- topology_variant: rewire-81703-recalibrated
+  rewire_seed: 81703
+  control_family: same_recipe_recalibrated_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81703-recalibrated.npz
+  artifact_sha256: ca2bbccd418809e24b8361a7177d5aa7642df8fe39c5118378e97b81b76826f8
+  semantic_topology_sha256: 9bd8ce7ae4795208502799ee8b3d93bf9ac23e4bc675f81da0b3837ebb59d564
+  seed: 81703
+  attempts: 1673
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 954
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+- topology_variant: rewire-81704-frozen
+  rewire_seed: 81704
+  control_family: frozen_parameter_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81704-frozen.npz
+  artifact_sha256: 22d49461932e9dc998b00a8a8421c4088bb7a7560ac688727f9ccc4c96529175
+  semantic_topology_sha256: 762698c86ee1214378253b669fd617370d9c9091a34e588f917fa58adb8c3eca
+  seed: 81704
+  attempts: 1862
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 1000
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+- topology_variant: rewire-81704-recalibrated
+  rewire_seed: 81704
+  control_family: same_recipe_recalibrated_rewire
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/topology-controls/rewire-81704-recalibrated.npz
+  artifact_sha256: 22d49461932e9dc998b00a8a8421c4088bb7a7560ac688727f9ccc4c96529175
+  semantic_topology_sha256: 762698c86ee1214378253b669fd617370d9c9091a34e588f917fa58adb8c3eca
+  seed: 81704
+  attempts: 1862
+  accepted_swaps: 500
+  changed_directed_edges_symmetric_difference: 1000
+  nodes: 196
+  edges: 4873
+  exact_in_degree_preserved: true
+  exact_out_degree_preserved: true
+  exact_weight_multiset_preserved: true
+  new_self_loops: 0
+  duplicate_edges: 0
+schedule:
+  rows: 3168
+  unique_scenarios: 3168
+  topology_variants: 9
+  canonical_rows: 352
+  frozen_rewire_rows: 1408
+  recalibrated_rewire_rows: 1408
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v0/execution-schedule.csv
+  artifact_sha256: d2e67b618ebd3e0b6dd8220f321ff5cc0578e994095d0b7560842c172707003e
+  semantic_sha256: 4e5944f2ce28c67046b47c01ff8825d1240921409ab00578aade019c2ff2d93f
+timebase:
+  physics_timestep_s: 0.0001
+  duration_tolerance_s: 1.0e-06
+  baseline_duration_s:
+    requested_s: 0.1
+    nearest_steps: 1000
+    represented_s: 0.1
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  ramp_duration_s:
+    requested_s: 0.06504065040650407
+    nearest_steps: 650
+    represented_s: 0.065
+    absolute_error_s: 4.06504065040697e-05
+    within_locked_tolerance: false
+  post_release_observation_s:
+    requested_s: 0.2
+    nearest_steps: 2000
+    represented_s: 0.2
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  total_duration_s:
+    requested_s: 0.3650406504065041
+    nearest_steps: 3650
+    represented_s: 0.365
+    absolute_error_s: 4.065040650408358e-05
+    within_locked_tolerance: false
+  all_locked_durations_representable: false
+checks:
+  held_out_outcomes_consumed_zero: true
+  eight_topology_control_artifacts_materialized: true
+  all_rewires_have_at_least_ten_accepted_swaps: true
+  all_rewires_change_semantic_topology: true
+  seeded_control_pairs_share_exact_topology: true
+  directed_degrees_and_weight_multisets_preserved: true
+  no_new_self_loop_or_duplicate: true
+  schedule_exactly_3168_unique_rows: true
+  every_member_side_condition_seed_topology_accounted: true
+  native_representations_kept_separate: true
+  append_only_writer_refuses_overwrite: true
+  locked_timing_representable_on_frozen_timebase: false
+execution_ready: false
+blocking_reasons:
+- The locked 65.040650 ms ramp and 365.040650 ms total duration cannot be represented
+  within the locked 1 us tolerance on the frozen 100 us MuJoCo time step.
+accepted_claims:
+- All eight locked topology-control artifacts and all 3,168 outcome-blind schedule
+  rows are reproducibly materialized.
+- The preflight consumes zero held-out outcomes and selects no FH-07 member.
+forbidden_claims:
+- This preflight demonstrates a proprioceptive response or any biological behavior.
+- A rounded timing may silently replace the immutable protocol.
+next_action: Before any outcome, register a superseding protocol whose waveform is
+  exactly representable on the frozen physical timebase, or version an independently
+  justified timebase change; never round v0 silently.
+semantic_result_sha256: 92c3cd54a68f446c6ea24093a8992cd03ff02b8a458ab4c8c1d168a14ffb84b6

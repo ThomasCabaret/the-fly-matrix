@@ -1,6 +1,6 @@
 schema_version: 1
 id: roadmap.first_held_out_evaluation.v0
-revision: 2
+revision: 3
 updated: 2026-10-18
 status: active
 
@@ -30,7 +30,7 @@ selected_planning_path:
   candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   decision_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
   protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
-  status: protocol_locked_execution_pending
+  status: protocol_locked_preflight_blocked_before_outcomes
   selection_basis: independent_biology_and_current_mechanism_readiness
   simulated_outcomes_inspected_for_selection: false
   displaced_preference:
@@ -46,9 +46,9 @@ estimate_contract:
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
   open_items: 1
-  base_work_batches: {min: 1, max: 2}
+  base_work_batches: {min: 2, max: 3}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 3, max: 6}
+  planning_forecast_batches: {min: 4, max: 7}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -323,9 +323,32 @@ items:
   - id: FH-09
     title: Execute and report the first held-out end-to-end evaluation
     nature: evaluation_only_execution
-    status: ready
+    status: blocked
     depends_on: [FH-08]
-    estimated_batches: {min: 1, max: 2}
+    estimated_batches: {min: 2, max: 3}
+    blocking_substep:
+      id: FH-09-timebase
+      status: discovered_by_outcome_blind_preflight
+      result_ref: calibration/runner/first-held-out-execution-preflight-v0.yaml
+      reason: >-
+        The immutable 65.040650 ms ramp and 365.040650 ms total duration cannot
+        be represented within the locked 1 us tolerance on the frozen 100 us
+        MuJoCo step. Protocol v0 may not be rounded silently.
+      resolution: >-
+        Before any outcome, supersede v0 with a source-consistent waveform whose
+        timing is exactly representable on the frozen physical step, or version
+        and justify a different physical timebase. Then regenerate hashes and
+        the outcome-blind schedule.
+    preflight_record:
+      campaign_ref: calibration/campaigns/first-held-out-execution-preflight-v0.yaml
+      result_ref: calibration/runner/first-held-out-execution-preflight-v0.yaml
+      evaluation_ref: calibration/evaluations/first-held-out-execution-preflight-v0.yaml
+      semantic_result_sha256: 92c3cd54a68f446c6ea24093a8992cd03ff02b8a458ab4c8c1d168a14ffb84b6
+      topology_control_artifacts: 8
+      topology_rewire_seeds: 4
+      accepted_swaps_per_seed: 500
+      schedule_rows: 3168
+      held_out_outcomes_consumed: 0
     exit_criteria:
       - all scheduled normal, sham, mirrored and topology-control trials are accounted
       - the frozen protocol receives a positive, negative or ambiguous disposition
@@ -353,6 +376,57 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-18
+    batch: fh09_outcome_blind_execution_preflight
+    before:
+      open_items: 1
+      base_work_batches: {min: 1, max: 2}
+      planning_forecast_batches: {min: 3, max: 6}
+    closed: []
+    advanced: [FH-09]
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      canonical_cone_nodes: 196
+      canonical_cone_edges: 4873
+      topology_control_artifacts: 8
+      topology_rewire_seeds: 4
+      accepted_swaps_per_seed: 500
+      exact_degree_weight_and_stratum_preservation: true
+      unique_schedule_rows: 3168
+      native_event_and_graded_measurements_separated: true
+      append_only_overwrite_refused: true
+      held_out_outcomes_consumed: 0
+    discovery:
+      id: FH-09-timebase
+      finding: >-
+        The 65.040650 ms source-derived ramp differs from its nearest native
+        MuJoCo representation by 40.650 us, above the prospectively locked 1 us
+        implementation tolerance. The same mismatch affects total duration.
+      why_not_known_before: >-
+        FH-08 locked continuous stimulus numerics but did not perform the required
+        integer-step representability check against the already frozen physical
+        timestep. That omission was a protocol-compilation error, now caught
+        before any held-out outcome was generated or inspected.
+      reusable_work:
+        - deterministic rewire compiler and eight materialized control artifacts
+        - exact 3,168-row cartesian schedule compiler and accounting
+        - native-representation-separated measurement primitive
+        - exclusive-create append-only outcome writer
+      invalidated_work:
+        - protocol v0 execution timing only; no outcomes, parameters or calibration lineage
+      added_work: >-
+        One bounded protocol/timebase resolution and hash-regeneration step before
+        the previously planned execution/report work.
+    after:
+      open_items: 1
+      base_work_batches: {min: 2, max: 3}
+      planning_forecast_batches: {min: 4, max: 7}
+    accounting_note: >-
+      FH-09 advanced but did not close. The preflight consumed one batch and
+      exposed one missing prerequisite batch; execution/report still requires
+      one to two batches. Therefore the remaining base forecast rises from 1--2
+      to 2--3, and the unchanged two-to-four contingency gives 4--7 total.
   - date: 2026-10-18
     batch: fh08_immutable_evaluation_only_protocol_lock
     before:
@@ -662,6 +736,26 @@ progress:
       planning_forecast_batches: {min: 10, max: 17}
 
 history:
+  - revision: 3
+    date: 2026-10-18
+    reason: fh09_preflight_found_locked_waveform_not_representable_on_frozen_timebase
+    old_open_items: 1
+    new_open_items: 1
+    old_base_work_batches: {min: 1, max: 2}
+    new_base_work_batches: {min: 2, max: 3}
+    old_planning_forecast_batches: {min: 3, max: 6}
+    new_planning_forecast_batches: {min: 4, max: 7}
+    closed: []
+    advanced: [FH-09]
+    newly_discovered_items: []
+    reusable_work:
+      - eight deterministic topology-control artifacts and their semantic hashes
+      - exact 3,168-scenario schedule and append-only storage mechanics
+      - native event/graded measurement separation
+    invalidated_work:
+      - executable timing claim of protocol v0 only
+    added_work:
+      - source-consistent and timebase-representable superseding protocol lock before outcomes
   - revision: 0
     date: 2026-10-16
     reason: initial_itemized_inventory_after_estimation_retrospective
