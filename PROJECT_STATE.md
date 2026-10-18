@@ -1353,32 +1353,40 @@ branches physiques, neuf ont été bloqués avant application par la garde `MOTO
 et 12 n'ont pas fermé le feedback sous leur perturbation assignée.
 
 FH-08 verrouille maintenant, avant tout résultat, une extension passive de 8° à
-123°/s, sham apparié, deux côtés, huit seeds et une règle directionnelle 7/8. Les
+environ 123°/s, sham apparié, deux côtés, huit seeds et une règle directionnelle 7/8. Les
 11 membres restent tous évalués et non classés. Quatre seeds de rewire reçoivent
 chacun un contrôle à paramètres gelés et un contrôle recalibré par la même recette
 non comportementale : 352 épisodes canoniques et 2 816 contrôles sont prévus. Le
 protocole n'invente aucun seuil d'amplitude en unités simulateur ; l'absence de
 muscles/compliance détaillés rend une négation purement physique ambiguë.
 
-Le préflight sans résultats de FH-09 a matérialisé les huit graphes de contrôle
+Le premier préflight sans résultats de FH-09 a matérialisé les huit graphes de contrôle
 issus de quatre seeds (500 swaps dirigés acceptés par seed, degrés, strates
 transmetteur/poids et multiensemble des poids préservés) ainsi que les 3 168
 scénarios uniques. Les mesures event et graded restent séparées et le stockage
 des résultats refuse l'écrasement. Il a aussi détecté, avant tout outcome, une
 erreur de compilation du protocole : la rampe verrouillée de 65,040650 ms ne peut
 pas être représentée à 1 microseconde près par le pas MuJoCo gelé de 100
-microsecondes ; l'écart minimal est 40,650 microsecondes. Le protocole v0 ne sera
-donc pas arrondi silencieusement : il doit être remplacé par une version sourcée
-et représentable, ou par un changement de timebase séparément justifié.
+microsecondes ; l'écart minimal est 40,650 microsecondes. V0 n'a donc jamais été
+exécuté ni arrondi silencieusement. Le protocole v1 le remplace avant tout outcome
+avec la même rampe source de 8° discrétisée en exactement 650 pas, soit 65 ms et
+123,076923°/s, dans la précision du « environ 123°/s » publié. Le compilateur
+v1 vérifie désormais explicitement les quatre durées contre le pas gelé.
 
-Le plan de base restant représente maintenant 2 à 3 fournées substantielles ; une réserve
-explicite de 2 à 4 porte la prévision de pilotage à 4--7. Cette fourchette vise le
+Le second préflight v1 est entièrement vert : les huit graphes de contrôle et les
+3 168 scénarios ont été régénérés sous de nouveaux IDs/hashes, toutes les durées
+sont exactes sur la grille de 100 microsecondes, les représentations event et
+graded restent séparées et le stockage demeure append-only. Il a consommé zéro
+outcome, sélectionné zéro membre et rend FH-09 prêt à l'exécution.
+
+Le plan de base restant représente maintenant 1 à 2 fournées substantielles ; une réserve
+explicite de 2 à 4 porte la prévision de pilotage à 3--6. Cette fourchette vise le
 **premier essai interprétable**, positif, négatif ou ambigu, et non un comportement
-réussi ni la calibration totale de MaleCNS. FH-09 doit d'abord fermer ce défaut
-de timebase et régénérer ses hashes sans résultat, puis exécuter une fois les
-3 168 épisodes et tout comptabiliser. Aucun résultat ne doit servir à classer ou
-réajuster les 11 survivants FH-07. L'augmentation depuis 1--2 est explicitement
-causée par ce prérequis omis à FH-08 ; elle n'est pas une réestimation silencieuse.
+réussi ni la calibration totale de MaleCNS. Le travail de base restant est
+l'exécuteur immuable avec la recalibration non comportementale des contrôles,
+puis l'exécution unique et le rapport exhaustif des 3 168 épisodes. Aucun résultat
+ne doit servir à classer ou réajuster les 11 survivants FH-07. La fourchette baisse
+donc bien d'une fournée après fermeture du prérequis omis à FH-08.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle

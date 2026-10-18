@@ -215,7 +215,10 @@ def deterministic_stratified_rewire(
     return rewired, summary
 
 
-def build_execution_schedule(protocol: Mapping[str, Any]) -> pd.DataFrame:
+def build_execution_schedule(
+    protocol: Mapping[str, Any],
+    scenario_namespace: str = "heldout.proprio.resistance.v0",
+) -> pd.DataFrame:
     topology_variants: list[dict[str, Any]] = [
         {
             "topology_variant": "canonical",
@@ -249,7 +252,7 @@ def build_execution_schedule(protocol: Mapping[str, Any]) -> pd.DataFrame:
                 for condition in ("stimulus", "sham"):
                     for seed in protocol["replication"]["paired_trial_seeds"]:
                         scenario_id = (
-                            f"heldout.proprio.resistance.v0/{topology['topology_variant']}/"
+                            f"{scenario_namespace}/{topology['topology_variant']}/"
                             f"{member_id}/{side}/{condition}/seed-{seed}"
                         )
                         rows.append(
@@ -325,6 +328,12 @@ def run_preflight(
     evaluation_path: Path = EVALUATION_PATH,
     output_root: Path = OUTPUT_ROOT,
 ) -> dict[str, Any]:
+    campaign_path = (
+        campaign_path if campaign_path.is_absolute() else ROOT / campaign_path
+    )
+    result_path = result_path if result_path.is_absolute() else ROOT / result_path
+    evaluation_path = evaluation_path if evaluation_path.is_absolute() else ROOT / evaluation_path
+    output_root = output_root if output_root.is_absolute() else ROOT / output_root
     print("[1/8] Verifying the outcome-blind FH-09 contract and frozen inputs", flush=True)
     campaign = _load_yaml(campaign_path)
     paths = _verify_frozen_inputs(campaign)
@@ -375,7 +384,10 @@ def run_preflight(
             )
 
     print("[4/8] Compiling and accounting the exact 3,168-scenario schedule", flush=True)
-    schedule = build_execution_schedule(protocol)
+    schedule = build_execution_schedule(
+        protocol,
+        str(campaign.get("scenario_namespace", "heldout.proprio.resistance.v0")),
+    )
     expected_rows = int(campaign["schedule_execution"]["expected_rows"])
     if len(schedule) != expected_rows or schedule["scenario_id"].nunique() != expected_rows:
         raise HeldOutPreflightError("execution schedule is not exactly unique and exhaustive")
@@ -386,7 +398,9 @@ def run_preflight(
     probe = np.arange(24, dtype=np.float64).reshape(4, 6)
     effects = native_response_effect(probe, np.zeros_like(probe), event_mask=np.array([1, 0, 1, 0, 1, 0], dtype=bool))
     measurement_ok = effects["event_count_delta"].shape == (3,) and effects["graded_state_integral_delta"].shape == (3,)
-    with tempfile.TemporaryDirectory() as directory:
+    with tempfile.TemporaryDirectory(
+        dir=output_root, prefix="append-only-mechanics-"
+    ) as directory:
         destination = Path(directory) / "outcomes.jsonl"
         write_jsonl_exclusive(destination, [{"scenario_id": "mechanics-only"}])
         overwrite_refused = False
@@ -447,10 +461,13 @@ def run_preflight(
             f"preflight invariant failed: {[key for key, value in non_timing_checks.items() if not value]}"
         )
     execution_ready = all(checks.values())
+    protocol_version = str(protocol["id"]).rsplit(".", maxsplit=1)[-1]
 
     result = {
         "schema_version": 1,
-        "id": "runner_result.first_held_out_execution_preflight.v0",
+        "id": campaign.get(
+            "result_id", "runner_result.first_held_out_execution_preflight.v0"
+        ),
         "campaign_id": str(campaign["id"]),
         "protocol_id": str(protocol["id"]),
         "status": (
@@ -459,7 +476,7 @@ def run_preflight(
             else "accepted_materialization_execution_blocked_by_locked_timebase_mismatch"
         ),
         "completed_at": datetime.now(UTC).isoformat(),
-        "command": "first_held_out_execution_preflight.bat",
+        "command": campaign.get("command", "first_held_out_execution_preflight.bat"),
         "claim_label": str(campaign["claim_label"]),
         "frozen_input_sha256": {key: _sha256(path) for key, path in paths.items()},
         "held_out_outcomes_consumed": 0,
@@ -491,7 +508,8 @@ def run_preflight(
             []
             if execution_ready
             else [
-                "The locked 65.040650 ms ramp and 365.040650 ms total duration cannot be represented within the locked 1 us tolerance on the frozen 100 us MuJoCo time step."
+                "One or more locked durations cannot be represented within tolerance "
+                "on the frozen physical time step."
             ]
         ),
         "accepted_claims": [
@@ -503,7 +521,7 @@ def run_preflight(
             "A rounded timing may silently replace the immutable protocol.",
         ],
         "next_action": (
-            "Execute FH-09 once without changing protocol v0."
+            f"Execute FH-09 once without changing protocol {protocol_version}."
             if execution_ready
             else "Before any outcome, register a superseding protocol whose waveform is exactly representable on the frozen physical timebase, or version an independently justified timebase change; never round v0 silently."
         ),
@@ -520,7 +538,9 @@ def run_preflight(
     result_path.write_text(yaml.safe_dump(result, sort_keys=False, allow_unicode=True), encoding="utf-8")
     evaluation = {
         "schema_version": 1,
-        "id": "evaluation.first_held_out_execution_preflight.v0",
+        "id": campaign.get(
+            "evaluation_id", "evaluation.first_held_out_execution_preflight.v0"
+        ),
         "title": "Outcome-blind FH-09 execution readiness",
         "status": result["status"],
         "protocol_id": str(protocol["id"]),
@@ -532,7 +552,15 @@ def run_preflight(
         "timebase": timebase,
         "interpretation": (
             "Topology controls, scenario accounting, native-measure separation and append-only storage are ready. "
-            "Execution remains blocked because the immutable waveform timing is not representable within its own tolerance on the frozen physical time step."
+            + (
+                "The immutable waveform timing is exactly representable on the frozen physical time step."
+                if execution_ready
+                else (
+                    "Execution remains blocked because the immutable waveform timing "
+                    "is not representable within its own tolerance on the frozen "
+                    "physical time step."
+                )
+            )
         ),
         "next_action": result["next_action"],
     }

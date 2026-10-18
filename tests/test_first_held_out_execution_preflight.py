@@ -53,6 +53,10 @@ class FirstHeldOutExecutionPreflightTests(unittest.TestCase):
         self.assertEqual(schedule["topology_variant"].nunique(), 9)
         self.assertEqual(schedule["condition"].value_counts().to_dict(), {"stimulus": 1584, "sham": 1584})
 
+        v1_schedule = build_execution_schedule(protocol, "heldout.proprio.resistance.v1")
+        self.assertTrue(v1_schedule["scenario_id"].str.startswith("heldout.proprio.resistance.v1/").all())
+        self.assertEqual(v1_schedule["scenario_id"].nunique(), 3168)
+
     def test_native_measurement_never_mixes_event_and_graded_units(self) -> None:
         stimulus = np.arange(20, dtype=float).reshape(5, 4)
         sham = np.ones_like(stimulus)
@@ -67,7 +71,9 @@ class FirstHeldOutExecutionPreflightTests(unittest.TestCase):
         )
 
     def test_append_only_writer_refuses_overwrite(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(
+            dir=Path.cwd(), prefix=".test-held-out-append-only-"
+        ) as directory:
             path = Path(directory) / "rows.jsonl"
             write_jsonl_exclusive(path, [{"id": 1}])
             with self.assertRaises(FileExistsError):
@@ -87,6 +93,21 @@ class FirstHeldOutExecutionPreflightTests(unittest.TestCase):
         self.assertFalse(report["all_locked_durations_representable"])
         self.assertTrue(report["baseline_duration_s"]["within_locked_tolerance"])
         self.assertFalse(report["ramp_duration_s"]["within_locked_tolerance"])
+
+    def test_v1_timebase_exact_ramp_is_representable(self) -> None:
+        protocol = {
+            "stimulus": {
+                "baseline_duration_s": 0.1,
+                "ramp_duration_s": 0.065,
+                "post_release_observation_s": 0.2,
+                "total_duration_s": 0.365,
+                "implementation_tolerance": {"duration_abs_s": 1.0e-6},
+            }
+        }
+        report = _timebase_report(protocol, 0.0001)
+        self.assertTrue(report["all_locked_durations_representable"])
+        self.assertEqual(report["ramp_duration_s"]["nearest_steps"], 650)
+        self.assertEqual(report["total_duration_s"]["nearest_steps"], 3650)
 
 
 if __name__ == "__main__":

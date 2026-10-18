@@ -21,11 +21,11 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.first_held_out_execution_preflight.v0
-last_preregistered_campaign_id: campaign.first_held_out_protocol_lock.v0
-last_executed_campaign_id: campaign.first_held_out_execution_preflight.v0
+last_completed_campaign_id: campaign.first_held_out_execution_preflight.v1
+last_preregistered_campaign_id: campaign.first_held_out_protocol_lock.v1
+last_executed_campaign_id: campaign.first_held_out_execution_preflight.v1
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
-last_completed_gate_evaluation_id: evaluation.first_held_out_protocol_lock.v0
+last_completed_gate_evaluation_id: evaluation.first_held_out_protocol_lock.v1
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
   - parameters.front_leg_local_feedback_nonamplifying_ensemble.v0
@@ -118,8 +118,8 @@ readiness:
   first_held_out_integrated_lineage: FH_06_complete_exact_factorization_4621555858189754880_discrete_addresses_one_outcome_blind_witness_body_drive_reaches_motor_state_zero_motor_events_zero_commands_exact_replay
   first_held_out_neutral_neural_regime: FH_07a_complete_23_pairwise_profiles_3_population_anchors_2_basal_native_mirrors_138_paired_rows_276_runtime_instances_all_finite_18_unranked_technical_survivors_zero_body_outcomes_physical_gate_open
   first_held_out_neutral_embodied_regime: FH_07_complete_32_outcome_blind_pairwise_physical_composites_all_18_FH07a_parents_exercised_23_four_branch_composites_92_physical_episodes_9_preapplication_motor_guard_blocks_11_unranked_exact_technical_survivors_zero_named_behavior
-  first_held_out_protocol_lock: FH_08_complete_8deg_123deg_per_s_passive_extension_paired_sham_bilateral_8_trial_seeds_7_of_8_sign_rule_11_unranked_members_4_rewire_seeds_2_control_families_3168_episodes_scheduled_zero_outcomes
-  first_held_out_execution_preflight: FH_09_advanced_8_control_artifacts_4_rewire_seeds_500_swaps_each_exact_degree_weight_strata_3168_unique_rows_native_measurements_separate_append_only_zero_outcomes_execution_blocked_65p040650ms_ramp_not_representable_within_1us_on_100us_physics_step
+  first_held_out_protocol_lock: FH_08_complete_v1_supersedes_unexecuted_v0_8deg_650_physics_steps_65ms_123p076923deg_per_s_paired_sham_bilateral_8_trial_seeds_7_of_8_sign_rule_11_unranked_members_4_rewire_seeds_2_control_families_3168_episodes_zero_outcomes
+  first_held_out_execution_preflight: FH_09_ready_v1_8_control_artifacts_4_rewire_seeds_500_swaps_each_exact_degree_weight_strata_3168_unique_rows_native_measurements_separate_append_only_all_4_durations_exact_on_100us_step_zero_outcomes
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: true
   held_out_protocol_executed: false
@@ -135,8 +135,8 @@ blocked_by:
   - FH-05 is complete as a finite technical execution ensemble, not as physiological identification. All 81 owner-separated members execute as paired stimulus/sham runs under both all-graded and all-event basal source-port mirrors: 162 paired branches and 324 runtime instances are finite. The bounded graph contains 6,041 explicit source ports, the 590 published direct source-to-cone edges and 4,873 induced cone edges; recurrence outside the cone is excluded and not approximated. Every owner axis changes an executed input. No pair of descriptive main-effect signatures exceeds the locked 0.95 similarity warning, but unknown-afferent policy is only weakly observable in this direct-boundary scope and no stimulus surplus of internally generated events appears under the fixtures. All 81 members and both mirrors remain unranked; zero value, assignment, route or behavior is selected. Higher-order assignments and whole-MaleCNS context remain outside the claim and are propagated to FH-06.
   - FH-06 is complete as a reconstructible integrated lineage, not as a reference model. The exact conditional factorization preserves 1,728 FH-03 sensory members, all 81 FH-05 technical members under both basal-native mirrors and the complete class-conditioned FH-04 motor envelope without materializing 4,621,555,858,189,754,880 discrete addresses; six native-amplitude dimensions per sensory member remain continuous and unselected. One predeclared lexicographic witness executed 480 physical/neural steps: body-derived FeCO drive was nonzero throughout, 32 FeCO events were forced by the declared phase-balanced process and motor internal state was nonzero for 95 steps. It generated zero motor events and zero commands; this was retained without retrying or selecting another member. The 48-frame trajectory round-trips exactly through the independent replay contract. This closes composition, hashes and replay transport only; FH-07 owns neutral-regime calibration.
   - FH-07 is complete as a behavior-naive technical gate. FH-07a retained 18 exact neural rows without body observation. FH-07b then scheduled 32 outcome-blind pairwise physical composites covering all eight FeCO source paths, three motor classes, three temporal regions, three route strata, three bridge gains and four generic signed knee-velocity perturbations; every FH-07a parent was exercised. Twenty-three composites passed the preapplication direct-MOTOR guard and completed baseline live, exact frozen replay, perturbed frozen-open and perturbed live-feedback branches, for 92 physical episodes with zero replay error. Nine combinations exceeded the 0.01 direct-MOTOR envelope and remain blocked without clipping or application. Twelve admitted composites lacked feedback command/physics adaptation. Eleven exact composites pass the locked finite, feedback and non-amplification checks and remain unranked; they cover seven neural parents. No named action, pose preference, movement magnitude or held-out response entered selection. This closes short-horizon technical stability for the exact ensemble, not physiology, a reference lineage, higher-order identifiability or behavior.
-  - FH-08 is complete as prospective design only. The immutable evaluation-only protocol schedules all eleven exact unranked FH-07 members under 8 degree passive front-tibia extension at 123 degrees per second, paired sham, both sides and eight trial seeds. Four deterministic rewire seeds each receive frozen-parameter and same-recipe recalibrated control variants, for 3,168 scheduled episodes. The primary rule is directional and paired (at least 7/8) with no fitted magnitude threshold. Zero held-out outcomes were executed or inspected; detailed muscles, compliance, electrical coupling, morphology-dependent delays and 184 native-class assignments remain explicit interpretation limits.
-  - FH-09 preflight is complete but execution is blocked before outcomes. Eight topology-control artifacts were materialized from four seeds with 500 accepted directed swaps each; node sets, exact per-node directed degrees, transmitter/weight strata and weight multisets are preserved, and all 3,168 scenario IDs are unique and accounted. Native event counts and graded-state integrals stay separate and outcome shards use exclusive creation. The immutable v0 ramp lasts 65.040650 ms, which misses the nearest 100 us MuJoCo boundary by 40.650 us and therefore violates its own 1 us tolerance. No outcome was generated or inspected; v0 must be superseded or the physical timebase independently versioned, never silently rounded.
+  - FH-08 remains complete as prospective design only. Before any outcome, protocol v1 superseded unexecuted v0 solely to make the source-level 8 degree ramp exact on the frozen physical grid: 650 steps, 65 ms and a derived 123.076923 degrees per second within the source's approximate 123 degrees per second. The eleven FH-07 members, sham, mirrors, seeds, sign rule, measurements, mechanism limits and topology-control recipes are unchanged. Zero held-out outcomes were executed or inspected.
+  - FH-09 v1 preflight is complete and execution-ready before outcomes. Eight topology-control artifacts were regenerated from four seeds with 500 accepted directed swaps each; node sets, exact per-node directed degrees, transmitter/weight strata and weight multisets are preserved, and all 3,168 v1 scenario IDs are unique and accounted. Native event counts and graded-state integrals stay separate, outcome shards use exclusive creation, and baseline, ramp, post-release and total durations are all exact on the frozen 100 us step. This validates execution mechanics only, not a response or behavior.
   - A first local scientific claim must compile and account its causal population cone rather than pretend that the two runtime extremes cover the 2^166419 native-assignment space.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
@@ -199,9 +199,9 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Follow roadmap.first_held_out_evaluation.v0 revision 3. FH-09 preflight has
-  materialized all eight controls and all 3,168 scenarios with zero outcomes.
-  Before execution, supersede protocol v0 with source-consistent timing exactly
-  representable on the frozen 100 us physical step, or version and justify a
-  different physical timebase. Regenerate the outcome-blind hashes and schedule,
-  then execute once and never rank or refit the eleven FH-07 members from it.
+  Follow roadmap.first_held_out_evaluation.v0 revision 4. FH-09 v1 preflight is
+  execution-ready with all eight controls, all 3,168 scenarios and exact timing
+  on the frozen 100 us step, while consuming zero outcomes. Implement the
+  immutable executor and same-recipe control recalibration without exposing the
+  response, then execute the schedule once and report every row. Never rank or
+  refit the eleven FH-07 members from this held-out result.

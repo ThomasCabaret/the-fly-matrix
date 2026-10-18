@@ -72,6 +72,41 @@ def _sign_test_tail(successes: int, trials: int) -> float:
     return sum(math.comb(trials, k) for k in range(successes, trials + 1)) / (2**trials)
 
 
+def _timebase_contract(
+    protocol: Mapping[str, Any], campaign: Mapping[str, Any]
+) -> dict[str, Any] | None:
+    contract = campaign.get("timebase_contract")
+    if contract is None:
+        return None
+    timestep = float(contract["physics_timestep_s"])
+    tolerance = float(contract["duration_tolerance_s"])
+    durations: dict[str, Any] = {}
+    all_representable = True
+    for key in contract["required_duration_fields"]:
+        requested = float(protocol["stimulus"][key])
+        steps = int(round(requested / timestep))
+        represented = steps * timestep
+        error = abs(represented - requested)
+        durations[str(key)] = {
+            "requested_s": requested,
+            "steps": steps,
+            "represented_s": represented,
+            "absolute_error_s": error,
+            "within_tolerance": error <= tolerance,
+        }
+        all_representable &= error <= tolerance
+    if not all_representable:
+        raise ProtocolLockError(
+            "protocol timing is not representable on the frozen physical timebase"
+        )
+    return {
+        "physics_timestep_s": timestep,
+        "duration_tolerance_s": tolerance,
+        "all_required_durations_representable": True,
+        "durations": durations,
+    }
+
+
 def compile_lock(campaign: Mapping[str, Any]) -> dict[str, Any]:
     frozen_hashes, docs = _verify_frozen_inputs(campaign)
     protocol = docs["protocol"]
@@ -147,6 +182,8 @@ def compile_lock(campaign: Mapping[str, Any]) -> dict[str, Any]:
     if protocol["measurements"]["secondary_physical"]["magnitude_threshold"] is not None:
         raise ProtocolLockError("an unsupported physical magnitude threshold was introduced")
 
+    timebase = _timebase_contract(protocol, campaign)
+
     semantic = {
         "protocol_sha256": frozen_hashes["protocol"],
         "scope_semantic_sha256": scope["semantic_scope_sha256"],
@@ -163,14 +200,14 @@ def compile_lock(campaign: Mapping[str, Any]) -> dict[str, Any]:
         "contamination": protocol["contamination"],
     }
     semantic_hash = _canonical_hash(semantic)
-    return {
+    result = {
         "schema_version": 1,
-        "id": "runner_result.first_held_out_protocol_lock.v0",
+        "id": campaign.get("result_id", "runner_result.first_held_out_protocol_lock.v0"),
         "campaign_id": campaign["id"],
         "protocol_id": protocol["id"],
         "status": "accepted_immutable_protocol_lock_FH08_complete",
-        "completed_at": datetime.now(UTC).isoformat(),
-        "command": "first_held_out_protocol_lock.bat",
+        "completed_at": campaign.get("completed_at", datetime.now(UTC).isoformat()),
+        "command": campaign.get("command", "first_held_out_protocol_lock.bat"),
         "claim_label": campaign["claim_label"],
         "frozen_input_sha256": frozen_hashes,
         "checks": {
@@ -195,12 +232,19 @@ def compile_lock(campaign: Mapping[str, Any]) -> dict[str, Any]:
         "forbidden_claims": campaign["forbidden_claims"],
         "next_action": campaign["next_action"],
     }
+    if timebase is not None:
+        result["timebase_contract"] = timebase
+        result["checks"]["frozen_timebase_representability_checked"] = True
+    return result
 
 
-def _evaluation(result: Mapping[str, Any]) -> dict[str, Any]:
+def _evaluation(
+    result: Mapping[str, Any], campaign: Mapping[str, Any] | None = None
+) -> dict[str, Any]:
+    campaign = campaign or {}
     return {
         "schema_version": 1,
-        "id": "evaluation.first_held_out_protocol_lock.v0",
+        "id": campaign.get("evaluation_id", "evaluation.first_held_out_protocol_lock.v0"),
         "campaign_id": result["campaign_id"],
         "runner_result_id": result["id"],
         "protocol_id": result["protocol_id"],
@@ -226,21 +270,24 @@ def _evaluation(result: Mapping[str, Any]) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Compile the immutable FH-08 held-out protocol lock")
     parser.add_argument("--check", action="store_true", help="validate committed outputs without rewriting")
+    parser.add_argument("--campaign", type=Path, default=CAMPAIGN_PATH)
+    parser.add_argument("--result", type=Path, default=RESULT_PATH)
+    parser.add_argument("--evaluation", type=Path, default=EVALUATION_PATH)
     args = parser.parse_args()
-    campaign = _load_yaml(CAMPAIGN_PATH)
+    campaign = _load_yaml(args.campaign)
     result = compile_lock(campaign)
-    evaluation = _evaluation(result)
+    evaluation = _evaluation(result, campaign)
     if args.check:
-        committed_result = _load_yaml(RESULT_PATH)
-        committed_evaluation = _load_yaml(EVALUATION_PATH)
+        committed_result = _load_yaml(args.result)
+        committed_evaluation = _load_yaml(args.evaluation)
         if committed_result.get("semantic_result_sha256") != result["semantic_result_sha256"]:
             raise ProtocolLockError("committed runner semantic hash drift")
         if committed_evaluation.get("semantic_result_sha256") != result["semantic_result_sha256"]:
             raise ProtocolLockError("committed evaluation semantic hash drift")
         print("[PASS] FH-08 lock and committed semantic hashes are current", flush=True)
         return 0
-    RESULT_PATH.write_text(yaml.safe_dump(result, sort_keys=False, allow_unicode=True), encoding="utf-8")
-    EVALUATION_PATH.write_text(yaml.safe_dump(evaluation, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    args.result.write_text(yaml.safe_dump(result, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    args.evaluation.write_text(yaml.safe_dump(evaluation, sort_keys=False, allow_unicode=True), encoding="utf-8")
     print("[PASS] FH-08 immutable protocol lock compiled", flush=True)
     print(f"[ACCOUNTING] 11 members / 8 trial seeds / 4 rewire seeds / {result['schedule']['total_episodes']} episodes scheduled", flush=True)
     print("[OUTCOMES] 0 held-out outcomes consumed; 0 members selected or ranked", flush=True)

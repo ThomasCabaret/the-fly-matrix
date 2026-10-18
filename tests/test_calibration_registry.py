@@ -193,7 +193,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         selected_id = readiness["decision"]["selected_candidate_id"]
         self.assertIn(selected_id, {item["id"] for item in catalog["candidates"]})
-        self.assertEqual(roadmap["revision"], 3)
+        self.assertEqual(roadmap["revision"], 4)
         self.assertEqual(roadmap["items"][0]["status"], "complete")
         self.assertEqual(roadmap["items"][1]["status"], "complete")
         self.assertEqual(roadmap["items"][2]["status"], "complete")
@@ -213,9 +213,13 @@ class CalibrationRegistryTests(unittest.TestCase):
             11,
         )
         self.assertEqual(roadmap["items"][7]["status"], "complete")
-        self.assertEqual(roadmap["items"][8]["status"], "blocked")
+        self.assertEqual(roadmap["items"][8]["status"], "ready")
         self.assertEqual(
             roadmap["items"][8]["blocking_substep"]["id"], "FH-09-timebase"
+        )
+        self.assertEqual(
+            roadmap["items"][8]["blocking_substep"]["status"],
+            "resolved_before_outcomes",
         )
         self.assertEqual(
             roadmap["items"][8]["preflight_record"]["held_out_outcomes_consumed"],
@@ -223,6 +227,9 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertEqual(
             roadmap["items"][8]["preflight_record"]["schedule_rows"], 3168
+        )
+        self.assertTrue(
+            roadmap["items"][8]["preflight_record"]["execution_ready"]
         )
         self.assertEqual(roadmap["estimate_contract"]["open_items"], 1)
 

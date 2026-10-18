@@ -347,16 +347,22 @@ composites pass the locked feedback/non-amplification checks. They remain an
 unranked engineering ensemble; this closes scoped FH-07 technical stability, not
 physiology or behavior.
 
-Run `first_held_out_protocol_lock.bat` to reproduce FH-08. It validates the
+`first_held_out_protocol_lock.bat` reproduces the historical FH-08 v0 lock. It validates the
 immutable passive-extension protocol, all eleven exact FH-07 members, eight paired
 trial seeds, bilateral stimulus/sham schedule, the preregistered 7-of-8 sign rule,
 mechanism limits and four seeds for both topology-control families. It schedules
 352 canonical and 2,816 control episodes but executes none of them. A green result
 therefore proves only that the held-out design was locked with zero outcomes and
-zero member selection. FH-09 must materialize/hash the controls before executing
-the 3,168 episodes exactly once.
+zero member selection. V0 was never executed: its outcome-blind preflight found
+a physical-timebase mismatch.
 
-Run `first_held_out_execution_preflight.bat` to reproduce the first FH-09 gate.
+Run `first_held_out_protocol_lock_v1.bat` for the active lock. V1 preserves all
+scientific axes but expresses the 8 degree ramp as exactly 650 frozen physical
+steps (65 ms, 123.076923 degrees per second within the source's approximate
+precision). The lock compiler now rejects any v1-style protocol whose declared
+durations are not representable within tolerance.
+
+`first_held_out_execution_preflight.bat` reproduces the historical v0 FH-09 gate.
 It materializes all eight control artifacts, preserves the directed-degree and
 transmitter/weight invariants, compiles 3,168 unique scenario rows, separates
 native event and graded measurements, and verifies append-only outcome storage.
@@ -364,6 +370,12 @@ It consumes zero held-out outcomes. The registered result is deliberately
 blocked before execution because protocol v0's 65.040650 ms ramp cannot satisfy
 its 1 us tolerance on the frozen 100 us physical step. Resolve that mismatch by
 a versioned protocol or timebase decision; never silently round the locked v0.
+
+Run `first_held_out_execution_preflight_v1.bat` for the active outcome-blind gate.
+It regenerates the eight controls and 3,168 v1 scenario IDs, verifies all four
+durations exactly, and returns `accepted_preflight_execution_ready` while still
+consuming zero outcomes and selecting zero members. It validates execution
+mechanics only, never the reflex itself.
 
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO

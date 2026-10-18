@@ -1,6 +1,6 @@
 schema_version: 1
 id: roadmap.first_held_out_evaluation.v0
-revision: 3
+revision: 4
 updated: 2026-10-18
 status: active
 
@@ -29,8 +29,8 @@ milestone:
 selected_planning_path:
   candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   decision_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
-  protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
-  status: protocol_locked_preflight_blocked_before_outcomes
+  protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+  status: protocol_v1_locked_preflight_ready_execution_pending
   selection_basis: independent_biology_and_current_mechanism_readiness
   simulated_outcomes_inspected_for_selection: false
   displaced_preference:
@@ -46,9 +46,9 @@ estimate_contract:
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
   open_items: 1
-  base_work_batches: {min: 2, max: 3}
+  base_work_batches: {min: 1, max: 2}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 4, max: 7}
+  planning_forecast_batches: {min: 3, max: 6}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -319,36 +319,55 @@ items:
         sham, bilateral mirrors, sign rule and topology-control recipes are now
         immutable. Magnitude thresholds remain absent because the sources do not
         provide transferable simulator units. This closes design, not execution.
+      execution_revision:
+        protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+        campaign_ref: calibration/campaigns/first-held-out-protocol-lock-v1.yaml
+        result_ref: calibration/runner/first-held-out-protocol-lock-v1.yaml
+        evaluation_ref: calibration/evaluations/first-held-out-protocol-lock-v1.yaml
+        semantic_result_sha256: a4bb2a85795b607e8c0a719948671f73445ca2e17b80240af77fe7d5df2bd3cb
+        predecessor_outcomes_consumed: 0
+        disposition: >-
+          V1 supersedes unexecuted v0 solely to express the same source-level
+          8 degree ramp as exactly 650 frozen 100 us physical steps. It changes
+          no member, seed, measurement, threshold or topology-control rule.
 
   - id: FH-09
     title: Execute and report the first held-out end-to-end evaluation
     nature: evaluation_only_execution
-    status: blocked
+    status: ready
     depends_on: [FH-08]
-    estimated_batches: {min: 2, max: 3}
+    estimated_batches: {min: 1, max: 2}
     blocking_substep:
       id: FH-09-timebase
-      status: discovered_by_outcome_blind_preflight
+      status: resolved_before_outcomes
       result_ref: calibration/runner/first-held-out-execution-preflight-v0.yaml
       reason: >-
         The immutable 65.040650 ms ramp and 365.040650 ms total duration cannot
         be represented within the locked 1 us tolerance on the frozen 100 us
         MuJoCo step. Protocol v0 may not be rounded silently.
       resolution: >-
-        Before any outcome, supersede v0 with a source-consistent waveform whose
-        timing is exactly representable on the frozen physical step, or version
-        and justify a different physical timebase. Then regenerate hashes and
-        the outcome-blind schedule.
+        Protocol v1 preserves the source-level 8 degree ramp and represents it as
+        exactly 650 physical steps (65 ms), with the source's approximate speed
+        expressed as 123.076923 degrees per second. The v1 compiler and preflight
+        verify all four locked durations exactly on the 100 us timebase.
+      resolution_refs:
+        protocol: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+        lock_result: calibration/runner/first-held-out-protocol-lock-v1.yaml
+        preflight_result: calibration/runner/first-held-out-execution-preflight-v1.yaml
     preflight_record:
-      campaign_ref: calibration/campaigns/first-held-out-execution-preflight-v0.yaml
-      result_ref: calibration/runner/first-held-out-execution-preflight-v0.yaml
-      evaluation_ref: calibration/evaluations/first-held-out-execution-preflight-v0.yaml
-      semantic_result_sha256: 92c3cd54a68f446c6ea24093a8992cd03ff02b8a458ab4c8c1d168a14ffb84b6
+      campaign_ref: calibration/campaigns/first-held-out-execution-preflight-v1.yaml
+      result_ref: calibration/runner/first-held-out-execution-preflight-v1.yaml
+      evaluation_ref: calibration/evaluations/first-held-out-execution-preflight-v1.yaml
+      semantic_result_sha256: 53108c0f5c315c32c3595fc25e2900c50e43af2be2fbd655f44b75db7dc58446
       topology_control_artifacts: 8
       topology_rewire_seeds: 4
       accepted_swaps_per_seed: 500
       schedule_rows: 3168
       held_out_outcomes_consumed: 0
+      frozen_timestep_s: 0.0001
+      ramp_steps: 650
+      total_steps: 3650
+      execution_ready: true
     exit_criteria:
       - all scheduled normal, sham, mirrored and topology-control trials are accounted
       - the frozen protocol receives a positive, negative or ambiguous disposition
@@ -376,6 +395,40 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-18
+    batch: fh08_v1_timebase_exact_lock_and_fh09_v1_preflight
+    before:
+      open_items: 1
+      base_work_batches: {min: 2, max: 3}
+      planning_forecast_batches: {min: 4, max: 7}
+    closed: []
+    advanced: [FH-09]
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      superseded_unexecuted_protocol: protocol.first_held_out_proprioceptive_resistance_reflex.v0
+      active_protocol: protocol.first_held_out_proprioceptive_resistance_reflex.v1
+      predecessor_outcomes_consumed: 0
+      ramp_physics_steps: 650
+      total_physics_steps: 3650
+      exact_timebase_checks: 4
+      topology_control_artifacts: 8
+      unique_schedule_rows: 3168
+      held_out_outcomes_consumed: 0
+      execution_ready: true
+    scientific_boundary: >-
+      V1 is a source-precision discretization correction, not a response-driven
+      waveform choice. It preserves every FH-07 member, seed, decision rule,
+      measurement, mechanism warning and topology-control recipe. No simulated
+      response was generated, inspected, ranked or used to select a parameter.
+    after:
+      open_items: 1
+      base_work_batches: {min: 1, max: 2}
+      planning_forecast_batches: {min: 3, max: 6}
+    accounting_note: >-
+      The one newly discovered prerequisite batch is closed and no further item
+      was discovered. FH-09 remains open for executor/control recalibration and
+      one-time execution/reporting, so both remaining base bounds fall by one.
   - date: 2026-10-18
     batch: fh09_outcome_blind_execution_preflight
     before:
@@ -736,6 +789,24 @@ progress:
       planning_forecast_batches: {min: 10, max: 17}
 
 history:
+  - revision: 4
+    date: 2026-10-18
+    reason: fh08_v1_closes_timebase_prerequisite_and_fh09_preflight_is_execution_ready
+    old_open_items: 1
+    new_open_items: 1
+    old_base_work_batches: {min: 2, max: 3}
+    new_base_work_batches: {min: 1, max: 2}
+    old_planning_forecast_batches: {min: 4, max: 7}
+    new_planning_forecast_batches: {min: 3, max: 6}
+    closed: []
+    advanced: [FH-09]
+    newly_discovered_items: []
+    reusable_work:
+      - all v0 preflight compilers, topology recipes and measurement mechanics
+      - exact FH-07 lineage, seeds, thresholds and mechanism-coverage policy
+    invalidated_work:
+      - protocol v0 timing only; v0 had zero outcome rows and was never executed
+    added_work: []
   - revision: 3
     date: 2026-10-18
     reason: fh09_preflight_found_locked_waveform_not_representable_on_frozen_timebase

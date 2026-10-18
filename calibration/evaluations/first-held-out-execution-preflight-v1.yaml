@@ -1,0 +1,54 @@
+schema_version: 1
+id: evaluation.first_held_out_execution_preflight.v1
+title: Outcome-blind FH-09 execution readiness
+status: accepted_preflight_execution_ready
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v1
+primary_class: evaluation_only
+outcome_rows_consumed: 0
+result_ref: calibration/runner/first-held-out-execution-preflight-v1.yaml
+semantic_result_sha256: 53108c0f5c315c32c3595fc25e2900c50e43af2be2fbd655f44b75db7dc58446
+checks:
+  held_out_outcomes_consumed_zero: true
+  eight_topology_control_artifacts_materialized: true
+  all_rewires_have_at_least_ten_accepted_swaps: true
+  all_rewires_change_semantic_topology: true
+  seeded_control_pairs_share_exact_topology: true
+  directed_degrees_and_weight_multisets_preserved: true
+  no_new_self_loop_or_duplicate: true
+  schedule_exactly_3168_unique_rows: true
+  every_member_side_condition_seed_topology_accounted: true
+  native_representations_kept_separate: true
+  append_only_writer_refuses_overwrite: true
+  locked_timing_representable_on_frozen_timebase: true
+timebase:
+  physics_timestep_s: 0.0001
+  duration_tolerance_s: 1.0e-06
+  baseline_duration_s:
+    requested_s: 0.1
+    nearest_steps: 1000
+    represented_s: 0.1
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  ramp_duration_s:
+    requested_s: 0.065
+    nearest_steps: 650
+    represented_s: 0.065
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  post_release_observation_s:
+    requested_s: 0.2
+    nearest_steps: 2000
+    represented_s: 0.2
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  total_duration_s:
+    requested_s: 0.365
+    nearest_steps: 3650
+    represented_s: 0.365
+    absolute_error_s: 0.0
+    within_locked_tolerance: true
+  all_locked_durations_representable: true
+interpretation: Topology controls, scenario accounting, native-measure separation
+  and append-only storage are ready. The immutable waveform timing is exactly representable
+  on the frozen physical time step.
+next_action: Execute FH-09 once without changing protocol v1.

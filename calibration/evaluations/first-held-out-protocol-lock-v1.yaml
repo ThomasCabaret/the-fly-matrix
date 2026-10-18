@@ -1,0 +1,24 @@
+schema_version: 1
+id: evaluation.first_held_out_protocol_lock.v1
+campaign_id: campaign.first_held_out_protocol_lock.v1
+runner_result_id: runner_result.first_held_out_protocol_lock.v1
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v1
+status: accepted_immutable_protocol_lock_FH08_complete
+acceptance_result: pass
+protocol_locked: true
+protocol_executed: false
+held_out_outcomes_consumed: 0
+member_count: 11
+members_ranked: false
+selected_reference_member_id: null
+scheduled_episodes:
+  canonical_episodes: 352
+  topology_control_episodes: 2816
+  total_episodes: 3168
+  total_topology_variants: 9
+semantic_result_sha256: a4bb2a85795b607e8c0a719948671f73445ca2e17b80240af77fe7d5df2bd3cb
+interpretation: FH-08 closes prospective design only. It locks a source-backed paired
+  stimulus/sham evaluation over all 11 unranked FH-07 members and both topology-control
+  families. It reports no held-out result and promotes no member.
+next_action: Materialize the v1 control topologies and outcome-blind execution schedule,
+  verify exact timing, then run FH-09 exactly once.

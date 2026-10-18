@@ -1,0 +1,75 @@
+schema_version: 1
+id: campaign.first_held_out_execution_preflight.v1
+title: FH-09 outcome-blind timebase-exact topology and execution preflight
+status: ready
+target_ids: [target.held_out_stimulus_response.v0]
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: evaluation_only
+optimization_exposure: forbidden
+claim_label: FH-09 V1 PREFLIGHT / NO HELD-OUT OUTCOME / NOT CALIBRATION
+behavior_targets: []
+outcome_rows_consumed: 0
+parameter_values_promoted: 0
+members_ranked: false
+result_id: runner_result.first_held_out_execution_preflight.v1
+evaluation_id: evaluation.first_held_out_execution_preflight.v1
+command: first_held_out_execution_preflight_v1.bat
+scenario_namespace: heldout.proprio.resistance.v1
+
+frozen_inputs:
+  protocol:
+    path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+    sha256: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  protocol_lock_result:
+    path: calibration/runner/first-held-out-protocol-lock-v1.yaml
+    sha256: 3742ca1ad99436623d5ab2c01abdcd620633cf58ddaaec4cf00ff50d99633b3f
+  fh07_result:
+    path: calibration/runner/front-leg-neutral-embodied-regime-v0.yaml
+    sha256: 1021b9659bb2f61c865abda3b82622c7043823528da8d2c6e3b7383c0ccd87e8
+  population_members:
+    path: data/derived/calibration/population-dynamics-front-leg-v0/population-members.csv
+    sha256: 01ee7bd3beb9f681bd5c90d7f8f20981917688239ad3d2c7c5c6f607c6d4b9b4
+  classified_intermediates:
+    path: data/derived/calibration/front-leg-intermediate-dynamics-accounting-v0/classified-intermediates.csv
+    sha256: c5893516ff5a37f8dbbc90e40b5da1b0d31d19cf2a29763517be1a16defd1dcc
+  central_nodes:
+    path: data/derived/wiring/central-node-index.parquet
+    sha256: 196d54b73a837aed6d8391800925676d2674c42e17b1464977633c6a60deb0cf
+  incoming_graph:
+    path: data/derived/execution-benchmark/malecns-full-csr-v1.npz
+    sha256: 89bb4fdffb990351035af419d4f1767e0c139bc5a1fa63e34bd5acdcbc2d5dec
+  transmitter_prior:
+    path: data/derived/calibration/transmitter-sign-prior-v0/neuron-priors.parquet
+    sha256: f7f129585ba0e516c824fc5bb5b9e53f2a62c2203405b1fd8b01c7e5cee5162a
+
+rewire_execution:
+  accepted_swaps_per_graph: 500
+  maximum_attempts_per_graph: 500000
+  artifact_root: data/derived/calibration/first-held-out-execution-preflight-v1/topology-controls
+  canonical_graph_artifact: data/derived/calibration/first-held-out-execution-preflight-v1/canonical-cone.npz
+
+schedule_execution:
+  artifact: data/derived/calibration/first-held-out-execution-preflight-v1/execution-schedule.csv
+  expected_rows: 3168
+  expected_topology_variants: 9
+
+runtime_contract:
+  frozen_physics_timestep_s: 0.0001
+  outcome_root: runs/calibration/first-held-out-proprioceptive-resistance-reflex-v1
+  outcome_storage_mode: exclusive_create_append_only
+  outcome_visibility: forbidden_during_preflight
+
+acceptance:
+  topology_artifact_count: 8
+  minimum_accepted_swaps_per_graph: 10
+  preserve_exact_node_set: true
+  preserve_exact_directed_degree: true
+  preserve_exact_transmitter_weight_strata: true
+  require_changed_semantic_topology_hash: true
+  require_pairwise_control_variants_share_the_same_seeded_topology: true
+  schedule_rows: 3168
+  held_out_outcome_rows: 0
+
+next_action: >-
+  Run the outcome-blind v1 preflight. Only an all-green exact-timebase result may
+  release the immutable schedule to the one-time held-out executor.

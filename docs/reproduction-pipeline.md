@@ -321,7 +321,7 @@ commands, normalize convergent routes, rank body motion or substitute a visually
 attractive member. A successful rerun closes FH-07 only as short-horizon technical
 stability.
 
-`first_held_out_protocol_lock.bat` reproduces FH-08 without running the held-out
+`first_held_out_protocol_lock.bat` reproduces the historical FH-08 v0 lock without running the held-out
 assay. It hash-checks the exact eleven-member FH-07 ensemble and causal cone, then
 validates the source-backed 8°/123°/s passive extension, paired sham, two sides,
 eight trial seeds, 7-of-8 directional rule and four seeds for each of the frozen
@@ -329,7 +329,7 @@ and recipe-matched recalibrated rewire families. Its 3,168-episode total is a
 schedule, not an observed dataset. Do not run a manually edited scenario before
 the FH-09 schedule and topology hashes have been materialized from this lock.
 
-`first_held_out_execution_preflight.bat` performs that outcome-blind FH-09
+`first_held_out_execution_preflight.bat` reproduces the historical outcome-blind FH-09
 materialization. It reconstructs the 196-neuron cone, emits eight deterministic
 control artifacts from four rewire seeds, verifies exact directed-degree and
 transmitter/weight-stratum preservation, and compiles all 3,168 unique scenario
@@ -337,8 +337,15 @@ rows. It also exercises the native event/graded measurement split and an
 exclusive-create result writer. The current registered preflight intentionally
 stops execution: the locked 65.040650 ms ramp is 40.650 us away from the nearest
 100 us MuJoCo boundary, exceeding protocol v0's 1 us tolerance. On a fresh clone,
-reproduce this blocked result; do not round v0 or execute an outcome until a
-superseding source-consistent protocol/timebase decision is registered.
+reproduce this blocked result; do not round or execute v0.
+
+The active path is `first_held_out_protocol_lock_v1.bat` followed by
+`first_held_out_execution_preflight_v1.bat`. V1 supersedes v0 before any outcome,
+uses the same source-level 8 degree ramp over exactly 650 frozen 100 us steps,
+and preserves every member, seed, measurement, threshold and topology-control
+rule. The v1 preflight must reproduce eight controls, 3,168 unique schedule rows,
+four exactly representable durations and zero consumed outcomes before the
+one-time executor is allowed to run.
 
 Run `embodied_measurement_contract_v1.bat` next to reproduce the completed
 short-horizon measurement gate. It executes three passive physical episodes and

@@ -1,0 +1,249 @@
+schema_version: 1
+id: protocol.first_held_out_proprioceptive_resistance_reflex.v1
+title: First locked evaluation-only front-leg proprioceptive resistance-reflex protocol, timebase-exact revision
+status: locked_execution_pending
+locked_at: 2026-10-18
+primary_class: evaluation_only
+optimization_exposure: forbidden
+claim_label: HELD-OUT EVALUATION / NOT CALIBRATION / OUTCOMES UNSEEN AT LOCK
+candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+target_id: target.held_out_stimulus_response.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+
+supersession:
+  supersedes_protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v0
+  predecessor_executed: false
+  predecessor_outcome_rows: 0
+  reason: >-
+    Outcome-blind FH-09 preflight found that the v0 continuous-time ramp was not
+    representable within its own 1 us tolerance on the already frozen 100 us
+    MuJoCo time step. V1 preserves the source-level 8 degree assay waveform and
+    uses exactly 650 physical steps (65 ms), implying 123.076923 degrees per
+    second instead of silently rounding v0 during execution.
+  scientific_change: none_beyond_timebase_exact_discretization_within_source_precision
+
+lock_assertions:
+  simulated_held_out_outcomes_inspected: false
+  behavior_used_for_parameter_or_member_selection: false
+  members_ranked: false
+  selected_reference_member_id: null
+  topology_changes_allowed_after_lock: false
+  threshold_changes_allowed_after_lock: false
+  protocol_version_reusable_after_inspection: false
+
+biological_basis:
+  sources:
+    - id: azevedo_et_al_2020
+      citation: Azevedo et al. (2020), A size principle for recruitment of Drosophila leg motor neurons, eLife 9:e56754
+      doi: 10.7554/eLife.56754
+      url: https://elifesciences.org/articles/56754
+      supports:
+        - passive femur-tibia movement evokes resistance-reflex input in tibia-flexor motor neurons
+        - the published mechanical assay used approximately 8 degree flexion and extension displacements
+        - passive extension produced excitatory postsynaptic responses across slow, intermediate and fast flexor classes
+        - spike output is not required for a source-consistent neural response because fast and intermediate cells commonly remained subthreshold
+    - id: mamiya_et_al_2018
+      citation: Mamiya et al. (2018), Neural Coding of Leg Proprioception in Drosophila, Neuron 100:636-650.e6
+      doi: 10.1016/j.neuron.2018.09.009
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6481666/
+      supports:
+        - FeCO contains position, movement-direction and vibration response classes
+        - controlled ramp-and-hold tibia motion is an appropriate local proprioceptive stimulus family
+  transfer_limits:
+    - The source assay began near a 90 degree femur-tibia angle; v1 applies a relative displacement from the frozen simulator reset angle and does not add a pose controller.
+    - The source reports an approximately 123 degree-per-second ramp; v1 uses 123.076923 degrees per second solely to represent the same 8 degree displacement in exactly 650 frozen physical steps.
+    - Published calcium and intracellular measurements do not provide a transferable simulator-unit response magnitude threshold.
+
+frozen_lineage:
+  parameter_set_id: parameters.front_leg_neutral_embodied_regime.v0
+  member_count: 11
+  evaluate_every_member: true
+  members_ranked: false
+  selected_reference_member_id: null
+  member_ids:
+    - physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    - physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    - physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    - physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    - physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    - physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    - physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    - physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    - physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    - physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    - physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+
+stimulus:
+  family: passive_front_leg_femur_tibia_extension
+  sides: [left, right]
+  mirror_rule: identical signed extension in each leg-local joint frame
+  displacement_deg: 8.0
+  source_reported_ramp_speed_deg_per_s: 123.0
+  ramp_speed_deg_per_s: 123.07692307692308
+  ramp_duration_s: 0.065
+  ramp_physics_steps: 650
+  hold_duration_s: 0.0
+  release_after_ramp: true
+  initial_joint_policy: relative_to_frozen_reset_angle
+  baseline_duration_s: 0.1
+  baseline_physics_steps: 1000
+  post_release_observation_s: 0.2
+  post_release_physics_steps: 2000
+  total_duration_s: 0.365
+  total_physics_steps: 3650
+  implementation_tolerance:
+    displacement_abs_deg: 0.01
+    duration_abs_s: 1.0e-6
+
+sham:
+  same_reset_state: true
+  same_timing: true
+  same_constraint_insertion_and_removal: true
+  displacement_deg: 0.0
+  paired_random_state: true
+
+replication:
+  paired_trial_seeds: [91001, 91002, 91003, 91004, 91005, 91006, 91007, 91008]
+  minimum_directionally_consistent_pairs: 7
+  exact_one_sided_sign_test_null_probability: 0.5
+  exact_one_sided_sign_test_p_at_threshold: 0.03515625
+  note: The 7-of-8 rule was fixed before execution and is not an observed effect-size fit.
+
+measurements:
+  primary_neural:
+    name: signed_flexor_population_response_relative_to_paired_sham
+    population: ten scoped front-leg tibia-flexor motor neurons
+    window: ramp_plus_first_100ms_after_release
+    representation_rule: >-
+      Integrate the native response measure declared by each population class:
+      event count for event populations and signed membrane or graded-state
+      depolarization for non-event populations. Report the two representations
+      separately before any dimensionless standardized aggregation.
+    expected_direction: extension_minus_sham_is_excitatory_or_depolarizing
+    magnitude_threshold: null
+    rationale: Source physiology supports response direction but not a transferable simulator-unit magnitude.
+  secondary_physical:
+    name: released_tibia_motion_opposes_imposed_extension_relative_to_sham
+    window: first_200ms_after_release
+    magnitude_threshold: null
+    role: embodied_correspondence_secondary_not_a_parameter_selector
+  safety:
+    - all runtime states and commands finite
+    - direct MOTOR command envelope inherited from the frozen FH-07 contract
+    - no new failure mask relative to paired sham
+  descriptive_only:
+    - response latency
+    - response magnitude
+    - left-right standardized-effect difference
+    - per-motor-class response
+    - recovery trajectory
+
+decision_rule:
+  per_member_per_side_primary_pass: at_least_7_of_8_paired_seeds_have_expected_signed_neural_effect
+  per_member_per_side_physical_support: at_least_7_of_8_paired_seeds_have_expected_signed_physical_effect
+  bilateral_requirement: both_sides_are_judged_independently
+  robust_positive: >-
+    Every one of the 11 frozen members passes the primary neural rule on both
+    sides, has physical support on both sides, remains bounded, and exceeds both
+    topology-control families under their paired comparison rule.
+  member_conditioned_ambiguous: >-
+    Some but not all frozen members pass, or neural and physical dispositions
+    disagree. Report the partition without ranking, selecting or refitting a member.
+  mechanism_limited_ambiguous: >-
+    A neural response is source-consistent but physical opposition fails, or a
+    negative result depends on an absent mechanism or unresolved native assignment.
+  robust_negative: >-
+    No frozen member passes the primary neural rule on either side, all scheduled
+    trials are valid, and the mechanism-coverage audit judges the scoped chemical
+    path sufficient for that negative claim. Physical failure alone is not a robust negative.
+
+topology_controls:
+  rewire_seeds: [81701, 81702, 81703, 81704]
+  variants_per_seed:
+    - frozen_parameter_rewire
+    - same_recipe_recalibrated_rewire
+  recipe:
+    algorithm: deterministic_directed_double_edge_swap_within_frozen_strata
+    edge_scope: induced chemical-synapse edges of the frozen 196-neuron cone
+    preserve:
+      - exact node and interface sets
+      - per-node directed in-degree and out-degree within each stratum
+      - source transmitter or sign class
+      - exact multiset of synaptic weights within each stratum
+      - sensory and motor endpoint cardinalities
+    reject:
+      - self loops not present in the canonical scoped graph
+      - duplicate directed edges when absent from the canonical scoped graph
+      - edge swaps crossing a transmitter or sign stratum
+      - a rewire with fewer than ten accepted swaps or an unchanged semantic topology hash
+    no_fallback: true
+  frozen_parameter_rewire:
+    calibration_after_rewire: forbidden
+    all_parameter_values_identical_to_corresponding_canonical_member: true
+  same_recipe_recalibrated_rewire:
+    calibration_recipe: exact_FH03_through_FH07_nonbehavioral_recipe_and_budgets
+    behavior_or_protocol_outcomes_visible_during_recalibration: false
+    failed_recalibration_disposition: report_failed_control_calibration_never_omit
+  paired_comparison_rule: >-
+    For each canonical member, side and trial seed, compare its signed effect with
+    every paired topology control. At least 7 of 8 trial-seed differences must
+    favor the canonical graph for each rewire seed; report all seeds separately.
+
+schedule:
+  canonical_topologies: 1
+  rewire_seeds: 4
+  control_variants_per_rewire_seed: 2
+  total_topology_variants: 9
+  frozen_members: 11
+  sides: 2
+  conditions_per_side: 2
+  paired_trial_seeds: 8
+  canonical_episodes: 352
+  topology_control_episodes: 2816
+  total_episodes: 3168
+  scenario_id_pattern: heldout.proprio.resistance.v1/{topology_variant}/{member_id}/{side}/{condition}/seed-{seed}
+
+mechanism_coverage:
+  represented:
+    - frozen FeCO-to-motor chemical-synapse cone and local interface candidates
+    - typed event-capable hybrid runtime and explicit native-boundary owners
+    - direct MuJoCo MOTOR action under the frozen actuator contract
+    - paired closed-loop body feedback and exact replay measurements
+  absent_or_surrogate:
+    - electrical gap junctions
+    - detailed muscle, tendon and compliance physiology
+    - compartmental dendritic integration and morphology-dependent delays
+    - biologically identified motor class for every bodyId
+    - biologically identified event-versus-graded class for all 184 unresolved cone neurons
+  interpretation_constraints:
+    - A physical negative cannot by itself reject the scoped neural computation because muscle and compliance physiology are absent.
+    - A mixed result across native assignments is uncertainty, not evidence for choosing the successful assignment.
+    - A positive claim requires topology specificity and cannot rest on direct-MOTOR plausibility alone.
+
+contamination:
+  forbidden_after_first_outcome_inspection:
+    - change any lineage parameter, member set, topology, stimulus, seed, metric, threshold or exclusion rule and retain protocol v1
+    - select or rank an FH-07 member from this response
+    - use this response in fitting, early stopping or manual tuning
+  required_if_change_is_needed: register_a_new_protocol_version_and_mark_v1_closed_or_contaminated
+  outcome_visibility_during_FH08: none
+
+execution_gate:
+  status: locked_not_executed
+  outcome_rows_present: 0
+  required_before_execution:
+    - materialize and hash all eight topology-control graphs from the locked recipe
+    - implement the stimulus and native-class-aware measurement contract exactly
+    - verify the 3168-scenario accounting without executing a held-out outcome
+    - make result storage append-only for protocol v1
+
+accepted_claims:
+  - Protocol v0 is superseded before execution and before any held-out outcome was generated.
+  - The evaluation design, seeds, lineage ensemble, thresholds and control recipes remain fixed before held-out execution.
+  - The timebase-exact waveform preserves the source-level displacement and approximate speed without fitting to a response.
+forbidden_claims:
+  - Protocol lock demonstrates a reflex, physiology or topology-specific behavior.
+  - One successful member may be selected as the reference lineage.
+  - Failure of the physical response alone invalidates MaleCNS.
+
+next_action: Regenerate and dry-validate the immutable FH-09 execution schedule for v1 without reading any held-out outcome, then execute it once and report every scheduled trial.

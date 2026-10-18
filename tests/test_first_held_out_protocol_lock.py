@@ -71,6 +71,22 @@ class FirstHeldOutProtocolLockTests(unittest.TestCase):
         with self.assertRaises(ProtocolLockError):
             compile_lock(changed)
 
+    def test_v1_supersedes_unexecuted_v0_and_locks_exact_timebase(self) -> None:
+        root = CAMPAIGN_PATH.parents[2]
+        campaign = _load_yaml(
+            root / "calibration/campaigns/first-held-out-protocol-lock-v1.yaml"
+        )
+        result = compile_lock(campaign)
+        protocol = _load_yaml(root / campaign["frozen_inputs"]["protocol"]["path"])
+        self.assertEqual(protocol["supersession"]["predecessor_outcome_rows"], 0)
+        self.assertFalse(protocol["supersession"]["predecessor_executed"])
+        self.assertEqual(protocol["stimulus"]["ramp_physics_steps"], 650)
+        self.assertEqual(protocol["stimulus"]["total_physics_steps"], 3650)
+        self.assertTrue(result["checks"]["frozen_timebase_representability_checked"])
+        self.assertTrue(result["timebase_contract"]["all_required_durations_representable"])
+        self.assertEqual(result["schedule"]["total_episodes"], 3168)
+        self.assertEqual(result["checks"]["held_out_outcomes_consumed"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
