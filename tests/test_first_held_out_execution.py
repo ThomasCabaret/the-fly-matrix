@@ -2,15 +2,48 @@ from __future__ import annotations
 
 import unittest
 
+import numpy as np
+import yaml
+
 from the_fly_matrix.first_held_out_execution import (
     _analyse,
     _member_side_summary,
     _pair_outcomes,
+    _step_without_diagnostic_metrics,
     ramp_fraction,
+)
+from the_fly_matrix.ledger import ROOT
+from the_fly_matrix.typed_hybrid_runtime import (
+    DiagnosticConstants,
+    TorchTypedHybridRuntime,
+    _micro_graph,
 )
 
 
 class FirstHeldOutExecutionTests(unittest.TestCase):
+    def test_metrics_free_step_is_state_identical_to_canonical_runtime(self) -> None:
+        campaign = yaml.safe_load(
+            (ROOT / "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml")
+            .read_text(encoding="utf-8")
+        )
+        constants = DiagnosticConstants.from_campaign(campaign)
+        graph, assignment = _micro_graph()
+        canonical = TorchTypedHybridRuntime(graph, assignment, constants, "cpu")
+        held_out = TorchTypedHybridRuntime(graph, assignment, constants, "cpu")
+        external = np.zeros(4, dtype=np.float32)
+        external[2] = constants.external_graded_probe
+
+        canonical.step(forced_event_indices=[0], external_graded=external)
+        _step_without_diagnostic_metrics(
+            held_out,
+            forced_event_indices=[0],
+            external_graded=external,
+        )
+
+        self.assertEqual(canonical.step_index, held_out.step_index)
+        for name, expected in canonical.state_arrays().items():
+            np.testing.assert_array_equal(held_out.state_arrays()[name], expected)
+
     def test_ramp_fraction_is_exact_and_releases(self) -> None:
         self.assertIsNone(ramp_fraction(999, 1000, 650))
         self.assertAlmostEqual(ramp_fraction(1000, 1000, 650), 1 / 650)

@@ -42,6 +42,91 @@ class HeldOutExecutionError(RuntimeError):
     pass
 
 
+def _step_without_diagnostic_metrics(
+    runtime: TorchTypedHybridRuntime,
+    *,
+    forced_event_indices: Sequence[int] | np.ndarray = (),
+    external_graded: np.ndarray | None = None,
+) -> None:
+    """Advance the canonical runtime state without unused per-step reductions.
+
+    This is deliberately local to FH-09: changing the shared, frozen runtime
+    implementation would invalidate earlier campaign hashes. The operations that
+    mutate state are kept identical to ``TorchTypedHybridRuntime.step``; only its
+    returned diagnostic reductions are omitted.
+    """
+    import torch
+
+    c = runtime.constants
+    slot = runtime.step_index % len(runtime.queue)
+    arriving_sources = runtime.queue[slot]
+    runtime.queue[slot] = torch.empty(0, dtype=torch.int64, device=runtime.device)
+
+    runtime.refractory[runtime.refractory > 0] -= 1
+    eligible = runtime.event_mask & (runtime.refractory == 0)
+    previous_v = runtime.v[eligible]
+    previous_g = runtime.g[eligible]
+    runtime.v[eligible] = c.lif.v_rest_mV + (
+        (previous_v - c.lif.v_rest_mV) * runtime.membrane_decay
+        + previous_g * runtime.membrane_coupling
+    )
+    runtime.g[eligible] = previous_g * runtime.synaptic_decay
+    generated = torch.nonzero(eligible & (runtime.v > c.lif.threshold_mV)).flatten()
+
+    event_vector = torch.zeros(runtime.node_count, dtype=torch.float32, device=runtime.device)
+    if arriving_sources.numel():
+        event_vector[arriving_sources] = 1.0
+    event_projection = runtime._projection(event_vector) if arriving_sources.numel() else event_vector
+    runtime.g[runtime.event_mask] += c.event_to_event_mV * event_projection[runtime.event_mask]
+
+    if generated.numel():
+        runtime.v[generated] = c.lif.reset_mV
+        runtime.g[generated] = 0.0
+        runtime.refractory[generated] = runtime.refractory_steps
+
+    forced = torch.as_tensor(forced_event_indices, dtype=torch.int64, device=runtime.device)
+    if forced.numel():
+        if int(forced.min()) < 0 or int(forced.max()) >= runtime.node_count:
+            raise HeldOutExecutionError("forced event index is outside the graph")
+        if not bool(torch.all(runtime.event_mask[forced]).item()):
+            raise HeldOutExecutionError("forced event was assigned to a non-event population")
+    emitted = torch.unique(torch.cat((generated, forced)))
+    destination = (runtime.step_index + runtime.delay_steps) % len(runtime.queue)
+    runtime.queue[destination] = emitted
+
+    graded_source = torch.where(
+        runtime.graded_mask, runtime.graded, torch.zeros_like(runtime.graded)
+    )
+    graded_projection = (
+        runtime._projection(graded_source)
+        if bool(runtime.graded_mask.any())
+        else graded_source
+    )
+    if external_graded is None:
+        external = torch.zeros(runtime.node_count, dtype=torch.float32, device=runtime.device)
+    else:
+        external = torch.as_tensor(external_graded, dtype=torch.float32, device=runtime.device)
+        if external.shape != (runtime.node_count,):
+            raise HeldOutExecutionError("external graded vector has the wrong shape")
+        if bool(torch.any(external[~runtime.graded_mask] != 0).item()):
+            raise HeldOutExecutionError("graded input was applied outside graded populations")
+    proposal = torch.tanh(
+        c.graded_to_graded * graded_projection
+        + c.event_to_graded * event_projection
+        + external
+    )
+    runtime.graded[runtime.graded_mask] = (
+        runtime.graded_decay * runtime.graded[runtime.graded_mask]
+        + (1.0 - runtime.graded_decay) * proposal[runtime.graded_mask]
+    )
+    runtime.graded[~runtime.graded_mask] = 0.0
+    runtime.g[runtime.event_mask] += c.graded_to_event_mV * graded_projection[runtime.event_mask]
+    runtime.g[~runtime.event_mask] = 0.0
+    runtime.v[~runtime.event_mask] = c.lif.v_rest_mV
+    runtime.refractory[~runtime.event_mask] = 0
+    runtime.step_index += 1
+
+
 def _load_yaml(path: Path) -> dict[str, Any]:
     value = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -243,6 +328,9 @@ def _run_episode(
         "R": _internal_angle_deg(loop.simulation.mj_data, anchors["r"]),
     }
     motor_assignment = np.asarray(context["assignment"])[np.asarray(context["motor_indices"])]
+    motor_index_tensor = torch.as_tensor(
+        context["motor_indices"], dtype=torch.int64, device=runtime.device
+    )
     event_counts = np.zeros(len(motor_body_ids), dtype=np.int64)
     graded_integrals = np.zeros(len(motor_body_ids), dtype=np.float64)
     target_angles: list[float] = []
@@ -299,8 +387,11 @@ def _run_episode(
             else:
                 external[int(node_index)] = activity[index] * float(fixture["feco_graded_drive"]) * feco_ratio
         with torch.inference_mode():
-            runtime.step(forced_event_indices=forced, external_graded=external)
-        motor_index_tensor = torch.as_tensor(context["motor_indices"], dtype=torch.int64, device=runtime.device)
+            _step_without_diagnostic_metrics(
+                runtime,
+                forced_event_indices=forced,
+                external_graded=external,
+            )
         events = (runtime.refractory[motor_index_tensor] == runtime.refractory_steps).detach().cpu().numpy()
         if baseline_steps <= step < response_stop:
             event_counts += events.astype(np.int64)
