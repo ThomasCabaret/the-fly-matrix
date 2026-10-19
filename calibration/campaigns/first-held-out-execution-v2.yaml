@@ -1,0 +1,134 @@
+schema_version: 1
+id: campaign.first_held_out_execution.v2
+title: One-time FH-09 held-out proprioceptive resistance-reflex execution
+status: preregistered_runnable_once
+target_ids: [target.held_out_stimulus_response.v0]
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+primary_class: evaluation_only
+optimization_exposure: evaluation_only
+claim_label: HELD-OUT V2 EXECUTION / PARAMETERS FROZEN / NEVER CALIBRATION
+parameter_changes_allowed: false
+members_ranked: false
+
+purpose: >-
+  Execute every one of the 3,072 scenarios locked before outcomes, preserve every
+  canonical and control member, and classify the complete result as positive,
+  negative or ambiguous without refitting, member selection or threshold change.
+
+frozen_inputs:
+  runtime:
+    path: src/the_fly_matrix/first_held_out_execution.py
+    sha256: 3bbf9418d88cfdfd25b9830540d9cec4fb2f5fa1e646b7b55e84d48cd534aed2
+  protocol_v2:
+    path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
+    sha256: f0b1eb25649bae2a2cf0717051992d83f042242f50a57d35c269d8eff06cd00b
+  base_protocol_v1:
+    path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+    sha256: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  schedule_lock:
+    path: calibration/runner/first-held-out-schedule-lock-v2.yaml
+    sha256: 2abe93a0d6b66559086cd490daa33b3cf644492eb57a075587502e3911a4ada5
+  schedule:
+    path: data/derived/calibration/first-held-out-schedule-lock-v2/execution-schedule.csv
+    sha256: a89a1a1c19d24ce3cb9fec15270720374a8fdb93bab82cb50becf78fa6c0324a
+  preflight_v1:
+    path: calibration/runner/first-held-out-execution-preflight-v1.yaml
+    sha256: 490731aeac7831731ce469f03ee1ac87aec6b66deade4152e8219d558d4dc03a
+  canonical_fh07b_campaign:
+    path: calibration/campaigns/front-leg-neutral-embodied-regime-v0.yaml
+    sha256: 85fe91bd22fb15efb020fde7de24d714f1ca53367715ccc6bdcbfd57c71e8175
+  canonical_fh07b_result:
+    path: calibration/runner/front-leg-neutral-embodied-regime-v0.yaml
+    sha256: 1021b9659bb2f61c865abda3b82622c7043823528da8d2c6e3b7383c0ccd87e8
+  control_81701_campaign:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81701/fh07b-campaign.yaml
+    sha256: 5df39a20bcd2608c9da968f52f1ca2472541dece09c8de9060ad81468a7de0ba
+  control_81701_result:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81701/fh07b-result.yaml
+    sha256: a8d1f8308e4c491e95d61a6309fa53e3fd655f6ffa7ebb03c1741b582c454bad
+  control_81702_campaign:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81702/fh07b-campaign.yaml
+    sha256: ebc07550baf124da71204ab356b1f6935d43f8acb5f1038aaf275f2fae8ad7bb
+  control_81702_result:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81702/fh07b-result.yaml
+    sha256: 8895d544ce0b174cd4c1de30f0f8f19d17940929cd288737895a17bac91c73f0
+  control_81703_campaign:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81703/fh07b-campaign.yaml
+    sha256: 84e2b0cc59c6c818bc7e985c9163ffbca86694068cc5106bd706f495a8e70097
+  control_81703_result:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81703/fh07b-result.yaml
+    sha256: 082c15c2aa59d63b383c69ffa44b7b0f4a504d24a15c3b6acefaf92a20b8595b
+  control_81704_campaign:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81704/fh07b-campaign.yaml
+    sha256: 54058f2afbf7596cd8b21d0faf18d612ab2bad4af6b35f17abfe7d89e3519205
+  control_81704_result:
+    path: runs/calibration/first-held-out-control-recalibration-v1/rewire-81704/fh07b-result.yaml
+    sha256: 94474e2d982b4beefc930acf1012d9bf4cb85b2305f95bbf9beeb60aa15a9699
+
+execution:
+  device: cpu
+  timestep_s: 0.0001
+  record_stride: 20
+  direct_motor_abs_max: 0.01
+  outcome_storage: append_only_one_shard_per_topology_member
+  resume_policy: skip_only_complete_exclusive_created_shards_then_reaccount_all_rows
+
+stimulus_implementation:
+  type: environment_owned_kinematic_joint_clamp_not_motor_controller
+  target: side_specific_front_femur_tibia_hinge
+  extension_sign: measured_from_leg_local_internal_angle_before_outcomes
+  baseline_steps: 1000
+  ramp_steps: 650
+  displacement_deg: 8.0
+  release_step: 1650
+  post_release_steps: 2000
+  sham: identical_clamp_lifecycle_with_zero_displacement_and_paired_random_state
+
+measurement_implementation:
+  neural_window: ramp_plus_first_100ms_after_release
+  event_populations: event_count_stimulus_minus_paired_sham
+  graded_populations: signed_graded_state_time_integral_stimulus_minus_paired_sham
+  mixed_native_rule: every_present_native_representation_must_have_positive_effect
+  physical_support: >-
+    Net leg-local angle opposing the imposed extension from release through the
+    end of the locked 200 ms window, minus the paired sham value.
+  safety: all arrays finite, command envelope respected, no new failure-mask frames versus sham
+  magnitude_threshold: null
+
+analysis:
+  canonical_member_side_rule: at_least_7_of_8_expected_direction_pairs
+  frozen_rewire_rule: at_least_7_of_8_native_measure_differences_favor_canonical_per_member_side_seed
+  recalibrated_rewire_rule: complete_native_ensemble_pass_fraction_per_side_and_rewire_seed
+  cardinality_equalization: forbidden
+  pooling_across_rewire_seeds: forbidden
+  member_ranking: forbidden
+
+outputs:
+  outcome_shards: runs/calibration/first-held-out-execution-v2/outcomes/
+  compact_result: calibration/runner/first-held-out-execution-v2.yaml
+  evaluation: calibration/evaluations/first-held-out-execution-v2.yaml
+
+next_action_by_disposition:
+  robust_positive: >-
+    Preserve protocol v2 closed and report the topology-specific response. Do not
+    promote one member; plan a separately locked replication or orthogonal held-out evaluation.
+  member_conditioned_ambiguous: >-
+    Preserve the complete partition and attribute disagreements by frozen model
+    dimensions. Any repair is a new calibration lineage and requires a new held-out protocol.
+  mechanism_limited_ambiguous_neural_without_physical_support: >-
+    Keep the neural result separate from the physical failure. Audit motor-class,
+    muscle/compliance surrogate and actuator bridge locally before any new calibration.
+  mechanism_limited_ambiguous_no_canonical_primary_pass: >-
+    Do not tune against this response. Audit stimulus registration, native-class
+    assignments and missing mechanisms using independent evidence; any revised
+    lineage must receive a new held-out protocol.
+
+accepted_claims:
+  - All locked scenarios are executed and accounted without changing parameters.
+  - The result may be reported exactly as positive, negative or ambiguous under the locked rules.
+forbidden_claims:
+  - A member may be selected or calibrated from this outcome.
+  - Physical plausibility alone validates MaleCNS or biological motor physiology.
+  - A negative result may be hidden or rerun under altered v2 settings.
+
