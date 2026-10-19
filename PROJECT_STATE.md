@@ -1,6 +1,29 @@
 # État de reprise du projet
 
-Mise à jour : 2026-10-18. L'inventaire/DAG, le compilateur périphérique et le
+## Checkpoint de pause — 2026-10-19
+
+Le projet est en pause sur le tag Git local annoté
+`checkpoint-first-closed-loop-attempt-v0`. L'objectif réel n'est pas un pilote
+local : c'est une boucle physique fermée utilisant les 166 700 neurones
+canoniques de MaleCNS, avec interfaces explicites et calibration non naïve,
+reproductible et suffisamment fidèle pour tenter une réponse spécifique tenue à
+l'écart.
+
+Cet objectif n'est pas atteint. Le câblage structurel v0 complet, le runtime du
+graphe entier et l'infrastructure de calibration sont réutilisables, mais la
+calibration détaillée porte sur un cône proprioceptif local de 196 neurones
+(environ 0,118 % du canonique). Les exécutions du graphe entier hors de ce cône
+restent des benchmarks ou sentinelles non calibrées. La première évaluation
+held-out v2 est fermée ambiguë avec zéro succès primaire canonique, et aucun jeu
+de paramètres complet n'est promu.
+
+Le statut faisant autorité, la réponse explicite sur la portée des règles, les
+acquis, le résultat et les fronts restants se trouvent dans
+[`docs/closed-loop-objective-and-pause-checkpoint-2026-10-19.md`](docs/closed-loop-objective-and-pause-checkpoint-2026-10-19.md).
+Ne pas lancer une nouvelle campagne de fitting ou d'évaluation sans décision
+explicite de reprise.
+
+Mise à jour détaillée : 2026-10-19. L'inventaire/DAG, le compilateur périphérique et le
 runner autonome minimal sont validés. Le prior neurotransmetteur/signe est gelé
 et un modèle central signé minimal est désormais exécutable et structurellement
 validé. Sept régimes non ajustés ont été caractérisés de façon reproductible ;

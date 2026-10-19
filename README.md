@@ -8,6 +8,15 @@ explicites, de faible capacité et auditables.
 Le contrat scientifique de référence est
 [`drosophila_virtual_fly_project_contract.md`](drosophila_virtual_fly_project_contract.md).
 
+> **Checkpoint du 19 octobre 2026 — projet en pause.** L'objectif reste une
+> boucle physique fermée utilisant l'intégralité du MaleCNS avec une calibration
+> non naïve et reproductible. Le câblage structurel v0 et une infrastructure
+> d'exécution/calibration importante sont acquis, mais la calibration détaillée
+> n'a été exercée que sur une chaîne locale de 196 neurones et n'a produit aucune
+> lignée MaleCNS complète ni réponse held-out primaire. Le statut honnête, les
+> acquis et les fronts non bornés sont consignés dans
+> [`docs/closed-loop-objective-and-pause-checkpoint-2026-10-19.md`](docs/closed-loop-objective-and-pause-checkpoint-2026-10-19.md).
+
 Pour reconstruire un espace de travail depuis un clone vierge, suivre le runbook
 canonique [`docs/reproduction-pipeline.md`](docs/reproduction-pipeline.md). Il
 distingue le setup obligatoire, les téléchargements optionnels avec jeton, les
@@ -17,7 +26,10 @@ n'est encore promu comme mouche calibrée de référence.
 
 Pour reprendre le projet sans le contexte des conversations :
 
-1. lire [`PROJECT_STATE.md`](PROJECT_STATE.md) pour l'état courant et les fronts restants ;
+1. lire d'abord le
+   [checkpoint de pause](docs/closed-loop-objective-and-pause-checkpoint-2026-10-19.md),
+   puis [`PROJECT_STATE.md`](PROJECT_STATE.md) pour l'état détaillé et les fronts
+   restants ;
 2. lire [`docs/wiring-methodology.md`](docs/wiring-methodology.md) pour la définition
    du câblage, les statuts et le calcul des pourcentages ;
 3. appliquer [`docs/provenance-policy.md`](docs/provenance-policy.md) à toute nouvelle

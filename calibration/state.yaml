@@ -1,6 +1,22 @@
 schema_version: 1
-phase: population_typed_dynamics_assignment_and_local_chain_calibration
+phase: paused_after_first_local_closed_loop_calibration_attempt
 updated: 2026-10-19
+
+project_checkpoint:
+  status: paused_by_user_decision
+  tag: checkpoint-first-closed-loop-attempt-v0
+  checkpoint_ref: docs/closed-loop-objective-and-pause-checkpoint-2026-10-19.md
+  actual_objective: >-
+    Run the complete canonical MaleCNS connectome in a continuously embodied
+    physical closed loop using non-naive reproducible calibration, then evaluate
+    at least one specific response that was not used to choose the lineage.
+  achieved: false
+  wiring_v0: complete_and_independently_revalidated
+  full_graph_runtime: integration_and_diagnostic_execution_only_not_calibrated
+  detailed_calibration_scope: 196_of_166700_neurons_front_leg_proprioceptive_cone
+  reference_parameter_set: null
+  first_held_out_result: mechanism_limited_ambiguous_no_canonical_primary_pass
+  execution_policy: no_new_fit_or_behavior_evaluation_campaign_without_explicit_user_resume
 
 wiring_baseline:
   terminal_coverage: complete

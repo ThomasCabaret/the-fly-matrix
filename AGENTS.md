@@ -8,13 +8,24 @@ doivent être locales, explicites, paramétrables et auditables. Un résultat vi
 mais produit par un contrôleur comportemental externe n'est pas un succès du
 projet.
 
+Le projet est **en pause** au checkpoint Git
+`checkpoint-first-closed-loop-attempt-v0`. L'objectif non négociable reste une
+boucle physique fermée sur l'intégralité des 166 700 neurones canoniques, avec
+calibration non naïve et reproductible. La calibration détaillée actuelle ne
+porte que sur un cône proprioceptif local de 196 neurones et la première
+évaluation tenue à l'écart est ambiguë sans succès primaire canonique. Lire
+`docs/closed-loop-objective-and-pause-checkpoint-2026-10-19.md` avant toute
+reprise. Ne lancer aucun nouveau fitting ou protocole comportemental sans décision
+explicite de l'utilisateur de sortir de cette pause.
+
 La couverture terminale et la revalidation scientifique du **câblage structurel
 v0 sont complètes**. L'inventaire des familles de paramètres et leur DAG sont
-complets. La phase courante affecte des dynamiques neuronales à des populations
-locales sous le contrat event-capable typé/hybride de l'ADR 0016, puis construit
-les premières chaînes sensorielles et motrices calibrables. Ne choisissez pas de
-valeurs physiologiques, gains, signes, seuils ou comportements cibles hors d'une
-cible et d'une campagne versionnées.
+complets. Avant la pause, le front actif affectait des dynamiques neuronales à des
+populations locales sous le contrat event-capable typé/hybride de l'ADR 0016,
+puis construisait les premières chaînes sensorielles et motrices calibrables. En
+cas de reprise explicite, ne choisissez pas de valeurs physiologiques, gains,
+signes, seuils ou comportements cibles hors d'une cible et d'une campagne
+versionnées.
 
 Tout objet possédé par une validation `scientific_wiring_revalidation` ouverte
 bloque la calibration de sa famille. Ni un smoke test vert, ni une cardinalité
