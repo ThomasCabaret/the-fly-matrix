@@ -1,0 +1,99 @@
+schema_version: 1
+id: campaign.first_held_out_control_recalibration.v1
+title: FH-09 outcome-blind same-recipe calibration of rewired topology controls
+status: preregistered_runnable
+target_ids:
+  - target.technical_neural_dynamics.v0
+  - target.technical_embodied_stability.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+primary_class: technical
+optimization_exposure: allowed_nonbehavioral_only
+claim_label: FH-09 CONTROL RECALIBRATION / NO HELD-OUT OUTCOME / NOT A REFERENCE
+behavior_targets: []
+held_out_outcome_rows_consumed: 0
+members_ranked: false
+parameter_values_promoted: 0
+
+purpose: >-
+  Apply the exact already frozen FH-05, FH-06, FH-07a and FH-07b recipes and
+  budgets independently to each of the four degree/weight/transmitter-stratified
+  rewired cone graphs. FH-03 sensory evidence and FH-04 motor evidence are reused
+  unchanged because their local datasets and finite envelopes do not depend on
+  cone recurrence. Every recalibration failure remains an explicit control
+  disposition. No stimulus, sham, response direction, physical reflex outcome or
+  member attractiveness from the locked evaluation is available to this campaign.
+
+frozen_inputs:
+  runtime:
+    path: src/the_fly_matrix/first_held_out_control_recalibration.py
+    sha256: 16fb29e08adab782bf53960d8856376cf1f7fbdc795f741fa4bb462f71019dab
+  protocol:
+    path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+    sha256: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  preflight_result:
+    path: calibration/runner/first-held-out-execution-preflight-v1.yaml
+    sha256: 490731aeac7831731ce469f03ee1ac87aec6b66deade4152e8219d558d4dc03a
+  fh05_campaign:
+    path: calibration/campaigns/front-leg-coupled-identifiability-execution-v0.yaml
+    sha256: 95758524f7a50c7df9f78b6e9b435fb3af7d8f3a02a7f52da56e833e94a494fd
+  fh06_campaign:
+    path: calibration/campaigns/front-leg-integrated-runnable-lineage-v0.yaml
+    sha256: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  fh07a_campaign:
+    path: calibration/campaigns/front-leg-neutral-neural-regime-v0.yaml
+    sha256: c1bc789ce3f22afea4397e3aff2d4fe7eafaba8be9d71e13ace4ea7a98c33654
+  fh07b_campaign:
+    path: calibration/campaigns/front-leg-neutral-embodied-regime-v0.yaml
+    sha256: 85fe91bd22fb15efb020fde7de24d714f1ca53367715ccc6bdcbfd57c71e8175
+
+recipe:
+  topology_dependent_stages:
+    - FH-05 complete 81-member owner design under both source-native mirrors
+    - FH-06 exact factorization and preregistered causal/replay witness
+    - FH-07a complete 138-row neural technical gate
+    - FH-07b complete 32-composite embodied technical gate
+  topology_independent_reused_stages:
+    - FH-03 local FeCO evidence, routing and native-profile envelope
+    - FH-04 local motor recordings, temporal envelopes and actuator bridge
+  per_rewire_execution_is_independent: true
+  original_acceptance_rules_unchanged: true
+  original_compute_budgets_unchanged: true
+  no_fallback_if_empty: true
+  no_post_outcome_grid_extension: true
+
+budget:
+  rewire_seeds: 4
+  FH05_owner_members_per_rewire: 81
+  FH05_native_mirrors_per_member: 2
+  FH06_witnesses_per_rewire: 1
+  FH07a_rows_per_rewire: 138
+  FH07b_pairwise_composites_per_nonempty_rewire: 32
+
+acceptance:
+  every_rewire_seed_accounted: true
+  failed_control_calibration_is_reported_not_omitted: true
+  held_out_outcome_rows_consumed: 0
+  members_ranked: false
+  selected_reference_member_id: null
+  parameter_values_promoted: 0
+
+outputs:
+  compact_result: calibration/runner/first-held-out-control-recalibration-v1.yaml
+  evaluation: calibration/evaluations/first-held-out-control-recalibration-v1.yaml
+  parameter_set: calibration/parameter_sets/first-held-out-recalibrated-topology-controls-v1.yaml
+  ignored_run_root: runs/calibration/first-held-out-control-recalibration-v1/
+
+accepted_claims:
+  - Every rewired topology received the same nonbehavioral recipe and budget as the canonical lineage.
+  - The resulting per-rewire sets are control ensembles and may be empty without being hidden.
+  - The campaign consumes no held-out response and cannot rank the canonical FH-07 members.
+forbidden_claims:
+  - Recalibration validates a reflex, physiology or topology-specific behavior.
+  - A control member may be selected from the future held-out response.
+  - Equal graph degree or a nonempty technical ensemble makes a rewire biologically plausible.
+
+next_action: >-
+  Compile the immutable evaluation schedule from the exact per-rewire survivor
+  sets before executing any held-out outcome. If cardinalities differ from the
+  fixed eleven-member placeholder schedule, supersede that unexecuted schedule
+  outcome-blind rather than dropping, duplicating or selecting control members.

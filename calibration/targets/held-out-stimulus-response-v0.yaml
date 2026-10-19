@@ -1,13 +1,13 @@
 schema_version: 1
 id: target.held_out_stimulus_response.v0
 title: Held-out bounded and stimulus-specific embodied response
-status: proprioceptive_resistance_reflex_protocol_locked_execution_pending
+status: proprioceptive_resistance_reflex_control_recalibration_complete_schedule_revision_pending
 primary_class: evaluation_only
 optimization_exposure: evaluation_only
 claim_label: held_out_system_evaluation
 candidate_catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
-protocol_lock_status: locked_execution_pending
-protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v0.yaml
+protocol_lock_status: v1_locked_zero_outcomes_v2_native_control_schedule_pending
+protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
 
 scope:
   includes:
@@ -84,6 +84,8 @@ provenance:
 validation: locked_not_executed
 blocked_reason: null
 next_action: >-
-  Execute roadmap FH-09 exactly once from the immutable protocol. First
-  materialize and hash its topology controls and schedule without outcomes; then
-  account all 3,168 episodes. Never rank the eleven FH-07 members from the response.
+  Compile and lock protocol/schedule v2 outcome-blind from the exact recalibrated
+  control ensembles (14, 15, 4 and 8 members) while retaining all eleven canonical
+  members and the same eleven for frozen-parameter rewires. Then execute FH-09
+  exactly once and account every scheduled episode. Never force equal control
+  cardinalities or rank the canonical ensemble from the response.

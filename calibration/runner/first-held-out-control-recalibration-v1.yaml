@@ -1,0 +1,224 @@
+schema_version: 1
+id: runner_result.first_held_out_control_recalibration.v1
+campaign_id: campaign.first_held_out_control_recalibration.v1
+status: complete_control_ensembles_accounted_outcome_blind
+completed_at: '2026-10-19T06:44:33.213941+00:00'
+command: first_held_out_control_recalibration_v1.bat
+claim_label: FH-09 CONTROL RECALIBRATION / NO HELD-OUT OUTCOME / NOT A REFERENCE
+frozen_input_sha256:
+  runtime: 16fb29e08adab782bf53960d8856376cf1f7fbdc795f741fa4bb462f71019dab
+  protocol: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  preflight_result: 490731aeac7831731ce469f03ee1ac87aec6b66deade4152e8219d558d4dc03a
+  fh05_campaign: 95758524f7a50c7df9f78b6e9b435fb3af7d8f3a02a7f52da56e833e94a494fd
+  fh06_campaign: 21139103b94826490e54bbf52d9c44208cd9aaece5f62c272b489651a0abb4a6
+  fh07a_campaign: c1bc789ce3f22afea4397e3aff2d4fe7eafaba8be9d71e13ace4ea7a98c33654
+  fh07b_campaign: 85fe91bd22fb15efb020fde7de24d714f1ca53367715ccc6bdcbfd57c71e8175
+preflight_semantic_sha256: 53108c0f5c315c32c3595fc25e2900c50e43af2be2fbd655f44b75db7dc58446
+rewire_controls:
+- rewire_seed: 81701
+  status: accepted_nonempty_same_recipe_control_ensemble
+  fh05_semantic_sha256: aa526a0777d1d25a65f1db236911f80b50e5e24dcdf48de10384730b2f5b6ab0
+  fh06_semantic_sha256: d192f6a8d6b075dae743898c18ec57ce729655ca5ec56086c114f6e51690777c
+  fh07a_semantic_sha256: a555e7f7688dc42df048a8ef783e92be34acb5b77d7f5c57ffd49e4809c7c8fc
+  fh07b_semantic_sha256: b43a6b25f0c132d83c8acdb79e3052241c1737486ce68a521b3a47fcd9e0802e
+  fh07a_accepted_members: 19
+  fh07a_member_ids:
+  - all_event_boundary_extreme__all_graded_candidate__regime_005
+  - all_event_boundary_extreme__all_event_candidate__regime_005
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  - mixed_pairwise_profile__all_graded_candidate__regime_005
+  - mixed_pairwise_profile__all_graded_candidate__regime_007
+  - mixed_pairwise_profile__all_graded_candidate__regime_010
+  - mixed_pairwise_profile__all_graded_candidate__regime_011
+  - mixed_pairwise_profile__all_graded_candidate__regime_014
+  - mixed_pairwise_profile__all_graded_candidate__regime_015
+  - mixed_pairwise_profile__all_event_candidate__regime_005
+  - mixed_pairwise_profile__all_event_candidate__regime_007
+  - mixed_pairwise_profile__all_event_candidate__regime_013
+  - mixed_pairwise_profile__all_event_candidate__regime_014
+  - mixed_pairwise_profile__all_event_candidate__regime_020
+  fh07b_accepted_members: 14
+  fh07b_member_ids:
+  - physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - physical_006__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  - physical_009__mixed_pairwise_profile__all_graded_candidate__regime_007
+  - physical_011__mixed_pairwise_profile__all_graded_candidate__regime_011
+  - physical_012__mixed_pairwise_profile__all_graded_candidate__regime_014
+  - physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+  - physical_018__mixed_pairwise_profile__all_event_candidate__regime_020
+  - physical_021__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  - physical_022__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  - physical_024__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - physical_025__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  - physical_028__mixed_pairwise_profile__all_graded_candidate__regime_007
+  - physical_030__mixed_pairwise_profile__all_graded_candidate__regime_011
+  - physical_031__mixed_pairwise_profile__all_graded_candidate__regime_014
+  fh07b_failure_counts:
+    direct_motor_guard: 5
+    feedback_changes_physics: 13
+    feedback_command_adapts: 13
+  held_out_outcomes_consumed: 0
+- rewire_seed: 81702
+  status: accepted_nonempty_same_recipe_control_ensemble
+  fh05_semantic_sha256: f7d4933ec00a4d81dd9c9da5f636ff51fc0c9343ae75a2a3d613f6393c986c0d
+  fh06_semantic_sha256: 3f801785356d941a4d29ebca087150f922310328f63896afe5853a38b989a3d6
+  fh07a_semantic_sha256: 6c0f1e2e92e3ec0c3e64f3389aab8a5915f7b793e843c7717f785951529b79c0
+  fh07b_semantic_sha256: d61aae2ae5149c1973725b83cace6a1077ae34b0d449f455fd6094e213092feb
+  fh07a_accepted_members: 18
+  fh07a_member_ids:
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_003
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  - mixed_pairwise_profile__all_graded_candidate__regime_006
+  - mixed_pairwise_profile__all_graded_candidate__regime_007
+  - mixed_pairwise_profile__all_graded_candidate__regime_011
+  - mixed_pairwise_profile__all_graded_candidate__regime_014
+  - mixed_pairwise_profile__all_graded_candidate__regime_019
+  - mixed_pairwise_profile__all_graded_candidate__regime_020
+  - mixed_pairwise_profile__all_event_candidate__regime_002
+  - mixed_pairwise_profile__all_event_candidate__regime_006
+  - mixed_pairwise_profile__all_event_candidate__regime_007
+  - mixed_pairwise_profile__all_event_candidate__regime_014
+  - mixed_pairwise_profile__all_event_candidate__regime_020
+  fh07b_accepted_members: 15
+  fh07b_member_ids:
+  - physical_000__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  - physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  - physical_002__graded_heavy_boundary_extreme__all_event_candidate__regime_003
+  - physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - physical_009__mixed_pairwise_profile__all_graded_candidate__regime_011
+  - physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+  - physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+  - physical_018__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  - physical_020__graded_heavy_boundary_extreme__all_event_candidate__regime_003
+  - physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+  - physical_027__mixed_pairwise_profile__all_graded_candidate__regime_011
+  - physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+  - physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+  fh07b_failure_counts:
+    closed_qpos_not_amplified: 1
+    closed_qvel_not_amplified: 1
+    direct_motor_guard: 6
+    feedback_changes_physics: 10
+    feedback_command_adapts: 10
+  held_out_outcomes_consumed: 0
+- rewire_seed: 81703
+  status: accepted_nonempty_same_recipe_control_ensemble
+  fh05_semantic_sha256: a9012068fcc3614fc473762fbffba1d7488a01d0d4d548fe62f10971d2215d03
+  fh06_semantic_sha256: 6d48cab0d192d2a20514a72a968a1974f3ec448cb9e72aa04fe45de4558a1172
+  fh07a_semantic_sha256: ba9095d04f48f1e1c7d3eaad2fca773f30482e190a2c9935109d0b738f8e1dcc
+  fh07b_semantic_sha256: 0e200dd2c9f2852b31b5312d5f1134f0b41227c3f6dd00144a4409132d6644b9
+  fh07a_accepted_members: 24
+  fh07a_member_ids:
+  - all_event_boundary_extreme__all_graded_candidate__regime_005
+  - all_event_boundary_extreme__all_graded_candidate__regime_008
+  - all_event_boundary_extreme__all_graded_candidate__regime_011
+  - all_event_boundary_extreme__all_event_candidate__regime_005
+  - all_event_boundary_extreme__all_event_candidate__regime_008
+  - all_event_boundary_extreme__all_event_candidate__regime_011
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_012
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_003
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_012
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  - mixed_pairwise_profile__all_graded_candidate__regime_005
+  - mixed_pairwise_profile__all_graded_candidate__regime_007
+  - mixed_pairwise_profile__all_graded_candidate__regime_011
+  - mixed_pairwise_profile__all_graded_candidate__regime_012
+  - mixed_pairwise_profile__all_graded_candidate__regime_014
+  - mixed_pairwise_profile__all_event_candidate__regime_007
+  - mixed_pairwise_profile__all_event_candidate__regime_012
+  - mixed_pairwise_profile__all_event_candidate__regime_013
+  - mixed_pairwise_profile__all_event_candidate__regime_014
+  fh07b_accepted_members: 4
+  fh07b_member_ids:
+  - physical_010__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - physical_011__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - physical_019__mixed_pairwise_profile__all_graded_candidate__regime_014
+  - physical_030__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  fh07b_failure_counts:
+    direct_motor_guard: 5
+    feedback_changes_physics: 23
+    feedback_command_adapts: 23
+  held_out_outcomes_consumed: 0
+- rewire_seed: 81704
+  status: accepted_nonempty_same_recipe_control_ensemble
+  fh05_semantic_sha256: 31aaaf074fd20974bea197343160e853c1b24c9b5287f8868f1c983778387393
+  fh06_semantic_sha256: dbab7f505da183d4fc4d495c0e3cc35ad564b18af0b15651b47095be1ff7cace
+  fh07a_semantic_sha256: 45cf593ffb9fc76801cae24e9e7a8a8cfd135a84727e55d200cbc47711d9906c
+  fh07b_semantic_sha256: d5fa1099d7f72707d93bb172f7dd1bd5c000236517fd1d786f16667925f4a5af
+  fh07a_accepted_members: 26
+  fh07a_member_ids:
+  - all_event_boundary_extreme__all_graded_candidate__regime_005
+  - all_event_boundary_extreme__all_graded_candidate__regime_008
+  - all_event_boundary_extreme__all_graded_candidate__regime_011
+  - all_event_boundary_extreme__all_event_candidate__regime_005
+  - all_event_boundary_extreme__all_event_candidate__regime_008
+  - all_event_boundary_extreme__all_event_candidate__regime_011
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_012
+  - graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_003
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_012
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_014
+  - graded_heavy_boundary_extreme__all_event_candidate__regime_020
+  - mixed_pairwise_profile__all_graded_candidate__regime_006
+  - mixed_pairwise_profile__all_graded_candidate__regime_007
+  - mixed_pairwise_profile__all_graded_candidate__regime_008
+  - mixed_pairwise_profile__all_graded_candidate__regime_011
+  - mixed_pairwise_profile__all_graded_candidate__regime_014
+  - mixed_pairwise_profile__all_graded_candidate__regime_020
+  - mixed_pairwise_profile__all_event_candidate__regime_003
+  - mixed_pairwise_profile__all_event_candidate__regime_007
+  - mixed_pairwise_profile__all_event_candidate__regime_008
+  - mixed_pairwise_profile__all_event_candidate__regime_014
+  - mixed_pairwise_profile__all_event_candidate__regime_020
+  fh07b_accepted_members: 8
+  fh07b_member_ids:
+  - physical_007__graded_heavy_boundary_extreme__all_graded_candidate__regime_012
+  - physical_010__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+  - physical_011__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+  - physical_018__mixed_pairwise_profile__all_graded_candidate__regime_011
+  - physical_019__mixed_pairwise_profile__all_graded_candidate__regime_014
+  - physical_022__mixed_pairwise_profile__all_event_candidate__regime_007
+  - physical_024__mixed_pairwise_profile__all_event_candidate__regime_014
+  - physical_025__mixed_pairwise_profile__all_event_candidate__regime_020
+  fh07b_failure_counts:
+    direct_motor_guard: 6
+    feedback_changes_physics: 18
+    feedback_command_adapts: 18
+  held_out_outcomes_consumed: 0
+accounting:
+  rewire_seeds: 4
+  nonempty_control_ensembles: 4
+  failed_control_calibrations: 0
+  held_out_outcomes_consumed: 0
+checks:
+  all_rewire_seeds_accounted: true
+  exact_FH05_through_FH07_recipe_executed: true
+  held_out_outcomes_consumed_zero: true
+  members_ranked: false
+  parameter_values_promoted: 0
+  failed_control_calibrations_omitted: false
+members_ranked: false
+parameter_values_promoted: 0
+semantic_result_sha256: 361b3d97b6166387344220476e0e21b2858fd26e2b29306fc3b11b3773e55c95
+next_action: Compile a superseding outcome-blind execution schedule from the exact
+  per-rewire survivor sets before any held-out outcome is run.

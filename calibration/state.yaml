@@ -1,6 +1,6 @@
 schema_version: 1
 phase: population_typed_dynamics_assignment_and_local_chain_calibration
-updated: 2026-10-18
+updated: 2026-10-19
 
 wiring_baseline:
   terminal_coverage: complete
@@ -21,11 +21,11 @@ completed_target_ids:
 
 reference_parameter_set_id: null
 last_promoted_parameter_set_id: null
-last_completed_campaign_id: campaign.first_held_out_execution_preflight.v1
-last_preregistered_campaign_id: campaign.first_held_out_protocol_lock.v1
-last_executed_campaign_id: campaign.first_held_out_execution_preflight.v1
+last_completed_campaign_id: campaign.first_held_out_control_recalibration.v1
+last_preregistered_campaign_id: campaign.first_held_out_control_recalibration.v1
+last_executed_campaign_id: campaign.first_held_out_control_recalibration.v1
 last_failed_campaign_id: campaign.neutral_embodied_command_factor_isolation.v0
-last_completed_gate_evaluation_id: evaluation.first_held_out_protocol_lock.v1
+last_completed_gate_evaluation_id: evaluation.first_held_out_control_recalibration.v1
 accepted_dependency_parameter_set_ids:
   - parameters.central_transmitter_sign_prior.v0
   - parameters.front_leg_local_feedback_nonamplifying_ensemble.v0
@@ -120,6 +120,7 @@ readiness:
   first_held_out_neutral_embodied_regime: FH_07_complete_32_outcome_blind_pairwise_physical_composites_all_18_FH07a_parents_exercised_23_four_branch_composites_92_physical_episodes_9_preapplication_motor_guard_blocks_11_unranked_exact_technical_survivors_zero_named_behavior
   first_held_out_protocol_lock: FH_08_complete_v1_supersedes_unexecuted_v0_8deg_650_physics_steps_65ms_123p076923deg_per_s_paired_sham_bilateral_8_trial_seeds_7_of_8_sign_rule_11_unranked_members_4_rewire_seeds_2_control_families_3168_episodes_zero_outcomes
   first_held_out_execution_preflight: FH_09_ready_v1_8_control_artifacts_4_rewire_seeds_500_swaps_each_exact_degree_weight_strata_3168_unique_rows_native_measurements_separate_append_only_all_4_durations_exact_on_100us_step_zero_outcomes
+  first_held_out_control_recalibration: FH_09_complete_outcome_blind_exact_FH05_through_FH07_recipe_4_of_4_nonempty_native_survivor_counts_14_15_4_8_total_41_zero_outcomes_zero_ranking_v2_schedule_required
   basal_source_evidence_readiness: accepted_exhaustive_2212_channels_6041_terminals_zero_values_explicit_candidate_unit_bridge_forms_now_executable_values_missing
   held_out_protocol_locked: true
   held_out_protocol_executed: false
@@ -136,7 +137,7 @@ blocked_by:
   - FH-06 is complete as a reconstructible integrated lineage, not as a reference model. The exact conditional factorization preserves 1,728 FH-03 sensory members, all 81 FH-05 technical members under both basal-native mirrors and the complete class-conditioned FH-04 motor envelope without materializing 4,621,555,858,189,754,880 discrete addresses; six native-amplitude dimensions per sensory member remain continuous and unselected. One predeclared lexicographic witness executed 480 physical/neural steps: body-derived FeCO drive was nonzero throughout, 32 FeCO events were forced by the declared phase-balanced process and motor internal state was nonzero for 95 steps. It generated zero motor events and zero commands; this was retained without retrying or selecting another member. The 48-frame trajectory round-trips exactly through the independent replay contract. This closes composition, hashes and replay transport only; FH-07 owns neutral-regime calibration.
   - FH-07 is complete as a behavior-naive technical gate. FH-07a retained 18 exact neural rows without body observation. FH-07b then scheduled 32 outcome-blind pairwise physical composites covering all eight FeCO source paths, three motor classes, three temporal regions, three route strata, three bridge gains and four generic signed knee-velocity perturbations; every FH-07a parent was exercised. Twenty-three composites passed the preapplication direct-MOTOR guard and completed baseline live, exact frozen replay, perturbed frozen-open and perturbed live-feedback branches, for 92 physical episodes with zero replay error. Nine combinations exceeded the 0.01 direct-MOTOR envelope and remain blocked without clipping or application. Twelve admitted composites lacked feedback command/physics adaptation. Eleven exact composites pass the locked finite, feedback and non-amplification checks and remain unranked; they cover seven neural parents. No named action, pose preference, movement magnitude or held-out response entered selection. This closes short-horizon technical stability for the exact ensemble, not physiology, a reference lineage, higher-order identifiability or behavior.
   - FH-08 remains complete as prospective design only. Before any outcome, protocol v1 superseded unexecuted v0 solely to make the source-level 8 degree ramp exact on the frozen physical grid: 650 steps, 65 ms and a derived 123.076923 degrees per second within the source's approximate 123 degrees per second. The eleven FH-07 members, sham, mirrors, seeds, sign rule, measurements, mechanism limits and topology-control recipes are unchanged. Zero held-out outcomes were executed or inspected.
-  - FH-09 v1 preflight is complete and execution-ready before outcomes. Eight topology-control artifacts were regenerated from four seeds with 500 accepted directed swaps each; node sets, exact per-node directed degrees, transmitter/weight strata and weight multisets are preserved, and all 3,168 v1 scenario IDs are unique and accounted. Native event counts and graded-state integrals stay separate, outcome shards use exclusive creation, and baseline, ramp, post-release and total durations are all exact on the frozen 100 us step. This validates execution mechanics only, not a response or behavior.
+  - FH-09 v1 preflight completed its mechanics before outcomes. Eight topology-control artifacts were regenerated from four seeds with 500 accepted directed swaps each; node sets, exact per-node directed degrees, transmitter/weight strata and weight multisets are preserved, and all 3,168 v1 placeholder scenario IDs are unique and accounted. Native event counts and graded-state integrals stay separate, outcome shards use exclusive creation, and baseline, ramp, post-release and total durations are all exact on the frozen 100 us step. Exact same-recipe recalibration subsequently retained 14, 15, 4 and 8 members on the four rewires, so this fixed-eleven placeholder is not the final executable schedule. Both stages consumed zero held-out outcomes.
   - A first local scientific claim must compile and account its causal population cone rather than pretend that the two runtime extremes cover the 2^166419 native-assignment space.
   - Model-dependent calibration may proceed only on bounded populations with evidence-backed or explicitly dual-unresolved assignments and named unit-conversion boundaries.
   - The twelve-parameter central model is a minimum-capacity hypothesis, not a validated biological dimensionality; further isolated narrowing is paused unless independent central evidence becomes available.
@@ -199,9 +200,11 @@ blocked_by:
   - Electrical coupling, detailed muscle dynamics and compartmental integration are not represented as accepted mechanisms, so candidate evaluations depending on them require an explicit applicability warning.
 
 next_action: >-
-  Follow roadmap.first_held_out_evaluation.v0 revision 4. FH-09 v1 preflight is
-  execution-ready with all eight controls, all 3,168 scenarios and exact timing
-  on the frozen 100 us step, while consuming zero outcomes. Implement the
-  immutable executor and same-recipe control recalibration without exposing the
-  response, then execute the schedule once and report every row. Never rank or
-  refit the eleven FH-07 members from this held-out result.
+  Follow roadmap.first_held_out_evaluation.v0 revision 5. Exact outcome-blind
+  same-recipe recalibration retained 14, 15, 4 and 8 members on the four rewired
+  graphs, with zero held-out outcomes and no ranking. Supersede the unexecuted
+  fixed-eleven placeholder schedule with an immutable v2 schedule that retains
+  every native control survivor, then execute it once and report every row.
+  Never equalize control cardinalities by dropping, duplicating or selecting
+  members, and never rank or refit the eleven canonical FH-07 members from the
+  held-out result.

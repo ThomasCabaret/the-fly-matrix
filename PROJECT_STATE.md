@@ -1377,16 +1377,29 @@ Le second préflight v1 est entièrement vert : les huit graphes de contrôle et
 3 168 scénarios ont été régénérés sous de nouveaux IDs/hashes, toutes les durées
 sont exactes sur la grille de 100 microsecondes, les représentations event et
 graded restent séparées et le stockage demeure append-only. Il a consommé zéro
-outcome, sélectionné zéro membre et rend FH-09 prêt à l'exécution.
+outcome et sélectionné zéro membre. Ses mécaniques restent valides, mais son
+planning fixe de onze membres par contrôle recalibré est maintenant conservé
+comme placeholder historique non exécuté.
 
-Le plan de base restant représente maintenant 1 à 2 fournées substantielles ; une réserve
-explicite de 2 à 4 porte la prévision de pilotage à 3--6. Cette fourchette vise le
+La recalibration indépendante et toujours aveugle aux outcomes a ensuite appliqué
+exactement les recettes FH-05 à FH-07 aux quatre graphes rewired. Les quatre
+calibrations sont non vides et retiennent respectivement 14, 15, 4 et 8 membres,
+soit 41 membres de contrôle au total. Aucun n'est classé ou promu et aucun outcome
+held-out n'a été produit. Cette différence de cardinalité est un résultat de la
+recette, pas une anomalie à effacer : le planning exécutable v2 devra conserver
+les onze membres canoniques pour le graphe normal et les rewires à paramètres
+gelés, mais tous les survivants natifs de chaque rewire recalibré. Il est interdit
+de supprimer, dupliquer ou apparier arbitrairement des membres pour obtenir onze.
+
+Le plan de base restant représente maintenant exactement 2 fournées substantielles ; une réserve
+explicite de 2 à 4 porte la prévision de pilotage à 4--6. Cette fourchette vise le
 **premier essai interprétable**, positif, négatif ou ambigu, et non un comportement
 réussi ni la calibration totale de MaleCNS. Le travail de base restant est
-l'exécuteur immuable avec la recalibration non comportementale des contrôles,
-puis l'exécution unique et le rapport exhaustif des 3 168 épisodes. Aucun résultat
-ne doit servir à classer ou réajuster les 11 survivants FH-07. La fourchette baisse
-donc bien d'une fournée après fermeture du prérequis omis à FH-08.
+d'abord le verrouillage/compilation v2 fondé sur les ensembles de contrôle réels,
+puis l'exécution unique et son rapport exhaustif. Aucun résultat ne doit servir à
+classer ou réajuster les 11 survivants FH-07. La borne minimale ne baisse pas après
+ce lot parce que la recalibration, impossible à prédire depuis le préflight, a
+révélé le prérequis de planning dynamique ; la révision 5 l'enregistre explicitement.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle

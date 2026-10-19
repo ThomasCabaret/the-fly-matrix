@@ -698,6 +698,15 @@ declared outside the agent-batch estimate. A gate may legitimately end in
 `blocked` or `revise`; discovering that early is progress, while silently adding
 its consequences to the next estimate is not.
 
+For topology controls recalibrated by the same nonbehavioral recipe, the retained
+ensemble is an output of that recipe, not a cardinality to impose in advance.
+Compile the final evaluation schedule only after every control calibration is
+accounted. Retain every native survivor without ranking; never drop, duplicate or
+pair members merely to match the canonical ensemble. An empty control calibration
+remains an explicit scientific disposition rather than a missing row. Comparisons
+between ensembles of unequal size must use an outcome-blind, preregistered
+ensemble statistic and keep the native member-level measurements available.
+
 ## Recommended staged program
 
 These stages are milestones over the dependency DAG, not an obligation to finish

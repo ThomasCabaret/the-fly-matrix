@@ -1,0 +1,23 @@
+schema_version: 1
+id: evaluation.first_held_out_control_recalibration.v1
+status: complete_control_ensembles_accounted_outcome_blind
+campaign_id: campaign.first_held_out_control_recalibration.v1
+runner_result_id: runner_result.first_held_out_control_recalibration.v1
+runner_semantic_sha256: 361b3d97b6166387344220476e0e21b2858fd26e2b29306fc3b11b3773e55c95
+accounting:
+  rewire_seeds: 4
+  nonempty_control_ensembles: 4
+  failed_control_calibrations: 0
+  held_out_outcomes_consumed: 0
+checks:
+  all_rewire_seeds_accounted: true
+  exact_FH05_through_FH07_recipe_executed: true
+  held_out_outcomes_consumed_zero: true
+  members_ranked: false
+  parameter_values_promoted: 0
+  failed_control_calibrations_omitted: false
+interpretation: Every rewired graph received the same nonbehavioral FH-05--FH-07 recipes
+  and budgets. The retained sets are topology-control calibration outputs, not references,
+  and no held-out response was available.
+next_action: Compile a superseding outcome-blind execution schedule from the exact
+  per-rewire survivor sets before any held-out outcome is run.

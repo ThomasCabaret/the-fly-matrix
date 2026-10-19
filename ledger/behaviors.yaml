@@ -10,8 +10,8 @@ evaluation_only_targets:
   - target.held_out_stimulus_response.v0
 held_out_behaviors:
   - id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
-    protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v0
-    status: locked_execution_pending
+    protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v1
+    status: locked_zero_outcomes_native_control_schedule_revision_pending
     optimization_exposure: forbidden
     outcomes_inspected: false
     frozen_parameter_members: 11
@@ -31,9 +31,10 @@ prospective_evaluation_candidates:
     - evaluation_candidate.structured_spontaneous_motor_activity.v0
 notes:
   - Technical stability targets are not fly behaviors and cannot support an emergence claim.
-  - One named evaluation is now assigned only to immutable protocol v0; it remains unrun and cannot influence calibration or member selection.
+  - One named evaluation is assigned to immutable protocol v1; it remains unrun and cannot influence calibration or member selection. A v2 revision may change only the outcome-blind schedule accounting needed for the native recalibrated-control ensembles.
   - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.
   - Prospective names are not locked held-out protocols; any behavior-specific design or tuning decision contaminates that candidate for the affected lineage.
   - FH-01 selected the front-leg proprioceptive resistance-reflex candidate before any simulated outcome; that selection was not a lock, while FH-08 now supplies the separate immutable protocol and keeps its response properties forbidden to calibration.
   - Mirrored localized leg contact remains prospective but is deferred until independent mechanosensory routing/transfer evidence makes a negative result interpretable.
   - The locked proprioceptive protocol evaluates all eleven FH-07 members as an unranked ensemble; any mixed outcome remains member-conditioned uncertainty.
+  - Same-recipe rewired controls retain their complete native survivor sets of 14, 15, 4 and 8 members. Their cardinalities may not be forced to eleven by selection, duplication or omission.

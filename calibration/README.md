@@ -377,6 +377,14 @@ durations exactly, and returns `accepted_preflight_execution_ready` while still
 consuming zero outcomes and selecting zero members. It validates execution
 mechanics only, never the reflex itself.
 
+`first_held_out_control_recalibration_v1.bat` applies the exact frozen FH-05
+through FH-07 technical recipe independently to each rewired topology without
+reading held-out outcomes. Its accepted control ensembles contain 14, 15, 4 and
+8 members. These unequal cardinalities are scientific outputs: they must be
+carried whole into a superseding outcome-blind schedule, never equalized by
+selection, duplication or omission. The prior 3,168-row schedule is therefore a
+zero-outcome historical placeholder, not the executable final schedule.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

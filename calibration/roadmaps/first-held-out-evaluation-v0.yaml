@@ -1,7 +1,7 @@
 schema_version: 1
 id: roadmap.first_held_out_evaluation.v0
-revision: 4
-updated: 2026-10-18
+revision: 5
+updated: 2026-10-19
 status: active
 
 milestone:
@@ -30,7 +30,7 @@ selected_planning_path:
   candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   decision_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
   protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
-  status: protocol_v1_locked_preflight_ready_execution_pending
+  status: control_recalibration_complete_outcome_blind_schedule_v2_required
   selection_basis: independent_biology_and_current_mechanism_readiness
   simulated_outcomes_inspected_for_selection: false
   displaced_preference:
@@ -46,9 +46,9 @@ estimate_contract:
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
   open_items: 1
-  base_work_batches: {min: 1, max: 2}
+  base_work_batches: {min: 2, max: 2}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 3, max: 6}
+  planning_forecast_batches: {min: 4, max: 6}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -334,9 +334,9 @@ items:
   - id: FH-09
     title: Execute and report the first held-out end-to-end evaluation
     nature: evaluation_only_execution
-    status: ready
+    status: in_progress
     depends_on: [FH-08]
-    estimated_batches: {min: 1, max: 2}
+    estimated_batches: {min: 2, max: 2}
     blocking_substep:
       id: FH-09-timebase
       status: resolved_before_outcomes
@@ -367,7 +367,31 @@ items:
       frozen_timestep_s: 0.0001
       ramp_steps: 650
       total_steps: 3650
-      execution_ready: true
+      execution_ready: false
+      disposition: >-
+        The mechanics and timebase are valid, but the fixed-eleven placeholder
+        schedule is not executable after exact same-recipe control recalibration.
+        It consumed zero outcomes and must be superseded outcome-blind.
+    control_recalibration_record:
+      campaign_ref: calibration/campaigns/first-held-out-control-recalibration-v1.yaml
+      result_ref: calibration/runner/first-held-out-control-recalibration-v1.yaml
+      evaluation_ref: calibration/evaluations/first-held-out-control-recalibration-v1.yaml
+      parameter_set_ref: calibration/parameter_sets/first-held-out-recalibrated-topology-controls-v1.yaml
+      semantic_result_sha256: 361b3d97b6166387344220476e0e21b2858fd26e2b29306fc3b11b3773e55c95
+      exact_same_recipe_survivor_counts_by_rewire_seed:
+        81701: 14
+        81702: 15
+        81703: 4
+        81704: 8
+      total_recalibrated_control_members: 41
+      failed_control_calibrations: 0
+      held_out_outcomes_consumed: 0
+      members_ranked: false
+      schedule_consequence: >-
+        Compile a v2 schedule with all 11 canonical members for canonical and
+        frozen-parameter rewires, and each recalibrated rewire's complete native
+        survivor set. Do not drop, duplicate, pair or select members to equalize
+        cardinalities. Failed control calibrations, if any, remain dispositions.
     exit_criteria:
       - all scheduled normal, sham, mirrored and topology-control trials are accounted
       - the frozen protocol receives a positive, negative or ambiguous disposition
@@ -395,6 +419,53 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-19
+    batch: fh09_outcome_blind_same_recipe_control_recalibration
+    before:
+      open_items: 1
+      base_work_batches: {min: 1, max: 2}
+      planning_forecast_batches: {min: 3, max: 6}
+    closed: []
+    advanced: [FH-09]
+    newly_discovered_items: [FH-09-dynamic-control-schedule]
+    consumed_batches: 1
+    delivered:
+      rewired_topologies_recalibrated: 4
+      exact_recipe: FH-05_through_FH-07
+      survivor_counts_by_seed: {81701: 14, 81702: 15, 81703: 4, 81704: 8}
+      total_recalibrated_control_members: 41
+      failed_control_calibrations: 0
+      held_out_outcomes_consumed: 0
+      members_ranked: false
+      parameter_values_promoted: 0
+    discovery:
+      id: FH-09-dynamic-control-schedule
+      finding: >-
+        Exact same-recipe calibration on each rewired graph produces its own
+        survivor set. The four cardinalities are 14, 15, 4 and 8, not the eleven
+        canonical members assumed by the outcome-blind placeholder schedule.
+      why_not_known_before: >-
+        Rewire-specific survivor sets are outputs of the full frozen technical
+        recipe and could not be known from graph invariants or preflight alone.
+        The previous schedule correctly remained a zero-outcome placeholder.
+      reusable_work:
+        - all four exact recalibration results and complete survivor IDs
+        - eight deterministic topology artifacts and their timebase checks
+        - append-only storage and native event/graded measurement mechanics
+      invalidated_work:
+        - only the unexecuted fixed-eleven control schedule; it contains zero outcomes
+      added_work: >-
+        One bounded outcome-blind v2 lock/compiler step using native control
+        ensembles before the already planned one-time execution/report batch.
+    after:
+      open_items: 1
+      base_work_batches: {min: 2, max: 2}
+      planning_forecast_batches: {min: 4, max: 6}
+    accounting_note: >-
+      This batch completed the previously estimated control-recalibration work,
+      but its necessary output exposed one schedule-compilation prerequisite.
+      The remaining base forecast is therefore exactly two batches rather than
+      dropping to zero or one: v2 lock/compiler, then execution/report.
   - date: 2026-10-18
     batch: fh08_v1_timebase_exact_lock_and_fh09_v1_preflight
     before:
@@ -789,6 +860,25 @@ progress:
       planning_forecast_batches: {min: 10, max: 17}
 
 history:
+  - revision: 5
+    date: 2026-10-19
+    reason: same_recipe_rewires_yield_native_unequal_survivor_sets
+    old_open_items: 1
+    new_open_items: 1
+    old_base_work_batches: {min: 1, max: 2}
+    new_base_work_batches: {min: 2, max: 2}
+    old_planning_forecast_batches: {min: 3, max: 6}
+    new_planning_forecast_batches: {min: 4, max: 6}
+    closed: []
+    advanced: [FH-09]
+    newly_discovered_items: [FH-09-dynamic-control-schedule]
+    reusable_work:
+      - complete exact recalibration results for all four rewired graphs
+      - preflight topology artifacts, timebase checks and storage mechanics
+    invalidated_work:
+      - unexecuted fixed-eleven placeholder schedule only
+    added_work:
+      - outcome-blind v2 protocol lock and schedule compilation from exact survivor sets
   - revision: 4
     date: 2026-10-18
     reason: fh08_v1_closes_timebase_prerequisite_and_fh09_preflight_is_execution_ready

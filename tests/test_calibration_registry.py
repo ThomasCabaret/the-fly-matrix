@@ -158,7 +158,10 @@ class CalibrationRegistryTests(unittest.TestCase):
                 "catalog_registration_is_protocol_lock"
             ]
         )
-        self.assertEqual(held_out_target["protocol_lock_status"], "locked_execution_pending")
+        self.assertEqual(
+            held_out_target["protocol_lock_status"],
+            "v1_locked_zero_outcomes_v2_native_control_schedule_pending",
+        )
         self.assertEqual(len(behavior_index["held_out_behaviors"]), 1)
         self.assertFalse(behavior_index["held_out_behaviors"][0]["outcomes_inspected"])
         self.assertFalse(behavior_index["held_out_behaviors"][0]["members_ranked"])
@@ -193,7 +196,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         selected_id = readiness["decision"]["selected_candidate_id"]
         self.assertIn(selected_id, {item["id"] for item in catalog["candidates"]})
-        self.assertEqual(roadmap["revision"], 4)
+        self.assertEqual(roadmap["revision"], 5)
         self.assertEqual(roadmap["items"][0]["status"], "complete")
         self.assertEqual(roadmap["items"][1]["status"], "complete")
         self.assertEqual(roadmap["items"][2]["status"], "complete")
@@ -213,7 +216,7 @@ class CalibrationRegistryTests(unittest.TestCase):
             11,
         )
         self.assertEqual(roadmap["items"][7]["status"], "complete")
-        self.assertEqual(roadmap["items"][8]["status"], "ready")
+        self.assertEqual(roadmap["items"][8]["status"], "in_progress")
         self.assertEqual(
             roadmap["items"][8]["blocking_substep"]["id"], "FH-09-timebase"
         )
@@ -228,8 +231,20 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(
             roadmap["items"][8]["preflight_record"]["schedule_rows"], 3168
         )
-        self.assertTrue(
+        self.assertFalse(
             roadmap["items"][8]["preflight_record"]["execution_ready"]
+        )
+        self.assertEqual(
+            roadmap["items"][8]["control_recalibration_record"][
+                "exact_same_recipe_survivor_counts_by_rewire_seed"
+            ],
+            {81701: 14, 81702: 15, 81703: 4, 81704: 8},
+        )
+        self.assertEqual(
+            roadmap["items"][8]["control_recalibration_record"][
+                "held_out_outcomes_consumed"
+            ],
+            0,
         )
         self.assertEqual(roadmap["estimate_contract"]["open_items"], 1)
 
