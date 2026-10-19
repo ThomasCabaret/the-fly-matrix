@@ -1,8 +1,8 @@
 schema_version: 1
 id: roadmap.first_held_out_evaluation.v0
-revision: 5
+revision: 6
 updated: 2026-10-19
-status: active
+status: complete
 
 milestone:
   title: First end-to-end behavior-naive held-out evaluation
@@ -30,7 +30,7 @@ selected_planning_path:
   candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   decision_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
   protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
-  status: protocol_v2_native_control_schedule_locked_execution_ready
+  status: protocol_v2_executed_ambiguous_closed
   selection_basis: independent_biology_and_current_mechanism_readiness
   simulated_outcomes_inspected_for_selection: false
   displaced_preference:
@@ -45,11 +45,11 @@ estimate_contract:
     One coherent implementation, evidence, campaign, or gate delivery with status,
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
-  open_items: 1
-  base_work_batches: {min: 1, max: 1}
-  contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 3, max: 5}
-  confidence: low_to_medium
+  open_items: 0
+  base_work_batches: {min: 0, max: 0}
+  contingency_batches: {min: 0, max: 0}
+  planning_forecast_batches: {min: 0, max: 0}
+  confidence: complete
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
     not total calibration of MaleCNS.
@@ -334,7 +334,7 @@ items:
   - id: FH-09
     title: Execute and report the first held-out end-to-end evaluation
     nature: evaluation_only_execution
-    status: ready
+    status: complete
     depends_on: [FH-08]
     estimated_batches: {min: 1, max: 1}
     blocking_substep:
@@ -412,6 +412,26 @@ items:
         rewires retain every native survivor and compare complete-ensemble pass
         fractions per side and rewire seed, with member-level native measures
         preserved and no pooling or cardinality equalization.
+    execution_record:
+      campaign_ref: calibration/campaigns/first-held-out-execution-v2.yaml
+      result_ref: calibration/runner/first-held-out-execution-v2.yaml
+      evaluation_ref: calibration/evaluations/first-held-out-execution-v2.yaml
+      semantic_result_sha256: 248abf7c48b52125f890a45f180137916096e87267cfdef589cb263612273b50e
+      outcome_rows: 3072
+      paired_trials: 1536
+      canonical_member_side_rows: 22
+      canonical_primary_pass_rows: 0
+      canonical_physical_support_rows: 0
+      topology_specific: false
+      members_ranked: false
+      parameter_values_changed: 0
+      disposition: mechanism_limited_ambiguous_no_canonical_primary_pass
+      interpretation: >-
+        All episodes are finite and commands reach the body. Every canonical
+        physical comparison has the expected sign, but joint-limit violations
+        invalidate every canonical row. Neural sign support is left-only for five
+        members and absent on the right; rewired controls prevent a topology-
+        specific claim. Protocol v2 is closed and cannot guide tuning.
     exit_criteria:
       - all scheduled normal, sham, mirrored and topology-control trials are accounted
       - the frozen protocol receives a positive, negative or ambiguous disposition
@@ -439,6 +459,43 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-19
+    batch: fh09_one_time_held_out_v2_execution_and_report
+    before:
+      open_items: 1
+      base_work_batches: {min: 1, max: 1}
+      planning_forecast_batches: {min: 3, max: 5}
+    closed: [FH-09]
+    advanced: []
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      scheduled_outcomes: 3072
+      persisted_outcomes: 3072
+      paired_trials: 1536
+      finite_outcomes: 3072
+      canonical_primary_pass_rows: 0
+      canonical_physical_support_rows: 0
+      topology_specific: false
+      members_ranked: false
+      parameter_values_changed: 0
+    scientific_findings:
+      - all canonical physical stimulus-sham pairs have the expected sign but every canonical row is invalidated by joint-limit violations
+      - five canonical members meet the neural sign rule on the left and none meet it on the right
+      - frozen and same-recipe rewired controls prevent a topology-specific interpretation
+    scientific_boundary: >-
+      This is the first inspection of protocol v2. It reports an ambiguous,
+      mechanism-limited result, not a failed calibration and not evidence of an
+      emergent reflex. No result was used to rank, refit, drop or promote a member.
+    after:
+      open_items: 0
+      base_work_batches: {min: 0, max: 0}
+      planning_forecast_batches: {min: 0, max: 0}
+    accounting_note: >-
+      The final planned batch closed FH-09 and the milestone. The former two-to-
+      four contingency was not silently carried into this completed roadmap:
+      joint-limit, bilateral-registration and topology-attribution findings belong
+      to a separately scoped post-evaluation roadmap if pursued.
   - date: 2026-10-19
     batch: fh09_native_control_schedule_v2_lock
     before:
@@ -916,6 +973,27 @@ progress:
       planning_forecast_batches: {min: 10, max: 17}
 
 history:
+  - revision: 6
+    date: 2026-10-19
+    reason: first_held_out_v2_executed_reported_and_closed_ambiguous
+    old_open_items: 1
+    new_open_items: 0
+    old_base_work_batches: {min: 1, max: 1}
+    new_base_work_batches: {min: 0, max: 0}
+    old_planning_forecast_batches: {min: 3, max: 5}
+    new_planning_forecast_batches: {min: 0, max: 0}
+    closed: [FH-09]
+    newly_discovered_items: []
+    reusable_work:
+      - complete frozen lineage, protocol and 3,072-outcome manifest
+      - exact neural, physical and topology-control result tables
+      - deterministic resumable sharded executor
+    invalidated_work: []
+    post_milestone_findings:
+      - all canonical physical rows are masked by joint-limit violations
+      - neural response is left-only and member-dependent
+      - the observed response is not topology-specific against declared controls
+    added_work: []
   - revision: 5
     date: 2026-10-19
     reason: same_recipe_rewires_yield_native_unequal_survivor_sets

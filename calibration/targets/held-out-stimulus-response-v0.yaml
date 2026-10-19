@@ -1,12 +1,12 @@
 schema_version: 1
 id: target.held_out_stimulus_response.v0
 title: Held-out bounded and stimulus-specific embodied response
-status: proprioceptive_resistance_reflex_protocol_v2_locked_execution_ready
+status: proprioceptive_resistance_reflex_protocol_v2_executed_ambiguous_closed
 primary_class: evaluation_only
 optimization_exposure: evaluation_only
 claim_label: held_out_system_evaluation
 candidate_catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
-protocol_lock_status: v2_locked_zero_outcomes_execution_ready
+protocol_lock_status: v2_executed_closed_after_inspection
 protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
 
 scope:
@@ -81,10 +81,27 @@ provenance:
     - FH-01 selected a proprioceptive resistance-reflex candidate from evidence and readiness before any simulated outcome was viewed.
     - FH-01 candidate selection was not a lock; FH-08 subsequently locked the scientific axes, and outcome-blind protocol v2 now carries the executable native-control schedule while keeping every response property forbidden during fitting and model selection.
 
-validation: locked_not_executed
-blocked_reason: null
+validation: executed_mechanism_limited_ambiguous
+execution_result:
+  campaign_id: campaign.first_held_out_execution.v2
+  evaluation_id: evaluation.first_held_out_execution.v2
+  scenarios: 3072
+  paired_trials: 1536
+  canonical_member_side_rows: 22
+  canonical_primary_pass_rows: 0
+  canonical_physical_support_rows: 0
+  topology_specific: false
+  result_sha256: 248abf7c48b52125f890a45f180137916096e87267cfdef589cb263612273b50e
+  interpretation: >-
+    All runs are finite and commands reach the body, but the preregistered claim
+    is not supported. Joint-limit violations invalidate every canonical physical
+    row, neural sign support is left-only and member-dependent, and rewired
+    controls prevent a topology-specific interpretation.
+blocked_reason: >-
+  Protocol v2 is permanently closed after inspection. Its result is ambiguous
+  because the physical safety mask fails on every canonical row and the neural
+  response is bilaterally asymmetric and not topology-specific.
 next_action: >-
-  Execute protocol v2 exactly once and account all 3,072 scheduled episodes:
-  352 canonical, 1,408 frozen-parameter rewires and 1,312 native-cardinality
-  same-recipe controls. Report positive, negative or ambiguous without changing,
-  ranking, dropping or duplicating any member after outcome inspection.
+  Do not tune against protocol v2. Audit the joint-limit fixture, bilateral
+  FeCO/native registration and topology-control attribution independently. Any
+  repair or recalibration must create a new lineage and a new held-out protocol.

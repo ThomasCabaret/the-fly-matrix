@@ -1,0 +1,2101 @@
+schema_version: 1
+id: runner_result.first_held_out_execution.v2
+campaign_id: campaign.first_held_out_execution.v2
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+status: complete_mechanism_limited_ambiguous_no_canonical_primary_pass
+completed_at: '2026-10-19T12:51:57.007093+00:00'
+command: first_held_out_execution_v2.bat
+claim_label: HELD-OUT V2 EXECUTION / PARAMETERS FROZEN / NEVER CALIBRATION
+frozen_input_sha256:
+  runtime: 442a9f268b36ea0c1c83a7f9637312a6587001a6819a99b75feccd07386602d7
+  protocol_v2: f0b1eb25649bae2a2cf0717051992d83f042242f50a57d35c269d8eff06cd00b
+  base_protocol_v1: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  schedule_lock: 2abe93a0d6b66559086cd490daa33b3cf644492eb57a075587502e3911a4ada5
+  schedule: a89a1a1c19d24ce3cb9fec15270720374a8fdb93bab82cb50becf78fa6c0324a
+  preflight_v1: 490731aeac7831731ce469f03ee1ac87aec6b66deade4152e8219d558d4dc03a
+  canonical_fh07b_campaign: 85fe91bd22fb15efb020fde7de24d714f1ca53367715ccc6bdcbfd57c71e8175
+  canonical_fh07b_result: 1021b9659bb2f61c865abda3b82622c7043823528da8d2c6e3b7383c0ccd87e8
+  control_81701_campaign: 5df39a20bcd2608c9da968f52f1ca2472541dece09c8de9060ad81468a7de0ba
+  control_81701_result: a8d1f8308e4c491e95d61a6309fa53e3fd655f6ffa7ebb03c1741b582c454bad
+  control_81702_campaign: ebc07550baf124da71204ab356b1f6935d43f8acb5f1038aaf275f2fae8ad7bb
+  control_81702_result: 8895d544ce0b174cd4c1de30f0f8f19d17940929cd288737895a17bac91c73f0
+  control_81703_campaign: 84e2b0cc59c6c818bc7e985c9163ffbca86694068cc5106bd706f495a8e70097
+  control_81703_result: 082c15c2aa59d63b383c69ffa44b7b0f4a504d24a15c3b6acefaf92a20b8595b
+  control_81704_campaign: 54058f2afbf7596cd8b21d0faf18d612ab2bad4af6b35f17abfe7d89e3519205
+  control_81704_result: 94474e2d982b4beefc930acf1012d9bf4cb85b2305f95bbf9beeb60aa15a9699
+outcome_manifest:
+  rows: 3072
+  unique_scenarios: 3072
+  shards: 96
+  semantic_sha256: b24d62fbf1041d1c6855599c43e0bd7b09bd270a89fadb53822b62d699be2b49
+analysis:
+  paired_trials: 1536
+  member_side_summaries:
+  - topology_variant: canonical
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: canonical
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_006__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_006__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_009__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_009__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_011__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_011__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: right
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_018__mixed_pairwise_profile__all_event_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_018__mixed_pairwise_profile__all_event_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_021__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_021__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_022__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_022__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_024__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_024__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_025__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_025__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: right
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_031__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81701-recalibrated
+    member_id: physical_031__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_000__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_000__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_002__graded_heavy_boundary_extreme__all_event_candidate__regime_003
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_002__graded_heavy_boundary_extreme__all_event_candidate__regime_003
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_009__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_009__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_018__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_018__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_020__graded_heavy_boundary_extreme__all_event_candidate__regime_003
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_020__graded_heavy_boundary_extreme__all_event_candidate__regime_003
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_027__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_027__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81702-recalibrated
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_010__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_010__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_011__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_011__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_019__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_019__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_030__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81703-recalibrated
+    member_id: physical_030__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-frozen
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_007__graded_heavy_boundary_extreme__all_graded_candidate__regime_012
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_007__graded_heavy_boundary_extreme__all_graded_candidate__regime_012
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_010__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_010__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_011__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_011__graded_heavy_boundary_extreme__all_event_candidate__regime_010
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_018__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_018__mixed_pairwise_profile__all_graded_candidate__regime_011
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_019__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_019__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_022__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_022__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_024__mixed_pairwise_profile__all_event_candidate__regime_014
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_024__mixed_pairwise_profile__all_event_candidate__regime_014
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_025__mixed_pairwise_profile__all_event_candidate__regime_020
+    side: left
+    neural_positive_pairs: 8
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  - topology_variant: rewire-81704-recalibrated
+    member_id: physical_025__mixed_pairwise_profile__all_event_candidate__regime_020
+    side: right
+    neural_positive_pairs: 0
+    physical_positive_pairs: 8
+    bounded_all_pairs: false
+    primary_neural_pass: false
+    secondary_physical_support: false
+  canonical:
+    member_side_rows: 22
+    primary_pass_rows: 0
+    physical_support_rows: 0
+    bounded_rows: 0
+    pass_fraction_by_side:
+      left: 0.0
+      right: 0.0
+  frozen_parameter_rewire_superiority:
+  - rewire_seed: 81701
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81701
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81701
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81701
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81701
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81701
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81701
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81702
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81702
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81703
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81703
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_001__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81704
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_004__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81704
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_010__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81704
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_012__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_015__mixed_pairwise_profile__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_019__graded_heavy_boundary_extreme__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81704
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_021__graded_heavy_boundary_extreme__all_event_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81704
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_022__graded_heavy_boundary_extreme__all_event_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81704
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_026__mixed_pairwise_profile__all_graded_candidate__regime_007
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_028__mixed_pairwise_profile__all_graded_candidate__regime_014
+    side: right
+    canonical_favored_pairs: 8
+    pass: true
+  - rewire_seed: 81704
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: left
+    canonical_favored_pairs: 0
+    pass: false
+  - rewire_seed: 81704
+    member_id: physical_030__mixed_pairwise_profile__all_graded_candidate__regime_020
+    side: right
+    canonical_favored_pairs: 0
+    pass: false
+  same_recipe_recalibrated_comparisons:
+  - rewire_seed: 81701
+    side: left
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 14
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  - rewire_seed: 81701
+    side: right
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 14
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  - rewire_seed: 81702
+    side: left
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 15
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  - rewire_seed: 81702
+    side: right
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 15
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  - rewire_seed: 81703
+    side: left
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 4
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  - rewire_seed: 81703
+    side: right
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 4
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  - rewire_seed: 81704
+    side: left
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 8
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  - rewire_seed: 81704
+    side: right
+    canonical_numerator: 0
+    canonical_denominator: 11
+    control_numerator: 0
+    control_denominator: 8
+    canonical_fraction: 0.0
+    control_fraction: 0.0
+    canonical_strictly_exceeds_control: false
+  topology_specific: false
+  disposition: mechanism_limited_ambiguous_no_canonical_primary_pass
+members_ranked: false
+parameter_values_changed: 0
+protocol_closed_after_inspection: true
+wall_seconds: 1.5103481999831274
+semantic_result_sha256: 248abf7c48b52125f890a45f180137916096e87267cfdef589cb26361273b50e
+next_action: Do not tune against this response. Audit stimulus registration, native-class
+  assignments and missing mechanisms using independent evidence; any revised lineage
+  must receive a new held-out protocol.

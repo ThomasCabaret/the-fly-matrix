@@ -398,6 +398,16 @@ executes no held-out episode and consumes zero outcome. After it passes, the nex
 activity is no longer calibration preparation: it is the one-time held-out v2
 execution and exhaustive positive, negative or ambiguous report.
 
+`first_held_out_execution_v2.bat` has now executed that immutable schedule once.
+All 3,072 outcomes are finite and accounted, but the registered disposition is
+`mechanism_limited_ambiguous_no_canonical_primary_pass`: 0/22 canonical
+member-side rows pass the primary rule, 0/22 have admissible physical support,
+and topology specificity is absent. Every canonical physical pair has the
+expected sign but is masked by joint-limit violations; neural support is
+left-only and member-dependent. Protocol v2 is permanently closed after this
+inspection. Its result may motivate independent attribution audits, never member
+ranking or tuning of the same lineage.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

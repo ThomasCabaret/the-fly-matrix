@@ -49,7 +49,7 @@ class CalibrationRegistryTests(unittest.TestCase):
     def test_active_milestone_roadmap_is_itemized_and_accounted(self) -> None:
         roadmap = validate_active_milestone_roadmap(CALIBRATION_ROOT)
         self.assertEqual(roadmap["id"], self.state["active_roadmap_id"])
-        self.assertEqual(roadmap["status"], "active")
+        self.assertIn(roadmap["status"], {"active", "complete"})
 
         items = roadmap["items"]
         item_ids = [item["id"] for item in items]
@@ -145,7 +145,7 @@ class CalibrationRegistryTests(unittest.TestCase):
 
         self.assertEqual(
             catalog["status"],
-            "prospective_catalog_one_candidate_promoted_to_locked_protocol_not_run",
+            "prospective_catalog_one_candidate_executed_ambiguous_protocol_closed",
         )
         self.assertEqual(catalog["optimization_exposure"], "forbidden")
         self.assertEqual(len(catalog["candidates"]), 8)
@@ -160,17 +160,17 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertEqual(
             held_out_target["protocol_lock_status"],
-            "v2_locked_zero_outcomes_execution_ready",
+            "v2_executed_closed_after_inspection",
         )
         self.assertEqual(len(behavior_index["held_out_behaviors"]), 1)
-        self.assertFalse(behavior_index["held_out_behaviors"][0]["outcomes_inspected"])
+        self.assertTrue(behavior_index["held_out_behaviors"][0]["outcomes_inspected"])
         self.assertFalse(behavior_index["held_out_behaviors"][0]["members_ranked"])
         self.assertEqual(
             behavior_index["prospective_evaluation_candidates"]["status"],
-            "catalog_retained_one_protocol_locked_not_run",
+            "catalog_retained_one_protocol_executed_ambiguous_closed",
         )
         self.assertTrue(self.state["readiness"]["held_out_protocol_locked"])
-        self.assertFalse(self.state["readiness"]["held_out_protocol_executed"])
+        self.assertTrue(self.state["readiness"]["held_out_protocol_executed"])
 
     def test_first_held_out_channel_choice_is_evidence_based_and_unlocked(self) -> None:
         readiness = load_yaml(
@@ -196,7 +196,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         selected_id = readiness["decision"]["selected_candidate_id"]
         self.assertIn(selected_id, {item["id"] for item in catalog["candidates"]})
-        self.assertEqual(roadmap["revision"], 5)
+        self.assertEqual(roadmap["revision"], 6)
         self.assertEqual(roadmap["items"][0]["status"], "complete")
         self.assertEqual(roadmap["items"][1]["status"], "complete")
         self.assertEqual(roadmap["items"][2]["status"], "complete")
@@ -216,7 +216,7 @@ class CalibrationRegistryTests(unittest.TestCase):
             11,
         )
         self.assertEqual(roadmap["items"][7]["status"], "complete")
-        self.assertEqual(roadmap["items"][8]["status"], "ready")
+        self.assertEqual(roadmap["items"][8]["status"], "complete")
         self.assertEqual(
             roadmap["items"][8]["blocking_substep"]["id"], "FH-09-timebase"
         )
@@ -255,7 +255,11 @@ class CalibrationRegistryTests(unittest.TestCase):
         self.assertEqual(schedule["recalibrated_control_members"], 41)
         self.assertEqual(schedule["held_out_outcomes_consumed"], 0)
         self.assertFalse(schedule["members_ranked"])
-        self.assertEqual(roadmap["estimate_contract"]["open_items"], 1)
+        execution = roadmap["items"][8]["execution_record"]
+        self.assertEqual(execution["outcome_rows"], 3072)
+        self.assertEqual(execution["canonical_primary_pass_rows"], 0)
+        self.assertFalse(execution["topology_specific"])
+        self.assertEqual(roadmap["estimate_contract"]["open_items"], 0)
 
     def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:
         scope = load_yaml(

@@ -11,15 +11,17 @@ evaluation_only_targets:
 held_out_behaviors:
   - id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
     protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
-    status: locked_zero_outcomes_execution_ready
+    status: executed_ambiguous_protocol_closed
     optimization_exposure: forbidden
-    outcomes_inspected: false
+    outcomes_inspected: true
     frozen_parameter_members: 11
     members_ranked: false
     selected_reference_member_id: null
+    evaluation_id: evaluation.first_held_out_execution.v2
+    disposition: mechanism_limited_ambiguous_no_canonical_primary_pass
 prospective_evaluation_candidates:
   catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
-  status: catalog_retained_one_protocol_locked_not_run
+  status: catalog_retained_one_protocol_executed_ambiguous_closed
   ids:
     - evaluation_candidate.localized_grooming.v0
     - evaluation_candidate.grooming_hierarchy.v0
@@ -31,10 +33,11 @@ prospective_evaluation_candidates:
     - evaluation_candidate.structured_spontaneous_motor_activity.v0
 notes:
   - Technical stability targets are not fly behaviors and cannot support an emergence claim.
-  - One named evaluation is assigned to immutable protocol v2; it remains unrun and cannot influence calibration or member selection. V2 changed only the outcome-blind schedule accounting and unequal-ensemble control statistic required by the native recalibrated-control ensembles.
+  - One named evaluation was executed under immutable protocol v2. It produced an ambiguous, mechanism-limited result and is permanently closed; it did not influence calibration or member selection.
   - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.
   - Prospective names are not locked held-out protocols; any behavior-specific design or tuning decision contaminates that candidate for the affected lineage.
   - FH-01 selected the front-leg proprioceptive resistance-reflex candidate before any simulated outcome; that selection was not a lock, while FH-08 now supplies the separate immutable protocol and keeps its response properties forbidden to calibration.
   - Mirrored localized leg contact remains prospective but is deferred until independent mechanosensory routing/transfer evidence makes a negative result interpretable.
   - The locked proprioceptive protocol evaluates all eleven FH-07 members as an unranked ensemble; any mixed outcome remains member-conditioned uncertainty.
   - Same-recipe rewired controls retain their complete native survivor sets of 14, 15, 4 and 8 members. Their cardinalities may not be forced to eleven by selection, duplication or omission.
+  - Protocol v2 ran all 3,072 episodes. No canonical member-side row passed the primary criterion, all canonical physical rows were masked by joint-limit violations, neural support was left-only and member-dependent, and topology specificity was absent. These outcomes may motivate an attribution audit but never tuning of this lineage against v2.

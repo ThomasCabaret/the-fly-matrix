@@ -1,11 +1,11 @@
 schema_version: 1
 id: catalog.prospective_emergent_behavior_evaluations.v0
 title: Prospective behavior-naive observation catalog
-status: prospective_catalog_one_candidate_promoted_to_locked_protocol_not_run
+status: prospective_catalog_one_candidate_executed_ambiguous_protocol_closed
 created: 2026-10-03
 primary_class: evaluation_only_candidate_catalog
 optimization_exposure: forbidden
-claim_label: PROSPECTIVE HELD-OUT CANDIDATES / NOT A PROTOCOL / NOT RUN
+claim_label: PROSPECTIVE CANDIDATES / ONE V2 PROTOCOL EXECUTED AND CLOSED
 
 purpose: >-
   Preserve candidate observations that may test whether insect-like or fly-like
@@ -25,7 +25,7 @@ catalog_exposure_policy:
     - frozen parameter-set lineage
 
 planning_priority:
-  status: promoted_to_protocol_v0_execution_pending
+  status: v2_protocol_executed_ambiguous_closed
   preferred_first_candidate: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   preferred_variant: mirrored_passive_front_tibia_displacement
   prerequisites:

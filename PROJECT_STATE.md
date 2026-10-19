@@ -1339,7 +1339,8 @@ proprioceptive biologiquement sourcée.
 La route vers le premier essai comportemental tenu à l'écart est maintenant
 inventoriée dans
 [`calibration/roadmaps/first-held-out-evaluation-v0.yaml`](calibration/roadmaps/first-held-out-evaluation-v0.yaml).
-FH-01 à FH-08 sont fermés ; FH-09 reste l'unique item ouvert. FH-06 conserve exactement
+FH-01 à FH-09 sont maintenant fermés : la première évaluation tenue à l'écart a
+été exécutée et rapportée sans réajustement. FH-06 conserve exactement
 les ensembles FH-03/FH-04/FH-05 sous une factorisation conditionnelle de
 4 621 555 858 189 754 880 adresses discrètes, sans les matérialiser ni sélectionner
 de référence. Son témoin lexicographique a exécuté les frontières corps/FeCO,
@@ -1399,15 +1400,23 @@ succès de leur ensemble natif complet, avec numérateur et dénominateur explic
 mesures individuelles conservées et aucun pooling entre seeds. Ce verrou a
 consommé zéro outcome et n'a classé aucun membre.
 
-Le plan de base restant représente maintenant exactement 1 fournée substantielle ;
-une réserve explicite de 2 à 4 porte la prévision de pilotage à 3--5. Cette
-fourchette vise le **premier essai interprétable**, positif, négatif ou ambigu, et
-non un comportement réussi ni la calibration totale de MaleCNS. Le seul travail
-de base restant est l'exécution unique des 3 072 scénarios et son rapport exhaustif.
-Aucun résultat ne doit servir à classer ou réajuster les 11 survivants FH-07 ni les
-41 membres de contrôle. Cette prochaine étape change de nature : la préparation et
-la calibration aveugles sont terminées ; elle exposera pour la première fois les
-résultats du protocole held-out v2.
+L'exécution unique de v2 a produit et comptabilisé les 3 072 épisodes finis, soit
+1 536 paires stimulus/sham. Aucun des 22 couples membre canonique/côté ne passe le
+critère primaire et aucun ne fournit un support physique admissible. Le signe
+physique attendu apparaît dans toutes les paires canoniques, mais chaque ligne est
+invalidée par des violations de limites articulaires. Côté neural, cinq des onze
+membres passent la règle 7/8 à gauche et aucun à droite. Les contrôles rewired
+répondent eux aussi assez souvent pour interdire un claim spécifique à la topologie.
+Le résultat est donc **ambigu et limité par les mécanismes/mesures**, pas une preuve
+d'un réflexe ni une réfutation de MaleCNS. Aucun membre, paramètre ou route n'a été
+classé, retiré, promu ou réajusté après inspection ; le protocole v2 est fermé.
+
+La roadmap du premier essai est complète et son estimation restante est zéro. La
+prochaine activité changerait de nature : elle doit être une attribution
+post-évaluation versionnée, indépendante de v2, portant d'abord sur le masque de
+limites articulaires, l'asymétrie de registration FeCO gauche/droite et l'absence
+de spécificité topologique. Toute réparation ou nouvelle calibration crée une
+nouvelle lignée et exige un nouveau protocole held-out avant un nouveau claim.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle

@@ -280,8 +280,11 @@ def validate_active_milestone_roadmap(
         raise CalibrationRegistryError(
             f"{roadmap_path}: id differs from state.yaml active_roadmap_id"
         )
-    if roadmap.get("status") != "active":
-        raise CalibrationRegistryError(f"{roadmap_path}: active roadmap must have status active")
+    roadmap_status = roadmap.get("status")
+    if roadmap_status not in {"active", "complete"}:
+        raise CalibrationRegistryError(
+            f"{roadmap_path}: referenced roadmap must have status active or complete"
+        )
 
     policy = _require_mapping(roadmap, "replanning_policy", roadmap_path)
     statuses = policy.get("statuses")
@@ -324,6 +327,10 @@ def validate_active_milestone_roadmap(
     contract = _require_mapping(roadmap, "estimate_contract", roadmap_path)
     if contract.get("open_items") != len(open_items):
         raise CalibrationRegistryError(f"{roadmap_path}: estimate_contract.open_items is stale")
+    if roadmap_status == "complete" and open_items:
+        raise CalibrationRegistryError(
+            f"{roadmap_path}: complete roadmap still has open items"
+        )
 
     def estimate_pair(record: Mapping[str, Any], label: str) -> tuple[int | float, int | float]:
         pair = _require_mapping(record, label, roadmap_path)
