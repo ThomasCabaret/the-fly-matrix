@@ -1,0 +1,59 @@
+schema_version: 1
+id: runner_result.first_held_out_schedule_lock.v2
+campaign_id: campaign.first_held_out_schedule_lock.v2
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+status: accepted_outcome_blind_native_control_schedule_execution_ready
+completed_at: '2026-10-19T10:22:03.279933+00:00'
+command: first_held_out_schedule_lock_v2.bat
+claim_label: FH-09 V2 SCHEDULE LOCK / NO HELD-OUT OUTCOME / NOT CALIBRATION
+frozen_input_sha256:
+  runtime: c09a7586567dfeb132316f64c78351f2a51d2d982c167be1c628e605be691d83
+  protocol_v2: f0b1eb25649bae2a2cf0717051992d83f042242f50a57d35c269d8eff06cd00b
+  base_protocol_v1: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  protocol_lock_v1: 3742ca1ad99436623d5ab2c01abdcd620633cf58ddaaec4cf00ff50d99633b3f
+  preflight_v1: 490731aeac7831731ce469f03ee1ac87aec6b66deade4152e8219d558d4dc03a
+  control_recalibration: ee911b2cc220c226c8821df314d6c9f5be80846c601f477e6571ffd5b58fe32c
+  canonical_parameter_set: dd1f696c29bcf3467d6cc93f18c55965fce5e5817cf6c94fa7718afcc1a9f68a
+  control_parameter_set: 26840e9698f79c139f56b2069dd39998e330b8529a4ded481be5a9b715a8b006
+held_out_outcomes_consumed: 0
+members_ranked: false
+selected_reference_member_id: null
+control_member_counts_by_seed:
+  81701: 14
+  81702: 15
+  81703: 4
+  81704: 8
+schedule:
+  rows: 3072
+  unique_scenarios: 3072
+  topology_variants: 9
+  family_rows:
+    canonical: 352
+    frozen_parameter_rewire: 1408
+    same_recipe_recalibrated_rewire: 1312
+  artifact: data/derived/calibration/first-held-out-schedule-lock-v2/execution-schedule.csv
+  artifact_sha256: a89a1a1c19d24ce3cb9fec15270720374a8fdb93bab82cb50becf78fa6c0324a
+  semantic_sha256: 39b7b904a672c2333c02d5a54f24d61b5736c416297ddad1d4b63328e9818746
+checks:
+  held_out_outcomes_consumed_zero: true
+  canonical_eleven_members_exact_and_unranked: true
+  all_41_native_control_members_accounted: true
+  control_cardinality_equalization_forbidden: true
+  frozen_rewires_remain_member_paired: true
+  recalibrated_controls_use_complete_ensemble_fraction: true
+  native_measurements_remain_separate: true
+  schedule_exactly_3072_unique_rows: true
+  no_member_selected: true
+  predecessor_outcomes_zero: true
+semantic_result_sha256: 58a6de49cae641c0dbf814e9e4fe5cff18f0a36c1fbcf423b566227474dfc832
+accepted_claims:
+- The v2 schedule is complete, unique and outcome-blind over all native control survivors.
+- V2 changes only control accounting and its unequal-ensemble statistic relative to
+  unexecuted v1.
+- No canonical or control member is selected, ranked, duplicated or dropped.
+forbidden_claims:
+- Schedule readiness validates a reflex or topology-specific behavior.
+- Recalibrated-control ensemble cardinalities are biological estimates.
+- The held-out outcome may be used to revise this protocol version.
+next_action: Execute the immutable v2 schedule exactly once and produce the exhaustive
+  positive, negative or ambiguous FH-09 report without refitting or ranking any member.

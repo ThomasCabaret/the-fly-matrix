@@ -1,0 +1,43 @@
+schema_version: 1
+id: evaluation.first_held_out_schedule_lock.v2
+status: accepted_outcome_blind_native_control_schedule_execution_ready
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+primary_class: evaluation_only
+protocol_locked: true
+protocol_executed: false
+held_out_outcomes_consumed: 0
+members_ranked: false
+result_ref: calibration/runner/first-held-out-schedule-lock-v2.yaml
+semantic_result_sha256: 58a6de49cae641c0dbf814e9e4fe5cff18f0a36c1fbcf423b566227474dfc832
+schedule:
+  rows: 3072
+  unique_scenarios: 3072
+  topology_variants: 9
+  family_rows:
+    canonical: 352
+    frozen_parameter_rewire: 1408
+    same_recipe_recalibrated_rewire: 1312
+  artifact: data/derived/calibration/first-held-out-schedule-lock-v2/execution-schedule.csv
+  artifact_sha256: a89a1a1c19d24ce3cb9fec15270720374a8fdb93bab82cb50becf78fa6c0324a
+  semantic_sha256: 39b7b904a672c2333c02d5a54f24d61b5736c416297ddad1d4b63328e9818746
+control_member_counts_by_seed:
+  81701: 14
+  81702: 15
+  81703: 4
+  81704: 8
+checks:
+  held_out_outcomes_consumed_zero: true
+  canonical_eleven_members_exact_and_unranked: true
+  all_41_native_control_members_accounted: true
+  control_cardinality_equalization_forbidden: true
+  frozen_rewires_remain_member_paired: true
+  recalibrated_controls_use_complete_ensemble_fraction: true
+  native_measurements_remain_separate: true
+  schedule_exactly_3072_unique_rows: true
+  no_member_selected: true
+  predecessor_outcomes_zero: true
+interpretation: V2 accounts every native same-recipe control survivor without selecting,
+  duplicating or dropping members. It locks execution mechanics and an unequal-ensemble
+  comparison before any held-out response exists.
+next_action: Execute the immutable v2 schedule exactly once and produce the exhaustive
+  positive, negative or ambiguous FH-09 report without refitting or ranking any member.

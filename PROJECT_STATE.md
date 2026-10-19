@@ -1386,20 +1386,28 @@ exactement les recettes FH-05 à FH-07 aux quatre graphes rewired. Les quatre
 calibrations sont non vides et retiennent respectivement 14, 15, 4 et 8 membres,
 soit 41 membres de contrôle au total. Aucun n'est classé ou promu et aucun outcome
 held-out n'a été produit. Cette différence de cardinalité est un résultat de la
-recette, pas une anomalie à effacer : le planning exécutable v2 devra conserver
-les onze membres canoniques pour le graphe normal et les rewires à paramètres
-gelés, mais tous les survivants natifs de chaque rewire recalibré. Il est interdit
-de supprimer, dupliquer ou apparier arbitrairement des membres pour obtenir onze.
+recette, pas une anomalie à effacer : le protocole v2 conserve les onze membres
+canoniques pour le graphe normal et les rewires à paramètres gelés, mais tous les
+survivants natifs de chaque rewire recalibré. Il est interdit de supprimer,
+dupliquer ou apparier arbitrairement des membres pour obtenir onze.
 
-Le plan de base restant représente maintenant exactement 2 fournées substantielles ; une réserve
-explicite de 2 à 4 porte la prévision de pilotage à 4--6. Cette fourchette vise le
-**premier essai interprétable**, positif, négatif ou ambigu, et non un comportement
-réussi ni la calibration totale de MaleCNS. Le travail de base restant est
-d'abord le verrouillage/compilation v2 fondé sur les ensembles de contrôle réels,
-puis l'exécution unique et son rapport exhaustif. Aucun résultat ne doit servir à
-classer ou réajuster les 11 survivants FH-07. La borne minimale ne baisse pas après
-ce lot parce que la recalibration, impossible à prédire depuis le préflight, a
-révélé le prérequis de planning dynamique ; la révision 5 l'enregistre explicitement.
+Le verrou outcome-blind v2 compile maintenant exactement 3 072 scénarios uniques :
+352 canoniques, 1 408 rewires à paramètres gelés et 1 312 contrôles recalibrés par
+la même recette. Les rewires gelés conservent l'appariement exact des membres ;
+les contrôles recalibrés comparent, par côté et seed de rewire, la fraction de
+succès de leur ensemble natif complet, avec numérateur et dénominateur explicites,
+mesures individuelles conservées et aucun pooling entre seeds. Ce verrou a
+consommé zéro outcome et n'a classé aucun membre.
+
+Le plan de base restant représente maintenant exactement 1 fournée substantielle ;
+une réserve explicite de 2 à 4 porte la prévision de pilotage à 3--5. Cette
+fourchette vise le **premier essai interprétable**, positif, négatif ou ambigu, et
+non un comportement réussi ni la calibration totale de MaleCNS. Le seul travail
+de base restant est l'exécution unique des 3 072 scénarios et son rapport exhaustif.
+Aucun résultat ne doit servir à classer ou réajuster les 11 survivants FH-07 ni les
+41 membres de contrôle. Cette prochaine étape change de nature : la préparation et
+la calibration aveugles sont terminées ; elle exposera pour la première fois les
+résultats du protocole held-out v2.
 
 Chaque livraison ferme des IDs de roadmap ou enregistre une découverte. Une
 estimation plate ou croissante doit suivre la règle

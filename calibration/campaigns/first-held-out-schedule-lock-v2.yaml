@@ -1,0 +1,86 @@
+schema_version: 1
+id: campaign.first_held_out_schedule_lock.v2
+title: FH-09 outcome-blind native-control schedule lock
+status: preregistered_runnable
+target_ids: [target.held_out_stimulus_response.v0]
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+primary_class: evaluation_only
+optimization_exposure: forbidden
+claim_label: FH-09 V2 SCHEDULE LOCK / NO HELD-OUT OUTCOME / NOT CALIBRATION
+held_out_outcomes_consumed: 0
+members_ranked: false
+parameter_values_promoted: 0
+scenario_namespace: heldout.proprio.resistance.v2
+
+purpose: >-
+  Supersede the zero-outcome fixed-eleven placeholder schedule with a complete
+  immutable schedule containing every native survivor of each exact same-recipe
+  rewired control. Freeze a dimensionless unequal-ensemble comparison before any
+  held-out response exists, while changing no stimulus, canonical member, seed,
+  native-unit measurement or biological pass rule.
+
+frozen_inputs:
+  runtime:
+    path: src/the_fly_matrix/first_held_out_schedule_lock.py
+    sha256: c09a7586567dfeb132316f64c78351f2a51d2d982c167be1c628e605be691d83
+  protocol_v2:
+    path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
+    sha256: f0b1eb25649bae2a2cf0717051992d83f042242f50a57d35c269d8eff06cd00b
+  base_protocol_v1:
+    path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+    sha256: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  protocol_lock_v1:
+    path: calibration/runner/first-held-out-protocol-lock-v1.yaml
+    sha256: 3742ca1ad99436623d5ab2c01abdcd620633cf58ddaaec4cf00ff50d99633b3f
+  preflight_v1:
+    path: calibration/runner/first-held-out-execution-preflight-v1.yaml
+    sha256: 490731aeac7831731ce469f03ee1ac87aec6b66deade4152e8219d558d4dc03a
+  control_recalibration:
+    path: calibration/runner/first-held-out-control-recalibration-v1.yaml
+    sha256: ee911b2cc220c226c8821df314d6c9f5be80846c601f477e6571ffd5b58fe32c
+  canonical_parameter_set:
+    path: calibration/parameter_sets/front-leg-neutral-embodied-regime-v0.yaml
+    sha256: dd1f696c29bcf3467d6cc93f18c55965fce5e5817cf6c94fa7718afcc1a9f68a
+  control_parameter_set:
+    path: calibration/parameter_sets/first-held-out-recalibrated-topology-controls-v1.yaml
+    sha256: 26840e9698f79c139f56b2069dd39998e330b8529a4ded481be5a9b715a8b006
+
+expected_accounting:
+  canonical_members: 11
+  canonical_rows: 352
+  frozen_parameter_rewire_rows: 1408
+  recalibrated_members_by_seed: {81701: 14, 81702: 15, 81703: 4, 81704: 8}
+  recalibrated_members_total: 41
+  recalibrated_rewire_rows: 1312
+  total_rows: 3072
+  unique_scenarios: 3072
+  topology_variants: 9
+  held_out_outcomes: 0
+
+acceptance:
+  every_native_control_member_accounted: true
+  cardinality_equalization_forbidden: true
+  failed_control_calibration_omission_forbidden: true
+  canonical_and_frozen_rewire_members_remain_paired: true
+  recalibrated_controls_use_complete_ensemble_pass_fraction: true
+  native_event_and_graded_measurements_remain_separate: true
+  held_out_outcomes_consumed: 0
+  members_ranked: false
+  selected_reference_member_id: null
+
+outputs:
+  schedule: data/derived/calibration/first-held-out-schedule-lock-v2/execution-schedule.csv
+  compact_result: calibration/runner/first-held-out-schedule-lock-v2.yaml
+  evaluation: calibration/evaluations/first-held-out-schedule-lock-v2.yaml
+
+accepted_claims:
+  - The v2 schedule is complete, unique and outcome-blind over all native control survivors.
+  - V2 changes only control accounting and its unequal-ensemble statistic relative to unexecuted v1.
+  - No canonical or control member is selected, ranked, duplicated or dropped.
+forbidden_claims:
+  - Schedule readiness validates a reflex or topology-specific behavior.
+  - Recalibrated-control ensemble cardinalities are biological estimates.
+  - The held-out outcome may be used to revise this protocol version.
+
+next_action: Execute the immutable v2 schedule exactly once and produce the exhaustive positive, negative or ambiguous FH-09 report without refitting or ranking any member.

@@ -385,6 +385,19 @@ carried whole into a superseding outcome-blind schedule, never equalized by
 selection, duplication or omission. The prior 3,168-row schedule is therefore a
 zero-outcome historical placeholder, not the executable final schedule.
 
+Run `first_held_out_schedule_lock_v2.bat` to reproduce the active final
+outcome-blind schedule. It inherits the unexecuted v1 scientific protocol by
+hash, retains the eleven canonical members, preserves exact member pairing for
+the frozen-parameter rewires, and includes all 14, 15, 4 and 8 native survivors
+for the same-recipe recalibrated controls. The resulting 3,072 unique rows are
+352 canonical, 1,408 frozen-rewire and 1,312 recalibrated-control episodes. The
+recalibrated controls are compared as complete-ensemble pass fractions per side
+and rewire seed, with exact denominators and all member-level native measures
+retained; they are never pooled, ranked or forced to equal cardinality. This gate
+executes no held-out episode and consumes zero outcome. After it passes, the next
+activity is no longer calibration preparation: it is the one-time held-out v2
+execution and exhaustive positive, negative or ambiguous report.
+
 The motor source repository is about 48.76 GB and the FeCO analysis repository
 contains scripts rather than its numerical measurement arrays. The missing FeCO
 tables are now located in the 2025 Dryad deposit as a checksum-locked 2 MB processed

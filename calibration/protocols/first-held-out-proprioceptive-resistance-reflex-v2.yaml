@@ -1,0 +1,143 @@
+schema_version: 1
+id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+title: Timebase-exact proprioceptive resistance-reflex evaluation with native control ensembles
+status: locked_execution_pending
+locked_at: 2026-10-19
+primary_class: evaluation_only
+optimization_exposure: forbidden
+claim_label: HELD-OUT EVALUATION / NOT CALIBRATION / OUTCOMES UNSEEN AT V2 LOCK
+candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
+target_id: target.held_out_stimulus_response.v0
+scope_id: scope.first_held_out_proprioceptive_resistance_reflex.v0
+
+base_protocol:
+  id: protocol.first_held_out_proprioceptive_resistance_reflex.v1
+  path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+  sha256: bf8fd7f09a181d46980c2fe63798ff9682ad89e80e0498182e2d8158c405e122
+  inherited_without_change:
+    - biological_basis
+    - frozen_lineage
+    - stimulus
+    - sham
+    - replication
+    - measurements
+    - mechanism_coverage
+    - all canonical-member biological decision rules
+    - contamination constraints except the protocol version identifier
+
+supersession:
+  supersedes_protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v1
+  predecessor_executed: false
+  predecessor_outcome_rows: 0
+  reason: >-
+    Exact outcome-blind application of the frozen FH-05 through FH-07 recipe to
+    the four rewired graphs retained 14, 15, 4 and 8 members. V1's fixed-eleven
+    recalibrated-control schedule was a placeholder and cannot be executed by
+    dropping, duplicating, pairing or selecting members.
+  scientific_change: >-
+    Schedule cardinalities and the same-recipe-control ensemble comparison are
+    made explicit. The stimulus, sham, canonical lineage, seeds, native-unit
+    measurements, canonical biological pass rule and mechanism limits do not change.
+  decision_informed_by_held_out_outcomes: false
+
+lock_assertions:
+  simulated_held_out_outcomes_inspected: false
+  behavior_used_for_parameter_or_member_selection: false
+  canonical_members_ranked: false
+  control_members_ranked: false
+  selected_reference_member_id: null
+  topology_changes_allowed_after_lock: false
+  threshold_changes_allowed_after_lock: false
+  protocol_version_reusable_after_inspection: false
+
+ensemble_membership:
+  canonical:
+    source: parameters.front_leg_neutral_embodied_regime.v0
+    member_count: 11
+    use: canonical_graph_and_each_frozen_parameter_rewire
+  recalibrated_controls:
+    source: parameters.first_held_out_recalibrated_topology_controls.v1
+    failed_control_calibrations: 0
+    total_members: 41
+    by_rewire_seed:
+      81701: 14
+      81702: 15
+      81703: 4
+      81704: 8
+  policy:
+    evaluate_every_member: true
+    members_ranked: false
+    selected_reference_member_id: null
+    equalize_cardinality: forbidden
+    omit_failed_control_calibration: forbidden
+
+topology_comparison:
+  frozen_parameter_rewires:
+    unit: canonical_member_side_rewire_seed
+    pairing: same_parameter_member_and_trial_seed
+    rule: >-
+      At least seven of eight paired trial-seed signed-effect differences favor
+      the canonical graph. Report every canonical member and rewire seed separately.
+  same_recipe_recalibrated_rewires:
+    unit: complete_ensemble_side_rewire_seed
+    member_level_rule: >-
+      Apply the unchanged canonical 7-of-8 expected-direction rule independently
+      to every native control member. Do not compare magnitudes across event and
+      graded native units.
+    ensemble_statistic: >-
+      For each side, report the exact numerator, denominator and fraction of the
+      complete ensemble whose member-level neural rule passes. Canonical ensemble
+      support exceeds a recalibrated control only when its pass fraction is
+      strictly larger for that rewire seed. Ties and representation-dependent
+      conclusions are ambiguous, never silently broken.
+    uncertainty_reporting:
+      - retain every member-level native event and graded measurement
+      - report exact pass numerators and denominators, not only fractions
+      - report each rewire seed separately; do not pool the four controls
+      - do not rank or select a control member from the held-out outcome
+
+schedule:
+  canonical_members: 11
+  canonical_topology_episodes: 352
+  frozen_parameter_rewire_members_per_seed: 11
+  frozen_parameter_rewire_episodes: 1408
+  recalibrated_control_members_by_seed:
+    81701: 14
+    81702: 15
+    81703: 4
+    81704: 8
+  recalibrated_control_members_total: 41
+  recalibrated_control_episodes: 1312
+  sides: 2
+  conditions_per_side: 2
+  paired_trial_seeds: 8
+  total_topology_variants: 9
+  total_episodes: 3072
+  scenario_id_pattern: heldout.proprio.resistance.v2/{topology_variant}/{member_id}/{side}/{condition}/seed-{seed}
+
+execution_gate:
+  status: locked_not_executed
+  outcome_rows_present: 0
+  required_before_execution:
+    - verify all inherited v1 fields and hashes
+    - verify all 41 recalibrated-control members against the outcome-blind control result
+    - compile exactly 3072 unique scenarios with every member accounted
+    - retain append-only storage and native event/graded measurement separation
+
+contamination:
+  forbidden_after_first_outcome_inspection:
+    - change any lineage parameter, member set, topology, stimulus, seed, metric, threshold, ensemble statistic or exclusion rule and retain protocol v2
+    - select or rank a canonical or control member from this response
+    - use this response in fitting, early stopping or manual tuning
+  required_if_change_is_needed: register_a_new_protocol_version_and_mark_v2_closed_or_contaminated
+
+accepted_claims:
+  - V2 supersedes unexecuted v1 before any held-out outcome is generated or inspected.
+  - Every canonical and recalibrated-control survivor is scheduled without ranking or cardinality equalization.
+  - Unequal control ensembles are compared by a preregistered dimensionless pass fraction while native measurements remain separate.
+forbidden_claims:
+  - Protocol lock demonstrates a reflex, physiology or topology-specific behavior.
+  - Unequal control-ensemble sizes may be hidden by resampling or selection.
+  - A successful member may be selected as a reference lineage.
+
+next_action: Compile and hash the exact 3072-row v2 schedule without producing any held-out outcome, then execute it once and report every row.

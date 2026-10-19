@@ -10,8 +10,8 @@ evaluation_only_targets:
   - target.held_out_stimulus_response.v0
 held_out_behaviors:
   - id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
-    protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v1
-    status: locked_zero_outcomes_native_control_schedule_revision_pending
+    protocol_id: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+    status: locked_zero_outcomes_execution_ready
     optimization_exposure: forbidden
     outcomes_inspected: false
     frozen_parameter_members: 11
@@ -31,7 +31,7 @@ prospective_evaluation_candidates:
     - evaluation_candidate.structured_spontaneous_motor_activity.v0
 notes:
   - Technical stability targets are not fly behaviors and cannot support an emergence claim.
-  - One named evaluation is assigned to immutable protocol v1; it remains unrun and cannot influence calibration or member selection. A v2 revision may change only the outcome-blind schedule accounting needed for the native recalibrated-control ensembles.
+  - One named evaluation is assigned to immutable protocol v2; it remains unrun and cannot influence calibration or member selection. V2 changed only the outcome-blind schedule accounting and unequal-ensemble control statistic required by the native recalibrated-control ensembles.
   - Any recognizable behavior used for optimization or selection must be added to behavior_targeted_calibrations and propagated through parameter lineage.
   - Prospective names are not locked held-out protocols; any behavior-specific design or tuning decision contaminates that candidate for the affected lineage.
   - FH-01 selected the front-leg proprioceptive resistance-reflex candidate before any simulated outcome; that selection was not a lock, while FH-08 now supplies the separate immutable protocol and keeps its response properties forbidden to calibration.

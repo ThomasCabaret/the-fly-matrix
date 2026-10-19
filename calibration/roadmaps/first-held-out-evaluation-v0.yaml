@@ -29,8 +29,8 @@ milestone:
 selected_planning_path:
   candidate_id: evaluation_candidate.front_leg_proprioceptive_resistance_reflex.v0
   decision_ref: calibration/evaluations/first-held-out-channel-readiness-v0.yaml
-  protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
-  status: control_recalibration_complete_outcome_blind_schedule_v2_required
+  protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
+  status: protocol_v2_native_control_schedule_locked_execution_ready
   selection_basis: independent_biology_and_current_mechanism_readiness
   simulated_outcomes_inspected_for_selection: false
   displaced_preference:
@@ -46,9 +46,9 @@ estimate_contract:
     tests and a local commit. It is not one shell command, one compute run or one
     calendar day.
   open_items: 1
-  base_work_batches: {min: 2, max: 2}
+  base_work_batches: {min: 1, max: 1}
   contingency_batches: {min: 2, max: 4}
-  planning_forecast_batches: {min: 4, max: 6}
+  planning_forecast_batches: {min: 3, max: 5}
   confidence: low_to_medium
   estimate_scope: >-
     First interpretable held-out attempt, not a guaranteed positive behavior and
@@ -334,9 +334,9 @@ items:
   - id: FH-09
     title: Execute and report the first held-out end-to-end evaluation
     nature: evaluation_only_execution
-    status: in_progress
+    status: ready
     depends_on: [FH-08]
-    estimated_batches: {min: 2, max: 2}
+    estimated_batches: {min: 1, max: 1}
     blocking_substep:
       id: FH-09-timebase
       status: resolved_before_outcomes
@@ -392,6 +392,26 @@ items:
         frozen-parameter rewires, and each recalibrated rewire's complete native
         survivor set. Do not drop, duplicate, pair or select members to equalize
         cardinalities. Failed control calibrations, if any, remain dispositions.
+    execution_schedule_v2:
+      protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
+      campaign_ref: calibration/campaigns/first-held-out-schedule-lock-v2.yaml
+      result_ref: calibration/runner/first-held-out-schedule-lock-v2.yaml
+      evaluation_ref: calibration/evaluations/first-held-out-schedule-lock-v2.yaml
+      semantic_result_sha256: 58a6de49cae641c0dbf814e9e4fe5cff18f0a36c1fbcf423b566227474dfc832
+      schedule_rows: 3072
+      canonical_rows: 352
+      frozen_parameter_rewire_rows: 1408
+      same_recipe_recalibrated_rewire_rows: 1312
+      recalibrated_control_members: 41
+      unique_scenarios: 3072
+      held_out_outcomes_consumed: 0
+      members_ranked: false
+      execution_ready: true
+      comparison_contract: >-
+        Frozen rewires retain exact member pairing. Same-recipe recalibrated
+        rewires retain every native survivor and compare complete-ensemble pass
+        fractions per side and rewire seed, with member-level native measures
+        preserved and no pooling or cardinality equalization.
     exit_criteria:
       - all scheduled normal, sham, mirrored and topology-control trials are accounted
       - the frozen protocol receives a positive, negative or ambiguous disposition
@@ -419,6 +439,42 @@ replanning_policy:
     must not be hidden inside an unchanged forecast.
 
 progress:
+  - date: 2026-10-19
+    batch: fh09_native_control_schedule_v2_lock
+    before:
+      open_items: 1
+      base_work_batches: {min: 2, max: 2}
+      planning_forecast_batches: {min: 4, max: 6}
+    closed: []
+    advanced: [FH-09]
+    newly_discovered_items: []
+    consumed_batches: 1
+    delivered:
+      active_protocol: protocol.first_held_out_proprioceptive_resistance_reflex.v2
+      predecessor_outcomes_consumed: 0
+      canonical_members: 11
+      recalibrated_control_members_by_seed: {81701: 14, 81702: 15, 81703: 4, 81704: 8}
+      canonical_rows: 352
+      frozen_parameter_rewire_rows: 1408
+      same_recipe_recalibrated_rewire_rows: 1312
+      unique_schedule_rows: 3072
+      held_out_outcomes_consumed: 0
+      members_ranked: false
+      execution_ready: true
+    scientific_boundary: >-
+      V2 changes only outcome-blind control accounting and the preregistered
+      unequal-ensemble comparison. Stimulus, sham, canonical members, seeds,
+      biological pass rule, native-unit separation and mechanism limits remain
+      inherited unchanged from v1. No response was generated or inspected.
+    after:
+      open_items: 1
+      base_work_batches: {min: 1, max: 1}
+      planning_forecast_batches: {min: 3, max: 5}
+    accounting_note: >-
+      One planned schedule-lock batch closed the only discovered prerequisite and
+      added no work. Exactly one base batch remains: one-time execution plus the
+      exhaustive report. The unchanged two-to-four contingency applies only if
+      execution reveals a new scientific mechanism or invalid contract.
   - date: 2026-10-19
     batch: fh09_outcome_blind_same_recipe_control_recalibration
     before:

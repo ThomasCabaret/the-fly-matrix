@@ -1,13 +1,13 @@
 schema_version: 1
 id: target.held_out_stimulus_response.v0
 title: Held-out bounded and stimulus-specific embodied response
-status: proprioceptive_resistance_reflex_control_recalibration_complete_schedule_revision_pending
+status: proprioceptive_resistance_reflex_protocol_v2_locked_execution_ready
 primary_class: evaluation_only
 optimization_exposure: evaluation_only
 claim_label: held_out_system_evaluation
 candidate_catalog_ref: calibration/evaluation_candidates/emergent-behavior-catalog-v0.yaml
-protocol_lock_status: v1_locked_zero_outcomes_v2_native_control_schedule_pending
-protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v1.yaml
+protocol_lock_status: v2_locked_zero_outcomes_execution_ready
+protocol_ref: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
 
 scope:
   includes:
@@ -52,11 +52,11 @@ scenario_splits:
   validation: []
   diagnostic: []
   held_out:
-    - heldout.proprio.resistance.v0/{topology_variant}/{member_id}/{side}/{condition}/seed-{seed}
+    - heldout.proprio.resistance.v2/{topology_variant}/{member_id}/{side}/{condition}/seed-{seed}
 
 contamination_policy: >-
   Any parameter or model-selection change made after inspecting this protocol's
-  outcomes contaminates version v0 and requires a newly registered held-out
+  outcomes contaminates protocol v2 and requires a newly registered held-out
   protocol before a held-out claim.
 
 dependencies:
@@ -79,13 +79,12 @@ provenance:
     - Biological evidence fixes response direction but not a transferable simulator-unit magnitude threshold.
     - Completing the FeCO proprioceptive chain alone does not make localized tactile contact runnable; mechanosensory routing and transfer readiness are separate gates.
     - FH-01 selected a proprioceptive resistance-reflex candidate from evidence and readiness before any simulated outcome was viewed.
-    - FH-01 candidate selection was not a lock; FH-08 subsequently locked protocol v0 while keeping every response property forbidden during fitting and model selection.
+    - FH-01 candidate selection was not a lock; FH-08 subsequently locked the scientific axes, and outcome-blind protocol v2 now carries the executable native-control schedule while keeping every response property forbidden during fitting and model selection.
 
 validation: locked_not_executed
 blocked_reason: null
 next_action: >-
-  Compile and lock protocol/schedule v2 outcome-blind from the exact recalibrated
-  control ensembles (14, 15, 4 and 8 members) while retaining all eleven canonical
-  members and the same eleven for frozen-parameter rewires. Then execute FH-09
-  exactly once and account every scheduled episode. Never force equal control
-  cardinalities or rank the canonical ensemble from the response.
+  Execute protocol v2 exactly once and account all 3,072 scheduled episodes:
+  352 canonical, 1,408 frozen-parameter rewires and 1,312 native-cardinality
+  same-recipe controls. Report positive, negative or ambiguous without changing,
+  ranking, dropping or duplicating any member after outcome inspection.

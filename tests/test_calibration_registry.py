@@ -160,7 +160,7 @@ class CalibrationRegistryTests(unittest.TestCase):
         )
         self.assertEqual(
             held_out_target["protocol_lock_status"],
-            "v1_locked_zero_outcomes_v2_native_control_schedule_pending",
+            "v2_locked_zero_outcomes_execution_ready",
         )
         self.assertEqual(len(behavior_index["held_out_behaviors"]), 1)
         self.assertFalse(behavior_index["held_out_behaviors"][0]["outcomes_inspected"])
@@ -216,7 +216,7 @@ class CalibrationRegistryTests(unittest.TestCase):
             11,
         )
         self.assertEqual(roadmap["items"][7]["status"], "complete")
-        self.assertEqual(roadmap["items"][8]["status"], "in_progress")
+        self.assertEqual(roadmap["items"][8]["status"], "ready")
         self.assertEqual(
             roadmap["items"][8]["blocking_substep"]["id"], "FH-09-timebase"
         )
@@ -246,6 +246,15 @@ class CalibrationRegistryTests(unittest.TestCase):
             ],
             0,
         )
+        schedule = roadmap["items"][8]["execution_schedule_v2"]
+        self.assertTrue(schedule["execution_ready"])
+        self.assertEqual(schedule["schedule_rows"], 3072)
+        self.assertEqual(schedule["canonical_rows"], 352)
+        self.assertEqual(schedule["frozen_parameter_rewire_rows"], 1408)
+        self.assertEqual(schedule["same_recipe_recalibrated_rewire_rows"], 1312)
+        self.assertEqual(schedule["recalibrated_control_members"], 41)
+        self.assertEqual(schedule["held_out_outcomes_consumed"], 0)
+        self.assertFalse(schedule["members_ranked"])
         self.assertEqual(roadmap["estimate_contract"]["open_items"], 1)
 
     def test_first_held_out_causal_cone_is_bounded_and_nonselecting(self) -> None:
