@@ -19,7 +19,7 @@ purpose: >-
 frozen_inputs:
   runtime:
     path: src/the_fly_matrix/first_held_out_execution.py
-    sha256: f5631ae562002c158ce2a94d212c55c6f935bf1b410b5c3b505d36b7665f6ef0
+    sha256: ffa297a301032a8435cc07d619e3868c6e9445b18690b81d96f510fd27544ce7
   protocol_v2:
     path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
     sha256: f0b1eb25649bae2a2cf0717051992d83f042242f50a57d35c269d8eff06cd00b
@@ -86,8 +86,16 @@ execution:
       persisted_outcome_rows: 0
       outcomes_inspected: false
       scientific_contract_changed: false
+    - backend: cuda_metrics_free
+      disposition: interrupted_for_remaining_per_step_validation_synchronization_before_first_complete_shard
+      complete_shards: 0
+      persisted_outcome_rows: 0
+      outcomes_inspected: false
+      scientific_contract_changed: false
   performance_implementation:
     per_step_diagnostic_metrics: disabled_for_this_runner
+    port_validation: equivalent_host_side_checks_on_runner_constructed_inputs
+    motor_state_readback: one_transfer_per_step_for_both_native_representations
     retained_observables: neural_state_motor_events_physics_and_all_locked_endpoint_metrics
 
 stimulus_implementation:

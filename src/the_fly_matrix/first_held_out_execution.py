@@ -29,7 +29,7 @@ from .neutral_embodied_declared_closed_loop_sentinel import (
 )
 from .neutral_embodied_feedback_identifiability import _record_physical_frame
 from .runtime import FlyBodyPhysicsLoop
-from .typed_hybrid_runtime import EVENT, TorchTypedHybridRuntime
+from .typed_hybrid_runtime import EVENT, GRADED, TorchTypedHybridRuntime
 
 
 CAMPAIGN_PATH = ROOT / "calibration/campaigns/first-held-out-execution-v2.yaml"
@@ -84,12 +84,13 @@ def _step_without_diagnostic_metrics(
         runtime.g[generated] = 0.0
         runtime.refractory[generated] = runtime.refractory_steps
 
-    forced = torch.as_tensor(forced_event_indices, dtype=torch.int64, device=runtime.device)
-    if forced.numel():
-        if int(forced.min()) < 0 or int(forced.max()) >= runtime.node_count:
+    forced_host = np.asarray(forced_event_indices, dtype=np.int64)
+    if forced_host.size:
+        if int(forced_host.min()) < 0 or int(forced_host.max()) >= runtime.node_count:
             raise HeldOutExecutionError("forced event index is outside the graph")
-        if not bool(torch.all(runtime.event_mask[forced]).item()):
+        if not np.all(runtime.assignment_np[forced_host] == EVENT):
             raise HeldOutExecutionError("forced event was assigned to a non-event population")
+    forced = torch.as_tensor(forced_host, dtype=torch.int64, device=runtime.device)
     emitted = torch.unique(torch.cat((generated, forced)))
     destination = (runtime.step_index + runtime.delay_steps) % len(runtime.queue)
     runtime.queue[destination] = emitted
@@ -99,7 +100,7 @@ def _step_without_diagnostic_metrics(
     )
     graded_projection = (
         runtime._projection(graded_source)
-        if bool(runtime.graded_mask.any())
+        if np.any(runtime.assignment_np == GRADED)
         else graded_source
     )
     if external_graded is None:
@@ -108,7 +109,8 @@ def _step_without_diagnostic_metrics(
         external = torch.as_tensor(external_graded, dtype=torch.float32, device=runtime.device)
         if external.shape != (runtime.node_count,):
             raise HeldOutExecutionError("external graded vector has the wrong shape")
-        if bool(torch.any(external[~runtime.graded_mask] != 0).item()):
+        nonzero = np.flatnonzero(external_graded)
+        if nonzero.size and np.any(runtime.assignment_np[nonzero] != GRADED):
             raise HeldOutExecutionError("graded input was applied outside graded populations")
     proposal = torch.tanh(
         c.graded_to_graded * graded_projection
@@ -392,10 +394,16 @@ def _run_episode(
                 forced_event_indices=forced,
                 external_graded=external,
             )
-        events = (runtime.refractory[motor_index_tensor] == runtime.refractory_steps).detach().cpu().numpy()
+        motor_snapshot = torch.stack(
+            (
+                (runtime.refractory[motor_index_tensor] == runtime.refractory_steps).to(torch.float32),
+                runtime.graded[motor_index_tensor],
+            )
+        ).detach().cpu().numpy()
+        events = motor_snapshot[0].astype(bool)
         if baseline_steps <= step < response_stop:
             event_counts += events.astype(np.int64)
-            graded_integrals += runtime.graded[motor_index_tensor].detach().cpu().numpy() * dt_s
+            graded_integrals += motor_snapshot[1] * dt_s
         command = np.zeros(len(loop.actuator_names), dtype=np.float64)
         for event, transfer, route in zip(events, filters, route_map, strict=True):
             _force, scalar = transfer.step(int(event))
