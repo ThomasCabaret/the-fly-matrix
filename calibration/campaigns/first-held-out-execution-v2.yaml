@@ -67,12 +67,19 @@ frozen_inputs:
     sha256: 94474e2d982b4beefc930acf1012d9bf4cb85b2305f95bbf9beeb60aa15a9699
 
 execution:
-  device: cpu
+  device: cuda
   timestep_s: 0.0001
   record_stride: 20
   direct_motor_abs_max: 0.01
   outcome_storage: append_only_one_shard_per_topology_member
   resume_policy: skip_only_complete_exclusive_created_shards_then_reaccount_all_rows
+  pre_outcome_execution_attempts:
+    - backend: cpu
+      disposition: interrupted_for_inadequate_throughput_before_first_complete_shard
+      complete_shards: 0
+      persisted_outcome_rows: 0
+      outcomes_inspected: false
+      scientific_contract_changed: false
 
 stimulus_implementation:
   type: environment_owned_kinematic_joint_clamp_not_motor_controller
