@@ -67,6 +67,7 @@ class FirstHeldOutExecutionTests(unittest.TestCase):
             "graded_motor_bodies": 1,
             "finite": True,
             "failure_masks": {"joint_limit_violation_frames": 0},
+            "command_abs_max": 0.005,
         }
         rows = [
             {
@@ -89,6 +90,29 @@ class FirstHeldOutExecutionTests(unittest.TestCase):
         self.assertEqual(paired[0]["graded_integral_effect"], 1.0)
         self.assertTrue(paired[0]["neural_expected_direction"])
         self.assertTrue(paired[0]["physical_expected_direction"])
+
+    def test_pairing_marks_motor_guard_violation_unbounded(self) -> None:
+        common = {
+            "topology_variant": "canonical",
+            "member_id": "member-a",
+            "side": "left",
+            "trial_seed": 1,
+            "event_motor_bodies": 1,
+            "graded_motor_bodies": 0,
+            "finite": True,
+            "failure_masks": {"joint_limit_violation_frames": 0},
+            "event_motor_count": 1,
+            "graded_motor_integral": 0.0,
+            "release_opposition_deg": 1.0,
+        }
+        paired = _pair_outcomes(
+            [
+                {**common, "condition": "stimulus", "command_abs_max": 0.010001},
+                {**common, "condition": "sham", "command_abs_max": 0.005},
+            ]
+        )
+        self.assertFalse(paired[0]["command_guard_respected"])
+        self.assertFalse(paired[0]["bounded"])
 
     def test_seven_of_eight_rule_is_exact(self) -> None:
         rows = []

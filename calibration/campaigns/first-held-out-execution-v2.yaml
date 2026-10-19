@@ -19,7 +19,7 @@ purpose: >-
 frozen_inputs:
   runtime:
     path: src/the_fly_matrix/first_held_out_execution.py
-    sha256: 4823574516e931f17aac507d42937a17cff1721a770ab16842a0306984093f97
+    sha256: 442a9f268b36ea0c1c83a7f9637312a6587001a6819a99b75feccd07386602d7
   protocol_v2:
     path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
     sha256: f0b1eb25649bae2a2cf0717051992d83f042242f50a57d35c269d8eff06cd00b
@@ -68,7 +68,7 @@ frozen_inputs:
 
 execution:
   device: cpu
-  parallel_workers: 8
+  parallel_workers: 12
   timestep_s: 0.0001
   record_stride: 20
   direct_motor_abs_max: 0.01
@@ -99,6 +99,19 @@ execution:
       persisted_outcome_rows: 0
       outcomes_inspected: false
       scientific_contract_changed: false
+    - backend: eight_cpu_workers
+      disposition: stopped_after_direct_motor_guard_was_incorrectly_fatal_instead_of_accounted
+      complete_shards: 84
+      persisted_outcome_rows: 2688
+      outcomes_inspected: false
+      scientific_contract_changed: false
+  execution_correction_after_shards:
+    issue: direct_motor_guard_violation_aborted_worker_instead_of_marking_pair_unbounded
+    correction: continue_episode_without_clamp_and_set_bounded_false_during_locked_analysis
+    threshold_changed: false
+    parameter_values_changed: 0
+    existing_shards_reusable_from_recorded_command_abs_max: true
+    resume_workers: 12
   performance_implementation:
     group_execution: eight_independent_cpu_workers_with_exclusive_shards
     per_step_diagnostic_metrics: disabled_for_this_runner

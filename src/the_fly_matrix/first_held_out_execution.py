@@ -347,6 +347,7 @@ def _run_episode(
     target_angles: list[float] = []
     records: dict[str, list[Any]] = {}
     command_abs_max = 0.0
+    command_guard_violation_steps = 0
     command_nonzero_steps = 0
     source_nonzero_steps = 0
 
@@ -420,9 +421,7 @@ def _run_episode(
         observed = float(np.max(np.abs(command), initial=0.0))
         command_abs_max = max(command_abs_max, observed)
         if observed > float(execution["direct_motor_abs_max"]):
-            raise HeldOutExecutionError(
-                f"direct-MOTOR guard violated in {side}/{condition}/seed-{trial_seed}: {observed}"
-            )
+            command_guard_violation_steps += 1
         command_nonzero_steps += int(np.any(command != 0.0))
         addressed = loop.actuator_interface.step(command)
         loop.simulation.set_actuator_inputs("flybody", loop.actuator_type, addressed.values)
@@ -454,11 +453,14 @@ def _run_episode(
         "source_nonzero_steps": source_nonzero_steps,
         "command_nonzero_steps": command_nonzero_steps,
         "command_abs_max": command_abs_max,
+        "command_guard_violation_steps": command_guard_violation_steps,
         "failure_masks": _failure_counts(arrays, metadata),
     }
 
 
-def _pair_outcomes(rows: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+def _pair_outcomes(
+    rows: Sequence[Mapping[str, Any]], direct_motor_abs_max: float = 0.01
+) -> list[dict[str, Any]]:
     by_key: dict[tuple[str, str, str, int], dict[str, Mapping[str, Any]]] = {}
     for row in rows:
         key = (str(row["topology_variant"]), str(row["member_id"]), str(row["side"]), int(row["trial_seed"]))
@@ -479,6 +481,10 @@ def _pair_outcomes(rows: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
             int(stimulus["failure_masks"].get(name, 0)) <= int(value)
             for name, value in sham["failure_masks"].items()
         )
+        command_guard_respected = bool(
+            float(stimulus["command_abs_max"]) <= direct_motor_abs_max
+            and float(sham["command_abs_max"]) <= direct_motor_abs_max
+        )
         pairs.append(
             {
                 "topology_variant": key[0],
@@ -495,7 +501,13 @@ def _pair_outcomes(rows: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
                 "physical_expected_direction": float(stimulus["release_opposition_deg"])
                 - float(sham["release_opposition_deg"])
                 > 0.0,
-                "bounded": bool(stimulus["finite"] and sham["finite"] and no_new_failure),
+                "command_guard_respected": command_guard_respected,
+                "bounded": bool(
+                    stimulus["finite"]
+                    and sham["finite"]
+                    and no_new_failure
+                    and command_guard_respected
+                ),
             }
         )
     return pairs
@@ -528,8 +540,12 @@ def _member_side_summary(pairs: Sequence[Mapping[str, Any]], threshold: int) -> 
     return result
 
 
-def _analyse(rows: Sequence[Mapping[str, Any]], protocol: Mapping[str, Any]) -> dict[str, Any]:
-    pairs = _pair_outcomes(rows)
+def _analyse(
+    rows: Sequence[Mapping[str, Any]],
+    protocol: Mapping[str, Any],
+    direct_motor_abs_max: float = 0.01,
+) -> dict[str, Any]:
+    pairs = _pair_outcomes(rows, direct_motor_abs_max)
     threshold = int(protocol["replication"]["minimum_directionally_consistent_pairs"])
     summaries = _member_side_summary(pairs, threshold)
     canonical = [row for row in summaries if row["topology_variant"] == "canonical"]
@@ -772,7 +788,11 @@ def run_execution(
     if {row["scenario_id"] for row in outcomes} != expected_ids:
         raise HeldOutExecutionError("outcome scenario IDs differ from the locked schedule")
     print("[4/7] Applying the locked paired sign, physical-support and topology-control rules", flush=True)
-    analysis = _analyse(outcomes, base_protocol)
+    analysis = _analyse(
+        outcomes,
+        base_protocol,
+        float(campaign["execution"]["direct_motor_abs_max"]),
+    )
     wall_seconds = time.perf_counter() - started
     outcome_manifest = {
         "rows": len(outcomes),
