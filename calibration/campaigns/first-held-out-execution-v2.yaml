@@ -19,7 +19,7 @@ purpose: >-
 frozen_inputs:
   runtime:
     path: src/the_fly_matrix/first_held_out_execution.py
-    sha256: ffa297a301032a8435cc07d619e3868c6e9445b18690b81d96f510fd27544ce7
+    sha256: 4823574516e931f17aac507d42937a17cff1721a770ab16842a0306984093f97
   protocol_v2:
     path: calibration/protocols/first-held-out-proprioceptive-resistance-reflex-v2.yaml
     sha256: f0b1eb25649bae2a2cf0717051992d83f042242f50a57d35c269d8eff06cd00b
@@ -67,7 +67,8 @@ frozen_inputs:
     sha256: 94474e2d982b4beefc930acf1012d9bf4cb85b2305f95bbf9beeb60aa15a9699
 
 execution:
-  device: cuda
+  device: cpu
+  parallel_workers: 8
   timestep_s: 0.0001
   record_stride: 20
   direct_motor_abs_max: 0.01
@@ -92,7 +93,14 @@ execution:
       persisted_outcome_rows: 0
       outcomes_inspected: false
       scientific_contract_changed: false
+    - backend: cuda_host_validated_single_readback
+      disposition: interrupted_for_small_graph_kernel_launch_overhead_before_first_complete_shard
+      complete_shards: 0
+      persisted_outcome_rows: 0
+      outcomes_inspected: false
+      scientific_contract_changed: false
   performance_implementation:
+    group_execution: eight_independent_cpu_workers_with_exclusive_shards
     per_step_diagnostic_metrics: disabled_for_this_runner
     port_validation: equivalent_host_side_checks_on_runner_constructed_inputs
     motor_state_readback: one_transfer_per_step_for_both_native_representations

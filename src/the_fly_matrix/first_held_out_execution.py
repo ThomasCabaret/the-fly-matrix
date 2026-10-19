@@ -4,6 +4,9 @@ import argparse
 import hashlib
 import json
 import math
+import os
+import subprocess
+import sys
 import time
 from datetime import UTC, datetime
 from pathlib import Path
@@ -234,6 +237,12 @@ def ramp_fraction(step: int, baseline_steps: int, ramp_steps: int) -> float | No
     if step < baseline_steps or step >= baseline_steps + ramp_steps:
         return None
     return (step - baseline_steps + 1) / ramp_steps
+
+
+def worker_group_indices(total: int, worker_index: int, worker_count: int) -> list[int]:
+    if total < 0 or worker_count < 1 or not 0 <= worker_index < worker_count:
+        raise HeldOutExecutionError("invalid parallel group partition")
+    return list(range(worker_index, total, worker_count))
 
 
 def _failure_counts(records: Mapping[str, np.ndarray], metadata: Mapping[str, Any]) -> dict[str, int]:
@@ -615,6 +624,10 @@ def run_execution(
     result_path: Path = RESULT_PATH,
     evaluation_path: Path = EVALUATION_PATH,
     run_root: Path = RUN_ROOT,
+    worker_index: int | None = None,
+    worker_count: int = 1,
+    shards_only: bool = False,
+    execute_groups: bool = True,
 ) -> dict[str, Any]:
     campaign = _load_yaml(campaign_path)
     paths = _verify_frozen_inputs(campaign)
@@ -651,8 +664,21 @@ def run_execution(
     shard_root.mkdir(parents=True, exist_ok=True)
     groups = list(schedule.groupby(["topology_variant", "member_id"], sort=False))
     started = time.perf_counter()
-    with FlyBodyPhysicsLoop.from_generated_wiring(with_vision=False) as loop:
+    if worker_index is not None:
+        assigned_group_indices = set(worker_group_indices(len(groups), worker_index, worker_count))
+        import torch
+
+        torch.set_num_threads(1)
+        print(
+            f"[WORKER {worker_index + 1}/{worker_count}] assigned groups "
+            f"{worker_index + 1}, {worker_index + 1 + worker_count}, ...",
+            flush=True,
+        )
+    if execute_groups:
+      with FlyBodyPhysicsLoop.from_generated_wiring(with_vision=False) as loop:
         for group_index, ((topology_variant, member_id), group) in enumerate(groups, start=1):
+            if worker_index is not None and group_index - 1 not in assigned_group_indices:
+                continue
             safe_member = hashlib.sha256(str(member_id).encode("utf-8")).hexdigest()[:16]
             shard = shard_root / str(topology_variant) / f"{safe_member}.jsonl"
             if shard.is_file():
@@ -720,10 +746,21 @@ def run_execution(
                     stream.write(json.dumps(outcome, sort_keys=True, allow_nan=False) + "\n")
             elapsed = time.perf_counter() - started
             print(
-                f"  [{group_index:03d}/{len(groups):03d}] DONE {topology_variant} / {member_id} "
+                f"  [{group_index:03d}/{len(groups):03d}] DONE "
+                f"worker={worker_index + 1 if worker_index is not None else 1} "
+                f"{topology_variant} / {member_id} "
                 f"({len(outcomes)} episodes; {elapsed:.1f}s)",
                 flush=True,
             )
+
+    if shards_only:
+        completed = len(list(shard_root.rglob("*.jsonl")))
+        print(
+            f"[WORKER {worker_index + 1 if worker_index is not None else 1}] "
+            f"shard phase complete; global shards now {completed}/{len(groups)}",
+            flush=True,
+        )
+        return {"worker_index": worker_index, "global_complete_shards": completed}
 
     print("[3/7] Loading append-only outcome shards and enforcing exhaustive accounting", flush=True)
     outcomes: list[dict[str, Any]] = []
@@ -802,8 +839,49 @@ def run_execution(
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Execute the immutable FH-09 held-out v2 protocol once")
     parser.add_argument("--campaign", type=Path, default=CAMPAIGN_PATH)
+    parser.add_argument("--worker-index", type=int)
+    parser.add_argument("--worker-count", type=int, default=1)
+    parser.add_argument("--shards-only", action="store_true")
     args = parser.parse_args(argv)
-    run_execution(campaign_path=args.campaign)
+    if args.worker_index is not None:
+        run_execution(
+            campaign_path=args.campaign,
+            worker_index=args.worker_index,
+            worker_count=args.worker_count,
+            shards_only=args.shards_only,
+        )
+        return 0
+
+    campaign = _load_yaml(args.campaign)
+    parallel_workers = int(campaign["execution"].get("parallel_workers", 1))
+    if parallel_workers > 1:
+        env = os.environ.copy()
+        env.update({"OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"})
+        processes = [
+            subprocess.Popen(
+                [
+                    sys.executable,
+                    "-m",
+                    "the_fly_matrix.first_held_out_execution",
+                    "--campaign",
+                    str(args.campaign),
+                    "--worker-index",
+                    str(index),
+                    "--worker-count",
+                    str(parallel_workers),
+                    "--shards-only",
+                ],
+                cwd=ROOT,
+                env=env,
+            )
+            for index in range(parallel_workers)
+        ]
+        failures = [process.wait() for process in processes]
+        if any(failures):
+            raise HeldOutExecutionError(f"parallel workers failed: {failures}")
+        run_execution(campaign_path=args.campaign, execute_groups=False)
+    else:
+        run_execution(campaign_path=args.campaign)
     return 0
 
 

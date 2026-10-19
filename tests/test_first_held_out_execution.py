@@ -11,6 +11,7 @@ from the_fly_matrix.first_held_out_execution import (
     _pair_outcomes,
     _step_without_diagnostic_metrics,
     ramp_fraction,
+    worker_group_indices,
 )
 from the_fly_matrix.ledger import ROOT
 from the_fly_matrix.typed_hybrid_runtime import (
@@ -21,6 +22,12 @@ from the_fly_matrix.typed_hybrid_runtime import (
 
 
 class FirstHeldOutExecutionTests(unittest.TestCase):
+    def test_worker_partitions_are_disjoint_and_exhaustive(self) -> None:
+        partitions = [worker_group_indices(96, index, 8) for index in range(8)]
+        flattened = [value for partition in partitions for value in partition]
+        self.assertEqual(sorted(flattened), list(range(96)))
+        self.assertEqual(len(flattened), len(set(flattened)))
+
     def test_metrics_free_step_is_state_identical_to_canonical_runtime(self) -> None:
         campaign = yaml.safe_load(
             (ROOT / "calibration/campaigns/basal-reached-typed-hybrid-runtime-sentinel-v0.yaml")
